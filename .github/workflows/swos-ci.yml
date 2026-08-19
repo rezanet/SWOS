@@ -40,8 +40,8 @@ jobs:
     needs: [contracts]
     strategy:
       fail-fast: false
-      matrix:plane: [retrieval, grounding, citation, scholarly, governance, regression, memory_contamination, adversarial]
-        
+      matrix:
+        plane: [retrieval, grounding, citation, scholarly, governance, regression, memory_contamination, adversarial]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
