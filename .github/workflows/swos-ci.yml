@@ -34,6 +34,17 @@ jobs:
       - name: Reject host-specific frontmatter in core skills
         run: python3 tools/lint_skills.py --strict
 
+  prose:
+    name: SWOS Prose semantic-delta tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run semantic-delta unit tests
+        run: python3 -m unittest discover -s tests/prose -p 'test_*.py'
+
   evaluation:
     name: Evaluation harness (release gate)
     runs-on: ubuntu-latest
