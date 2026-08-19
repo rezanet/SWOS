@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/state/scholarly-state.schema.json",
+  "title": "SWOS Scholarly State Model",
+  "description": "The lifecycle spine. Every claim, evidence record, decision, memory item, reviewer finding and output carries a state. Without this, EPG, SDL and RPM cannot be validated. Transitions are the enforcement point for Rule #3.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "work_id",
+    "current_state",
+    "history"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "work_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "current_state": {
+      "$ref": "../common/common.schema.json#/$defs/scholarly_state"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "state",
+          "entered_at",
+          "sdlc_phase",
+          "governance_checkpoint"
+        ],
+        "properties": {
+          "state": {
+            "$ref": "../common/common.schema.json#/$defs/scholarly_state"
+          },
+          "entered_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sdlc_phase": {
+            "type": "string",
+            "enum": [
+              "discover",
+              "design",
+              "build",
+              "validate",
+              "release",
+              "operate",
+              "evolve",
+              "retire"
+            ]
+          },
+          "governance_checkpoint": {
+            "type": "string"
+          },
+          "epg_state": {
+            "type": "string",
+            "description": "e.g. empty bundle, query plan, retrieval events, verified spans, claim graph, output derivation, review bundle, release bundle, archived bundle."
+          },
+          "sdl_event": {
+            "type": "string"
+          },
+          "gate_ids": {
+            "type": "array",
+            "items": {
+              "$ref": "../common/common.schema.json#/$defs/id"
+            }
+          },
+          "entered_by": {
+            "$ref": "../common/common.schema.json#/$defs/actor"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "blocked_transitions": {
+      "type": "array",
+      "description": "Recorded attempts to transition without satisfying preconditions. A draft_generated attempt before evidence_verified is the canonical Rule #3 violation and must be logged, not silently retried.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "attempted_state": {
+            "$ref": "../common/common.schema.json#/$defs/scholarly_state"
+          },
+          "blocked_by": {
+            "type": "string"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

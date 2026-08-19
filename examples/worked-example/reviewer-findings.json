@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-4f3a91c2-0b7d-4e18-9a52-6c81de7f0a33",
+  "reviewer_role": "methodologist",
+  "discipline": "psychology",
+  "iteration": 1,
+  "verdict": "pass_with_findings",
+  "blind_review": false,
+  "findings": [
+    {
+      "finding_id": "rev-00000001-0000-4000-8000-000000000000",
+      "severity": "blocker",
+      "category": "statistical_overreach",
+      "description": "The draft asserted a causal relationship on the basis of a cross-sectional observational design. The design cannot distinguish causation from association.",
+      "locus": "clm-00000002-0000-4000-8000-000000000000",
+      "required_action": "Withhold the causal licence. Either qualify the claim to the association the design supports, or withdraw it.",
+      "status": "resolved",
+      "resolution_note": "Resolved at revision. Claim reclassified to unverified_claim, thesis restated as evidential insufficiency, and the claim listed in the unsupported-claim report. See sdl dec-00000003."
+    },
+    {
+      "finding_id": "rev-00000002-0000-4000-8000-000000000000",
+      "severity": "major",
+      "category": "overclaim",
+      "description": "The population 'older adults' exceeds the sampled population (ages 65-74, single urban cohort).",
+      "locus": "clm-00000002-0000-4000-8000-000000000000",
+      "required_action": "Add a qualifier matching the evidence scope, or retrieve broader evidence.",
+      "status": "resolved",
+      "resolution_note": "Qualifier node arg-00000006 added; scope bounded explicitly in the manuscript."
+    },
+    {
+      "finding_id": "rev-00000003-0000-4000-8000-000000000000",
+      "severity": "minor",
+      "category": "method_weakness",
+      "description": "Effect size reported without a confidence interval in the source. The absence should be surfaced, not silently carried.",
+      "locus": "clm-00000001-0000-4000-8000-000000000000",
+      "required_action": "Note the missing interval in the uncertainty statement.",
+      "status": "resolved",
+      "resolution_note": "Recorded as weak_support in the uncertainty statement."
+    }
+  ],
+  "rubric_scores": [
+    {
+      "dimension": "Construct and measurement validity",
+      "score": 0.82,
+      "max": 1.0,
+      "threshold": 0.7,
+      "rubric_id": "psychology",
+      "rubric_version": "1.0.0"
+    },
+    {
+      "dimension": "Sampling and generalisation",
+      "score": 0.75,
+      "max": 1.0,
+      "threshold": 0.7,
+      "rubric_id": "psychology",
+      "rubric_version": "1.0.0"
+    },
+    {
+      "dimension": "Statistical interpretation",
+      "score": 0.78,
+      "max": 1.0,
+      "threshold": 0.7,
+      "rubric_id": "psychology",
+      "rubric_version": "1.0.0"
+    },
+    {
+      "dimension": "Causal-claim licensing",
+      "score": 1.0,
+      "max": 1.0,
+      "threshold": 0.9,
+      "rubric_id": "psychology",
+      "rubric_version": "1.0.0"
+    },
+    {
+      "dimension": "Confound and bias identification",
+      "score": 0.8,
+      "max": 1.0,
+      "threshold": 0.7,
+      "rubric_id": "psychology",
+      "rubric_version": "1.0.0"
+    },
+    {
+      "dimension": "Replication awareness",
+      "score": 0.95,
+      "max": 1.0,
+      "threshold": 0.7,
+      "rubric_id": "psychology",
+      "rubric_version": "1.0.0"
+    }
+  ],
+  "sdl_decision_id": "dec-00000003-0000-4000-8000-000000000000",
+  "audit": {
+    "created_at": "2026-01-06T15:10:00Z",
+    "created_by": {
+      "actor_type": "agent",
+      "actor_id": "swos-methodologist",
+      "version": "1.0.0"
+    }
+  }
+}

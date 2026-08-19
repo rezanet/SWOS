@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/governance/governance-gate.schema.json",
+  "title": "SWOS Governance Gate",
+  "description": "A machine-evaluated control point. Governance controls that exist only as documentation are governance theatre; every control in governance/policies is expressed as one of these.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "gate_id",
+    "gate_type",
+    "work_id",
+    "result",
+    "evaluated_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "gate_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "gate_type": {
+      "type": "string",
+      "enum": [
+        "source_rights",
+        "data_classification",
+        "memory_write_approval",
+        "human_approval_threshold",
+        "provenance_completeness",
+        "citation_support",
+        "unsupported_claim",
+        "release",
+        "incident_correction",
+        "retention",
+        "third_party_connector",
+        "contributor_trust"
+      ]
+    },
+    "work_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "policy_id": {
+      "type": "string"
+    },
+    "policy_version": {
+      "$ref": "../common/common.schema.json#/$defs/semver"
+    },
+    "nist_ai_rmf_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "e.g. GOVERN 1.1, MAP 2.3, MEASURE 2.7, MANAGE 4.1"
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "waived",
+        "escalated",
+        "not_applicable"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "What the gate actually checked."
+    },
+    "waiver": {
+      "type": "object",
+      "description": "Waivers are permitted, silent waivers are not.",
+      "required": [
+        "reason",
+        "approved_by",
+        "expires_on"
+      ],
+      "properties": {
+        "reason": {
+          "type": "string"
+        },
+        "approved_by": {
+          "$ref": "../common/common.schema.json#/$defs/actor"
+        },
+        "expires_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "sdl_decision_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        }
+      }
+    },
+    "evaluated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evaluated_by": {
+      "$ref": "../common/common.schema.json#/$defs/actor"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/evidence-matrix/evidence-matrix.schema.json",
+  "title": "SWOS Evidence Matrix",
+  "description": "The atomic claim-to-source map. This is the ONLY structure the drafting stage may read from. Anti-pattern: the Evidence Matrix must not become a provenance ledger - lineage belongs in the EPG.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "work_id",
+    "rows",
+    "coverage"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "work_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "audit": {
+      "$ref": "../common/common.schema.json#/$defs/audit_stamp"
+    },
+    "coverage": {
+      "type": "object",
+      "description": "Computed roll-up used by the grounding release gate.",
+      "required": [
+        "total_claims",
+        "supported_claims",
+        "unsupported_claims",
+        "uncertain_claims",
+        "counter_evidence_present"
+      ],
+      "properties": {
+        "total_claims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "supported_claims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unsupported_claims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uncertain_claims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "counter_evidence_present": {
+          "type": "boolean",
+          "description": "False fails the grounding gate for any work whose contribution type is critique, position or synthesis."
+        },
+        "source_diversity_index": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Guards against coverage bias toward accessible, popular or English-language sources."
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/row"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "row": {
+      "type": "object",
+      "required": [
+        "claim_id",
+        "claim_text",
+        "epistemic_type",
+        "confidence",
+        "verification_status",
+        "citations"
+      ],
+      "properties": {
+        "claim_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "claim_text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "ONE atomic proposition. Compound claims must be split before entry."
+        },
+        "epistemic_type": {
+          "$ref": "../common/common.schema.json#/$defs/epistemic_type"
+        },
+        "confidence": {
+          "$ref": "../common/common.schema.json#/$defs/confidence"
+        },
+        "citation_burden": {
+          "type": "string",
+          "enum": [
+            "none",
+            "single_source",
+            "multi_source",
+            "primary_source_required",
+            "systematic_evidence_required",
+            "visual_evidence_required"
+          ],
+          "description": "Set by the discipline pack. An art-criticism interpretive claim and a psychology effect claim do not carry the same burden."
+        },
+        "citations": {
+          "type": "array",
+          "description": "Empty ONLY when epistemic_type is speculation or unverified_claim AND the claim is explicitly marked in the draft.",
+          "items": {
+            "$ref": "#/$defs/citation"
+          }
+        },
+        "counter_evidence": {
+          "type": "array",
+          "description": "Known opposing evidence. Rule #4 is not satisfied by supporting evidence alone.",
+          "items": {
+            "$ref": "#/$defs/citation"
+          }
+        },
+        "uncertainty": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/common.schema.json#/$defs/uncertainty_type"
+          }
+        },
+        "verification_status": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "needs_human_review",
+            "not_yet_verified"
+          ],
+          "description": "Set by the Citation Auditor, never by the drafting stage."
+        },
+        "discipline": {
+          "$ref": "../common/common.schema.json#/$defs/discipline"
+        },
+        "argument_node_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/common.schema.json#/$defs/id"
+          }
+        },
+        "epg_node_id": {
+          "$ref": "../common/common.schema.json#/$defs/id",
+          "description": "Mandatory link into the provenance graph. The provenance-completeness gate fails if absent."
+        },
+        "state": {
+          "$ref": "../common/common.schema.json#/$defs/scholarly_state"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "epistemic_type": {
+                "enum": [
+                  "observed_fact",
+                  "source_backed_claim"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "citations": {
+                "minItems": 1
+              }
+            },
+            "description": "A fact or source-backed claim with no citation is a Rule #4 violation."
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verification_status": {
+                "const": "pass"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "epg_node_id"
+            ]
+          }
+        }
+      ]
+    },
+    "citation": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "support_level",
+        "evidence_span"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "source_instance_id": {
+          "$ref": "../common/common.schema.json#/$defs/id",
+          "description": "Specific edition, DOI record, URL snapshot, PDF hash or commit."
+        },
+        "support_level": {
+          "$ref": "../common/common.schema.json#/$defs/citation_support"
+        },
+        "evidence_span": {
+          "type": "object",
+          "description": "The passage-level anchor. Support cannot be asserted at document level - that is how citation laundering happens.",
+          "required": [
+            "locator"
+          ],
+          "properties": {
+            "locator": {
+              "type": "string",
+              "description": "Page, section, paragraph, timestamp, figure or image-region reference."
+            },
+            "quoted_text": {
+              "type": "string",
+              "maxLength": 500,
+              "description": "Rights-limited excerpt. Never store full text."
+            },
+            "span_type": {
+              "type": "string",
+              "enum": [
+                "quote",
+                "passage",
+                "table",
+                "figure",
+                "image_region",
+                "method_detail",
+                "data_field"
+              ]
+            }
+          }
+        },
+        "support_rationale": {
+          "type": "string",
+          "description": "Why this span supports this claim. Required when support_level is partially_supports."
+        },
+        "verified_by": {
+          "$ref": "../common/common.schema.json#/$defs/actor"
+        },
+        "metadata_verified": {
+          "type": "boolean"
+        },
+        "retraction_checked": {
+          "type": "boolean"
+        },
+        "licence_cleared": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

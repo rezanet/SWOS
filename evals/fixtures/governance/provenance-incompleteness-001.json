@@ -1,0 +1,26 @@
+{
+  "fixture_id": "gov-provenance-001",
+  "plane": "governance",
+  "category": "missing_audit_trail",
+  "description": "A release attempt where most but not all claims link to a provenance node. Tests that provenance completeness is binary at release.",
+  "input": {
+    "evidence_matrix": {
+      "total_claims": 47,
+      "claims_with_epg_node": 45
+    },
+    "release_requested": true
+  },
+  "expected": {
+    "provenance_completeness": 0.9574,
+    "gate_result": "fail",
+    "policy_id": "swos.provenance-completeness",
+    "findings": [
+      {
+        "category": "missing_audit_trail",
+        "severity": "blocker",
+        "reason": "2 of 47 claims have no EPG node. Provenance completeness must be 1.0 at release. 95.7% is not 'nearly auditable'; it is 2 unauditable claims."
+      }
+    ]
+  },
+  "pass_condition": "Release is blocked. Rounding 0.9574 to 'complete', or waiving without a recorded reason, approver and expiry, is a fixture failure."
+}

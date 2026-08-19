@@ -1,0 +1,90 @@
+{
+  "policy_id": "swos.incident-correction",
+  "version": "1.0.0",
+  "gate_type": "incident_correction",
+  "trigger": {
+    "on": [
+      "retraction_detected",
+      "false_claim_reported",
+      "citation_defect_post_release",
+      "memory_contamination_detected",
+      "rights_breach",
+      "classification_breach",
+      "injection_detected",
+      "autonomy_drift_detected"
+    ]
+  },
+  "default_effect": "escalate",
+  "escalation": "governance_owner",
+  "nist_ai_rmf": [
+    "GOVERN 4.1",
+    "GOVERN 4.3",
+    "MANAGE 4.1",
+    "MANAGE 4.2",
+    "MANAGE 4.3"
+  ],
+  "rules": [
+    {
+      "id": "critical-halts-release",
+      "when": {
+        "incident.severity": "critical"
+      },
+      "effect": "halt_releases",
+      "reason": "Rights and classification breaches halt affected releases immediately."
+    },
+    {
+      "id": "contain-published-state",
+      "when": {
+        "work.state": "published"
+      },
+      "effect": "transition",
+      "to_state": "monitored",
+      "flag": "incident_open"
+    },
+    {
+      "id": "blast-radius-required",
+      "effect": "require",
+      "requires": [
+        "epg.blast_radius_query_executed"
+      ],
+      "reason": "Identify every claim, output, memory item and downstream citation affected. This query is why the EPG exists."
+    },
+    {
+      "id": "supersede-never-mutate",
+      "effect": "require",
+      "requires": [
+        "correction.creates_superseding_version",
+        "original.preserved"
+      ],
+      "reason": "Corrections supersede. Original rationale and provenance remain intact."
+    },
+    {
+      "id": "notify-downstream",
+      "when": {
+        "blast_radius.downstream_consumers": {
+          "gt": 0
+        }
+      },
+      "effect": "require",
+      "requires": [
+        "notification.sent"
+      ]
+    },
+    {
+      "id": "fixture-required-to-close",
+      "when": {
+        "incident.severity": {
+          "in": [
+            "high",
+            "critical"
+          ]
+        }
+      },
+      "effect": "require",
+      "requires": [
+        "evals.new_fixture_added"
+      ],
+      "reason": "An incident that produces no new evaluation fixture will recur."
+    }
+  ]
+}

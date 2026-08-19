@@ -1,0 +1,22 @@
+{
+  "adapter": "cli",
+  "swos_version": "1.0.0",
+  "capabilities": {
+    "progressive_disclosure": "not_applicable",
+    "script_execution": "local_sandboxed",
+    "tool_approval_gate": "non_interactive_policy",
+    "blind_review": "native",
+    "persistent_memory": "local_or_external",
+    "state_store": "local_or_external",
+    "provenance_store": "local_or_external",
+    "evaluation_runner": "native"
+  },
+  "unsupported": [],
+  "work_classes_permitted": [
+    "public",
+    "internal",
+    "confidential",
+    "restricted"
+  ],
+  "notes": "The most complete adapter. Non-interactive approval routing means high-risk approvals must be pre-authorised or the run halts with exit code 20 - it never self-approves."
+}

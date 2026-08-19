@@ -1,0 +1,21 @@
+{
+  "adapter": "agent-skills",
+  "swos_version": "1.0.0",
+  "capabilities": {
+    "progressive_disclosure": "full",
+    "script_execution": "host_dependent",
+    "tool_approval_gate": "host_dependent",
+    "persistent_memory": "external_required",
+    "state_store": "external_required",
+    "provenance_store": "external_required",
+    "evaluation_runner": "external_required"
+  },
+  "unsupported": [],
+  "work_classes_permitted": [
+    "public",
+    "internal",
+    "confidential",
+    "restricted"
+  ],
+  "notes": "Baseline adapter. Persistence capabilities are always external because the Agent Skills spec defines packaging, not runtime state."
+}

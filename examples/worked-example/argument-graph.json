@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-4f3a91c2-0b7d-4e18-9a52-6c81de7f0a33",
+  "audit": {
+    "created_at": "2026-01-06T13:20:00Z",
+    "created_by": {
+      "actor_type": "agent",
+      "actor_id": "swos-argument-architect"
+    }
+  },
+  "thesis": {
+    "node_id": "arg-00000001-0000-4000-8000-000000000000",
+    "statement": "The current evidence base supports an association between intervention X and improved outcomes in a bounded population, but does not license a causal claim for older adults generally.",
+    "contribution_type": "critique",
+    "rival_theses_considered": [
+      "Intervention X causes improved outcomes in older adults (rejected: no design licenses causation; replication failed).",
+      "Intervention X has no effect (rejected: overstates the negative; the urban-cohort association is real and unexplained).",
+      "The effect is real but population-bounded (retained as a rival reading; cannot be distinguished from the retained thesis on current evidence)."
+    ]
+  },
+  "nodes": [
+    {
+      "node_id": "arg-00000001-0000-4000-8000-000000000000",
+      "node_type": "claim",
+      "statement": "Evidence does not license a causal claim for older adults generally.",
+      "strength": "high",
+      "status": "accepted",
+      "evidence_claim_ids": [
+        "clm-00000003-0000-4000-8000-000000000000"
+      ]
+    },
+    {
+      "node_id": "arg-00000002-0000-4000-8000-000000000000",
+      "node_type": "grounds",
+      "statement": "The primary study used a cross-sectional observational design.",
+      "evidence_claim_ids": [
+        "clm-00000003-0000-4000-8000-000000000000"
+      ],
+      "strength": "high",
+      "status": "accepted"
+    },
+    {
+      "node_id": "arg-00000003-0000-4000-8000-000000000000",
+      "node_type": "grounds",
+      "statement": "A pre-registered replication in a rural cohort did not reproduce the association.",
+      "evidence_claim_ids": [
+        "clm-00000003-0000-4000-8000-000000000000"
+      ],
+      "strength": "high",
+      "status": "accepted"
+    },
+    {
+      "node_id": "arg-00000004-0000-4000-8000-000000000000",
+      "node_type": "warrant",
+      "statement": "A cross-sectional observational design cannot distinguish causation from association, so it cannot discharge a causal claim.",
+      "strength": "high",
+      "hidden_premise": false,
+      "status": "accepted"
+    },
+    {
+      "node_id": "arg-00000005-0000-4000-8000-000000000000",
+      "node_type": "backing",
+      "statement": "This is the standard design-licensing principle in the psychology discipline pack's proof standard.",
+      "strength": "high",
+      "status": "accepted"
+    },
+    {
+      "node_id": "arg-00000006-0000-4000-8000-000000000000",
+      "node_type": "qualifier",
+      "statement": "This concerns causal licensing only. The bounded association in the 65-74 urban cohort is well supported and is not disputed.",
+      "strength": "high",
+      "status": "accepted"
+    },
+    {
+      "node_id": "arg-00000007-0000-4000-8000-000000000000",
+      "node_type": "objection",
+      "statement": "The replication failure could reflect population differences rather than absence of effect, in which case the effect may be real but bounded.",
+      "strength": "medium",
+      "status": "conceded"
+    },
+    {
+      "node_id": "arg-00000008-0000-4000-8000-000000000000",
+      "node_type": "rebuttal",
+      "statement": "Conceded. This does not restore the causal licence: a bounded real effect and no effect are both consistent with the evidence, and neither is distinguishable without an experimental design.",
+      "strength": "high",
+      "status": "accepted"
+    },
+    {
+      "node_id": "arg-00000009-0000-4000-8000-000000000000",
+      "node_type": "rival_reading",
+      "statement": "The effect is real but population-bounded to urban cohorts in that age band.",
+      "strength": "medium",
+      "status": "accepted"
+    },
+    {
+      "node_id": "arg-0000000a-0000-4000-8000-000000000000",
+      "node_type": "implication",
+      "statement": "An experimental or quasi-experimental design in a broader population is required before a causal claim can be made.",
+      "strength": "high",
+      "status": "accepted"
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "arg-00000002-0000-4000-8000-000000000000",
+      "to_node": "arg-00000001-0000-4000-8000-000000000000",
+      "relation": "supports",
+      "relation_confidence": "high"
+    },
+    {
+      "from_node": "arg-00000003-0000-4000-8000-000000000000",
+      "to_node": "arg-00000001-0000-4000-8000-000000000000",
+      "relation": "supports",
+      "relation_confidence": "high"
+    },
+    {
+      "from_node": "arg-00000004-0000-4000-8000-000000000000",
+      "to_node": "arg-00000001-0000-4000-8000-000000000000",
+      "relation": "warrants",
+      "relation_confidence": "high"
+    },
+    {
+      "from_node": "arg-00000005-0000-4000-8000-000000000000",
+      "to_node": "arg-00000004-0000-4000-8000-000000000000",
+      "relation": "backs",
+      "relation_confidence": "high"
+    },
+    {
+      "from_node": "arg-00000006-0000-4000-8000-000000000000",
+      "to_node": "arg-00000001-0000-4000-8000-000000000000",
+      "relation": "qualifies",
+      "relation_confidence": "high"
+    },
+    {
+      "from_node": "arg-00000007-0000-4000-8000-000000000000",
+      "to_node": "arg-00000001-0000-4000-8000-000000000000",
+      "relation": "objects_to",
+      "relation_confidence": "medium"
+    },
+    {
+      "from_node": "arg-00000008-0000-4000-8000-000000000000",
+      "to_node": "arg-00000007-0000-4000-8000-000000000000",
+      "relation": "rebuts",
+      "relation_confidence": "high"
+    },
+    {
+      "from_node": "arg-00000009-0000-4000-8000-000000000000",
+      "to_node": "arg-00000001-0000-4000-8000-000000000000",
+      "relation": "rivals",
+      "relation_confidence": "medium"
+    },
+    {
+      "from_node": "arg-00000001-0000-4000-8000-000000000000",
+      "to_node": "arg-0000000a-0000-4000-8000-000000000000",
+      "relation": "implies",
+      "relation_confidence": "high"
+    }
+  ],
+  "unresolved_objections": []
+}

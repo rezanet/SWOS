@@ -1,0 +1,41 @@
+{
+  "fixture_id": "gnd-unsupported-001",
+  "plane": "grounding",
+  "category": "unsupported_claim",
+  "description": "A material factual claim with only context_only citations. Tests the rule that context-only support is not support.",
+  "input": {
+    "claim": {
+      "claim_text": "Adoption of this technique reduced defect rates by approximately 40% across the industry.",
+      "epistemic_type": "source_backed_claim"
+    },
+    "citations": [
+      {
+        "support_level": "context_only",
+        "evidence_span": {
+          "locator": "p. 2, Introduction",
+          "quoted_text": "[rights-cleared excerpt] Defect reduction remains a central concern for the sector."
+        }
+      },
+      {
+        "support_level": "context_only",
+        "evidence_span": {
+          "locator": "p. 14, Discussion",
+          "quoted_text": "[rights-cleared excerpt] Several plants have trialled the approach."
+        }
+      }
+    ]
+  },
+  "expected": {
+    "claim_status": "unsupported",
+    "unsupported_claim_rate_contribution": 1,
+    "required_action": "mark as unsupported in the output and list in the unsupported-claim report, or remove",
+    "findings": [
+      {
+        "category": "unsupported_claim",
+        "severity": "blocker",
+        "reason": "All citations are context_only. Neither establishes the 40% figure or the industry-wide scope. A claim supported only by context is unsupported."
+      }
+    ]
+  },
+  "pass_condition": "The claim is classified unsupported and appears in the unsupported-claim list. Treating two context_only citations as cumulative support is a fixture failure."
+}

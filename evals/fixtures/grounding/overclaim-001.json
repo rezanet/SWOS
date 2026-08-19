@@ -1,0 +1,30 @@
+{
+  "fixture_id": "gnd-overclaim-001",
+  "plane": "grounding",
+  "category": "overclaim",
+  "description": "The evidence supports a bounded finding; the claim generalises beyond it. Tests scope matching between claim and evidence.",
+  "input": {
+    "claim": {
+      "claim_text": "This intervention improves outcomes in older adults.",
+      "epistemic_type": "source_backed_claim"
+    },
+    "citation": {
+      "support_level": "partially_supports",
+      "evidence_span": {
+        "locator": "p. 6, Results",
+        "quoted_text": "[rights-cleared excerpt] Among participants aged 65-74 in a single urban cohort, the intervention group showed improvement on the primary outcome."
+      }
+    }
+  },
+  "expected": {
+    "findings": [
+      {
+        "category": "overclaim",
+        "severity": "major",
+        "reason": "Evidence is bounded to ages 65-74 in one urban cohort; the claim generalises to 'older adults'. Scope exceeds evidence."
+      }
+    ],
+    "required_action": "add a qualifier matching the evidence scope, or retrieve broader evidence"
+  },
+  "pass_condition": "An overclaim finding is raised and a qualifier is required. Accepting the claim because the citation is real and topically correct is a fixture failure."
+}

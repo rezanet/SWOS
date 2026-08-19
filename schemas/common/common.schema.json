@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/common/common.schema.json",
+  "title": "SWOS Common Definitions",
+  "description": "Shared identifier formats, controlled vocabularies and audit stamps used across every SWOS artefact. Frozen at v1.0.0.",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]{2,6}-[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$",
+      "description": "Prefixed UUID. Prefixes: work, clm, evd, src, spn, arg, prov, dec, mem, rev, evl, gate, agt, tool."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "description": "Ordinal confidence. Numeric scores are forbidden at the contract layer because they imply a calibration SWOS does not guarantee."
+    },
+    "epistemic_type": {
+      "type": "string",
+      "enum": [
+        "observed_fact",
+        "source_backed_claim",
+        "inference",
+        "interpretation",
+        "hypothesis",
+        "speculation",
+        "critical_assessment",
+        "normative_judgement",
+        "unverified_claim"
+      ]
+    },
+    "citation_support": {
+      "type": "string",
+      "enum": [
+        "directly_supports",
+        "partially_supports",
+        "context_only",
+        "contradicts",
+        "citation_laundering_risk",
+        "invalid_citation"
+      ]
+    },
+    "uncertainty_type": {
+      "type": "string",
+      "enum": [
+        "missing_evidence",
+        "weak_support",
+        "conflicting_evidence",
+        "method_uncertainty",
+        "construct_limitation",
+        "interpretive_plurality",
+        "source_bias",
+        "temporal_staleness",
+        "domain_transfer_risk"
+      ]
+    },
+    "discipline": {
+      "type": "string",
+      "enum": [
+        "technical_writing",
+        "engineering",
+        "philosophy",
+        "psychology",
+        "materials_science",
+        "humanities",
+        "art_history",
+        "art_criticism",
+        "interdisciplinary",
+        "enterprise_reporting"
+      ]
+    },
+    "scholarly_state": {
+      "type": "string",
+      "enum": [
+        "initiated",
+        "planned",
+        "evidence_gathering",
+        "evidence_verified",
+        "argument_constructed",
+        "draft_generated",
+        "reviewed",
+        "revised",
+        "approved",
+        "published",
+        "monitored",
+        "superseded",
+        "retired"
+      ]
+    },
+    "data_classification": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ]
+    },
+    "actor": {
+      "type": "object",
+      "description": "Who or what performed an action. Human, agent role, tool or model.",
+      "required": [
+        "actor_type",
+        "actor_id"
+      ],
+      "properties": {
+        "actor_type": {
+          "type": "string",
+          "enum": [
+            "human",
+            "agent",
+            "tool",
+            "model",
+            "orchestrator",
+            "host_runtime"
+          ]
+        },
+        "actor_id": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "acting_on_behalf_of": {
+          "type": "string",
+          "description": "PROV delegation: the actor this actor acted for."
+        }
+      },
+      "additionalProperties": false
+    },
+    "audit_stamp": {
+      "type": "object",
+      "required": [
+        "created_at",
+        "created_by"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "$ref": "#/$defs/actor"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "content_hash": {
+          "type": "string",
+          "description": "SHA-256 of the canonicalised record. Enables tamper evidence."
+        },
+        "previous_hash": {
+          "type": "string",
+          "description": "Hash of the prior revision, forming an append-only chain."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/memory/rpm.schema.json",
+  "title": "SWOS Research Program Memory (RPM)",
+  "description": "Governed long-running continuity across projects. RPM sits ABOVE episodic, semantic, reflective and user memory. Anti-pattern: RPM must not store unsupported reflections as facts, and must not become a junk drawer for model impressions. Every durable write needs EPG support, SDL rationale, owner, expiry, correction path and policy classification.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "programme_id",
+    "items",
+    "memory_policies"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "programme_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "title": {
+      "type": "string"
+    },
+    "disciplines": {
+      "type": "array",
+      "items": {
+        "$ref": "../common/common.schema.json#/$defs/discipline"
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/item"
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contradiction"
+      }
+    },
+    "memory_policies": {
+      "$ref": "#/$defs/policies"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "item": {
+      "type": "object",
+      "required": [
+        "memory_id",
+        "category",
+        "content",
+        "owner",
+        "confidence",
+        "expiry",
+        "provenance"
+      ],
+      "properties": {
+        "memory_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "research_agenda",
+            "open_question",
+            "concept_lineage",
+            "accepted_position",
+            "rejected_position",
+            "claim_lifecycle",
+            "evidence_history",
+            "reviewer_lesson",
+            "method_lesson",
+            "future_work",
+            "publication",
+            "scholarly_commitment",
+            "user_style_preference",
+            "project_terminology"
+          ],
+          "description": "user_style_preference is deliberately isolated: user style preferences must be kept separate from scholarly facts so a stylistic habit can never be read back as evidence."
+        },
+        "content": {
+          "type": "string"
+        },
+        "owner": {
+          "$ref": "../common/common.schema.json#/$defs/actor"
+        },
+        "confidence": {
+          "$ref": "../common/common.schema.json#/$defs/confidence"
+        },
+        "source_grounded": {
+          "type": "boolean",
+          "description": "MUST be true for every category except user_style_preference and project_terminology. Store source-grounded lessons, never raw sensitive content."
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "epg_node_ids",
+            "sdl_decision_id"
+          ],
+          "description": "The write path. A memory item without EPG support and an SDL memory_write decision is rejected at write time - this is the memory-contamination control.",
+          "properties": {
+            "epg_node_ids": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "../common/common.schema.json#/$defs/id"
+              }
+            },
+            "sdl_decision_id": {
+              "$ref": "../common/common.schema.json#/$defs/id"
+            },
+            "originating_work_id": {
+              "$ref": "../common/common.schema.json#/$defs/id"
+            }
+          }
+        },
+        "data_classification": {
+          "$ref": "../common/common.schema.json#/$defs/data_classification"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_confirmed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiry": {
+          "type": "string",
+          "format": "date",
+          "description": "Mandatory. Memory without expiry becomes silent dogma."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "under_review",
+            "corrected",
+            "contradicted",
+            "expired",
+            "deleted"
+          ]
+        },
+        "correction_of": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contradiction": {
+      "type": "object",
+      "required": [
+        "contradiction_id",
+        "memory_ids",
+        "state"
+      ],
+      "properties": {
+        "contradiction_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "memory_ids": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "../common/common.schema.json#/$defs/id"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "open_contradiction",
+            "under_review",
+            "resolved_by_evidence",
+            "resolved_by_scope",
+            "parked",
+            "retired"
+          ],
+          "description": "resolved_by_scope means both positions are valid under different assumptions - a legitimate scholarly outcome that must not be collapsed into a single answer."
+        },
+        "resolution_sdl_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "policies": {
+      "type": "object",
+      "required": [
+        "read",
+        "write",
+        "update",
+        "expiry",
+        "correction",
+        "deletion"
+      ],
+      "description": "Memory governance is a contract, not a setting. All six verbs must be explicitly defined.",
+      "properties": {
+        "read": {
+          "type": "string"
+        },
+        "write": {
+          "type": "string"
+        },
+        "update": {
+          "type": "string"
+        },
+        "expiry": {
+          "type": "string"
+        },
+        "correction": {
+          "type": "string"
+        },
+        "deletion": {
+          "type": "string"
+        },
+        "default_retention_days": {
+          "type": "integer"
+        },
+        "requires_human_approval_above": {
+          "type": "string",
+          "enum": [
+            "never",
+            "reviewer_lesson",
+            "accepted_position",
+            "all_durable_writes"
+          ]
+        }
+      }
+    }
+  }
+}

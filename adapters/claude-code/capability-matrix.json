@@ -1,0 +1,21 @@
+{
+  "adapter": "claude-code",
+  "swos_version": "1.0.0",
+  "capabilities": {
+    "progressive_disclosure": "full",
+    "script_execution": "sandboxed_with_approval",
+    "tool_approval_gate": "native",
+    "blind_review": "native_via_context_fork",
+    "persistent_memory": "external_required",
+    "state_store": "external_required",
+    "provenance_store": "external_required",
+    "evaluation_runner": "external_required"
+  },
+  "unsupported": [],
+  "work_classes_permitted": [
+    "public",
+    "internal",
+    "confidential"
+  ],
+  "notes": "Restricted-class work requires an external provenance and state store with tenant isolation; not permitted on a local-only install."
+}

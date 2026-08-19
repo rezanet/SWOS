@@ -1,0 +1,23 @@
+{
+  "fixture_id": "gold-philosophy-001",
+  "plane": "scholarly",
+  "discipline": "philosophy",
+  "description": "Conceptual analysis task. Tests whether the output performs philosophy or summarises it.",
+  "task": "Analyse the concept of consciousness as it functions in the debate over machine minds.",
+  "expected_moves": [
+    "reconstructs at least one target position in its strongest form",
+    "makes hidden premises explicit",
+    "distinguishes conceptual, empirical and normative claims",
+    "generates at least one counterexample",
+    "traces the genealogy of at least one contested term",
+    "states and answers the strongest objection",
+    "checks for equivocation across uses of 'consciousness'"
+  ],
+  "must_not": [
+    "produce a chronological survey of who said what",
+    "treat 'consciousness' as univocal across the argument",
+    "cite a commentator for a claim about a primary text"
+  ],
+  "rubric": "discipline-packs/philosophy/PACK.md",
+  "pass_condition": "All expected moves present; rubric threshold met on every weighted dimension; zero must_not violations."
+}

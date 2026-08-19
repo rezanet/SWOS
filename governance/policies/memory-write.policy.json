@@ -1,0 +1,117 @@
+{
+  "policy_id": "swos.memory-write",
+  "version": "1.0.0",
+  "gate_type": "memory_write_approval",
+  "trigger": {
+    "on": [
+      "before_memory_write"
+    ]
+  },
+  "default_effect": "deny",
+  "escalation": "memory_owner",
+  "nist_ai_rmf": [
+    "GOVERN 1.3",
+    "MEASURE 2.8",
+    "MANAGE 4.1"
+  ],
+  "rules": [
+    {
+      "id": "epg-support-required",
+      "when": {
+        "item.provenance.epg_node_ids": {
+          "min_items": 1
+        }
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Memory write requires at least one supporting provenance node. Unsupported reflection never becomes fact."
+      }
+    },
+    {
+      "id": "sdl-rationale-required",
+      "when": {
+        "item.provenance.sdl_decision_id": {
+          "exists": true
+        }
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Memory write requires an SDL memory_write decision."
+      }
+    },
+    {
+      "id": "expiry-required",
+      "when": {
+        "item.expiry": {
+          "exists": true
+        }
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Memory without expiry becomes silent dogma."
+      }
+    },
+    {
+      "id": "owner-required",
+      "when": {
+        "item.owner": {
+          "exists": true
+        }
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Every memory item needs an accountable owner."
+      }
+    },
+    {
+      "id": "no-restricted-content",
+      "when": {
+        "item.data_classification": "restricted"
+      },
+      "effect": "deny",
+      "reason": "Restricted-class content is never written to durable memory."
+    },
+    {
+      "id": "no-raw-payloads",
+      "when": {
+        "item.content_kind": {
+          "in": [
+            "prompt",
+            "response",
+            "secret",
+            "customer_content",
+            "runtime_payload"
+          ]
+        }
+      },
+      "effect": "deny",
+      "reason": "Metadata-first principle: store source-grounded lessons, not payloads."
+    },
+    {
+      "id": "source-grounded-required",
+      "when": {
+        "item.category": {
+          "not_in": [
+            "user_style_preference",
+            "project_terminology"
+          ]
+        },
+        "item.source_grounded": false
+      },
+      "effect": "deny",
+      "reason": "Non-preference memory must be source-grounded."
+    },
+    {
+      "id": "contradiction-check",
+      "when": {
+        "contradiction.detected": true
+      },
+      "effect": "escalate",
+      "reason": "Conflicts with existing memory. Create a contradiction record; do not overwrite."
+    }
+  ]
+}

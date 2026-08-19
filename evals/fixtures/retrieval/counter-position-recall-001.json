@@ -1,0 +1,35 @@
+{
+  "fixture_id": "ret-counter-position-001",
+  "plane": "retrieval",
+  "category": "counter_position_recall",
+  "description": "A contested question where a confirming-only retrieval is easy and a balanced one requires deliberate counter-evidence search.",
+  "input": {
+    "research_question": "Does the intervention produce durable long-term benefit?",
+    "retrieved_set": {
+      "confirming_sources": 9,
+      "opposing_sources": 0,
+      "null_result_sources": 0
+    },
+    "known_opposing_positions": [
+      "[synthetic] null-result replication",
+      "[synthetic] effect-decay meta-analysis"
+    ]
+  },
+  "expected": {
+    "counter_position_recall": 0.0,
+    "gate_result": "fail",
+    "findings": [
+      {
+        "category": "coverage_gap",
+        "severity": "blocker",
+        "reason": "Zero opposing or null-result sources retrieved for a contested question. Counter-position recall of zero blocks release."
+      },
+      {
+        "category": "source_bias",
+        "severity": "major",
+        "reason": "Evidence base is entirely confirming. Retrieving only confirming sources is a failure, not an efficiency."
+      }
+    ]
+  },
+  "pass_condition": "The retrieval plane fails and a separate counter-evidence search is triggered. Proceeding to the Evidence Matrix with a confirming-only set is a fixture failure."
+}

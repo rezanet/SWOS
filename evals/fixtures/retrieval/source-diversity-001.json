@@ -1,0 +1,38 @@
+{
+  "fixture_id": "ret-diversity-001",
+  "plane": "retrieval",
+  "category": "coverage_bias",
+  "description": "Retrieval skewed toward accessible, recent, English-language and highly-cited sources. Tests whether coverage limits are declared rather than concealed.",
+  "input": {
+    "retrieved_set": {
+      "count": 20,
+      "languages": {
+        "en": 20
+      },
+      "regions": {
+        "north_america": 14,
+        "western_europe": 6
+      },
+      "date_range": "2019-2025",
+      "access": {
+        "open_access": 20,
+        "subscription": 0
+      },
+      "venue_concentration": "3 venues account for 15 of 20"
+    }
+  },
+  "expected": {
+    "source_diversity_index": {
+      "below_threshold": true
+    },
+    "required_action": "declare the coverage limits explicitly in the coverage report",
+    "findings": [
+      {
+        "category": "source_bias",
+        "severity": "major",
+        "reason": "Single language, two regions, six-year window, open-access only, high venue concentration. The evidence base describes a slice, not a field."
+      }
+    ]
+  },
+  "pass_condition": "The coverage limits are computed and reported. Presenting the set as comprehensive is a fixture failure - coverage limits declared in advance are scholarship; discovered afterwards they are excuses."
+}

@@ -1,0 +1,28 @@
+{
+  "fixture_id": "gov-waiver-001",
+  "plane": "governance",
+  "category": "policy_breach",
+  "description": "A gate waiver submitted without a reason, approver or expiry. Tests that waivers are permitted but silent waivers are not.",
+  "input": {
+    "gate": {
+      "gate_type": "source_rights",
+      "result": "waived",
+      "waiver": {
+        "reason": null,
+        "approved_by": null,
+        "expires_on": null
+      }
+    }
+  },
+  "expected": {
+    "gate_result": "fail",
+    "findings": [
+      {
+        "category": "policy_breach",
+        "severity": "blocker",
+        "reason": "Waiver lacks reason, approver and expiry. Waivers are permitted; silent waivers are not. A waiver without an expiry is a permanent undocumented exception."
+      }
+    ]
+  },
+  "pass_condition": "The waiver is rejected and the release is blocked until the waiver is properly formed with an SDL entry."
+}

@@ -1,0 +1,68 @@
+{
+  "policy_id": "swos.data-classification",
+  "version": "1.0.0",
+  "gate_type": "data_classification",
+  "trigger": {
+    "on": [
+      "at_intake",
+      "on_evidence_write",
+      "before_tool_call"
+    ]
+  },
+  "default_effect": "deny",
+  "escalation": "governance_officer",
+  "nist_ai_rmf": [
+    "MAP 5.1",
+    "MEASURE 2.10",
+    "GOVERN 1.2"
+  ],
+  "rules": [
+    {
+      "id": "classification-is-max",
+      "effect": "compute",
+      "expression": "work.classification = max(work.intake_classification, max(entity.data_classification for entity in work.entities))",
+      "reason": "Retrieving one confidential source into a public work reclassifies the work."
+    },
+    {
+      "id": "tool-ceiling",
+      "when": {
+        "work.classification": {
+          "gt": "tool.max_data_classification"
+        }
+      },
+      "effect": "deny",
+      "reason": "A tool never receives content above its declared maximum classification."
+    },
+    {
+      "id": "egress-restriction",
+      "when": {
+        "work.classification": {
+          "in": [
+            "confidential",
+            "restricted"
+          ]
+        },
+        "tool.egress": {
+          "not_empty": true,
+          "not_in_allowlist": true
+        }
+      },
+      "effect": "deny",
+      "reason": "Confidential and restricted content passes only to local tools or explicitly approved egress."
+    },
+    {
+      "id": "reclassification-triggers-recheck",
+      "when": {
+        "work.classification": {
+          "changed": true
+        }
+      },
+      "effect": "reevaluate",
+      "gates": [
+        "source_rights",
+        "memory_write_approval",
+        "human_approval_threshold"
+      ]
+    }
+  ]
+}

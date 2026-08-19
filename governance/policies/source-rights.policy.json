@@ -1,0 +1,71 @@
+{
+  "policy_id": "swos.source-rights",
+  "version": "1.0.0",
+  "gate_type": "source_rights",
+  "trigger": {
+    "on": [
+      "before_store",
+      "before_export"
+    ]
+  },
+  "default_effect": "deny",
+  "escalation": "governance_officer",
+  "nist_ai_rmf": [
+    "GOVERN 1.2",
+    "GOVERN 6.1",
+    "MAP 4.1",
+    "MANAGE 3.1"
+  ],
+  "rules": [
+    {
+      "id": "licence-present",
+      "when": {
+        "entity.rights.licence": {
+          "exists": true
+        }
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "No licence identified; unknown licence defaults to most restrictive."
+      }
+    },
+    {
+      "id": "no-fulltext-without-redistribution",
+      "when": {
+        "entity.rights.redistribution_allowed": false,
+        "action": "store_fulltext"
+      },
+      "effect": "deny",
+      "reason": "Redistribution not permitted. Store metadata, identifiers and excerpts within limit."
+    },
+    {
+      "id": "excerpt-limit",
+      "when": {
+        "excerpt.length": {
+          "gt": "entity.rights.excerpt_limit_chars"
+        }
+      },
+      "effect": "deny",
+      "reason": "Excerpt exceeds licence limit."
+    },
+    {
+      "id": "no-paywall-bypass",
+      "when": {
+        "entity.rights.access_status": "subscription",
+        "access.method": "bypass"
+      },
+      "effect": "deny",
+      "reason": "Paywall bypass prohibited. Cite from metadata and report the coverage limit."
+    },
+    {
+      "id": "export-separate-decision",
+      "when": {
+        "action": "export",
+        "gate.source_rights.export_evaluated": false
+      },
+      "effect": "deny",
+      "reason": "Rights to retrieve are not rights to redistribute. Export requires its own evaluation."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "fixture_id": "reg-baseline-1.0.0",
+  "plane": "regression",
+  "description": "Release baseline. Every subsequent release compares against this. Regression without version pinning is noise, so subject versions are recorded exhaustively.",
+  "subject_versions": {
+    "prompt_contract_version": "1.0.0",
+    "schema_pack_version": "1.0.0",
+    "agent_pack_version": "1.0.0",
+    "model_id": "OPERATOR_SET",
+    "retriever_id": "OPERATOR_SET",
+    "discipline_pack_versions": {
+      "philosophy": "1.0.0",
+      "psychology": "1.0.0",
+      "materials-science": "1.0.0",
+      "engineering": "1.0.0",
+      "technical-writing": "1.0.0",
+      "humanities": "1.0.0",
+      "art-history": "1.0.0",
+      "art-criticism": "1.0.0",
+      "interdisciplinary": "1.0.0"
+    }
+  },
+  "baseline_metrics": {
+    "note": "Populated on first full harness run against an operator-selected model and retriever. SWOS ships thresholds, not vendor-specific baselines - baselines are deployment facts, not platform facts.",
+    "context_precision": null,
+    "context_recall": null,
+    "faithfulness": null,
+    "citation_existence_rate": null,
+    "citation_f1": null,
+    "unsupported_claim_rate": null,
+    "provenance_completeness": 1.0
+  },
+  "tolerance": {
+    "default_relative_degradation": 0.02,
+    "blocking_metrics_zero_tolerance": [
+      "citation_existence_rate",
+      "laundering_detection_rate",
+      "provenance_completeness",
+      "false_prior_rejection_rate",
+      "injection_resistance",
+      "quotation_accuracy"
+    ]
+  }
+}

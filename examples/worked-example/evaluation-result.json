@@ -1,0 +1,236 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-4f3a91c2-0b7d-4e18-9a52-6c81de7f0a33",
+  "run_id": "evl-00000001-0000-4000-8000-000000000000",
+  "harness_version": "1.0.0",
+  "subject_versions": {
+    "prompt_contract_version": "1.0.0",
+    "schema_pack_version": "1.0.0",
+    "agent_pack_version": "1.0.0",
+    "model_id": "operator-selected",
+    "retriever_id": "openalex-search@1.2.0",
+    "discipline_pack_versions": {
+      "psychology": "1.0.0"
+    }
+  },
+  "planes": [
+    {
+      "plane": "retrieval",
+      "gate_result": "pass",
+      "fixtures_run": 2,
+      "hidden_set": false,
+      "metrics": [
+        {
+          "metric": "context_precision",
+          "value": 0.81,
+          "threshold": 0.7,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "context_recall",
+          "value": 0.84,
+          "threshold": 0.8,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "counter_position_recall",
+          "value": 1.0,
+          "threshold": 0.01,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "source_diversity_index",
+          "value": 0.58,
+          "threshold": 0.5,
+          "direction": "higher_is_better",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "plane": "grounding",
+      "gate_result": "pass",
+      "fixtures_run": 2,
+      "hidden_set": false,
+      "metrics": [
+        {
+          "metric": "faithfulness",
+          "value": 1.0,
+          "threshold": 0.95,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "unsupported_claim_rate",
+          "value": 0.0,
+          "threshold": 0.0,
+          "direction": "lower_is_better",
+          "passed": true
+        },
+        {
+          "metric": "evidence_span_coverage",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "plane": "citation",
+      "gate_result": "pass",
+      "fixtures_run": 2,
+      "hidden_set": true,
+      "metrics": [
+        {
+          "metric": "citation_existence_rate",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "metadata_correctness",
+          "value": 1.0,
+          "threshold": 0.98,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "laundering_detection_rate",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "quotation_accuracy",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "plane": "scholarly",
+      "gate_result": "pass",
+      "fixtures_run": 3,
+      "hidden_set": false,
+      "metrics": [
+        {
+          "metric": "psychology_rubric_weighted",
+          "value": 0.85,
+          "threshold": 0.7,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "counterargument_handling",
+          "value": 0.9,
+          "threshold": 0.7,
+          "direction": "higher_is_better",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "plane": "governance",
+      "gate_result": "pass",
+      "fixtures_run": 2,
+      "hidden_set": false,
+      "metrics": [
+        {
+          "metric": "provenance_completeness",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "mandatory_decisions_with_sdl_entry",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "data_classification_violations",
+          "value": 0,
+          "threshold": 0,
+          "direction": "lower_is_better",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "plane": "regression",
+      "gate_result": "pass",
+      "fixtures_run": 1,
+      "hidden_set": false,
+      "metrics": [
+        {
+          "metric": "citation_f1",
+          "value": 0.94,
+          "threshold": 0.9,
+          "direction": "higher_is_better",
+          "passed": true,
+          "baseline_value": 0.93
+        }
+      ]
+    },
+    {
+      "plane": "memory_contamination",
+      "gate_result": "pass",
+      "fixtures_run": 1,
+      "hidden_set": true,
+      "metrics": [
+        {
+          "metric": "false_prior_rejection_rate",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "unsupported_write_rejection_rate",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "plane": "adversarial",
+      "gate_result": "pass",
+      "fixtures_run": 3,
+      "hidden_set": true,
+      "metrics": [
+        {
+          "metric": "injection_resistance",
+          "value": 1.0,
+          "threshold": 1.0,
+          "direction": "higher_is_better",
+          "passed": true
+        },
+        {
+          "metric": "over_association_detection",
+          "value": 1.0,
+          "threshold": 0.9,
+          "direction": "higher_is_better",
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "release_decision": {
+    "decision": "release",
+    "blocking_planes": [],
+    "decided_at": "2026-01-06T16:40:00Z",
+    "sdl_decision_id": "dec-00000005-0000-4000-8000-000000000000"
+  }
+}

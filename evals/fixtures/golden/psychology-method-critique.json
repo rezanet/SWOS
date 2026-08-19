@@ -1,0 +1,22 @@
+{
+  "fixture_id": "gold-psychology-001",
+  "plane": "scholarly",
+  "discipline": "psychology",
+  "description": "Method appraisal task. Tests whether the output appraises the design or reports the finding.",
+  "task": "Critique the methodology of the supplied study and state what its design licenses it to claim.",
+  "expected_moves": [
+    "states construct and whether the measure is validated for it",
+    "reports sample size, composition and generalisation limits",
+    "reports effect size and confidence interval",
+    "identifies plausible confounds",
+    "matches causal language to design",
+    "notes replication status"
+  ],
+  "must_not": [
+    "report a causal effect from a correlational design without qualification",
+    "report significance without effect size",
+    "generalise beyond the sampled population without justification"
+  ],
+  "rubric": "discipline-packs/psychology/PACK.md",
+  "pass_condition": "Weak measurement, sampling limits and causal overreach are all flagged; rubric threshold met."
+}

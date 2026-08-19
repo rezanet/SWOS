@@ -1,0 +1,25 @@
+{
+  "fixture_id": "gold-art-history-001",
+  "plane": "scholarly",
+  "discipline": "art_history",
+  "description": "Visual analysis task. Tests whether interpretation is anchored in observed features or in secondary commentary.",
+  "task": "Analyse the supplied work and defend an interpretation of its iconographic programme.",
+  "expected_moves": [
+    "describes material, dimensions, technique and condition",
+    "performs specific formal analysis: composition, colour, line, light, facture",
+    "anchors every interpretive claim to an observed feature",
+    "identifies iconographic sources",
+    "states provenance and its gaps",
+    "situates by period, workshop, patronage and function",
+    "tests historical plausibility of the reading",
+    "declares whether the work was seen directly or in reproduction"
+  ],
+  "must_not": [
+    "substitute description of the image for analysis",
+    "make an interpretive claim with no visual anchor",
+    "rely on secondary commentary where the object is available",
+    "read reproduction artefacts as facture"
+  ],
+  "rubric": "discipline-packs/art-history/PACK.md",
+  "pass_condition": "Interpretation is anchored in visual evidence from the object; provenance gaps stated; rubric threshold met."
+}

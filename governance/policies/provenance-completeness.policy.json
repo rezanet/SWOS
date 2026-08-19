@@ -1,0 +1,68 @@
+{
+  "policy_id": "swos.provenance-completeness",
+  "version": "1.0.0",
+  "gate_type": "provenance_completeness",
+  "trigger": {
+    "on": [
+      "before_release"
+    ]
+  },
+  "default_effect": "deny",
+  "escalation": "governance_officer",
+  "nist_ai_rmf": [
+    "MEASURE 2.8",
+    "MANAGE 4.1"
+  ],
+  "rules": [
+    {
+      "id": "every-claim-linked",
+      "when": {
+        "metric.provenance_completeness": {
+          "equals": 1.0
+        }
+      },
+      "effect": "allow",
+      "else": {
+        "effect": "deny",
+        "reason": "Every claim must link to an EPG node. Auditability is a measurement, not an aspiration."
+      }
+    },
+    {
+      "id": "bundle-frozen",
+      "when": {
+        "epg.release_bundle.frozen": true
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Release bundle must be frozen before publication."
+      }
+    },
+    {
+      "id": "decision-triggers-covered",
+      "when": {
+        "metric.mandatory_decisions_with_sdl_entry": {
+          "equals": 1.0
+        }
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Every mandatory decision trigger requires an SDL entry (Rule #6)."
+      }
+    },
+    {
+      "id": "no-orphan-citations",
+      "when": {
+        "metric.citations_without_evidence_span": {
+          "equals": 0
+        }
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Document-level support assertions are forbidden."
+      }
+    }
+  ]
+}

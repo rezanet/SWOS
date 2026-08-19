@@ -1,0 +1,494 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-4f3a91c2-0b7d-4e18-9a52-6c81de7f0a33",
+  "prov_compatibility": {
+    "prov_model": "W3C PROV-DM",
+    "serialisation": "prov-json"
+  },
+  "entities": [
+    {
+      "entity_id": "src-00000001-0000-4000-8000-000000000000",
+      "entity_type": "source_work",
+      "label": "[synthetic] Cross-sectional study of intervention X in an urban cohort",
+      "identifiers": {
+        "doi": "10.5555/synthetic.example.2024.0011"
+      },
+      "rights": {
+        "licence": "CC-BY-4.0",
+        "access_status": "open_access",
+        "redistribution_allowed": true,
+        "excerpt_limit_chars": 500
+      },
+      "retraction_status": "clean",
+      "data_classification": "public",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "src-0000000b-0000-4000-8000-000000000000",
+      "entity_type": "source_instance",
+      "label": "Version of record, 2024-03-11",
+      "identifiers": {
+        "doi": "10.5555/synthetic.example.2024.0011",
+        "content_hash": "sha256:aa17...9d2c"
+      },
+      "retraction_status": "clean",
+      "data_classification": "public",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "src-00000002-0000-4000-8000-000000000000",
+      "entity_type": "source_work",
+      "label": "[synthetic] Pre-registered replication in a rural cohort",
+      "identifiers": {
+        "doi": "10.5555/synthetic.example.2025.0042"
+      },
+      "rights": {
+        "licence": "CC-BY-4.0",
+        "access_status": "open_access",
+        "redistribution_allowed": true,
+        "excerpt_limit_chars": 500
+      },
+      "retraction_status": "clean",
+      "data_classification": "public",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "src-0000000c-0000-4000-8000-000000000000",
+      "entity_type": "source_instance",
+      "label": "Version of record, 2025-06-02",
+      "identifiers": {
+        "doi": "10.5555/synthetic.example.2025.0042",
+        "content_hash": "sha256:b3e0...41fa"
+      },
+      "retraction_status": "clean",
+      "data_classification": "public",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "src-00000003-0000-4000-8000-000000000000",
+      "entity_type": "source_work",
+      "label": "[synthetic] Narrative review of the intervention class",
+      "identifiers": {
+        "doi": "10.5555/synthetic.example.2023.0007"
+      },
+      "rights": {
+        "licence": "CC-BY-4.0",
+        "access_status": "open_access",
+        "redistribution_allowed": true,
+        "excerpt_limit_chars": 500
+      },
+      "retraction_status": "clean",
+      "data_classification": "public",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "src-0000000d-0000-4000-8000-000000000000",
+      "entity_type": "source_instance",
+      "label": "Version of record, 2023-09-19",
+      "identifiers": {
+        "doi": "10.5555/synthetic.example.2023.0007"
+      },
+      "retraction_status": "clean",
+      "data_classification": "public",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "prov-00000001-0000-4000-8000-000000000000",
+      "entity_type": "claim",
+      "label": "Bounded association claim",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "prov-00000002-0000-4000-8000-000000000000",
+      "entity_type": "claim",
+      "label": "Causal claim (rejected)",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "prov-00000003-0000-4000-8000-000000000000",
+      "entity_type": "claim",
+      "label": "Insufficiency assessment",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "prov-00000014-0000-4000-8000-000000000000",
+      "entity_type": "output_bundle",
+      "label": "Released manuscript plus audit pack",
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    },
+    {
+      "entity_id": "prov-00000015-0000-4000-8000-000000000000",
+      "entity_type": "audit_pack",
+      "label": "Audit pack v1",
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    }
+  ],
+  "activities": [
+    {
+      "activity_id": "prov-00000032-0000-4000-8000-000000000000",
+      "activity_type": "search",
+      "started_at": "2026-01-06T10:40:00Z",
+      "ended_at": "2026-01-06T10:52:00Z",
+      "tool_id": "openalex-search",
+      "parameters": {
+        "query": "intervention X older adults outcome Y",
+        "corpus": "openalex",
+        "date_from": "2015",
+        "limit": 100,
+        "index_version": "2026-01"
+      },
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "activity_id": "prov-00000033-0000-4000-8000-000000000000",
+      "activity_type": "counter_evidence_search",
+      "started_at": "2026-01-06T11:05:00Z",
+      "ended_at": "2026-01-06T11:14:00Z",
+      "tool_id": "openalex-search",
+      "parameters": {
+        "query": "intervention X null result OR failed replication OR no effect",
+        "corpus": "openalex",
+        "limit": 100,
+        "index_version": "2026-01"
+      },
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "activity_id": "prov-00000034-0000-4000-8000-000000000000",
+      "activity_type": "citation_check",
+      "started_at": "2026-01-06T11:40:00Z",
+      "ended_at": "2026-01-06T11:52:00Z",
+      "tool_id": "crossref-doi",
+      "parameters": {
+        "dois": 3,
+        "fields_checked": [
+          "authors",
+          "title",
+          "venue",
+          "year",
+          "volume",
+          "pages"
+        ]
+      },
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "activity_id": "prov-00000035-0000-4000-8000-000000000000",
+      "activity_type": "retraction_check",
+      "started_at": "2026-01-06T11:52:00Z",
+      "ended_at": "2026-01-06T11:55:00Z",
+      "tool_id": "retraction-watch-check",
+      "parameters": {
+        "instances": 3
+      },
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "activity_id": "prov-00000036-0000-4000-8000-000000000000",
+      "activity_type": "classification",
+      "started_at": "2026-01-06T11:56:00Z",
+      "ended_at": "2026-01-06T12:05:00Z",
+      "tool_id": "passage-support-classifier",
+      "parameters": {
+        "claim_citation_pairs": 5,
+        "model_version": "1.0.0"
+      },
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "activity_id": "prov-00000037-0000-4000-8000-000000000000",
+      "activity_type": "review",
+      "started_at": "2026-01-06T14:10:00Z",
+      "ended_at": "2026-01-06T15:10:00Z",
+      "parameters": {
+        "roles": [
+          "citation_auditor",
+          "methodologist",
+          "argument_examiner",
+          "discipline_expert",
+          "hostile_reviewer"
+        ],
+        "iterations": 1
+      },
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "activity_id": "prov-00000038-0000-4000-8000-000000000000",
+      "activity_type": "drafting",
+      "started_at": "2026-01-06T14:00:00Z",
+      "ended_at": "2026-01-06T14:08:00Z",
+      "parameters": {
+        "source": "evidence_matrix_and_argument_graph_only"
+      },
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    },
+    {
+      "activity_id": "prov-00000039-0000-4000-8000-000000000000",
+      "activity_type": "approval",
+      "started_at": "2026-01-06T16:45:00Z",
+      "ended_at": "2026-01-06T16:47:00Z",
+      "parameters": {
+        "gate": "release"
+      },
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    }
+  ],
+  "agents": [
+    {
+      "agent_id": "agt-00000001-0000-4000-8000-000000000000",
+      "agent_kind": "human_author",
+      "label": "author@example.org"
+    },
+    {
+      "agent_id": "agt-00000002-0000-4000-8000-000000000000",
+      "agent_kind": "governance_approver",
+      "label": "approver@example.org"
+    },
+    {
+      "agent_id": "agt-00000003-0000-4000-8000-000000000000",
+      "agent_kind": "specialist_agent",
+      "label": "Research Librarian",
+      "version": "1.0.0",
+      "acted_on_behalf_of": "agt-00000009-0000-4000-8000-000000000000"
+    },
+    {
+      "agent_id": "agt-00000004-0000-4000-8000-000000000000",
+      "agent_kind": "specialist_agent",
+      "label": "Citation Auditor",
+      "version": "1.0.0",
+      "acted_on_behalf_of": "agt-00000009-0000-4000-8000-000000000000"
+    },
+    {
+      "agent_id": "agt-00000005-0000-4000-8000-000000000000",
+      "agent_kind": "specialist_agent",
+      "label": "Methodologist",
+      "version": "1.0.0",
+      "acted_on_behalf_of": "agt-00000009-0000-4000-8000-000000000000"
+    },
+    {
+      "agent_id": "agt-00000006-0000-4000-8000-000000000000",
+      "agent_kind": "specialist_agent",
+      "label": "Argument Architect",
+      "version": "1.0.0",
+      "acted_on_behalf_of": "agt-00000009-0000-4000-8000-000000000000"
+    },
+    {
+      "agent_id": "agt-00000007-0000-4000-8000-000000000000",
+      "agent_kind": "tool",
+      "label": "crossref-doi",
+      "version": "1.0.3"
+    },
+    {
+      "agent_id": "agt-00000008-0000-4000-8000-000000000000",
+      "agent_kind": "retrieval_system",
+      "label": "openalex-search",
+      "version": "1.2.0"
+    },
+    {
+      "agent_id": "agt-00000009-0000-4000-8000-000000000000",
+      "agent_kind": "orchestrator",
+      "label": "SWOS Orchestrator",
+      "version": "1.0.0"
+    }
+  ],
+  "relations": [
+    {
+      "relation_type": "wasGeneratedBy",
+      "subject": "src-00000001-0000-4000-8000-000000000000",
+      "object": "prov-00000032-0000-4000-8000-000000000000",
+      "at_time": "2026-01-06T10:52:00Z",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasGeneratedBy",
+      "subject": "src-00000002-0000-4000-8000-000000000000",
+      "object": "prov-00000033-0000-4000-8000-000000000000",
+      "at_time": "2026-01-06T11:14:00Z",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "specializationOf",
+      "subject": "src-0000000b-0000-4000-8000-000000000000",
+      "object": "src-00000001-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "specializationOf",
+      "subject": "src-0000000c-0000-4000-8000-000000000000",
+      "object": "src-00000002-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "specializationOf",
+      "subject": "src-0000000d-0000-4000-8000-000000000000",
+      "object": "src-00000003-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasAssociatedWith",
+      "subject": "prov-00000032-0000-4000-8000-000000000000",
+      "object": "agt-00000003-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasAssociatedWith",
+      "subject": "prov-00000033-0000-4000-8000-000000000000",
+      "object": "agt-00000003-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasAssociatedWith",
+      "subject": "prov-00000034-0000-4000-8000-000000000000",
+      "object": "agt-00000004-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "used",
+      "subject": "prov-00000034-0000-4000-8000-000000000000",
+      "object": "src-0000000b-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "used",
+      "subject": "prov-00000036-0000-4000-8000-000000000000",
+      "object": "src-0000000b-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasDerivedFrom",
+      "subject": "prov-00000001-0000-4000-8000-000000000000",
+      "object": "src-0000000b-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasDerivedFrom",
+      "subject": "prov-00000003-0000-4000-8000-000000000000",
+      "object": "src-0000000b-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasDerivedFrom",
+      "subject": "prov-00000003-0000-4000-8000-000000000000",
+      "object": "src-0000000c-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasQuotedFrom",
+      "subject": "prov-00000001-0000-4000-8000-000000000000",
+      "object": "src-0000000b-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "hadPrimarySource",
+      "subject": "prov-00000003-0000-4000-8000-000000000000",
+      "object": "src-0000000b-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "supportsClaim",
+      "subject": "src-0000000b-0000-4000-8000-000000000000",
+      "object": "prov-00000001-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "partiallySupports",
+      "subject": "src-0000000b-0000-4000-8000-000000000000",
+      "object": "prov-00000002-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "contradicts",
+      "subject": "src-0000000c-0000-4000-8000-000000000000",
+      "object": "prov-00000002-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "contextualises",
+      "subject": "src-0000000d-0000-4000-8000-000000000000",
+      "object": "prov-00000003-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasGeneratedBy",
+      "subject": "prov-00000014-0000-4000-8000-000000000000",
+      "object": "prov-00000038-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasDerivedFrom",
+      "subject": "prov-00000014-0000-4000-8000-000000000000",
+      "object": "prov-00000001-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasDerivedFrom",
+      "subject": "prov-00000014-0000-4000-8000-000000000000",
+      "object": "prov-00000003-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "hadMember",
+      "subject": "prov-00000015-0000-4000-8000-000000000000",
+      "object": "prov-00000014-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "approvedBy",
+      "subject": "prov-00000014-0000-4000-8000-000000000000",
+      "object": "agt-00000002-0000-4000-8000-000000000000",
+      "at_time": "2026-01-06T16:47:00Z",
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "actedOnBehalfOf",
+      "subject": "agt-00000004-0000-4000-8000-000000000000",
+      "object": "agt-00000009-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    },
+    {
+      "relation_type": "wasInformedBy",
+      "subject": "prov-00000036-0000-4000-8000-000000000000",
+      "object": "prov-00000034-0000-4000-8000-000000000000",
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000"
+    }
+  ],
+  "bundles": [
+    {
+      "bundle_id": "prov-00000064-0000-4000-8000-000000000000",
+      "asserted_by": {
+        "actor_type": "orchestrator",
+        "actor_id": "swos-orchestrator",
+        "version": "1.0.0"
+      },
+      "asserted_at": "2026-01-06T12:05:00Z",
+      "scope": "work",
+      "frozen": false,
+      "member_entity_ids": [
+        "src-00000001-0000-4000-8000-000000000000",
+        "src-0000000b-0000-4000-8000-000000000000",
+        "src-00000002-0000-4000-8000-000000000000",
+        "src-0000000c-0000-4000-8000-000000000000",
+        "src-00000003-0000-4000-8000-000000000000",
+        "src-0000000d-0000-4000-8000-000000000000",
+        "prov-00000001-0000-4000-8000-000000000000",
+        "prov-00000002-0000-4000-8000-000000000000",
+        "prov-00000003-0000-4000-8000-000000000000"
+      ]
+    },
+    {
+      "bundle_id": "prov-00000065-0000-4000-8000-000000000000",
+      "asserted_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-governance-officer",
+        "version": "1.0.0"
+      },
+      "asserted_at": "2026-01-06T17:00:00Z",
+      "scope": "release",
+      "frozen": true,
+      "member_entity_ids": [
+        "prov-00000014-0000-4000-8000-000000000000",
+        "prov-00000015-0000-4000-8000-000000000000"
+      ]
+    }
+  ]
+}

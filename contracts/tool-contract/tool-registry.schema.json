@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/tool-registry.schema.json",
+  "title": "SWOS Tool Registry",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "tools"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "tool_id",
+          "class",
+          "version",
+          "max_data_classification",
+          "emits_epg_activity",
+          "failure_mode"
+        ],
+        "properties": {
+          "tool_id": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string",
+            "enum": [
+              "scholarly_search",
+              "enterprise_search",
+              "web_search",
+              "citation_graph_traverse",
+              "full_text_parse",
+              "ocr",
+              "doi_resolve",
+              "metadata_validate",
+              "retraction_check",
+              "licence_check",
+              "passage_support_classify",
+              "quotation_verify",
+              "counter_evidence_search",
+              "prior_art_search",
+              "reranker",
+              "similarity_check",
+              "image_analysis",
+              "eval_runner"
+            ]
+          },
+          "version": {
+            "type": "string"
+          },
+          "max_data_classification": {
+            "type": "string",
+            "enum": [
+              "public",
+              "internal",
+              "confidential",
+              "restricted"
+            ]
+          },
+          "egress": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Empty array means local-only, no network egress."
+          },
+          "emits_epg_activity": {
+            "type": "string"
+          },
+          "rate_limit": {
+            "type": "string"
+          },
+          "failure_mode": {
+            "type": "string",
+            "enum": [
+              "fail_closed",
+              "fail_open"
+            ],
+            "description": "Verification-chain tools MUST be fail_closed."
+          },
+          "approval_required": {
+            "type": "boolean"
+          },
+          "sandbox_required": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "class": {
+                  "enum": [
+                    "doi_resolve",
+                    "metadata_validate",
+                    "retraction_check",
+                    "licence_check",
+                    "passage_support_classify",
+                    "quotation_verify"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "failure_mode": {
+                  "const": "fail_closed"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

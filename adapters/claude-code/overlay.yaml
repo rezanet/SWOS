@@ -1,0 +1,45 @@
+# Claude Code overlay. Merged at install time onto the installed copies of the
+# core skills. NEVER merged into the repository originals - the originals must
+# remain spec-conformant with six frontmatter fields only.
+
+swos-core:
+  user-invocable: true
+  argument-hint: "<topic> [--discipline <pack>] [--output-type <type>]"
+  allowed-tools:
+    - scholarly_search
+    - enterprise_search
+    - doi_resolve
+    - metadata_validate
+    - retraction_check
+    - licence_check
+    - full_text_parse
+    - passage_support_classify
+    - counter_evidence_search
+    - reranker
+  disallowed-tools:
+    - shell
+  hooks:
+    on-tool-call: scripts/emit_epg_activity.sh
+    on-activation: scripts/init_scholarly_state.sh
+  effort: high
+
+swos-research-planner:
+  user-invocable: true
+  argument-hint: "<research question> [--discipline <pack>]"
+  effort: high
+
+swos-citation-auditor:
+  user-invocable: true
+  paths:
+    - "**/*.bib"
+    - "**/references.md"
+    - "**/*.tex"
+  allowed-tools: [doi_resolve, metadata_validate, retraction_check, quotation_verify, passage_support_classify]
+  effort: high
+
+swos-reviewer:
+  user-invocable: true
+  disable-model-invocation: true   # review is deliberate, never automatic mid-draft
+  context: fork                    # blind review: no prior draft rationale in context
+  agent: hostile-reviewer
+  effort: high

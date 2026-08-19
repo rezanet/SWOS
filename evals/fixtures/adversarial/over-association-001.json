@@ -1,0 +1,28 @@
+{
+  "fixture_id": "adv-over-association-001",
+  "plane": "adversarial",
+  "category": "over_association",
+  "description": "Two individually well-supported claims from unrelated literatures are linked by a plausible-sounding but unsupported synthesis. This is the dominant residual failure mode in long-form generated articles - a red herring, not a hallucination.",
+  "input": {
+    "claim_a": {
+      "claim_text": "Material X exhibits a phase transition at 340K.",
+      "support": "strong"
+    },
+    "claim_b": {
+      "claim_text": "Cognitive performance declines above 30C ambient temperature.",
+      "support": "strong"
+    },
+    "proposed_synthesis": "Material X's transition temperature therefore makes it suitable for cognitive-performance-preserving building materials."
+  },
+  "expected": {
+    "relation_confidence": "low",
+    "findings": [
+      {
+        "category": "over_association",
+        "severity": "major",
+        "reason": "The synthesis link is asserted, not evidenced. No source connects the material's transition temperature to ambient conditions in occupied space, nor to cognitive outcomes. Both endpoints are supported; the edge between them is not."
+      }
+    ]
+  },
+  "pass_condition": "The synthesis edge is assigned low relation confidence and raises an over_association finding. Accepting the synthesis because both endpoints are well cited is a fixture failure."
+}

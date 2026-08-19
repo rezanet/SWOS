@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-4f3a91c2-0b7d-4e18-9a52-6c81de7f0a33",
+  "current_state": "published",
+  "history": [
+    {
+      "state": "initiated",
+      "entered_at": "2026-01-06T09:00:00Z",
+      "sdlc_phase": "discover",
+      "governance_checkpoint": "Use case and scope registered; classification set to public",
+      "epg_state": "empty bundle",
+      "sdl_event": "Initiation rationale",
+      "entered_by": {
+        "actor_type": "human",
+        "actor_id": "author@example.org"
+      }
+    },
+    {
+      "state": "planned",
+      "entered_at": "2026-01-06T10:15:00Z",
+      "sdlc_phase": "design",
+      "governance_checkpoint": "Evidence standard agreed (psychology pack)",
+      "epg_state": "query plan",
+      "sdl_event": "Scope decision",
+      "entered_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-research-planner"
+      }
+    },
+    {
+      "state": "evidence_gathering",
+      "entered_at": "2026-01-06T10:40:00Z",
+      "sdlc_phase": "build",
+      "governance_checkpoint": "Source policy enforced; licence gate bound",
+      "epg_state": "retrieval events",
+      "sdl_event": "Search decisions",
+      "entered_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-research-librarian"
+      }
+    },
+    {
+      "state": "evidence_verified",
+      "entered_at": "2026-01-06T12:05:00Z",
+      "sdlc_phase": "validate",
+      "governance_checkpoint": "Citation and support gate passed",
+      "epg_state": "verified spans",
+      "sdl_event": "Inclusion and exclusion",
+      "entered_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-citation-auditor"
+      }
+    },
+    {
+      "state": "argument_constructed",
+      "entered_at": "2026-01-06T13:20:00Z",
+      "sdlc_phase": "validate",
+      "governance_checkpoint": "Argument review; rival readings present",
+      "epg_state": "claim graph",
+      "sdl_event": "Thesis and warrant choice",
+      "entered_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-argument-architect"
+      }
+    },
+    {
+      "state": "draft_generated",
+      "entered_at": "2026-01-06T14:00:00Z",
+      "sdlc_phase": "build",
+      "governance_checkpoint": "Rule #3 gate passed; draft from evidence matrix only",
+      "epg_state": "output derivation",
+      "sdl_event": "Draft decision",
+      "entered_by": {
+        "actor_type": "orchestrator",
+        "actor_id": "swos-orchestrator"
+      }
+    },
+    {
+      "state": "reviewed",
+      "entered_at": "2026-01-06T15:10:00Z",
+      "sdlc_phase": "validate",
+      "governance_checkpoint": "Panel complete: citation, method, argument, discipline, hostile",
+      "epg_state": "review bundle",
+      "sdl_event": "Review outcome",
+      "entered_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-reviewer"
+      }
+    },
+    {
+      "state": "revised",
+      "entered_at": "2026-01-06T16:00:00Z",
+      "sdlc_phase": "validate",
+      "governance_checkpoint": "Regression check; causal claim qualified per methodologist finding",
+      "epg_state": "revision derivation",
+      "sdl_event": "Change rationale",
+      "entered_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-editor"
+      }
+    },
+    {
+      "state": "approved",
+      "entered_at": "2026-01-06T16:45:00Z",
+      "sdlc_phase": "release",
+      "governance_checkpoint": "Human approval recorded",
+      "epg_state": "release bundle",
+      "sdl_event": "Approval decision",
+      "entered_by": {
+        "actor_type": "human",
+        "actor_id": "approver@example.org"
+      }
+    },
+    {
+      "state": "published",
+      "entered_at": "2026-01-06T17:00:00Z",
+      "sdlc_phase": "release",
+      "governance_checkpoint": "Audit pack assembled; provenance frozen; disclosure generated",
+      "epg_state": "published artefact",
+      "sdl_event": "Publication gate",
+      "entered_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-governance-officer"
+      }
+    }
+  ],
+  "blocked_transitions": [
+    {
+      "attempted_state": "draft_generated",
+      "at": "2026-01-06T12:30:00Z",
+      "blocked_by": "Rule #3 gate: argument_graph absent; evidence_matrix.coverage.unsupported_claims = 1. No draft produced; attempt recorded rather than retried silently."
+    }
+  ]
+}

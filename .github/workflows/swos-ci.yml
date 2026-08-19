@@ -1,0 +1,74 @@
+name: SWOS CI
+
+# Release gates are enforced here, not in documentation.
+# A merge to main that degrades any evaluation plane is blocked.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  contracts:
+    name: Schema and contract conformance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install jsonschema pyyaml
+      - name: Validate all artefacts against frozen schemas
+        run: python3 tools/validate_schemas.py --strict
+
+  portability:
+    name: Agent Skills six-field constraint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - name: Reject host-specific frontmatter in core skills
+        run: python3 tools/lint_skills.py --strict
+
+  evaluation:
+    name: Evaluation harness (release gate)
+    runs-on: ubuntu-latest
+    needs: [contracts]
+    strategy:
+      fail-fast: false
+      matrix:
+        plane: [retrieval, grounding, citation, scholarly, governance, regression, memory, adversarial]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install jsonschema
+      - name: Run evaluation plane
+        run: python3 evals/harness/run_evals.py --planes ${{ matrix.plane }} --fail-on-gate
+
+  governance:
+    name: Governance policy check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install jsonschema
+      - name: Provenance completeness and policy-as-code validation
+        run: python3 tools/check_governance.py
+
+  dco:
+    name: DCO sign-off
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify Signed-off-by on all commits
+        run: python3 tools/check_dco.py

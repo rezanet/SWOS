@@ -1,0 +1,119 @@
+{
+  "name": "swos",
+  "version": "1.0.0",
+  "description": "SWOS scholarly reasoning tool layer exposed over MCP.",
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": true,
+    "logging": true
+  },
+  "tools": [
+    {
+      "name": "swos_scholarly_search",
+      "swos_class": "scholarly_search",
+      "epg_activity": "search",
+      "max_data_classification": "public",
+      "failure_mode": "fail_closed"
+    },
+    {
+      "name": "swos_doi_resolve",
+      "swos_class": "doi_resolve",
+      "epg_activity": "citation_check",
+      "max_data_classification": "public",
+      "failure_mode": "fail_closed"
+    },
+    {
+      "name": "swos_metadata_validate",
+      "swos_class": "metadata_validate",
+      "epg_activity": "citation_check",
+      "max_data_classification": "public",
+      "failure_mode": "fail_closed"
+    },
+    {
+      "name": "swos_retraction_check",
+      "swos_class": "retraction_check",
+      "epg_activity": "retraction_check",
+      "max_data_classification": "public",
+      "failure_mode": "fail_closed"
+    },
+    {
+      "name": "swos_licence_check",
+      "swos_class": "licence_check",
+      "epg_activity": "licence_check",
+      "max_data_classification": "internal",
+      "failure_mode": "fail_closed"
+    },
+    {
+      "name": "swos_passage_support_classify",
+      "swos_class": "passage_support_classify",
+      "epg_activity": "classification",
+      "max_data_classification": "restricted",
+      "failure_mode": "fail_closed"
+    },
+    {
+      "name": "swos_counter_evidence_search",
+      "swos_class": "counter_evidence_search",
+      "epg_activity": "counter_evidence_search",
+      "max_data_classification": "public",
+      "failure_mode": "fail_closed"
+    },
+    {
+      "name": "swos_rerank",
+      "swos_class": "reranker",
+      "epg_activity": "classification",
+      "max_data_classification": "restricted",
+      "failure_mode": "fail_closed"
+    }
+  ],
+  "resources": [
+    {
+      "uri": "swos://schemas/evidence-matrix",
+      "mime_type": "application/schema+json"
+    },
+    {
+      "uri": "swos://schemas/argument-graph",
+      "mime_type": "application/schema+json"
+    },
+    {
+      "uri": "swos://schemas/epg",
+      "mime_type": "application/schema+json"
+    },
+    {
+      "uri": "swos://schemas/sdl",
+      "mime_type": "application/schema+json"
+    },
+    {
+      "uri": "swos://schemas/rpm",
+      "mime_type": "application/schema+json"
+    },
+    {
+      "uri": "swos://knowledge-and-reasoning-spec",
+      "mime_type": "text/markdown"
+    },
+    {
+      "uri": "swos://discipline-packs/{discipline}",
+      "mime_type": "text/markdown"
+    },
+    {
+      "uri": "swos://reviewer-packs/{role}",
+      "mime_type": "text/markdown"
+    }
+  ],
+  "prompts": [
+    {
+      "name": "swos_master_contract",
+      "description": "The SWOS constitutional prompt contract."
+    },
+    {
+      "name": "swos_agent",
+      "description": "An agent contract by role.",
+      "arguments": [
+        {
+          "name": "role",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

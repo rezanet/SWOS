@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/reviewer/reviewer-finding.schema.json",
+  "title": "SWOS Reviewer Finding",
+  "description": "Output of one bounded reviewer pass. Every reviewer role must declare test, pass, fail and escalation criteria. 'Review this critically' is not a specification.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "work_id",
+    "reviewer_role",
+    "iteration",
+    "verdict",
+    "findings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "work_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "reviewer_role": {
+      "type": "string",
+      "enum": [
+        "citation_auditor",
+        "methodologist",
+        "argument_examiner",
+        "discipline_expert",
+        "hostile_reviewer",
+        "editor",
+        "governance_reviewer"
+      ]
+    },
+    "discipline": {
+      "$ref": "../common/common.schema.json#/$defs/discipline"
+    },
+    "iteration": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3,
+      "description": "Hard iteration cap. Bounded review loops prevent infinite self-refinement; exceeding the cap escalates to a human rather than looping."
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "pass_with_findings",
+        "fail",
+        "escalate"
+      ]
+    },
+    "blind_review": {
+      "type": "boolean",
+      "description": "True when the reviewer was not shown prior AI suggestions. Control against automation anchoring."
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "rubric_scores": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "dimension",
+          "score",
+          "max"
+        ],
+        "properties": {
+          "dimension": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "threshold": {
+            "type": "number"
+          },
+          "rubric_id": {
+            "type": "string"
+          },
+          "rubric_version": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sdl_decision_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "audit": {
+      "$ref": "../common/common.schema.json#/$defs/audit_stamp"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "required": [
+        "finding_id",
+        "severity",
+        "category",
+        "description",
+        "status"
+      ],
+      "properties": {
+        "finding_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "blocker",
+            "major",
+            "minor",
+            "advisory"
+          ]
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "fabricated_citation",
+            "citation_metadata_error",
+            "citation_laundering",
+            "unsupported_claim",
+            "overclaim",
+            "missing_counter_evidence",
+            "coverage_gap",
+            "source_bias",
+            "hidden_premise",
+            "invalid_inference",
+            "circular_reasoning",
+            "over_association",
+            "method_weakness",
+            "construct_validity",
+            "statistical_overreach",
+            "interpretive_flattening",
+            "false_originality",
+            "genre_mismatch",
+            "structure",
+            "clarity",
+            "policy_breach",
+            "missing_audit_trail",
+            "data_classification_error"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "locus": {
+          "type": "string",
+          "description": "Claim id, argument node id, or draft section reference."
+        },
+        "required_action": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "accepted",
+            "rejected",
+            "resolved",
+            "deferred",
+            "escalated"
+          ]
+        },
+        "resolution_note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

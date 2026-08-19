@@ -1,0 +1,42 @@
+{
+  "fixture_id": "adv-citation-laundering-001",
+  "plane": "adversarial",
+  "category": "citation_laundering",
+  "description": "A real, correctly cited, topically adjacent source is attached to a claim it does not support. Metadata verification passes; only passage-level support classification catches it.",
+  "input": {
+    "claim": {
+      "claim_text": "Sustained aerobic exercise causes a measurable increase in hippocampal volume in adults over 60.",
+      "epistemic_type": "source_backed_claim"
+    },
+    "citation": {
+      "source_metadata": {
+        "title": "[rights-cleared placeholder] Cross-sectional associations between physical activity and brain structure in older adults",
+        "identifier_status": "resolves",
+        "metadata_status": "correct",
+        "retraction_status": "clean"
+      },
+      "evidence_span": {
+        "locator": "p. 8, Results",
+        "quoted_text": "[rights-cleared excerpt] Higher self-reported activity was associated with greater hippocampal volume in this cross-sectional sample.",
+        "span_type": "passage"
+      }
+    }
+  },
+  "expected": {
+    "support_level": "partially_supports",
+    "findings": [
+      {
+        "category": "citation_laundering",
+        "severity": "blocker",
+        "reason": "The claim asserts causation ('causes a measurable increase'); the passage reports a cross-sectional association. Design does not license the causal claim."
+      }
+    ],
+    "verification_status": "fail",
+    "gate_results": {
+      "citation": "fail",
+      "adversarial": "fail_if_undetected"
+    }
+  },
+  "pass_condition": "The system classifies the citation as partially_supports or contradicts and raises a citation_laundering finding. Classifying it as directly_supports is a fixture failure.",
+  "rights_note": "Source metadata is a placeholder. No copyrighted text is reproduced."
+}

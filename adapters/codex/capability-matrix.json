@@ -1,0 +1,22 @@
+{
+  "adapter": "codex",
+  "swos_version": "1.0.0",
+  "capabilities": {
+    "progressive_disclosure": "full",
+    "script_execution": "sandboxed",
+    "tool_approval_gate": "policy_declared",
+    "blind_review": "unsupported",
+    "persistent_memory": "external_required",
+    "state_store": "external_required",
+    "provenance_store": "external_required",
+    "evaluation_runner": "external_required"
+  },
+  "unsupported": [
+    "blind_review"
+  ],
+  "work_classes_permitted": [
+    "public",
+    "internal"
+  ],
+  "notes": "Blind review is unsupported because there is no context-fork primitive; the hostile reviewer runs with prior context visible. Works requiring blind review must run on an adapter that supports it, or accept a recorded automation-anchoring risk in the SDL."
+}

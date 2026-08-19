@@ -1,0 +1,25 @@
+{
+  "adapter": "ide",
+  "swos_version": "1.0.0",
+  "capabilities": {
+    "progressive_disclosure": "full",
+    "script_execution": "unsupported",
+    "tool_approval_gate": "host_dependent",
+    "blind_review": "unsupported",
+    "persistent_memory": "unsupported",
+    "state_store": "workspace_only",
+    "provenance_store": "unsupported",
+    "evaluation_runner": "external_required"
+  },
+  "unsupported": [
+    "provenance_store",
+    "persistent_memory",
+    "blind_review",
+    "release"
+  ],
+  "work_classes_permitted": [
+    "public",
+    "internal"
+  ],
+  "notes": "Cannot release. No audit pack can be produced without a durable provenance store. Drafting and inline diagnostics only; release must run from the CLI adapter."
+}

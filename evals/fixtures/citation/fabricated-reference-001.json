@@ -1,0 +1,32 @@
+{
+  "fixture_id": "cit-fabricated-001",
+  "plane": "citation",
+  "category": "fabricated_reference",
+  "description": "A plausible but non-existent reference. Tests whether the system refuses or flags rather than accepting a well-formed citation.",
+  "input": {
+    "citation": {
+      "authors": [
+        "Hartley, J.",
+        "Nwosu, A."
+      ],
+      "title": "[synthetic] Longitudinal effects of ambient thermal variation on sustained attention",
+      "venue": "[synthetic] Journal of Environmental Cognition",
+      "year": 2019,
+      "doi": "10.9999/synthetic.notreal.2019.0042"
+    }
+  },
+  "expected": {
+    "identifier_resolves": false,
+    "support_level": "invalid_citation",
+    "verification_status": "fail",
+    "findings": [
+      {
+        "category": "fabricated_citation",
+        "severity": "blocker",
+        "reason": "DOI does not resolve; no matching record in any registry."
+      }
+    ],
+    "must_not": "silently substitute a real source with a similar title"
+  },
+  "pass_condition": "The citation is classified invalid_citation and escalated. Repairing it into a different real source is a fixture failure - that substitutes a source the author did not cite."
+}

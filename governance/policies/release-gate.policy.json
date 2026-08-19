@@ -1,0 +1,104 @@
+{
+  "policy_id": "swos.release-gate",
+  "version": "1.0.0",
+  "gate_type": "release",
+  "trigger": {
+    "on": [
+      "before_release"
+    ]
+  },
+  "default_effect": "deny",
+  "escalation": "governance_owner",
+  "nist_ai_rmf": [
+    "MEASURE 1.1",
+    "MEASURE 3.1",
+    "MANAGE 1.1",
+    "MANAGE 2.2"
+  ],
+  "rules": [
+    {
+      "id": "all-planes-pass",
+      "when": {
+        "evaluation.all_required_planes": "pass"
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "A blocking evaluation plane failed."
+      }
+    },
+    {
+      "id": "not-run-is-fail",
+      "when": {
+        "evaluation.any_plane": "not_run"
+      },
+      "effect": "deny",
+      "reason": "An unrun gate is an unmet gate."
+    },
+    {
+      "id": "no-open-blockers",
+      "when": {
+        "reviews.open_blocker_findings": 0
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Blocker findings are not closed by revision-round exhaustion."
+      }
+    },
+    {
+      "id": "provenance-complete",
+      "when": {
+        "gate.provenance_completeness": "pass"
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "Provenance completeness gate must pass."
+      }
+    },
+    {
+      "id": "audit-pack-complete",
+      "when": {
+        "output.audit_pack.complete": true
+      },
+      "effect": "continue",
+      "else": {
+        "effect": "deny",
+        "reason": "An output without an audit pack is not a SWOS output."
+      }
+    },
+    {
+      "id": "approval-recorded",
+      "when": {
+        "gate.human_approval_threshold": {
+          "in": [
+            "pass",
+            "not_applicable"
+          ]
+        }
+      },
+      "effect": "allow",
+      "else": {
+        "effect": "deny",
+        "reason": "Required human approval not recorded."
+      }
+    },
+    {
+      "id": "waiver-shape",
+      "when": {
+        "waiver": {
+          "exists": true
+        }
+      },
+      "effect": "require",
+      "requires": [
+        "waiver.reason",
+        "waiver.approved_by",
+        "waiver.expires_on",
+        "waiver.sdl_decision_id"
+      ],
+      "reason": "Waivers are permitted. Silent waivers are not."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+# Codex/ChatGPT overlay for SWOS skills.
+# Host-specific. Never merged into the core SKILL.md files.
+
+skills:
+  swos-core:
+    interface:
+      display_name: "SWOS - Governed Scholarly Writing"
+      short_description: "Evidence-first scholarly and enterprise writing with a full audit pack."
+      icon: swos
+    policy:
+      allow_implicit_invocation: true
+    dependencies:
+      tools:
+        - scholarly_search
+        - doi_resolve
+        - metadata_validate
+        - retraction_check
+        - passage_support_classify
+
+  swos-research-planner:
+    interface:
+      display_name: "SWOS Research Planner"
+      short_description: "Build the research plan before any evidence work begins."
+    policy:
+      allow_implicit_invocation: true
+
+  swos-citation-auditor:
+    interface:
+      display_name: "SWOS Citation Auditor"
+      short_description: "Verify citation existence, metadata and passage-level claim support."
+    policy:
+      allow_implicit_invocation: true
+    dependencies:
+      tools: [doi_resolve, metadata_validate, retraction_check, quotation_verify]
+
+  swos-reviewer:
+    interface:
+      display_name: "SWOS Reviewer Panel"
+      short_description: "Bounded role-based peer review with explicit pass/fail criteria."
+    policy:
+      allow_implicit_invocation: false   # review must be deliberate

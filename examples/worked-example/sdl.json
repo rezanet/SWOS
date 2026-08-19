@@ -1,0 +1,232 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-4f3a91c2-0b7d-4e18-9a52-6c81de7f0a33",
+  "append_only": true,
+  "entries": [
+    {
+      "decision_id": "dec-00000001-0000-4000-8000-000000000000",
+      "decision_type": "scope",
+      "question": "Should the review be bounded to studies of adults aged 65 and over, or to all adult populations?",
+      "options_considered": [
+        {
+          "option": "Bound to 65+"
+        },
+        {
+          "option": "All adults",
+          "why_rejected": "Would import evidence from populations the research question does not concern, diluting the assessment."
+        }
+      ],
+      "selected_option": "Bound to 65+",
+      "rationale": "The research question concerns older adults. Widening the population would produce a larger evidence base that answers a different question.",
+      "criteria_applied": [
+        "population matches the research question"
+      ],
+      "confidence": "high",
+      "review_status": "passed",
+      "responsible_agent": {
+        "actor_type": "agent",
+        "actor_id": "swos-research-planner"
+      },
+      "timestamp": "2026-01-06T10:15:00Z",
+      "lifecycle_status": "approved",
+      "reversibility": "reversible"
+    },
+    {
+      "decision_id": "dec-00000002-0000-4000-8000-000000000000",
+      "decision_type": "citation_support_judgement",
+      "question": "Does the primary study's Table 2 directly support the claim that intervention X causes improved outcomes in older adults?",
+      "options_considered": [
+        {
+          "option": "directly_supports",
+          "why_rejected": "The passage reports an association within one age band in one urban cohort. The claim asserts causation across a broader population. Two distinct scope failures.",
+          "supporting_evidence_refs": [
+            "clm-00000002-0000-4000-8000-000000000000"
+          ]
+        },
+        {
+          "option": "partially_supports"
+        },
+        {
+          "option": "context_only",
+          "why_rejected": "Understates the relationship; the passage does bear on part of the claim."
+        }
+      ],
+      "selected_option": "partially_supports",
+      "rationale": "The source supports the bounded association and nothing beyond it. Classifying this as directly_supports would be citation laundering: a real, correctly cited, topically adjacent source attached to a claim its passages do not support.",
+      "criteria_applied": [
+        "passage-level support, not document-level",
+        "claim scope must not exceed evidence scope"
+      ],
+      "evidence_refs": [
+        "clm-00000002-0000-4000-8000-000000000000"
+      ],
+      "counter_evidence_refs": [
+        "clm-00000003-0000-4000-8000-000000000000"
+      ],
+      "confidence": "high",
+      "uncertainty": [
+        "method_uncertainty"
+      ],
+      "review_status": "passed",
+      "responsible_agent": {
+        "actor_type": "agent",
+        "actor_id": "swos-citation-auditor"
+      },
+      "timestamp": "2026-01-06T12:02:00Z",
+      "lifecycle_status": "approved",
+      "reversibility": "locked",
+      "epg_node_ids": [
+        "prov-00000002-0000-4000-8000-000000000000",
+        "src-0000000b-0000-4000-8000-000000000000"
+      ]
+    },
+    {
+      "decision_id": "dec-00000003-0000-4000-8000-000000000000",
+      "decision_type": "thesis_selection",
+      "question": "Should the work assert a causal conclusion, a null conclusion, or a qualified assessment of evidential insufficiency?",
+      "options_considered": [
+        {
+          "option": "Assert causation",
+          "why_rejected": "No design in the evidence base licenses a causal claim, and the replication failed.",
+          "supporting_evidence_refs": [
+            "clm-00000002-0000-4000-8000-000000000000"
+          ]
+        },
+        {
+          "option": "Assert no effect",
+          "why_rejected": "Overstates the negative. The urban-cohort association is real and unexplained; absence of a licensed causal claim is not evidence of absence."
+        },
+        {
+          "option": "Assert evidential insufficiency for a causal claim, retaining the bounded association"
+        }
+      ],
+      "selected_option": "Assert evidential insufficiency for a causal claim, retaining the bounded association",
+      "rationale": "This is the strongest claim the evidence licenses. The bounded association is well supported and is retained; the causal extension is not supported and is withheld. The population-bounded rival reading is retained explicitly because it cannot be distinguished from the selected thesis on current evidence.",
+      "criteria_applied": [
+        "design licences the causal claim, or it is withheld",
+        "claim scope must match evidence scope",
+        "rival readings retained where indistinguishable"
+      ],
+      "evidence_refs": [
+        "clm-00000001-0000-4000-8000-000000000000",
+        "clm-00000003-0000-4000-8000-000000000000"
+      ],
+      "counter_evidence_refs": [
+        "clm-00000002-0000-4000-8000-000000000000"
+      ],
+      "argument_refs": [
+        "arg-00000001-0000-4000-8000-000000000000",
+        "arg-00000009-0000-4000-8000-000000000000"
+      ],
+      "confidence": "high",
+      "uncertainty": [
+        "conflicting_evidence",
+        "interpretive_plurality"
+      ],
+      "dissenting_view": "The hostile reviewer noted that the replication failure may reflect population differences rather than absence of effect. Conceded and retained as rival reading arg-00000009; it does not restore the causal licence.",
+      "review_status": "passed",
+      "responsible_agent": {
+        "actor_type": "agent",
+        "actor_id": "swos-argument-architect"
+      },
+      "timestamp": "2026-01-06T13:15:00Z",
+      "review_date": "2027-01-06",
+      "lifecycle_status": "approved",
+      "reversibility": "reversible",
+      "epg_node_ids": [
+        "prov-00000001-0000-4000-8000-000000000000",
+        "prov-00000003-0000-4000-8000-000000000000"
+      ]
+    },
+    {
+      "decision_id": "dec-00000004-0000-4000-8000-000000000000",
+      "decision_type": "memory_write",
+      "question": "Should the lesson 'cross-sectional designs recur as the basis for causal claims in this literature' be written to Research Program Memory?",
+      "options_considered": [
+        {
+          "option": "Write as a method_lesson with source grounding and 24-month expiry"
+        },
+        {
+          "option": "Do not write",
+          "why_rejected": "The pattern is source-grounded and directly useful to future works in this programme."
+        },
+        {
+          "option": "Write as an accepted_position",
+          "why_rejected": "It is a lesson about method prevalence in a literature, not a scholarly position. Miscategorising it would allow it to be read back as a claim about the world."
+        }
+      ],
+      "selected_option": "Write as a method_lesson with source grounding and 24-month expiry",
+      "rationale": "Source-grounded, owned, expiring, and supported by two EPG nodes. Satisfies the memory-write policy. Categorised as a method lesson so it can never be read back as evidence.",
+      "criteria_applied": [
+        "EPG support required",
+        "SDL rationale required",
+        "expiry required",
+        "category must not permit read-back as evidence"
+      ],
+      "evidence_refs": [
+        "clm-00000003-0000-4000-8000-000000000000"
+      ],
+      "confidence": "medium",
+      "review_status": "passed",
+      "responsible_agent": {
+        "actor_type": "agent",
+        "actor_id": "swos-governance-officer"
+      },
+      "human_approver": {
+        "actor_type": "human",
+        "actor_id": "approver@example.org",
+        "display_name": "Memory owner"
+      },
+      "policy_basis": "swos.memory-write@1.0.0",
+      "timestamp": "2026-01-06T16:50:00Z",
+      "review_date": "2028-01-06",
+      "lifecycle_status": "approved",
+      "reversibility": "reversible",
+      "epg_node_ids": [
+        "prov-00000003-0000-4000-8000-000000000000",
+        "src-0000000c-0000-4000-8000-000000000000"
+      ]
+    },
+    {
+      "decision_id": "dec-00000005-0000-4000-8000-000000000000",
+      "decision_type": "release",
+      "question": "Should this work be released?",
+      "options_considered": [
+        {
+          "option": "Release"
+        },
+        {
+          "option": "Block pending broader retrieval",
+          "why_rejected": "Coverage limits are declared in the uncertainty statement rather than concealed. The conclusion is bounded to what the evidence supports, so wider retrieval would strengthen but not correct it."
+        }
+      ],
+      "selected_option": "Release",
+      "rationale": "All eight evaluation planes passed. Provenance completeness 1.0. Zero open blocker findings. The single unsupported claim is explicitly marked in the output and listed in the unsupported-claim report, satisfying Rule #4.",
+      "criteria_applied": [
+        "swos.release-gate@1.0.0"
+      ],
+      "evidence_refs": [
+        "clm-00000001-0000-4000-8000-000000000000",
+        "clm-00000002-0000-4000-8000-000000000000",
+        "clm-00000003-0000-4000-8000-000000000000"
+      ],
+      "confidence": "high",
+      "review_status": "passed",
+      "responsible_agent": {
+        "actor_type": "agent",
+        "actor_id": "swos-governance-officer"
+      },
+      "human_approver": {
+        "actor_type": "human",
+        "actor_id": "approver@example.org"
+      },
+      "policy_basis": "swos.release-gate@1.0.0",
+      "timestamp": "2026-01-06T16:47:00Z",
+      "lifecycle_status": "approved",
+      "reversibility": "locked",
+      "epg_node_ids": [
+        "prov-00000014-0000-4000-8000-000000000000"
+      ]
+    }
+  ]
+}

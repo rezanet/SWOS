@@ -1,0 +1,366 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/provenance-graph/epg.schema.json",
+  "title": "SWOS Evidence Provenance Graph (EPG)",
+  "description": "The audit spine. W3C PROV-DM compatible: entities, activities, agents, derivations, collections and bundles. EPG answers 'where from and how produced'. It must NOT become a judgement log - that is the SDL. Every EPG document is serialisable to PROV-JSON without loss.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "work_id",
+    "entities",
+    "activities",
+    "agents",
+    "relations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "work_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "prov_compatibility": {
+      "type": "object",
+      "description": "Declares the PROV serialisation this bundle round-trips to.",
+      "properties": {
+        "prov_model": {
+          "const": "W3C PROV-DM"
+        },
+        "serialisation": {
+          "type": "string",
+          "enum": [
+            "prov-json",
+            "prov-n",
+            "prov-xml",
+            "rdf-turtle"
+          ]
+        }
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entity"
+      }
+    },
+    "activities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/activity"
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/agent"
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relation"
+      }
+    },
+    "bundles": {
+      "type": "array",
+      "description": "PROV bundles carry provenance-of-provenance. This matters because a reviewer must know not only what evidence supports a claim, but who or what asserted that support, and when.",
+      "items": {
+        "type": "object",
+        "required": [
+          "bundle_id",
+          "asserted_by",
+          "asserted_at"
+        ],
+        "properties": {
+          "bundle_id": {
+            "$ref": "../common/common.schema.json#/$defs/id"
+          },
+          "asserted_by": {
+            "$ref": "../common/common.schema.json#/$defs/actor"
+          },
+          "asserted_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "work",
+              "release",
+              "review",
+              "correction",
+              "retirement"
+            ]
+          },
+          "member_entity_ids": {
+            "type": "array",
+            "items": {
+              "$ref": "../common/common.schema.json#/$defs/id"
+            }
+          },
+          "frozen": {
+            "type": "boolean",
+            "description": "True once published. A frozen bundle is append-only; corrections create a superseding bundle."
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "entity": {
+      "type": "object",
+      "required": [
+        "entity_id",
+        "entity_type"
+      ],
+      "properties": {
+        "entity_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "entity_type": {
+          "type": "string",
+          "enum": [
+            "source_work",
+            "source_instance",
+            "evidence_span",
+            "claim",
+            "normalised_claim",
+            "citation_link",
+            "argument_node",
+            "draft_section",
+            "reviewer_comment",
+            "memory_item",
+            "decision_record",
+            "evaluation_result",
+            "output_bundle",
+            "audit_pack"
+          ],
+          "description": "source_work is the abstract work (paper, book, artwork, dataset, archive item, policy, interview, image, primary text). source_instance is the specific edition, DOI record, URL snapshot, PDF hash or repository commit."
+        },
+        "label": {
+          "type": "string"
+        },
+        "identifiers": {
+          "type": "object",
+          "properties": {
+            "doi": {
+              "type": "string"
+            },
+            "isbn": {
+              "type": "string"
+            },
+            "arxiv": {
+              "type": "string"
+            },
+            "openalex": {
+              "type": "string"
+            },
+            "pmid": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "accession": {
+              "type": "string"
+            },
+            "content_hash": {
+              "type": "string"
+            }
+          }
+        },
+        "rights": {
+          "type": "object",
+          "description": "Populated by the source-rights gate BEFORE the entity may be stored or exported.",
+          "properties": {
+            "licence": {
+              "type": "string"
+            },
+            "access_status": {
+              "type": "string",
+              "enum": [
+                "open_access",
+                "subscription",
+                "licensed",
+                "internal",
+                "restricted",
+                "unknown"
+              ]
+            },
+            "redistribution_allowed": {
+              "type": "boolean"
+            },
+            "excerpt_limit_chars": {
+              "type": "integer"
+            }
+          }
+        },
+        "retraction_status": {
+          "type": "string",
+          "enum": [
+            "not_checked",
+            "clean",
+            "expression_of_concern",
+            "corrected",
+            "retracted"
+          ]
+        },
+        "data_classification": {
+          "$ref": "../common/common.schema.json#/$defs/data_classification"
+        },
+        "bundle_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "activity": {
+      "type": "object",
+      "required": [
+        "activity_id",
+        "activity_type",
+        "started_at"
+      ],
+      "properties": {
+        "activity_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "activity_type": {
+          "type": "string",
+          "enum": [
+            "search",
+            "retrieval",
+            "parsing",
+            "ocr",
+            "extraction",
+            "normalisation",
+            "classification",
+            "citation_check",
+            "retraction_check",
+            "licence_check",
+            "counter_evidence_search",
+            "argument_construction",
+            "drafting",
+            "review",
+            "revision",
+            "evaluation",
+            "approval",
+            "export",
+            "memory_write",
+            "retirement"
+          ]
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ended_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Query strings, database, filters, model and version. Reproducibility depends on this being complete."
+        },
+        "tool_id": {
+          "type": "string"
+        },
+        "bundle_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "agent": {
+      "type": "object",
+      "required": [
+        "agent_id",
+        "agent_kind"
+      ],
+      "properties": {
+        "agent_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "agent_kind": {
+          "type": "string",
+          "enum": [
+            "human_author",
+            "reviewer_role",
+            "specialist_agent",
+            "tool",
+            "retrieval_system",
+            "parser",
+            "model",
+            "orchestrator",
+            "governance_approver",
+            "host_runtime"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "acted_on_behalf_of": {
+          "$ref": "../common/common.schema.json#/$defs/id",
+          "description": "PROV delegation."
+        }
+      },
+      "additionalProperties": false
+    },
+    "relation": {
+      "type": "object",
+      "required": [
+        "relation_type",
+        "subject",
+        "object"
+      ],
+      "properties": {
+        "relation_type": {
+          "type": "string",
+          "enum": [
+            "used",
+            "wasGeneratedBy",
+            "wasDerivedFrom",
+            "wasAttributedTo",
+            "wasAssociatedWith",
+            "wasRevisionOf",
+            "wasQuotedFrom",
+            "hadPrimarySource",
+            "hadMember",
+            "wasInformedBy",
+            "actedOnBehalfOf",
+            "alternateOf",
+            "specializationOf",
+            "supportsClaim",
+            "partiallySupports",
+            "contextualises",
+            "contradicts",
+            "requiresHumanReview",
+            "evaluatedBy",
+            "approvedBy",
+            "supersedes",
+            "belongsToResearchProgramme"
+          ],
+          "description": "The first twelve are W3C PROV-DM core relations and round-trip to PROV without loss. The remainder are SWOS domain extensions, declared in the PROV extensibility namespace swos:."
+        },
+        "subject": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "object": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "at_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "bundle_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

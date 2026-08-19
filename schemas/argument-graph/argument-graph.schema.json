@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/argument-graph/argument-graph.schema.json",
+  "title": "SWOS Argument Graph",
+  "description": "Toulmin-structured argument as an explicit graph. Anti-pattern: the Argument Graph must not store raw source metadata - that belongs in the Evidence Matrix and the EPG.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "work_id",
+    "thesis",
+    "nodes",
+    "edges"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "work_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "audit": {
+      "$ref": "../common/common.schema.json#/$defs/audit_stamp"
+    },
+    "thesis": {
+      "type": "object",
+      "required": [
+        "node_id",
+        "statement"
+      ],
+      "properties": {
+        "node_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "contribution_type": {
+          "type": "string",
+          "enum": [
+            "survey",
+            "critique",
+            "synthesis",
+            "position",
+            "theory",
+            "experiment",
+            "commentary"
+          ]
+        },
+        "rival_theses_considered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Populated by Tree-of-Thoughts exploration. An empty array on a position or theory work fails the scholarly gate."
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    },
+    "unresolved_objections": {
+      "type": "array",
+      "description": "Objections raised by review that were neither rebutted nor conceded. Must be surfaced in the uncertainty statement, never silently dropped.",
+      "items": {
+        "$ref": "../common/common.schema.json#/$defs/id"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": [
+        "node_id",
+        "node_type",
+        "statement"
+      ],
+      "properties": {
+        "node_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "node_type": {
+          "type": "string",
+          "enum": [
+            "claim",
+            "grounds",
+            "warrant",
+            "backing",
+            "qualifier",
+            "objection",
+            "rebuttal",
+            "implication",
+            "rival_reading"
+          ],
+          "description": "Toulmin components plus objection, implication and rival_reading. rival_reading exists so humanities output cannot collapse ambiguity into one safe reading (interpretive flattening)."
+        },
+        "statement": {
+          "type": "string"
+        },
+        "evidence_claim_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "../common/common.schema.json#/$defs/id"
+          },
+          "description": "Evidence Matrix claim_ids. A grounds node with no evidence_claim_ids is not grounds; it is assertion."
+        },
+        "strength": {
+          "$ref": "../common/common.schema.json#/$defs/confidence"
+        },
+        "hidden_premise": {
+          "type": "boolean",
+          "description": "Flagged by the Argument Examiner. A warrant that is a hidden premise must be made explicit before approval."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "proposed",
+            "accepted",
+            "challenged",
+            "rebutted",
+            "conceded",
+            "withdrawn"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "edge": {
+      "type": "object",
+      "required": [
+        "from_node",
+        "to_node",
+        "relation"
+      ],
+      "properties": {
+        "from_node": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "to_node": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        },
+        "relation": {
+          "type": "string",
+          "enum": [
+            "supports",
+            "warrants",
+            "backs",
+            "qualifies",
+            "objects_to",
+            "rebuts",
+            "implies",
+            "rivals",
+            "depends_on"
+          ]
+        },
+        "relation_confidence": {
+          "$ref": "../common/common.schema.json#/$defs/confidence",
+          "description": "Explicit control against over-association: linking unrelated facts into a neat but false synthesis. Low-confidence relations are flagged to the Adversarial Reviewer."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

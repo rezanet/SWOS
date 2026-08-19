@@ -1,0 +1,18 @@
+{
+  "evaluation": {
+    "all_required_planes": "pass",
+    "any_plane": "pass"
+  },
+  "reviews": {
+    "open_blocker_findings": 0
+  },
+  "gate": {
+    "provenance_completeness": "pass",
+    "human_approval_threshold": "pass"
+  },
+  "output": {
+    "audit_pack": {
+      "complete": true
+    }
+  }
+}

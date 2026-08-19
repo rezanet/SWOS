@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/1.0.0/evaluation/evaluation-result.schema.json",
+  "title": "SWOS Evaluation Result",
+  "description": "Output of the evaluation harness. Eight planes. Release is gated on this document, not on reviewer opinion.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "work_id",
+    "run_id",
+    "planes",
+    "release_decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "work_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "run_id": {
+      "$ref": "../common/common.schema.json#/$defs/id"
+    },
+    "harness_version": {
+      "$ref": "../common/common.schema.json#/$defs/semver"
+    },
+    "subject_versions": {
+      "type": "object",
+      "description": "What was under test. Regression is meaningless without this.",
+      "properties": {
+        "prompt_contract_version": {
+          "type": "string"
+        },
+        "schema_pack_version": {
+          "type": "string"
+        },
+        "agent_pack_version": {
+          "type": "string"
+        },
+        "model_id": {
+          "type": "string"
+        },
+        "retriever_id": {
+          "type": "string"
+        },
+        "discipline_pack_versions": {
+          "type": "object"
+        }
+      }
+    },
+    "planes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/plane"
+      }
+    },
+    "release_decision": {
+      "type": "object",
+      "required": [
+        "decision",
+        "decided_at"
+      ],
+      "properties": {
+        "decision": {
+          "type": "string",
+          "enum": [
+            "release",
+            "block",
+            "release_with_conditions",
+            "rollback"
+          ]
+        },
+        "blocking_planes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "decided_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sdl_decision_id": {
+          "$ref": "../common/common.schema.json#/$defs/id"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "plane": {
+      "type": "object",
+      "required": [
+        "plane",
+        "gate_result",
+        "metrics"
+      ],
+      "properties": {
+        "plane": {
+          "type": "string",
+          "enum": [
+            "retrieval",
+            "grounding",
+            "citation",
+            "scholarly",
+            "governance",
+            "regression",
+            "memory_contamination",
+            "adversarial"
+          ]
+        },
+        "gate_result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "warn",
+            "not_run"
+          ]
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "metric",
+              "value"
+            ],
+            "properties": {
+              "metric": {
+                "type": "string",
+                "description": "Retrieval plane uses context precision, context recall, hit rate@k, MRR, nDCG, source diversity, seminal-source recall, counter-position recall. Grounding plane uses faithfulness and unsupported-claim rate. Citation plane uses citation existence rate, metadata correctness, citation precision/recall/F1 and laundering-detection rate."
+              },
+              "value": {
+                "type": "number"
+              },
+              "threshold": {
+                "type": "number"
+              },
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "higher_is_better",
+                  "lower_is_better"
+                ]
+              },
+              "passed": {
+                "type": "boolean"
+              },
+              "baseline_value": {
+                "type": "number",
+                "description": "Previous release. Used by the regression plane."
+              }
+            }
+          }
+        },
+        "fixtures_run": {
+          "type": "integer"
+        },
+        "failures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "fixture_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "hidden_set": {
+          "type": "boolean",
+          "description": "True where a non-public fixture set was used. Rotating hidden sets are the control against evaluation gaming."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

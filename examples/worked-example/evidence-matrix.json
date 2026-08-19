@@ -1,0 +1,180 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-4f3a91c2-0b7d-4e18-9a52-6c81de7f0a33",
+  "audit": {
+    "created_at": "2026-01-06T12:05:00Z",
+    "created_by": {
+      "actor_type": "agent",
+      "actor_id": "swos-citation-auditor",
+      "display_name": "Citation Auditor"
+    },
+    "content_hash": "sha256:3f1a...c907"
+  },
+  "coverage": {
+    "total_claims": 3,
+    "supported_claims": 2,
+    "unsupported_claims": 1,
+    "uncertain_claims": 1,
+    "counter_evidence_present": true,
+    "source_diversity_index": 0.58
+  },
+  "rows": [
+    {
+      "claim_id": "clm-00000001-0000-4000-8000-000000000000",
+      "claim_text": "Participants aged 65-74 receiving intervention X showed improvement on the primary outcome relative to controls in a single urban cohort.",
+      "epistemic_type": "source_backed_claim",
+      "confidence": "high",
+      "citation_burden": "single_source",
+      "discipline": "psychology",
+      "verification_status": "pass",
+      "epg_node_id": "prov-00000001-0000-4000-8000-000000000000",
+      "state": "approved",
+      "citations": [
+        {
+          "source_id": "src-00000001-0000-4000-8000-000000000000",
+          "source_instance_id": "src-0000000b-0000-4000-8000-000000000000",
+          "support_level": "directly_supports",
+          "evidence_span": {
+            "locator": "p. 6, Results, Table 2",
+            "quoted_text": "[rights-cleared excerpt] Among participants aged 65-74, the intervention group showed improvement on the primary outcome.",
+            "span_type": "table"
+          },
+          "verified_by": {
+            "actor_type": "agent",
+            "actor_id": "swos-citation-auditor"
+          },
+          "metadata_verified": true,
+          "retraction_checked": true,
+          "licence_cleared": true
+        }
+      ],
+      "counter_evidence": [],
+      "uncertainty": []
+    },
+    {
+      "claim_id": "clm-00000002-0000-4000-8000-000000000000",
+      "claim_text": "Intervention X causes improved outcomes in older adults generally.",
+      "epistemic_type": "unverified_claim",
+      "confidence": "low",
+      "citation_burden": "systematic_evidence_required",
+      "discipline": "psychology",
+      "verification_status": "fail",
+      "epg_node_id": "prov-00000002-0000-4000-8000-000000000000",
+      "state": "evidence_verified",
+      "citations": [
+        {
+          "source_id": "src-00000001-0000-4000-8000-000000000000",
+          "source_instance_id": "src-0000000b-0000-4000-8000-000000000000",
+          "support_level": "partially_supports",
+          "evidence_span": {
+            "locator": "p. 6, Results, Table 2",
+            "quoted_text": "[rights-cleared excerpt] Among participants aged 65-74, the intervention group showed improvement on the primary outcome.",
+            "span_type": "table"
+          },
+          "support_rationale": "The source supports an association in one age band within one urban cohort. It does not support (a) causation - the design is correlational - nor (b) the population 'older adults generally'. Two distinct scope failures.",
+          "verified_by": {
+            "actor_type": "agent",
+            "actor_id": "swos-citation-auditor"
+          },
+          "metadata_verified": true,
+          "retraction_checked": true,
+          "licence_cleared": true
+        }
+      ],
+      "counter_evidence": [
+        {
+          "source_id": "src-00000002-0000-4000-8000-000000000000",
+          "source_instance_id": "src-0000000c-0000-4000-8000-000000000000",
+          "support_level": "contradicts",
+          "evidence_span": {
+            "locator": "p. 11, Discussion",
+            "quoted_text": "[rights-cleared excerpt] A pre-registered replication in a rural cohort did not reproduce the association.",
+            "span_type": "passage"
+          },
+          "verified_by": {
+            "actor_type": "agent",
+            "actor_id": "swos-citation-auditor"
+          },
+          "metadata_verified": true,
+          "retraction_checked": true,
+          "licence_cleared": true
+        }
+      ],
+      "uncertainty": [
+        "conflicting_evidence",
+        "method_uncertainty",
+        "domain_transfer_risk"
+      ]
+    },
+    {
+      "claim_id": "clm-00000003-0000-4000-8000-000000000000",
+      "claim_text": "The available evidence is insufficient to license a causal claim for intervention X in older adults.",
+      "epistemic_type": "critical_assessment",
+      "confidence": "high",
+      "citation_burden": "multi_source",
+      "discipline": "psychology",
+      "verification_status": "pass",
+      "epg_node_id": "prov-00000003-0000-4000-8000-000000000000",
+      "state": "approved",
+      "citations": [
+        {
+          "source_id": "src-00000001-0000-4000-8000-000000000000",
+          "source_instance_id": "src-0000000b-0000-4000-8000-000000000000",
+          "support_level": "directly_supports",
+          "evidence_span": {
+            "locator": "p. 4, Methods",
+            "quoted_text": "[rights-cleared excerpt] This was a cross-sectional observational design.",
+            "span_type": "method_detail"
+          },
+          "support_rationale": "The design statement is what licenses the assessment: a cross-sectional design cannot support a causal claim.",
+          "verified_by": {
+            "actor_type": "agent",
+            "actor_id": "swos-methodologist"
+          },
+          "metadata_verified": true,
+          "retraction_checked": true,
+          "licence_cleared": true
+        },
+        {
+          "source_id": "src-00000002-0000-4000-8000-000000000000",
+          "source_instance_id": "src-0000000c-0000-4000-8000-000000000000",
+          "support_level": "directly_supports",
+          "evidence_span": {
+            "locator": "p. 11, Discussion",
+            "quoted_text": "[rights-cleared excerpt] A pre-registered replication in a rural cohort did not reproduce the association.",
+            "span_type": "passage"
+          },
+          "verified_by": {
+            "actor_type": "agent",
+            "actor_id": "swos-methodologist"
+          },
+          "metadata_verified": true,
+          "retraction_checked": true,
+          "licence_cleared": true
+        },
+        {
+          "source_id": "src-00000003-0000-4000-8000-000000000000",
+          "source_instance_id": "src-0000000d-0000-4000-8000-000000000000",
+          "support_level": "context_only",
+          "evidence_span": {
+            "locator": "p. 2, Introduction",
+            "quoted_text": "[rights-cleared excerpt] Evidence for this intervention class remains mixed.",
+            "span_type": "passage"
+          },
+          "support_rationale": "Context only. Recorded to show it was considered and did NOT contribute support - a claim supported only by context-only citations is unsupported.",
+          "verified_by": {
+            "actor_type": "agent",
+            "actor_id": "swos-citation-auditor"
+          },
+          "metadata_verified": true,
+          "retraction_checked": true,
+          "licence_cleared": true
+        }
+      ],
+      "counter_evidence": [],
+      "uncertainty": [
+        "weak_support"
+      ]
+    }
+  ]
+}

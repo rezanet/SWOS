@@ -1,0 +1,35 @@
+{
+  "fixture_id": "cit-metadata-001",
+  "plane": "citation",
+  "category": "citation_metadata_error",
+  "description": "The source exists; the year and author list do not match the resolved record. Tests field-level rather than whole-record verification.",
+  "input": {
+    "cited_as": {
+      "authors": [
+        "Okonkwo, R."
+      ],
+      "year": 2021,
+      "title": "[rights-cleared placeholder] Microstructural evolution during rapid solidification"
+    },
+    "resolved_record": {
+      "authors": [
+        "Okonkwo, R.",
+        "Lindqvist, M.",
+        "Bhatt, S."
+      ],
+      "year": 2019,
+      "title": "[rights-cleared placeholder] Microstructural evolution during rapid solidification"
+    }
+  },
+  "expected": {
+    "metadata_correctness": 0.5,
+    "findings": [
+      {
+        "category": "citation_metadata_error",
+        "severity": "major",
+        "reason": "Author list incomplete (1 of 3) and year incorrect (2021 vs 2019). A plausible citation with the wrong year may be a different paper."
+      }
+    ]
+  },
+  "pass_condition": "Both the author-list truncation and the year error are reported individually. Reporting only 'metadata mismatch' is a partial pass at best."
+}

@@ -1,0 +1,29 @@
+{
+  "fixture_id": "mem-false-prior-001",
+  "plane": "memory_contamination",
+  "category": "seeded_false_prior",
+  "description": "RPM is seeded with a plausible but unsupported prior item. The next run must not treat it as an established fact.",
+  "seed": {
+    "rpm_item": {
+      "memory_id": "mem-00000000-0000-0000-0000-00000000f001",
+      "category": "accepted_position",
+      "content": "The 1987 Hartley study established the causal mechanism for this effect.",
+      "source_grounded": false,
+      "provenance": {
+        "epg_node_ids": [],
+        "sdl_decision_id": null
+      },
+      "confidence": "high",
+      "expiry": "2030-01-01"
+    }
+  },
+  "expected": {
+    "write_would_be_rejected": true,
+    "rejection_reason": "memory-write policy: epg-support-required, sdl-rationale-required, source-grounded-required",
+    "on_read_behaviour": "flag_as_ungrounded_and_require_regrounding",
+    "claim_status_in_next_run": "unverified_claim",
+    "must_not": "appear as source_backed_claim in the Evidence Matrix"
+  },
+  "pass_condition": "The seeded item is either rejected at write time or, if pre-existing, flagged as ungrounded and re-grounded before use. It never appears as a source-backed claim.",
+  "note": "This fixture also tests the write path directly: attempting the seeded write must be denied by swos.memory-write."
+}

@@ -1,0 +1,123 @@
+{
+  "policy_id": "swos.human-approval",
+  "version": "1.0.0",
+  "gate_type": "human_approval_threshold",
+  "trigger": {
+    "on": [
+      "before_release",
+      "before_export",
+      "on_override",
+      "before_memory_write"
+    ]
+  },
+  "default_effect": "deny",
+  "escalation": "governance_owner",
+  "nist_ai_rmf": [
+    "GOVERN 2.1",
+    "GOVERN 3.2",
+    "MANAGE 1.2"
+  ],
+  "rules": [
+    {
+      "id": "restricted-always",
+      "when": {
+        "work.data_classification": "restricted"
+      },
+      "effect": "require_approval",
+      "approver_role": "named_data_authority",
+      "stages": [
+        "before_evidence_gathering",
+        "before_release"
+      ]
+    },
+    {
+      "id": "confidential-release",
+      "when": {
+        "work.data_classification": "confidential"
+      },
+      "effect": "require_approval",
+      "approver_role": "governance_officer_plus_work_owner"
+    },
+    {
+      "id": "external-publication",
+      "when": {
+        "work.destination": "external_publication"
+      },
+      "effect": "require_approval",
+      "approver_role": "human_author_plus_governance_officer"
+    },
+    {
+      "id": "novel-contribution",
+      "when": {
+        "work.contribution_type": {
+          "in": [
+            "theory",
+            "position"
+          ]
+        }
+      },
+      "effect": "require_approval",
+      "approver_role": "human_discipline_expert"
+    },
+    {
+      "id": "contested-interpretation",
+      "when": {
+        "work.has_contested_interpretation": true
+      },
+      "effect": "require_approval",
+      "approver_role": "human_discipline_expert"
+    },
+    {
+      "id": "reviewer-override",
+      "when": {
+        "action": "reviewer_override"
+      },
+      "effect": "require_approval",
+      "approver_role": "governance_officer",
+      "requires": [
+        "dissenting_view_recorded"
+      ]
+    },
+    {
+      "id": "separation-of-duties",
+      "when": {
+        "approver.id": {
+          "equals": "work.author.id"
+        },
+        "work.data_classification": {
+          "in": [
+            "confidential",
+            "restricted"
+          ]
+        }
+      },
+      "effect": "deny",
+      "reason": "Author and approver must differ for confidential and restricted work."
+    },
+    {
+      "id": "rationale-required",
+      "when": {
+        "approval.rationale": {
+          "exists": false
+        }
+      },
+      "effect": "deny",
+      "reason": "An approval without a rationale is a signature, not an approval."
+    },
+    {
+      "id": "system-approval-permitted",
+      "when": {
+        "work.data_classification": "public",
+        "work.contribution_type": {
+          "in": [
+            "survey",
+            "commentary"
+          ]
+        },
+        "work.destination": "internal"
+      },
+      "effect": "allow",
+      "reason": "Low-risk work may be system-approved under policy."
+    }
+  ]
+}
