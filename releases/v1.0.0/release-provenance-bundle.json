@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0.0",
+  "work_id": "work-7cb5c380-b340-454f-8f08-e05b23c366c4",
+  "prov_compatibility": {
+    "prov_model": "W3C PROV-DM",
+    "serialisation": "prov-json"
+  },
+  "entities": [
+    {
+      "entity_id": "prov-462dfb7b-5aa1-4b06-bb5f-ea45df307241",
+      "entity_type": "source_instance",
+      "label": "SWOS v1.0.0 release-candidate base bcf096fe87585121729d80e32e672ba772eb06f5",
+      "identifiers": {
+        "url": "https://github.com/rezanet/SWOS/commit/bcf096fe87585121729d80e32e672ba772eb06f5",
+        "content_hash": "bcf096fe87585121729d80e32e672ba772eb06f5"
+      },
+      "data_classification": "public",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "entity_id": "prov-494834b4-0f5c-451f-b767-cfde4ae74ffc",
+      "entity_type": "output_bundle",
+      "label": "SWOS v1.0.0 release notes",
+      "identifiers": {
+        "url": "https://github.com/rezanet/SWOS/blob/release/v1.0.0/releases/v1.0.0/RELEASE-NOTES.md"
+      },
+      "data_classification": "public",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "entity_id": "prov-8b443925-b5e4-47e6-b262-f6c365b0d1d9",
+      "entity_type": "audit_pack",
+      "label": "SWOS v1.0.0 release audit",
+      "identifiers": {
+        "url": "https://github.com/rezanet/SWOS/blob/release/v1.0.0/releases/v1.0.0/RELEASE-AUDIT.md"
+      },
+      "data_classification": "public",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "entity_id": "prov-3c1fc823-2fd4-406c-80e9-89800c036baf",
+      "entity_type": "decision_record",
+      "label": "SWOS v1.0.0 backout record",
+      "identifiers": {
+        "url": "https://github.com/rezanet/SWOS/blob/release/v1.0.0/releases/v1.0.0/BACKOUT.md"
+      },
+      "data_classification": "public",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "entity_id": "prov-5b8a45d7-ce4d-4fc4-9110-5fd137ce5a42",
+      "entity_type": "decision_record",
+      "label": "SWOS v1.0.0 release SDL",
+      "identifiers": {
+        "url": "https://github.com/rezanet/SWOS/blob/release/v1.0.0/releases/v1.0.0/release-sdl.json"
+      },
+      "data_classification": "public",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "entity_id": "prov-e609c8a6-89c2-489b-b7a7-786335d548bc",
+      "entity_type": "evaluation_result",
+      "label": "SWOS CI result for release PR #2",
+      "identifiers": {
+        "url": "https://github.com/rezanet/SWOS/pull/2"
+      },
+      "data_classification": "public",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    }
+  ],
+  "activities": [
+    {
+      "activity_id": "prov-62a52a2b-0e2c-491a-8bbf-58b8a9caebb5",
+      "activity_type": "evaluation",
+      "started_at": "2026-08-19T15:01:00Z",
+      "parameters": {
+        "scope": "SWOS v1.0.0 release checklist",
+        "base_commit": "bcf096fe87585121729d80e32e672ba772eb06f5"
+      },
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "activity_id": "prov-adc33424-075d-4999-bd5d-c2a3fe2c86c3",
+      "activity_type": "approval",
+      "started_at": "2026-08-19T15:01:00Z",
+      "parameters": {
+        "policy": "swos.release-gate@1.0.0",
+        "state": "pending-final-ci"
+      },
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "activity_id": "prov-12152773-3480-4802-a395-0ebdeb6430ab",
+      "activity_type": "export",
+      "started_at": "2026-08-19T15:01:00Z",
+      "parameters": {
+        "target": "GitHub tag/release v1.0.0",
+        "state": "not-yet-published"
+      },
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    }
+  ],
+  "agents": [
+    {
+      "agent_id": "agt-184985b7-5fb8-4367-a5ba-4ebccb1873f7",
+      "agent_kind": "governance_approver",
+      "label": "github:rezanet repository owner / release approver"
+    },
+    {
+      "agent_id": "agt-9915fe06-e228-4746-a1fd-4fe5de43a886",
+      "agent_kind": "specialist_agent",
+      "label": "SWOS release audit agent",
+      "version": "GPT-5.6 Sol"
+    },
+    {
+      "agent_id": "agt-d5302ae9-db92-4e90-a0fa-710d6ddb7d9c",
+      "agent_kind": "tool",
+      "label": "GitHub Actions SWOS CI"
+    }
+  ],
+  "relations": [
+    {
+      "relation_type": "wasDerivedFrom",
+      "subject": "prov-494834b4-0f5c-451f-b767-cfde4ae74ffc",
+      "object": "prov-462dfb7b-5aa1-4b06-bb5f-ea45df307241",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "relation_type": "wasGeneratedBy",
+      "subject": "prov-8b443925-b5e4-47e6-b262-f6c365b0d1d9",
+      "object": "prov-62a52a2b-0e2c-491a-8bbf-58b8a9caebb5",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "relation_type": "wasGeneratedBy",
+      "subject": "prov-3c1fc823-2fd4-406c-80e9-89800c036baf",
+      "object": "prov-62a52a2b-0e2c-491a-8bbf-58b8a9caebb5",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "relation_type": "wasGeneratedBy",
+      "subject": "prov-5b8a45d7-ce4d-4fc4-9110-5fd137ce5a42",
+      "object": "prov-adc33424-075d-4999-bd5d-c2a3fe2c86c3",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "relation_type": "evaluatedBy",
+      "subject": "prov-e609c8a6-89c2-489b-b7a7-786335d548bc",
+      "object": "agt-d5302ae9-db92-4e90-a0fa-710d6ddb7d9c",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "relation_type": "wasAssociatedWith",
+      "subject": "prov-62a52a2b-0e2c-491a-8bbf-58b8a9caebb5",
+      "object": "agt-9915fe06-e228-4746-a1fd-4fe5de43a886",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "relation_type": "wasAssociatedWith",
+      "subject": "prov-adc33424-075d-4999-bd5d-c2a3fe2c86c3",
+      "object": "agt-184985b7-5fb8-4367-a5ba-4ebccb1873f7",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    }
+  ],
+  "bundles": [
+    {
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664",
+      "asserted_by": {
+        "actor_type": "agent",
+        "actor_id": "swos-release-audit-agent",
+        "version": "GPT-5.6 Sol"
+      },
+      "asserted_at": "2026-08-19T15:01:00Z",
+      "scope": "release",
+      "member_entity_ids": [
+        "prov-462dfb7b-5aa1-4b06-bb5f-ea45df307241",
+        "prov-494834b4-0f5c-451f-b767-cfde4ae74ffc",
+        "prov-8b443925-b5e4-47e6-b262-f6c365b0d1d9",
+        "prov-3c1fc823-2fd4-406c-80e9-89800c036baf",
+        "prov-5b8a45d7-ce4d-4fc4-9110-5fd137ce5a42",
+        "prov-e609c8a6-89c2-489b-b7a7-786335d548bc"
+      ],
+      "frozen": false
+    }
+  ]
+}

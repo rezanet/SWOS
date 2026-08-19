@@ -3,7 +3,9 @@
 Format follows Keep a Changelog. Versioning is Semantic Versioning applied to
 **contracts and schemas**, not to prose.
 
-## [1.0.0] - Specification Lock
+## [1.0.0] - 2026-08-20
+
+**Specification Lock**
 
 The v1.0.0 release freezes the contract and schema layer. This is the release the
 architecture assessment called for: do not spend the next milestone polishing
@@ -58,6 +60,14 @@ prompt wording or adding agents - spend it extracting contracts.
 * Discipline specialists ship as packs, not agents. Promotion to an agent
   requires a specialised tool or workflow. See `adr/ADR-0005`.
 * MCP is optional, never mandatory. See `adr/ADR-0009`.
+
+### Release hardening
+* Fixed the CI evaluation matrix to use the canonical `memory_contamination`
+  plane name.
+* Hardened DCO enforcement so pull requests and pushes validate explicit commit
+  ranges, empty ranges fail closed, and `Signed-off-by` is parsed as a Git
+  trailer rather than matched as free text.
+* Added the governed v1.0.0 release audit pack under `releases/v1.0.0/`.
 
 ### Known gaps carried to 1.1
 * No reference retrieval corpus is bundled. Adapters exist; corpus choice is the
