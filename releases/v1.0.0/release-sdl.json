@@ -47,6 +47,53 @@
         "prov-e609c8a6-89c2-489b-b7a7-786335d548bc",
         "prov-462dfb7b-5aa1-4b06-bb5f-ea45df307241"
       ]
+    },
+    {
+      "decision_id": "dec-1f5cda50-b6f0-419b-a9b5-c5945ff065ff",
+      "decision_type": "release",
+      "question": "After the release-record PR passed every required SWOS CI gate, should SWOS v1.0.0 now be published?",
+      "options_considered": [
+        {
+          "option": "Release SWOS v1.0.0"
+        },
+        {
+          "option": "Block release despite green gates",
+          "why_rejected": "No blocking evaluation, governance, provenance, DCO, schema, adapter, ADR, backout, or approval condition remains open."
+        },
+        {
+          "option": "Delay to a later version",
+          "why_rejected": "The v1.0.0 specification-lock scope is complete and its known implementation gaps are explicitly deferred to 1.1 rather than concealed."
+        }
+      ],
+      "selected_option": "Release SWOS v1.0.0",
+      "rationale": "GitHub Actions run 32268253554 on release PR #2 passed schema/contract conformance, Agent Skills portability, governance policy checks, hardened DCO validation, and all eight evaluation planes. The changelog is dated and retains known gaps, the backout plan is documented and dry-run tested, release notes are signed, the release provenance bundle is frozen, no waiver is used, and no blocker remains open. Publication is therefore allowed under swos.release-gate@1.0.0.",
+      "criteria_applied": [
+        "swos.release-gate@1.0.0",
+        "docs/operations-and-lifecycle-playbook.md release checklist"
+      ],
+      "confidence": "high",
+      "review_status": "passed",
+      "responsible_agent": {
+        "actor_type": "agent",
+        "actor_id": "swos-governance-officer",
+        "display_name": "SWOS Governance Officer"
+      },
+      "human_approver": {
+        "actor_type": "human",
+        "actor_id": "github:rezanet",
+        "display_name": "Repository owner / governance approver"
+      },
+      "policy_basis": "swos.release-gate@1.0.0",
+      "timestamp": "2026-08-19T15:11:00Z",
+      "lifecycle_status": "approved",
+      "reversibility": "locked",
+      "supersedes_decision_id": "dec-d6467b6d-90b9-4cc3-9ddd-ec56091b09b3",
+      "epg_node_ids": [
+        "prov-8b443925-b5e4-47e6-b262-f6c365b0d1d9",
+        "prov-e609c8a6-89c2-489b-b7a7-786335d548bc",
+        "prov-462dfb7b-5aa1-4b06-bb5f-ea45df307241",
+        "prov-494834b4-0f5c-451f-b767-cfde4ae74ffc"
+      ]
     }
   ]
 }

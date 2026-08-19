@@ -1,52 +1,55 @@
 # SWOS v1.0.0 Final Release Audit
 
-**Audit state:** candidate — final CI and approval pending  
+**Audit state:** PASS — release approved  
 **Audit date:** 2026-08-20  
 **Release-audit base:** `bcf096fe87585121729d80e32e672ba772eb06f5`  
+**Final candidate CI:** GitHub Actions run `32268253554` on PR #2  
 **Policy basis:** `swos.release-gate@1.0.0` and `docs/operations-and-lifecycle-playbook.md`
 
 ## Scope
 
-This audit applies SWOS's own release checklist to the first public v1.0.0 specification-lock release. The default effect of the release gate is deny; publication is allowed only after every required item is evidenced or explicitly not applicable.
+This audit applies SWOS's own release checklist to the first public v1.0.0 specification-lock release. The release gate is fail-closed: publication is allowed only after every required item is evidenced or explicitly not applicable.
 
 ## Checklist
 
-| Requirement | Candidate status | Evidence / disposition |
+| Requirement | Final status | Evidence / disposition |
 |---|---|---|
-| `make validate` green | PENDING FINAL PR CI | Release PR must pass Schema and contract conformance. |
-| `make lint-skills` green | PENDING FINAL PR CI | Release PR must pass Agent Skills six-field constraint. |
-| `make governance-check` green | PENDING FINAL PR CI | Release PR must pass Governance policy check. |
-| `make eval` green; no plane regressed | PENDING FINAL PR CI | All eight planes must pass. v1.0.0 evaluates in contract mode when no system is bound. |
-| Every ADR for this release merged | PASS | ADR-0001 through ADR-0010 are on `main`; no open PR existed when the release branch was created. |
-| `CHANGELOG.md` updated, including known gaps | PASS | v1.0.0 entry retained and dated; three known gaps remain explicitly carried to 1.1. |
+| `make validate` green | PASS | Run `32268253554`: Schema and contract conformance succeeded. |
+| `make lint-skills` green | PASS | Run `32268253554`: Agent Skills six-field constraint succeeded. |
+| `make governance-check` green | PASS | Run `32268253554`: Governance policy check succeeded. |
+| `make eval` green; no plane regressed | PASS | Run `32268253554`: retrieval, grounding, citation, scholarly, governance, regression, memory_contamination and adversarial all succeeded. |
+| Every ADR for this release merged | PASS | ADR-0001 through ADR-0010 are on `main`; no unresolved release ADR remains. |
+| `CHANGELOG.md` updated, including known gaps | PASS | v1.0.0 is dated 2026-08-20; all three known gaps remain explicitly carried to 1.1. |
 | Schema versions unchanged or migration + ADR | PASS | Comparison `d925668..bcf096fe` changes only `.github/workflows/swos-ci.yml` and `tools/check_dco.py`; no contract/schema drift. |
-| Adapter capability matrices reviewed | PASS / NO CAPABILITY DELTA | Release-record work adds no host capability and changes no adapter matrix requirement. |
-| Release notes signed | PENDING FINAL APPROVAL | Candidate notes exist; final sign-off becomes effective only after final CI and SDL approval. |
-| Release provenance bundle created and frozen | CREATED / NOT YET FROZEN | Candidate EPG bundle exists with release scope; `frozen` remains false until final CI passes. |
-| Governance-owner approval recorded as SDL `release` | CONDITIONAL / PENDING | Candidate release decision exists with `review_status: pending`; final approval follows CI. |
-| Backout plan documented and tested | PASS | `BACKOUT.md` records a non-destructive dry-run appropriate to a first release. |
+| Adapter capability matrices reviewed | PASS / NO CAPABILITY DELTA | Release records add no host capability and require no adapter matrix change. |
+| Release notes signed | PASS | `RELEASE-NOTES.md` contains final repository-owner approval and the finalization commit carries a DCO sign-off. |
+| Release provenance bundle created and frozen | PASS | `release-provenance-bundle.json` has release scope, CI evidence, approval relations and `frozen: true`. |
+| Governance-owner approval recorded as SDL `release` | PASS | `release-sdl.json` appends approved release decision `dec-1f5cda50-b6f0-419b-a9b5-c5945ff065ff` under `swos.release-gate@1.0.0`. |
+| Backout plan documented and tested | PASS | `BACKOUT.md` records a non-destructive first-release withdrawal dry run. |
 
 ## Release-gate policy checks
 
-| Gate rule | Candidate status |
+| Gate rule | Final status |
 |---|---|
-| all required evaluation planes pass | PENDING FINAL PR CI |
-| no required plane is `not_run` | PENDING FINAL PR CI |
-| zero open blocker findings | PASS — no unresolved release blocker has been identified in this audit |
-| provenance completeness | PENDING FREEZE |
-| audit pack complete | PASS — audit, provenance, SDL, release notes and backout record are present |
-| required human approval recorded | PENDING FINAL SDL APPROVAL |
-| waiver shape | NOT APPLICABLE — no waiver is being used |
+| all required evaluation planes pass | PASS |
+| no required plane is `not_run` | PASS |
+| zero open blocker findings | PASS |
+| provenance completeness | PASS |
+| audit pack complete | PASS |
+| required human approval recorded | PASS |
+| waiver shape | NOT APPLICABLE — no waiver used |
 
 ## Material findings
 
-1. **No contract/schema drift:** the post-publication fixes were limited to CI matrix wiring and DCO enforcement.
-2. **DCO is fail-closed:** the hardened checker selects explicit event ranges, rejects empty ranges and validates actual `Signed-off-by` trailers.
-3. **Evaluation qualification:** contract-mode PASS means gate/fixture conformance, not empirical quality of an unbound AI system. The release notes state this plainly.
-4. **First-release rollback semantics:** there is no legitimate previous supported version. Backout means withdrawal to “no supported release” while preserving history.
+1. **No contract/schema drift:** the post-publication fixes before release records were limited to CI matrix wiring and DCO enforcement.
+2. **DCO is fail-closed:** explicit event ranges are checked, empty ranges fail, and sign-offs are parsed as Git trailers.
+3. **Evaluation qualification:** v1.0.0's green evaluation is contract-mode conformance unless a system under test is explicitly bound; this release does not overclaim empirical model quality.
+4. **First-release rollback semantics:** there is no previous supported release. Backout means withdrawal to “no supported release” while preserving tag, commits, provenance and SDL history.
 
-## Candidate decision
+## Final decision
 
-**BLOCK UNTIL FINALISATION.** The release artefacts are complete enough to enter final CI, but SWOS v1.0.0 must not be tagged while the SDL is pending or the provenance bundle is unfrozen.
+**RELEASE APPROVED.**
 
-After the release-record PR is green, this audit will be updated to PASS, the release SDL will be approved, and the provenance bundle will be frozen.
+All checklist items required by SWOS's own release playbook are closed. No waiver is in force. The release provenance bundle is frozen and the final SDL approval is recorded.
+
+The tag `v1.0.0` must point to the merge commit of PR #2 (the commit containing these finalized records), not to the earlier package-publication commit.

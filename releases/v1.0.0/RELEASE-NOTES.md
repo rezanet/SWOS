@@ -1,7 +1,6 @@
 # SWOS v1.0.0 — Specification Lock
 
-**Release status:** candidate — publication is blocked until the release-record PR passes all SWOS CI gates, the release SDL is approved, and the provenance bundle is frozen.
-
+**Release status:** FINAL — approved for publication  
 **Release date:** 2026-08-20
 
 SWOS v1.0.0 is the first public governed release of the Scholarly Writing Operating System. It freezes the contract and schema layer at 1.0.0 and establishes the repository as a host-agnostic, model-agnostic scholarly reasoning platform built around explicit evidence, provenance, decision records, governance and evaluation.
@@ -17,7 +16,8 @@ This release includes:
 - eight-plane evaluation harness and fixtures;
 - host adapters for Agent Skills, Claude Code, Codex, MCP, CLI and IDE environments;
 - discipline packs, reviewer packs, worked examples and operations documentation;
-- event-aware, fail-closed DCO enforcement for pull requests and pushes.
+- event-aware, fail-closed DCO enforcement for pull requests and pushes;
+- a governed release audit pack under `releases/v1.0.0/`.
 
 ## Compatibility and version boundary
 
@@ -35,29 +35,37 @@ These are declared limitations, not silent omissions:
 
 ## Validation
 
-Final publication requires the release-record PR to pass:
+GitHub Actions run `32268253554` on release PR #2 passed:
 
 - schema and contract conformance;
 - Agent Skills six-field constraint;
 - governance policy check;
-- all eight evaluation planes;
-- hardened DCO sign-off verification.
+- hardened DCO sign-off verification;
+- retrieval;
+- grounding;
+- citation;
+- scholarly;
+- governance;
+- regression;
+- memory contamination;
+- adversarial evaluation planes.
 
 The evaluation harness in v1.0.0 runs in **contract mode** when no system under test is bound. A passing contract-mode run verifies fixture/gate conformance; it does not claim empirical model quality.
 
 ## Governance records
 
-The release audit pack is stored under `releases/v1.0.0/`:
+The frozen release audit pack is stored under `releases/v1.0.0/`:
 
 - `RELEASE-AUDIT.md`
 - `release-provenance-bundle.json`
 - `release-sdl.json`
 - `BACKOUT.md`
 
-The release must not be tagged until `release-sdl.json` is approved and `release-provenance-bundle.json` has `frozen: true`.
+Final release decision: `dec-1f5cda50-b6f0-419b-a9b5-c5945ff065ff`.
 
-## Authorisation
+## Approval and sign-off
 
-The repository owner explicitly authorised the final v1.0.0 release audit and publication workflow through the authenticated GitHub-connected session on 2026-08-20. Final approval remains conditional on the release SDL and final CI.
+The repository owner authorised this release workflow and the final release gate has passed under `swos.release-gate@1.0.0`.
 
-**Approver:** `github:rezanet` — repository owner / governance approver
+**Approved-by:** `github:rezanet` — repository owner / governance approver  
+**Signed-off-by:** Reza Negarestani <13441247+rezanet@users.noreply.github.com>

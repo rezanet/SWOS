@@ -60,9 +60,9 @@
     {
       "entity_id": "prov-e609c8a6-89c2-489b-b7a7-786335d548bc",
       "entity_type": "evaluation_result",
-      "label": "SWOS CI result for release PR #2",
+      "label": "SWOS CI run 32268253554 for release PR #2",
       "identifiers": {
-        "url": "https://github.com/rezanet/SWOS/pull/2"
+        "url": "https://github.com/rezanet/SWOS/actions/runs/32268253554"
       },
       "data_classification": "public",
       "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
@@ -73,9 +73,12 @@
       "activity_id": "prov-62a52a2b-0e2c-491a-8bbf-58b8a9caebb5",
       "activity_type": "evaluation",
       "started_at": "2026-08-19T15:01:00Z",
+      "ended_at": "2026-08-19T15:11:00Z",
       "parameters": {
         "scope": "SWOS v1.0.0 release checklist",
-        "base_commit": "bcf096fe87585121729d80e32e672ba772eb06f5"
+        "base_commit": "bcf096fe87585121729d80e32e672ba772eb06f5",
+        "ci_run_id": 32268253554,
+        "ci_result": "all-required-jobs-pass"
       },
       "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
     },
@@ -83,9 +86,11 @@
       "activity_id": "prov-adc33424-075d-4999-bd5d-c2a3fe2c86c3",
       "activity_type": "approval",
       "started_at": "2026-08-19T15:01:00Z",
+      "ended_at": "2026-08-19T15:11:00Z",
       "parameters": {
         "policy": "swos.release-gate@1.0.0",
-        "state": "pending-final-ci"
+        "state": "approved",
+        "decision_id": "dec-1f5cda50-b6f0-419b-a9b5-c5945ff065ff"
       },
       "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
     },
@@ -95,7 +100,7 @@
       "started_at": "2026-08-19T15:01:00Z",
       "parameters": {
         "target": "GitHub tag/release v1.0.0",
-        "state": "not-yet-published"
+        "state": "approved-for-publish"
       },
       "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
     }
@@ -160,6 +165,20 @@
       "subject": "prov-adc33424-075d-4999-bd5d-c2a3fe2c86c3",
       "object": "agt-184985b7-5fb8-4367-a5ba-4ebccb1873f7",
       "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "relation_type": "approvedBy",
+      "subject": "prov-494834b4-0f5c-451f-b767-cfde4ae74ffc",
+      "object": "agt-184985b7-5fb8-4367-a5ba-4ebccb1873f7",
+      "at_time": "2026-08-19T15:11:00Z",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
+    },
+    {
+      "relation_type": "approvedBy",
+      "subject": "prov-5b8a45d7-ce4d-4fc4-9110-5fd137ce5a42",
+      "object": "agt-184985b7-5fb8-4367-a5ba-4ebccb1873f7",
+      "at_time": "2026-08-19T15:11:00Z",
+      "bundle_id": "prov-78883b53-e95d-4e64-97fe-f909316a8664"
     }
   ],
   "bundles": [
@@ -170,7 +189,7 @@
         "actor_id": "swos-release-audit-agent",
         "version": "GPT-5.6 Sol"
       },
-      "asserted_at": "2026-08-19T15:01:00Z",
+      "asserted_at": "2026-08-19T15:11:00Z",
       "scope": "release",
       "member_entity_ids": [
         "prov-462dfb7b-5aa1-4b06-bb5f-ea45df307241",
@@ -180,7 +199,7 @@
         "prov-5b8a45d7-ce4d-4fc4-9110-5fd137ce5a42",
         "prov-e609c8a6-89c2-489b-b7a7-786335d548bc"
       ],
-      "frozen": false
+      "frozen": true
     }
   ]
 }
