@@ -1,0 +1,72 @@
+name: Feature request
+description: Propose a focused improvement to SWOS
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe the problem before prescribing an implementation. SWOS favors evidence-backed, testable changes over speculative complexity.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What user or system problem should be solved? Who experiences it, and why does it matter?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the smallest useful capability or behavior that would solve the problem.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches, workarounds, or existing SWOS capabilities did you consider?
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Give observable or testable conditions that would prove the feature works.
+      placeholder: |
+        - Given ... when ... then ...
+        - Regression fixture ... passes
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - SWOS Prose
+        - Evaluation / fixtures
+        - Contracts / schemas
+        - Discipline packs
+        - Reviewer packs
+        - Host adapters
+        - CLI / tooling
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I searched existing issues for a similar request.
+          required: true
+        - label: I have described a problem and testable outcome, not only an implementation preference.
+          required: true
