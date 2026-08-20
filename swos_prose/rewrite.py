@@ -14,7 +14,9 @@ from .anchors import extract_anchors
 from .models import VerificationResult, VerificationStatus
 from .pipeline import verify_rewrite
 from .providers.base import SemanticVerifierProvider
-from .providers.rewrite_base import RewriteProvider
+from .providers.rewrite_base import RewriteCandidate, RewriteProvider
+
+ASSURANCE_LEVELS = {"standard", "strict", "review"}
 
 
 @dataclass
@@ -99,6 +101,8 @@ def polish_text(
     No repair loop exists in this slice. Therefore REPAIR, REVIEW and REJECT are
     all non-releasable outcomes and return the original source as ``final_text``.
     """
+    if assurance not in ASSURANCE_LEVELS:
+        raise ValueError(f"Unknown assurance level: {assurance}")
     if not isinstance(source, str):
         raise TypeError("source must be a string")
     if not source.strip():
@@ -132,6 +136,17 @@ def polish_text(
             verification=None,
             used_source_fallback=True,
             notes=[f"Rewrite provider failed; source preserved: {exc}"],
+        )
+
+    if not isinstance(proposal, RewriteCandidate):
+        return PolishResult(
+            source=source,
+            candidate=source,
+            final_text=source,
+            assurance=assurance,
+            verification=None,
+            used_source_fallback=True,
+            notes=["Rewrite provider returned a malformed result object; source preserved."],
         )
 
     candidate = proposal.candidate_text
