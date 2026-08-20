@@ -37,6 +37,16 @@ ATTRIBUTION_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Evidence/context adjuncts that the provider may represent separately from the
+# relation object. Keep this reviewed and narrow: arbitrary ``in ...`` phrases
+# can be part of an entity and must not be stripped mechanically.
+_REVIEWED_RELATION_CONTEXT_SUFFIX_RE = re.compile(
+    r"\s+in\s+(?:the|this)\s+(?:"
+    r"observed\s+tests|sample|cohort|study|dataset|population"
+    r")\s*$",
+    re.IGNORECASE,
+)
+
 
 def _delta(
     delta_type: DeltaType,
@@ -97,6 +107,12 @@ def _normalise_role(text: str) -> str:
     return value
 
 
+def _normalise_relation_object(text: str) -> str:
+    value = " ".join(text.split()).strip(" .,:;!?")
+    value = _REVIEWED_RELATION_CONTEXT_SUFFIX_RE.sub("", value).rstrip()
+    return _normalise_role(value)
+
+
 def _normalise_optional(text: str | None) -> str | None:
     if text is None:
         return None
@@ -109,8 +125,22 @@ def _normalise_attribution(attribution: Attribution | None) -> tuple[str, str] |
     return (_normalise_role(attribution.agent), _normalise_role(attribution.act))
 
 
+def _embedded_relation_text(proposition: Proposition) -> str:
+    """Return relation surface with a reviewed attribution wrapper removed.
+
+    The provider contract stores attribution separately from relational roles.
+    When the proposition text still includes ``Smith reports that ...``, relation
+    parsing must therefore compare subject/object against the embedded claim,
+    while ``_raw_attribution`` independently validates the reporter and act.
+    """
+    match = ATTRIBUTION_RE.match(proposition.text)
+    if match is None:
+        return proposition.text
+    return proposition.text[match.end():].lstrip()
+
+
 def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | None:
-    match = RELATION_RE.match(proposition.text)
+    match = RELATION_RE.match(_embedded_relation_text(proposition))
     if not match:
         return None
     sign_token = match.group("sign")
@@ -121,7 +151,7 @@ def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | Non
     return (
         _normalise_role(match.group("subject")),
         " ".join(match.group("relation").casefold().split()),
-        _normalise_role(match.group("object")),
+        _normalise_relation_object(match.group("object")),
         sign,
     )
 
@@ -154,7 +184,7 @@ def _provider_frame_mismatches(proposition: Proposition) -> list[str]:
             mismatches.append("subject")
         if proposition.relation is not None and _normalise_optional(proposition.relation) != parsed[1]:
             mismatches.append("relation")
-        if proposition.object is not None and _normalise_role(proposition.object) != parsed[2]:
+        if proposition.object is not None and _normalise_relation_object(proposition.object) != parsed[2]:
             mismatches.append("object")
         if parsed[3] in {"positive", "negative"} and _normalise_optional(proposition.relation_sign) != parsed[3]:
             mismatches.append("relation_sign")
