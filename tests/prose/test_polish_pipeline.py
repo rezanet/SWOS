@@ -170,6 +170,32 @@ class PolishPipelineTests(unittest.TestCase):
         self.assertEqual(result.final_text, "   ")
         self.assertEqual(rewriter.calls, 0)
 
+    def test_invalid_assurance_fails_before_rewriter_call(self):
+        rewriter = StaticRewriteProvider("candidate")
+        with self.assertRaises(ValueError):
+            polish_text(
+                source="Source prose.",
+                rewrite_provider=rewriter,
+                verifier_provider=None,
+                assurance="unsafe",
+            )
+        self.assertEqual(rewriter.calls, 0)
+
+    def test_malformed_rewrite_provider_result_falls_back(self):
+        class MalformedRewriteProvider:
+            def rewrite(self, **kwargs):
+                return {"candidate_text": "Changed prose."}
+
+        source = "Source prose."
+        result = polish_text(
+            source=source,
+            rewrite_provider=MalformedRewriteProvider(),
+            verifier_provider=None,
+        )
+        self.assertEqual(result.final_text, source)
+        self.assertTrue(result.used_source_fallback)
+        self.assertIsNone(result.verification)
+
 
 class FakeResponse:
     def __init__(self, candidate: str):
