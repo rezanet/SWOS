@@ -8,6 +8,7 @@ source text.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import re
 from typing import Any
 
 from .anchors import extract_anchors
@@ -17,6 +18,56 @@ from .providers.base import SemanticVerifierProvider
 from .providers.rewrite_base import RewriteCandidate, RewriteProvider
 
 ASSURANCE_LEVELS = {"standard", "strict", "review"}
+
+_DEGREE_MARKERS = (
+    "somewhat",
+    "slightly",
+    "marginally",
+    "moderately",
+    "considerably",
+    "substantially",
+    "significantly",
+    "highly",
+    "strongly",
+    "partly",
+    "partially",
+    "largely",
+    "mostly",
+    "nearly",
+    "almost",
+    "barely",
+    "hardly",
+)
+
+_MODAL_MARKERS = (
+    "may",
+    "might",
+    "can",
+    "could",
+    "should",
+    "would",
+    "must",
+)
+
+
+def _present_markers(source: str, markers: tuple[str, ...]) -> list[str]:
+    return [
+        marker
+        for marker in markers
+        if re.search(rf"\b{re.escape(marker)}\b", source, re.IGNORECASE)
+    ]
+
+
+def _semantic_force_profile(source: str) -> dict[str, list[str]]:
+    """Expose source force-bearing language to the rewrite provider.
+
+    This profile guides generation only. It is not evidence of equivalence and
+    never substitutes for downstream semantic verification.
+    """
+    return {
+        "degree_markers": _present_markers(source, _DEGREE_MARKERS),
+        "modal_markers": _present_markers(source, _MODAL_MARKERS),
+    }
 
 
 @dataclass
@@ -56,7 +107,7 @@ class PolishResult:
         }
 
 
-def _polish_plan() -> dict[str, Any]:
+def _polish_plan(source: str) -> dict[str, Any]:
     return {
         "mode": "polish",
         "objectives": [
@@ -68,6 +119,7 @@ def _polish_plan() -> dict[str, Any]:
             "material propositions",
             "attribution",
             "uncertainty and modality",
+            "degree and scalar force",
             "negation",
             "causal force",
             "scope and quantifiers",
@@ -81,8 +133,11 @@ def _polish_plan() -> dict[str, Any]:
             "new citations or evidence",
             "certainty strengthening",
             "causal strengthening",
+            "degree-to-modality substitution",
+            "modal-force substitution",
             "ambiguity resolution by guess",
         ],
+        "semantic_force_profile": _semantic_force_profile(source),
     }
 
 
@@ -123,7 +178,7 @@ def polish_text(
             source=source,
             mode="polish",
             protected_anchors=protected_anchors,
-            rewrite_plan=_polish_plan(),
+            rewrite_plan=_polish_plan(source),
             context_before=context_before,
             context_after=context_after,
         )
