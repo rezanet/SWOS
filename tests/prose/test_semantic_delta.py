@@ -71,6 +71,29 @@ class SemanticDeltaTests(unittest.TestCase):
         result = verify_rewrite(source="The result may vary.", candidate="The result may vary.")
         self.assertEqual(result.status, VerificationStatus.PASS)
 
+    def test_terminal_newline_only_is_no_change_before_verifier(self):
+        result = verify_rewrite(
+            source="The claim is unchanged.\n",
+            candidate="The claim is unchanged.",
+            verifier_provider=EquivalentVerifier(),
+            assurance="strict",
+        )
+
+        self.assertEqual(result.status, VerificationStatus.PASS)
+        self.assertFalse(result.verifier_used)
+        self.assertEqual(result.verifier_skip_reason, "terminal_newline_only")
+        self.assertEqual(result.semantic_deltas, [])
+
+    def test_terminal_spaces_are_not_silently_normalized(self):
+        result = verify_rewrite(
+            source="The claim is unchanged. ",
+            candidate="The claim is unchanged.",
+            assurance="strict",
+        )
+
+        self.assertEqual(result.status, VerificationStatus.REVIEW)
+        self.assertEqual(result.verifier_skip_reason, "no_verifier_bound")
+
     def test_changed_text_without_semantic_verifier_requires_review(self):
         result = verify_rewrite(
             source="The experiment was difficult to reproduce.",
