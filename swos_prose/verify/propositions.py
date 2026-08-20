@@ -45,7 +45,7 @@ _REVIEWED_RELATION_CONTEXT_SUFFIX_RE = re.compile(
     re.IGNORECASE,
 )
 _REVIEWED_RELATION_CONTEXT_PREFIX_RE = re.compile(
-    r"^\s*,?\s*in\s+(?:the|this)\s+observed\s+tests\s*,\s*",
+    r"^\s*in\s+(?:the|this)\s+observed\s+tests\s*,\s*",
     re.IGNORECASE,
 )
 
@@ -132,6 +132,7 @@ def _normalise_role(text: str) -> str:
 
 
 def _normalise_relation_object(text: str) -> str:
+    """Return the base relation object, omitting only observed live context."""
     value = " ".join(text.split()).strip(" .,:;!?")
     value = _REVIEWED_RELATION_CONTEXT_SUFFIX_RE.sub("", value).rstrip()
     return _normalise_role(value)
@@ -161,24 +162,32 @@ def _canonical_reporting_act(text: str | None) -> str | None:
     return _REPORTING_ACT_CANONICAL.get(value)
 
 
-def _embedded_relation_text(proposition: Proposition) -> str:
-    """Return a relation surface after reviewed wrappers/adjuncts are removed.
+def _raw_embedded_claim_text(proposition: Proposition) -> str:
+    """Return the complete claim following a reviewed attribution wrapper."""
+    match = ATTRIBUTION_RE.match(proposition.text)
+    if match is None:
+        return proposition.text
+    text = proposition.text[match.end():].lstrip()
+    # Live prose may punctuate a fronted adjunct as ``reports that, in ...``.
+    # Remove only that one wrapper comma; the claim text itself remains intact.
+    if text.startswith(","):
+        text = text[1:].lstrip()
+    return text
 
-    The provider contract stores attribution separately from relational roles.
-    When proposition text still includes ``Smith reports that ...``, inner-role
-    parsing therefore starts at the embedded claim. The one evidence-context
-    adjunct observed in live dogfood may likewise be represented outside roles.
-    """
-    text = proposition.text
-    attribution = ATTRIBUTION_RE.match(text)
-    if attribution is not None:
-        text = text[attribution.end():].lstrip()
+
+def _embedded_relation_text(proposition: Proposition) -> str:
+    """Return the inner relation surface after reviewed context extraction."""
+    text = _raw_embedded_claim_text(proposition)
     text = _REVIEWED_RELATION_CONTEXT_PREFIX_RE.sub("", text)
     return text
 
 
+def _relation_match(proposition: Proposition) -> re.Match[str] | None:
+    return RELATION_RE.match(_embedded_relation_text(proposition))
+
+
 def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | None:
-    match = RELATION_RE.match(_embedded_relation_text(proposition))
+    match = _relation_match(proposition)
     if not match:
         return None
     sign_token = match.group("sign")
@@ -192,6 +201,23 @@ def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | Non
         _normalise_relation_object(match.group("object")),
         sign,
     )
+
+
+def _relation_object_matches(proposition: Proposition, provider_object: str) -> bool:
+    """Compare an object without allowing the provider to invent context.
+
+    The provider may either preserve the exact surface object or omit the one
+    reviewed ``in the observed tests`` suffix seen in live dogfood. The reverse
+    is not allowed: a provider-only scope adjunct must remain a frame conflict.
+    """
+    match = _relation_match(proposition)
+    if match is None:
+        return True
+    surface_object = match.group("object")
+    surface_full = _normalise_role(surface_object)
+    surface_base = _normalise_relation_object(surface_object)
+    supplied = _normalise_role(provider_object)
+    return supplied in {surface_full, surface_base}
 
 
 def _temporal_parts(proposition: Proposition) -> tuple[str, str] | None:
@@ -221,10 +247,9 @@ def _outer_attribution_frame_mismatches(
     """Validate a provider frame that models the outer reporting proposition.
 
     Luna may validly emit both ``Chen reports P`` and ``P`` as separate material
-    propositions. When relation names the reporting act, do not compare that
-    outer frame against the embedded association parser. Validate the reporter,
-    reporting act, and—when supplied—that its object is textually anchored in the
-    embedded proposition. The inner proposition remains independently verified.
+    propositions. When relation names the reporting act, validate the reporter,
+    act, and complete embedded claim. The inner proposition remains independently
+    verified when the provider emits it separately.
     """
     provider_act = _canonical_reporting_act(proposition.relation)
     raw_act = _canonical_reporting_act(raw_attribution[1])
@@ -235,11 +260,9 @@ def _outer_attribution_frame_mismatches(
     if proposition.subject is not None and _normalise_role(proposition.subject) != raw_attribution[0]:
         mismatches.append("subject")
 
-    if proposition.object is not None:
-        embedded = _normalise_frame_text(_embedded_relation_text(proposition))
-        provider_object = _normalise_frame_text(proposition.object)
-        if provider_object and provider_object not in embedded and embedded not in provider_object:
-            mismatches.append("object")
+    embedded = _normalise_frame_text(_raw_embedded_claim_text(proposition))
+    if proposition.object is None or _normalise_frame_text(proposition.object) != embedded:
+        mismatches.append("object")
     return mismatches
 
 
@@ -261,7 +284,7 @@ def _provider_frame_mismatches(proposition: Proposition) -> list[str]:
                 mismatches.append("subject")
             if proposition.relation is not None and _normalise_optional(proposition.relation) != parsed[1]:
                 mismatches.append("relation")
-            if proposition.object is not None and _normalise_relation_object(proposition.object) != parsed[2]:
+            if proposition.object is not None and not _relation_object_matches(proposition, proposition.object):
                 mismatches.append("object")
             if parsed[3] in {"positive", "negative"} and _normalise_optional(proposition.relation_sign) != parsed[3]:
                 mismatches.append("relation_sign")
@@ -271,8 +294,19 @@ def _provider_frame_mismatches(proposition: Proposition) -> list[str]:
     return mismatches
 
 
+def _structured_frame_supports_relation(proposition: Proposition, relation: str) -> bool:
+    """Return whether structured fields validly support the parsed inner relation."""
+    if _normalise_optional(proposition.relation) == relation:
+        return not _provider_frame_mismatches(proposition)
+    raw_attribution = _raw_attribution(proposition)
+    if raw_attribution is None:
+        return False
+    outer = _outer_attribution_frame_mismatches(proposition, raw_attribution)
+    return outer == [] and not _provider_frame_mismatches(proposition)
+
+
 def _is_symmetric_swap(source: Proposition, candidate: Proposition) -> bool:
-    """Return true only when raw text and structured frames prove a safe symmetric swap."""
+    """Return true only when text and structured frames prove a safe symmetric swap."""
     left = _relation_parts(source)
     right = _relation_parts(candidate)
     if left is None or right is None:
@@ -283,13 +317,9 @@ def _is_symmetric_swap(source: Proposition, candidate: Proposition) -> bool:
         return False
     if not (left[0] == right[2] and left[2] == right[0]):
         return False
-    if source.relation is None or candidate.relation is None:
-        return False
     return (
-        _normalise_optional(source.relation) == left[1]
-        and _normalise_optional(candidate.relation) == right[1]
-        and not _provider_frame_mismatches(source)
-        and not _provider_frame_mismatches(candidate)
+        _structured_frame_supports_relation(source, left[1])
+        and _structured_frame_supports_relation(candidate, right[1])
     )
 
 
