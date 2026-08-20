@@ -1,0 +1,150 @@
+"""Deterministic and heuristic semantic-delta checks."""
+from __future__ import annotations
+
+from collections import Counter
+
+from ..anchors import anchor_multiset, extract_anchors, extract_risk_signals
+from ..models import DeltaType, SemanticDelta, Severity
+
+
+def _delta(
+    delta_type: DeltaType,
+    explanation: str,
+    *,
+    source_span: str | None = None,
+    candidate_span: str | None = None,
+    severity: Severity = Severity.BLOCKER,
+    repairable: bool = False,
+    confidence: float = 1.0,
+) -> SemanticDelta:
+    return SemanticDelta(
+        delta_type=delta_type,
+        source_span=source_span,
+        candidate_span=candidate_span,
+        severity=severity,
+        explanation=explanation,
+        repairable=repairable,
+        confidence=confidence,
+    )
+
+
+def _counter_text(counter: Counter[str]) -> str:
+    return ", ".join(f"{item} x{count}" if count > 1 else item for item, count in sorted(counter.items()))
+
+
+def _compare_hard_anchors(source: str, candidate: str) -> tuple[list, list, list[SemanticDelta]]:
+    source_anchors = extract_anchors(source)
+    candidate_anchors = extract_anchors(candidate)
+    deltas: list[SemanticDelta] = []
+
+    mapping = {
+        "number": DeltaType.NUMBER_CHANGED,
+        "citation": DeltaType.CITATION_REMOVED,
+        "quotation": DeltaType.QUOTATION_CHANGED,
+    }
+    for kind, delta_type in mapping.items():
+        left = anchor_multiset(source_anchors, kind)
+        right = anchor_multiset(candidate_anchors, kind)
+        if left != right:
+            deltas.append(_delta(
+                delta_type,
+                f"Protected {kind} anchors differ between source and candidate.",
+                source_span=_counter_text(left) or None,
+                candidate_span=_counter_text(right) or None,
+                severity=Severity.BLOCKER,
+                repairable=False,
+            ))
+
+    return source_anchors, candidate_anchors, deltas
+
+
+def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[SemanticDelta]]:
+    """Return deterministic/high-risk deltas without claiming full equivalence.
+
+    Hard anchors (numbers, citations, quotations) are literal blockers. Linguistic
+    risk checks are conservative signals. Clear semantic strengthening is a
+    blocker; potentially safe paraphrases that require interpretation become
+    REVIEW-level warnings for the semantic verifier to resolve.
+    """
+    source_anchors, candidate_anchors, deltas = _compare_hard_anchors(source, candidate)
+    left = extract_risk_signals(source)
+    right = extract_risk_signals(candidate)
+
+    if bool(left.negations) != bool(right.negations):
+        deltas.append(_delta(
+            DeltaType.NEGATION_CHANGED,
+            "Negation is present on only one side of the rewrite.",
+            source_span=", ".join(left.negations) or None,
+            candidate_span=", ".join(right.negations) or None,
+        ))
+
+    # A weak modal disappearing is a direct certainty-strengthening risk.
+    if left.weak_modals and not right.weak_modals:
+        deltas.append(_delta(
+            DeltaType.MODALITY_STRENGTHENED,
+            "Source contains an explicit weak modal that the candidate removes.",
+            source_span=", ".join(left.weak_modals),
+            candidate_span=", ".join(right.weak_modals) or None,
+        ))
+
+    if left.suggestive_markers and right.strong_epistemic_markers:
+        deltas.append(_delta(
+            DeltaType.MODALITY_STRENGTHENED,
+            "Candidate replaces suggestive evidence language with a stronger epistemic verb.",
+            source_span=", ".join(left.suggestive_markers),
+            candidate_span=", ".join(right.strong_epistemic_markers),
+        ))
+
+    if left.association_markers and right.causal_markers:
+        deltas.append(_delta(
+            DeltaType.CAUSAL_STRENGTH_CHANGED,
+            "Candidate changes associative language into causal language.",
+            source_span=", ".join(left.association_markers),
+            candidate_span=", ".join(right.causal_markers),
+        ))
+    elif not left.causal_markers and right.causal_markers:
+        deltas.append(_delta(
+            DeltaType.CAUSAL_STRENGTH_CHANGED,
+            "Candidate introduces explicit causal language absent from the source.",
+            source_span=None,
+            candidate_span=", ".join(right.causal_markers),
+            severity=Severity.WARNING,
+            confidence=0.9,
+        ))
+
+    if Counter(left.quantifiers) != Counter(right.quantifiers):
+        strong = {"most", "all", "always"}
+        if strong.intersection(right.quantifiers) - strong.intersection(left.quantifiers):
+            severity = Severity.BLOCKER
+        else:
+            severity = Severity.WARNING
+        deltas.append(_delta(
+            DeltaType.QUANTIFIER_CHANGED,
+            "Quantifier language differs and may alter the scope or frequency of the claim.",
+            source_span=", ".join(left.quantifiers) or None,
+            candidate_span=", ".join(right.quantifiers) or None,
+            severity=severity,
+            confidence=0.9,
+        ))
+
+    if left.scope_markers and Counter(left.scope_markers) != Counter(right.scope_markers):
+        deltas.append(_delta(
+            DeltaType.SCOPE_BROADENED,
+            "A source scope/condition marker is not preserved literally; semantic review is required.",
+            source_span=", ".join(left.scope_markers),
+            candidate_span=", ".join(right.scope_markers) or None,
+            severity=Severity.WARNING,
+            confidence=0.8,
+        ))
+
+    if left.attributions and Counter(left.attributions) != Counter(right.attributions):
+        deltas.append(_delta(
+            DeltaType.ATTRIBUTION_CHANGED,
+            "Attribution language differs between source and candidate.",
+            source_span=", ".join(left.attributions),
+            candidate_span=", ".join(right.attributions) or None,
+            severity=Severity.BLOCKER if not right.attributions else Severity.WARNING,
+            confidence=0.9,
+        ))
+
+    return source_anchors, candidate_anchors, deltas
