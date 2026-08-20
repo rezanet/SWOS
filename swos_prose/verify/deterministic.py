@@ -11,7 +11,10 @@ from ..anchors import (
     extract_risk_signals,
 )
 from ..models import DeltaType, SemanticDelta, Severity
-from .negation_equivalence import REVIEWED_LEXICAL_NEGATION_TERMS
+from .negation_equivalence import (
+    REVIEWED_LEXICAL_NEGATION_TERMS,
+    REVIEWED_NEGATION_EQUIVALENCES,
+)
 
 
 _ANAPHORIC_ALL_RE = re.compile(
@@ -20,6 +23,20 @@ _ANAPHORIC_ALL_RE = re.compile(
 _REVIEWED_LEXICAL_NEGATION_RE = re.compile(
     r"\b(?:" + "|".join(re.escape(item) for item in REVIEWED_LEXICAL_NEGATION_TERMS) + r")\b",
     re.I,
+)
+_WORD_RE = re.compile(r"[A-Za-z0-9]+(?:['’.-][A-Za-z0-9]+)*")
+
+
+def _phrase_re(phrase: str) -> re.Pattern[str]:
+    return re.compile(
+        r"\b" + r"\s+".join(re.escape(part) for part in phrase.split()) + r"\b",
+        re.I,
+    )
+
+
+_REVIEWED_NEGATION_PATTERNS = tuple(
+    (explicit, lexical, _phrase_re(explicit), _phrase_re(lexical))
+    for explicit, lexical in REVIEWED_NEGATION_EQUIVALENCES
 )
 
 
@@ -50,6 +67,41 @@ def _counter_text(counter: Counter[str]) -> str:
 
 def _reviewed_lexical_negations(text: str) -> tuple[str, ...]:
     return tuple(match.group(0).casefold() for match in _REVIEWED_LEXICAL_NEGATION_RE.finditer(text))
+
+
+def _local_contexts(text: str, pattern: re.Pattern[str]) -> Counter[tuple[tuple[str, ...], tuple[str, ...]]]:
+    """Return narrow two-token context keys around reviewed negation forms."""
+    contexts: Counter[tuple[tuple[str, ...], tuple[str, ...]]] = Counter()
+    for match in pattern.finditer(text):
+        before = tuple(item.casefold() for item in _WORD_RE.findall(text[:match.start()])[-2:])
+        after = tuple(item.casefold() for item in _WORD_RE.findall(text[match.end():])[:2])
+        contexts[(before, after)] += 1
+    return contexts
+
+
+def _reviewed_negation_context_signature(text: str) -> tuple:
+    """Canonicalize reviewed explicit/lexical forms only within local context.
+
+    The same reviewed pair is trusted as a polarity-preserving substitution only
+    when it occupies the same narrow lexical neighbourhood. This prevents a
+    reviewed negative from being moved to another clause or wrapped in another
+    negation and then treated as equivalent merely because both sides contain a
+    negative-looking token.
+    """
+    signature = []
+    for explicit, lexical, explicit_re, lexical_re in _REVIEWED_NEGATION_PATTERNS:
+        contexts = _local_contexts(text, explicit_re)
+        contexts.update(_local_contexts(text, lexical_re))
+        signature.append((explicit, lexical, tuple(sorted(contexts.items()))))
+    return tuple(signature)
+
+
+def _reviewed_negation_occurrences(text: str) -> int:
+    return sum(
+        sum(_local_contexts(text, explicit_re).values())
+        + sum(_local_contexts(text, lexical_re).values())
+        for _, _, explicit_re, lexical_re in _REVIEWED_NEGATION_PATTERNS
+    )
 
 
 def _compare_hard_anchors(source: str, candidate: str) -> tuple[list, list, list[SemanticDelta]]:
@@ -105,18 +157,42 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
     left = extract_risk_signals(source)
     right = extract_risk_signals(candidate)
 
-    # Reviewed lexical negatives count as polarity signals, but do not establish
-    # sentence-level equivalence. This prevents a known explicit-to-lexical
-    # paraphrase from being hard-rejected while still requiring semantic
-    # verification for changed prose.
-    left_negations = (*left.negations, *_reviewed_lexical_negations(source))
-    right_negations = (*right.negations, *_reviewed_lexical_negations(candidate))
-    if bool(left_negations) != bool(right_negations):
+    left_reviewed = _reviewed_lexical_negations(source)
+    right_reviewed = _reviewed_lexical_negations(candidate)
+    reviewed_forms_present = bool(
+        _reviewed_negation_occurrences(source) or _reviewed_negation_occurrences(candidate)
+    )
+    base_negation_mismatch = bool(left.negations) != bool(right.negations)
+
+    if reviewed_forms_present:
+        # A reviewed lexical form contributes one polarity signal. Exact
+        # explicit<->lexical substitution may explain the base Boolean mismatch,
+        # but only if negation count/parity remains balanced and the reviewed form
+        # stays in the same narrow lexical context.
+        left_adjusted_count = len(left.negations) + len(left_reviewed)
+        right_adjusted_count = len(right.negations) + len(right_reviewed)
+        reviewed_contexts_match = (
+            _reviewed_negation_context_signature(source)
+            == _reviewed_negation_context_signature(candidate)
+        )
+        if base_negation_mismatch:
+            negation_mismatch = not (
+                left_adjusted_count == right_adjusted_count
+                and reviewed_contexts_match
+            )
+        else:
+            negation_mismatch = left_adjusted_count != right_adjusted_count
+    else:
+        negation_mismatch = base_negation_mismatch
+
+    if negation_mismatch:
+        left_spans = (*left.negations, *left_reviewed)
+        right_spans = (*right.negations, *right_reviewed)
         deltas.append(_delta(
             DeltaType.NEGATION_CHANGED,
-            "Negation is present on only one side of the rewrite.",
-            source_span=", ".join(left_negations) or None,
-            candidate_span=", ".join(right_negations) or None,
+            "Negation polarity, count, or reviewed lexical-negation context differs between source and candidate.",
+            source_span=", ".join(left_spans) or None,
+            candidate_span=", ".join(right_spans) or None,
         ))
 
     if left.weak_modals and not right.weak_modals:
