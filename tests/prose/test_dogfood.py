@@ -124,6 +124,36 @@ class DogfoodCollectorTests(unittest.TestCase):
             self.assertEqual(summary["sample_count"], 1)
             self.assertEqual(summary["status_counts"], {"PASS": 1})
 
+    def test_terminal_newline_only_records_no_change_and_preserves_source(self):
+        source = "The claim is unchanged.\n"
+        candidate = "The claim is unchanged."
+        verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            corpus = root / "corpus"
+            results = root / "results"
+            corpus.mkdir()
+            (corpus / "paragraph_001.txt").write_text(source, encoding="utf-8")
+
+            records = collect_dogfood(
+                input_dir=corpus,
+                output_dir=results,
+                rewrite_provider=StaticRewriteProvider(candidate),
+                verifier_provider=verifier,
+                assurance="strict",
+            )
+
+            self.assertEqual(records[0]["status"], "NO_CHANGE_RECOMMENDED")
+            self.assertEqual(records[0]["final_text"], source)
+            self.assertFalse(records[0]["used_fallback"])
+            self.assertFalse(records[0]["verifier_used"])
+            self.assertEqual(records[0]["verification_skip_reason"], "terminal_newline_only")
+            self.assertEqual(verifier.calls, 0)
+
+            summary = json.loads((results / "summary.json").read_text(encoding="utf-8"))
+            self.assertEqual(summary["status_counts"], {"NO_CHANGE_RECOMMENDED": 1})
+
     def test_deterministic_reject_records_verifier_skip_reason(self):
         source = "The response rate was 18.7%."
         candidate = "The response rate was 19%."
