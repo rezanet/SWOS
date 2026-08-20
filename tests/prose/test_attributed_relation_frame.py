@@ -4,7 +4,7 @@ import unittest
 
 from swos_prose.models import DeltaType, VerificationStatus
 from swos_prose.pipeline import verify_rewrite
-from swos_prose.providers.base import Proposition
+from swos_prose.providers.base import Attribution, Proposition
 from swos_prose.providers.mock import StaticSemanticVerifierProvider
 from swos_prose.verify.propositions import _provider_frame_mismatches
 
@@ -185,6 +185,22 @@ class AttributedRelationFrameTests(unittest.TestCase):
         )
 
         self.assertIn("object", _provider_frame_mismatches(proposition))
+
+    def test_comma_led_observed_test_context_keeps_inner_subject(self):
+        proposition = Proposition(
+            proposition_id="p2",
+            text=(
+                "Chen et al. report that, in the observed tests, processor load "
+                "was associated with longer response times."
+            ),
+            subject="processor load",
+            relation="associated with",
+            object="longer response times",
+            attribution=Attribution(agent="Chen et al.", act="report"),
+            relation_sign="neutral",
+        )
+
+        self.assertEqual(_provider_frame_mismatches(proposition), [])
 
 
 if __name__ == "__main__":
