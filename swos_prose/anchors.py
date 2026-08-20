@@ -48,6 +48,7 @@ _ONES = (
 )
 _TENS = {20: "twenty", 30: "thirty", 40: "forty", 50: "fifty", 60: "sixty", 70: "seventy", 80: "eighty", 90: "ninety"}
 _SCALES = ((1_000_000_000, "billion"), (1_000_000, "million"), (1_000, "thousand"))
+_NUMBER_WORDS = set(_ONES) | set(_TENS.values()) | {"hundred", "thousand", "million", "billion", "and", "minus"}
 
 
 @dataclass(frozen=True)
@@ -152,28 +153,38 @@ def _integer_to_words(value: int, *, british_and: bool = False) -> str:
 
 
 def _word_number_occurrences(text: str, value: str) -> int:
-    """Count conservative English word forms for a peer literal integer.
+    """Count complete conservative English word forms for a peer literal integer.
 
-    To avoid turning ordinary words such as 'one' into hard numeric anchors, word
-    matching is deliberately enabled only for integer values >= 100. This covers
-    common scholarly count rewrites such as 200 <-> 'two hundred' while failing
-    closed for smaller ambiguous forms until a richer numeric parser is added.
+    Matching is deliberately enabled only for integer values >= 100. A generated
+    form must occupy a complete number-word phrase, so ``two hundred`` does not
+    match inside ``two hundred and one`` or ``one thousand two hundred``.
     """
     if value.endswith("%") or not re.fullmatch(r"-?\d+", value):
         return 0
     integer = int(value)
     if abs(integer) < 100 or abs(integer) > 999_999_999_999:
         return 0
+
+    tokens = re.findall(r"[a-z]+", text.casefold().replace("-", " "))
     forms = {
-        _integer_to_words(integer, british_and=False),
-        _integer_to_words(integer, british_and=True),
+        tuple(_integer_to_words(integer, british_and=False).split()),
+        tuple(_integer_to_words(integer, british_and=True).split()),
     }
-    count = 0
-    for form in forms:
-        tokens = form.split()
-        pattern = r"\b" + r"[\s-]+".join(re.escape(token) for token in tokens) + r"\b"
-        count = max(count, len(re.findall(pattern, text, flags=re.IGNORECASE)))
-    return count
+    best = 0
+    for form_tokens in forms:
+        width = len(form_tokens)
+        count = 0
+        for index in range(0, len(tokens) - width + 1):
+            if tuple(tokens[index:index + width]) != form_tokens:
+                continue
+            before = tokens[index - 1] if index > 0 else None
+            after_index = index + width
+            after = tokens[after_index] if after_index < len(tokens) else None
+            if before in _NUMBER_WORDS or after in _NUMBER_WORDS:
+                continue
+            count += 1
+        best = max(best, count)
+    return best
 
 
 def canonical_number_multisets(
