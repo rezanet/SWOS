@@ -11,7 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 
-from ..anchors import CAUSAL_RE
+from ..anchors import ASSOCIATION_RE, CAUSAL_RE
 
 
 # Evidence-led nominal association paraphrase observed in live dogfood. Keep this
@@ -53,6 +53,21 @@ _UNPUNCTUATED_COORDINATE_CAUSAL_RE = re.compile(
 )
 _THAT_COMPLEMENT_RE = re.compile(r"\s+that\b", re.I)
 
+# Even inside an explicit ``that`` complement, an unpunctuated coordinate with
+# its own subject and a reviewed reporting/evidential predicate is strong evidence
+# that a new outer clause has begun: ``... not claim that X caused Y but it
+# concludes Z caused W``. This is deliberately narrower than generic coordination.
+_OUTER_REPORTING_PREDICATE_PATTERN = (
+    r"(?:claims?|asserts?|concludes?|demonstrates?|shows?|establishes?|proves?|"
+    r"reports?|finds?|states?|observes?|proposes?)"
+)
+_EXPLICIT_OUTER_COORDINATE_RE = re.compile(
+    r"\b(?:and|but|yet)\s+"
+    r"(?:[A-Za-z][A-Za-z0-9'’.-]*\s+){1,3}"
+    rf"(?={_OUTER_REPORTING_PREDICATE_PATTERN}\b)",
+    re.I,
+)
+
 
 @dataclass(frozen=True)
 class CausalPolaritySignals:
@@ -73,6 +88,13 @@ def _scope_end(text: str, scope_start: int) -> int:
     punctuated = _DENIED_SCOPE_END_RE.search(text, scope_start)
     if punctuated is not None:
         candidates.append(punctuated.start())
+
+    # A new coordinate with its own subject + outer reporting/evidential
+    # predicate ends the denial even when the denied predicate introduced a
+    # ``that`` complement.
+    outer_coordinate = _EXPLICIT_OUTER_COORDINATE_RE.search(text, scope_start)
+    if outer_coordinate is not None:
+        candidates.append(outer_coordinate.start())
 
     # Without an explicit ``that`` complement, a new unpunctuated coordinate
     # clause with its own subject + causal predicate is outside the denial.
@@ -113,3 +135,26 @@ def causal_polarity_signals(text: str) -> CausalPolaritySignals:
         affirmative=tuple(affirmative),
         denied=tuple(denied),
     )
+
+
+def affirmative_relation_sequence(text: str) -> tuple[str, ...]:
+    """Return textual order of affirmative association/causal relation markers.
+
+    The sequence is intentionally coarse. It does not align propositions and
+    therefore cannot prove that a relation changed. It is useful only for
+    detecting redistribution that global counts would otherwise hide; such a
+    mismatch should route to REVIEW rather than automatic PASS.
+    """
+    denied_spans = _denied_causal_spans(text)
+    items: list[tuple[int, str]] = []
+
+    for match in ASSOCIATION_RE.finditer(text):
+        items.append((match.start(), "association"))
+    for match in _REVIEWED_ASSOCIATION_RE.finditer(text):
+        items.append((match.start(), "association"))
+    for match in CAUSAL_RE.finditer(text):
+        if any(start <= match.start() < end for start, end in denied_spans):
+            continue
+        items.append((match.start(), "causal"))
+
+    return tuple(kind for _, kind in sorted(items))
