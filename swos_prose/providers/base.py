@@ -29,6 +29,8 @@ class Proposition:
     temporal_relation: str | None = None
     normative_stance: str | None = None
     relation_sign: str | None = None
+    claim_type: str | None = None
+    epistemic_type: str | None = None
 
 
 @dataclass(frozen=True)
@@ -86,6 +88,8 @@ class PropositionReport:
                 temporal_relation=_optional_str(item.get("temporal_relation")),
                 normative_stance=_optional_str(item.get("normative_stance")),
                 relation_sign=_optional_str(item.get("relation_sign")),
+                claim_type=_optional_str(item.get("claim_type")),
+                epistemic_type=_optional_str(item.get("epistemic_type")),
             )
 
         def s2c(item: dict[str, Any]) -> SourceToCandidateMapping:
