@@ -36,6 +36,23 @@ _DENIED_SCOPE_END_RE = re.compile(
     re.I,
 )
 
+# A narrow unpunctuated coordinate-clause boundary. Requiring an explicit subject
+# token before the causal predicate avoids cutting ``does not claim X caused Y
+# and produced Z`` at the predicate coordination. This boundary is used only
+# when the denied predicate is not followed by an explicit ``that`` complement;
+# with ``that``, coordination may legitimately remain inside the embedded claim.
+_CAUSAL_PREDICATE_PATTERN = (
+    r"(?:causes?|caused|leads?\s+to|led\s+to|results?\s+in|resulted\s+in|"
+    r"produces?|produced|drives?|drove|determines?|determined)"
+)
+_UNPUNCTUATED_COORDINATE_CAUSAL_RE = re.compile(
+    r"\b(?:and|but|yet)\s+"
+    r"(?:[A-Za-z][A-Za-z0-9'’.-]*\s+){1,4}"
+    rf"(?={_CAUSAL_PREDICATE_PATTERN}\b)",
+    re.I,
+)
+_THAT_COMPLEMENT_RE = re.compile(r"\s+that\b", re.I)
+
 
 @dataclass(frozen=True)
 class CausalPolaritySignals:
@@ -50,13 +67,28 @@ def reviewed_association_markers(text: str) -> tuple[str, ...]:
     )
 
 
+def _scope_end(text: str, scope_start: int) -> int:
+    candidates: list[int] = []
+
+    punctuated = _DENIED_SCOPE_END_RE.search(text, scope_start)
+    if punctuated is not None:
+        candidates.append(punctuated.start())
+
+    # Without an explicit ``that`` complement, a new unpunctuated coordinate
+    # clause with its own subject + causal predicate is outside the denial.
+    if _THAT_COMPLEMENT_RE.match(text[scope_start:]) is None:
+        coordinate = _UNPUNCTUATED_COORDINATE_CAUSAL_RE.search(text, scope_start)
+        if coordinate is not None:
+            candidates.append(coordinate.start())
+
+    return min(candidates) if candidates else len(text)
+
+
 def _denied_causal_spans(text: str) -> list[tuple[int, int]]:
     spans: list[tuple[int, int]] = []
     for head in _DENIED_CAUSAL_HEAD_RE.finditer(text):
         scope_start = head.end()
-        boundary = _DENIED_SCOPE_END_RE.search(text, scope_start)
-        scope_end = boundary.start() if boundary is not None else len(text)
-        spans.append((scope_start, scope_end))
+        spans.append((scope_start, _scope_end(text, scope_start)))
     return spans
 
 
