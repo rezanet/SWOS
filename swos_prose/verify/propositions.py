@@ -652,7 +652,7 @@ def deltas_from_proposition_report(
             deltas.append(_delta(
                 DeltaType.UNRESOLVED_EQUIVALENCE,
                 f"Scope is not preserved for source proposition {source_id}.",
-                source_span=source.text,
+                source_span=proposition.text,
                 candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
             ))
         if mapping.attribution_preserved is False:
