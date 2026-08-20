@@ -156,7 +156,6 @@ def _provider_frame_mismatches(proposition: Proposition) -> list[str]:
             mismatches.append("relation")
         if proposition.object is not None and _normalise_role(proposition.object) != parsed[2]:
             mismatches.append("object")
-        # Only explicit positive/negative surface signs are treated as deterministic.
         if parsed[3] in {"positive", "negative"} and _normalise_optional(proposition.relation_sign) != parsed[3]:
             mismatches.append("relation_sign")
 
@@ -344,11 +343,14 @@ def deltas_from_proposition_report(
         if count > 1:
             deltas.append(_malformed(f"Semantic verifier returned {count} mappings for candidate proposition {candidate_id}."))
 
+    has_reference_errors = False
     for mapping in report.source_to_candidate:
         if mapping.source_id not in source_props:
+            has_reference_errors = True
             deltas.append(_malformed(f"source_to_candidate references unknown source proposition {mapping.source_id}."))
         unknown_candidates = [item for item in mapping.candidate_ids if item not in candidate_props]
         if unknown_candidates:
+            has_reference_errors = True
             deltas.append(_malformed(
                 "source_to_candidate references unknown candidate proposition(s): "
                 + ", ".join(sorted(set(unknown_candidates))) + "."
@@ -356,9 +358,11 @@ def deltas_from_proposition_report(
 
     for mapping in report.candidate_to_source:
         if mapping.candidate_id not in candidate_props:
+            has_reference_errors = True
             deltas.append(_malformed(f"candidate_to_source references unknown candidate proposition {mapping.candidate_id}."))
         unknown_sources = [item for item in mapping.source_ids if item not in source_props]
         if unknown_sources:
+            has_reference_errors = True
             deltas.append(_malformed(
                 "candidate_to_source references unknown source proposition(s): "
                 + ", ".join(sorted(set(unknown_sources))) + "."
@@ -367,23 +371,26 @@ def deltas_from_proposition_report(
     source_mappings = {item.source_id: item for item in report.source_to_candidate if item.source_id in source_props}
     candidate_mappings = {item.candidate_id: item for item in report.candidate_to_source if item.candidate_id in candidate_props}
 
-    # Mapping arrays are many-to-many, but both directions must describe the same graph.
-    for source_id, mapping in source_mappings.items():
-        for candidate_id in mapping.candidate_ids:
-            reverse = candidate_mappings.get(candidate_id)
-            if reverse is not None and source_id not in reverse.source_ids:
-                deltas.append(_malformed(
-                    f"Mapping graph is not reciprocal: {source_id} -> {candidate_id} is missing from candidate_to_source.",
-                    severity=Severity.BLOCKER if strict else Severity.WARNING,
-                ))
-    for candidate_id, mapping in candidate_mappings.items():
-        for source_id in mapping.source_ids:
-            reverse = source_mappings.get(source_id)
-            if reverse is not None and candidate_id not in reverse.candidate_ids:
-                deltas.append(_malformed(
-                    f"Mapping graph is not reciprocal: {candidate_id} -> {source_id} is missing from source_to_candidate.",
-                    severity=Severity.BLOCKER if strict else Severity.WARNING,
-                ))
+    # Mapping arrays are many-to-many, but both directions must describe the same
+    # graph when their references are otherwise well formed. Unknown IDs preserve
+    # the PR #8 fail-safe policy (REVIEW) rather than cascading into a blocker.
+    if not has_reference_errors:
+        for source_id, mapping in source_mappings.items():
+            for candidate_id in mapping.candidate_ids:
+                reverse = candidate_mappings.get(candidate_id)
+                if reverse is not None and source_id not in reverse.source_ids:
+                    deltas.append(_malformed(
+                        f"Mapping graph is not reciprocal: {source_id} -> {candidate_id} is missing from candidate_to_source.",
+                        severity=Severity.BLOCKER if strict else Severity.WARNING,
+                    ))
+        for candidate_id, mapping in candidate_mappings.items():
+            for source_id in mapping.source_ids:
+                reverse = source_mappings.get(source_id)
+                if reverse is not None and candidate_id not in reverse.candidate_ids:
+                    deltas.append(_malformed(
+                        f"Mapping graph is not reciprocal: {candidate_id} -> {source_id} is missing from source_to_candidate.",
+                        severity=Severity.BLOCKER if strict else Severity.WARNING,
+                    ))
 
     if not source_props and not candidate_props:
         deltas.append(_unresolved("Bidirectional proposition report contains no verifiable propositions."))
