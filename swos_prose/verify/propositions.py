@@ -38,7 +38,7 @@ ATTRIBUTION_RE = re.compile(
 )
 
 # Evidence/context adjuncts that the provider may represent separately from the
-# relation object. Keep this reviewed and narrow: arbitrary ``in ...`` phrases
+# relation object. Keep these reviewed and narrow: arbitrary ``in ...`` phrases
 # can be part of an entity and must not be stripped mechanically.
 _REVIEWED_RELATION_CONTEXT_SUFFIX_RE = re.compile(
     r"\s+in\s+(?:the|this)\s+(?:"
@@ -46,6 +46,34 @@ _REVIEWED_RELATION_CONTEXT_SUFFIX_RE = re.compile(
     r")\s*$",
     re.IGNORECASE,
 )
+_REVIEWED_RELATION_CONTEXT_PREFIX_RE = re.compile(
+    r"^\s*in\s+(?:the|this)\s+(?:"
+    r"observed\s+tests|sample|cohort|study|dataset|population"
+    r")\s*,\s*",
+    re.IGNORECASE,
+)
+
+_REPORTING_ACT_CANONICAL = {
+    "argue": "argue",
+    "argues": "argue",
+    "claim": "claim",
+    "claims": "claim",
+    "report": "report",
+    "reports": "report",
+    "state": "state",
+    "states": "state",
+    "suggest": "suggest",
+    "suggests": "suggest",
+    "find": "find",
+    "finds": "find",
+    "found": "find",
+    "observe": "observe",
+    "observes": "observe",
+    "propose": "propose",
+    "proposes": "propose",
+    "speculate": "speculate",
+    "speculates": "speculate",
+}
 
 
 def _delta(
@@ -113,6 +141,10 @@ def _normalise_relation_object(text: str) -> str:
     return _normalise_role(value)
 
 
+def _normalise_frame_text(text: str) -> str:
+    return " ".join(text.casefold().split()).strip(" .,:;!?")
+
+
 def _normalise_optional(text: str | None) -> str | None:
     if text is None:
         return None
@@ -125,18 +157,28 @@ def _normalise_attribution(attribution: Attribution | None) -> tuple[str, str] |
     return (_normalise_role(attribution.agent), _normalise_role(attribution.act))
 
 
+def _canonical_reporting_act(text: str | None) -> str | None:
+    if text is None:
+        return None
+    value = _normalise_frame_text(text)
+    value = re.sub(r"\s+that$", "", value)
+    return _REPORTING_ACT_CANONICAL.get(value)
+
+
 def _embedded_relation_text(proposition: Proposition) -> str:
-    """Return relation surface with a reviewed attribution wrapper removed.
+    """Return a relation surface after reviewed wrappers/adjuncts are removed.
 
     The provider contract stores attribution separately from relational roles.
-    When the proposition text still includes ``Smith reports that ...``, relation
-    parsing must therefore compare subject/object against the embedded claim,
-    while ``_raw_attribution`` independently validates the reporter and act.
+    When proposition text still includes ``Smith reports that ...``, inner-role
+    parsing therefore starts at the embedded claim. A narrow reviewed leading
+    evidence-context adjunct may likewise be represented outside subject/object.
     """
-    match = ATTRIBUTION_RE.match(proposition.text)
-    if match is None:
-        return proposition.text
-    return proposition.text[match.end():].lstrip()
+    text = proposition.text
+    attribution = ATTRIBUTION_RE.match(text)
+    if attribution is not None:
+        text = text[attribution.end():].lstrip()
+    text = _REVIEWED_RELATION_CONTEXT_PREFIX_RE.sub("", text)
+    return text
 
 
 def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | None:
@@ -176,20 +218,58 @@ def _raw_attribution(proposition: Proposition) -> tuple[str, str] | None:
     return (_normalise_role(match.group("agent")), _normalise_role(match.group("act")))
 
 
+def _outer_attribution_frame_mismatches(
+    proposition: Proposition,
+    raw_attribution: tuple[str, str],
+) -> list[str] | None:
+    """Validate a provider frame that models the outer reporting proposition.
+
+    Luna may validly emit both ``Chen reports P`` and ``P`` as separate material
+    propositions. When relation names the reporting act, do not compare that
+    outer frame against the embedded association parser. Validate the reporter,
+    reporting act, and—when supplied—that its object is textually anchored in the
+    embedded proposition. The inner proposition remains independently verified.
+    """
+    provider_act = _canonical_reporting_act(proposition.relation)
+    raw_act = _canonical_reporting_act(raw_attribution[1])
+    if provider_act is None or raw_act is None or provider_act != raw_act:
+        return None
+
+    mismatches: list[str] = []
+    if proposition.subject is not None and _normalise_role(proposition.subject) != raw_attribution[0]:
+        mismatches.append("subject")
+
+    if proposition.object is not None:
+        embedded = _normalise_frame_text(_embedded_relation_text(proposition))
+        provider_object = _normalise_frame_text(proposition.object)
+        if provider_object and provider_object not in embedded and embedded not in provider_object:
+            mismatches.append("object")
+    return mismatches
+
+
 def _provider_frame_mismatches(proposition: Proposition) -> list[str]:
     mismatches: list[str] = []
-    parsed = _relation_parts(proposition)
-    if parsed is not None:
-        if proposition.subject is not None and _normalise_role(proposition.subject) != parsed[0]:
-            mismatches.append("subject")
-        if proposition.relation is not None and _normalise_optional(proposition.relation) != parsed[1]:
-            mismatches.append("relation")
-        if proposition.object is not None and _normalise_relation_object(proposition.object) != parsed[2]:
-            mismatches.append("object")
-        if parsed[3] in {"positive", "negative"} and _normalise_optional(proposition.relation_sign) != parsed[3]:
-            mismatches.append("relation_sign")
-
     raw_attribution = _raw_attribution(proposition)
+
+    outer_mismatches = (
+        _outer_attribution_frame_mismatches(proposition, raw_attribution)
+        if raw_attribution is not None
+        else None
+    )
+    if outer_mismatches is not None:
+        mismatches.extend(outer_mismatches)
+    else:
+        parsed = _relation_parts(proposition)
+        if parsed is not None:
+            if proposition.subject is not None and _normalise_role(proposition.subject) != parsed[0]:
+                mismatches.append("subject")
+            if proposition.relation is not None and _normalise_optional(proposition.relation) != parsed[1]:
+                mismatches.append("relation")
+            if proposition.object is not None and _normalise_relation_object(proposition.object) != parsed[2]:
+                mismatches.append("object")
+            if parsed[3] in {"positive", "negative"} and _normalise_optional(proposition.relation_sign) != parsed[3]:
+                mismatches.append("relation_sign")
+
     if raw_attribution is not None and _normalise_attribution(proposition.attribution) != raw_attribution:
         mismatches.append("attribution")
     return mismatches
