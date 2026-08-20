@@ -4,7 +4,9 @@ import unittest
 
 from swos_prose.models import DeltaType, VerificationStatus
 from swos_prose.pipeline import verify_rewrite
+from swos_prose.providers.base import Proposition
 from swos_prose.providers.mock import StaticSemanticVerifierProvider
+from swos_prose.verify.propositions import _provider_frame_mismatches
 
 
 SOURCE = (
@@ -171,6 +173,18 @@ class AttributedRelationFrameTests(unittest.TestCase):
         self.assertIn(DeltaType.ATTRIBUTION_CHANGED, types)
         self.assertIn(DeltaType.MALFORMED_PROVIDER_RESPONSE, types)
         self.assertNotEqual(result.status, VerificationStatus.PASS)
+
+    def test_conflicting_relation_context_is_not_normalized_away(self):
+        proposition = Proposition(
+            proposition_id="p1",
+            text="Mortality was associated with exposure in the study.",
+            subject="Mortality",
+            relation="associated with",
+            object="exposure in the population",
+            relation_sign="neutral",
+        )
+
+        self.assertIn("object", _provider_frame_mismatches(proposition))
 
 
 if __name__ == "__main__":
