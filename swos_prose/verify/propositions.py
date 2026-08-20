@@ -52,14 +52,13 @@ _REVIEWED_RELATION_CONTEXT_ANY_RE = re.compile(
     r"\bin\s+(?:the|this)\s+observed\s+tests\b",
     re.IGNORECASE,
 )
-_REVIEWED_RELATION_CONTEXT_CLAUSE_BOUNDARY_RE = re.compile(
-    r"^\s*(?:"
-    r"(?:but|and|or|yet)\s+(?:they|we|he|she|it|this|that|these|those)\s+"
-    r"(?:do|does|did|is|are|was|were|has|have|had|can|could|may|might|must|will|would|should)\b"
-    r"|but\s+(?:do|does|did)\s+not\s+"
-    r"(?:claim|argue|state|suggest|report|assert|conclude|infer|demonstrate|show)\b"
-    r"|however\b|whereas\b|although\b|though\b|while\b"
-    r")",
+# This is deliberately not a general-purpose clause parser. The reviewed live
+# case contains one contrastive denial after the evidence-context phrase. Strip
+# only that narrow outside-scope clause; retain every other continuation so
+# punctuation or coordination cannot silently broaden evidence scope.
+_REVIEWED_RELATION_CONTEXT_OUTSIDE_DENIAL_RE = re.compile(
+    r",\s*but\s+(?:they\s+)?(?:do|does|did)\s+not\s+"
+    r"(?:claim|argue|state|suggest|report|assert|conclude|infer|demonstrate|show)\b.*$",
     re.IGNORECASE,
 )
 
@@ -247,27 +246,19 @@ def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | Non
 
 
 def _reviewed_relation_context(proposition: Proposition) -> str | None:
-    """Return the complete reviewed evidence-context adjunct from proposition text.
+    """Return the complete reviewed evidence-context surface.
 
-    Normalise position and punctuation, but retain words conjoined with or
-    otherwise extending ``in the observed tests``. Soft punctuation (comma,
-    semicolon, colon) fails closed and keeps the scope open unless what follows
-    matches a narrow reviewed independent-clause transition. Sentence-ending
-    punctuation always closes it.
+    Once ``in the observed tests`` appears, retain the remaining surface by
+    default. The only omitted text is the narrow contrastive denial clause from
+    the reviewed live case. This intentionally prefers a conservative REVIEW to
+    any punctuation-based rule that could hide evidence-scope broadening.
     """
     text = _raw_embedded_claim_text(proposition)
     match = _REVIEWED_RELATION_CONTEXT_ANY_RE.search(text)
     if match is None:
         return None
     tail = text[match.start():]
-    for boundary in re.finditer(r"[,;:.!?]", tail):
-        punctuation = boundary.group()
-        if punctuation not in ".!?":
-            continuation = tail[boundary.end():]
-            if not _REVIEWED_RELATION_CONTEXT_CLAUSE_BOUNDARY_RE.match(continuation):
-                continue
-        tail = tail[:boundary.start()]
-        break
+    tail = _REVIEWED_RELATION_CONTEXT_OUTSIDE_DENIAL_RE.sub("", tail)
     return _normalise_frame_text(tail)
 
 
