@@ -259,6 +259,37 @@ class AttributedRelationFrameTests(unittest.TestCase):
 
         self.assertTrue(_is_symmetric_swap(source, candidate))
 
+    def test_reviewed_relation_variants_share_one_canonical_frame(self):
+        for relation in (
+            "associated with",
+            "was associated with",
+            "associated",
+            "association",
+            "association with",
+        ):
+            with self.subTest(relation=relation):
+                proposition = Proposition(
+                    proposition_id="p5",
+                    text="Processor load was associated with longer response times.",
+                    subject="processor load",
+                    relation=relation,
+                    object="longer response times",
+                    relation_sign="neutral",
+                )
+                self.assertEqual(_provider_frame_mismatches(proposition), [])
+
+    def test_unreviewed_relation_label_remains_malformed(self):
+        proposition = Proposition(
+            proposition_id="p6",
+            text="Processor load was associated with longer response times.",
+            subject="processor load",
+            relation="caused",
+            object="longer response times",
+            relation_sign="neutral",
+        )
+
+        self.assertIn("relation", _provider_frame_mismatches(proposition))
+
 
 if __name__ == "__main__":
     unittest.main()
