@@ -221,10 +221,18 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
     left_associations = (*left.association_markers, *reviewed_association_markers(source))
     right_associations = (*right.association_markers, *reviewed_association_markers(candidate))
 
-    if left_associations and not left_causal.affirmative and right_causal.affirmative:
+    # Compare occurrence counts rather than asking whether the source contains
+    # *any* affirmative causal marker. Otherwise an unrelated source-side causal
+    # claim can mask association -> causation strengthening in another clause.
+    lost_association = len(right_associations) < len(left_associations)
+    introduced_affirmative_causality = (
+        len(right_causal.affirmative) > len(left_causal.affirmative)
+    )
+
+    if left_associations and lost_association and introduced_affirmative_causality:
         deltas.append(_delta(
             DeltaType.CAUSAL_STRENGTH_CHANGED,
-            "Candidate changes associative language into affirmative causal language.",
+            "Candidate replaces at least one associative relation with additional affirmative causal language.",
             source_span=", ".join(left_associations),
             candidate_span=", ".join(right_causal.affirmative),
         ))
