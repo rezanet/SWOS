@@ -451,16 +451,74 @@ class AttributedRelationFrameTests(unittest.TestCase):
             [delta.delta_type for delta in deltas],
         )
 
-    def test_reviewed_scope_stops_at_explicit_reporting_clause_transition(self):
+    def test_dependent_while_scope_broadening_requires_review(self):
         source = Proposition(
             proposition_id="s8",
+            text="A was associated with B in the observed tests.",
+            subject="A",
+            relation="associated with",
+            object="B in the observed tests",
+            relation_sign="neutral",
+        )
+        candidate = Proposition(
+            proposition_id="c8",
+            text=(
+                "A was associated with B in the observed tests, while being "
+                "associated with B in field deployments."
+            ),
+            subject="A",
+            relation="associated with",
+            object=(
+                "B in the observed tests, while being associated with B in field deployments"
+            ),
+            relation_sign="neutral",
+        )
+
+        deltas = _frame_consistency_deltas(source, candidate)
+        self.assertIn(
+            DeltaType.UNRESOLVED_EQUIVALENCE,
+            [delta.delta_type for delta in deltas],
+        )
+
+    def test_independent_extra_association_scope_broadening_requires_review(self):
+        source = Proposition(
+            proposition_id="s9",
+            text="A was associated with B in the observed tests.",
+            subject="A",
+            relation="associated with",
+            object="B in the observed tests",
+            relation_sign="neutral",
+        )
+        candidate = Proposition(
+            proposition_id="c9",
+            text=(
+                "A was associated with B in the observed tests, and it was also "
+                "associated with B in field deployments."
+            ),
+            subject="A",
+            relation="associated with",
+            object=(
+                "B in the observed tests, and it was also associated with B in field deployments"
+            ),
+            relation_sign="neutral",
+        )
+
+        deltas = _frame_consistency_deltas(source, candidate)
+        self.assertIn(
+            DeltaType.UNRESOLVED_EQUIVALENCE,
+            [delta.delta_type for delta in deltas],
+        )
+
+    def test_reviewed_scope_stops_at_explicit_reporting_clause_transition(self):
+        source = Proposition(
+            proposition_id="s10",
             text=(
                 "A was associated with B in the observed tests, but they do not "
                 "claim that A caused B."
             ),
         )
         candidate = Proposition(
-            proposition_id="c8",
+            proposition_id="c10",
             text=(
                 "A was associated with B in the observed tests, but they do not "
                 "claim that it caused B."
