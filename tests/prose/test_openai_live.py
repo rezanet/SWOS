@@ -56,6 +56,44 @@ class OpenAILiveAdversarialTests(unittest.TestCase):
         )
         self.assertEqual(result.status, VerificationStatus.PASS)
 
+    def test_methodological_lexical_variant_is_equivalent(self):
+        result = self.verify(
+            "The analysis was performed using a t-test.",
+            "The analysis used a t-test.",
+        )
+        self.assertEqual(result.status, VerificationStatus.PASS)
+
+    def test_pure_sequence_marker_change_is_equivalent(self):
+        result = self.verify(
+            "First, the results indicate an effect.",
+            "To begin, the results indicate an effect.",
+        )
+        self.assertEqual(result.status, VerificationStatus.PASS)
+
+    def test_lexical_negation_paraphrase_is_equivalent(self):
+        result = self.verify(
+            "The treatment was ineffective.",
+            "The treatment was not effective.",
+        )
+        self.assertEqual(result.status, VerificationStatus.PASS)
+
+    def test_hypothesis_to_expectation_never_passes(self):
+        result = self.verify(
+            "We hypothesized that the drug would reduce symptoms.",
+            "The drug was expected to reduce symptoms.",
+        )
+        self.assertNotEqual(result.status, VerificationStatus.PASS)
+
+    def test_parenthetical_surprising_modifier_may_be_nonmaterial(self):
+        result = self.verify(
+            "The findings, which were surprising, suggest a new approach.",
+            "The findings suggest a new approach.",
+        )
+        # Slice 4 permits PASS only if the verifier classifies the parenthetical
+        # evaluation as non-material. REVIEW is also acceptable if materiality is
+        # uncertain; a hard REJECT is not required by the core.
+        self.assertIn(result.status, {VerificationStatus.PASS, VerificationStatus.REVIEW})
+
 
 if __name__ == "__main__":
     unittest.main()

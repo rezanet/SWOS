@@ -13,7 +13,7 @@ from typing import Any
 
 from .base import ProviderAssessment
 
-PROMPT_VERSION = "swos-prose-semantic-verifier-v0.3.1"
+PROMPT_VERSION = "swos-prose-semantic-verifier-v0.4.0"
 
 SEMANTIC_VERIFIER_INSTRUCTIONS = """\
 You are the semantic-verification witness for SWOS Prose.
@@ -26,7 +26,8 @@ Your task is not to judge topic similarity or stylistic similarity. Equivalence
 is proposition-level and bidirectional:
 1. Every material SOURCE proposition must remain represented in CANDIDATE with
    the same truth conditions, attribution, scope, uncertainty, causal force,
-   chronology, conditions, exceptions, relation sign, and normative stance.
+   chronology, conditions, exceptions, relation sign, claim type, epistemic
+   type, and normative stance.
 2. Every material CANDIDATE proposition must be licensed by SOURCE. A plausible
    inference, common-knowledge addition, or stronger claim is still a new claim.
 
@@ -34,11 +35,59 @@ Do not use embedding similarity, lexical overlap, or topical relatedness as a
 primary equivalence criterion. Ask whether each candidate proposition is
 strictly licensed by the source and whether each source proposition survives.
 
-Sentence boundaries are not proposition boundaries. A conjunction in one
-sentence may legitimately map to multiple candidate propositions, and multiple
-source propositions may be merged into one candidate proposition. Use the
-candidate_ids/source_ids arrays to represent these split/merge mappings. Do not
-invent or drop propositions merely to make the mapping convenient.
+MATERIALITY AND COVERAGE
+- Extract material propositions: empirical findings, methodological/procedural
+  facts, interpretations, definitions, hypotheses, assumptions, conclusions,
+  normative claims, and other commitments whose removal would change what the
+  text asserts or how strongly it asserts it.
+- Do not automatically promote every adjective or parenthetical evaluation into
+  a standalone proposition. A purely rhetorical modifier such as "surprising"
+  may be non-material when it only expresses local authorial reaction and does
+  not bear argumentative weight.
+- However, evaluative language is not automatically disposable. If an
+  evaluation carries argumentative, normative, evidential, or authorial-stance
+  significance, extract it with claim_type="evaluative". If you cannot decide
+  whether the evaluation is material, include an unresolved item. Do not guess
+  that subjective means semantically irrelevant.
+- Sentence boundaries are not proposition boundaries. A conjunction in one
+  sentence may map to multiple candidate propositions, and multiple source
+  propositions may be merged into one candidate proposition. Use the
+  candidate_ids/source_ids arrays to represent split/merge mappings.
+- Pure formatting or sequencing cues such as "First" and "To begin" are not
+  propositions by themselves. Do not extract them as claims.
+- Do not generalize that all discourse markers are surface-only. "Therefore",
+  "because", "however", and similar markers can encode inference, cause,
+  contrast, or argumentative relations. Preserve those relations when they are
+  material to the proposition.
+
+CLAIM AND EPISTEMIC CLASSIFICATION
+For every proposition set claim_type to one of:
+- empirical
+- methodological
+- interpretive
+- normative
+- definitional
+- procedural
+- evaluative
+- other
+- unknown
+
+For every proposition set epistemic_type to one of:
+- observation
+- hypothesis
+- inference
+- assumption
+- conclusion
+- report
+- method
+- evaluation
+- none
+- unknown
+
+Do not collapse a methodological report into an interpretation. Do not collapse
+hypothesis into assumption, observation into conclusion, or attributed report
+into unqualified fact. If the classification cannot be established reliably,
+use "unknown" and add an unresolved item.
 
 Extract atomic propositions. When a sentence contains a reporting or epistemic
 predicate plus an embedded claim, keep their scopes distinct. For each
@@ -51,7 +100,8 @@ proposition record:
 - temporal relation in a canonical form when possible, e.g.
   before(intervention,outcome), regardless of whether the surface wording is
   "intervention preceded outcome" or "outcome followed intervention";
-- normative stance using one of: positive, negative, neutral, mixed, unknown.
+- normative stance using one of: positive, negative, neutral, mixed, unknown;
+- claim_type and epistemic_type using the controlled vocabularies above.
 
 Attribution is semantic content. "Smith argues that X" is not equivalent to an
 unattributed assertion "X". Preserve both the attribution agent and the speech
@@ -65,6 +115,12 @@ The modality_scope field must identify what the modal governs. If a proposition
 contains modality but you cannot determine its target, set modality_scope to
 null and add an unresolved item. Do not guess safe.
 
+Lexical negation can be semantically equivalent to explicit negation, but do not
+infer negation from a prefix mechanically. For example, "ineffective" can be
+licensed by "not effective" in the same scope. Treat only clear lexical
+relations as equivalent; terms beginning with un-/in-/dis-/non- are not
+automatically negations.
+
 Temporal inverse wording can preserve meaning. "A preceded B" and "B followed A"
 express the same chronology. Canonicalize the temporal relation rather than
 treating surface subject/object order as semantic direction by itself.
@@ -74,8 +130,9 @@ when their surface arguments are swapped. Relation sign is independent of that
 symmetry: "positively correlated" and "negatively correlated" are not
 equivalent even if the arguments are reversed.
 
-If any proposition, mapping, scope, attribution, relation sign, or relation
-cannot be resolved reliably, use the unresolved array. Do not guess safe.
+If any proposition, materiality judgement, mapping, scope, attribution,
+classification, relation sign, or relation cannot be resolved reliably, use the
+unresolved array. Do not guess safe.
 
 Return only the JSON object required by the response schema.
 """
@@ -89,6 +146,15 @@ ATTRIBUTION_SCHEMA: dict[str, Any] = {
     "required": ["agent", "act"],
     "additionalProperties": False,
 }
+
+CLAIM_TYPES = [
+    "empirical", "methodological", "interpretive", "normative", "definitional",
+    "procedural", "evaluative", "other", "unknown",
+]
+EPISTEMIC_TYPES = [
+    "observation", "hypothesis", "inference", "assumption", "conclusion",
+    "report", "method", "evaluation", "none", "unknown",
+]
 
 PROPOSITION_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -115,11 +181,13 @@ PROPOSITION_SCHEMA: dict[str, Any] = {
             "type": ["string", "null"],
             "enum": ["positive", "negative", "neutral", "unknown", None],
         },
+        "claim_type": {"type": "string", "enum": CLAIM_TYPES},
+        "epistemic_type": {"type": "string", "enum": EPISTEMIC_TYPES},
     },
     "required": [
         "id", "text", "subject", "relation", "object", "modality",
         "modality_scope", "attribution", "causal_force", "temporal_relation",
-        "normative_stance", "relation_sign",
+        "normative_stance", "relation_sign", "claim_type", "epistemic_type",
     ],
 }
 

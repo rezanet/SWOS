@@ -22,7 +22,25 @@ QUOTE_RES = (
     re.compile(r'“([^”]+)”'),
     re.compile(r'"([^"\n]+)"'),
 )
-NEGATION_RE = re.compile(r"\b(?:no|not|never|neither|nor|without)\b|\bfailed\s+to\b", re.I)
+
+# Deliberately conservative. Do not infer negation from morphology generally:
+# English prefixes are not reliably compositional (for example, inflammable).
+# These terms are included only where the lexical negative is clear enough to
+# function as a high-risk negation signal for the verifier.
+LEXICAL_NEGATION_TERMS = (
+    "ineffective",
+    "inefficient",
+    "unavailable",
+    "unable",
+    "unsuccessful",
+    "unknown",
+    "incompatible",
+)
+_NEGATION_TERMS_PATTERN = "|".join(re.escape(item) for item in LEXICAL_NEGATION_TERMS)
+NEGATION_RE = re.compile(
+    rf"\b(?:no|not|never|neither|nor|without)\b|\bfailed\s+to\b|\b(?:{_NEGATION_TERMS_PATTERN})\b",
+    re.I,
+)
 WEAK_MODAL_RE = re.compile(r"\b(?:may|might|could|possibly|perhaps)\b", re.I)
 SUGGESTIVE_RE = re.compile(r"\b(?:suggests?|suggested|indicates?|indicated|appears?|seems?)\b", re.I)
 STRONG_EPISTEMIC_RE = re.compile(r"\b(?:demonstrates?|demonstrated|proves?|proved|establishes?|established|confirms?|confirmed)\b", re.I)

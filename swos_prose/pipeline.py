@@ -4,6 +4,7 @@ from __future__ import annotations
 from .models import DeltaType, SemanticDelta, Severity, VerificationResult, VerificationStatus
 from .providers.base import ProviderAssessment, SemanticVerifierProvider
 from .verify.classify import classify_deltas
+from .verify.coverage import coverage_deltas
 from .verify.deterministic import deterministic_deltas
 from .verify.propositions import deltas_from_proposition_report
 
@@ -159,6 +160,12 @@ def verify_rewrite(
             if assessment.proposition_report is not None:
                 provider_deltas.extend(
                     deltas_from_proposition_report(
+                        assessment.proposition_report,
+                        assurance=assurance,
+                    )
+                )
+                provider_deltas.extend(
+                    coverage_deltas(
                         assessment.proposition_report,
                         assurance=assurance,
                     )
