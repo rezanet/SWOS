@@ -48,6 +48,10 @@ _REVIEWED_RELATION_CONTEXT_PREFIX_RE = re.compile(
     r"^\s*in\s+(?:the|this)\s+observed\s+tests\s*,\s*",
     re.IGNORECASE,
 )
+_REVIEWED_RELATION_CONTEXT_ANY_RE = re.compile(
+    r"\bin\s+(?:the|this)\s+observed\s+tests\b",
+    re.IGNORECASE,
+)
 
 _REPORTING_ACT_CANONICAL = {
     "argue": "argue",
@@ -232,6 +236,13 @@ def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | Non
     )
 
 
+def _reviewed_relation_context(proposition: Proposition) -> str | None:
+    """Return reviewed evidence-context scope present in the proposition text."""
+    if _REVIEWED_RELATION_CONTEXT_ANY_RE.search(proposition.text):
+        return "observed tests"
+    return None
+
+
 def _relation_object_matches(proposition: Proposition, provider_object: str) -> bool:
     """Compare an object without allowing the provider to invent context.
 
@@ -277,8 +288,8 @@ def _outer_attribution_frame_mismatches(
 
     Luna may validly emit both ``Chen reports P`` and ``P`` as separate material
     propositions. When relation names the reporting act, validate the reporter,
-    act, and complete embedded claim. The inner proposition remains independently
-    verified when the provider emits it separately.
+    act, complete embedded claim, and any deterministic inner relation sign. The
+    inner proposition remains independently verified when emitted separately.
     """
     provider_act = _canonical_reporting_act(proposition.relation)
     raw_act = _canonical_reporting_act(raw_attribution[1])
@@ -292,6 +303,11 @@ def _outer_attribution_frame_mismatches(
     embedded = _normalise_frame_text(_raw_embedded_claim_text(proposition))
     if proposition.object is None or _normalise_frame_text(proposition.object) != embedded:
         mismatches.append("object")
+
+    parsed = _relation_parts(proposition)
+    if parsed is not None and parsed[3] in {"positive", "negative"}:
+        if _normalise_optional(proposition.relation_sign) != parsed[3]:
+            mismatches.append("relation_sign")
     return mismatches
 
 
@@ -390,6 +406,15 @@ def _core_relation_delta(source: Proposition, candidate: Proposition) -> Semanti
 def _frame_consistency_deltas(source: Proposition, candidate: Proposition) -> list[SemanticDelta]:
     """Surface contradictions or missing high-risk structure in provider frames."""
     deltas: list[SemanticDelta] = []
+
+    source_context = _reviewed_relation_context(source)
+    candidate_context = _reviewed_relation_context(candidate)
+    if source_context != candidate_context:
+        deltas.append(_unresolved(
+            "Mapped relational proposition changes reviewed evidence-context scope.",
+            source_span=source.text,
+            candidate_span=candidate.text,
+        ))
 
     source_modality = _normalise_optional(source.modality)
     candidate_modality = _normalise_optional(candidate.modality)
