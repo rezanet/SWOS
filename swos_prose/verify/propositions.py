@@ -37,19 +37,15 @@ ATTRIBUTION_RE = re.compile(
     re.IGNORECASE,
 )
 
-# Evidence/context adjuncts that the provider may represent separately from the
-# relation object. Keep these reviewed and narrow: arbitrary ``in ...`` phrases
-# can be part of an entity and must not be stripped mechanically.
+# The only relation-context adjunct normalized here is the exact form observed
+# in live dogfood. Do not widen this to generic study/cohort/population suffixes:
+# those scopes can differ materially and must remain visible to frame validation.
 _REVIEWED_RELATION_CONTEXT_SUFFIX_RE = re.compile(
-    r"\s+in\s+(?:the|this)\s+(?:"
-    r"observed\s+tests|sample|cohort|study|dataset|population"
-    r")\s*$",
+    r"\s+in\s+(?:the|this)\s+observed\s+tests\s*$",
     re.IGNORECASE,
 )
 _REVIEWED_RELATION_CONTEXT_PREFIX_RE = re.compile(
-    r"^\s*in\s+(?:the|this)\s+(?:"
-    r"observed\s+tests|sample|cohort|study|dataset|population"
-    r")\s*,\s*",
+    r"^\s*in\s+(?:the|this)\s+observed\s+tests\s*,\s*",
     re.IGNORECASE,
 )
 
@@ -170,8 +166,8 @@ def _embedded_relation_text(proposition: Proposition) -> str:
 
     The provider contract stores attribution separately from relational roles.
     When proposition text still includes ``Smith reports that ...``, inner-role
-    parsing therefore starts at the embedded claim. A narrow reviewed leading
-    evidence-context adjunct may likewise be represented outside subject/object.
+    parsing therefore starts at the embedded claim. The one evidence-context
+    adjunct observed in live dogfood may likewise be represented outside roles.
     """
     text = proposition.text
     attribution = ATTRIBUTION_RE.match(text)
