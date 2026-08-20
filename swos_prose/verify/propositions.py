@@ -52,10 +52,12 @@ _REVIEWED_RELATION_CONTEXT_ANY_RE = re.compile(
     r"\bin\s+(?:the|this)\s+observed\s+tests\b",
     re.IGNORECASE,
 )
-_REVIEWED_RELATION_CONTEXT_COMMA_BOUNDARY_RE = re.compile(
+_REVIEWED_RELATION_CONTEXT_CLAUSE_BOUNDARY_RE = re.compile(
     r"^\s*(?:"
-    r"(?:but|and|or|yet)\s+(?:(?:they|we|he|she|it|this|that|these|those)\s+)?"
+    r"(?:but|and|or|yet)\s+(?:they|we|he|she|it|this|that|these|those)\s+"
     r"(?:do|does|did|is|are|was|were|has|have|had|can|could|may|might|must|will|would|should)\b"
+    r"|but\s+(?:do|does|did)\s+not\s+"
+    r"(?:claim|argue|state|suggest|report|assert|conclude|infer|demonstrate|show)\b"
     r"|however\b|whereas\b|although\b|though\b|while\b"
     r")",
     re.IGNORECASE,
@@ -248,20 +250,21 @@ def _reviewed_relation_context(proposition: Proposition) -> str | None:
     """Return the complete reviewed evidence-context adjunct from proposition text.
 
     Normalise position and punctuation, but retain words conjoined with or
-    otherwise extending ``in the observed tests``. Commas fail closed: they keep
-    the scope open unless they match a narrow reviewed clause-transition shape.
-    This may cause a conservative REVIEW, but it cannot silently erase broadened
-    evidence scope from a mapped source/candidate pair.
+    otherwise extending ``in the observed tests``. Soft punctuation (comma,
+    semicolon, colon) fails closed and keeps the scope open unless what follows
+    matches a narrow reviewed independent-clause transition. Sentence-ending
+    punctuation always closes it.
     """
     text = _raw_embedded_claim_text(proposition)
     match = _REVIEWED_RELATION_CONTEXT_ANY_RE.search(text)
     if match is None:
         return None
     tail = text[match.start():]
-    for boundary in re.finditer(r"[,;.!?]", tail):
-        if boundary.group() == ",":
+    for boundary in re.finditer(r"[,;:.!?]", tail):
+        punctuation = boundary.group()
+        if punctuation not in ".!?":
             continuation = tail[boundary.end():]
-            if not _REVIEWED_RELATION_CONTEXT_COMMA_BOUNDARY_RE.match(continuation):
+            if not _REVIEWED_RELATION_CONTEXT_CLAUSE_BOUNDARY_RE.match(continuation):
                 continue
         tail = tail[:boundary.start()]
         break
