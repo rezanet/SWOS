@@ -58,6 +58,14 @@ def load_simple_env_file(path: str | Path) -> list[str]:
 
 
 def _status_for(result: PolishResult) -> str:
+    if (
+        result.verification is not None
+        and result.verification.verifier_skip_reason in {
+            "source_identical",
+            "terminal_newline_only",
+        }
+    ):
+        return "NO_CHANGE_RECOMMENDED"
     if result.verification_status is not None:
         return result.verification_status
     if result.used_source_fallback:
