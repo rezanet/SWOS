@@ -224,7 +224,14 @@ def polish_text(
         native_swos_context=native_swos_context,
     )
 
-    if verification.status is VerificationStatus.PASS:
+    if verification.verifier_skip_reason == "terminal_newline_only":
+        final_text = source
+        used_source_fallback = False
+        decision_note = (
+            "Candidate differed only by terminal line-ending whitespace; "
+            "the original source representation was preserved."
+        )
+    elif verification.status is VerificationStatus.PASS:
         final_text = candidate
         used_source_fallback = False
         decision_note = "Candidate passed semantic verification and is safe for automatic use."

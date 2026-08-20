@@ -103,6 +103,25 @@ class PolishPipelineTests(unittest.TestCase):
         self.assertFalse(result.used_source_fallback)
         self.assertTrue(result.safe_for_automatic_use)
 
+    def test_terminal_newline_only_candidate_preserves_source_without_verifier(self):
+        source = "The claim is unchanged.\n"
+        candidate = "The claim is unchanged."
+        verifier = StaticSemanticVerifierProvider(equivalent_payload(source, candidate))
+
+        result = polish_text(
+            source=source,
+            rewrite_provider=StaticRewriteProvider(candidate),
+            verifier_provider=verifier,
+            assurance="strict",
+        )
+
+        self.assertEqual(result.verification_status, VerificationStatus.PASS.value)
+        self.assertEqual(result.verification.verifier_skip_reason, "terminal_newline_only")
+        self.assertEqual(verifier.calls, 0)
+        self.assertEqual(result.final_text, source)
+        self.assertFalse(result.used_source_fallback)
+        self.assertTrue(result.safe_for_automatic_use)
+
     def test_deterministic_number_drift_falls_back_before_verifier(self):
         source = "The response rate was 18.7%."
         candidate = "The response rate was 19%."
