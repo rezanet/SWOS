@@ -65,7 +65,7 @@ class OpenAIResponsesRewriteProvider:
         *,
         model: str | None = None,
         client: Any | None = None,
-        temperature: float = 0.0,
+        temperature: float | None = None,
         max_output_tokens: int = 4000,
     ) -> None:
         self.model = model or os.environ.get("SWOS_PROSE_OPENAI_REWRITE_MODEL", "gpt-5.6")
@@ -121,7 +121,7 @@ class OpenAIResponsesRewriteProvider:
                         "strict": True,
                     }
                 },
-                temperature=self.temperature,
+                **({"temperature": self.temperature} if self.temperature is not None else {}),
                 max_output_tokens=self.max_output_tokens,
                 store=False,
             )

@@ -250,7 +250,7 @@ class OpenAIResponsesSemanticVerifierProvider:
     """Stateless semantic verifier using OpenAI's Responses API.
 
     Reproducibility controls are best-effort rather than a guarantee: requests
-    are stateless, use structured output, use temperature 0 by default, and
+    are stateless, use structured output, and
     record the model/prompt version and input hash.
     """
 
@@ -259,7 +259,7 @@ class OpenAIResponsesSemanticVerifierProvider:
         *,
         model: str | None = None,
         client: Any | None = None,
-        temperature: float = 0.0,
+        temperature: float | None = None,
         max_output_tokens: int = 6000,
         independent_of_rewriter: bool | None = True,
     ) -> None:
@@ -313,7 +313,7 @@ class OpenAIResponsesSemanticVerifierProvider:
                         "strict": True,
                     }
                 },
-                temperature=self.temperature,
+                **({"temperature": self.temperature} if self.temperature is not None else {}),
                 max_output_tokens=self.max_output_tokens,
                 store=False,
             )

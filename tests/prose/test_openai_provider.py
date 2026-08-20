@@ -115,12 +115,35 @@ class OpenAIProviderUnitTests(unittest.TestCase):
         )
         call = client.responses.calls[0]
         self.assertEqual(call["model"], "test-model")
-        self.assertEqual(call["temperature"], 0.0)
+        self.assertNotIn("temperature", call)
         self.assertFalse(call["store"])
         self.assertTrue(call["text"]["format"]["strict"])
         self.assertEqual(call["text"]["format"]["schema"], OPENAI_SEMANTIC_VERIFIER_SCHEMA)
         self.assertEqual(assessment.token_usage["total_tokens"], 333)
         self.assertIn("provider=openai_responses", assessment.notes)
+
+    def test_provider_forwards_explicit_temperature(self):
+        payload = one_to_one_payload(
+            proposition("p1", "The model performs poorly."),
+            proposition("c1", "The model underperforms."),
+        )
+        client = FakeClient(payload)
+        provider = OpenAIResponsesSemanticVerifierProvider(
+            model="test-model",
+            client=client,
+            temperature=0.25,
+        )
+
+        provider.verify(
+            source="The model performs poorly.",
+            candidate="The model underperforms.",
+            source_anchors=[],
+            candidate_anchors=[],
+            assurance="strict",
+            native_swos_context=None,
+        )
+
+        self.assertEqual(client.responses.calls[0]["temperature"], 0.25)
 
     def test_modal_scope_relocation_cannot_pass_even_if_provider_boolean_says_preserved(self):
         source = "The data may suggest that X causes Y."
