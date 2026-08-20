@@ -52,6 +52,10 @@ _REVIEWED_RELATION_CONTEXT_ANY_RE = re.compile(
     r"\bin\s+(?:the|this)\s+observed\s+tests\b",
     re.IGNORECASE,
 )
+_REVIEWED_RELATION_CONTEXT_CONTINUATION_RE = re.compile(
+    r"^\s*(?:as\s+well\s+as|along\s+with|together\s+with|plus|including|and)\b",
+    re.IGNORECASE,
+)
 
 _REPORTING_ACT_CANONICAL = {
     "argue": "argue",
@@ -239,19 +243,23 @@ def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | Non
 def _reviewed_relation_context(proposition: Proposition) -> str | None:
     """Return the complete reviewed evidence-context adjunct from proposition text.
 
-    Normalise position and punctuation, but retain any words conjoined with or
-    otherwise extending ``in the observed tests``. This lets provider extraction
-    omit the adjunct from a structured object without letting a mapped candidate
-    silently broaden the textual evidence scope.
+    Normalise position and punctuation, but retain words conjoined with or
+    otherwise extending ``in the observed tests``. A comma only ends the scope
+    when it introduces a new clause; reviewed coordination markers keep the
+    scoped adjunct open so broadening remains visible to mapped-frame checks.
     """
     text = _raw_embedded_claim_text(proposition)
     match = _REVIEWED_RELATION_CONTEXT_ANY_RE.search(text)
     if match is None:
         return None
     tail = text[match.start():]
-    boundary = re.search(r"[,;.!?]", tail)
-    if boundary is not None:
+    for boundary in re.finditer(r"[,;.!?]", tail):
+        if boundary.group() == ",":
+            continuation = tail[boundary.end():]
+            if _REVIEWED_RELATION_CONTEXT_CONTINUATION_RE.match(continuation):
+                continue
         tail = tail[:boundary.start()]
+        break
     return _normalise_frame_text(tail)
 
 
@@ -644,7 +652,7 @@ def deltas_from_proposition_report(
             deltas.append(_delta(
                 DeltaType.UNRESOLVED_EQUIVALENCE,
                 f"Scope is not preserved for source proposition {source_id}.",
-                source_span=proposition.text,
+                source_span=source.text,
                 candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
             ))
         if mapping.attribution_preserved is False:
