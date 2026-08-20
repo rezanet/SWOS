@@ -13,7 +13,7 @@ from typing import Any
 
 from .base import ProviderAssessment
 
-PROMPT_VERSION = "swos-prose-semantic-verifier-v0.3.0"
+PROMPT_VERSION = "swos-prose-semantic-verifier-v0.3.1"
 
 SEMANTIC_VERIFIER_INSTRUCTIONS = """\
 You are the semantic-verification witness for SWOS Prose.
@@ -26,7 +26,7 @@ Your task is not to judge topic similarity or stylistic similarity. Equivalence
 is proposition-level and bidirectional:
 1. Every material SOURCE proposition must remain represented in CANDIDATE with
    the same truth conditions, attribution, scope, uncertainty, causal force,
-   chronology, conditions, exceptions, and normative stance.
+   chronology, conditions, exceptions, relation sign, and normative stance.
 2. Every material CANDIDATE proposition must be licensed by SOURCE. A plausible
    inference, common-knowledge addition, or stronger claim is still a new claim.
 
@@ -34,38 +34,61 @@ Do not use embedding similarity, lexical overlap, or topical relatedness as a
 primary equivalence criterion. Ask whether each candidate proposition is
 strictly licensed by the source and whether each source proposition survives.
 
+Sentence boundaries are not proposition boundaries. A conjunction in one
+sentence may legitimately map to multiple candidate propositions, and multiple
+source propositions may be merged into one candidate proposition. Use the
+candidate_ids/source_ids arrays to represent these split/merge mappings. Do not
+invent or drop propositions merely to make the mapping convenient.
+
 Extract atomic propositions. When a sentence contains a reporting or epistemic
-predicate plus an embedded claim, keep their scopes distinct. In particular,
-record:
+predicate plus an embedded claim, keep their scopes distinct. For each
+proposition record:
 - subject, relation, object where meaningful;
-- modality and exactly what the modality scopes over;
-- attribution;
+- modality and exactly what predicate/claim the modality scopes over;
+- attribution as a structured {agent, act} object when present;
 - causal force using one of: none, association, possible_causal, causal, unknown;
+- relation sign using one of: positive, negative, neutral, unknown;
 - temporal relation in a canonical form when possible, e.g.
   before(intervention,outcome), regardless of whether the surface wording is
   "intervention preceded outcome" or "outcome followed intervention";
 - normative stance using one of: positive, negative, neutral, mixed, unknown.
 
+Attribution is semantic content. "Smith argues that X" is not equivalent to an
+unattributed assertion "X". Preserve both the attribution agent and the speech
+act (argues, reports, observes, speculates, etc.).
+
 Modal scope matters. For example:
 "The data may suggest that X causes Y"
 is not automatically equivalent to
 "The data suggests that X may cause Y".
-If you cannot establish the same scope, mark the mapping unresolved and explain
-why.
+The modality_scope field must identify what the modal governs. If a proposition
+contains modality but you cannot determine its target, set modality_scope to
+null and add an unresolved item. Do not guess safe.
 
 Temporal inverse wording can preserve meaning. "A preceded B" and "B followed A"
 express the same chronology. Canonicalize the temporal relation rather than
 treating surface subject/object order as semantic direction by itself.
 
 Symmetric relations such as plain association/correlation may remain equivalent
-when their surface arguments are swapped. Do not invent causal direction from
-an associative relation.
+when their surface arguments are swapped. Relation sign is independent of that
+symmetry: "positively correlated" and "negatively correlated" are not
+equivalent even if the arguments are reversed.
 
-If any proposition, mapping, scope, attribution, or relation cannot be resolved
-reliably, use the unresolved array. Do not guess safe.
+If any proposition, mapping, scope, attribution, relation sign, or relation
+cannot be resolved reliably, use the unresolved array. Do not guess safe.
 
 Return only the JSON object required by the response schema.
 """
+
+ATTRIBUTION_SCHEMA: dict[str, Any] = {
+    "type": ["object", "null"],
+    "properties": {
+        "agent": {"type": "string"},
+        "act": {"type": "string"},
+    },
+    "required": ["agent", "act"],
+    "additionalProperties": False,
+}
 
 PROPOSITION_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -78,7 +101,7 @@ PROPOSITION_SCHEMA: dict[str, Any] = {
         "object": {"type": ["string", "null"]},
         "modality": {"type": ["string", "null"]},
         "modality_scope": {"type": ["string", "null"]},
-        "attribution": {"type": ["string", "null"]},
+        "attribution": ATTRIBUTION_SCHEMA,
         "causal_force": {
             "type": ["string", "null"],
             "enum": ["none", "association", "possible_causal", "causal", "unknown", None],
@@ -88,11 +111,15 @@ PROPOSITION_SCHEMA: dict[str, Any] = {
             "type": ["string", "null"],
             "enum": ["positive", "negative", "neutral", "mixed", "unknown", None],
         },
+        "relation_sign": {
+            "type": ["string", "null"],
+            "enum": ["positive", "negative", "neutral", "unknown", None],
+        },
     },
     "required": [
         "id", "text", "subject", "relation", "object", "modality",
         "modality_scope", "attribution", "causal_force", "temporal_relation",
-        "normative_stance",
+        "normative_stance", "relation_sign",
     ],
 }
 
