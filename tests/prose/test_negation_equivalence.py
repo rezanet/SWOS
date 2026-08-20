@@ -116,6 +116,48 @@ class ReviewedNegationEquivalenceTests(unittest.TestCase):
             [delta.delta_type.value for delta in result.semantic_deltas],
         )
 
+    def test_double_negation_is_not_collapsed_into_reviewed_equivalence(self):
+        source = "The available evidence is not insufficient to establish the claim."
+        candidate = "The available evidence is insufficient to establish the claim."
+        verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
+
+        result = verify_rewrite(
+            source=source,
+            candidate=candidate,
+            assurance="strict",
+            verifier_provider=verifier,
+        )
+
+        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertEqual(verifier.calls, 0)
+        self.assertIn(
+            "negation_changed",
+            [delta.delta_type.value for delta in result.semantic_deltas],
+        )
+
+    def test_reviewed_negation_cannot_move_to_another_clause(self):
+        source = (
+            "The first condition is not sufficient, while the second condition is sufficient."
+        )
+        candidate = (
+            "The first condition is sufficient, while the second condition is insufficient."
+        )
+        verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
+
+        result = verify_rewrite(
+            source=source,
+            candidate=candidate,
+            assurance="strict",
+            verifier_provider=verifier,
+        )
+
+        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertEqual(verifier.calls, 0)
+        self.assertIn(
+            "negation_changed",
+            [delta.delta_type.value for delta in result.semantic_deltas],
+        )
+
     def test_generic_negative_prefix_is_not_inferred(self):
         source = "The result was not valuable."
         candidate = "The result was invaluable."
