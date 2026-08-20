@@ -71,6 +71,26 @@ _REPORTING_ACT_CANONICAL = {
     "speculates": "speculate",
 }
 
+# Structured verifier output is semantic rather than necessarily a verbatim
+# surface transcription. Accept only reviewed morphological/copular variants of
+# the four relation families the deterministic parser itself understands.
+_RELATION_CANONICAL = {
+    "associated": "associated with",
+    "associated with": "associated with",
+    "association": "associated with",
+    "association with": "associated with",
+    "correlated": "correlated with",
+    "correlated with": "correlated with",
+    "correlation": "correlated with",
+    "correlation with": "correlated with",
+    "linked": "linked to",
+    "linked to": "linked to",
+    "link": "linked to",
+    "link to": "linked to",
+    "related": "related to",
+    "related to": "related to",
+}
+
 
 def _delta(
     delta_type: DeltaType,
@@ -160,6 +180,15 @@ def _canonical_reporting_act(text: str | None) -> str | None:
     value = _normalise_frame_text(text)
     value = re.sub(r"\s+that$", "", value)
     return _REPORTING_ACT_CANONICAL.get(value)
+
+
+def _canonical_relation(text: str | None) -> str | None:
+    """Canonicalise only relation variants already understood by the core."""
+    if text is None:
+        return None
+    value = _normalise_frame_text(text)
+    value = re.sub(r"^(?:is|are|was|were)\s+", "", value)
+    return _RELATION_CANONICAL.get(value)
 
 
 def _raw_embedded_claim_text(proposition: Proposition) -> str:
@@ -282,7 +311,7 @@ def _provider_frame_mismatches(proposition: Proposition) -> list[str]:
         if parsed is not None:
             if proposition.subject is not None and _normalise_role(proposition.subject) != parsed[0]:
                 mismatches.append("subject")
-            if proposition.relation is not None and _normalise_optional(proposition.relation) != parsed[1]:
+            if proposition.relation is not None and _canonical_relation(proposition.relation) != parsed[1]:
                 mismatches.append("relation")
             if proposition.object is not None and not _relation_object_matches(proposition, proposition.object):
                 mismatches.append("object")
@@ -296,7 +325,7 @@ def _provider_frame_mismatches(proposition: Proposition) -> list[str]:
 
 def _structured_frame_supports_relation(proposition: Proposition, relation: str) -> bool:
     """Return whether structured fields validly support the parsed inner relation."""
-    if _normalise_optional(proposition.relation) == relation:
+    if _canonical_relation(proposition.relation) == relation:
         return not _provider_frame_mismatches(proposition)
     raw_attribution = _raw_attribution(proposition)
     if raw_attribution is None:
