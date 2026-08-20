@@ -54,7 +54,7 @@ _REVIEWED_RELATION_CONTEXT_ANY_RE = re.compile(
 )
 _REVIEWED_RELATION_CONTEXT_COMMA_BOUNDARY_RE = re.compile(
     r"^\s*(?:"
-    r"(?:but|and|or|yet)\s+(?:they|we|he|she|it|this|that|these|those)\s+"
+    r"(?:but|and|or|yet)\s+(?:(?:they|we|he|she|it|this|that|these|those)\s+)?"
     r"(?:do|does|did|is|are|was|were|has|have|had|can|could|may|might|must|will|would|should)\b"
     r"|however\b|whereas\b|although\b|though\b|while\b"
     r")",
