@@ -11,6 +11,11 @@ from ..anchors import (
     extract_risk_signals,
 )
 from ..models import DeltaType, SemanticDelta, Severity
+from .causal_scope import (
+    affirmative_relation_sequence,
+    causal_polarity_signals,
+    reviewed_association_markers,
+)
 from .negation_equivalence import (
     REVIEWED_LEXICAL_NEGATION_TERMS,
     REVIEWED_NEGATION_EQUIVALENCES,
@@ -211,19 +216,66 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
             candidate_span=", ".join(right.strong_epistemic_markers),
         ))
 
-    if left.association_markers and right.causal_markers:
+    # Causal words inside a reviewed denied claim/evidence scope are not treated
+    # as affirmative causal assertions. The denied proposition still matters: if
+    # its causal wording changes, retain a REVIEW-level signal for the semantic
+    # verifier rather than declaring the content irrelevant.
+    left_causal = causal_polarity_signals(source)
+    right_causal = causal_polarity_signals(candidate)
+    left_associations = (*left.association_markers, *reviewed_association_markers(source))
+    right_associations = (*right.association_markers, *reviewed_association_markers(candidate))
+
+    # Compare occurrence counts rather than asking whether the source contains
+    # *any* affirmative causal marker. Otherwise an unrelated source-side causal
+    # claim can mask association -> causation strengthening in another clause.
+    lost_association = len(right_associations) < len(left_associations)
+    introduced_affirmative_causality = (
+        len(right_causal.affirmative) > len(left_causal.affirmative)
+    )
+
+    if left_associations and lost_association and introduced_affirmative_causality:
         deltas.append(_delta(
             DeltaType.CAUSAL_STRENGTH_CHANGED,
-            "Candidate changes associative language into causal language.",
-            source_span=", ".join(left.association_markers),
-            candidate_span=", ".join(right.causal_markers),
+            "Candidate replaces at least one associative relation with additional affirmative causal language.",
+            source_span=", ".join(left_associations),
+            candidate_span=", ".join(right_causal.affirmative),
         ))
-    elif not left.causal_markers and right.causal_markers:
+    elif not left_causal.affirmative and right_causal.affirmative:
         deltas.append(_delta(
             DeltaType.CAUSAL_STRENGTH_CHANGED,
-            "Candidate introduces explicit causal language absent from the source.",
+            "Candidate introduces affirmative causal language absent from the source.",
             source_span=None,
-            candidate_span=", ".join(right.causal_markers),
+            candidate_span=", ".join(right_causal.affirmative),
+            severity=Severity.WARNING,
+            confidence=0.9,
+        ))
+
+    # Balanced global counts can still hide a strengthening in one proposition
+    # offset by weakening another. Textual relation order is not enough to prove
+    # which proposition changed, so a changed association/causal sequence is an
+    # unresolved semantic risk and must not be auto-PASSed by an optimistic model.
+    left_relation_sequence = affirmative_relation_sequence(source)
+    right_relation_sequence = affirmative_relation_sequence(candidate)
+    if (
+        left_relation_sequence != right_relation_sequence
+        and Counter(left_relation_sequence) == Counter(right_relation_sequence)
+        and {"association", "causal"}.issubset(set(left_relation_sequence))
+    ):
+        deltas.append(_delta(
+            DeltaType.CAUSAL_STRENGTH_CHANGED,
+            "Association and affirmative-causal markers are redistributed across the text; proposition-level alignment is required.",
+            source_span=" -> ".join(left_relation_sequence),
+            candidate_span=" -> ".join(right_relation_sequence),
+            severity=Severity.WARNING,
+            confidence=0.9,
+        ))
+
+    if Counter(left_causal.denied) != Counter(right_causal.denied):
+        deltas.append(_delta(
+            DeltaType.CAUSAL_STRENGTH_CHANGED,
+            "Causal wording inside a denied claim/evidence scope differs and requires semantic review.",
+            source_span=", ".join(left_causal.denied) or None,
+            candidate_span=", ".join(right_causal.denied) or None,
             severity=Severity.WARNING,
             confidence=0.9,
         ))
