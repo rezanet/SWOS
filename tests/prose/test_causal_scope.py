@@ -11,7 +11,12 @@ from swos_prose.verify.causal_scope import (
 )
 
 
-def _proposition(prop_id: str, text: str) -> dict:
+def _proposition(
+    prop_id: str,
+    text: str,
+    *,
+    attribution: dict[str, str] | None = None,
+) -> dict:
     return {
         "id": prop_id,
         "text": text,
@@ -20,7 +25,7 @@ def _proposition(prop_id: str, text: str) -> dict:
         "object": None,
         "modality": None,
         "modality_scope": None,
-        "attribution": None,
+        "attribution": attribution,
         "causal_force": "none",
         "temporal_relation": None,
         "normative_stance": "neutral",
@@ -30,12 +35,21 @@ def _proposition(prop_id: str, text: str) -> dict:
     }
 
 
-def _equivalent_payload(source: str, candidate: str) -> dict:
+def _equivalent_payload(
+    source: str,
+    candidate: str,
+    *,
+    attribution: dict[str, str] | None = None,
+) -> dict:
     return {
         "equivalent": True,
         "independent_of_rewriter": True,
-        "source_propositions": [_proposition("p1", source)],
-        "candidate_propositions": [_proposition("c1", candidate)],
+        "source_propositions": [
+            _proposition("p1", source, attribution=attribution)
+        ],
+        "candidate_propositions": [
+            _proposition("c1", candidate, attribution=attribution)
+        ],
         "source_to_candidate": [{
             "source_id": "p1",
             "candidate_ids": ["c1"],
@@ -91,7 +105,14 @@ class CausalScopeTests(unittest.TestCase):
             "response times in the observed tests, but do not claim that processor "
             "load caused the delay."
         )
-        verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
+        attribution = {"agent": "Chen et al.", "act": "report"}
+        verifier = StaticSemanticVerifierProvider(
+            _equivalent_payload(
+                source,
+                candidate,
+                attribution=attribution,
+            )
+        )
 
         result = verify_rewrite(
             source=source,
@@ -100,11 +121,15 @@ class CausalScopeTests(unittest.TestCase):
             verifier_provider=verifier,
         )
 
-        self.assertIn(result.status, {VerificationStatus.PASS, VerificationStatus.REVIEW})
+        self.assertEqual(result.status, VerificationStatus.PASS)
         self.assertTrue(result.verifier_used)
         self.assertEqual(verifier.calls, 1)
         self.assertNotIn(
             "causal_strength_changed",
+            [delta.delta_type.value for delta in result.semantic_deltas],
+        )
+        self.assertNotIn(
+            "malformed_provider_response",
             [delta.delta_type.value for delta in result.semantic_deltas],
         )
 
