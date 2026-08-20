@@ -8,6 +8,14 @@ from ..models import DeltaType, SemanticAnchor, SemanticDelta, Severity
 
 
 @dataclass(frozen=True)
+class Attribution:
+    """Structured attribution attached to a proposition."""
+
+    agent: str
+    act: str
+
+
+@dataclass(frozen=True)
 class Proposition:
     proposition_id: str
     text: str
@@ -16,10 +24,11 @@ class Proposition:
     object: str | None = None
     modality: str | None = None
     modality_scope: str | None = None
-    attribution: str | None = None
+    attribution: Attribution | None = None
     causal_force: str | None = None
     temporal_relation: str | None = None
     normative_stance: str | None = None
+    relation_sign: str | None = None
 
 
 @dataclass(frozen=True)
@@ -72,10 +81,11 @@ class PropositionReport:
                 object=_optional_str(item.get("object")),
                 modality=_optional_str(item.get("modality")),
                 modality_scope=_optional_str(item.get("modality_scope")),
-                attribution=_optional_str(item.get("attribution")),
+                attribution=_optional_attribution(item.get("attribution")),
                 causal_force=_optional_str(item.get("causal_force")),
                 temporal_relation=_optional_str(item.get("temporal_relation")),
                 normative_stance=_optional_str(item.get("normative_stance")),
+                relation_sign=_optional_str(item.get("relation_sign")),
             )
 
         def s2c(item: dict[str, Any]) -> SourceToCandidateMapping:
@@ -135,6 +145,20 @@ def _optional_float(value: Any) -> float | None:
 
 def _optional_str(value: Any) -> str | None:
     return None if value is None else str(value)
+
+
+def _optional_attribution(value: Any) -> Attribution | None:
+    if value is None:
+        return None
+    if not isinstance(value, dict):
+        raise ValueError("attribution must be an object with agent and act, or null.")
+    agent = value.get("agent")
+    act = value.get("act")
+    if not isinstance(agent, str) or not agent.strip():
+        raise ValueError("attribution.agent must be a non-empty string.")
+    if not isinstance(act, str) or not act.strip():
+        raise ValueError("attribution.act must be a non-empty string.")
+    return Attribution(agent=agent.strip(), act=act.strip())
 
 
 def _provider_delta(item: Any) -> SemanticDelta:
