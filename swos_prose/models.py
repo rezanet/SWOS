@@ -35,6 +35,7 @@ class DeltaType(str, Enum):
     MODALITY_WEAKENED = "modality_weakened"
     CAUSAL_STRENGTH_CHANGED = "causal_strength_changed"
     DIRECTION_REVERSAL = "direction_reversal"
+    RELATION_SIGN_CHANGED = "relation_sign_changed"
     SCOPE_BROADENED = "scope_broadened"
     SCOPE_NARROWED = "scope_narrowed"
     ATTRIBUTION_CHANGED = "attribution_changed"
