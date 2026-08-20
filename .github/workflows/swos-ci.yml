@@ -46,12 +46,14 @@ jobs:
         run: python3 -m unittest discover -s tests/prose -p 'test_*.py'
 
   prose-openai-live:
-    name: SWOS Prose OpenAI live semantic tests
-    if: github.event_name != 'pull_request'
+    name: SWOS Prose OpenAI live evidence
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       SWOS_PROSE_RUN_LIVE_OPENAI: "1"
+      SWOS_PROSE_OPENAI_MODEL: gpt-5.6-luna
+      SWOS_PROSE_OPENAI_REWRITE_MODEL: gpt-5.6-luna
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -59,12 +61,47 @@ jobs:
           python-version: "3.11"
       - name: Report live-test skip when no API key is configured
         if: env.OPENAI_API_KEY == ''
-        run: echo "OPENAI_API_KEY is not configured; live semantic-verifier tests skipped."
-      - name: Run live OpenAI semantic-verifier tests
+        run: echo "OPENAI_API_KEY is not configured; live SWOS Prose evidence skipped."
+      - name: Install OpenAI SDK
         if: env.OPENAI_API_KEY != ''
+        run: python3 -m pip install openai
+      - name: Run live OpenAI semantic-verifier regressions
+        id: live-verifier
+        if: env.OPENAI_API_KEY != ''
+        continue-on-error: true
         run: |
-          python3 -m pip install openai
-          python3 -m unittest discover -s tests/prose -p 'test_openai_live.py'
+          set -o pipefail
+          python3 -m unittest discover -s tests/prose -p 'test_openai_live.py' 2>&1 \
+            | tee /tmp/swos-prose-live-verifier.log
+      - name: Run five-case polish dogfood batch
+        if: env.OPENAI_API_KEY != '' && always()
+        run: |
+          rm -rf /tmp/swos-prose-dogfood
+          python3 -m swos_prose.cli dogfood \
+            --input-dir tests/prose/fixtures/live_dogfood \
+            --output-dir /tmp/swos-prose-dogfood \
+            --assurance strict \
+            --rewriter-model gpt-5.6-luna \
+            --verifier-model gpt-5.6-luna
+          cat /tmp/swos-prose-dogfood/summary.json
+          {
+            echo '## SWOS Prose live evidence'
+            echo
+            echo "Verifier regression step outcome: ${{ steps.live-verifier.outcome }}"
+            echo
+            echo '```json'
+            cat /tmp/swos-prose-dogfood/summary.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload live evidence
+        if: env.OPENAI_API_KEY != '' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swos-prose-live-evidence
+          path: |
+            /tmp/swos-prose-dogfood
+            /tmp/swos-prose-live-verifier.log
+          retention-days: 7
 
   evaluation:
     name: Evaluation harness (release gate)

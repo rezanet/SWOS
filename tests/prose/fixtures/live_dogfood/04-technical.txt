@@ -1,0 +1,1 @@
+The reference implementation uses a quadratic comparison step with O(n^2) time complexity, while memory usage remains O(n) because the intermediate state is stored in a single linear buffer.

@@ -12,7 +12,7 @@ from typing import Any
 
 from .rewrite_base import RewriteCandidate
 
-PROMPT_VERSION = "swos-prose-polish-rewriter-v0.1.0"
+PROMPT_VERSION = "swos-prose-polish-rewriter-v0.2.0"
 
 POLISH_REWRITER_INSTRUCTIONS = """\
 You are the prose-rewrite witness for SWOS Prose.
@@ -31,8 +31,8 @@ Hard rules:
 2. Do not add facts, examples, evidence, citations, quotations, explanations, or
    conclusions that are not already licensed by SOURCE.
 3. Preserve attribution, uncertainty, modality, negation, causal force, scope,
-   chronology, conditions, exceptions, quantifiers, epistemic status, and
-   normative stance.
+   chronology, conditions, exceptions, quantifiers, epistemic status, degree
+   and scalar force, and normative stance.
 4. Every protected anchor supplied by the runtime must remain verbatim in the
    candidate. In this first rewrite slice, do not reformat numbers, citations,
    or quotations even when an equivalent spelling might exist.
@@ -42,6 +42,16 @@ Hard rules:
    unchanged.
 8. Read-only context may inform local flow, but never introduce a proposition
    that is supported only by context and absent from SOURCE.
+9. Degree and scalar force are semantic content. Preserve expressions such as
+   "somewhat", "slightly", "substantially", "highly", "nearly", and similar
+   force-bearing modifiers when they materially qualify a proposition.
+10. Never replace an asserted degree with modal possibility or necessity merely
+    to improve style. For example, "is still somewhat difficult" must not become
+    "can still be difficult". The first asserts a present degree of difficulty;
+    the second changes the proposition into possibility.
+11. Do not introduce, remove, or relocate may/might/can/could/should/would/must
+    when doing so changes the author's commitment. If semantic force is
+    uncertain, retain the original force-bearing wording rather than guessing.
 
 Follow the supplied rewrite_plan, but the hard rules above take precedence.
 Return only the JSON object required by the response schema.

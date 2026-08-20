@@ -10,7 +10,7 @@ from swos_prose.providers.openai_rewrite import (
     POLISH_REWRITER_INSTRUCTIONS,
 )
 from swos_prose.providers.rewrite_mock import StaticRewriteProvider
-from swos_prose.rewrite import polish_text
+from swos_prose.rewrite import _polish_plan, polish_text
 
 
 def proposition(prop_id: str, text: str) -> dict:
@@ -61,6 +61,27 @@ def equivalent_payload(source: str, candidate: str) -> dict:
         "unresolved": [],
         "notes": [],
     }
+
+
+class PolishPlanTests(unittest.TestCase):
+    def test_polish_plan_records_degree_and_modal_force(self):
+        source = (
+            "The interaction is still somewhat difficult and may remain "
+            "partially unclear."
+        )
+
+        plan = _polish_plan(source)
+
+        self.assertEqual(
+            plan["semantic_force_profile"]["degree_markers"],
+            ["somewhat", "partially"],
+        )
+        self.assertEqual(
+            plan["semantic_force_profile"]["modal_markers"],
+            ["may"],
+        )
+        self.assertIn("degree and scalar force", plan["must_preserve"])
+        self.assertIn("degree-to-modality substitution", plan["forbidden"])
 
 
 class PolishPipelineTests(unittest.TestCase):
@@ -160,6 +181,20 @@ class PolishPipelineTests(unittest.TestCase):
         self.assertIn("[12]", anchors)
         self.assertEqual(rewriter.last_request["mode"], "polish")
 
+    def test_semantic_force_profile_is_passed_to_rewriter(self):
+        source = "The interaction is still somewhat difficult and may remain unclear."
+        rewriter = StaticRewriteProvider(source)
+
+        polish_text(
+            source=source,
+            rewrite_provider=rewriter,
+            verifier_provider=None,
+        )
+
+        profile = rewriter.last_request["rewrite_plan"]["semantic_force_profile"]
+        self.assertEqual(profile["degree_markers"], ["somewhat"])
+        self.assertEqual(profile["modal_markers"], ["may"])
+
     def test_empty_source_is_a_noop_without_provider_call(self):
         rewriter = StaticRewriteProvider("unexpected")
         result = polish_text(
@@ -242,6 +277,14 @@ class OpenAIRewriteAdapterTests(unittest.TestCase):
         self.assertEqual(request_payload["protected_anchors"][0]["text"], "18.7%")
         self.assertIn("protected anchor", POLISH_REWRITER_INSTRUCTIONS.casefold())
         self.assertIn("do not add", POLISH_REWRITER_INSTRUCTIONS.casefold())
+
+    def test_openai_polish_instructions_preserve_degree_and_modal_force(self):
+        instructions = POLISH_REWRITER_INSTRUCTIONS.casefold()
+
+        self.assertIn("degree and scalar force", instructions)
+        self.assertIn("is still somewhat difficult", instructions)
+        self.assertIn("can still be difficult", instructions)
+        self.assertIn("retain the original force-bearing wording", instructions)
 
     def test_openai_polish_adapter_forwards_explicit_temperature(self):
         client = FakeClient("Polished prose.")
