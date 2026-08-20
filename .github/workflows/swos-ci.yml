@@ -45,6 +45,27 @@ jobs:
       - name: Run semantic-delta unit tests
         run: python3 -m unittest discover -s tests/prose -p 'test_*.py'
 
+  prose-openai-live:
+    name: SWOS Prose OpenAI live semantic tests
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      SWOS_PROSE_RUN_LIVE_OPENAI: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Report live-test skip when no API key is configured
+        if: env.OPENAI_API_KEY == ''
+        run: echo "OPENAI_API_KEY is not configured; live semantic-verifier tests skipped."
+      - name: Run live OpenAI semantic-verifier tests
+        if: env.OPENAI_API_KEY != ''
+        run: |
+          python3 -m pip install openai
+          python3 -m unittest discover -s tests/prose -p 'test_openai_live.py'
+
   evaluation:
     name: Evaluation harness (release gate)
     runs-on: ubuntu-latest

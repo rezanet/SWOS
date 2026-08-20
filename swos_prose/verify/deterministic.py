@@ -3,7 +3,12 @@ from __future__ import annotations
 
 from collections import Counter
 
-from ..anchors import anchor_multiset, extract_anchors, extract_risk_signals
+from ..anchors import (
+    anchor_multiset,
+    canonical_number_multisets,
+    extract_anchors,
+    extract_risk_signals,
+)
 from ..models import DeltaType, SemanticDelta, Severity
 
 
@@ -37,8 +42,23 @@ def _compare_hard_anchors(source: str, candidate: str) -> tuple[list, list, list
     candidate_anchors = extract_anchors(candidate)
     deltas: list[SemanticDelta] = []
 
+    number_left, number_right = canonical_number_multisets(
+        source,
+        candidate,
+        source_anchors,
+        candidate_anchors,
+    )
+    if number_left != number_right:
+        deltas.append(_delta(
+            DeltaType.NUMBER_CHANGED,
+            "Protected number anchors differ between source and candidate after conservative numeric canonicalization.",
+            source_span=_counter_text(number_left) or None,
+            candidate_span=_counter_text(number_right) or None,
+            severity=Severity.BLOCKER,
+            repairable=False,
+        ))
+
     mapping = {
-        "number": DeltaType.NUMBER_CHANGED,
         "citation": DeltaType.CITATION_REMOVED,
         "quotation": DeltaType.QUOTATION_CHANGED,
     }
@@ -61,10 +81,10 @@ def _compare_hard_anchors(source: str, candidate: str) -> tuple[list, list, list
 def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[SemanticDelta]]:
     """Return deterministic/high-risk deltas without claiming full equivalence.
 
-    Hard anchors (numbers, citations, quotations) are literal blockers. Linguistic
-    risk checks are conservative signals. Clear semantic strengthening is a
-    blocker; potentially safe paraphrases that require interpretation become
-    REVIEW-level warnings for the semantic verifier to resolve.
+    Hard anchors (numbers, citations, quotations) are literal blockers after
+    conservative canonicalization. Linguistic risk checks are conservative
+    signals. Clear semantic strengthening is a blocker; potentially safe
+    paraphrases that require interpretation become REVIEW-level warnings.
     """
     source_anchors, candidate_anchors, deltas = _compare_hard_anchors(source, candidate)
     left = extract_risk_signals(source)
@@ -78,7 +98,6 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
             candidate_span=", ".join(right.negations) or None,
         ))
 
-    # A weak modal disappearing is a direct certainty-strengthening risk.
     if left.weak_modals and not right.weak_modals:
         deltas.append(_delta(
             DeltaType.MODALITY_STRENGTHENED,

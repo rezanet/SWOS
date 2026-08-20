@@ -1,6 +1,7 @@
-"""Semantic verifier provider interfaces and test doubles."""
+"""Semantic verifier provider interfaces, adapters, and test doubles."""
 
 from .base import (
+    Attribution,
     CandidateToSourceMapping,
     Proposition,
     PropositionReport,
@@ -9,9 +10,12 @@ from .base import (
     SourceToCandidateMapping,
 )
 from .mock import StaticSemanticVerifierProvider
+from .openai_responses import OpenAIResponsesSemanticVerifierProvider
 
 __all__ = [
+    "Attribution",
     "CandidateToSourceMapping",
+    "OpenAIResponsesSemanticVerifierProvider",
     "Proposition",
     "PropositionReport",
     "ProviderAssessment",
