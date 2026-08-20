@@ -237,10 +237,22 @@ def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | Non
 
 
 def _reviewed_relation_context(proposition: Proposition) -> str | None:
-    """Return reviewed evidence-context scope present in the proposition text."""
-    if _REVIEWED_RELATION_CONTEXT_ANY_RE.search(proposition.text):
-        return "observed tests"
-    return None
+    """Return the complete reviewed evidence-context adjunct from proposition text.
+
+    Normalise position and punctuation, but retain any words conjoined with or
+    otherwise extending ``in the observed tests``. This lets provider extraction
+    omit the adjunct from a structured object without letting a mapped candidate
+    silently broaden the textual evidence scope.
+    """
+    text = _raw_embedded_claim_text(proposition)
+    match = _REVIEWED_RELATION_CONTEXT_ANY_RE.search(text)
+    if match is None:
+        return None
+    tail = text[match.start():]
+    boundary = re.search(r"[,;.!?]", tail)
+    if boundary is not None:
+        tail = tail[:boundary.start()]
+    return _normalise_frame_text(tail)
 
 
 def _relation_object_matches(proposition: Proposition, provider_object: str) -> bool:
