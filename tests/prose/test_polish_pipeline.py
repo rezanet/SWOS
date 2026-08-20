@@ -236,12 +236,29 @@ class OpenAIRewriteAdapterTests(unittest.TestCase):
         self.assertEqual(proposal.token_usage["total_tokens"], 120)
         call = client.responses.calls[0]
         self.assertFalse(call["store"])
-        self.assertEqual(call["temperature"], 0.0)
+        self.assertNotIn("temperature", call)
         self.assertTrue(call["text"]["format"]["strict"])
         request_payload = json.loads(call["input"])
         self.assertEqual(request_payload["protected_anchors"][0]["text"], "18.7%")
         self.assertIn("protected anchor", POLISH_REWRITER_INSTRUCTIONS.casefold())
         self.assertIn("do not add", POLISH_REWRITER_INSTRUCTIONS.casefold())
+
+    def test_openai_polish_adapter_forwards_explicit_temperature(self):
+        client = FakeClient("Polished prose.")
+        provider = OpenAIResponsesRewriteProvider(
+            model="test-model",
+            client=client,
+            temperature=0.25,
+        )
+
+        provider.rewrite(
+            source="Source prose.",
+            mode="polish",
+            protected_anchors=[],
+            rewrite_plan={"objectives": ["improve clarity"]},
+        )
+
+        self.assertEqual(client.responses.calls[0]["temperature"], 0.25)
 
     def test_openai_polish_adapter_rejects_unimplemented_mode(self):
         provider = OpenAIResponsesRewriteProvider(model="test-model", client=FakeClient("x"))
