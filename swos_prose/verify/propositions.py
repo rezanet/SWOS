@@ -45,7 +45,7 @@ _REVIEWED_RELATION_CONTEXT_SUFFIX_RE = re.compile(
     re.IGNORECASE,
 )
 _REVIEWED_RELATION_CONTEXT_PREFIX_RE = re.compile(
-    r"^\s*in\s+(?:the|this)\s+observed\s+tests\s*,\s*",
+    r"^\s*,?\s*in\s+(?:the|this)\s+observed\s+tests\s*,\s*",
     re.IGNORECASE,
 )
 
