@@ -11,7 +11,11 @@ from ..anchors import (
     extract_risk_signals,
 )
 from ..models import DeltaType, SemanticDelta, Severity
-from .causal_scope import causal_polarity_signals, reviewed_association_markers
+from .causal_scope import (
+    affirmative_relation_sequence,
+    causal_polarity_signals,
+    reviewed_association_markers,
+)
 from .negation_equivalence import (
     REVIEWED_LEXICAL_NEGATION_TERMS,
     REVIEWED_NEGATION_EQUIVALENCES,
@@ -242,6 +246,26 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
             "Candidate introduces affirmative causal language absent from the source.",
             source_span=None,
             candidate_span=", ".join(right_causal.affirmative),
+            severity=Severity.WARNING,
+            confidence=0.9,
+        ))
+
+    # Balanced global counts can still hide a strengthening in one proposition
+    # offset by weakening another. Textual relation order is not enough to prove
+    # which proposition changed, so a changed association/causal sequence is an
+    # unresolved semantic risk and must not be auto-PASSed by an optimistic model.
+    left_relation_sequence = affirmative_relation_sequence(source)
+    right_relation_sequence = affirmative_relation_sequence(candidate)
+    if (
+        left_relation_sequence != right_relation_sequence
+        and Counter(left_relation_sequence) == Counter(right_relation_sequence)
+        and {"association", "causal"}.issubset(set(left_relation_sequence))
+    ):
+        deltas.append(_delta(
+            DeltaType.CAUSAL_STRENGTH_CHANGED,
+            "Association and affirmative-causal markers are redistributed across the text; proposition-level alignment is required.",
+            source_span=" -> ".join(left_relation_sequence),
+            candidate_span=" -> ".join(right_relation_sequence),
             severity=Severity.WARNING,
             confidence=0.9,
         ))
