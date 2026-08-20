@@ -6,7 +6,10 @@ from swos_prose.models import DeltaType, VerificationStatus
 from swos_prose.pipeline import verify_rewrite
 from swos_prose.providers.base import Attribution, Proposition
 from swos_prose.providers.mock import StaticSemanticVerifierProvider
-from swos_prose.verify.propositions import _provider_frame_mismatches
+from swos_prose.verify.propositions import (
+    _is_symmetric_swap,
+    _provider_frame_mismatches,
+)
 
 
 SOURCE = (
@@ -186,9 +189,21 @@ class AttributedRelationFrameTests(unittest.TestCase):
 
         self.assertIn("object", _provider_frame_mismatches(proposition))
 
-    def test_comma_led_observed_test_context_keeps_inner_subject(self):
+    def test_provider_only_observed_test_scope_is_rejected(self):
         proposition = Proposition(
             proposition_id="p2",
+            text="Mortality was associated with exposure.",
+            subject="Mortality",
+            relation="associated with",
+            object="exposure in the observed tests",
+            relation_sign="neutral",
+        )
+
+        self.assertIn("object", _provider_frame_mismatches(proposition))
+
+    def test_comma_led_observed_test_context_keeps_inner_subject(self):
+        proposition = Proposition(
+            proposition_id="p3",
             text=(
                 "Chen et al. report that, in the observed tests, processor load "
                 "was associated with longer response times."
@@ -201,6 +216,48 @@ class AttributedRelationFrameTests(unittest.TestCase):
         )
 
         self.assertEqual(_provider_frame_mismatches(proposition), [])
+
+    def test_outer_reporting_frame_requires_complete_embedded_claim(self):
+        text = "Chen et al. report that mortality was associated with exposure."
+        attribution = Attribution(agent="Chen et al.", act="report")
+        for bad_object in (
+            "mortality",
+            "mortality was associated with exposure and caused harm",
+        ):
+            with self.subTest(object=bad_object):
+                proposition = Proposition(
+                    proposition_id="p4",
+                    text=text,
+                    subject="Chen et al.",
+                    relation="report",
+                    object=bad_object,
+                    attribution=attribution,
+                    relation_sign="neutral",
+                )
+                self.assertIn("object", _provider_frame_mismatches(proposition))
+
+    def test_outer_reporting_frames_can_prove_symmetric_relation_swap(self):
+        attribution = Attribution(agent="Chen et al.", act="report")
+        source = Proposition(
+            proposition_id="s1",
+            text="Chen et al. report that A was associated with B.",
+            subject="Chen et al.",
+            relation="report",
+            object="A was associated with B",
+            attribution=attribution,
+            relation_sign="neutral",
+        )
+        candidate = Proposition(
+            proposition_id="c1",
+            text="Chen et al. report that B was associated with A.",
+            subject="Chen et al.",
+            relation="report",
+            object="B was associated with A",
+            attribution=attribution,
+            relation_sign="neutral",
+        )
+
+        self.assertTrue(_is_symmetric_swap(source, candidate))
 
 
 if __name__ == "__main__":
