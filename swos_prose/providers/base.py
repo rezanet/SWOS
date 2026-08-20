@@ -11,6 +11,9 @@ from ..models import DeltaType, SemanticAnchor, SemanticDelta, Severity
 class Proposition:
     proposition_id: str
     text: str
+    subject: str | None = None
+    relation: str | None = None
+    object: str | None = None
 
 
 @dataclass(frozen=True)
@@ -22,6 +25,7 @@ class SourceToCandidateMapping:
     scope_preserved: bool | None = None
     attribution_preserved: bool | None = None
     causal_force_preserved: bool | None = None
+    relational_direction_preserved: bool | None = None
     confidence: float | None = None
     reason: str | None = None
 
@@ -48,13 +52,23 @@ class PropositionReport:
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "PropositionReport":
+        if not isinstance(payload, dict):
+            raise ValueError("proposition_report must be an object")
+
         def prop(item: dict[str, Any]) -> Proposition:
+            if not isinstance(item, dict) or "id" not in item or "text" not in item:
+                raise ValueError("Each proposition requires id and text.")
             return Proposition(
                 proposition_id=str(item["id"]),
                 text=str(item["text"]),
+                subject=_optional_str(item.get("subject")),
+                relation=_optional_str(item.get("relation")),
+                object=_optional_str(item.get("object")),
             )
 
         def s2c(item: dict[str, Any]) -> SourceToCandidateMapping:
+            if not isinstance(item, dict) or "source_id" not in item:
+                raise ValueError("Each source_to_candidate mapping requires source_id.")
             return SourceToCandidateMapping(
                 source_id=str(item["source_id"]),
                 candidate_ids=tuple(str(value) for value in item.get("candidate_ids", [])),
@@ -63,11 +77,16 @@ class PropositionReport:
                 scope_preserved=_optional_bool(item.get("scope_preserved")),
                 attribution_preserved=_optional_bool(item.get("attribution_preserved")),
                 causal_force_preserved=_optional_bool(item.get("causal_force_preserved")),
+                relational_direction_preserved=_optional_bool(
+                    item.get("relational_direction_preserved")
+                ),
                 confidence=_optional_float(item.get("confidence")),
                 reason=_optional_str(item.get("reason")),
             )
 
         def c2s(item: dict[str, Any]) -> CandidateToSourceMapping:
+            if not isinstance(item, dict) or "candidate_id" not in item:
+                raise ValueError("Each candidate_to_source mapping requires candidate_id.")
             return CandidateToSourceMapping(
                 candidate_id=str(item["candidate_id"]),
                 source_ids=tuple(str(value) for value in item.get("source_ids", [])),
@@ -106,6 +125,40 @@ def _optional_str(value: Any) -> str | None:
     return None if value is None else str(value)
 
 
+def _provider_delta(item: Any) -> SemanticDelta:
+    if not isinstance(item, dict):
+        return SemanticDelta(
+            delta_type=DeltaType.MALFORMED_PROVIDER_RESPONSE,
+            source_span=None,
+            candidate_span=None,
+            severity=Severity.WARNING,
+            explanation="Provider delta entry is not an object.",
+            confidence=1.0,
+        )
+    try:
+        delta_type = DeltaType(item.get("type", item.get("delta_type")))
+        severity = Severity(item.get("severity", Severity.WARNING.value))
+        confidence = float(item.get("confidence", 1.0))
+    except (TypeError, ValueError):
+        return SemanticDelta(
+            delta_type=DeltaType.MALFORMED_PROVIDER_RESPONSE,
+            source_span=None,
+            candidate_span=None,
+            severity=Severity.WARNING,
+            explanation="Provider returned an invalid semantic-delta type, severity, or confidence.",
+            confidence=1.0,
+        )
+    return SemanticDelta(
+        delta_type=delta_type,
+        source_span=item.get("source_span"),
+        candidate_span=item.get("candidate_span"),
+        severity=severity,
+        explanation=str(item.get("explanation", "Provider-reported semantic delta.")),
+        repairable=bool(item.get("repairable", False)),
+        confidence=confidence,
+    )
+
+
 @dataclass
 class ProviderAssessment:
     equivalent: bool | None
@@ -118,20 +171,14 @@ class ProviderAssessment:
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "ProviderAssessment":
+        if not isinstance(payload, dict):
+            raise ValueError("Provider assessment must be an object.")
+
         equivalent = _optional_bool(payload.get("equivalent"))
         raw_deltas = payload.get("deltas", [])
-        deltas = [
-            SemanticDelta(
-                delta_type=DeltaType(item.get("type", item.get("delta_type"))),
-                source_span=item.get("source_span"),
-                candidate_span=item.get("candidate_span"),
-                severity=Severity(item.get("severity", Severity.WARNING.value)),
-                explanation=str(item.get("explanation", "Provider-reported semantic delta.")),
-                repairable=bool(item.get("repairable", False)),
-                confidence=float(item.get("confidence", 1.0)),
-            )
-            for item in raw_deltas
-        ]
+        if not isinstance(raw_deltas, list):
+            raise ValueError("Provider deltas must be an array.")
+        deltas = [_provider_delta(item) for item in raw_deltas]
 
         report_payload = payload.get("proposition_report")
         if report_payload is None and any(
@@ -156,6 +203,8 @@ class ProviderAssessment:
 
         token_usage = payload.get("token_usage")
         if token_usage is not None:
+            if not isinstance(token_usage, dict):
+                raise ValueError("token_usage must be an object or null.")
             token_usage = {str(key): int(value) for key, value in token_usage.items()}
 
         return cls(
