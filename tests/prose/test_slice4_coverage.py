@@ -67,7 +67,7 @@ def one_to_one(source_prop: dict, candidate_prop: dict) -> dict:
 
 class Slice4CoverageTests(unittest.TestCase):
     def test_prompt_distinguishes_materiality_and_discourse_relations(self):
-        lowered = SEMANTIC_VERIFIER_INSTRUCTIONS.casefold()
+        lowered = " ".join(SEMANTIC_VERIFIER_INSTRUCTIONS.casefold().split())
         self.assertIn("purely rhetorical modifier", lowered)
         self.assertIn("first", lowered)
         self.assertIn("therefore", lowered)
