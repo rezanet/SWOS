@@ -7,6 +7,7 @@ from swos_prose.pipeline import verify_rewrite
 from swos_prose.providers.base import Attribution, Proposition
 from swos_prose.providers.mock import StaticSemanticVerifierProvider
 from swos_prose.verify.propositions import (
+    _frame_consistency_deltas,
     _is_symmetric_swap,
     _provider_frame_mismatches,
 )
@@ -289,6 +290,55 @@ class AttributedRelationFrameTests(unittest.TestCase):
         )
 
         self.assertIn("relation", _provider_frame_mismatches(proposition))
+
+    def test_mapped_observed_test_scope_removal_requires_review(self):
+        source = Proposition(
+            proposition_id="s2",
+            text="A was associated with B in the observed tests.",
+            subject="A",
+            relation="associated with",
+            object="B",
+            relation_sign="neutral",
+        )
+        candidate = Proposition(
+            proposition_id="c2",
+            text="A was associated with B.",
+            subject="A",
+            relation="associated with",
+            object="B",
+            relation_sign="neutral",
+        )
+
+        deltas = _frame_consistency_deltas(source, candidate)
+        self.assertIn(
+            DeltaType.UNRESOLVED_EQUIVALENCE,
+            [delta.delta_type for delta in deltas],
+        )
+
+    def test_outer_reporting_frame_validates_inner_relation_sign(self):
+        attribution = Attribution(agent="Chen et al.", act="report")
+        text = "Chen et al. report that A was positively associated with B."
+        good = Proposition(
+            proposition_id="p7",
+            text=text,
+            subject="Chen et al.",
+            relation="report",
+            object="A was positively associated with B",
+            attribution=attribution,
+            relation_sign="positive",
+        )
+        bad = Proposition(
+            proposition_id="p8",
+            text=text,
+            subject="Chen et al.",
+            relation="report",
+            object="A was positively associated with B",
+            attribution=attribution,
+            relation_sign="negative",
+        )
+
+        self.assertEqual(_provider_frame_mismatches(good), [])
+        self.assertIn("relation_sign", _provider_frame_mismatches(bad))
 
 
 if __name__ == "__main__":
