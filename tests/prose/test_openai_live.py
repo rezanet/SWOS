@@ -90,6 +90,26 @@ class OpenAILiveAdversarialTests(unittest.TestCase):
             [delta.delta_type.value for delta in result.semantic_deltas],
         )
 
+    def test_denied_causal_dogfood_pair_reaches_verifier(self):
+        source = (
+            "Chen et al. report that processor load was associated with longer "
+            "response times in the observed tests, but they do not claim that "
+            "processor load caused the delay."
+        )
+        candidate = (
+            "Chen et al. report an association between processor load and longer "
+            "response times in the observed tests, but do not claim that processor "
+            "load caused the delay."
+        )
+        result = self.verify(source, candidate)
+
+        self.assertTrue(result.verifier_used)
+        self.assertIn(result.status, {VerificationStatus.PASS, VerificationStatus.REVIEW})
+        self.assertNotIn(
+            "causal_strength_changed",
+            [delta.delta_type.value for delta in result.semantic_deltas],
+        )
+
     def test_hypothesis_to_expectation_never_passes(self):
         result = self.verify(
             "We hypothesized that the drug would reduce symptoms.",
