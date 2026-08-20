@@ -34,6 +34,7 @@ class DeltaType(str, Enum):
     MODALITY_STRENGTHENED = "modality_strengthened"
     MODALITY_WEAKENED = "modality_weakened"
     CAUSAL_STRENGTH_CHANGED = "causal_strength_changed"
+    DIRECTION_REVERSAL = "direction_reversal"
     SCOPE_BROADENED = "scope_broadened"
     SCOPE_NARROWED = "scope_narrowed"
     ATTRIBUTION_CHANGED = "attribution_changed"
@@ -42,6 +43,7 @@ class DeltaType(str, Enum):
     CONDITION_CHANGED = "condition_changed"
     EXCEPTION_REMOVED = "exception_removed"
     EPISTEMIC_TYPE_CHANGED = "epistemic_type_changed"
+    MALFORMED_PROVIDER_RESPONSE = "malformed_provider_response"
     UNRESOLVED_EQUIVALENCE = "unresolved_equivalence"
 
 
