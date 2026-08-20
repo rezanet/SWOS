@@ -1,6 +1,7 @@
 """Verification pipeline for the SWOS Prose semantic-delta engine."""
 from __future__ import annotations
 
+from .anchors import extract_anchors
 from .models import DeltaType, SemanticDelta, Severity, VerificationResult, VerificationStatus
 from .providers.base import ProviderAssessment, SemanticVerifierProvider
 from .verify.classify import classify_deltas
@@ -44,6 +45,15 @@ def _boundary_result(
     )
 
 
+def _terminal_newline_equivalent(source: str, candidate: str) -> bool:
+    """Return True only when texts differ by trailing CR/LF characters.
+
+    This is deliberately narrower than ``rstrip()``: spaces, tabs, and internal
+    whitespace remain material input to the normal verification pipeline.
+    """
+    return source != candidate and source.rstrip("\r\n") == candidate.rstrip("\r\n")
+
+
 def verify_rewrite(
     *,
     source: str,
@@ -85,6 +95,24 @@ def verify_rewrite(
             candidate=candidate,
             delta_type=DeltaType.CLAIM_REMOVED,
             note="Candidate removes all source content.",
+        )
+
+    # File-format line endings are not semantic content. Detect this before the
+    # high-risk heuristics so a terminal newline cannot trigger unrelated lexical
+    # blockers or spend verifier tokens. Preserve the original strings in the
+    # result so callers can keep the source representation intact.
+    if _terminal_newline_equivalent(source, candidate):
+        return VerificationResult(
+            status=VerificationStatus.PASS,
+            source=source,
+            candidate=candidate,
+            source_anchors=extract_anchors(source),
+            candidate_anchors=extract_anchors(candidate),
+            notes=[
+                "Source and candidate differ only by terminal line-ending whitespace; "
+                "no change recommended."
+            ],
+            verifier_skip_reason="terminal_newline_only",
         )
 
     source_anchors, candidate_anchors, deltas = deterministic_deltas(source, candidate)
