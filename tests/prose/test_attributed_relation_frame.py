@@ -342,6 +342,35 @@ class AttributedRelationFrameTests(unittest.TestCase):
             [delta.delta_type for delta in deltas],
         )
 
+    def test_comma_coordinated_observed_scope_broadening_requires_review(self):
+        source = Proposition(
+            proposition_id="s4",
+            text="A was associated with B in the observed tests.",
+            subject="A",
+            relation="associated with",
+            object="B in the observed tests",
+            relation_sign="neutral",
+        )
+        candidate = Proposition(
+            proposition_id="c4",
+            text=(
+                "A was associated with B in the observed tests, as well as in "
+                "field deployments."
+            ),
+            subject="A",
+            relation="associated with",
+            object=(
+                "B in the observed tests, as well as in field deployments"
+            ),
+            relation_sign="neutral",
+        )
+
+        deltas = _frame_consistency_deltas(source, candidate)
+        self.assertIn(
+            DeltaType.UNRESOLVED_EQUIVALENCE,
+            [delta.delta_type for delta in deltas],
+        )
+
     def test_outer_reporting_frame_validates_inner_relation_sign(self):
         attribution = Attribution(agent="Chen et al.", act="report")
         text = "Chen et al. report that A was positively associated with B."
