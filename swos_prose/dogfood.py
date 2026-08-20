@@ -78,6 +78,17 @@ def _record_for(path: Path, root: Path, result: PolishResult) -> dict[str, Any]:
         "final_text": result.final_text,
         "used_fallback": result.used_source_fallback,
         "safe_for_automatic_use": result.safe_for_automatic_use,
+        "verifier_used": verification.verifier_used if verification is not None else False,
+        "verification_skip_reason": (
+            verification.verifier_skip_reason
+            if verification is not None
+            else ("rewrite_provider_failure" if result.used_source_fallback else None)
+        ),
+        "verifier_notes": (
+            list(verification.verifier_notes)
+            if verification is not None
+            else []
+        ),
         "semantic_deltas": (
             [delta.to_dict() for delta in verification.semantic_deltas]
             if verification is not None
@@ -120,7 +131,7 @@ def collect_dogfood(
     result_root.mkdir(parents=True, exist_ok=True)
     records: list[dict[str, Any]] = []
     for path in files:
-        source = path.read_text(encoding="utf-8")
+        source = path.read_text(encoding="utf-8-sig")
         result = polish_text(
             source=source,
             rewrite_provider=rewrite_provider,

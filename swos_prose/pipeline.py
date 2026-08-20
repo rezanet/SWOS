@@ -36,6 +36,11 @@ def _boundary_result(
         candidate=candidate,
         semantic_deltas=deltas,
         notes=[note],
+        verifier_skip_reason=(
+            f"boundary:{delta_type.value}"
+            if delta_type is not None
+            else "boundary:no_claims"
+        ),
     )
 
 
@@ -86,6 +91,8 @@ def verify_rewrite(
     notes: list[str] = []
     verifier_used = False
     verifier_independent: bool | None = None
+    verifier_skip_reason: str | None = None
+    verifier_notes: list[str] = []
     token_usage = None
     cost_estimate = None
 
@@ -98,6 +105,7 @@ def verify_rewrite(
             source_anchors=source_anchors,
             candidate_anchors=candidate_anchors,
             notes=["Source and candidate are identical; no change recommended."],
+            verifier_skip_reason="source_identical",
         )
 
     deterministic_status = classify_deltas(deltas)
@@ -110,9 +118,18 @@ def verify_rewrite(
             source_anchors=source_anchors,
             candidate_anchors=candidate_anchors,
             notes=["Deterministic/high-risk checks found a blocking semantic delta."],
+            verifier_skip_reason=next(
+                (
+                    f"deterministic_blocker:{delta.delta_type.value}"
+                    for delta in deltas
+                    if delta.severity is Severity.BLOCKER and not delta.repairable
+                ),
+                "deterministic_blocker",
+            ),
         )
 
     if verifier_provider is None:
+        verifier_skip_reason = "no_verifier_bound"
         deltas.append(SemanticDelta(
             delta_type=DeltaType.UNRESOLVED_EQUIVALENCE,
             source_span=None,
@@ -185,6 +202,7 @@ def verify_rewrite(
                 ))
 
             deltas.extend(provider_deltas)
+            verifier_notes.extend(assessment.notes)
             notes.extend(assessment.notes)
 
             if assessment.equivalent is None:
@@ -206,6 +224,32 @@ def verify_rewrite(
                     confidence=1.0,
                 ))
 
+            # Deterministic linguistic warnings are signals, not semantic verdicts.
+            # A warning may be removed only when an independent verifier supplies
+            # a complete proposition report, reports equivalence, has no unresolved
+            # items, and the core validators produce no semantic deltas.
+            if (
+                assessment.equivalent is True
+                and assessment.independent_of_rewriter is True
+                and assessment.proposition_report is not None
+                and not assessment.proposition_report.unresolved
+                and not provider_deltas
+            ):
+                before_resolution = len(deltas)
+                deltas = [
+                    delta
+                    for delta in deltas
+                    if not (
+                        delta.severity is Severity.WARNING
+                        and delta.delta_type is DeltaType.QUANTIFIER_CHANGED
+                    )
+                ]
+                if len(deltas) < before_resolution:
+                    notes.append(
+                        "Independent proposition verification resolved heuristic "
+                        "quantifier risk."
+                    )
+
     status = classify_deltas(deltas)
     return VerificationResult(
         status=status,
@@ -216,6 +260,8 @@ def verify_rewrite(
         candidate_anchors=candidate_anchors,
         verifier_used=verifier_used,
         verifier_independent=verifier_independent,
+        verifier_skip_reason=verifier_skip_reason,
+        verifier_notes=verifier_notes,
         notes=notes,
         token_usage=token_usage,
         cost_estimate=cost_estimate,

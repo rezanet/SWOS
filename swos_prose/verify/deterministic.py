@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from collections import Counter
+import re
 
 from ..anchors import (
     anchor_multiset,
@@ -10,6 +11,11 @@ from ..anchors import (
     extract_risk_signals,
 )
 from ..models import DeltaType, SemanticDelta, Severity
+
+
+_ANAPHORIC_ALL_RE = re.compile(
+    r"\ball\s+of\s+(?:which|whom|them|these|those)\b", re.I
+)
 
 
 def _delta(
@@ -133,13 +139,38 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
 
     if Counter(left.quantifiers) != Counter(right.quantifiers):
         strong = {"most", "all", "always"}
-        if strong.intersection(right.quantifiers) - strong.intersection(left.quantifiers):
+        introduced_strong = (
+            strong.intersection(right.quantifiers)
+            - strong.intersection(left.quantifiers)
+        )
+
+        # A newly introduced strong quantifier is normally blocking. One narrow
+        # exception is anaphoric "all of which/whom/them/these/those": its scope
+        # can be licensed by an already-defined referent rather than strengthening
+        # the proposition. Deterministic parsing cannot prove that equivalence,
+        # so route it to semantic verification instead of rejecting it.
+        anaphoric_all_requires_verification = (
+            introduced_strong == {"all"}
+            and "all" not in left.quantifiers
+            and bool(_ANAPHORIC_ALL_RE.search(candidate))
+        )
+
+        if introduced_strong and not anaphoric_all_requires_verification:
             severity = Severity.BLOCKER
+            explanation = (
+                "Candidate introduces stronger quantifier language and "
+                "deterministic scope comparison indicates semantic strengthening."
+            )
         else:
             severity = Severity.WARNING
+            explanation = (
+                "Quantifier language differs and requires proposition-level "
+                "verification of scope and binding."
+            )
+
         deltas.append(_delta(
             DeltaType.QUANTIFIER_CHANGED,
-            "Quantifier language differs and may alter the scope or frequency of the claim.",
+            explanation,
             source_span=", ".join(left.quantifiers) or None,
             candidate_span=", ".join(right.quantifiers) or None,
             severity=severity,
