@@ -179,6 +179,17 @@ class Slice4CoverageTests(unittest.TestCase):
         self.assertEqual(result.status, VerificationStatus.REJECT)
         self.assertIn(DeltaType.EPISTEMIC_TYPE_CHANGED, [d.delta_type for d in result.semantic_deltas])
 
+    def test_hypothesis_to_conclusion_is_rejected(self):
+        source = "We hypothesized that X reduces Y."
+        candidate = "We concluded that X reduces Y."
+        provider = StaticSemanticVerifierProvider(one_to_one(
+            prop("p1", source, claim_type="interpretive", epistemic_type="hypothesis"),
+            prop("c1", candidate, claim_type="interpretive", epistemic_type="conclusion"),
+        ))
+        result = verify_rewrite(source=source, candidate=candidate, assurance="strict", verifier_provider=provider)
+        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertIn(DeltaType.EPISTEMIC_TYPE_CHANGED, [d.delta_type for d in result.semantic_deltas])
+
     def test_unresolved_epistemic_classification_never_passes_strict(self):
         source = "The evidence supports the proposed explanation."
         candidate = "The evidence is consistent with the proposed explanation."
