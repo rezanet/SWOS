@@ -90,6 +90,8 @@ class VerificationResult:
     candidate_anchors: list[SemanticAnchor] = field(default_factory=list)
     verifier_used: bool = False
     verifier_independent: bool | None = None
+    verifier_skip_reason: str | None = None
+    verifier_notes: list[str] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
     token_usage: dict[str, int] | None = None
     cost_estimate: float | None = None
@@ -109,6 +111,8 @@ class VerificationResult:
             "candidate_anchors": [anchor.to_dict() for anchor in self.candidate_anchors],
             "verifier_used": self.verifier_used,
             "verifier_independent": self.verifier_independent,
+            "verifier_skip_reason": self.verifier_skip_reason,
+            "verifier_notes": self.verifier_notes,
             "notes": self.notes,
             "token_usage": self.token_usage,
             "cost_estimate": self.cost_estimate,

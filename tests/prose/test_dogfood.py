@@ -95,7 +95,7 @@ class DogfoodCollectorTests(unittest.TestCase):
             corpus = root / "corpus"
             results = root / "results"
             corpus.mkdir()
-            (corpus / "paragraph_001.txt").write_text(source, encoding="utf-8")
+            (corpus / "paragraph_001.txt").write_text(source, encoding="utf-8-sig")
 
             records = collect_dogfood(
                 input_dir=corpus,
@@ -107,7 +107,10 @@ class DogfoodCollectorTests(unittest.TestCase):
 
             self.assertEqual(len(records), 1)
             self.assertEqual(records[0]["status"], "PASS")
+            self.assertEqual(records[0]["source_text"], source)
             self.assertEqual(records[0]["final_text"], candidate)
+            self.assertTrue(records[0]["verifier_used"])
+            self.assertIsNone(records[0]["verification_skip_reason"])
             self.assertIsNone(records[0]["preset"])
             self.assertIsNone(records[0]["diagnostics_before"])
             self.assertEqual(records[0]["human_review"]["category"], None)
@@ -120,6 +123,35 @@ class DogfoodCollectorTests(unittest.TestCase):
             summary = json.loads((results / "summary.json").read_text(encoding="utf-8"))
             self.assertEqual(summary["sample_count"], 1)
             self.assertEqual(summary["status_counts"], {"PASS": 1})
+
+    def test_deterministic_reject_records_verifier_skip_reason(self):
+        source = "The response rate was 18.7%."
+        candidate = "The response rate was 19%."
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            corpus = root / "corpus"
+            results = root / "results"
+            corpus.mkdir()
+            (corpus / "paragraph_001.txt").write_text(source, encoding="utf-8")
+
+            records = collect_dogfood(
+                input_dir=corpus,
+                output_dir=results,
+                rewrite_provider=StaticRewriteProvider(candidate),
+                verifier_provider=StaticSemanticVerifierProvider(
+                    _equivalent_payload(source, candidate)
+                ),
+                assurance="strict",
+            )
+
+            self.assertEqual(records[0]["status"], "REJECT")
+            self.assertFalse(records[0]["verifier_used"])
+            self.assertEqual(
+                records[0]["verification_skip_reason"],
+                "deterministic_blocker:number_changed",
+            )
+            self.assertEqual(records[0]["verifier_notes"], [])
 
     def test_collect_dogfood_rejects_empty_supported_corpus(self):
         with tempfile.TemporaryDirectory() as tmp:
