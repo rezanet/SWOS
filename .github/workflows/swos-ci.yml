@@ -46,12 +46,14 @@ jobs:
         run: python3 -m unittest discover -s tests/prose -p 'test_*.py'
 
   prose-openai-live:
-    name: SWOS Prose OpenAI live semantic tests
-    if: github.event_name != 'pull_request'
+    name: SWOS Prose OpenAI live semantic and dogfood tests
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       SWOS_PROSE_RUN_LIVE_OPENAI: "1"
+      SWOS_PROSE_OPENAI_MODEL: gpt-5.6-luna
+      SWOS_PROSE_OPENAI_REWRITE_MODEL: gpt-5.6-luna
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -59,12 +61,31 @@ jobs:
           python-version: "3.11"
       - name: Report live-test skip when no API key is configured
         if: env.OPENAI_API_KEY == ''
-        run: echo "OPENAI_API_KEY is not configured; live semantic-verifier tests skipped."
+        run: echo "OPENAI_API_KEY is not configured; live SWOS Prose tests skipped."
+      - name: Install OpenAI SDK
+        if: env.OPENAI_API_KEY != ''
+        run: python3 -m pip install openai
       - name: Run live OpenAI semantic-verifier tests
         if: env.OPENAI_API_KEY != ''
+        run: python3 -m unittest discover -s tests/prose -p 'test_openai_live.py'
+      - name: Run five-case polish dogfood batch
+        if: env.OPENAI_API_KEY != ''
         run: |
-          python3 -m pip install openai
-          python3 -m unittest discover -s tests/prose -p 'test_openai_live.py'
+          rm -rf /tmp/swos-prose-dogfood
+          python3 -m swos_prose.cli dogfood \
+            --input-dir tests/prose/fixtures/live_dogfood \
+            --output-dir /tmp/swos-prose-dogfood \
+            --assurance strict \
+            --rewriter-model gpt-5.6-luna \
+            --verifier-model gpt-5.6-luna
+          cat /tmp/swos-prose-dogfood/summary.json
+      - name: Upload dogfood evidence
+        if: env.OPENAI_API_KEY != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: swos-prose-live-dogfood
+          path: /tmp/swos-prose-dogfood
+          retention-days: 7
 
   evaluation:
     name: Evaluation harness (release gate)
