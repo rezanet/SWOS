@@ -14,6 +14,12 @@ class Proposition:
     subject: str | None = None
     relation: str | None = None
     object: str | None = None
+    modality: str | None = None
+    modality_scope: str | None = None
+    attribution: str | None = None
+    causal_force: str | None = None
+    temporal_relation: str | None = None
+    normative_stance: str | None = None
 
 
 @dataclass(frozen=True)
@@ -64,6 +70,12 @@ class PropositionReport:
                 subject=_optional_str(item.get("subject")),
                 relation=_optional_str(item.get("relation")),
                 object=_optional_str(item.get("object")),
+                modality=_optional_str(item.get("modality")),
+                modality_scope=_optional_str(item.get("modality_scope")),
+                attribution=_optional_str(item.get("attribution")),
+                causal_force=_optional_str(item.get("causal_force")),
+                temporal_relation=_optional_str(item.get("temporal_relation")),
+                normative_stance=_optional_str(item.get("normative_stance")),
             )
 
         def s2c(item: dict[str, Any]) -> SourceToCandidateMapping:

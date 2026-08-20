@@ -8,10 +8,24 @@ from ..models import DeltaType, SemanticDelta, Severity
 from ..providers.base import Proposition, PropositionReport
 
 
+SYMMETRIC_RELATIONS = {
+    "associated with",
+    "correlated with",
+    "linked to",
+    "related to",
+}
+
 RELATION_RE = re.compile(
     r"^\s*(?P<subject>.+?)\s+"
     r"(?:is|are|was|were)\s+"
     r"(?P<relation>associated\s+with|correlated\s+with|linked\s+to|related\s+to)\s+"
+    r"(?P<object>.+?)\s*[.!?]?\s*$",
+    re.IGNORECASE,
+)
+
+TEMPORAL_RE = re.compile(
+    r"^\s*(?P<subject>.+?)\s+"
+    r"(?P<relation>preceded|followed)\s+"
     r"(?P<object>.+?)\s*[.!?]?\s*$",
     re.IGNORECASE,
 )
@@ -76,9 +90,13 @@ def _normalise_role(text: str) -> str:
     return value
 
 
+def _normalise_optional(text: str | None) -> str | None:
+    if text is None:
+        return None
+    return " ".join(text.casefold().split()).strip()
+
+
 def _relation_parts(proposition: Proposition) -> tuple[str, str, str] | None:
-    # Parse raw proposition text in the core. Provider-supplied directional fields
-    # are metadata and cannot override this narrow deterministic check.
     match = RELATION_RE.match(proposition.text)
     if not match:
         return None
@@ -87,6 +105,19 @@ def _relation_parts(proposition: Proposition) -> tuple[str, str, str] | None:
         " ".join(match.group("relation").casefold().split()),
         _normalise_role(match.group("object")),
     )
+
+
+def _temporal_parts(proposition: Proposition) -> tuple[str, str] | None:
+    """Return canonical (earlier, later) roles for simple preceded/followed forms."""
+    match = TEMPORAL_RE.match(proposition.text)
+    if not match:
+        return None
+    subject = _normalise_role(match.group("subject"))
+    obj = _normalise_role(match.group("object"))
+    relation = match.group("relation").casefold()
+    if relation == "preceded":
+        return subject, obj
+    return obj, subject
 
 
 def _provider_role_mismatch(proposition: Proposition) -> bool:
@@ -102,21 +133,108 @@ def _provider_role_mismatch(proposition: Proposition) -> bool:
     return False
 
 
-def _direction_delta(source: Proposition, candidate: Proposition) -> SemanticDelta | None:
+def _is_symmetric_swap(source: Proposition, candidate: Proposition) -> bool:
+    """Return true only when raw text and structured frames prove a symmetric swap."""
     left = _relation_parts(source)
     right = _relation_parts(candidate)
     if left is None or right is None:
+        return False
+    if left[1] != right[1] or left[1] not in SYMMETRIC_RELATIONS:
+        return False
+    if not (left[0] == right[2] and left[2] == right[0]):
+        return False
+    if source.relation is None or candidate.relation is None:
+        return False
+    return (
+        _normalise_optional(source.relation) == left[1]
+        and _normalise_optional(candidate.relation) == right[1]
+        and not _provider_role_mismatch(source)
+        and not _provider_role_mismatch(candidate)
+    )
+
+
+def _core_relation_delta(source: Proposition, candidate: Proposition) -> SemanticDelta | None:
+    """Check relation semantics only where the core has a reliable rule."""
+    left_time = _temporal_parts(source)
+    right_time = _temporal_parts(candidate)
+    if left_time is not None and right_time is not None:
+        if left_time != right_time:
+            return _delta(
+                DeltaType.CHRONOLOGY_CHANGED,
+                "Core temporal parsing detected a changed earlier/later relationship.",
+                source_span=source.text,
+                candidate_span=candidate.text,
+            )
         return None
-    if left[1] != right[1]:
-        return None
-    if left[0] == right[2] and left[2] == right[0] and left[0] != left[2]:
-        return _delta(
-            DeltaType.DIRECTION_REVERSAL,
-            "Core relation parsing detected a subject/object reversal despite provider equivalence.",
+
+    left = _relation_parts(source)
+    right = _relation_parts(candidate)
+    if left is not None and right is not None and left[1] == right[1]:
+        swapped = left[0] == right[2] and left[2] == right[0] and left[0] != left[2]
+        if swapped and not _is_symmetric_swap(source, candidate):
+            return _delta(
+                DeltaType.DIRECTION_REVERSAL,
+                "Core relation parsing detected an argument reversal without structured proof that the relation is safely symmetric.",
+                source_span=source.text,
+                candidate_span=candidate.text,
+            )
+    return None
+
+
+def _frame_consistency_deltas(source: Proposition, candidate: Proposition) -> list[SemanticDelta]:
+    """Surface contradictions inside provider-extracted proposition frames."""
+    deltas: list[SemanticDelta] = []
+
+    source_scope = _normalise_optional(source.modality_scope)
+    candidate_scope = _normalise_optional(candidate.modality_scope)
+    if source_scope is not None and candidate_scope is not None and source_scope != candidate_scope:
+        deltas.append(_unresolved(
+            "Provider-extracted modality scope differs across a mapped proposition.",
             source_span=source.text,
             candidate_span=candidate.text,
-        )
-    return None
+        ))
+
+    source_force = _normalise_optional(source.causal_force)
+    candidate_force = _normalise_optional(candidate.causal_force)
+    if source_force is not None and candidate_force is not None and source_force != candidate_force:
+        deltas.append(_delta(
+            DeltaType.CAUSAL_STRENGTH_CHANGED,
+            "Provider-extracted causal force differs across a mapped proposition.",
+            source_span=source.text,
+            candidate_span=candidate.text,
+        ))
+
+    source_time = _normalise_optional(source.temporal_relation)
+    candidate_time = _normalise_optional(candidate.temporal_relation)
+    if source_time is not None and candidate_time is not None and source_time != candidate_time:
+        deltas.append(_delta(
+            DeltaType.CHRONOLOGY_CHANGED,
+            "Provider-extracted canonical chronology differs across a mapped proposition.",
+            source_span=source.text,
+            candidate_span=candidate.text,
+        ))
+
+    source_stance = _normalise_optional(source.normative_stance)
+    candidate_stance = _normalise_optional(candidate.normative_stance)
+    if source_stance is not None and candidate_stance is not None and source_stance != candidate_stance:
+        deltas.append(_delta(
+            DeltaType.EPISTEMIC_TYPE_CHANGED,
+            "Provider-extracted normative stance differs across a mapped proposition.",
+            source_span=source.text,
+            candidate_span=candidate.text,
+        ))
+
+    source_attribution = _normalise_optional(source.attribution)
+    candidate_attribution = _normalise_optional(candidate.attribution)
+    if source_attribution is not None and candidate_attribution is not None and source_attribution != candidate_attribution:
+        deltas.append(_delta(
+            DeltaType.ATTRIBUTION_CHANGED,
+            "Provider-extracted attribution differs across a mapped proposition.",
+            source_span=source.text,
+            candidate_span=candidate.text,
+        ))
+
+    return deltas
 
 
 def deltas_from_proposition_report(
@@ -124,11 +242,7 @@ def deltas_from_proposition_report(
     *,
     assurance: str = "standard",
 ) -> list[SemanticDelta]:
-    """Validate provider coverage/IDs before translating semantic judgements.
-
-    Provider booleans are evidence, not authority. The core validates proposition
-    coverage, cross-references and a narrow class of relation reversals first.
-    """
+    """Validate provider coverage/IDs before translating semantic judgements."""
     deltas: list[SemanticDelta] = []
     strict = assurance in {"strict", "review"}
 
@@ -140,13 +254,9 @@ def deltas_from_proposition_report(
     duplicate_source_ids = [item for item, count in Counter(source_ids).items() if count > 1]
     duplicate_candidate_ids = [item for item, count in Counter(candidate_ids).items() if count > 1]
     if duplicate_source_ids:
-        deltas.append(_malformed(
-            f"Duplicate source proposition IDs: {', '.join(sorted(duplicate_source_ids))}."
-        ))
+        deltas.append(_malformed(f"Duplicate source proposition IDs: {', '.join(sorted(duplicate_source_ids))}."))
     if duplicate_candidate_ids:
-        deltas.append(_malformed(
-            f"Duplicate candidate proposition IDs: {', '.join(sorted(duplicate_candidate_ids))}."
-        ))
+        deltas.append(_malformed(f"Duplicate candidate proposition IDs: {', '.join(sorted(duplicate_candidate_ids))}."))
 
     for proposition in (*report.source_propositions, *report.candidate_propositions):
         if _provider_role_mismatch(proposition):
@@ -161,62 +271,33 @@ def deltas_from_proposition_report(
 
     for source_id, count in source_mapping_counts.items():
         if count > 1:
-            deltas.append(_malformed(
-                f"Semantic verifier returned {count} mappings for source proposition {source_id}."
-            ))
+            deltas.append(_malformed(f"Semantic verifier returned {count} mappings for source proposition {source_id}."))
     for candidate_id, count in candidate_mapping_counts.items():
         if count > 1:
-            deltas.append(_malformed(
-                f"Semantic verifier returned {count} mappings for candidate proposition {candidate_id}."
-            ))
+            deltas.append(_malformed(f"Semantic verifier returned {count} mappings for candidate proposition {candidate_id}."))
 
-    # Validate all mapping references before dereferencing them.
     for mapping in report.source_to_candidate:
         if mapping.source_id not in source_props:
-            deltas.append(_malformed(
-                f"source_to_candidate references unknown source proposition {mapping.source_id}."
-            ))
+            deltas.append(_malformed(f"source_to_candidate references unknown source proposition {mapping.source_id}."))
         unknown_candidates = [item for item in mapping.candidate_ids if item not in candidate_props]
         if unknown_candidates:
-            deltas.append(_malformed(
-                "source_to_candidate references unknown candidate proposition(s): "
-                + ", ".join(sorted(set(unknown_candidates))) + "."
-            ))
+            deltas.append(_malformed("source_to_candidate references unknown candidate proposition(s): " + ", ".join(sorted(set(unknown_candidates))) + "."))
 
     for mapping in report.candidate_to_source:
         if mapping.candidate_id not in candidate_props:
-            deltas.append(_malformed(
-                f"candidate_to_source references unknown candidate proposition {mapping.candidate_id}."
-            ))
+            deltas.append(_malformed(f"candidate_to_source references unknown candidate proposition {mapping.candidate_id}."))
         unknown_sources = [item for item in mapping.source_ids if item not in source_props]
         if unknown_sources:
-            deltas.append(_malformed(
-                "candidate_to_source references unknown source proposition(s): "
-                + ", ".join(sorted(set(unknown_sources))) + "."
-            ))
+            deltas.append(_malformed("candidate_to_source references unknown source proposition(s): " + ", ".join(sorted(set(unknown_sources))) + "."))
 
-    source_mappings = {
-        item.source_id: item
-        for item in report.source_to_candidate
-        if item.source_id in source_props
-    }
-    candidate_mappings = {
-        item.candidate_id: item
-        for item in report.candidate_to_source
-        if item.candidate_id in candidate_props
-    }
+    source_mappings = {item.source_id: item for item in report.source_to_candidate if item.source_id in source_props}
+    candidate_mappings = {item.candidate_id: item for item in report.candidate_to_source if item.candidate_id in candidate_props}
 
     if not source_props and not candidate_props:
-        deltas.append(_unresolved(
-            "Bidirectional proposition report contains no verifiable propositions."
-        ))
+        deltas.append(_unresolved("Bidirectional proposition report contains no verifiable propositions."))
     elif not source_props or not candidate_props:
-        deltas.append(_malformed(
-            "Bidirectional proposition report is one-sided.",
-            severity=Severity.BLOCKER if strict else Severity.WARNING,
-        ))
+        deltas.append(_malformed("Bidirectional proposition report is one-sided.", severity=Severity.BLOCKER if strict else Severity.WARNING))
 
-    # Completeness: source propositions may not be silently omitted.
     for source_id, proposition in source_props.items():
         mapping = source_mappings.get(source_id)
         if mapping is None:
@@ -235,72 +316,38 @@ def deltas_from_proposition_report(
             ))
 
         if mapping.preserved is False:
-            deltas.append(_delta(
-                DeltaType.CLAIM_REMOVED,
-                f"Source proposition {source_id} is not preserved in the candidate.",
-                source_span=proposition.text,
-                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
-            ))
+            deltas.append(_delta(DeltaType.CLAIM_REMOVED, f"Source proposition {source_id} is not preserved in the candidate.", source_span=proposition.text, candidate_span=_candidate_text(mapping.candidate_ids, candidate_props)))
         elif mapping.preserved is None:
-            deltas.append(_unresolved(
-                f"Preservation of source proposition {source_id} is unresolved.",
-                source_span=proposition.text,
-                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
-            ))
+            deltas.append(_unresolved(f"Preservation of source proposition {source_id} is unresolved.", source_span=proposition.text, candidate_span=_candidate_text(mapping.candidate_ids, candidate_props)))
 
         if mapping.modality_preserved is False:
-            deltas.append(_delta(
-                DeltaType.EPISTEMIC_TYPE_CHANGED,
-                f"Modality is not preserved for source proposition {source_id}.",
-                source_span=proposition.text,
-                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
-            ))
+            deltas.append(_delta(DeltaType.EPISTEMIC_TYPE_CHANGED, f"Modality is not preserved for source proposition {source_id}.", source_span=proposition.text, candidate_span=_candidate_text(mapping.candidate_ids, candidate_props)))
         if mapping.scope_preserved is False:
-            deltas.append(_delta(
-                DeltaType.UNRESOLVED_EQUIVALENCE,
-                f"Scope is not preserved for source proposition {source_id}.",
-                source_span=proposition.text,
-                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
-            ))
+            deltas.append(_delta(DeltaType.UNRESOLVED_EQUIVALENCE, f"Scope is not preserved for source proposition {source_id}.", source_span=proposition.text, candidate_span=_candidate_text(mapping.candidate_ids, candidate_props)))
         if mapping.attribution_preserved is False:
-            deltas.append(_delta(
-                DeltaType.ATTRIBUTION_CHANGED,
-                f"Attribution is not preserved for source proposition {source_id}.",
-                source_span=proposition.text,
-                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
-            ))
+            deltas.append(_delta(DeltaType.ATTRIBUTION_CHANGED, f"Attribution is not preserved for source proposition {source_id}.", source_span=proposition.text, candidate_span=_candidate_text(mapping.candidate_ids, candidate_props)))
         if mapping.causal_force_preserved is False:
-            deltas.append(_delta(
-                DeltaType.CAUSAL_STRENGTH_CHANGED,
-                f"Causal/relational force is not preserved for source proposition {source_id}.",
-                source_span=proposition.text,
-                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
-            ))
-        if mapping.relational_direction_preserved is False:
-            deltas.append(_delta(
-                DeltaType.DIRECTION_REVERSAL,
-                f"Relational direction is not preserved for source proposition {source_id}.",
-                source_span=proposition.text,
-                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
-            ))
+            deltas.append(_delta(DeltaType.CAUSAL_STRENGTH_CHANGED, f"Causal/relational force is not preserved for source proposition {source_id}.", source_span=proposition.text, candidate_span=_candidate_text(mapping.candidate_ids, candidate_props)))
 
         if len(mapping.candidate_ids) == 1 and mapping.candidate_ids[0] in candidate_props:
-            direction_delta = _direction_delta(
-                proposition,
-                candidate_props[mapping.candidate_ids[0]],
-            )
-            if direction_delta is not None:
-                deltas.append(direction_delta)
+            candidate_prop = candidate_props[mapping.candidate_ids[0]]
+            symmetric_swap = _is_symmetric_swap(proposition, candidate_prop)
 
-    # Licensing completeness: orphan candidates are unlicensed added claims.
+            if mapping.relational_direction_preserved is False and not symmetric_swap:
+                deltas.append(_delta(DeltaType.DIRECTION_REVERSAL, f"Relational direction is not preserved for source proposition {source_id}.", source_span=proposition.text, candidate_span=candidate_prop.text))
+
+            relation_delta = _core_relation_delta(proposition, candidate_prop)
+            if relation_delta is not None:
+                deltas.append(relation_delta)
+
+            deltas.extend(_frame_consistency_deltas(proposition, candidate_prop))
+        elif mapping.relational_direction_preserved is False:
+            deltas.append(_delta(DeltaType.DIRECTION_REVERSAL, f"Relational direction is not preserved for source proposition {source_id}.", source_span=proposition.text, candidate_span=_candidate_text(mapping.candidate_ids, candidate_props)))
+
     for candidate_id, proposition in candidate_props.items():
         mapping = candidate_mappings.get(candidate_id)
         if mapping is None:
-            deltas.append(_delta(
-                DeltaType.CLAIM_ADDED,
-                f"Candidate proposition {candidate_id} has no source licensing mapping.",
-                candidate_span=proposition.text,
-            ))
+            deltas.append(_delta(DeltaType.CLAIM_ADDED, f"Candidate proposition {candidate_id} has no source licensing mapping.", candidate_span=proposition.text))
             continue
 
         if mapping.licensed is True and mapping.new_claim is False and not mapping.source_ids:
@@ -311,18 +358,9 @@ def deltas_from_proposition_report(
             ))
 
         if mapping.licensed is False or mapping.new_claim is True:
-            deltas.append(_delta(
-                DeltaType.CLAIM_ADDED,
-                f"Candidate proposition {candidate_id} is not licensed by the source.",
-                source_span=_source_text(mapping.source_ids, source_props),
-                candidate_span=proposition.text,
-            ))
+            deltas.append(_delta(DeltaType.CLAIM_ADDED, f"Candidate proposition {candidate_id} is not licensed by the source.", source_span=_source_text(mapping.source_ids, source_props), candidate_span=proposition.text))
         elif mapping.licensed is None or mapping.new_claim is None:
-            deltas.append(_unresolved(
-                f"Licensing of candidate proposition {candidate_id} is unresolved.",
-                source_span=_source_text(mapping.source_ids, source_props),
-                candidate_span=proposition.text,
-            ))
+            deltas.append(_unresolved(f"Licensing of candidate proposition {candidate_id} is unresolved.", source_span=_source_text(mapping.source_ids, source_props), candidate_span=proposition.text))
 
     for item in report.unresolved:
         deltas.append(_unresolved(f"Semantic verifier unresolved item: {item}"))
