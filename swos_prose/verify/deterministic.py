@@ -11,10 +11,15 @@ from ..anchors import (
     extract_risk_signals,
 )
 from ..models import DeltaType, SemanticDelta, Severity
+from .negation_equivalence import REVIEWED_LEXICAL_NEGATION_TERMS
 
 
 _ANAPHORIC_ALL_RE = re.compile(
     r"\ball\s+of\s+(?:which|whom|them|these|those)\b", re.I
+)
+_REVIEWED_LEXICAL_NEGATION_RE = re.compile(
+    r"\b(?:" + "|".join(re.escape(item) for item in REVIEWED_LEXICAL_NEGATION_TERMS) + r")\b",
+    re.I,
 )
 
 
@@ -41,6 +46,10 @@ def _delta(
 
 def _counter_text(counter: Counter[str]) -> str:
     return ", ".join(f"{item} x{count}" if count > 1 else item for item, count in sorted(counter.items()))
+
+
+def _reviewed_lexical_negations(text: str) -> tuple[str, ...]:
+    return tuple(match.group(0).casefold() for match in _REVIEWED_LEXICAL_NEGATION_RE.finditer(text))
 
 
 def _compare_hard_anchors(source: str, candidate: str) -> tuple[list, list, list[SemanticDelta]]:
@@ -96,12 +105,18 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
     left = extract_risk_signals(source)
     right = extract_risk_signals(candidate)
 
-    if bool(left.negations) != bool(right.negations):
+    # Reviewed lexical negatives count as polarity signals, but do not establish
+    # sentence-level equivalence. This prevents a known explicit-to-lexical
+    # paraphrase from being hard-rejected while still requiring semantic
+    # verification for changed prose.
+    left_negations = (*left.negations, *_reviewed_lexical_negations(source))
+    right_negations = (*right.negations, *_reviewed_lexical_negations(candidate))
+    if bool(left_negations) != bool(right_negations):
         deltas.append(_delta(
             DeltaType.NEGATION_CHANGED,
             "Negation is present on only one side of the rewrite.",
-            source_span=", ".join(left.negations) or None,
-            candidate_span=", ".join(right.negations) or None,
+            source_span=", ".join(left_negations) or None,
+            candidate_span=", ".join(right_negations) or None,
         ))
 
     if left.weak_modals and not right.weak_modals:
