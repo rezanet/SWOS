@@ -224,7 +224,7 @@ class DogfoodCollectorTests(unittest.TestCase):
             self.assertFalse(records[0]["verifier_used"])
             self.assertEqual(
                 records[0]["diagnostics_before"]["positive_evidence"],
-                ["reviewed_complete_single_declarative_structure"],
+                ["reviewed_whole_sentence_exemplar"],
             )
             self.assertEqual(rewriter.calls, 0)
             self.assertEqual(verifier.calls, 0)
