@@ -2,8 +2,11 @@ from __future__ import annotations
 
 from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
+import json
 import os
+from pathlib import Path
 import sys
+import tempfile
 import unittest
 from unittest.mock import Mock, patch
 
@@ -49,11 +52,48 @@ class PolishCliTests(unittest.TestCase):
         self.assertNotIn("OPENAI_API_KEY", stderr.getvalue())
         sentinel_rewrite.assert_not_called()
 
-    def test_long_literal_source_is_not_statted_as_a_path(self):
+    def test_empty_source_is_successful_zero_provider_noop(self):
+        stdout = StringIO()
+        stderr = StringIO()
+        argv = ["swos-prose", "polish", "--source", "   ", "--json"]
+
+        with (
+            patch.dict(os.environ, {}, clear=True),
+            patch.object(sys, "argv", argv),
+            patch("swos_prose.cli._ProviderMustNotRun.rewrite") as sentinel_rewrite,
+            redirect_stdout(stdout),
+            redirect_stderr(stderr),
+        ):
+            code = cli.main()
+
+        payload = json.loads(stdout.getvalue())
+        self.assertEqual(code, 0)
+        self.assertTrue(payload["safe_for_automatic_use"])
+        self.assertEqual(payload["final_text"], "   ")
+        self.assertIsNone(payload["verification_status"])
+        self.assertEqual(stderr.getvalue(), "")
+        sentinel_rewrite.assert_not_called()
+
+    def test_long_literal_source_falls_back_from_filesystem_error(self):
         source = "A" * 1000
         content, was_file = cli.resolve_input(source)
         self.assertEqual(content, source)
         self.assertFalse(was_file)
+
+    def test_valid_long_file_path_is_still_read(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)
+            for index in range(6):
+                path = path / (f"segment-{index}-" + "x" * 28)
+            path.mkdir(parents=True)
+            source_file = path / "source.txt"
+            source_file.write_text("Read from a deeply nested file.", encoding="utf-8")
+            self.assertGreater(len(str(source_file)), 200)
+
+            content, was_file = cli.resolve_input(str(source_file))
+
+        self.assertTrue(was_file)
+        self.assertEqual(content, "Read from a deeply nested file.")
 
     def test_multiline_literal_source_is_not_statted_as_a_path(self):
         source = "First sentence.\nSecond sentence."

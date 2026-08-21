@@ -88,6 +88,18 @@ class PolishResult:
 
     @property
     def safe_for_automatic_use(self) -> bool:
+        # Empty/whitespace-only source is a benign no-op boundary: no semantic
+        # proposition exists to alter, the source is returned byte-for-byte, and
+        # no provider or verifier is invoked. Treating this as success keeps the
+        # library and CLI contracts aligned without broadening diagnostics.
+        if (
+            not self.source.strip()
+            and self.candidate == self.source
+            and self.final_text == self.source
+            and self.verification is None
+            and not self.used_source_fallback
+        ):
+            return True
         if self.diagnostics_before is not None and self.diagnostics_before.no_change_recommended:
             return True
         return self.verification is not None and self.verification.status is VerificationStatus.PASS

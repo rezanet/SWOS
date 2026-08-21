@@ -13,19 +13,18 @@ from .pipeline import verify_rewrite
 from .rewrite import polish_text
 
 
-_MAX_PATH_CANDIDATE_CHARS = 200
-
-
 def resolve_input(value: str) -> tuple[str, bool]:
     """Return ``(content, was_read_from_file)`` for a path-or-literal argument.
 
-    Long or multiline values are treated as literal prose before any filesystem
-    stat call. Short values are tried as paths; filesystem/path errors fall back
-    to literal text rather than escaping as user-visible tracebacks.
+    Multiline values are unambiguously prose and avoid filesystem probing.
+    Single-line values are tried as file paths regardless of total path length;
+    filesystem/path errors such as ENAMETOOLONG fall back to literal prose.
+    This preserves support for legitimately deep workspace paths while keeping
+    ordinary long literal text fail-safe.
     """
     if not isinstance(value, str):
         raise TypeError("input value must be a string")
-    if "\n" in value or "\r" in value or len(value) > _MAX_PATH_CANDIDATE_CHARS:
+    if "\n" in value or "\r" in value:
         return value, False
 
     try:
