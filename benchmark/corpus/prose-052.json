@@ -1,0 +1,13 @@
+{
+  "fixture_id": "repair-002",
+  "category": "repair-local-quantifier",
+  "benchmark_group": "repair",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "Some participants reported difficulty completing the task.",
+  "semantic_probe_candidate": "Participants reported difficulty completing the task.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "M1 positive repair fixture: omitted bounded quantifier must be restored and PASS re-verification."
+}

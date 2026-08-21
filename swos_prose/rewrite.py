@@ -1,72 +1,39 @@
-"""Milestone 2 rewrite orchestration for SWOS Prose.
+"""Rewrite orchestration for SWOS Prose.
 
-This first vertical slice implements only ``polish`` and deliberately has no
-repair loop. A generated candidate is returned automatically only when the
-existing semantic verifier returns PASS; every other outcome falls back to the
-source text. Conservative pre-generation diagnostics may abstain before any
-rewrite-provider call only when they have positive evidence for a narrow
-already-good prose shape.
+``polish`` remains the only user-facing mode in this milestone. A generated
+candidate is released automatically only after semantic PASS. Milestone 1 adds
+bounded local-span repair: a candidate with only high-confidence, machine-
+actionable lexical semantic deltas may be repaired at most twice, with every
+mutation mechanically span-confined and fully re-verified.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 import re
-from typing import Any
+from typing import Any, cast
 
 from .anchors import extract_anchors
 from .diagnostics import PolishDiagnostics, diagnose_polish
-from .models import VerificationResult, VerificationStatus
-from .pipeline import verify_rewrite
+from .models import RepairAttempt, VerificationResult, VerificationStatus
+from .pipeline import verify_rewrite_with_repair
 from .providers.base import SemanticVerifierProvider
 from .providers.rewrite_base import RewriteCandidate, RewriteProvider
+from .repair import RepairProvider
 
 ASSURANCE_LEVELS = {"standard", "strict", "review"}
-
 _DEGREE_MARKERS = (
-    "somewhat",
-    "slightly",
-    "marginally",
-    "moderately",
-    "considerably",
-    "substantially",
-    "significantly",
-    "highly",
-    "strongly",
-    "partly",
-    "partially",
-    "largely",
-    "mostly",
-    "nearly",
-    "almost",
-    "barely",
-    "hardly",
+    "somewhat", "slightly", "marginally", "moderately", "considerably", "substantially",
+    "significantly", "highly", "strongly", "partly", "partially", "largely", "mostly",
+    "nearly", "almost", "barely", "hardly",
 )
-
-_MODAL_MARKERS = (
-    "may",
-    "might",
-    "can",
-    "could",
-    "should",
-    "would",
-    "must",
-)
+_MODAL_MARKERS = ("may", "might", "can", "could", "should", "would", "must")
 
 
 def _present_markers(source: str, markers: tuple[str, ...]) -> list[str]:
-    return [
-        marker
-        for marker in markers
-        if re.search(rf"\b{re.escape(marker)}\b", source, re.IGNORECASE)
-    ]
+    return [m for m in markers if re.search(rf"\b{re.escape(m)}\b", source, re.IGNORECASE)]
 
 
 def _semantic_force_profile(source: str) -> dict[str, list[str]]:
-    """Expose source force-bearing language to the rewrite provider.
-
-    This profile guides generation only. It is not evidence of equivalence and
-    never substitutes for downstream semantic verification.
-    """
     return {
         "degree_markers": _present_markers(source, _DEGREE_MARKERS),
         "modal_markers": _present_markers(source, _MODAL_MARKERS),
@@ -82,22 +49,18 @@ class PolishResult:
     verification: VerificationResult | None
     used_source_fallback: bool
     diagnostics_before: PolishDiagnostics | None = None
+    repair_attempts: list[RepairAttempt] = field(default_factory=list)
+    repair_success: bool = False
+    repair_failure_reason: str | None = None
     notes: list[str] = field(default_factory=list)
     rewrite_token_usage: dict[str, int] | None = None
     rewrite_cost_estimate: float | None = None
 
     @property
     def safe_for_automatic_use(self) -> bool:
-        # Empty/whitespace-only source is a benign no-op boundary: no semantic
-        # proposition exists to alter, the source is returned byte-for-byte, and
-        # no provider or verifier is invoked. Treating this as success keeps the
-        # library and CLI contracts aligned without broadening diagnostics.
         if (
-            not self.source.strip()
-            and self.candidate == self.source
-            and self.final_text == self.source
-            and self.verification is None
-            and not self.used_source_fallback
+            not self.source.strip() and self.candidate == self.source and self.final_text == self.source
+            and self.verification is None and not self.used_source_fallback
         ):
             return True
         if self.diagnostics_before is not None and self.diagnostics_before.no_change_recommended:
@@ -111,31 +74,24 @@ class PolishResult:
     @property
     def generation_skipped_by_diagnostics(self) -> bool:
         return (
-            self.diagnostics_before is not None
-            and self.diagnostics_before.no_change_recommended
-            and self.candidate == self.source
-            and self.rewrite_token_usage is None
+            self.diagnostics_before is not None and self.diagnostics_before.no_change_recommended
+            and self.candidate == self.source and self.rewrite_token_usage is None
         )
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "mode": "polish",
-            "assurance": self.assurance,
-            "source": self.source,
-            "candidate": self.candidate,
-            "final_text": self.final_text,
+            "mode": "polish", "assurance": self.assurance, "source": self.source,
+            "candidate": self.candidate, "final_text": self.final_text,
             "used_source_fallback": self.used_source_fallback,
             "safe_for_automatic_use": self.safe_for_automatic_use,
             "verification_status": self.verification_status,
             "verification": self.verification.to_dict() if self.verification is not None else None,
-            "diagnostics_before": (
-                self.diagnostics_before.to_dict()
-                if self.diagnostics_before is not None
-                else None
-            ),
+            "diagnostics_before": self.diagnostics_before.to_dict() if self.diagnostics_before is not None else None,
             "generation_skipped_by_diagnostics": self.generation_skipped_by_diagnostics,
-            "notes": self.notes,
-            "rewrite_token_usage": self.rewrite_token_usage,
+            "repair_attempts": [attempt.to_dict() for attempt in self.repair_attempts],
+            "repair_success": self.repair_success,
+            "repair_failure_reason": self.repair_failure_reason,
+            "notes": self.notes, "rewrite_token_usage": self.rewrite_token_usage,
             "rewrite_cost_estimate": self.rewrite_cost_estimate,
         }
 
@@ -149,57 +105,32 @@ def _polish_plan(source: str) -> dict[str, Any]:
             "improve local flow and natural readability",
         ],
         "must_preserve": [
-            "material propositions",
-            "attribution",
-            "uncertainty and modality",
-            "degree and scalar force",
-            "negation",
-            "causal force",
-            "scope and quantifiers",
-            "chronology, conditions, and exceptions",
-            "epistemic status and normative stance",
+            "material propositions", "attribution", "uncertainty and modality",
+            "degree and scalar force", "negation", "causal force", "scope and quantifiers",
+            "chronology, conditions, and exceptions", "epistemic status and normative stance",
             "protected anchors verbatim",
         ],
         "forbidden": [
-            "new factual claims",
-            "new examples or explanations",
-            "new citations or evidence",
-            "certainty strengthening",
-            "causal strengthening",
-            "degree-to-modality substitution",
-            "modal-force substitution",
-            "ambiguity resolution by guess",
+            "new factual claims", "new examples or explanations", "new citations or evidence",
+            "certainty strengthening", "causal strengthening", "degree-to-modality substitution",
+            "modal-force substitution", "ambiguity resolution by guess",
         ],
         "semantic_force_profile": _semantic_force_profile(source),
     }
 
 
+def _implicit_repair_provider(rewrite_provider: RewriteProvider) -> RepairProvider | None:
+    return cast(RepairProvider, rewrite_provider) if callable(getattr(rewrite_provider, "repair", None)) else None
+
+
 def polish_text(
-    *,
-    source: str,
-    rewrite_provider: RewriteProvider,
-    verifier_provider: SemanticVerifierProvider | None,
-    assurance: str = "strict",
-    native_swos_context: dict | None = None,
-    context_before: str | None = None,
-    context_after: str | None = None,
-    run_diagnostics: bool = True,
+    *, source: str, rewrite_provider: RewriteProvider,
+    verifier_provider: SemanticVerifierProvider | None, assurance: str = "strict",
+    native_swos_context: dict | None = None, context_before: str | None = None,
+    context_after: str | None = None, run_diagnostics: bool = True,
+    repair_provider: RepairProvider | None = None,
 ) -> PolishResult:
-    """Diagnose, generate one polish candidate when needed, verify, and fail safe.
-
-    Diagnostics may return ``NO_CHANGE_RECOMMENDED`` before generation only when
-    positive evidence supports a narrow already-good prose shape. This is a
-    no-op decision: the source is returned unchanged, no rewrite/verifier tokens
-    are spent, and semantic equivalence does not need to be inferred because no
-    candidate change exists.
-
-    If neighbouring context is supplied, the first diagnostics slice always
-    proceeds to generation because it does not yet reason about cross-sentence or
-    cross-paragraph flow.
-
-    No repair loop exists in this slice. Therefore REPAIR, REVIEW and REJECT are
-    all non-releasable outcomes and return the original source as ``final_text``.
-    """
+    """Diagnose, generate, verify, optionally repair locally, and fail safe."""
     if assurance not in ASSURANCE_LEVELS:
         raise ValueError(f"Unknown assurance level: {assurance}")
     if not isinstance(source, str):
@@ -208,124 +139,73 @@ def polish_text(
         raise TypeError("run_diagnostics must be a boolean")
     if not source.strip():
         return PolishResult(
-            source=source,
-            candidate=source,
-            final_text=source,
-            assurance=assurance,
-            verification=None,
-            used_source_fallback=False,
+            source=source, candidate=source, final_text=source, assurance=assurance,
+            verification=None, used_source_fallback=False,
             notes=["No source prose supplied; no change recommended."],
         )
 
-    diagnostics_before = (
-        diagnose_polish(
-            source,
-            context_before=context_before,
-            context_after=context_after,
-        )
-        if run_diagnostics
-        else None
-    )
+    diagnostics_before = diagnose_polish(
+        source, context_before=context_before, context_after=context_after,
+    ) if run_diagnostics else None
     if diagnostics_before is not None and diagnostics_before.no_change_recommended:
         return PolishResult(
-            source=source,
-            candidate=source,
-            final_text=source,
-            assurance=assurance,
-            verification=None,
-            used_source_fallback=False,
-            diagnostics_before=diagnostics_before,
-            notes=[
-                "Pre-generation diagnostics found positive evidence for a narrow "
-                "already-good prose shape; generation and semantic verification "
-                "were skipped."
-            ],
+            source=source, candidate=source, final_text=source, assurance=assurance,
+            verification=None, used_source_fallback=False, diagnostics_before=diagnostics_before,
+            notes=["Pre-generation diagnostics found positive evidence for a narrow already-good prose shape; generation and semantic verification were skipped."],
         )
 
-    protected_anchors = [anchor.to_dict() for anchor in extract_anchors(source) if anchor.protected]
-
+    protected_anchors = [a.to_dict() for a in extract_anchors(source) if a.protected]
     try:
         proposal = rewrite_provider.rewrite(
-            source=source,
-            mode="polish",
-            protected_anchors=protected_anchors,
-            rewrite_plan=_polish_plan(source),
-            context_before=context_before,
-            context_after=context_after,
+            source=source, mode="polish", protected_anchors=protected_anchors,
+            rewrite_plan=_polish_plan(source), context_before=context_before, context_after=context_after,
         )
     except (TypeError, ValueError, RuntimeError) as exc:
         return PolishResult(
-            source=source,
-            candidate=source,
-            final_text=source,
-            assurance=assurance,
-            verification=None,
-            used_source_fallback=True,
-            diagnostics_before=diagnostics_before,
+            source=source, candidate=source, final_text=source, assurance=assurance,
+            verification=None, used_source_fallback=True, diagnostics_before=diagnostics_before,
             notes=[f"Rewrite provider failed; source preserved: {exc}"],
         )
-
     if not isinstance(proposal, RewriteCandidate):
         return PolishResult(
-            source=source,
-            candidate=source,
-            final_text=source,
-            assurance=assurance,
-            verification=None,
-            used_source_fallback=True,
-            diagnostics_before=diagnostics_before,
+            source=source, candidate=source, final_text=source, assurance=assurance,
+            verification=None, used_source_fallback=True, diagnostics_before=diagnostics_before,
             notes=["Rewrite provider returned a malformed result object; source preserved."],
         )
-
     candidate = proposal.candidate_text
     if not isinstance(candidate, str):
         return PolishResult(
-            source=source,
-            candidate=source,
-            final_text=source,
-            assurance=assurance,
-            verification=None,
-            used_source_fallback=True,
-            diagnostics_before=diagnostics_before,
+            source=source, candidate=source, final_text=source, assurance=assurance,
+            verification=None, used_source_fallback=True, diagnostics_before=diagnostics_before,
             notes=["Rewrite provider returned a non-string candidate; source preserved."],
         )
 
-    verification = verify_rewrite(
-        source=source,
-        candidate=candidate,
-        assurance=assurance,
+    execution = verify_rewrite_with_repair(
+        source=source, candidate=candidate, assurance=assurance,
         verifier_provider=verifier_provider,
+        repair_provider=repair_provider or _implicit_repair_provider(rewrite_provider),
         native_swos_context=native_swos_context,
     )
-
+    verification, verified_candidate = execution.verification, execution.candidate
     if verification.verifier_skip_reason == "terminal_newline_only":
-        final_text = source
-        used_source_fallback = False
-        decision_note = (
-            "Candidate differed only by terminal line-ending whitespace; "
-            "the original source representation was preserved."
-        )
+        final_text, used_source_fallback = source, False
+        decision_note = "Candidate differed only by terminal line-ending whitespace; the original source representation was preserved."
     elif verification.status is VerificationStatus.PASS:
-        final_text = candidate
-        used_source_fallback = False
-        decision_note = "Candidate passed semantic verification and is safe for automatic use."
-    else:
-        final_text = source
-        used_source_fallback = True
+        final_text, used_source_fallback = verified_candidate, False
         decision_note = (
-            f"Candidate verification returned {verification.status.value}; "
-            "repair is not implemented in this slice, so the source was preserved."
+            "Bounded repair succeeded and the repaired candidate passed semantic re-verification."
+            if execution.success else "Candidate passed semantic verification and is safe for automatic use."
         )
+    else:
+        final_text, used_source_fallback = source, True
+        suffix = f" Repair detail: {execution.failure_reason}" if execution.failure_reason else ""
+        decision_note = f"Candidate verification returned {verification.status.value}; the original source was preserved.{suffix}"
 
     return PolishResult(
-        source=source,
-        candidate=candidate,
-        final_text=final_text,
-        assurance=assurance,
-        verification=verification,
-        used_source_fallback=used_source_fallback,
-        diagnostics_before=diagnostics_before,
-        notes=[*proposal.notes, decision_note],
-        rewrite_token_usage=proposal.token_usage,
+        source=source, candidate=verified_candidate, final_text=final_text, assurance=assurance,
+        verification=verification, used_source_fallback=used_source_fallback,
+        diagnostics_before=diagnostics_before, repair_attempts=execution.attempts,
+        repair_success=execution.success, repair_failure_reason=execution.failure_reason,
+        notes=[*proposal.notes, decision_note], rewrite_token_usage=proposal.token_usage,
         rewrite_cost_estimate=proposal.cost_estimate,
     )

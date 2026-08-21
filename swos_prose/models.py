@@ -70,6 +70,10 @@ class SemanticDelta:
     candidate_span: str | None
     severity: Severity
     explanation: str
+    source_start: int | None = None
+    source_end: int | None = None
+    candidate_start: int | None = None
+    candidate_end: int | None = None
     repairable: bool = False
     confidence: float = 1.0
 
@@ -78,6 +82,36 @@ class SemanticDelta:
         payload["type"] = payload.pop("delta_type").value
         payload["severity"] = self.severity.value
         return payload
+
+
+@dataclass
+class RepairAttempt:
+    attempt_number: int
+    offending_span: str
+    repaired_span: str
+    candidate_before: str
+    candidate_after: str
+    deltas_before: list[SemanticDelta]
+    deltas_after: list[SemanticDelta]
+    success: bool
+    failure_reason: str | None
+    timestamp: str
+    token_usage: dict[str, int] | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "attempt_number": self.attempt_number,
+            "offending_span": self.offending_span,
+            "repaired_span": self.repaired_span,
+            "candidate_before": self.candidate_before,
+            "candidate_after": self.candidate_after,
+            "deltas_before": [delta.to_dict() for delta in self.deltas_before],
+            "deltas_after": [delta.to_dict() for delta in self.deltas_after],
+            "success": self.success,
+            "failure_reason": self.failure_reason,
+            "timestamp": self.timestamp,
+            "token_usage": self.token_usage,
+        }
 
 
 @dataclass

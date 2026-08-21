@@ -1,0 +1,300 @@
+"""Fail-closed bounded local repair for SWOS Prose Milestone 1."""
+from __future__ import annotations
+
+from dataclasses import dataclass, replace
+from datetime import datetime, timezone
+from difflib import SequenceMatcher
+import re
+from typing import Callable, Protocol
+
+from .models import DeltaType, RepairAttempt, SemanticDelta, Severity, VerificationResult, VerificationStatus
+from .providers.rewrite_base import RewriteCandidate
+
+MAX_REPAIR_ATTEMPTS = 2
+MIN_LOCALISATION_CONFIDENCE = 0.95
+MAX_REPAIR_SPAN_CHARS = 96
+MAX_REPAIR_SPAN_TOKENS = 4
+
+REPAIRABLE_DELTA_TYPES = frozenset({
+    DeltaType.MODALITY_STRENGTHENED,
+    DeltaType.MODALITY_WEAKENED,
+    DeltaType.QUANTIFIER_CHANGED,
+    DeltaType.ATTRIBUTION_CHANGED,
+    DeltaType.NEGATION_CHANGED,
+    DeltaType.CAUSAL_STRENGTH_CHANGED,
+})
+HARD_INVARIANT_DELTA_TYPES = frozenset({
+    DeltaType.NUMBER_CHANGED,
+    DeltaType.DATE_CHANGED,
+    DeltaType.UNIT_CHANGED,
+    DeltaType.QUOTATION_CHANGED,
+    DeltaType.CITATION_REMOVED,
+    DeltaType.CITATION_RELOCATED,
+})
+_TOKEN_RE = re.compile(r"[A-Za-z0-9]+(?:['’.-][A-Za-z0-9]+)*|[^\w\s]", re.UNICODE)
+
+
+@dataclass(frozen=True)
+class RepairSpan:
+    source_start: int
+    source_end: int
+    candidate_start: int
+    candidate_end: int
+    confidence: float
+
+
+@dataclass
+class RepairExecution:
+    candidate: str
+    verification: VerificationResult
+    attempts: list[RepairAttempt]
+    success: bool
+    failure_reason: str | None = None
+
+
+class RepairProvider(Protocol):
+    def repair(
+        self, *, prompt: str, source: str, candidate: str, delta: SemanticDelta,
+        candidate_start: int, candidate_end: int,
+    ) -> RewriteCandidate: ...
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def _tokens(text: str) -> list[tuple[str, int, int]]:
+    return [(m.group(0), m.start(), m.end()) for m in _TOKEN_RE.finditer(text)]
+
+
+def _bounded(text: str) -> bool:
+    return len(text) <= MAX_REPAIR_SPAN_CHARS and len(_TOKEN_RE.findall(text)) <= MAX_REPAIR_SPAN_TOKENS
+
+
+def _unique(text: str, marker: str | None) -> tuple[int, int] | None:
+    if not marker:
+        return None
+    for candidate_marker in (marker, marker.strip().strip(".,;:!?()[]{}\"'“”‘’")):
+        if not candidate_marker:
+            continue
+        folded_text, folded_marker = text.casefold(), candidate_marker.casefold()
+        start = folded_text.find(folded_marker)
+        if start >= 0 and folded_text.find(folded_marker, start + 1) < 0:
+            return start, start + len(candidate_marker)
+    return None
+
+
+def _surface_marker(delta: SemanticDelta, span: str | None) -> str | None:
+    if span is None:
+        return None
+    if delta.delta_type is DeltaType.ATTRIBUTION_CHANGED and "::" in span:
+        if "," in span:
+            return None
+        return span.rsplit("::", 1)[1].strip() or None
+    return span
+
+
+def _valid_offsets(text: str, start: int | None, end: int | None, expected: str | None) -> bool:
+    return bool(
+        start is not None and end is not None and 0 <= start <= end <= len(text)
+        and (expected is None or text[start:end] == expected)
+    )
+
+
+def _token_range(tokens: list[tuple[str, int, int]], start: int, end: int) -> tuple[int, int] | None:
+    indexes = [i for i, (_, a, b) in enumerate(tokens) if b > start and a < end]
+    return (indexes[0], indexes[-1] + 1) if indexes else None
+
+
+def _aligned_span(source: str, candidate: str, source_marker: tuple[int, int]) -> RepairSpan | None:
+    left, right = _tokens(source), _tokens(candidate)
+    marker_range = _token_range(left, *source_marker)
+    if marker_range is None:
+        return None
+    mi1, mi2 = marker_range
+    matches = []
+    matcher = SequenceMatcher(
+        a=[t[0].casefold() for t in left], b=[t[0].casefold() for t in right], autojunk=False
+    )
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag != "equal" and i1 <= mi1 and mi2 <= i2:
+            matches.append((i1, i2, j1, j2))
+    if len(matches) != 1:
+        return None
+    i1, i2, j1, j2 = matches[0]
+    if i2 - i1 > MAX_REPAIR_SPAN_TOKENS or j2 - j1 > MAX_REPAIR_SPAN_TOKENS:
+        return None
+
+    if j1 == j2:
+        if j2 < len(right) and i2 < len(left) and left[i2][0].casefold() == right[j2][0].casefold():
+            i2 += 1; j2 += 1
+        elif j1 > 0 and i1 > 0 and left[i1 - 1][0].casefold() == right[j1 - 1][0].casefold():
+            i1 -= 1; j1 -= 1
+        else:
+            return None
+    if i1 >= i2 or j1 >= j2:
+        return None
+
+    span = RepairSpan(left[i1][1], left[i2 - 1][2], right[j1][1], right[j2 - 1][2], 0.97)
+    if not _bounded(source[span.source_start:span.source_end]) or not _bounded(candidate[span.candidate_start:span.candidate_end]):
+        return None
+    return span
+
+
+def locate_span(source: str, candidate: str, delta: SemanticDelta) -> RepairSpan | None:
+    """Return one high-confidence bounded replacement window, otherwise None."""
+    if (
+        _valid_offsets(source, delta.source_start, delta.source_end, delta.source_span)
+        and _valid_offsets(candidate, delta.candidate_start, delta.candidate_end, delta.candidate_span)
+    ):
+        left = source[delta.source_start:delta.source_end]
+        right = candidate[delta.candidate_start:delta.candidate_end]
+        if _bounded(left) and _bounded(right):
+            return RepairSpan(delta.source_start, delta.source_end, delta.candidate_start, delta.candidate_end, 1.0)
+
+    source_match = _unique(source, _surface_marker(delta, delta.source_span))
+    candidate_match = _unique(candidate, _surface_marker(delta, delta.candidate_span))
+    if source_match is None:
+        return None
+
+    aligned = _aligned_span(source, candidate, source_match)
+    if aligned is not None and (
+        candidate_match is None
+        or (aligned.candidate_start <= candidate_match[0] and candidate_match[1] <= aligned.candidate_end)
+    ):
+        return aligned
+
+    if candidate_match is not None:
+        left, right = source[slice(*source_match)], candidate[slice(*candidate_match)]
+        if _bounded(left) and _bounded(right):
+            return RepairSpan(*source_match, *candidate_match, 1.0)
+    return None
+
+
+def annotate_local_repairability(source: str, candidate: str, deltas: list[SemanticDelta]) -> list[SemanticDelta]:
+    """Authorise only reviewed lexical delta types with >=95% localisation."""
+    result: list[SemanticDelta] = []
+    for delta in deltas:
+        if delta.delta_type in HARD_INVARIANT_DELTA_TYPES or delta.delta_type not in REPAIRABLE_DELTA_TYPES:
+            result.append(replace(delta, repairable=False))
+            continue
+        span = locate_span(source, candidate, delta)
+        if span is None or span.confidence < MIN_LOCALISATION_CONFIDENCE:
+            result.append(replace(delta, repairable=False))
+            continue
+        result.append(replace(
+            delta,
+            source_span=source[span.source_start:span.source_end],
+            candidate_span=candidate[span.candidate_start:span.candidate_end],
+            source_start=span.source_start, source_end=span.source_end,
+            candidate_start=span.candidate_start, candidate_end=span.candidate_end,
+            severity=Severity.BLOCKER, repairable=True,
+        ))
+    return result
+
+
+def render_repair_prompt(*, source: str, candidate: str, delta: SemanticDelta, offending_span: str) -> str:
+    return f'''You are a semantic-safe editor. The following text has a single, localised defect.
+
+Source (original):
+{source}
+
+Candidate (your previous rewrite):
+{candidate}
+
+Defect:
+{delta.explanation}
+
+Offending span in candidate:
+"{offending_span}"
+
+Task:
+Replace ONLY the offending span with a corrected version that resolves the defect.
+Do NOT change anything else in the candidate.
+Do NOT add new claims, citations, examples, or evidence.
+Do NOT rephrase the surrounding context.
+
+Return ONLY the full corrected candidate text.'''
+
+
+def _confined_middle(candidate: str, repaired: str, start: int, end: int) -> str | None:
+    prefix, suffix = candidate[:start], candidate[end:]
+    if not repaired.startswith(prefix) or (suffix and not repaired.endswith(suffix)):
+        return None
+    middle_end = len(repaired) - len(suffix) if suffix else len(repaired)
+    middle = repaired[len(prefix):middle_end]
+    if middle == candidate[start:end]:
+        return None
+    if len(middle) > MAX_REPAIR_SPAN_CHARS * 2 or len(_TOKEN_RE.findall(middle)) > MAX_REPAIR_SPAN_TOKENS * 2:
+        return None
+    return middle
+
+
+def _failed_attempt(number: int, span: str, candidate: str, deltas: list[SemanticDelta], reason: str, usage=None) -> RepairAttempt:
+    return RepairAttempt(number, span, "", candidate, candidate, list(deltas), list(deltas), False, reason, _utc_now(), usage)
+
+
+def repair_loop(
+    *, source: str, candidate: str, initial_verification: VerificationResult,
+    repair_provider: RepairProvider, verify_candidate: Callable[[str], VerificationResult],
+    max_attempts: int = MAX_REPAIR_ATTEMPTS,
+) -> RepairExecution:
+    """Attempt at most two confined mutations, with full re-verification each time."""
+    if not 1 <= max_attempts <= MAX_REPAIR_ATTEMPTS:
+        raise ValueError(f"max_attempts must be between 1 and {MAX_REPAIR_ATTEMPTS}")
+    current, verification, attempts = candidate, initial_verification, []
+    if verification.status is VerificationStatus.PASS:
+        return RepairExecution(current, verification, attempts, False)
+    if not verification.semantic_deltas:
+        return RepairExecution(current, verification, attempts, False, "No structured semantic delta is available for bounded repair.")
+    if any(not d.repairable for d in verification.semantic_deltas):
+        return RepairExecution(current, verification, attempts, False, "At least one semantic delta is not bounded and repairable; repair bypassed.")
+
+    for number in range(1, max_attempts + 1):
+        if not verification.semantic_deltas or any(not d.repairable for d in verification.semantic_deltas):
+            return RepairExecution(current, verification, attempts, False, "Repair stopped because the remaining delta set is not fully repairable.")
+        delta = verification.semantic_deltas[0]
+        span = locate_span(source, current, delta)
+        if span is None or span.confidence < MIN_LOCALISATION_CONFIDENCE:
+            reason = "Offending span could not be localised with >=95% confidence."
+            attempts.append(_failed_attempt(number, delta.candidate_span or "", current, verification.semantic_deltas, reason))
+            return RepairExecution(current, verification, attempts, False, reason)
+
+        offending = current[span.candidate_start:span.candidate_end]
+        prompt = render_repair_prompt(source=source, candidate=current, delta=delta, offending_span=offending)
+        try:
+            proposal = repair_provider.repair(
+                prompt=prompt, source=source, candidate=current, delta=delta,
+                candidate_start=span.candidate_start, candidate_end=span.candidate_end,
+            )
+        except (TypeError, ValueError, RuntimeError) as exc:
+            reason = f"Repair provider failed: {exc}"
+            attempts.append(_failed_attempt(number, offending, current, verification.semantic_deltas, reason))
+            return RepairExecution(current, verification, attempts, False, reason)
+        if not isinstance(proposal, RewriteCandidate) or not isinstance(proposal.candidate_text, str):
+            reason = "Repair provider returned a malformed result object."
+            attempts.append(_failed_attempt(number, offending, current, verification.semantic_deltas, reason))
+            return RepairExecution(current, verification, attempts, False, reason)
+
+        repaired = proposal.candidate_text
+        repaired_span = _confined_middle(current, repaired, span.candidate_start, span.candidate_end)
+        if repaired_span is None:
+            reason = "Repair changed text outside the authorised local span or made no local change."
+            attempts.append(_failed_attempt(number, offending, current, verification.semantic_deltas, reason, proposal.token_usage))
+            return RepairExecution(current, verification, attempts, False, reason)
+
+        new_verification = verify_candidate(repaired)
+        success = new_verification.status is VerificationStatus.PASS
+        attempts.append(RepairAttempt(
+            number, offending, repaired_span, current, repaired,
+            list(verification.semantic_deltas), list(new_verification.semantic_deltas),
+            success, None if success else f"Re-verification returned {new_verification.status.value}.",
+            _utc_now(), proposal.token_usage,
+        ))
+        if success:
+            return RepairExecution(repaired, new_verification, attempts, True)
+        current, verification = repaired, new_verification
+        if any(not d.repairable for d in verification.semantic_deltas):
+            return RepairExecution(current, verification, attempts, False, "Re-verification produced a non-repairable delta; repair stopped.")
+
+    return RepairExecution(current, verification, attempts, False, "Maximum repair attempts exceeded.")

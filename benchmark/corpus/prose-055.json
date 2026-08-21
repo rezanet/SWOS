@@ -1,0 +1,13 @@
+{
+  "fixture_id": "repair-005",
+  "category": "repair-local-causality",
+  "benchmark_group": "repair",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "Exposure was associated with the observed outcome.",
+  "semantic_probe_candidate": "Exposure caused the observed outcome.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "M1 positive repair fixture: association-to-causation strengthening must be locally restored and PASS re-verification."
+}
