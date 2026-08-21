@@ -1,11 +1,16 @@
 """Conservative pre-generation diagnostics for SWOS Prose polish mode.
 
-Diagnostics answer one narrow question: is there enough evidence of an editorial
-problem to justify spending a rewrite-provider call? They do not score style,
-prove quality, or establish semantic equivalence. The only automatic action is a
-high-confidence abstention when a compact passage exposes none of the reviewed
-material-defect or uncertainty signals below. Everything else proceeds to the
-normal rewriter and verifier pipeline.
+Diagnostics answer one narrow question: is there enough *positive* deterministic
+evidence to justify returning an already-good source unchanged without spending a
+rewrite-provider call? They do not score style, prove grammatical correctness, or
+establish semantic equivalence.
+
+The fail-closed rule is asymmetric:
+- a narrow, reviewed simple-prose shape plus no defect/uncertainty signal may
+  produce ``NO_CHANGE_RECOMMENDED``;
+- absence of a known defect is never sufficient by itself;
+- anything outside the narrow positive-evidence envelope proceeds to the normal
+  rewriter and verifier pipeline.
 """
 from __future__ import annotations
 
@@ -36,8 +41,7 @@ _WORDINESS_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 
 # Force-bearing language is not an editorial defect. It is simply a reason not
 # to let this first deterministic diagnostics slice make a high-confidence
-# abstention decision. The rewriter/verifier path already has richer safeguards
-# for these expressions.
+# abstention decision. The rewriter/verifier path has richer safeguards for it.
 _FORCE_BEARING_RE = re.compile(
     r"\b(?:may|might|can|could|should|would|must|somewhat|slightly|marginally|"
     r"moderately|considerably|substantially|significantly|highly|strongly|partly|"
@@ -45,14 +49,37 @@ _FORCE_BEARING_RE = re.compile(
     re.IGNORECASE,
 )
 
+# This finite-predicate recogniser is intentionally narrow. It is not an English
+# parser. Its purpose is to provide *positive* evidence for a tiny subset of
+# simple declarative prose rather than infer quality from the absence of errors.
+_REVIEWED_SIMPLE_PREDICATE_RE = re.compile(
+    r"\b(?:"
+    r"(?:is|are|was|were)\s+(?:clear|stable|complete|consistent|concise|direct|"
+    r"readable|accurate|available|useful|effective|preserved|recorded|supported|"
+    r"required|completed|included|returned|reduced|improved|simplified|clarified)"
+    r"|(?:has|have|had)\s+(?:been\s+)?(?:preserved|recorded|supported|required|"
+    r"completed|included|returned|reduced|improved|simplified|clarified)"
+    r"|(?:reduced|improved|simplified|clarified|supported|preserved|prevented|"
+    r"required|provided|recorded|produced|returned|completed|included|changed|"
+    r"removed|added)"
+    r")\b",
+    re.IGNORECASE,
+)
+
+# A few high-confidence agreement risks are cheap reasons to avoid abstention.
+# False positives are safe: they merely spend the normal rewrite/verifier path.
+_QUANTIFIER_AGREEMENT_RISK_RE = re.compile(
+    r"\b(?:several|many|few|multiple|numerous)\s+([A-Za-z][A-Za-z'-]*)\b",
+    re.IGNORECASE,
+)
+_IRREGULAR_PLURALS = {"children", "people", "men", "women", "data", "criteria", "phenomena"}
+
 # High-confidence abstention envelope. Falling outside it does not mean the prose
-# is defective; it means the deterministic diagnostics are not confident enough
-# to skip generation.
+# is defective; it means deterministic diagnostics are not confident enough to
+# skip generation.
 _MIN_ABSTAIN_WORDS = 8
-_MAX_ABSTAIN_WORDS = 48
-_MAX_SENTENCE_WORDS = 34
-_MAX_SENTENCE_COUNT = 3
-_MAX_HEAVY_PUNCTUATION = 5  # commas + semicolons + colons
+_MAX_ABSTAIN_WORDS = 32
+_MAX_SENTENCE_WORDS = 32
 
 
 @dataclass(frozen=True)
@@ -60,6 +87,7 @@ class PolishDiagnostics:
     recommendation: str
     high_confidence: bool
     signals: tuple[str, ...]
+    positive_evidence: tuple[str, ...]
     word_count: int
     sentence_count: int
     max_sentence_words: int
@@ -73,6 +101,7 @@ class PolishDiagnostics:
             "recommendation": self.recommendation,
             "high_confidence": self.high_confidence,
             "signals": list(self.signals),
+            "positive_evidence": list(self.positive_evidence),
             "word_count": self.word_count,
             "sentence_count": self.sentence_count,
             "max_sentence_words": self.max_sentence_words,
@@ -94,16 +123,62 @@ def _sentence_word_counts(text: str) -> list[int]:
     return counts or [0]
 
 
-def diagnose_polish(source: str) -> PolishDiagnostics:
+def _quantifier_agreement_risk(source: str) -> bool:
+    for match in _QUANTIFIER_AGREEMENT_RISK_RE.finditer(source):
+        noun = match.group(1).casefold()
+        if not noun.endswith("s") and noun not in _IRREGULAR_PLURALS:
+            return True
+    return False
+
+
+def _positive_structure_evidence(
+    source: str,
+    *,
+    word_count: int,
+    sentence_count: int,
+) -> tuple[str, ...]:
+    """Recognise a deliberately tiny set of low-ambiguity prose shapes."""
+    text = source.strip()
+    if not (_MIN_ABSTAIN_WORDS <= word_count <= _MAX_ABSTAIN_WORDS):
+        return ()
+    if sentence_count != 1:
+        return ()
+    if not text.endswith(".") or text.endswith("..."):
+        return ()
+    if any(char in text for char in "?!;:()[]{}\n\r"):
+        return ()
+    if "," in text:
+        return ()
+    first_alpha = next((char for char in text if char.isalpha()), "")
+    if not first_alpha or not first_alpha.isupper():
+        return ()
+    if not _REVIEWED_SIMPLE_PREDICATE_RE.search(text):
+        return ()
+    return ("reviewed_single_declarative_with_explicit_finite_predicate",)
+
+
+def diagnose_polish(
+    source: str,
+    *,
+    context_before: str | None = None,
+    context_after: str | None = None,
+) -> PolishDiagnostics:
     """Return a conservative pre-generation recommendation for polish mode.
 
-    ``NO_CHANGE_RECOMMENDED`` is issued only inside a narrow compact-prose
-    envelope and only when no reviewed material-defect or uncertainty signal is
-    present. ``PROCEED_TO_REWRITE`` includes both detected defects and cases
-    where deterministic diagnostics are simply not confident enough to abstain.
+    ``NO_CHANGE_RECOMMENDED`` requires positive structural evidence *and* the
+    absence of reviewed material-defect/uncertainty signals. Anything else is
+    ``PROCEED_TO_REWRITE``. This function never labels prose as bad.
+
+    Until diagnostics are context-aware, supplying neighbouring context disables
+    early abstention so local-flow problems cannot be hidden by an isolated
+    sentence that looks acceptable on its own.
     """
     if not isinstance(source, str):
         raise TypeError("source must be a string")
+    if context_before is not None and not isinstance(context_before, str):
+        raise TypeError("context_before must be a string or None")
+    if context_after is not None and not isinstance(context_after, str):
+        raise TypeError("context_after must be a string or None")
 
     words = _WORD_RE.findall(source)
     sentence_word_counts = _sentence_word_counts(source)
@@ -115,27 +190,40 @@ def diagnose_polish(source: str) -> PolishDiagnostics:
     if word_count < _MIN_ABSTAIN_WORDS:
         signals.append("insufficient_length_for_high_confidence_abstention")
     if word_count > _MAX_ABSTAIN_WORDS:
-        signals.append("paragraph_length_may_benefit_from_editing")
-    if sentence_count > _MAX_SENTENCE_COUNT:
-        signals.append("multi_sentence_structure_requires_editorial_review")
+        signals.append("paragraph_length_requires_richer_editorial_path")
+    if sentence_count != 1:
+        signals.append("multi_sentence_structure_requires_richer_editorial_path")
     if max_sentence_words > _MAX_SENTENCE_WORDS:
         signals.append("long_sentence_may_benefit_from_restructuring")
-    if len(re.findall(r"[,;:]", source)) > _MAX_HEAVY_PUNCTUATION:
-        signals.append("dense_punctuation_may_indicate_overloaded_construction")
+    if re.search(r"[,;:]", source):
+        signals.append("punctuated_clause_structure_requires_richer_editorial_path")
     if _REPEATED_WORD_RE.search(source):
         signals.append("immediate_word_repetition")
     if _FORCE_BEARING_RE.search(source):
         signals.append("force_bearing_language_requires_richer_editorial_path")
+    if _quantifier_agreement_risk(source):
+        signals.append("possible_quantifier_number_agreement_problem")
+    if (context_before and context_before.strip()) or (context_after and context_after.strip()):
+        signals.append("neighboring_context_requires_context_aware_diagnostics")
 
     for name, pattern in _WORDINESS_PATTERNS:
         if pattern.search(source):
             signals.append(f"avoidable_expansion:{name}")
 
+    positive_evidence = _positive_structure_evidence(
+        source,
+        word_count=word_count,
+        sentence_count=sentence_count,
+    )
+    if not positive_evidence:
+        signals.append("no_positive_abstention_evidence")
+
     if signals:
         return PolishDiagnostics(
             recommendation="PROCEED_TO_REWRITE",
             high_confidence=False,
-            signals=tuple(signals),
+            signals=tuple(dict.fromkeys(signals)),
+            positive_evidence=positive_evidence,
             word_count=word_count,
             sentence_count=sentence_count,
             max_sentence_words=max_sentence_words,
@@ -144,7 +232,8 @@ def diagnose_polish(source: str) -> PolishDiagnostics:
     return PolishDiagnostics(
         recommendation="NO_CHANGE_RECOMMENDED",
         high_confidence=True,
-        signals=("compact_prose_without_reviewed_material_defect_signal",),
+        signals=(),
+        positive_evidence=positive_evidence,
         word_count=word_count,
         sentence_count=sentence_count,
         max_sentence_words=max_sentence_words,
