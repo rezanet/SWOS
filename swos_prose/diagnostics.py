@@ -4,8 +4,8 @@ Diagnostics answer one narrow question: is there enough evidence of an editorial
 problem to justify spending a rewrite-provider call? They do not score style,
 prove quality, or establish semantic equivalence. The only automatic action is a
 high-confidence abstention when a compact passage exposes none of the reviewed
-material-defect signals below. Everything else proceeds to the normal rewriter
-and verifier pipeline.
+material-defect or uncertainty signals below. Everything else proceeds to the
+normal rewriter and verifier pipeline.
 """
 from __future__ import annotations
 
@@ -30,6 +30,19 @@ _WORDINESS_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("for_the_purpose_of", re.compile(r"\bfor\s+the\s+purpose\s+of\b", re.IGNORECASE)),
     ("with_regard_to", re.compile(r"\bwith\s+regard\s+to\b", re.IGNORECASE)),
     ("has_the_ability_to", re.compile(r"\bhas\s+the\s+ability\s+to\b", re.IGNORECASE)),
+    ("was_performed_using", re.compile(r"\bwas\s+performed\s+using\b", re.IGNORECASE)),
+    ("rather_unnecessarily", re.compile(r"\brather\s+unnecessarily\b", re.IGNORECASE)),
+)
+
+# Force-bearing language is not an editorial defect. It is simply a reason not
+# to let this first deterministic diagnostics slice make a high-confidence
+# abstention decision. The rewriter/verifier path already has richer safeguards
+# for these expressions.
+_FORCE_BEARING_RE = re.compile(
+    r"\b(?:may|might|can|could|should|would|must|somewhat|slightly|marginally|"
+    r"moderately|considerably|substantially|significantly|highly|strongly|partly|"
+    r"partially|largely|mostly|nearly|almost|barely|hardly)\b",
+    re.IGNORECASE,
 )
 
 # High-confidence abstention envelope. Falling outside it does not mean the prose
@@ -85,9 +98,9 @@ def diagnose_polish(source: str) -> PolishDiagnostics:
     """Return a conservative pre-generation recommendation for polish mode.
 
     ``NO_CHANGE_RECOMMENDED`` is issued only inside a narrow compact-prose
-    envelope and only when no reviewed material-defect signal is present.
-    ``PROCEED_TO_REWRITE`` is intentionally broader: it includes both detected
-    defects and cases where deterministic diagnostics are simply uncertain.
+    envelope and only when no reviewed material-defect or uncertainty signal is
+    present. ``PROCEED_TO_REWRITE`` includes both detected defects and cases
+    where deterministic diagnostics are simply not confident enough to abstain.
     """
     if not isinstance(source, str):
         raise TypeError("source must be a string")
@@ -111,6 +124,8 @@ def diagnose_polish(source: str) -> PolishDiagnostics:
         signals.append("dense_punctuation_may_indicate_overloaded_construction")
     if _REPEATED_WORD_RE.search(source):
         signals.append("immediate_word_repetition")
+    if _FORCE_BEARING_RE.search(source):
+        signals.append("force_bearing_language_requires_richer_editorial_path")
 
     for name, pattern in _WORDINESS_PATTERNS:
         if pattern.search(source):
