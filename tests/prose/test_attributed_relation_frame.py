@@ -509,7 +509,7 @@ class AttributedRelationFrameTests(unittest.TestCase):
             [delta.delta_type for delta in deltas],
         )
 
-    def test_reviewed_scope_stops_at_explicit_reporting_clause_transition(self):
+    def test_combined_proposition_coreference_change_requires_review(self):
         source = Proposition(
             proposition_id="s10",
             text=(
@@ -526,7 +526,7 @@ class AttributedRelationFrameTests(unittest.TestCase):
         )
 
         deltas = _frame_consistency_deltas(source, candidate)
-        self.assertNotIn(
+        self.assertIn(
             DeltaType.UNRESOLVED_EQUIVALENCE,
             [delta.delta_type for delta in deltas],
         )
@@ -545,6 +545,28 @@ class AttributedRelationFrameTests(unittest.TestCase):
                 "A was associated with B in the observed tests, but they do not "
                 "claim that A caused B, and A was also associated with B in field "
                 "deployments."
+            ),
+        )
+
+        deltas = _frame_consistency_deltas(source, candidate)
+        self.assertIn(
+            DeltaType.UNRESOLVED_EQUIVALENCE,
+            [delta.delta_type for delta in deltas],
+        )
+
+    def test_terminal_denial_operand_change_requires_review(self):
+        source = Proposition(
+            proposition_id="s12",
+            text=(
+                "A was associated with B in the observed tests, but they do not "
+                "claim that processor load caused the delay."
+            ),
+        )
+        candidate = Proposition(
+            proposition_id="c12",
+            text=(
+                "A was associated with B in the observed tests, but they do not "
+                "claim that memory usage caused the delay."
             ),
         )
 
