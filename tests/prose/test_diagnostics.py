@@ -45,7 +45,7 @@ class PolishDiagnosticsTests(unittest.TestCase):
             "NO_CHANGE_RECOMMENDED",
         )
         self.assertIn(
-            "reviewed_single_declarative_with_explicit_finite_predicate",
+            "reviewed_complete_single_declarative_structure",
             result.diagnostics_before.positive_evidence,
         )
         self.assertEqual(result.diagnostics_before.signals, ())
@@ -57,6 +57,15 @@ class PolishDiagnosticsTests(unittest.TestCase):
 
         self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
         self.assertFalse(diagnostics.high_confidence)
+        self.assertEqual(diagnostics.positive_evidence, ())
+        self.assertIn("no_positive_abstention_evidence", diagnostics.signals)
+
+    def test_malformed_coordinated_tail_cannot_hide_behind_valid_predicate(self):
+        diagnostics = diagnose_polish(
+            "The revised report reduced several errors and contain obvious mistakes."
+        )
+
+        self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
         self.assertEqual(diagnostics.positive_evidence, ())
         self.assertIn("no_positive_abstention_evidence", diagnostics.signals)
 
