@@ -47,7 +47,9 @@ Existing process environment variables take precedence over values in `--env-fil
 
 ## Diagnostics and calibration
 
-Pre-generation diagnostics are enabled by default. They may return `NO_CHANGE_RECOMMENDED` before generation only when a deliberately narrow deterministic recogniser has **positive evidence** for a simple already-good prose shape and no reviewed defect/uncertainty signal is present. Absence of a known defect is not enough.
+Pre-generation diagnostics are enabled by default. In this first slice, zero-cost `NO_CHANGE_RECOMMENDED` is intentionally **exemplar-only**: the complete source sentence must match an explicitly reviewed whole-sentence exemplar and no reviewed defect/uncertainty signal may be present. Absence of a known defect is not enough, and diagnostics do not attempt to parse or certify arbitrary English.
+
+The exemplar set is deliberately tiny. Expanding abstention coverage belongs to Benchmark: add reviewed complete exemplars only when empirical evidence justifies them rather than making the recogniser progressively more permissive.
 
 A diagnostics abstention returns the source unchanged and makes zero rewrite-provider and zero semantic-verifier calls. Dogfood records expose this through `diagnostics_before`, `generation_skipped_by_diagnostics`, and the `diagnostics_no_change` skip reason.
 
