@@ -243,12 +243,17 @@ def _reviewed_relation_context(proposition: Proposition) -> str | None:
     This helper deliberately makes no attempt to strip clauses, resolve
     coreference, or decide semantic equivalence. Any changed continuation stays
     visible to mapped-frame validation and may conservatively route to REVIEW.
+    A single terminal full stop is treated as ordinary assertion punctuation;
+    question marks, exclamation marks, and ellipses remain semantically visible.
     """
     text = _raw_embedded_claim_text(proposition)
     match = _REVIEWED_RELATION_CONTEXT_ANY_RE.search(text)
     if match is None:
         return None
-    return _normalise_frame_text(text[match.start():])
+    value = " ".join(text[match.start():].casefold().split()).strip()
+    if value.endswith(".") and not value.endswith("..."):
+        value = value[:-1].rstrip()
+    return value
 
 
 def _relation_object_matches(proposition: Proposition, provider_object: str) -> bool:
