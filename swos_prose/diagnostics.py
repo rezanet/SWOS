@@ -49,20 +49,24 @@ _FORCE_BEARING_RE = re.compile(
     re.IGNORECASE,
 )
 
-# This finite-predicate recogniser is intentionally narrow. It is not an English
-# parser. Its purpose is to provide *positive* evidence for a tiny subset of
-# simple declarative prose rather than infer quality from the absence of errors.
-_REVIEWED_SIMPLE_PREDICATE_RE = re.compile(
-    r"\b(?:"
-    r"(?:is|are|was|were)\s+(?:clear|stable|complete|consistent|concise|direct|"
-    r"readable|accurate|available|useful|effective|preserved|recorded|supported|"
-    r"required|completed|included|returned|reduced|improved|simplified|clarified)"
-    r"|(?:has|have|had)\s+(?:been\s+)?(?:preserved|recorded|supported|required|"
-    r"completed|included|returned|reduced|improved|simplified|clarified)"
-    r"|(?:reduced|improved|simplified|clarified|supported|preserved|prevented|"
+# Positive abstention evidence must cover the *complete sentence*, not merely a
+# trusted predicate substring. This deliberately recognises a tiny controlled
+# grammar: a simple determiner-led subject, one reviewed regular-past predicate,
+# a plain object/complement span, and optionally one coordinated reviewed
+# predicate. Any unrecognised tail makes the full match fail and routes to the
+# normal rewrite/verifier path.
+_REVIEWED_VERB = (
+    r"(?:reduced|improved|simplified|clarified|supported|preserved|prevented|"
     r"required|provided|recorded|produced|returned|completed|included|changed|"
     r"removed|added)"
-    r")\b",
+)
+_REVIEWED_WORD = r"[A-Za-z][A-Za-z'-]*"
+_REVIEWED_OBJECT_TOKEN = rf"(?!and\b){_REVIEWED_WORD}"
+_REVIEWED_SIMPLE_SENTENCE_RE = re.compile(
+    rf"^(?:The|This|A|An)\s+(?:{_REVIEWED_WORD}\s+){{1,3}}{_REVIEWED_VERB}\s+"
+    rf"{_REVIEWED_OBJECT_TOKEN}(?:\s+{_REVIEWED_OBJECT_TOKEN}){{0,7}}"
+    rf"(?:\s+and\s+{_REVIEWED_VERB}\s+{_REVIEWED_OBJECT_TOKEN}"
+    rf"(?:\s+{_REVIEWED_OBJECT_TOKEN}){{0,7}})?\.$",
     re.IGNORECASE,
 )
 
@@ -137,24 +141,15 @@ def _positive_structure_evidence(
     word_count: int,
     sentence_count: int,
 ) -> tuple[str, ...]:
-    """Recognise a deliberately tiny set of low-ambiguity prose shapes."""
+    """Recognise only a complete reviewed sentence shape."""
     text = source.strip()
     if not (_MIN_ABSTAIN_WORDS <= word_count <= _MAX_ABSTAIN_WORDS):
         return ()
     if sentence_count != 1:
         return ()
-    if not text.endswith(".") or text.endswith("..."):
+    if not _REVIEWED_SIMPLE_SENTENCE_RE.fullmatch(text):
         return ()
-    if any(char in text for char in "?!;:()[]{}\n\r"):
-        return ()
-    if "," in text:
-        return ()
-    first_alpha = next((char for char in text if char.isalpha()), "")
-    if not first_alpha or not first_alpha.isupper():
-        return ()
-    if not _REVIEWED_SIMPLE_PREDICATE_RE.search(text):
-        return ()
-    return ("reviewed_single_declarative_with_explicit_finite_predicate",)
+    return ("reviewed_complete_single_declarative_structure",)
 
 
 def diagnose_polish(
@@ -165,9 +160,10 @@ def diagnose_polish(
 ) -> PolishDiagnostics:
     """Return a conservative pre-generation recommendation for polish mode.
 
-    ``NO_CHANGE_RECOMMENDED`` requires positive structural evidence *and* the
-    absence of reviewed material-defect/uncertainty signals. Anything else is
-    ``PROCEED_TO_REWRITE``. This function never labels prose as bad.
+    ``NO_CHANGE_RECOMMENDED`` requires positive structural evidence covering the
+    complete source sentence *and* the absence of reviewed material-defect or
+    uncertainty signals. Anything else is ``PROCEED_TO_REWRITE``. This function
+    never labels prose as bad.
 
     Until diagnostics are context-aware, supplying neighbouring context disables
     early abstention so local-flow problems cannot be hidden by an isolated
