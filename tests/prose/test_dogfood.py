@@ -191,8 +191,7 @@ class DogfoodCollectorTests(unittest.TestCase):
 
     def test_diagnostics_abstention_records_no_provider_cost(self):
         source = (
-            "Clear requirements reduce implementation errors and make later review "
-            "easier for everyone involved."
+            "The revised workflow reduced implementation errors and simplified later review."
         )
         rewriter = StaticRewriteProvider("This provider must not be called.")
         verifier = StaticSemanticVerifierProvider({
@@ -222,6 +221,10 @@ class DogfoodCollectorTests(unittest.TestCase):
             self.assertTrue(records[0]["generation_skipped_by_diagnostics"])
             self.assertIsNone(records[0]["rewrite_token_usage"])
             self.assertFalse(records[0]["verifier_used"])
+            self.assertEqual(
+                records[0]["diagnostics_before"]["positive_evidence"],
+                ["reviewed_single_declarative_with_explicit_finite_predicate"],
+            )
             self.assertEqual(rewriter.calls, 0)
             self.assertEqual(verifier.calls, 0)
 
