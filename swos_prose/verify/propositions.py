@@ -53,12 +53,18 @@ _REVIEWED_RELATION_CONTEXT_ANY_RE = re.compile(
     re.IGNORECASE,
 )
 # This is deliberately not a general-purpose clause parser. The reviewed live
-# case contains one contrastive denial after the evidence-context phrase. Strip
-# only that narrow outside-scope clause; retain every other continuation so
-# punctuation or coordination cannot silently broaden evidence scope.
+# case contains one terminal, simple contrastive denial of a causal claim after
+# the evidence-context phrase. Strip only that shape. Any coordinated, punctuated,
+# or otherwise more complex continuation remains visible and therefore fails
+# closed to REVIEW rather than being normalized away.
+_ROLE_TOKEN = r"[A-Za-z0-9'’.-]+"
 _REVIEWED_RELATION_CONTEXT_OUTSIDE_DENIAL_RE = re.compile(
     r",\s*but\s+(?:they\s+)?(?:do|does|did)\s+not\s+"
-    r"(?:claim|argue|state|suggest|report|assert|conclude|infer|demonstrate|show)\b.*$",
+    r"(?:claim|argue|state|suggest|report|assert|conclude|infer|demonstrate|show)\s+"
+    r"that\s+"
+    rf"(?:{_ROLE_TOKEN}\s+){{0,2}}{_ROLE_TOKEN}\s+"
+    r"(?:causes?|caused)\s+"
+    rf"(?:{_ROLE_TOKEN}\s+){{0,2}}{_ROLE_TOKEN}\s*[.!?]?\s*$",
     re.IGNORECASE,
 )
 
@@ -249,9 +255,9 @@ def _reviewed_relation_context(proposition: Proposition) -> str | None:
     """Return the complete reviewed evidence-context surface.
 
     Once ``in the observed tests`` appears, retain the remaining surface by
-    default. The only omitted text is the narrow contrastive denial clause from
-    the reviewed live case. This intentionally prefers a conservative REVIEW to
-    any punctuation-based rule that could hide evidence-scope broadening.
+    default. The only omitted text is a terminal, simple contrastive denial of a
+    causal claim matching the reviewed live case. More complex continuations are
+    retained so they cannot disappear behind the exception.
     """
     text = _raw_embedded_claim_text(proposition)
     match = _REVIEWED_RELATION_CONTEXT_ANY_RE.search(text)
