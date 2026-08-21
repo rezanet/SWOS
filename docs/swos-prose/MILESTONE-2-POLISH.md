@@ -2,7 +2,7 @@
 
 **Status:** implementation candidate  
 **Mode:** `polish` only  
-**Goal:** connect real rewrite generation to the semantic verifier with safe fallback, while avoiding some unnecessary provider calls through conservative pre-generation abstention.
+**Goal:** connect real rewrite generation to the semantic verifier with safe fallback, while proving a conservative zero-provider abstention contract.
 
 ## Product boundary
 
@@ -11,7 +11,7 @@ The pipeline remains deliberately narrow:
 ```text
 SOURCE
   -> conservative pre-generation diagnostics
-     -> high-confidence NO_CHANGE: source returned unchanged
+     -> reviewed whole-sentence exemplar + no warning: source returned unchanged
      -> otherwise continue
   -> protected-anchor extraction
   -> one polish candidate
@@ -24,15 +24,17 @@ There is **no repair loop** in this slice. `REPAIR`, `REVIEW`, and `REJECT` are 
 
 ## Pre-generation diagnostics
 
-The first diagnostics slice is deliberately fail-closed. It is not a style score and it does not infer semantic equivalence.
+The first diagnostics slice is deliberately fail-closed. It is not a style score, grammar checker, parser, or semantic verifier.
 
 `NO_CHANGE_RECOMMENDED` is available only when:
 
-- a deliberately narrow deterministic recogniser finds **positive evidence** for a simple already-good prose shape;
+- the complete source sentence matches an explicitly reviewed whole-sentence abstention exemplar;
 - no reviewed editorial-defect or uncertainty signal is present;
 - no neighbouring `context_before` / `context_after` is supplied.
 
-The absence of a known defect is never enough by itself. Anything outside the narrow positive-evidence envelope becomes `PROCEED_TO_REWRITE`, which means only that diagnostics are not confident enough to abstain.
+The absence of a known defect is never enough by itself, and no wildcard/object-span grammar is used to certify arbitrary English. Anything outside the reviewed exemplar set becomes `PROCEED_TO_REWRITE`, which means only that diagnostics are not confident enough to abstain.
+
+The exemplar set is intentionally tiny. Expanding zero-cost abstention coverage is a Benchmark task: add complete reviewed exemplars only when empirical evidence justifies them instead of making deterministic parsing progressively more permissive.
 
 A diagnostics abstention is a no-op: candidate and final text are the source, no rewrite provider is called, no semantic verifier is called, and token usage remains zero. `PolishResult` records `diagnostics_before` and `generation_skipped_by_diagnostics` so callers can distinguish this path from verifier-backed outcomes.
 
@@ -105,11 +107,13 @@ Provider-independent tests cover:
 - synthetic REPAIR -> source fallback because repair is not implemented;
 - protected anchors passed verbatim to the rewrite provider;
 - empty input no-op;
-- conservative diagnostics abstention -> source unchanged with zero provider calls;
-- absence of known defect without positive evidence -> proceed to rewrite;
+- reviewed exemplar -> source unchanged with zero provider calls;
+- absence of a reviewed exemplar -> proceed to rewrite even when the sentence appears well formed;
+- malformed coordinated tails cannot hide behind a trusted predicate substring;
 - force-bearing language -> proceed to richer rewrite/verifier path;
 - neighbouring context -> no early diagnostics abstention;
 - explicit diagnostics bypass for semantic calibration;
+- dogfood summary reports the actual diagnostics mode;
 - OpenAI rewrite adapter request shape, strict schema, `store=False`, optional temperature forwarding, and token accounting;
 - unsupported rewrite modes fail explicitly.
 
@@ -123,6 +127,7 @@ This slice does not implement:
 - context-aware diagnostics;
 - post-rewrite diagnostics;
 - broad grammar or spelling proof;
+- general deterministic certification of already-good English;
 - multi-candidate ranking;
 - repair;
 - voice/style profiles;
@@ -131,4 +136,4 @@ This slice does not implement:
 
 ## Next slice
 
-Use dogfood and benchmark evidence to measure three things separately: semantic safety, editorial improvement, and diagnostics efficiency. Keep the diagnostics-enabled efficiency campaign separate from the diagnostics-disabled semantic-calibration campaign. Do not broaden into additional modes until the basic polish -> verify -> fallback path and the abstention boundary are empirically stable.
+Use dogfood and benchmark evidence to measure three things separately: semantic safety, editorial improvement, and diagnostics efficiency. Keep the diagnostics-enabled efficiency campaign separate from the diagnostics-disabled semantic-calibration campaign. Expand the abstention exemplar set only from reviewed benchmark evidence; do not broaden it through a parser exception arms race.
