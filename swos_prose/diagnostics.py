@@ -6,11 +6,15 @@ rewrite-provider call? They do not score style, prove grammatical correctness, o
 establish semantic equivalence.
 
 The fail-closed rule is asymmetric:
-- a narrow, reviewed simple-prose shape plus no defect/uncertainty signal may
-  produce ``NO_CHANGE_RECOMMENDED``;
+- only a fully reviewed whole-sentence exemplar plus no defect/uncertainty signal
+  may produce ``NO_CHANGE_RECOMMENDED``;
 - absence of a known defect is never sufficient by itself;
-- anything outside the narrow positive-evidence envelope proceeds to the normal
-  rewriter and verifier pipeline.
+- anything outside the reviewed exemplar set proceeds to the normal rewriter and
+  verifier pipeline.
+
+The exemplar set is intentionally tiny. Expanding zero-cost abstention coverage is
+a benchmark task, not a parser task: new exemplars must be reviewed and added from
+empirical evidence rather than inferred through increasingly permissive regexes.
 """
 from __future__ import annotations
 
@@ -49,26 +53,16 @@ _FORCE_BEARING_RE = re.compile(
     re.IGNORECASE,
 )
 
-# Positive abstention evidence must cover the *complete sentence*, not merely a
-# trusted predicate substring. This deliberately recognises a tiny controlled
-# grammar: a simple determiner-led subject, one reviewed regular-past predicate,
-# a plain object/complement span, and optionally one coordinated reviewed
-# predicate. Any unrecognised tail makes the full match fail and routes to the
-# normal rewrite/verifier path.
-_REVIEWED_VERB = (
-    r"(?:reduced|improved|simplified|clarified|supported|preserved|prevented|"
-    r"required|provided|recorded|produced|returned|completed|included|changed|"
-    r"removed|added)"
-)
-_REVIEWED_WORD = r"[A-Za-z][A-Za-z'-]*"
-_REVIEWED_OBJECT_TOKEN = rf"(?!and\b){_REVIEWED_WORD}"
-_REVIEWED_SIMPLE_SENTENCE_RE = re.compile(
-    rf"^(?:The|This|A|An)\s+(?:{_REVIEWED_WORD}\s+){{1,3}}{_REVIEWED_VERB}\s+"
-    rf"{_REVIEWED_OBJECT_TOKEN}(?:\s+{_REVIEWED_OBJECT_TOKEN}){{0,7}}"
-    rf"(?:\s+and\s+{_REVIEWED_VERB}\s+{_REVIEWED_OBJECT_TOKEN}"
-    rf"(?:\s+{_REVIEWED_OBJECT_TOKEN}){{0,7}})?\.$",
-    re.IGNORECASE,
-)
+# These are deliberately complete, reviewed source sentences. No slot, wildcard,
+# or unrestricted object span is accepted. The set exists to prove the abstention
+# plumbing and zero-provider-cost contract without pretending that deterministic
+# regexes can certify arbitrary English prose. Benchmark evidence may justify
+# adding more complete exemplars later.
+_REVIEWED_ABSTENTION_EXEMPLARS = frozenset({
+    "the revised workflow reduced implementation errors and simplified later review.",
+    "the revised process reduced review effort and improved consistency.",
+    "the revised implementation reduced unnecessary repetition and improved readability.",
+})
 
 # A few high-confidence agreement risks are cheap reasons to avoid abstention.
 # False positives are safe: they merely spend the normal rewrite/verifier path.
@@ -141,15 +135,15 @@ def _positive_structure_evidence(
     word_count: int,
     sentence_count: int,
 ) -> tuple[str, ...]:
-    """Recognise only a complete reviewed sentence shape."""
+    """Recognise only an explicitly reviewed complete source exemplar."""
     text = source.strip()
     if not (_MIN_ABSTAIN_WORDS <= word_count <= _MAX_ABSTAIN_WORDS):
         return ()
     if sentence_count != 1:
         return ()
-    if not _REVIEWED_SIMPLE_SENTENCE_RE.fullmatch(text):
+    if text.casefold() not in _REVIEWED_ABSTENTION_EXEMPLARS:
         return ()
-    return ("reviewed_complete_single_declarative_structure",)
+    return ("reviewed_whole_sentence_exemplar",)
 
 
 def diagnose_polish(
@@ -160,10 +154,10 @@ def diagnose_polish(
 ) -> PolishDiagnostics:
     """Return a conservative pre-generation recommendation for polish mode.
 
-    ``NO_CHANGE_RECOMMENDED`` requires positive structural evidence covering the
-    complete source sentence *and* the absence of reviewed material-defect or
-    uncertainty signals. Anything else is ``PROCEED_TO_REWRITE``. This function
-    never labels prose as bad.
+    ``NO_CHANGE_RECOMMENDED`` requires an explicitly reviewed whole-sentence
+    exemplar *and* the absence of reviewed material-defect/uncertainty signals.
+    Anything else is ``PROCEED_TO_REWRITE``. This function never labels prose as
+    bad.
 
     Until diagnostics are context-aware, supplying neighbouring context disables
     early abstention so local-flow problems cannot be hidden by an isolated
@@ -212,7 +206,7 @@ def diagnose_polish(
         sentence_count=sentence_count,
     )
     if not positive_evidence:
-        signals.append("no_positive_abstention_evidence")
+        signals.append("no_reviewed_abstention_exemplar")
 
     if signals:
         return PolishDiagnostics(
