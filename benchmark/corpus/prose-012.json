@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-012",
+  "category": "reviewed-abstention",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The revised workflow reduced implementation errors and simplified later review.",
+  "semantic_probe_candidate": "The revised workflow reduced implementation errors while simplifying later review.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "NO_CHANGE_RECOMMENDED",
+    "must_not_abstain": false
+  },
+  "stability_probe": false,
+  "notes": "Exact reviewed whole-sentence abstention exemplar.",
+  "benchmark_group": "reviewed-abstention"
+}

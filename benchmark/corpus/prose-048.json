@@ -1,0 +1,18 @@
+{
+  "fixture_id": "prose-048",
+  "category": "context-structure",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The revised workflow reduced implementation errors and simplified later review.",
+  "semantic_probe_candidate": "The revised workflow reduced implementation errors and simplified later review.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "neighboring_context_requires_context_aware_diagnostics"
+  },
+  "stability_probe": false,
+  "notes": "Exact exemplar must not abstain when neighbouring context is supplied.",
+  "context_before": "Earlier review already made the same claim.",
+  "benchmark_group": "context-semantic-trap"
+}

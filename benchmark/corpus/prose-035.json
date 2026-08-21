@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-035",
+  "category": "attribution-causality",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The review states that the change followed the policy update.",
+  "semantic_probe_candidate": "The change followed the policy update.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "attribution-causality"
+}

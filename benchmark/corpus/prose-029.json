@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-029",
+  "category": "uncertainty-negation",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The evidence does not establish that the treatment caused the improvement.",
+  "semantic_probe_candidate": "The evidence establishes that the treatment caused the improvement.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "uncertainty-negation"
+}

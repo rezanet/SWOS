@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-046",
+  "category": "diagnostics-near-miss",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The revised workflow reduced implementation errors and may simplify later review.",
+  "semantic_probe_candidate": "The revised workflow reduced implementation errors and simplified later review.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "force_bearing_language_requires_richer_editorial_path"
+  },
+  "stability_probe": false,
+  "notes": "Lexically close to a reviewed exemplar but must not inherit abstention.",
+  "benchmark_group": "diagnostics-near-miss"
+}

@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-003",
+  "category": "chronology",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The intervention preceded the outcome.",
+  "semantic_probe_candidate": "The outcome followed the intervention.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "insufficient_length_for_high_confidence_abstention"
+  },
+  "stability_probe": true,
+  "notes": "",
+  "benchmark_group": "semantic-equivalence"
+}

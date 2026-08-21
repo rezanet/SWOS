@@ -1,0 +1,81 @@
+name: SWOS Prose Benchmark
+
+on:
+  pull_request:
+    paths:
+      - "benchmark/**"
+      - "swos_prose/**"
+      - "tests/prose/**"
+      - ".github/workflows/swos-prose-benchmark.yml"
+  workflow_dispatch:
+
+jobs:
+  benchmark-contract:
+    name: Prose benchmark corpus contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate 50-case corpus and diagnostics contract
+        run: |
+          python3 benchmark/runner.py \
+            --mode validate \
+            --expect-count 50 \
+            --output /tmp/swos-prose-benchmark-validate.json
+          cat /tmp/swos-prose-benchmark-validate.json
+
+  benchmark-live:
+    name: Prose benchmark live baseline (non-gating)
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      SWOS_PROSE_RUN_LIVE_OPENAI: "1"
+      SWOS_PROSE_OPENAI_MODEL: gpt-5.6-luna
+      SWOS_PROSE_OPENAI_REWRITE_MODEL: gpt-5.6-luna
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Report live benchmark skip when no API key is configured
+        if: env.OPENAI_API_KEY == ''
+        run: echo "OPENAI_API_KEY is not configured; live SWOS Prose benchmark skipped."
+      - name: Install OpenAI SDK
+        if: env.OPENAI_API_KEY != ''
+        run: python3 -m pip install openai jsonschema
+      - name: Run full 50-case live baseline
+        id: live-benchmark
+        if: env.OPENAI_API_KEY != ''
+        continue-on-error: true
+        run: |
+          rm -rf /tmp/swos-prose-benchmark
+          mkdir -p /tmp/swos-prose-benchmark
+          python3 benchmark/runner.py \
+            --mode all \
+            --expect-count 50 \
+            --stability-runs 5 \
+            --rewriter-model gpt-5.6-luna \
+            --verifier-model gpt-5.6-luna \
+            --fail-on-unsafe \
+            --output /tmp/swos-prose-benchmark/baseline.json
+      - name: Publish benchmark summary
+        if: env.OPENAI_API_KEY != '' && always()
+        run: |
+          {
+            echo "## SWOS Prose v0.2 benchmark"
+            echo
+            echo "Live benchmark step outcome: ${{ steps.live-benchmark.outcome }}"
+            echo
+            if [[ -f /tmp/swos-prose-benchmark/baseline.json ]]; then
+              python3 -c 'import json; r=json.load(open("/tmp/swos-prose-benchmark/baseline.json")); print("Corpus:", r["corpus"]["fixture_count"]); print("Unsafe diagnostic abstentions:", len(r["diagnostics_contract"]["unsafe_abstentions"])); print("Unsafe semantic PASSes:", r["semantic_safety"]["unsafe_pass_count"]); print("Diagnostics abstentions:", r["token_efficiency"]["abstention_count"]); print("Observed/counterfactual token savings %:", r["token_efficiency"]["total_token_savings_percent"]); print("Stability draws per probe:", r["stability"]["runs_per_probe"])'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload live benchmark evidence
+        if: env.OPENAI_API_KEY != '' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swos-prose-v0.2-benchmark
+          path: /tmp/swos-prose-benchmark
+          retention-days: 14

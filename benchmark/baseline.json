@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "benchmark_version": "0.2.0-rc1",
+  "baseline_status": "pending_live_evidence",
+  "source_commit": "3c077fb41b9d8fa21896aeaba68a22b6c9652c4a",
+  "corpus_fixture_count": 50,
+  "stability_runs_required": 5,
+  "performance_claims_frozen": false,
+  "note": "Replace this placeholder with the exact full live CI report before the benchmark PR leaves draft status.",
+  "corpus_sha256": "7d0ac58a083435a175a3dd728917b1f663e95ae83e29299865a11cde421c59be"
+}

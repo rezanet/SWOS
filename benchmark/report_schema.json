@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/prose-benchmark-report-v1.json",
+  "title": "SWOS Prose benchmark report",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "benchmark_version",
+    "mode",
+    "generated_at",
+    "corpus",
+    "diagnostics_contract"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "benchmark_version": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "validate",
+        "safety",
+        "efficiency",
+        "stability",
+        "all"
+      ]
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "corpus": {
+      "type": "object"
+    },
+    "diagnostics_contract": {
+      "type": "object"
+    },
+    "semantic_safety": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "token_efficiency": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "stability": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "records": {
+      "type": "array"
+    }
+  }
+}

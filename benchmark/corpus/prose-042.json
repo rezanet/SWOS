@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-042",
+  "category": "numbers-citations",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The finding is reported in Smith et al. (2023, p. 47).",
+  "semantic_probe_candidate": "The finding is reported in Smith et al. (2023, p. 74).",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "numbers-citations"
+}

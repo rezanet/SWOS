@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-007",
+  "category": "negation",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The treatment was ineffective.",
+  "semantic_probe_candidate": "The treatment was not effective.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "insufficient_length_for_high_confidence_abstention"
+  },
+  "stability_probe": true,
+  "notes": "",
+  "benchmark_group": "semantic-equivalence"
+}

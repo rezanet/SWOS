@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-001",
+  "category": "causality",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "X caused Y.",
+  "semantic_probe_candidate": "X was associated with Y.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "insufficient_length_for_high_confidence_abstention"
+  },
+  "stability_probe": true,
+  "notes": "Causal weakening must never receive automatic PASS.",
+  "benchmark_group": "attribution-causality"
+}

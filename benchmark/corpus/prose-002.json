@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-002",
+  "category": "modality-scope",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The data may suggest that X causes Y.",
+  "semantic_probe_candidate": "The data suggests that X may cause Y.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "force_bearing_language_requires_richer_editorial_path"
+  },
+  "stability_probe": true,
+  "notes": "Modal scope relocation changes commitment.",
+  "benchmark_group": "modality-degree"
+}
