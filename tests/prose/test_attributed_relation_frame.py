@@ -531,6 +531,29 @@ class AttributedRelationFrameTests(unittest.TestCase):
             [delta.delta_type for delta in deltas],
         )
 
+    def test_contrastive_denial_cannot_hide_following_scope_broadening(self):
+        source = Proposition(
+            proposition_id="s11",
+            text=(
+                "A was associated with B in the observed tests, but they do not "
+                "claim that A caused B."
+            ),
+        )
+        candidate = Proposition(
+            proposition_id="c11",
+            text=(
+                "A was associated with B in the observed tests, but they do not "
+                "claim that A caused B, and A was also associated with B in field "
+                "deployments."
+            ),
+        )
+
+        deltas = _frame_consistency_deltas(source, candidate)
+        self.assertIn(
+            DeltaType.UNRESOLVED_EQUIVALENCE,
+            [delta.delta_type for delta in deltas],
+        )
+
     def test_outer_reporting_frame_validates_inner_relation_sign(self):
         attribution = Attribution(agent="Chen et al.", act="report")
         text = "Chen et al. report that A was positively associated with B."
