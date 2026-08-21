@@ -3,7 +3,7 @@
 
 The benchmark deliberately separates four questions:
 
-* validate: Is the 50-case corpus well-formed, and do deterministic diagnostics
+* validate: Is the active 56-case corpus well-formed, and do deterministic diagnostics
   obey their fail-closed fixture contract?
 * safety: Does the semantic verifier ever PASS a human-labelled material change?
 * efficiency: How many provider tokens would the current diagnostics abstentions
@@ -38,6 +38,7 @@ from swos_prose.providers.openai_rewrite import OpenAIResponsesRewriteProvider
 
 BENCHMARK_VERSION = "0.2.0-rc1"
 SCHEMA_VERSION = "1.0"
+ACTIVE_CORPUS_COUNT = 56
 DEFAULT_CORPUS = ROOT / "benchmark" / "corpus"
 FIXTURE_SCHEMA = ROOT / "benchmark" / "fixture_schema.json"
 REPORT_SCHEMA = ROOT / "benchmark" / "report_schema.json"
@@ -274,6 +275,8 @@ def _sum_usage(usage: dict[str, int] | None, totals: dict[str, int]) -> None:
 def _combined_result_usage(result: Any) -> dict[str, int]:
     totals: dict[str, int] = {}
     _sum_usage(result.rewrite_token_usage, totals)
+    for attempt in result.repair_attempts:
+        _sum_usage(attempt.token_usage, totals)
     if result.verification is not None:
         _sum_usage(result.verification.token_usage, totals)
     return totals
@@ -438,7 +441,7 @@ def main() -> int:
     parser.add_argument("--mode", choices=("validate", "safety", "efficiency", "stability", "all"), default="validate")
     parser.add_argument("--corpus-dir", default=str(DEFAULT_CORPUS))
     parser.add_argument("--output", required=True)
-    parser.add_argument("--expect-count", type=int, default=50)
+    parser.add_argument("--expect-count", type=int, default=ACTIVE_CORPUS_COUNT)
     parser.add_argument("--rewriter-model", default=None)
     parser.add_argument("--verifier-model", default=None)
     parser.add_argument("--stability-runs", type=int, default=5)

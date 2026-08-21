@@ -7,7 +7,7 @@ help:
 	@echo "  eval            Run the full evaluation harness (all eight planes)"
 	@echo "  eval-fast       Run grounding + citation planes only (pre-commit)"
 	@echo "  test-prose      Run SWOS Prose semantic-delta unit tests"
-	@echo "  benchmark-prose Validate the governed 50-case SWOS Prose benchmark corpus"
+	@echo "  benchmark-prose Validate the active 56-case SWOS Prose benchmark corpus"
 	@echo "  ci              validate + lint-skills + governance-check + eval + prose tests"
 
 validate:
@@ -26,7 +26,7 @@ test-prose:
 	python3 -m unittest discover -s tests/prose -p 'test_*.py'
 
 benchmark-prose:
-	python3 benchmark/runner.py --mode validate --expect-count 50 --output /tmp/swos-prose-benchmark-validate.json
+	python3 benchmark/runner.py --mode validate --expect-count 56 --output /tmp/swos-prose-benchmark-validate.json
 
 gate:
 	python3 tools/run_gate.py --policy governance/policies/release-gate.policy.json --context examples/worked-example/gate-context.json --work-id work-4f3a91c2-0b7d-4e18-9a52-6c81de7f0a33
