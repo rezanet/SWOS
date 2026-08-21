@@ -8,12 +8,14 @@ from swos_prose.providers.rewrite_mock import StaticRewriteProvider
 from swos_prose.rewrite import polish_text
 
 
+STRONG_SOURCE = (
+    "The revised workflow reduced implementation errors and simplified later review."
+)
+
+
 class PolishDiagnosticsTests(unittest.TestCase):
     def test_compact_strong_prose_abstains_before_any_provider_call(self):
-        source = (
-            "Clear requirements reduce implementation errors and make later review "
-            "easier for everyone involved."
-        )
+        source = STRONG_SOURCE
         rewriter = StaticRewriteProvider("This provider must not be called.")
         verifier = StaticSemanticVerifierProvider({
             "equivalent": True,
@@ -42,6 +44,32 @@ class PolishDiagnosticsTests(unittest.TestCase):
             result.diagnostics_before.recommendation,
             "NO_CHANGE_RECOMMENDED",
         )
+        self.assertIn(
+            "reviewed_single_declarative_with_explicit_finite_predicate",
+            result.diagnostics_before.positive_evidence,
+        )
+        self.assertEqual(result.diagnostics_before.signals, ())
+
+    def test_absence_of_known_defect_is_not_positive_evidence(self):
+        diagnostics = diagnose_polish(
+            "The report contain several error that make it difficult to read."
+        )
+
+        self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
+        self.assertFalse(diagnostics.high_confidence)
+        self.assertEqual(diagnostics.positive_evidence, ())
+        self.assertIn("no_positive_abstention_evidence", diagnostics.signals)
+
+    def test_quantifier_number_risk_prevents_abstention(self):
+        diagnostics = diagnose_polish(
+            "The revised report reduced several error during the final review."
+        )
+
+        self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
+        self.assertIn(
+            "possible_quantifier_number_agreement_problem",
+            diagnostics.signals,
+        )
 
     def test_reviewed_wordiness_signal_proceeds_to_rewriter(self):
         source = (
@@ -66,11 +94,30 @@ class PolishDiagnosticsTests(unittest.TestCase):
             diagnostics.signals,
         )
 
-    def test_diagnostics_can_be_explicitly_disabled_for_calibration(self):
-        source = (
-            "Clear requirements reduce implementation errors and make later review "
-            "easier for everyone involved."
+    def test_neighboring_context_prevents_early_abstention(self):
+        source = STRONG_SOURCE
+        rewriter = StaticRewriteProvider(source)
+
+        result = polish_text(
+            source=source,
+            rewrite_provider=rewriter,
+            verifier_provider=None,
+            context_before="The previous sentence makes the same point.",
         )
+
+        self.assertEqual(rewriter.calls, 1)
+        self.assertFalse(result.generation_skipped_by_diagnostics)
+        self.assertEqual(
+            result.diagnostics_before.recommendation,
+            "PROCEED_TO_REWRITE",
+        )
+        self.assertIn(
+            "neighboring_context_requires_context_aware_diagnostics",
+            result.diagnostics_before.signals,
+        )
+
+    def test_diagnostics_can_be_explicitly_disabled_for_calibration(self):
+        source = STRONG_SOURCE
         rewriter = StaticRewriteProvider(source)
 
         result = polish_text(
