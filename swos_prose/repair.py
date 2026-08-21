@@ -41,6 +41,11 @@ _NEGATIVE_PREFIX_RE = re.compile(r"\b(?:un|in|im|ir|il|dis|non)[A-Za-z]{3,}\b", 
 _NOT_PREFIX_RE = re.compile(r"\bnot\s+(?:un|in|im|ir|il|dis|non)[A-Za-z]{3,}\b", re.I)
 _WEAK_MODAL_MARKERS = frozenset({"may", "might", "could", "possibly", "perhaps"})
 _QUANTIFIER_MARKERS = frozenset({"none", "few", "some", "many", "most", "all", "sometimes", "often", "always"})
+_NEGATION_AUXILIARIES = frozenset({
+    "do", "does", "did", "is", "are", "was", "were", "has", "have", "had",
+    "can", "could", "may", "might", "must", "shall", "should", "will", "would",
+})
+_MODAL_FINITE_CARRIERS = frozenset({"do", "does", "did"})
 _ANAPHORIC_ALL_RE = re.compile(r"\ball\s+of\s+(?:which|whom|them|these|those)\b", re.I)
 _SIMPLE_ASSOC_RE = re.compile(
     r"^\s*(?P<subject>.+?)\s+(?:is|are|was|were)\s+"
@@ -65,6 +70,14 @@ class RepairSpan:
     candidate_start: int
     candidate_end: int
     confidence: float
+
+
+@dataclass(frozen=True)
+class LexicalEdit:
+    """The sole non-equal token opcode between source and candidate."""
+
+    source_tokens: tuple[str, ...]
+    candidate_tokens: tuple[str, ...]
 
 
 @dataclass
@@ -128,6 +141,43 @@ def _valid_offsets(text: str, start: int | None, end: int | None, expected: str 
 def _token_range(tokens: list[tuple[str, int, int]], start: int, end: int) -> tuple[int, int] | None:
     indexes = [i for i, (_, a, b) in enumerate(tokens) if b > start and a < end]
     return (indexes[0], indexes[-1] + 1) if indexes else None
+
+
+def _single_lexical_edit(source: str, candidate: str) -> LexicalEdit | None:
+    """Return exactly one changed token opcode; any second edit blocks M1 repair."""
+    left = _tokens(source)
+    right = _tokens(candidate)
+    matcher = SequenceMatcher(
+        a=[token.casefold() for token, _, _ in left],
+        b=[token.casefold() for token, _, _ in right],
+        autojunk=False,
+    )
+    edits = [opcode for opcode in matcher.get_opcodes() if opcode[0] != "equal"]
+    if len(edits) != 1:
+        return None
+    _, i1, i2, j1, j2 = edits[0]
+    if i2 - i1 > MAX_REPAIR_SPAN_TOKENS or j2 - j1 > MAX_REPAIR_SPAN_TOKENS:
+        return None
+    return LexicalEdit(
+        source_tokens=tuple(token.casefold() for token, _, _ in left[i1:i2]),
+        candidate_tokens=tuple(token.casefold() for token, _, _ in right[j1:j2]),
+    )
+
+
+def _inflection_variants(word: str) -> set[str]:
+    """Return a deliberately small set of grammatical carrier variants."""
+    value = word.casefold()
+    variants = {value, value + "s", value + "es", value + "ed"}
+    if value.endswith("e"):
+        variants.add(value + "d")
+    if len(value) > 1 and value.endswith("y"):
+        variants.add(value[:-1] + "ies")
+        variants.add(value[:-1] + "ied")
+    return variants
+
+
+def _same_lexeme(left: str, right: str) -> bool:
+    return right.casefold() in _inflection_variants(left) or left.casefold() in _inflection_variants(right)
 
 
 def _aligned_span(source: str, candidate: str, source_marker: tuple[int, int]) -> RepairSpan | None:
@@ -214,6 +264,55 @@ def _negative_prefix_tokens(text: str) -> tuple[str, ...]:
     return tuple(sorted(match.group(0).casefold() for match in _NEGATIVE_PREFIX_RE.finditer(text)))
 
 
+def _modal_edit_only(edit: LexicalEdit, delta: SemanticDelta) -> bool:
+    if delta.delta_type is not DeltaType.MODALITY_STRENGTHENED:
+        return False
+    source_modals = [token for token in edit.source_tokens if token in _WEAK_MODAL_MARKERS]
+    candidate_modals = [token for token in edit.candidate_tokens if token in _WEAK_MODAL_MARKERS]
+    if len(source_modals) != 1 or candidate_modals:
+        return False
+    source_rest = [token for token in edit.source_tokens if token not in _WEAK_MODAL_MARKERS]
+    candidate_rest = [token for token in edit.candidate_tokens if token not in _WEAK_MODAL_MARKERS]
+    if not source_rest:
+        return not candidate_rest or (len(candidate_rest) == 1 and candidate_rest[0] in _MODAL_FINITE_CARRIERS)
+    if len(source_rest) == 1 and len(candidate_rest) == 1:
+        return _same_lexeme(source_rest[0], candidate_rest[0])
+    return False
+
+
+def _quantifier_edit_only(edit: LexicalEdit, source_marker: str) -> bool:
+    if edit.source_tokens != (source_marker,):
+        return False
+    return not edit.candidate_tokens or (
+        len(edit.candidate_tokens) == 1 and edit.candidate_tokens[0] in _QUANTIFIER_MARKERS
+    )
+
+
+def _attribution_edit_only(edit: LexicalEdit, source_act: str, candidate_act: str) -> bool:
+    return edit.source_tokens == (source_act,) and edit.candidate_tokens == (candidate_act,)
+
+
+def _negation_content(tokens: tuple[str, ...]) -> tuple[int, tuple[str, ...]]:
+    not_count = sum(1 for token in tokens if token == "not")
+    content = tuple(
+        token for token in tokens
+        if token != "not" and token not in _NEGATION_AUXILIARIES
+    )
+    return not_count, content
+
+
+def _negation_edit_only(edit: LexicalEdit) -> bool:
+    source_not, source_content = _negation_content(edit.source_tokens)
+    candidate_not, candidate_content = _negation_content(edit.candidate_tokens)
+    if {source_not, candidate_not} != {0, 1}:
+        return False
+    if len(source_content) > 1 or len(candidate_content) > 1:
+        return False
+    if source_content and candidate_content:
+        return _same_lexeme(source_content[0], candidate_content[0])
+    return not source_content and not candidate_content
+
+
 def _same_simple_relation_roles(source: str, candidate: str) -> bool:
     if not _single_clause(source) or not _single_clause(candidate):
         return False
@@ -228,64 +327,77 @@ def _same_simple_relation_roles(source: str, candidate: str) -> bool:
     )
 
 
+def _causal_edit_only(source: str, candidate: str, edit: LexicalEdit) -> bool:
+    if not _same_simple_relation_roles(source, candidate):
+        return False
+    source_surface = " ".join(edit.source_tokens)
+    candidate_surface = " ".join(edit.candidate_tokens)
+    return (
+        any(marker in source_surface for marker in ("associated", "correlated", "linked", "related"))
+        and any(marker in candidate_surface for marker in (
+            "cause", "causes", "caused", "leads", "lead", "led", "results", "resulted",
+            "produces", "produced", "drives", "drove", "determines", "determined",
+        ))
+    )
+
+
 def _reviewed_repair_shape(source: str, candidate: str, delta: SemanticDelta) -> bool:
     """Return whether M1 explicitly authorises this lexical repair shape.
 
-    Delta type alone is never enough. This gate prevents provider flags or broad
-    deterministic categories from turning structural/ambiguous changes into a
-    repair opportunity.
+    Repair eligibility requires exactly one token-level edit and that edit must be
+    entirely explained by the reviewed semantic-force family. A bounded diff is
+    not, by itself, evidence that a change is lexical-only.
     """
     if delta.delta_type in HARD_INVARIANT_DELTA_TYPES:
+        return False
+    if not _single_clause(source) or not _single_clause(candidate):
+        return False
+    edit = _single_lexical_edit(source, candidate)
+    if edit is None:
         return False
 
     if delta.delta_type in {DeltaType.MODALITY_STRENGTHENED, DeltaType.MODALITY_WEAKENED}:
         return (
-            _single_clause(source)
-            and _single_clause(candidate)
-            and _single_marker(delta.source_span, _WEAK_MODAL_MARKERS) is not None
+            _single_marker(delta.source_span, _WEAK_MODAL_MARKERS) is not None
             and "explicit weak modal" in delta.explanation.casefold()
+            and _modal_edit_only(edit, delta)
         )
 
     if delta.delta_type is DeltaType.QUANTIFIER_CHANGED:
-        if not _single_clause(source) or not _single_clause(candidate) or _ANAPHORIC_ALL_RE.search(candidate):
+        if _ANAPHORIC_ALL_RE.search(candidate):
             return False
         source_marker = _single_marker(delta.source_span, _QUANTIFIER_MARKERS)
         candidate_marker = _single_marker(delta.candidate_span, _QUANTIFIER_MARKERS)
-        # M1 repairs loss/change of an existing source quantifier. It does not
-        # infer how to repair a newly invented quantifier when the source had none.
-        return source_marker is not None and (candidate_marker is None or candidate_marker != source_marker)
+        return bool(
+            source_marker is not None
+            and (candidate_marker is None or candidate_marker != source_marker)
+            and _quantifier_edit_only(edit, source_marker)
+        )
 
     if delta.delta_type is DeltaType.ATTRIBUTION_CHANGED:
-        if not _single_clause(source) or not _single_clause(candidate):
-            return False
         left, right = delta.source_span, delta.candidate_span
         if not left or not right or "," in left or "," in right or "::" not in left or "::" not in right:
             return False
         left_agent, left_act = (part.strip().casefold() for part in left.split("::", 1))
         right_agent, right_act = (part.strip().casefold() for part in right.split("::", 1))
-        return bool(left_agent and left_act and left_agent == right_agent and left_act != right_act)
+        return bool(
+            left_agent and left_act and left_agent == right_agent and left_act != right_act
+            and _attribution_edit_only(edit, left_act, right_act)
+        )
 
     if delta.delta_type is DeltaType.NEGATION_CHANGED:
-        if not _single_clause(source) or not _single_clause(candidate):
-            return False
         source_aux = len(_AUX_NOT_RE.findall(source))
         candidate_aux = len(_AUX_NOT_RE.findall(candidate))
         if {source_aux, candidate_aux} != {0, 1}:
             return False
-        # Prefix substitutions such as not valuable -> invaluable and double
-        # negatives are deliberately outside M1; unchanged prefix-looking words
-        # (for example, "intervention") must not block a local not-deletion repair.
         if _NOT_PREFIX_RE.search(source) or _NOT_PREFIX_RE.search(candidate):
             return False
         if _negative_prefix_tokens(source) != _negative_prefix_tokens(candidate):
             return False
-        return True
+        return _negation_edit_only(edit)
 
     if delta.delta_type is DeltaType.CAUSAL_STRENGTH_CHANGED:
-        # Only the simple association -> causation lexical shape is repairable.
-        # Denied causal wording, multiple propositions, coordinated clauses and
-        # redistributed causal relations stay on the existing REVIEW/REJECT path.
-        return _same_simple_relation_roles(source, candidate)
+        return _causal_edit_only(source, candidate, edit)
 
     return False
 
