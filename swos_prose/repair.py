@@ -32,6 +32,29 @@ HARD_INVARIANT_DELTA_TYPES = frozenset({
     DeltaType.CITATION_RELOCATED,
 })
 _TOKEN_RE = re.compile(r"[A-Za-z0-9]+(?:['’.-][A-Za-z0-9]+)*|[^\w\s]", re.UNICODE)
+_CLAUSE_BOUNDARY_RE = re.compile(r"[,;:]|\b(?:and|but|while|whereas|although|though)\b", re.I)
+_AUX_NOT_RE = re.compile(
+    r"\b(?:do|does|did|is|are|was|were|has|have|had|can|could|may|might|must|shall|should|will|would)\s+not\b",
+    re.I,
+)
+_NEGATIVE_PREFIX_RE = re.compile(r"\b(?:un|in|im|ir|il|dis|non)[A-Za-z]{3,}\b", re.I)
+_WEAK_MODAL_MARKERS = frozenset({"may", "might", "could", "possibly", "perhaps"})
+_QUANTIFIER_MARKERS = frozenset({"none", "few", "some", "many", "most", "all", "sometimes", "often", "always"})
+_ANAPHORIC_ALL_RE = re.compile(r"\ball\s+of\s+(?:which|whom|them|these|those)\b", re.I)
+_SIMPLE_ASSOC_RE = re.compile(
+    r"^\s*(?P<subject>.+?)\s+(?:is|are|was|were)\s+"
+    r"(?:associated\s+with|correlated\s+with|linked\s+to|related\s+to)\s+"
+    r"(?P<object>.+?)\s*[.!?]?\s*$",
+    re.I,
+)
+_SIMPLE_CAUSAL_RE = re.compile(
+    r"^\s*(?P<subject>.+?)\s+"
+    r"(?:(?:is|are|was|were)\s+)?"
+    r"(?:caused\s+by|causes?|caused|leads?\s+to|led\s+to|results?\s+in|resulted\s+in|"
+    r"produces?|produced|drives?|drove|determines?|determined)\s+"
+    r"(?P<object>.+?)\s*[.!?]?\s*$",
+    re.I,
+)
 
 
 @dataclass(frozen=True)
@@ -127,9 +150,11 @@ def _aligned_span(source: str, candidate: str, source_marker: tuple[int, int]) -
 
     if j1 == j2:
         if j2 < len(right) and i2 < len(left) and left[i2][0].casefold() == right[j2][0].casefold():
-            i2 += 1; j2 += 1
+            i2 += 1
+            j2 += 1
         elif j1 > 0 and i1 > 0 and left[i1 - 1][0].casefold() == right[j1 - 1][0].casefold():
-            i1 -= 1; j1 -= 1
+            i1 -= 1
+            j1 -= 1
         else:
             return None
     if i1 >= i2 or j1 >= j2:
@@ -171,11 +196,95 @@ def locate_span(source: str, candidate: str, delta: SemanticDelta) -> RepairSpan
     return None
 
 
+def _single_clause(text: str) -> bool:
+    return _CLAUSE_BOUNDARY_RE.search(text) is None
+
+
+def _single_marker(span: str | None, vocabulary: frozenset[str]) -> str | None:
+    if span is None or "," in span:
+        return None
+    value = " ".join(span.casefold().split()).strip(" .,:;!?")
+    return value if value in vocabulary else None
+
+
+def _same_simple_relation_roles(source: str, candidate: str) -> bool:
+    if not _single_clause(source) or not _single_clause(candidate):
+        return False
+    left = _SIMPLE_ASSOC_RE.match(source)
+    right = _SIMPLE_CAUSAL_RE.match(candidate)
+    if left is None or right is None:
+        return False
+    normalise = lambda value: " ".join(value.casefold().split()).strip(" .,:;!?")
+    return (
+        normalise(left.group("subject")) == normalise(right.group("subject"))
+        and normalise(left.group("object")) == normalise(right.group("object"))
+    )
+
+
+def _reviewed_repair_shape(source: str, candidate: str, delta: SemanticDelta) -> bool:
+    """Return whether M1 explicitly authorises this lexical repair shape.
+
+    Delta type alone is never enough. This gate prevents provider flags or broad
+    deterministic categories from turning structural/ambiguous changes into a
+    repair opportunity.
+    """
+    if delta.delta_type in HARD_INVARIANT_DELTA_TYPES:
+        return False
+
+    if delta.delta_type in {DeltaType.MODALITY_STRENGTHENED, DeltaType.MODALITY_WEAKENED}:
+        return (
+            _single_clause(source)
+            and _single_clause(candidate)
+            and _single_marker(delta.source_span, _WEAK_MODAL_MARKERS) is not None
+            and "explicit weak modal" in delta.explanation.casefold()
+        )
+
+    if delta.delta_type is DeltaType.QUANTIFIER_CHANGED:
+        if not _single_clause(source) or not _single_clause(candidate) or _ANAPHORIC_ALL_RE.search(candidate):
+            return False
+        source_marker = _single_marker(delta.source_span, _QUANTIFIER_MARKERS)
+        candidate_marker = _single_marker(delta.candidate_span, _QUANTIFIER_MARKERS)
+        # M1 repairs loss/change of an existing source quantifier. It does not
+        # infer how to repair a newly invented quantifier when the source had none.
+        return source_marker is not None and (candidate_marker is None or candidate_marker != source_marker)
+
+    if delta.delta_type is DeltaType.ATTRIBUTION_CHANGED:
+        if not _single_clause(source) or not _single_clause(candidate):
+            return False
+        left, right = delta.source_span, delta.candidate_span
+        if not left or not right or "," in left or "," in right or "::" not in left or "::" not in right:
+            return False
+        left_agent, left_act = (part.strip().casefold() for part in left.split("::", 1))
+        right_agent, right_act = (part.strip().casefold() for part in right.split("::", 1))
+        return bool(left_agent and left_act and left_agent == right_agent and left_act != right_act)
+
+    if delta.delta_type is DeltaType.NEGATION_CHANGED:
+        if not _single_clause(source) or not _single_clause(candidate):
+            return False
+        source_aux = len(_AUX_NOT_RE.findall(source))
+        candidate_aux = len(_AUX_NOT_RE.findall(candidate))
+        if {source_aux, candidate_aux} != {0, 1}:
+            return False
+        # Prefix substitutions such as not valuable -> invaluable and double
+        # negatives are deliberately outside M1; they require lexical semantics.
+        if _NEGATIVE_PREFIX_RE.search(source) or _NEGATIVE_PREFIX_RE.search(candidate):
+            return False
+        return True
+
+    if delta.delta_type is DeltaType.CAUSAL_STRENGTH_CHANGED:
+        # Only the simple association -> causation lexical shape is repairable.
+        # Denied causal wording, multiple propositions, coordinated clauses and
+        # redistributed causal relations stay on the existing REVIEW/REJECT path.
+        return _same_simple_relation_roles(source, candidate)
+
+    return False
+
+
 def annotate_local_repairability(source: str, candidate: str, deltas: list[SemanticDelta]) -> list[SemanticDelta]:
-    """Authorise only reviewed lexical delta types with >=95% localisation."""
+    """Authorise only reviewed lexical delta shapes with >=95% localisation."""
     result: list[SemanticDelta] = []
     for delta in deltas:
-        if delta.delta_type in HARD_INVARIANT_DELTA_TYPES or delta.delta_type not in REPAIRABLE_DELTA_TYPES:
+        if delta.delta_type not in REPAIRABLE_DELTA_TYPES or not _reviewed_repair_shape(source, candidate, delta):
             result.append(replace(delta, repairable=False))
             continue
         span = locate_span(source, candidate, delta)
@@ -186,9 +295,12 @@ def annotate_local_repairability(source: str, candidate: str, deltas: list[Seman
             delta,
             source_span=source[span.source_start:span.source_end],
             candidate_span=candidate[span.candidate_start:span.candidate_end],
-            source_start=span.source_start, source_end=span.source_end,
-            candidate_start=span.candidate_start, candidate_end=span.candidate_end,
-            severity=Severity.BLOCKER, repairable=True,
+            source_start=span.source_start,
+            source_end=span.source_end,
+            candidate_start=span.candidate_start,
+            candidate_end=span.candidate_end,
+            severity=Severity.BLOCKER,
+            repairable=True,
         ))
     return result
 
