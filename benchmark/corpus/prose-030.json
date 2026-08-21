@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-030",
+  "category": "uncertainty-negation",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The available records do not rule out an alternative explanation.",
+  "semantic_probe_candidate": "The available records rule out an alternative explanation.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "uncertainty-negation"
+}

@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-013",
+  "category": "reviewed-abstention",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The revised process reduced review effort and improved consistency.",
+  "semantic_probe_candidate": "The revised process lowered review effort and improved consistency.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "NO_CHANGE_RECOMMENDED",
+    "must_not_abstain": false
+  },
+  "stability_probe": false,
+  "notes": "Exact reviewed whole-sentence abstention exemplar.",
+  "benchmark_group": "reviewed-abstention"
+}

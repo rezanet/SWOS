@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0",
+  "benchmark_version": "0.2.0-rc1",
+  "mode": "all",
+  "generated_at": "2026-08-21T05:18:56.348923Z",
+  "baseline_status": "frozen",
+  "performance_claims_frozen": true,
+  "evidence": {
+    "workflow_run_id": 32450085166,
+    "workflow_run_number": 1,
+    "artifact_id": 9435636550,
+    "artifact_name": "swos-prose-v0.2-benchmark",
+    "evidence_source_commit": "7637a487a93266e30fcbefbc40ad2266fec600b8",
+    "freeze_parent_commit": "56edbbc44764231132862073b090b793c9aaf8f1",
+    "raw_report_path": "benchmark/artifacts/raw-evidence-v0.2/manifest.json",
+    "raw_report_sha256": "1287335a681acd5890588bd3f9d3aa6e61ccac6d35aa8de9b65b840ef5597c9a",
+    "artifact_zip_sha256": "c8347bb7578923664972ec6682e98303931ed4593497297f0a169520bc243202",
+    "compressed_raw_report_sha256": "c994d4eaede343b31391a4a284a08784c3c10e52cd0f1677cf8de0be6d62aed9"
+  },
+  "corpus": {
+    "fixture_count": 50,
+    "sha256": "7d0ac58a083435a175a3dd728917b1f663e95ae83e29299865a11cde421c59be",
+    "groups": {
+      "already-good": 4,
+      "attribution-causality": 7,
+      "context-semantic-trap": 3,
+      "diagnostics-near-miss": 5,
+      "modality-degree": 7,
+      "numbers-citations": 4,
+      "prose-defect": 5,
+      "reviewed-abstention": 3,
+      "semantic-equivalence": 7,
+      "uncertainty-negation": 5
+    },
+    "semantic_relations": {
+      "equivalent": 28,
+      "material_change": 22
+    },
+    "stability_probe_count": 11
+  },
+  "diagnostics_contract": {
+    "unsafe_abstentions": [],
+    "expectation_mismatches": [],
+    "missing_expected_signals": [],
+    "reviewed_abstentions": 3,
+    "note": "Diagnostics are evaluated for unsafe abstention and governed coverage, not as a general grammar/style classifier."
+  },
+  "semantic_safety": {
+    "unsafe_pass_count": 0,
+    "unsafe_pass_fixture_ids": [],
+    "equivalent_status_counts": {
+      "PASS": 22,
+      "REJECT": 2,
+      "REVIEW": 4
+    },
+    "material_change_status_counts": {
+      "REJECT": 22
+    },
+    "safety_gate_passed": true,
+    "note": "For material-change probes, PASS is unsafe. REVIEW and REJECT are fail-closed. For equivalent probes, non-PASS outcomes are reported as quality/stability costs, not safety failures."
+  },
+  "token_efficiency": {
+    "method": "observed_no_diagnostics_plus_exact_skip_counterfactual",
+    "baseline_without_diagnostics": {
+      "input_tokens": 64232,
+      "output_tokens": 13361,
+      "total_tokens": 77593
+    },
+    "counterfactual_with_diagnostics": {
+      "input_tokens": 62023,
+      "output_tokens": 13212,
+      "total_tokens": 75235
+    },
+    "tokens_saved_by_diagnostics": {
+      "input_tokens": 2209,
+      "output_tokens": 149,
+      "total_tokens": 2358
+    },
+    "total_token_savings_percent": 3.038933924451948,
+    "abstention_count": 3,
+    "abstention_rate": 0.06,
+    "unsafe_abstention_count": 0,
+    "unsafe_abstention_fixture_ids": [],
+    "note": "This is a counterfactual on the exact current fast path: cases that do not abstain are unchanged by diagnostics, while abstaining cases make zero rewrite and verifier calls."
+  },
+  "stability": {
+    "runs_per_probe": 5,
+    "probe_count": 11,
+    "distributions": {
+      "prose-001": {
+        "REJECT": 5
+      },
+      "prose-002": {
+        "REJECT": 5
+      },
+      "prose-003": {
+        "PASS": 5
+      },
+      "prose-004": {
+        "PASS": 3,
+        "REJECT": 2
+      },
+      "prose-005": {
+        "PASS": 4,
+        "REVIEW": 1
+      },
+      "prose-006": {
+        "PASS": 4,
+        "REVIEW": 1
+      },
+      "prose-007": {
+        "PASS": 3,
+        "REVIEW": 2
+      },
+      "prose-008": {
+        "REVIEW": 5
+      },
+      "prose-009": {
+        "PASS": 5
+      },
+      "prose-010": {
+        "REJECT": 5
+      },
+      "prose-011": {
+        "PASS": 4,
+        "REVIEW": 1
+      }
+    },
+    "unsafe_pass_count": 0,
+    "unsafe_passes": [],
+    "note": "Variance on equivalent probes quantifies verifier stability. Any PASS on a material-change probe is a safety failure."
+  },
+  "note": "Canonical compact v0.2 baseline frozen from the exact CI-generated live report. The complete per-fixture and per-draw records are preserved in the committed raw evidence archive."
+}

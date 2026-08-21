@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-039",
+  "category": "numbers-citations",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The sample included 128 participants and produced a 4.7% error rate.",
+  "semantic_probe_candidate": "The sample included 128 participants and produced a 4.7% error rate.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "numbers-citations"
+}

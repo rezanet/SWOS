@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-004",
+  "category": "normative-lexical",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The model performs poorly under these conditions.",
+  "semantic_probe_candidate": "The model underperforms under these conditions.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": true,
+  "notes": "Known verifier-stability probe from issue #32.",
+  "benchmark_group": "semantic-equivalence"
+}

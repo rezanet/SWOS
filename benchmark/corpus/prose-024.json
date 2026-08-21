@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-024",
+  "category": "modality-degree",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The intervention may reduce processing time in some settings.",
+  "semantic_probe_candidate": "The intervention reduces processing time in some settings.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "force_bearing_language_requires_richer_editorial_path"
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "modality-degree"
+}

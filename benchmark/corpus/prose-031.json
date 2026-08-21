@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-031",
+  "category": "uncertainty-negation",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The estimate remains uncertain because the sample is small.",
+  "semantic_probe_candidate": "The estimate is reliable despite the small sample.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "uncertainty-negation"
+}

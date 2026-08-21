@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-023",
+  "category": "wordiness",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "In order to improve clarity, the team revised the introduction.",
+  "semantic_probe_candidate": "To improve clarity, the team revised the introduction.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "avoidable_expansion:in_order_to"
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "prose-defect"
+}

@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-050",
+  "category": "semantic-trap",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The policy applies only when both conditions are satisfied.",
+  "semantic_probe_candidate": "The policy applies when either condition is satisfied.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "context-semantic-trap"
+}

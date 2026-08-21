@@ -1,0 +1,17 @@
+SWOS Prose v0.2 benchmark evidence freeze
+baseline_status: frozen
+benchmark_version: 0.2.0-rc1
+workflow_run_id: 32450085166
+workflow_run_number: 1
+artifact_id: 9435636550
+evidence_source_commit: 7637a487a93266e30fcbefbc40ad2266fec600b8
+freeze_parent_commit: 56edbbc44764231132862073b090b793c9aaf8f1
+corpus_sha256: 7d0ac58a083435a175a3dd728917b1f663e95ae83e29299865a11cde421c59be
+raw_report_sha256: 1287335a681acd5890588bd3f9d3aa6e61ccac6d35aa8de9b65b840ef5597c9a
+compressed_raw_report_sha256: c994d4eaede343b31391a4a284a08784c3c10e52cd0f1677cf8de0be6d62aed9
+source_actions_artifact_zip_sha256: c8347bb7578923664972ec6682e98303931ed4593497297f0a169520bc243202
+raw_evidence_manifest: benchmark/artifacts/raw-evidence-v0.2/manifest.json
+
+Note: the live baseline ran against evidence_source_commit. freeze_parent_commit is the
+subsequent CI-policy-only commit on the same PR branch and did not change the corpus,
+runner, semantic engine, or measured benchmark logic.

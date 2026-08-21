@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-009",
+  "category": "attribution-causality",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "Chen et al. report that processor load was associated with longer response times in the observed tests, but they do not claim that processor load caused the delay.",
+  "semantic_probe_candidate": "Chen et al. report an association between processor load and longer response times in the observed tests, but do not claim that processor load caused the delay.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "punctuated_clause_structure_requires_richer_editorial_path"
+  },
+  "stability_probe": true,
+  "notes": "",
+  "benchmark_group": "attribution-causality"
+}

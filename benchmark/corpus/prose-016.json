@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-016",
+  "category": "already-good-unreviewed",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The revised schedule shortened review cycles and improved handoffs.",
+  "semantic_probe_candidate": "The revised schedule reduced review cycles and improved handoffs.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": false
+  },
+  "stability_probe": false,
+  "notes": "Proceeding is conservative, not a diagnostic error; benchmark records coverage.",
+  "benchmark_group": "already-good"
+}

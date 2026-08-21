@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-006",
+  "category": "sequence-marker",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "First, the results indicate an effect.",
+  "semantic_probe_candidate": "To begin, the results indicate an effect.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "punctuated_clause_structure_requires_richer_editorial_path"
+  },
+  "stability_probe": true,
+  "notes": "",
+  "benchmark_group": "semantic-equivalence"
+}

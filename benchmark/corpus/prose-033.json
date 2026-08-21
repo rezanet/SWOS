@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-033",
+  "category": "uncertainty-negation",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The result is consistent with, but does not prove, the proposed mechanism.",
+  "semantic_probe_candidate": "The result proves the proposed mechanism.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "uncertainty-negation"
+}
