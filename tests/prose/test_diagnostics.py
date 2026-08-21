@@ -50,6 +50,20 @@ class PolishDiagnosticsTests(unittest.TestCase):
         )
         self.assertEqual(result.diagnostics_before.signals, ())
 
+    def test_exemplar_case_change_is_not_an_exact_match(self):
+        diagnostics = diagnose_polish(STRONG_SOURCE.upper())
+
+        self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
+        self.assertEqual(diagnostics.positive_evidence, ())
+        self.assertIn("no_reviewed_abstention_exemplar", diagnostics.signals)
+
+    def test_exemplar_whitespace_change_is_not_an_exact_match(self):
+        diagnostics = diagnose_polish(f" {STRONG_SOURCE}")
+
+        self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
+        self.assertEqual(diagnostics.positive_evidence, ())
+        self.assertIn("no_reviewed_abstention_exemplar", diagnostics.signals)
+
     def test_absence_of_known_defect_is_not_positive_evidence(self):
         diagnostics = diagnose_polish(
             "The report contain several error that make it difficult to read."
