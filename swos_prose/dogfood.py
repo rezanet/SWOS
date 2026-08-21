@@ -169,6 +169,15 @@ def collect_dogfood(
         )
         records.append(record)
 
+    diagnostics_note = (
+        "Pre-generation diagnostics were enabled for this run; high-confidence "
+        "abstentions may skip rewrite and verifier calls."
+        if run_diagnostics
+        else (
+            "Pre-generation diagnostics were disabled for this run so rewrite/verifier "
+            "coverage is preserved for semantic calibration."
+        )
+    )
     summary = {
         "mode": "polish",
         "preset": None,
@@ -183,10 +192,7 @@ def collect_dogfood(
             1 for item in records if item["generation_skipped_by_diagnostics"]
         ),
         "files": [item["file"] for item in records],
-        "note": (
-            "Pre-generation diagnostics are enabled; semantic-calibration runs may disable "
-            "them explicitly to preserve verifier coverage. Presets are not implemented yet."
-        ),
+        "note": f"{diagnostics_note} Presets are not implemented yet.",
     }
     (result_root / "summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n",
