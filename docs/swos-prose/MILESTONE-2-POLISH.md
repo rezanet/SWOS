@@ -1,17 +1,18 @@
-# SWOS Prose — Milestone 2 Slice 1: Basic Polish Pipeline
+# SWOS Prose — Milestone 2: Polish Pipeline
 
 **Status:** implementation candidate  
 **Mode:** `polish` only  
-**Goal:** connect real rewrite generation to the existing semantic verifier with safe fallback.
+**Goal:** connect real rewrite generation to the semantic verifier with safe fallback, while avoiding some unnecessary provider calls through conservative pre-generation abstention.
 
 ## Product boundary
 
-This is the first SWOS Prose slice that generates prose.
-
-The pipeline is deliberately narrow:
+The pipeline remains deliberately narrow:
 
 ```text
 SOURCE
+  -> conservative pre-generation diagnostics
+     -> high-confidence NO_CHANGE: source returned unchanged
+     -> otherwise continue
   -> protected-anchor extraction
   -> one polish candidate
   -> semantic verification
@@ -20,6 +21,22 @@ SOURCE
 ```
 
 There is **no repair loop** in this slice. `REPAIR`, `REVIEW`, and `REJECT` are all non-releasable outcomes and preserve the source.
+
+## Pre-generation diagnostics
+
+The first diagnostics slice is deliberately fail-closed. It is not a style score and it does not infer semantic equivalence.
+
+`NO_CHANGE_RECOMMENDED` is available only when:
+
+- a deliberately narrow deterministic recogniser finds **positive evidence** for a simple already-good prose shape;
+- no reviewed editorial-defect or uncertainty signal is present;
+- no neighbouring `context_before` / `context_after` is supplied.
+
+The absence of a known defect is never enough by itself. Anything outside the narrow positive-evidence envelope becomes `PROCEED_TO_REWRITE`, which means only that diagnostics are not confident enough to abstain.
+
+A diagnostics abstention is a no-op: candidate and final text are the source, no rewrite provider is called, no semantic verifier is called, and token usage remains zero. `PolishResult` records `diagnostics_before` and `generation_skipped_by_diagnostics` so callers can distinguish this path from verifier-backed outcomes.
+
+For semantic calibration, diagnostics can be explicitly disabled with `run_diagnostics=False`; the CLI exposes this as `--skip-diagnostics`. The trusted five-case Luna calibration workflow uses that bypass so diagnostics cannot hide verifier coverage.
 
 ## Rewrite provider
 
@@ -55,17 +72,18 @@ result = polish_text(
 
 print(result.final_text)
 print(result.verification_status)
+print(result.diagnostics_before)
 ```
 
 ## Safety rule
 
-Only:
+A **changed candidate** may be released automatically only when:
 
 ```text
 verification.status == PASS
 ```
 
-may release the candidate automatically.
+A diagnostics abstention does not release a changed candidate; it returns the original source unchanged.
 
 Until a repair loop exists:
 
@@ -87,7 +105,12 @@ Provider-independent tests cover:
 - synthetic REPAIR -> source fallback because repair is not implemented;
 - protected anchors passed verbatim to the rewrite provider;
 - empty input no-op;
-- OpenAI rewrite adapter request shape, strict schema, `store=False`, temperature 0, and token accounting;
+- conservative diagnostics abstention -> source unchanged with zero provider calls;
+- absence of known defect without positive evidence -> proceed to rewrite;
+- force-bearing language -> proceed to richer rewrite/verifier path;
+- neighbouring context -> no early diagnostics abstention;
+- explicit diagnostics bypass for semantic calibration;
+- OpenAI rewrite adapter request shape, strict schema, `store=False`, optional temperature forwarding, and token accounting;
 - unsupported rewrite modes fail explicitly.
 
 ## Deliberate non-goals
@@ -97,14 +120,15 @@ This slice does not implement:
 - `naturalise`;
 - `clarify`;
 - `tighten`;
-- diagnostics;
+- context-aware diagnostics;
+- post-rewrite diagnostics;
+- broad grammar or spelling proof;
 - multi-candidate ranking;
 - repair;
-- paragraph-context editing beyond optional read-only context parameters;
 - voice/style profiles;
 - document-wide flow;
-- claims that a live hosted model has already met the benchmark.
+- claims that a hosted verifier is deterministic.
 
 ## Next slice
 
-Dogfood `polish` against real prose, collect the rejected/reviewed candidates, and use those failures to design the bounded local repair loop. Do not broaden into additional modes until the basic rewrite -> verify -> fallback path is stable.
+Use dogfood and benchmark evidence to measure three things separately: semantic safety, editorial improvement, and diagnostics efficiency. Keep the diagnostics-enabled efficiency campaign separate from the diagnostics-disabled semantic-calibration campaign. Do not broaden into additional modes until the basic polish -> verify -> fallback path and the abstention boundary are empirically stable.
