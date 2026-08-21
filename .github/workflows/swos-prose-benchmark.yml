@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install benchmark schema validator
+        run: python3 -m pip install jsonschema
       - name: Validate 50-case corpus and diagnostics contract
         run: |
           python3 benchmark/runner.py \
@@ -28,6 +30,7 @@ jobs:
 
   benchmark-live:
     name: Prose benchmark live baseline (non-gating)
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
