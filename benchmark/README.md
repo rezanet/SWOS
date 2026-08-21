@@ -77,7 +77,7 @@ than being reclassified as safety failures.
 
 `baseline.json` is the compact canonical claim surface. The exact complete
 CI-generated report, including per-fixture and per-draw records, is preserved in
-`artifacts/swos-prose-v0.2-benchmark-run-32450085166.zip`. `FROZEN_AT` records the
+`artifacts/raw-evidence-v0.2/` as an xz-compressed, base64-transported exact raw report with a reconstruction manifest. `FROZEN_AT` records the
 run, commits, corpus digest, raw report digest, and archive digest.
 
 ## Commands

@@ -1,1 +1,0 @@
-The binary ZIP archive is committed as a Git blob in the same directory; this text file exists only to make the evidence directory self-describing in simple file browsers.

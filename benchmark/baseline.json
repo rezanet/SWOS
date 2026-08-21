@@ -12,9 +12,10 @@
     "artifact_name": "swos-prose-v0.2-benchmark",
     "evidence_source_commit": "7637a487a93266e30fcbefbc40ad2266fec600b8",
     "freeze_parent_commit": "56edbbc44764231132862073b090b793c9aaf8f1",
-    "raw_report_path": "benchmark/artifacts/swos-prose-v0.2-benchmark-run-32450085166.zip",
+    "raw_report_path": "benchmark/artifacts/raw-evidence-v0.2/manifest.json",
     "raw_report_sha256": "1287335a681acd5890588bd3f9d3aa6e61ccac6d35aa8de9b65b840ef5597c9a",
-    "artifact_zip_sha256": "c8347bb7578923664972ec6682e98303931ed4593497297f0a169520bc243202"
+    "artifact_zip_sha256": "c8347bb7578923664972ec6682e98303931ed4593497297f0a169520bc243202",
+    "compressed_raw_report_sha256": "c994d4eaede343b31391a4a284a08784c3c10e52cd0f1677cf8de0be6d62aed9"
   },
   "corpus": {
     "fixture_count": 50,
@@ -86,17 +87,44 @@
     "runs_per_probe": 5,
     "probe_count": 11,
     "distributions": {
-      "prose-001": {"REJECT": 5},
-      "prose-002": {"REJECT": 5},
-      "prose-003": {"PASS": 5},
-      "prose-004": {"PASS": 3, "REJECT": 2},
-      "prose-005": {"PASS": 4, "REVIEW": 1},
-      "prose-006": {"PASS": 4, "REVIEW": 1},
-      "prose-007": {"PASS": 3, "REVIEW": 2},
-      "prose-008": {"REVIEW": 5},
-      "prose-009": {"PASS": 5},
-      "prose-010": {"REJECT": 5},
-      "prose-011": {"PASS": 4, "REVIEW": 1}
+      "prose-001": {
+        "REJECT": 5
+      },
+      "prose-002": {
+        "REJECT": 5
+      },
+      "prose-003": {
+        "PASS": 5
+      },
+      "prose-004": {
+        "PASS": 3,
+        "REJECT": 2
+      },
+      "prose-005": {
+        "PASS": 4,
+        "REVIEW": 1
+      },
+      "prose-006": {
+        "PASS": 4,
+        "REVIEW": 1
+      },
+      "prose-007": {
+        "PASS": 3,
+        "REVIEW": 2
+      },
+      "prose-008": {
+        "REVIEW": 5
+      },
+      "prose-009": {
+        "PASS": 5
+      },
+      "prose-010": {
+        "REJECT": 5
+      },
+      "prose-011": {
+        "PASS": 4,
+        "REVIEW": 1
+      }
     },
     "unsafe_pass_count": 0,
     "unsafe_passes": [],
