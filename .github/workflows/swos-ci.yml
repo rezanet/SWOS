@@ -82,7 +82,8 @@ jobs:
             --output-dir /tmp/swos-prose-dogfood \
             --assurance strict \
             --rewriter-model gpt-5.6-luna \
-            --verifier-model gpt-5.6-luna
+            --verifier-model gpt-5.6-luna \
+            --skip-diagnostics
           cat /tmp/swos-prose-dogfood/summary.json
           {
             echo '## SWOS Prose live evidence'

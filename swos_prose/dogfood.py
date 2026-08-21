@@ -58,6 +58,8 @@ def load_simple_env_file(path: str | Path) -> list[str]:
 
 
 def _status_for(result: PolishResult) -> str:
+    if result.generation_skipped_by_diagnostics:
+        return "NO_CHANGE_RECOMMENDED"
     if (
         result.verification is not None
         and result.verification.verifier_skip_reason in {
@@ -86,11 +88,16 @@ def _record_for(path: Path, root: Path, result: PolishResult) -> dict[str, Any]:
         "final_text": result.final_text,
         "used_fallback": result.used_source_fallback,
         "safe_for_automatic_use": result.safe_for_automatic_use,
+        "generation_skipped_by_diagnostics": result.generation_skipped_by_diagnostics,
         "verifier_used": verification.verifier_used if verification is not None else False,
         "verification_skip_reason": (
             verification.verifier_skip_reason
             if verification is not None
-            else ("rewrite_provider_failure" if result.used_source_fallback else None)
+            else (
+                "diagnostics_no_change"
+                if result.generation_skipped_by_diagnostics
+                else ("rewrite_provider_failure" if result.used_source_fallback else None)
+            )
         ),
         "verifier_notes": (
             list(verification.verifier_notes)
@@ -102,7 +109,11 @@ def _record_for(path: Path, root: Path, result: PolishResult) -> dict[str, Any]:
             if verification is not None
             else []
         ),
-        "diagnostics_before": None,
+        "diagnostics_before": (
+            result.diagnostics_before.to_dict()
+            if result.diagnostics_before is not None
+            else None
+        ),
         "diagnostics_after": None,
         "rewrite_token_usage": result.rewrite_token_usage,
         "verification_token_usage": verification.token_usage if verification is not None else None,
@@ -121,6 +132,7 @@ def collect_dogfood(
     rewrite_provider: RewriteProvider,
     verifier_provider: SemanticVerifierProvider | None,
     assurance: str = "strict",
+    run_diagnostics: bool = True,
 ) -> list[dict[str, Any]]:
     """Run polish over local .md/.txt samples and persist one JSON result each."""
     source_root = Path(input_dir)
@@ -145,6 +157,7 @@ def collect_dogfood(
             rewrite_provider=rewrite_provider,
             verifier_provider=verifier_provider,
             assurance=assurance,
+            run_diagnostics=run_diagnostics,
         )
         record = _record_for(path, source_root, result)
         relative = path.relative_to(source_root)
@@ -156,17 +169,30 @@ def collect_dogfood(
         )
         records.append(record)
 
+    diagnostics_note = (
+        "Pre-generation diagnostics were enabled for this run; high-confidence "
+        "abstentions may skip rewrite and verifier calls."
+        if run_diagnostics
+        else (
+            "Pre-generation diagnostics were disabled for this run so rewrite/verifier "
+            "coverage is preserved for semantic calibration."
+        )
+    )
     summary = {
         "mode": "polish",
         "preset": None,
         "assurance": assurance,
+        "diagnostics_enabled": run_diagnostics,
         "sample_count": len(records),
         "status_counts": {
             status: sum(1 for item in records if item["status"] == status)
             for status in sorted({item["status"] for item in records})
         },
+        "generation_skipped_by_diagnostics": sum(
+            1 for item in records if item["generation_skipped_by_diagnostics"]
+        ),
         "files": [item["file"] for item in records],
-        "note": "Prose diagnostics and presets are not implemented yet; null fields are intentional.",
+        "note": f"{diagnostics_note} Presets are not implemented yet.",
     }
     (result_root / "summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n",

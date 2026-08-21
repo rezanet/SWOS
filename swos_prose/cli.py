@@ -62,6 +62,7 @@ def _run_dogfood(args: argparse.Namespace) -> int:
             rewrite_provider=rewriter,
             verifier_provider=verifier,
             assurance=args.assurance,
+            run_diagnostics=not args.skip_diagnostics,
         )
     except (RuntimeError, TypeError, ValueError) as exc:
         print(f"SWOS Prose dogfood failed safely: {exc}")
@@ -97,6 +98,14 @@ def main() -> int:
     )
     dogfood.add_argument("--rewriter-model", default=None, help="Optional rewrite-provider model override")
     dogfood.add_argument("--verifier-model", default=None, help="Optional verifier-provider model override")
+    dogfood.add_argument(
+        "--skip-diagnostics",
+        action="store_true",
+        help=(
+            "Disable pre-generation abstention. Intended for semantic-calibration campaigns "
+            "that must exercise the rewrite/verifier path even on already-good prose."
+        ),
+    )
 
     args = parser.parse_args()
     if args.command == "verify":
