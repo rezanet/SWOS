@@ -46,6 +46,10 @@ def load_simple_env_file(path: str | Path) -> list[str]:
 
 
 def _status_for(result: PolishResult) -> str:
+    # A successful repair may deliberately restore the exact source wording. It
+    # is still a PASS event with repair provenance, not a diagnostics/no-op event.
+    if result.repair_success and result.verification_status is not None:
+        return result.verification_status
     if result.generation_skipped_by_diagnostics:
         return "NO_CHANGE_RECOMMENDED"
     if result.verification is not None and result.verification.verifier_skip_reason in {"source_identical", "terminal_newline_only"}:
