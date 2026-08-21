@@ -112,7 +112,11 @@ class DogfoodCollectorTests(unittest.TestCase):
             self.assertTrue(records[0]["verifier_used"])
             self.assertIsNone(records[0]["verification_skip_reason"])
             self.assertIsNone(records[0]["preset"])
-            self.assertIsNone(records[0]["diagnostics_before"])
+            self.assertEqual(
+                records[0]["diagnostics_before"]["recommendation"],
+                "PROCEED_TO_REWRITE",
+            )
+            self.assertFalse(records[0]["generation_skipped_by_diagnostics"])
             self.assertEqual(records[0]["human_review"]["category"], None)
 
             result_path = results / "paragraph_001.txt.json"
@@ -123,6 +127,8 @@ class DogfoodCollectorTests(unittest.TestCase):
             summary = json.loads((results / "summary.json").read_text(encoding="utf-8"))
             self.assertEqual(summary["sample_count"], 1)
             self.assertEqual(summary["status_counts"], {"PASS": 1})
+            self.assertTrue(summary["diagnostics_enabled"])
+            self.assertEqual(summary["generation_skipped_by_diagnostics"], 0)
 
     def test_terminal_newline_only_records_no_change_and_preserves_source(self):
         source = "The claim is unchanged.\n"
@@ -182,6 +188,45 @@ class DogfoodCollectorTests(unittest.TestCase):
                 "deterministic_blocker:number_changed",
             )
             self.assertEqual(records[0]["verifier_notes"], [])
+
+    def test_diagnostics_abstention_records_no_provider_cost(self):
+        source = (
+            "Clear requirements reduce implementation errors and make later review "
+            "easier for everyone involved."
+        )
+        rewriter = StaticRewriteProvider("This provider must not be called.")
+        verifier = StaticSemanticVerifierProvider({
+            "equivalent": True,
+            "independent_of_rewriter": True,
+            "deltas": [],
+            "notes": [],
+        })
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            corpus = root / "corpus"
+            results = root / "results"
+            corpus.mkdir()
+            (corpus / "already_good.txt").write_text(source, encoding="utf-8")
+
+            records = collect_dogfood(
+                input_dir=corpus,
+                output_dir=results,
+                rewrite_provider=rewriter,
+                verifier_provider=verifier,
+                assurance="strict",
+            )
+
+            self.assertEqual(records[0]["status"], "NO_CHANGE_RECOMMENDED")
+            self.assertEqual(records[0]["verification_skip_reason"], "diagnostics_no_change")
+            self.assertTrue(records[0]["generation_skipped_by_diagnostics"])
+            self.assertIsNone(records[0]["rewrite_token_usage"])
+            self.assertFalse(records[0]["verifier_used"])
+            self.assertEqual(rewriter.calls, 0)
+            self.assertEqual(verifier.calls, 0)
+
+            summary = json.loads((results / "summary.json").read_text(encoding="utf-8"))
+            self.assertEqual(summary["generation_skipped_by_diagnostics"], 1)
 
     def test_collect_dogfood_rejects_empty_supported_corpus(self):
         with tempfile.TemporaryDirectory() as tmp:
