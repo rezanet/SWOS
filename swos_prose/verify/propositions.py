@@ -658,6 +658,28 @@ def deltas_from_proposition_report(
                 candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
             ))
 
+        mapped_candidates = [
+            candidate_props[item]
+            for item in mapping.candidate_ids
+            if item in candidate_props
+        ]
+        reviewed_context_touched = (
+            _reviewed_relation_context(proposition) is not None
+            or any(_reviewed_relation_context(item) is not None for item in mapped_candidates)
+        )
+        non_unit_mapping = len(mapping.candidate_ids) != 1 or any(
+            candidate_mappings.get(item) is not None
+            and len(candidate_mappings[item].source_ids) != 1
+            for item in mapping.candidate_ids
+            if item in candidate_props
+        )
+        if reviewed_context_touched and non_unit_mapping:
+            deltas.append(_unresolved(
+                "Reviewed evidence-context propositions require a one-to-one semantic mapping for automatic approval.",
+                source_span=proposition.text,
+                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
+            ))
+
         if len(mapping.candidate_ids) == 1 and mapping.candidate_ids[0] in candidate_props:
             candidate_prop = candidate_props[mapping.candidate_ids[0]]
             symmetric_swap = _is_symmetric_swap(proposition, candidate_prop)
