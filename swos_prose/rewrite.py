@@ -4,7 +4,8 @@ This first vertical slice implements only ``polish`` and deliberately has no
 repair loop. A generated candidate is returned automatically only when the
 existing semantic verifier returns PASS; every other outcome falls back to the
 source text. Conservative pre-generation diagnostics may abstain before any
-rewrite-provider call when no material editorial defect is detected.
+rewrite-provider call only when they have positive evidence for a narrow
+already-good prose shape.
 """
 from __future__ import annotations
 
@@ -174,10 +175,15 @@ def polish_text(
 ) -> PolishResult:
     """Diagnose, generate one polish candidate when needed, verify, and fail safe.
 
-    Diagnostics may return ``NO_CHANGE_RECOMMENDED`` before generation. This is a
+    Diagnostics may return ``NO_CHANGE_RECOMMENDED`` before generation only when
+    positive evidence supports a narrow already-good prose shape. This is a
     no-op decision: the source is returned unchanged, no rewrite/verifier tokens
     are spent, and semantic equivalence does not need to be inferred because no
     candidate change exists.
+
+    If neighbouring context is supplied, the first diagnostics slice always
+    proceeds to generation because it does not yet reason about cross-sentence or
+    cross-paragraph flow.
 
     No repair loop exists in this slice. Therefore REPAIR, REVIEW and REJECT are
     all non-releasable outcomes and return the original source as ``final_text``.
@@ -199,7 +205,15 @@ def polish_text(
             notes=["No source prose supplied; no change recommended."],
         )
 
-    diagnostics_before = diagnose_polish(source) if run_diagnostics else None
+    diagnostics_before = (
+        diagnose_polish(
+            source,
+            context_before=context_before,
+            context_after=context_after,
+        )
+        if run_diagnostics
+        else None
+    )
     if diagnostics_before is not None and diagnostics_before.no_change_recommended:
         return PolishResult(
             source=source,
@@ -210,8 +224,9 @@ def polish_text(
             used_source_fallback=False,
             diagnostics_before=diagnostics_before,
             notes=[
-                "Pre-generation diagnostics found no material editorial defect; "
-                "generation and semantic verification were skipped."
+                "Pre-generation diagnostics found positive evidence for a narrow "
+                "already-good prose shape; generation and semantic verification "
+                "were skipped."
             ],
         )
 
