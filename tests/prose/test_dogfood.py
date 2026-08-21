@@ -129,6 +129,7 @@ class DogfoodCollectorTests(unittest.TestCase):
             self.assertEqual(summary["status_counts"], {"PASS": 1})
             self.assertTrue(summary["diagnostics_enabled"])
             self.assertEqual(summary["generation_skipped_by_diagnostics"], 0)
+            self.assertIn("diagnostics were enabled", summary["note"])
 
     def test_terminal_newline_only_records_no_change_and_preserves_source(self):
         source = "The claim is unchanged.\n"
@@ -223,13 +224,37 @@ class DogfoodCollectorTests(unittest.TestCase):
             self.assertFalse(records[0]["verifier_used"])
             self.assertEqual(
                 records[0]["diagnostics_before"]["positive_evidence"],
-                ["reviewed_single_declarative_with_explicit_finite_predicate"],
+                ["reviewed_complete_single_declarative_structure"],
             )
             self.assertEqual(rewriter.calls, 0)
             self.assertEqual(verifier.calls, 0)
 
             summary = json.loads((results / "summary.json").read_text(encoding="utf-8"))
             self.assertEqual(summary["generation_skipped_by_diagnostics"], 1)
+
+    def test_diagnostics_disabled_summary_reports_actual_mode(self):
+        source = "The analysis was performed using a t-test."
+        candidate = "The analysis used a t-test."
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            corpus = root / "corpus"
+            results = root / "results"
+            corpus.mkdir()
+            (corpus / "paragraph_001.txt").write_text(source, encoding="utf-8")
+
+            collect_dogfood(
+                input_dir=corpus,
+                output_dir=results,
+                rewrite_provider=StaticRewriteProvider(candidate),
+                verifier_provider=StaticSemanticVerifierProvider(_equivalent_payload(source, candidate)),
+                assurance="strict",
+                run_diagnostics=False,
+            )
+
+            summary = json.loads((results / "summary.json").read_text(encoding="utf-8"))
+            self.assertFalse(summary["diagnostics_enabled"])
+            self.assertIn("diagnostics were disabled", summary["note"])
 
     def test_collect_dogfood_rejects_empty_supported_corpus(self):
         with tempfile.TemporaryDirectory() as tmp:
