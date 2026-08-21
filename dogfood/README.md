@@ -45,6 +45,16 @@ python -m swos_prose.cli dogfood \
 
 Existing process environment variables take precedence over values in `--env-file`.
 
+## Diagnostics and calibration
+
+Pre-generation diagnostics are enabled by default. They may return `NO_CHANGE_RECOMMENDED` before generation only when a deliberately narrow deterministic recogniser has **positive evidence** for a simple already-good prose shape and no reviewed defect/uncertainty signal is present. Absence of a known defect is not enough.
+
+A diagnostics abstention returns the source unchanged and makes zero rewrite-provider and zero semantic-verifier calls. Dogfood records expose this through `diagnostics_before`, `generation_skipped_by_diagnostics`, and the `diagnostics_no_change` skip reason.
+
+Use `--skip-diagnostics` when the purpose of a run is semantic calibration and the rewriter/verifier must be exercised even on prose that diagnostics could otherwise abstain on. This is how the trusted five-case Luna calibration workflow keeps the diagnostics signal separate from the verifier signal.
+
+The first diagnostics slice is intentionally context-blind. If `polish_text` receives neighbouring context directly, early abstention is disabled until context-aware diagnostics exist.
+
 ## Corpus shape
 
 Put one reviewable sample in each `.txt` or `.md` file. For the first run, use 5–10 varied paragraphs rather than long documents.
@@ -65,13 +75,16 @@ Each record contains:
 
 - source, candidate, and final text;
 - PASS / REPAIR / REVIEW / REJECT status where verification ran;
+- `NO_CHANGE_RECOMMENDED` where the source is intentionally preserved without a material rewrite;
 - whether the source fallback was used;
 - semantic deltas;
 - rewrite and verifier token usage when available;
 - provider notes/provenance;
+- `diagnostics_before` when diagnostics ran, including recommendation, signals, positive evidence, and simple size metrics;
+- `generation_skipped_by_diagnostics` so zero-cost abstentions are distinguishable from provider/verifier no-change outcomes;
 - empty fields for a manual human-review category and notes.
 
-`preset`, `diagnostics_before`, and `diagnostics_after` are currently `null` because presets and prose diagnostics are not implemented yet. The collector does not fabricate those capabilities.
+`preset` and `diagnostics_after` remain `null` because presets and post-rewrite prose diagnostics are not implemented yet. The collector does not fabricate those capabilities.
 
 ## Human review taxonomy
 
@@ -87,4 +100,4 @@ Write the category and short notes into the local JSON result before summarising
 
 ## Current scope
 
-Dogfooding currently exercises `mode="polish"` only. Do not use this harness as evidence that `naturalise`, `clarify`, `tighten`, presets, diagnostics, or repair are implemented.
+Dogfooding currently exercises `mode="polish"` only. It includes the first conservative pre-generation diagnostics/abstention slice. Do not use this harness as evidence that `naturalise`, `clarify`, `tighten`, presets, post-rewrite diagnostics, or repair are implemented.
