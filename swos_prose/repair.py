@@ -38,6 +38,7 @@ _AUX_NOT_RE = re.compile(
     re.I,
 )
 _NEGATIVE_PREFIX_RE = re.compile(r"\b(?:un|in|im|ir|il|dis|non)[A-Za-z]{3,}\b", re.I)
+_NOT_PREFIX_RE = re.compile(r"\bnot\s+(?:un|in|im|ir|il|dis|non)[A-Za-z]{3,}\b", re.I)
 _WEAK_MODAL_MARKERS = frozenset({"may", "might", "could", "possibly", "perhaps"})
 _QUANTIFIER_MARKERS = frozenset({"none", "few", "some", "many", "most", "all", "sometimes", "often", "always"})
 _ANAPHORIC_ALL_RE = re.compile(r"\ball\s+of\s+(?:which|whom|them|these|those)\b", re.I)
@@ -197,7 +198,9 @@ def locate_span(source: str, candidate: str, delta: SemanticDelta) -> RepairSpan
 
 
 def _single_clause(text: str) -> bool:
-    return _CLAUSE_BOUNDARY_RE.search(text) is None
+    stripped = text.strip()
+    core = stripped[:-1] if stripped.endswith((".", "!", "?")) else stripped
+    return _CLAUSE_BOUNDARY_RE.search(core) is None and re.search(r"[.!?]", core) is None
 
 
 def _single_marker(span: str | None, vocabulary: frozenset[str]) -> str | None:
@@ -205,6 +208,10 @@ def _single_marker(span: str | None, vocabulary: frozenset[str]) -> str | None:
         return None
     value = " ".join(span.casefold().split()).strip(" .,:;!?")
     return value if value in vocabulary else None
+
+
+def _negative_prefix_tokens(text: str) -> tuple[str, ...]:
+    return tuple(sorted(match.group(0).casefold() for match in _NEGATIVE_PREFIX_RE.finditer(text)))
 
 
 def _same_simple_relation_roles(source: str, candidate: str) -> bool:
@@ -266,8 +273,11 @@ def _reviewed_repair_shape(source: str, candidate: str, delta: SemanticDelta) ->
         if {source_aux, candidate_aux} != {0, 1}:
             return False
         # Prefix substitutions such as not valuable -> invaluable and double
-        # negatives are deliberately outside M1; they require lexical semantics.
-        if _NEGATIVE_PREFIX_RE.search(source) or _NEGATIVE_PREFIX_RE.search(candidate):
+        # negatives are deliberately outside M1; unchanged prefix-looking words
+        # (for example, "intervention") must not block a local not-deletion repair.
+        if _NOT_PREFIX_RE.search(source) or _NOT_PREFIX_RE.search(candidate):
+            return False
+        if _negative_prefix_tokens(source) != _negative_prefix_tokens(candidate):
             return False
         return True
 
