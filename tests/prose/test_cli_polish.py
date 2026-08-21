@@ -11,7 +11,7 @@ from swos_prose import cli
 
 
 class PolishCliTests(unittest.TestCase):
-    def test_polish_requires_explicit_api_key(self):
+    def test_polish_requires_explicit_api_key_when_generation_is_needed(self):
         stdout = StringIO()
         stderr = StringIO()
         argv = ["swos-prose", "polish", "--source", "A source sentence."]
@@ -27,6 +27,39 @@ class PolishCliTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual(stdout.getvalue(), "")
         self.assertIn("OPENAI_API_KEY", stderr.getvalue())
+
+    def test_reviewed_abstention_exemplar_needs_no_api_key_or_provider(self):
+        source = "The revised workflow reduced implementation errors and simplified later review."
+        stdout = StringIO()
+        stderr = StringIO()
+        argv = ["swos-prose", "polish", "--source", source]
+
+        with (
+            patch.dict(os.environ, {}, clear=True),
+            patch.object(sys, "argv", argv),
+            patch("swos_prose.cli._ProviderMustNotRun.rewrite") as sentinel_rewrite,
+            redirect_stdout(stdout),
+            redirect_stderr(stderr),
+        ):
+            code = cli.main()
+
+        self.assertEqual(code, 0)
+        self.assertEqual(stdout.getvalue(), f"{source}\n")
+        self.assertIn("NO_CHANGE_RECOMMENDED", stderr.getvalue())
+        self.assertNotIn("OPENAI_API_KEY", stderr.getvalue())
+        sentinel_rewrite.assert_not_called()
+
+    def test_long_literal_source_is_not_statted_as_a_path(self):
+        source = "A" * 1000
+        content, was_file = cli.resolve_input(source)
+        self.assertEqual(content, source)
+        self.assertFalse(was_file)
+
+    def test_multiline_literal_source_is_not_statted_as_a_path(self):
+        source = "First sentence.\nSecond sentence."
+        content, was_file = cli.resolve_input(source)
+        self.assertEqual(content, source)
+        self.assertFalse(was_file)
 
     def test_polish_plain_output_is_final_text_and_status_is_stderr(self):
         result = Mock()

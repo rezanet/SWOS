@@ -42,6 +42,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install packaged SWOS Prose surface
+        run: python3 -m pip install --no-deps --no-build-isolation -e .
+      - name: Smoke test packaged CLI entry point
+        run: swos-prose --help >/dev/null
       - name: Run semantic-delta unit tests
         run: python3 -m unittest discover -s tests/prose -p 'test_*.py'
 

@@ -6,14 +6,39 @@ import json
 import os
 from pathlib import Path
 import sys
+from typing import Any
 
+from .diagnostics import diagnose_polish
 from .pipeline import verify_rewrite
 from .rewrite import polish_text
 
 
+_MAX_PATH_CANDIDATE_CHARS = 200
+
+
+def resolve_input(value: str) -> tuple[str, bool]:
+    """Return ``(content, was_read_from_file)`` for a path-or-literal argument.
+
+    Long or multiline values are treated as literal prose before any filesystem
+    stat call. Short values are tried as paths; filesystem/path errors fall back
+    to literal text rather than escaping as user-visible tracebacks.
+    """
+    if not isinstance(value, str):
+        raise TypeError("input value must be a string")
+    if "\n" in value or "\r" in value or len(value) > _MAX_PATH_CANDIDATE_CHARS:
+        return value, False
+
+    try:
+        path = Path(value)
+        if path.is_file():
+            return path.read_text(encoding="utf-8"), True
+    except (OSError, ValueError):
+        pass
+    return value, False
+
+
 def _read(value: str) -> str:
-    path = Path(value)
-    return path.read_text(encoding="utf-8") if path.exists() else value
+    return resolve_input(value)[0]
 
 
 def _read_optional(value: str | None) -> str | None:
@@ -59,9 +84,66 @@ def _run_verify(args: argparse.Namespace) -> int:
     return 0 if result.safe_for_automatic_use else 1
 
 
+def _polish_status(result: Any) -> str:
+    if result.generation_skipped_by_diagnostics:
+        return "NO_CHANGE_RECOMMENDED"
+    if result.verification_status is not None:
+        return result.verification_status
+    if result.used_source_fallback:
+        return "PROVIDER_FAILURE"
+    return "NO_CHANGE_RECOMMENDED"
+
+
+def _emit_polish_result(result: Any, *, as_json: bool) -> int:
+    if as_json:
+        print(json.dumps(result.to_dict(), indent=2, ensure_ascii=False))
+    else:
+        # Plain mode is deliberately composable: stdout is only the text callers
+        # should keep. Operational status belongs on stderr.
+        print(result.final_text)
+        print(f"SWOS Prose polish: {_polish_status(result)}", file=sys.stderr)
+    return 0 if result.safe_for_automatic_use else 1
+
+
+class _ProviderMustNotRun:
+    """Sentinel used only after the CLI has proved a zero-provider no-op path."""
+
+    def rewrite(self, **_: Any) -> Any:
+        raise RuntimeError("Internal error: zero-provider polish attempted generation.")
+
+
 def _run_polish(args: argparse.Namespace) -> int:
-    from .providers.openai_responses import OpenAIResponsesSemanticVerifierProvider
-    from .providers.openai_rewrite import OpenAIResponsesRewriteProvider
+    source = _read(args.source)
+    context_before = _read_optional(args.context_before)
+    context_after = _read_optional(args.context_after)
+
+    # Preserve the library's zero-provider boundary. Exact reviewed diagnostics
+    # exemplars (and empty input) must not require the OpenAI SDK, credentials,
+    # or provider construction.
+    local_no_provider = not source.strip()
+    if not local_no_provider and not args.skip_diagnostics:
+        diagnostics = diagnose_polish(
+            source,
+            context_before=context_before,
+            context_after=context_after,
+        )
+        local_no_provider = diagnostics.no_change_recommended
+
+    if local_no_provider:
+        try:
+            result = polish_text(
+                source=source,
+                rewrite_provider=_ProviderMustNotRun(),
+                verifier_provider=None,
+                assurance=args.assurance,
+                context_before=context_before,
+                context_after=context_after,
+                run_diagnostics=not args.skip_diagnostics,
+            )
+        except (RuntimeError, TypeError, ValueError) as exc:
+            print(f"SWOS Prose polish failed safely: {exc}", file=sys.stderr)
+            return 2
+        return _emit_polish_result(result, as_json=args.as_json)
 
     ok, exit_code = _load_env_file(args.env_file)
     if not ok:
@@ -75,41 +157,28 @@ def _run_polish(args: argparse.Namespace) -> int:
         )
         return 2
 
+    # Provider adapters are imported and initialized only after diagnostics has
+    # established that generation is actually required.
+    from .providers.openai_responses import OpenAIResponsesSemanticVerifierProvider
+    from .providers.openai_rewrite import OpenAIResponsesRewriteProvider
+
     try:
         rewriter = OpenAIResponsesRewriteProvider(model=args.rewriter_model)
         verifier = OpenAIResponsesSemanticVerifierProvider(model=args.verifier_model)
         result = polish_text(
-            source=_read(args.source),
+            source=source,
             rewrite_provider=rewriter,
             verifier_provider=verifier,
             assurance=args.assurance,
-            context_before=_read_optional(args.context_before),
-            context_after=_read_optional(args.context_after),
+            context_before=context_before,
+            context_after=context_after,
             run_diagnostics=not args.skip_diagnostics,
         )
     except (RuntimeError, TypeError, ValueError) as exc:
         print(f"SWOS Prose polish failed safely: {exc}", file=sys.stderr)
         return 2
 
-    if args.as_json:
-        print(json.dumps(result.to_dict(), indent=2, ensure_ascii=False))
-    else:
-        # Plain mode is deliberately composable: stdout is only the text callers
-        # should keep. Operational status belongs on stderr.
-        print(result.final_text)
-        if result.generation_skipped_by_diagnostics:
-            status = "NO_CHANGE_RECOMMENDED"
-        elif result.verification_status is not None:
-            status = result.verification_status
-        elif result.used_source_fallback:
-            status = "PROVIDER_FAILURE"
-        else:
-            status = "NO_CHANGE_RECOMMENDED"
-        print(f"SWOS Prose polish: {status}", file=sys.stderr)
-
-    # A non-zero result means callers should not treat a changed candidate as
-    # automatically releasable. final_text still remains fail-closed to source.
-    return 0 if result.safe_for_automatic_use else 1
+    return _emit_polish_result(result, as_json=args.as_json)
 
 
 def _run_dogfood(args: argparse.Namespace) -> int:

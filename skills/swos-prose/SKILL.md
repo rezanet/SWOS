@@ -2,7 +2,7 @@
 name: swos-prose
 description: Semantic-safe prose polishing for text whose meaning is already settled. Use when asked to polish, edit, clarify, tighten wording, reduce repetition, improve sentence construction, or make academic, technical, explanatory, or enterprise prose read more naturally without changing its factual claims, attribution, uncertainty, modality, degree, causality, numbers, citations, quotations, chronology, conditions, or normative force. Runs conservative pre-generation diagnostics, one rewrite proposal when needed, and independent semantic verification; unsafe or uncertain rewrites fall back to the source.
 license: MIT
-compatibility: Requires the SWOS Prose Python package. Changed prose needs a rewrite provider and an independent semantic-verifier provider; the bundled OpenAI Responses adapters require the optional openai package and an API key. Exact reviewed diagnostics exemplars can abstain with zero provider calls. No host-specific runtime is required.
+compatibility: Requires the installable SWOS Prose Python package (`pip install -e .` from the SWOS repo root). Changed prose needs a rewrite provider and an independent semantic verifier; bundled OpenAI Responses adapters require an API key. Exact reviewed diagnostics exemplars can abstain locally with zero provider calls. No host-specific runtime is required.
 metadata:
   version: 0.2.0
   swos_component: prose
@@ -18,6 +18,20 @@ Rewrite the language. Preserve the meaning.
 SWOS Prose is a **post-draft semantic-safe editing layer**. Use it only after the
 claims, evidence, citations and argument are already settled. Its job is to improve
 wording without silently changing what the author committed to.
+
+## Installation
+
+The portable skill metadata and the executable Python engine are two separate
+pieces. Copying this `SKILL.md` into an Agent Skills runtime does **not** install the
+engine. From the root of the SWOS repository, install the package first:
+
+```bash
+python3 -m pip install -e .
+```
+
+That installs the `swos-prose` console command, the `swos_prose` Python package and
+the OpenAI SDK dependency used by the bundled Responses adapters. The frozen
+benchmark files are release provenance, not runtime dependencies of the skill.
 
 ## Released surface: v0.2
 
@@ -65,6 +79,7 @@ possibility into certainty, or a qualified statement into an unqualified one.
 1. **Diagnose before generation.** The current deterministic fast path may return
    `NO_CHANGE_RECOMMENDED` only for an exact reviewed whole-sentence exemplar with
    no blocking signal and no neighbouring context that requires richer analysis.
+   This zero-provider path does not require OpenAI credentials or provider loading.
 2. **Generate once when needed.** The rewrite provider proposes wording; it does
    not approve its own work.
 3. **Verify independently.** Changed text is checked by the semantic-delta engine
@@ -122,15 +137,15 @@ quality/stability costs.
 
 ## CLI
 
-The CLI keeps stdout composable: plain `polish` prints only `final_text`; status and
-setup messages go to stderr. Use `--json` for the full diagnostics, verification and
-token record.
+The installed CLI keeps stdout composable: plain `polish` prints only `final_text`;
+status and setup messages go to stderr. Use `--json` for the full diagnostics,
+verification and token record.
 
 ### Example 1 - polish literal text
 
 ```bash
 export OPENAI_API_KEY=...
-python3 -m swos_prose.cli polish \
+swos-prose polish \
   --source "The analysis was performed using a t-test." \
   --assurance strict \
   --json
@@ -139,7 +154,7 @@ python3 -m swos_prose.cli polish \
 ### Example 2 - polish a file with read-only context
 
 ```bash
-python3 -m swos_prose.cli polish \
+swos-prose polish \
   --source draft-paragraph.txt \
   --context-before previous-paragraph.txt \
   --context-after next-paragraph.txt \
