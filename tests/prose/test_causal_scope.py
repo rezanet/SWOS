@@ -94,7 +94,7 @@ class CausalScopeTests(unittest.TestCase):
                 self.assertEqual(signals.affirmative, ())
                 self.assertEqual(signals.denied, ("caused",))
 
-    def test_exact_dogfood_pair_routes_to_verifier_without_causal_blocker(self):
+    def test_exact_dogfood_pair_routes_to_review_without_causal_blocker(self):
         source = (
             "Chen et al. report that processor load was associated with longer "
             "response times in the observed tests, but they do not claim that "
@@ -121,17 +121,13 @@ class CausalScopeTests(unittest.TestCase):
             verifier_provider=verifier,
         )
 
-        self.assertEqual(result.status, VerificationStatus.PASS)
+        self.assertEqual(result.status, VerificationStatus.REVIEW)
         self.assertTrue(result.verifier_used)
         self.assertEqual(verifier.calls, 1)
-        self.assertNotIn(
-            "causal_strength_changed",
-            [delta.delta_type.value for delta in result.semantic_deltas],
-        )
-        self.assertNotIn(
-            "malformed_provider_response",
-            [delta.delta_type.value for delta in result.semantic_deltas],
-        )
+        delta_types = [delta.delta_type.value for delta in result.semantic_deltas]
+        self.assertIn("unresolved_equivalence", delta_types)
+        self.assertNotIn("causal_strength_changed", delta_types)
+        self.assertNotIn("malformed_provider_response", delta_types)
 
     def test_affirmative_association_to_causation_remains_hard_blocked(self):
         source = "Exposure was associated with higher fatigue."
