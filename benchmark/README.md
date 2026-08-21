@@ -56,6 +56,30 @@ the same generation path, so a second stochastic 50-case run is unnecessary.
 `--mode stability --stability-runs 5` runs the 11 inherited live probes five times
 and records the PASS/REVIEW/REJECT distribution per fixture.
 
+## Frozen v0.2 baseline
+
+The first governed live baseline is frozen from GitHub Actions run `32450085166`
+against commit `7637a487a93266e30fcbefbc40ad2266fec600b8`.
+
+Release-critical results:
+
+- 50 governed fixtures;
+- 22 human-labelled material-change probes;
+- 0 unsafe semantic `PASS` outcomes;
+- 0 unsafe diagnostic abstentions;
+- 3 deterministic diagnostics abstentions (6% coverage);
+- 2,358 tokens avoided out of 77,593 observed baseline tokens (3.04%);
+- 11 stability probes repeated five times;
+- 0 unsafe `PASS` outcomes across the repeated stability draws.
+
+Equivalent-pair non-PASS outcomes remain visible as quality/stability costs rather
+than being reclassified as safety failures.
+
+`baseline.json` is the compact canonical claim surface. The exact complete
+CI-generated report, including per-fixture and per-draw records, is preserved in
+`artifacts/swos-prose-v0.2-benchmark-run-32450085166.zip`. `FROZEN_AT` records the
+run, commits, corpus digest, raw report digest, and archive digest.
+
 ## Commands
 
 Deterministic corpus and diagnostics contract:
@@ -67,7 +91,7 @@ python3 benchmark/runner.py \
   --output /tmp/swos-prose-benchmark-validate.json
 ```
 
-Full live baseline:
+Full live baseline (manual evidence campaign):
 
 ```bash
 export OPENAI_API_KEY=...
@@ -83,10 +107,11 @@ python3 benchmark/runner.py \
 
 ## Baseline policy
 
-`baseline.json` is a release evidence artefact, not a hand-written performance
-claim. Until the first full live CI run is captured and reviewed, it remains
-explicitly marked `pending_live_evidence`. Before this PR can leave draft status,
-replace it with the exact CI-generated report and record the producing commit/run.
+A frozen baseline is evidence, not a hand-written performance claim. The compact
+canonical baseline may summarize the measured result, but every summary value must
+be traceable to the preserved raw CI report and its cryptographic digest.
 
-A frozen baseline must never be edited to make a result look better. New evidence
-requires a new benchmark version or a clearly documented rerun.
+A frozen baseline must never be edited to make a result look better. New live
+evidence requires a new benchmark version or a clearly documented rerun. Ordinary
+PR pushes run the deterministic 50-case corpus/diagnostics contract; the expensive
+live Luna campaign is deliberately manual.
