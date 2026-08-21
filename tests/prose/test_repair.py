@@ -77,6 +77,51 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
         self.assertEqual(len(result.repair_attempts), 1)
         self.assertIn("outside the authorised local span", result.repair_failure_reason)
 
+    def test_reviewed_family_plus_unrelated_content_change_never_enters_repair(self):
+        cases = (
+            (
+                "modality",
+                "The findings may indicate benefits.",
+                "The findings describe harms.",
+            ),
+            (
+                "quantifier",
+                "Some participants reported fatigue.",
+                "Most participants reported benefits.",
+            ),
+            (
+                "attribution",
+                "Ahmed argues that the evidence is limited.",
+                "Ahmed states that the evidence is strong.",
+            ),
+            (
+                "negation",
+                "The intervention did not change the outcome.",
+                "The intervention improved the outcome.",
+            ),
+            (
+                "causal_force",
+                "Exposure was associated with fatigue.",
+                "Exposure caused recovery.",
+            ),
+        )
+        for name, source, defective in cases:
+            with self.subTest(name=name):
+                repairer = ScriptedRepairProvider(source)
+                result = polish_text(
+                    source=source,
+                    rewrite_provider=StaticRewriteProvider(defective),
+                    verifier_provider=None,
+                    assurance="strict",
+                    run_diagnostics=False,
+                    repair_provider=repairer,
+                )
+                self.assertNotEqual(result.verification_status, VerificationStatus.REPAIR.value)
+                self.assertFalse(result.repair_success)
+                self.assertEqual(result.repair_attempts, [])
+                self.assertEqual(repairer.calls, 0)
+                self.assertEqual(result.final_text, source)
+
     def test_out_of_scope_provider_delta_cannot_self_declare_repairable(self):
         source = "The analysis was performed using a t-test."
         candidate = "The analysis used a t-test."
