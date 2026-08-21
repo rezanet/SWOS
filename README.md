@@ -8,7 +8,42 @@ SWOS does not optimise for prose. It optimises for trustworthy scholarly
 reasoning - epistemic correctness, evidence traceability, methodological rigour,
 reproducibility, governance compliance and auditability.
 
-`contracts frozen v1.0.0` · `MIT` · `provenance: W3C PROV-DM` · `governance: NIST AI RMF 1.0`
+`contracts frozen v1.0.0` · `SWOS Prose v0.2.0` · `MIT` · `provenance: W3C PROV-DM` · `governance: NIST AI RMF 1.0`
+
+---
+
+## SWOS Prose v0.2
+
+**SWOS Prose is the post-draft semantic-safe editing layer: rewrite the language,
+preserve the meaning.** It operates after claims and evidence are settled, and it
+fails closed to the source whenever a proposed rewrite cannot be approved safely.
+
+The v0.2 released surface implements `mode=polish` only. It combines conservative
+pre-generation diagnostics, one rewrite proposal when needed, deterministic
+semantic-delta checks, and independent semantic verification. `REVIEW`, `REJECT`
+or provider failure never silently releases the candidate.
+
+The frozen governed v0.2 benchmark contains 50 cases. On that benchmark SWOS Prose
+recorded **0 unsafe semantic PASS outcomes**, **0 unsafe diagnostic abstentions**,
+and **3.04% token savings** from its intentionally tiny exact-exemplar diagnostics
+fast path. Equivalent-pair verifier wobble remains visible and is tracked
+separately rather than being disguised as a safety success.
+
+- Portable skill: [`skills/swos-prose/SKILL.md`](skills/swos-prose/SKILL.md)
+- Frozen baseline: [`benchmark/baseline.json`](benchmark/baseline.json)
+- Evidence provenance: [`benchmark/FROZEN_AT`](benchmark/FROZEN_AT)
+- Python implementation: [`swos_prose/`](swos_prose/)
+
+```bash
+export OPENAI_API_KEY=...
+python3 -m swos_prose.cli polish \
+  --source "The analysis was performed using a t-test." \
+  --assurance strict \
+  --json
+```
+
+SWOS Prose does not establish whether the source is true or adequately supported.
+Use the evidence-first SWOS workflow and citation audit before polishing.
 
 ---
 
@@ -156,6 +191,7 @@ Full component and interface model: [`docs/architecture/`](docs/architecture/).
 | [`reviewer-packs/`](reviewer-packs/) | Reviewer roles with pass/fail/escalation criteria |
 | [`governance/`](governance/) | Policy-as-code, risk and approval models, RMF crosswalk |
 | [`evals/`](evals/) | Eight-plane evaluation harness and fixtures |
+| [`benchmark/`](benchmark/) | Governed SWOS Prose corpus, frozen baseline and raw evidence provenance |
 | [`examples/`](examples/) | Worked example with a full audit pack |
 | [`docs/`](docs/) | Architecture and operations documents |
 | [`adr/`](adr/) | Architecture decisions and rationale history |
@@ -166,9 +202,10 @@ Full component and interface model: [`docs/architecture/`](docs/architecture/).
 ## Quick start
 
 ```bash
-make validate     # every artefact against the frozen schemas
-make lint-skills  # six-field Agent Skills frontmatter constraint
-make eval         # all eight evaluation planes
+make validate          # every artefact against the frozen schemas
+make lint-skills       # six-field Agent Skills frontmatter constraint
+make eval              # all eight evaluation planes
+make benchmark-prose   # deterministic governed 50-case prose benchmark contract
 ls examples/worked-example/   # a complete output bundle with audit pack
 ```
 
@@ -224,7 +261,7 @@ output.
 
 SWOS is deliberately **not**:
 
-* a prose stylist that improves fluency without touching evidence;
+* an unconstrained prose stylist that improves fluency without semantic verification - `swos-prose` is the bounded, fail-closed editing layer;
 * a single giant prompt with the architecture hidden in prose;
 * a vendor-bound product - no host, model, retriever or store is mandatory;
 * an autonomous publisher - human accountability for final judgement is a
