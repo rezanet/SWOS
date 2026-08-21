@@ -14,7 +14,7 @@ STRONG_SOURCE = (
 
 
 class PolishDiagnosticsTests(unittest.TestCase):
-    def test_compact_strong_prose_abstains_before_any_provider_call(self):
+    def test_reviewed_exemplar_abstains_before_any_provider_call(self):
         source = STRONG_SOURCE
         rewriter = StaticRewriteProvider("This provider must not be called.")
         verifier = StaticSemanticVerifierProvider({
@@ -44,9 +44,9 @@ class PolishDiagnosticsTests(unittest.TestCase):
             result.diagnostics_before.recommendation,
             "NO_CHANGE_RECOMMENDED",
         )
-        self.assertIn(
-            "reviewed_complete_single_declarative_structure",
+        self.assertEqual(
             result.diagnostics_before.positive_evidence,
+            ("reviewed_whole_sentence_exemplar",),
         )
         self.assertEqual(result.diagnostics_before.signals, ())
 
@@ -58,16 +58,34 @@ class PolishDiagnosticsTests(unittest.TestCase):
         self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
         self.assertFalse(diagnostics.high_confidence)
         self.assertEqual(diagnostics.positive_evidence, ())
-        self.assertIn("no_positive_abstention_evidence", diagnostics.signals)
+        self.assertIn("no_reviewed_abstention_exemplar", diagnostics.signals)
 
-    def test_malformed_coordinated_tail_cannot_hide_behind_valid_predicate(self):
+    def test_malformed_and_tail_cannot_hide_behind_valid_predicate(self):
         diagnostics = diagnose_polish(
             "The revised report reduced several errors and contain obvious mistakes."
         )
 
         self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
         self.assertEqual(diagnostics.positive_evidence, ())
-        self.assertIn("no_positive_abstention_evidence", diagnostics.signals)
+        self.assertIn("no_reviewed_abstention_exemplar", diagnostics.signals)
+
+    def test_malformed_but_tail_cannot_be_consumed_as_object_text(self):
+        diagnostics = diagnose_polish(
+            "The revised report reduced several errors but contain obvious mistakes."
+        )
+
+        self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
+        self.assertEqual(diagnostics.positive_evidence, ())
+        self.assertIn("no_reviewed_abstention_exemplar", diagnostics.signals)
+
+    def test_unreviewed_well_formed_sentence_still_proceeds(self):
+        diagnostics = diagnose_polish(
+            "The revised workflow reduced processing time and improved later review."
+        )
+
+        self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
+        self.assertEqual(diagnostics.positive_evidence, ())
+        self.assertIn("no_reviewed_abstention_exemplar", diagnostics.signals)
 
     def test_quantifier_number_risk_prevents_abstention(self):
         diagnostics = diagnose_polish(
