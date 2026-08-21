@@ -54,14 +54,14 @@ _FORCE_BEARING_RE = re.compile(
 )
 
 # These are deliberately complete, reviewed source sentences. No slot, wildcard,
-# or unrestricted object span is accepted. The set exists to prove the abstention
-# plumbing and zero-provider-cost contract without pretending that deterministic
-# regexes can certify arbitrary English prose. Benchmark evidence may justify
-# adding more complete exemplars later.
+# case normalization, whitespace normalization, or unrestricted object span is
+# accepted. The set exists to prove the abstention plumbing and zero-provider-cost
+# contract without pretending that deterministic regexes can certify arbitrary
+# English prose. Benchmark evidence may justify adding more literal exemplars.
 _REVIEWED_ABSTENTION_EXEMPLARS = frozenset({
-    "the revised workflow reduced implementation errors and simplified later review.",
-    "the revised process reduced review effort and improved consistency.",
-    "the revised implementation reduced unnecessary repetition and improved readability.",
+    "The revised workflow reduced implementation errors and simplified later review.",
+    "The revised process reduced review effort and improved consistency.",
+    "The revised implementation reduced unnecessary repetition and improved readability.",
 })
 
 # A few high-confidence agreement risks are cheap reasons to avoid abstention.
@@ -135,13 +135,12 @@ def _positive_structure_evidence(
     word_count: int,
     sentence_count: int,
 ) -> tuple[str, ...]:
-    """Recognise only an explicitly reviewed complete source exemplar."""
-    text = source.strip()
+    """Recognise only an explicitly reviewed literal source exemplar."""
     if not (_MIN_ABSTAIN_WORDS <= word_count <= _MAX_ABSTAIN_WORDS):
         return ()
     if sentence_count != 1:
         return ()
-    if text.casefold() not in _REVIEWED_ABSTENTION_EXEMPLARS:
+    if source not in _REVIEWED_ABSTENTION_EXEMPLARS:
         return ()
     return ("reviewed_whole_sentence_exemplar",)
 
@@ -154,7 +153,7 @@ def diagnose_polish(
 ) -> PolishDiagnostics:
     """Return a conservative pre-generation recommendation for polish mode.
 
-    ``NO_CHANGE_RECOMMENDED`` requires an explicitly reviewed whole-sentence
+    ``NO_CHANGE_RECOMMENDED`` requires an exact literal reviewed whole-sentence
     exemplar *and* the absence of reviewed material-defect/uncertainty signals.
     Anything else is ``PROCEED_TO_REWRITE``. This function never labels prose as
     bad.
