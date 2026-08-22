@@ -226,6 +226,17 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_sentence_matching_preserves_unary_signs(self):
+        context_sentence = "- 5 is positive."
+
+        deltas = context_only_deltas(
+            "5 is positive.",
+            context_sentence,
+            context_after=context_sentence,
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_mid_sentence_initialism_remains_a_context_only_claim(self):
         deltas = context_only_deltas(
             "Regulators in the U.S. approved the plan.",

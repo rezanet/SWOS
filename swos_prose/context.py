@@ -21,7 +21,10 @@ _INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
 _INITIALISM_AT_FRAGMENT_END_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}$")
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
 _CONTEXT_PRESENTATION_PREFIX_RE = re.compile(
-    r"^(?:(?:>{1,3}\s*)|(?:#{1,6}\s+)|(?:[-+*•◦▪‣]\s+)|(?:\d{1,9}[.)]\s+))+"
+    r"^(?:(?:>{1,3}\s+(?=[^\W\d_]|[\"'“‘]))|"
+    r"(?:#{1,6}\s+(?=[^\W\d_]|[\"'“‘]))|"
+    r"(?:[-+*•◦▪‣]\s+(?=[^\W\d_]|[\"'“‘]))|"
+    r"(?:\d{1,9}[.)]\s+(?=[^\W\d_]|[\"'“‘])))+"
 )
 _CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?。！？｡؟।॥‼⁇⁈⁉⸮]+$")
 _CONTEXT_IGNORED_SYMBOLS = frozenset(".!?。！？｡؟।॥‼⁇⁈⁉⸮")
