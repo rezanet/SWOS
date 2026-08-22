@@ -191,6 +191,7 @@ class GProse95ContextSafetyTests(unittest.TestCase):
             ("C# works.", "C++ works."),
             ("The value is < 3.", "The value is > 3."),
             ("Use foo::bar.", "Use foo/bar."),
+            ("The result is (a+b)*c.", "The result is a+(b*c)."),
         )
 
         for source, context_sentence in cases:

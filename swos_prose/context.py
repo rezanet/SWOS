@@ -20,7 +20,7 @@ _INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
 _INITIALISM_AT_FRAGMENT_END_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}$")
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
 _CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?]+$")
-_CONTEXT_IGNORED_SYMBOLS = frozenset(".!?\"'()[]{}“”‘’")
+_CONTEXT_IGNORED_SYMBOLS = frozenset(".!?")
 _TECHNICAL_SENTENCE_START_WORDS = frozenset(
     {
         "api",
