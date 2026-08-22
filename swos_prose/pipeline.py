@@ -375,7 +375,7 @@ def verify_rewrite(
         notes=notes,
         token_usage=token_usage,
         cost_estimate=cost_estimate,
-        context_safety=context_safety or context_info.to_dict(),
+        context_safety=context_info.to_dict(),
     )
 
 

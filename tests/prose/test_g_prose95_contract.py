@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from benchmark.runner import _combined_result_cost
-from swos_prose.context import context_only_deltas
+from swos_prose.context import context_only_deltas, inspect_context
 from swos_prose.cost import estimate_cost
 from swos_prose.diagnostics import diagnose_polish
 from swos_prose.models import VerificationStatus
@@ -420,6 +420,22 @@ class GProse95CostEvidenceTests(unittest.TestCase):
         self.assertEqual(result.status, VerificationStatus.REVIEW)
         self.assertFalse(result.verifier_used)
         self.assertEqual(verifier.calls, 0)
+
+    def test_verifier_result_context_safety_comes_from_inspected_inputs(self):
+        source = "The study reports a modest association."
+        candidate = "The study describes a modest association."
+        context_after = "A separate read-only note."
+        verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
+
+        result = verify_rewrite(
+            source=source,
+            candidate=candidate,
+            verifier_provider=verifier,
+            context_after=context_after,
+            context_safety={"accepted": False, "after_sha256": "forged"},
+        )
+
+        self.assertEqual(result.context_safety, inspect_context(after=context_after).to_dict())
 
 
 if __name__ == "__main__":
