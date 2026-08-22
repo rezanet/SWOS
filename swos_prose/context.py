@@ -50,10 +50,12 @@ _TECHNICAL_SENTENCE_START_WORDS = frozenset(
         "pytest",
         "python",
         "redis",
+        "ruff",
         "sql",
         "ssh",
         "systemd",
         "terraform",
+        "uv",
         "windows",
         "yarn",
     }
@@ -168,7 +170,7 @@ def _strip_markdown_links(value: str) -> str:
     index = 0
     changed = False
     while index < len(surface):
-        if surface[index] != "[" or (index > 0 and surface[index - 1] == "!"):
+        if surface[index] != "[":
             index += 1
             continue
         label_end = _find_markdown_closer(surface, index, "[", "]")
@@ -179,7 +181,8 @@ def _strip_markdown_links(value: str) -> str:
         if destination_end is None or not surface[label_end + 2 : destination_end].strip():
             index += 1
             continue
-        pieces.append(surface[copy_start:index])
+        image_prefix_start = index - 1 if index > 0 and surface[index - 1] == "!" else index
+        pieces.append(surface[copy_start:image_prefix_start])
         pieces.append(surface[index + 1 : label_end])
         copy_start = destination_end + 1
         index = copy_start
@@ -268,6 +271,7 @@ def _looks_like_technical_sentence_start(value: str) -> bool:
     token = match.group(0).casefold()
     return (
         token in _TECHNICAL_SENTENCE_START_WORDS
+        or len(token) <= 5
         or any(character.isdigit() for character in token)
         or any(character in "_/-\\" for character in token)
     )
@@ -293,6 +297,7 @@ def _source_licenses_context_sentence(
 
 
 def _sentences(value: str) -> list[tuple[str, str]]:
+    value = _canonical_context_surface(value)
     result: list[tuple[str, str]] = []
     start = 0
 

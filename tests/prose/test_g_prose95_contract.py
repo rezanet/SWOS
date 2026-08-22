@@ -271,6 +271,33 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
                 self.assertEqual(len(deltas), 1)
 
+    def test_context_sentence_matching_normalizes_wrappers_before_splitting(self):
+        deltas = context_only_deltas(
+            "The study continued.",
+            "The study continued. Access denied.",
+            context_after="**Access denied. Network failed.**",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
+    def test_context_sentence_matching_normalizes_image_alt_labels(self):
+        deltas = context_only_deltas(
+            "The study continued.",
+            "The study continued. Access denied.",
+            context_after="![Access denied.](shot.png)",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
+    def test_context_sentence_matching_splits_before_unlisted_lowercase_technical_text(self):
+        deltas = context_only_deltas(
+            "The study continued.",
+            "The study continued. pip failed.",
+            context_after="The approval came from the U.S. pip failed.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_context_sentence_matching_ignores_markdown_link_destinations(self):
         source = "The study continued."
         context_sentence = "[Access denied.](https://example.test)"
