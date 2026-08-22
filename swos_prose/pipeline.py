@@ -216,6 +216,18 @@ def verify_rewrite(
             candidate_anchors=candidate_anchors,
             context_safety=context_info.to_dict(),
         )
+    if not context_info.accepted:
+        return VerificationResult(
+            status=VerificationStatus.REVIEW,
+            source=source,
+            candidate=candidate,
+            semantic_deltas=deltas,
+            source_anchors=source_anchors,
+            candidate_anchors=candidate_anchors,
+            notes=["Context safety bounds failed; verifier invocation was bypassed."],
+            verifier_skip_reason="context_safety_rejected",
+            context_safety=context_info.to_dict(),
+        )
 
     if verifier_provider is None:
         verifier_skip_reason = "no_verifier_bound"

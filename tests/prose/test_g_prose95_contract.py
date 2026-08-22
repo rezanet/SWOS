@@ -177,6 +177,24 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(deltas, [])
 
+    def test_context_sentence_matching_preserves_abbreviation_entity(self):
+        deltas = context_only_deltas(
+            "U.K. regulators approved the plan.",
+            "U.S. regulators approved the plan.",
+            context_after="U.S. regulators approved the plan.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
+    def test_short_context_sentence_is_not_discarded(self):
+        deltas = context_only_deltas(
+            "The test ran.",
+            "The test ran. It failed.",
+            context_after="It failed.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_context_is_untrusted_and_cannot_license_a_context_only_sentence(self):
         source = "The study reports a modest association."
         context_after = "The treatment cured insomnia."
@@ -341,6 +359,19 @@ class GProse95CostEvidenceTests(unittest.TestCase):
 
         self.assertEqual(result.rewrite_call_count, 0)
         self.assertTrue(result.used_source_fallback)
+
+    def test_rejected_context_bypasses_verifier(self):
+        verifier = StaticSemanticVerifierProvider({})
+        result = verify_rewrite(
+            source="Source prose.",
+            candidate="Changed prose.",
+            verifier_provider=verifier,
+            context_after="x" * 12001,
+        )
+
+        self.assertEqual(result.status, VerificationStatus.REVIEW)
+        self.assertFalse(result.verifier_used)
+        self.assertEqual(verifier.calls, 0)
 
 
 if __name__ == "__main__":
