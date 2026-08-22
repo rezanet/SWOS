@@ -14,16 +14,17 @@ The benchmark deliberately separates four questions:
 Diagnostics are not scored as a grammar classifier. An unreviewed good sentence
 that proceeds to rewrite is conservative inefficiency, not a correctness error.
 """
+
 from __future__ import annotations
 
 import argparse
-from collections import Counter, defaultdict
-from datetime import datetime, timezone
 import hashlib
 import json
 import os
-from pathlib import Path
 import sys
+from collections import Counter, defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,9 +33,9 @@ if str(ROOT) not in sys.path:
 
 from swos_prose.diagnostics import diagnose_polish
 from swos_prose.pipeline import verify_rewrite
-from swos_prose.rewrite import polish_text
 from swos_prose.providers.openai_responses import OpenAIResponsesSemanticVerifierProvider
 from swos_prose.providers.openai_rewrite import OpenAIResponsesRewriteProvider
+from swos_prose.rewrite import polish_text
 
 BENCHMARK_VERSION = "0.3.0-m1"
 SCHEMA_VERSION = "1.0"
@@ -63,9 +64,17 @@ def load_corpus(corpus_dir: str | Path = DEFAULT_CORPUS) -> list[dict[str, Any]]
 def validate_fixture_shape(fixture: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     required = {
-        "fixture_id", "category", "benchmark_group", "mode", "assurance", "source",
-        "semantic_probe_candidate", "semantic_relation", "diagnostics_expectation",
-        "stability_probe", "notes",
+        "fixture_id",
+        "category",
+        "benchmark_group",
+        "mode",
+        "assurance",
+        "source",
+        "semantic_probe_candidate",
+        "semantic_relation",
+        "diagnostics_expectation",
+        "stability_probe",
+        "notes",
     }
     missing = sorted(required - fixture.keys())
     if missing:
@@ -101,15 +110,19 @@ def _json_schema_errors(fixtures: list[dict[str, Any]]) -> tuple[bool, list[dict
     validator = jsonschema.Draft202012Validator(schema)
     for fixture in fixtures:
         for error in sorted(validator.iter_errors(fixture), key=lambda item: list(item.path)):
-            errors.append({
-                "fixture_id": fixture.get("fixture_id"),
-                "path": list(error.path),
-                "message": error.message,
-            })
+            errors.append(
+                {
+                    "fixture_id": fixture.get("fixture_id"),
+                    "path": list(error.path),
+                    "message": error.message,
+                }
+            )
     return True, errors
 
 
-def validate_corpus(fixtures: list[dict[str, Any]], expect_count: int | None = None) -> dict[str, Any]:
+def validate_corpus(
+    fixtures: list[dict[str, Any]], expect_count: int | None = None
+) -> dict[str, Any]:
     shape_errors: list[dict[str, Any]] = []
     ids = [item.get("fixture_id") for item in fixtures]
     duplicates = sorted(key for key, count in Counter(ids).items() if count > 1)
@@ -119,10 +132,12 @@ def validate_corpus(fixtures: list[dict[str, Any]], expect_count: int | None = N
             shape_errors.append({"fixture_id": fixture.get("fixture_id"), "errors": errors})
 
     if expect_count is not None and len(fixtures) != expect_count:
-        shape_errors.append({
-            "fixture_id": None,
-            "errors": [f"expected {expect_count} fixtures, found {len(fixtures)}"],
-        })
+        shape_errors.append(
+            {
+                "fixture_id": None,
+                "errors": [f"expected {expect_count} fixtures, found {len(fixtures)}"],
+            }
+        )
 
     diagnostic_records: list[dict[str, Any]] = []
     unsafe_abstentions: list[str] = []
@@ -146,14 +161,16 @@ def validate_corpus(fixtures: list[dict[str, Any]], expect_count: int | None = N
         expected_signal = expected.get("expected_signal")
         if expected_signal and expected_signal not in diagnostics.signals:
             missing_expected_signals.append(fixture["fixture_id"])
-        diagnostic_records.append({
-            "fixture_id": fixture["fixture_id"],
-            "expected": expected["outcome"],
-            "actual": actual,
-            "must_not_abstain": expected["must_not_abstain"],
-            "signals": list(diagnostics.signals),
-            "positive_evidence": list(diagnostics.positive_evidence),
-        })
+        diagnostic_records.append(
+            {
+                "fixture_id": fixture["fixture_id"],
+                "expected": expected["outcome"],
+                "actual": actual,
+                "must_not_abstain": expected["must_not_abstain"],
+                "signals": list(diagnostics.signals),
+                "positive_evidence": list(diagnostics.positive_evidence),
+            }
+        )
 
     schema_checked, schema_errors = _json_schema_errors(fixtures)
     return {
@@ -166,8 +183,12 @@ def validate_corpus(fixtures: list[dict[str, Any]], expect_count: int | None = N
         "missing_expected_signals": missing_expected_signals,
         "diagnostics_records": diagnostic_records,
         "valid": not (
-            shape_errors or schema_errors or duplicates or unsafe_abstentions
-            or expectation_mismatches or missing_expected_signals
+            shape_errors
+            or schema_errors
+            or duplicates
+            or unsafe_abstentions
+            or expectation_mismatches
+            or missing_expected_signals
         ),
     }
 
@@ -193,7 +214,8 @@ def _base_report(fixtures: list[dict[str, Any]], mode: str) -> dict[str, Any]:
             "expectation_mismatches": validation["diagnostics_expectation_mismatches"],
             "missing_expected_signals": validation["missing_expected_signals"],
             "reviewed_abstentions": sum(
-                1 for item in validation["diagnostics_records"]
+                1
+                for item in validation["diagnostics_records"]
                 if item["actual"] == "NO_CHANGE_RECOMMENDED"
             ),
             "note": (
@@ -230,7 +252,9 @@ def _semantic_record(fixture: dict[str, Any], result: Any, draw: int = 1) -> dic
     }
 
 
-def run_safety(fixtures: list[dict[str, Any]], verifier_model: str | None) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+def run_safety(
+    fixtures: list[dict[str, Any]], verifier_model: str | None
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     _require_live()
     provider = OpenAIResponsesSemanticVerifierProvider(model=verifier_model)
     records: list[dict[str, Any]] = []
@@ -328,14 +352,16 @@ def run_efficiency(
             if would_skip:
                 saved[key] = saved.get(key, 0) + value
 
-        records.append({
-            "fixture_id": fixture["fixture_id"],
-            "diagnostics_would_skip": would_skip,
-            "diagnostics_signals": list(diagnostics.signals),
-            "baseline_status": result.verification_status,
-            "baseline_safe_for_automatic_use": result.safe_for_automatic_use,
-            "baseline_token_usage": usage,
-        })
+        records.append(
+            {
+                "fixture_id": fixture["fixture_id"],
+                "diagnostics_would_skip": would_skip,
+                "diagnostics_signals": list(diagnostics.signals),
+                "baseline_status": result.verification_status,
+                "baseline_safe_for_automatic_use": result.safe_for_automatic_use,
+                "baseline_token_usage": usage,
+            }
+        )
 
     with_diagnostics = {
         key: total_without.get(key, 0) - saved.get(key, 0)
@@ -352,7 +378,11 @@ def run_efficiency(
         "tokens_saved_by_diagnostics": dict(sorted(saved.items())),
         "total_token_savings_percent": savings_pct,
         "abstention_count": sum(1 for item in records if item["diagnostics_would_skip"]),
-        "abstention_rate": (sum(1 for item in records if item["diagnostics_would_skip"]) / len(records)) if records else 0.0,
+        "abstention_rate": (
+            sum(1 for item in records if item["diagnostics_would_skip"]) / len(records)
+        )
+        if records
+        else 0.0,
         "unsafe_abstention_count": len(unsafe_abstentions),
         "unsafe_abstention_fixture_ids": unsafe_abstentions,
         "note": (
@@ -416,7 +446,9 @@ def build_report(
 ) -> dict[str, Any]:
     report = _base_report(fixtures, mode)
     validation = validate_corpus(fixtures)
-    report["records"].append({"kind": "diagnostics_validation", "items": validation["diagnostics_records"]})
+    report["records"].append(
+        {"kind": "diagnostics_validation", "items": validation["diagnostics_records"]}
+    )
 
     if mode in {"safety", "all"}:
         summary, records = run_safety(fixtures, verifier_model)
@@ -438,7 +470,11 @@ def build_report(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the governed SWOS Prose v0.2 benchmark")
-    parser.add_argument("--mode", choices=("validate", "safety", "efficiency", "stability", "all"), default="validate")
+    parser.add_argument(
+        "--mode",
+        choices=("validate", "safety", "efficiency", "stability", "all"),
+        default="validate",
+    )
     parser.add_argument("--corpus-dir", default=str(DEFAULT_CORPUS))
     parser.add_argument("--output", required=True)
     parser.add_argument("--expect-count", type=int, default=ACTIVE_CORPUS_COUNT)
@@ -471,17 +507,25 @@ def main() -> int:
 
     destination = Path(args.output)
     destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(json.dumps({
-        "mode": args.mode,
-        "output": str(destination),
-        "corpus_size": len(fixtures),
-        "unsafe_abstentions": report["diagnostics_contract"]["unsafe_abstentions"],
-        "unsafe_passes": (
-            report["semantic_safety"]["unsafe_pass_count"]
-            if report["semantic_safety"] is not None else None
-        ),
-    }, indent=2))
+    destination.write_text(
+        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    print(
+        json.dumps(
+            {
+                "mode": args.mode,
+                "output": str(destination),
+                "corpus_size": len(fixtures),
+                "unsafe_abstentions": report["diagnostics_contract"]["unsafe_abstentions"],
+                "unsafe_passes": (
+                    report["semantic_safety"]["unsafe_pass_count"]
+                    if report["semantic_safety"] is not None
+                    else None
+                ),
+            },
+            indent=2,
+        )
+    )
 
     if args.fail_on_unsafe:
         if report["diagnostics_contract"]["unsafe_abstentions"]:

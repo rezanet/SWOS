@@ -5,6 +5,7 @@ Usage:  python3 tools/validate_schemas.py [--strict]
 
 Exit codes: 0 ok, 1 validation failure, 2 harness error.
 """
+
 import json
 import sys
 from pathlib import Path
@@ -80,8 +81,15 @@ def main():
     # 3. Governance policies are well formed.
     for path in (ROOT / "governance" / "policies").glob("*.policy.json"):
         pol = load_json(path)
-        for field in ("policy_id", "version", "gate_type", "trigger", "rules",
-                      "default_effect", "nist_ai_rmf"):
+        for field in (
+            "policy_id",
+            "version",
+            "gate_type",
+            "trigger",
+            "rules",
+            "default_effect",
+            "nist_ai_rmf",
+        ):
             if field not in pol:
                 errors.append(f"{path.name}: missing required policy field '{field}'")
         if pol.get("default_effect") not in ("deny", "escalate"):
@@ -94,8 +102,13 @@ def main():
     # 4. Adapter capability matrices declare what they cannot do.
     for path in (ROOT / "adapters").rglob("capability-matrix.json"):
         cap = load_json(path)
-        for field in ("adapter", "swos_version", "capabilities", "unsupported",
-                      "work_classes_permitted"):
+        for field in (
+            "adapter",
+            "swos_version",
+            "capabilities",
+            "unsupported",
+            "work_classes_permitted",
+        ):
             if field not in cap:
                 errors.append(f"{path.parent.name}: capability matrix missing '{field}'")
         unsupported = set(cap.get("unsupported", []))
@@ -128,11 +141,13 @@ def main():
                 continue
             schema = load_json(SCHEMA_DIR / schema_rel)
             instance = load_json(path)
-            resolver = jsonschema.RefResolver(
-                base_uri=schema["$id"], referrer=schema, store=store
-            )
+            resolver = jsonschema.RefResolver(base_uri=schema["$id"], referrer=schema, store=store)
             validator = jsonschema.Draft202012Validator(schema, resolver=resolver)
-            instances = instance if stem == "governance-gates" and isinstance(instance, list) else [instance]
+            instances = (
+                instance
+                if stem == "governance-gates" and isinstance(instance, list)
+                else [instance]
+            )
             for index, item in enumerate(instances):
                 for err in validator.iter_errors(item):
                     prefix = f"{index}/" if len(instances) > 1 else ""

@@ -4,6 +4,7 @@ This module is optional: the core SWOS Prose package does not require the
 ``openai`` package unless this provider is instantiated without an injected
 client.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -148,12 +149,27 @@ ATTRIBUTION_SCHEMA: dict[str, Any] = {
 }
 
 CLAIM_TYPES = [
-    "empirical", "methodological", "interpretive", "normative", "definitional",
-    "procedural", "evaluative", "other", "unknown",
+    "empirical",
+    "methodological",
+    "interpretive",
+    "normative",
+    "definitional",
+    "procedural",
+    "evaluative",
+    "other",
+    "unknown",
 ]
 EPISTEMIC_TYPES = [
-    "observation", "hypothesis", "inference", "assumption", "conclusion",
-    "report", "method", "evaluation", "none", "unknown",
+    "observation",
+    "hypothesis",
+    "inference",
+    "assumption",
+    "conclusion",
+    "report",
+    "method",
+    "evaluation",
+    "none",
+    "unknown",
 ]
 
 PROPOSITION_SCHEMA: dict[str, Any] = {
@@ -185,9 +201,20 @@ PROPOSITION_SCHEMA: dict[str, Any] = {
         "epistemic_type": {"type": "string", "enum": EPISTEMIC_TYPES},
     },
     "required": [
-        "id", "text", "subject", "relation", "object", "modality",
-        "modality_scope", "attribution", "causal_force", "temporal_relation",
-        "normative_stance", "relation_sign", "claim_type", "epistemic_type",
+        "id",
+        "text",
+        "subject",
+        "relation",
+        "object",
+        "modality",
+        "modality_scope",
+        "attribution",
+        "causal_force",
+        "temporal_relation",
+        "normative_stance",
+        "relation_sign",
+        "claim_type",
+        "epistemic_type",
     ],
 }
 
@@ -207,9 +234,16 @@ SOURCE_MAPPING_SCHEMA: dict[str, Any] = {
         "reason": {"type": ["string", "null"]},
     },
     "required": [
-        "source_id", "candidate_ids", "preserved", "modality_preserved",
-        "scope_preserved", "attribution_preserved", "causal_force_preserved",
-        "relational_direction_preserved", "confidence", "reason",
+        "source_id",
+        "candidate_ids",
+        "preserved",
+        "modality_preserved",
+        "scope_preserved",
+        "attribution_preserved",
+        "causal_force_preserved",
+        "relational_direction_preserved",
+        "confidence",
+        "reason",
     ],
 }
 
@@ -240,8 +274,13 @@ OPENAI_SEMANTIC_VERIFIER_SCHEMA: dict[str, Any] = {
         "notes": {"type": "array", "items": {"type": "string"}},
     },
     "required": [
-        "equivalent", "source_propositions", "candidate_propositions",
-        "source_to_candidate", "candidate_to_source", "unresolved", "notes",
+        "equivalent",
+        "source_propositions",
+        "candidate_propositions",
+        "source_to_candidate",
+        "candidate_to_source",
+        "unresolved",
+        "notes",
     ],
 }
 
@@ -332,12 +371,14 @@ class OpenAIResponsesSemanticVerifierProvider:
         assessment = ProviderAssessment.from_dict(payload)
         assessment.independent_of_rewriter = self.independent_of_rewriter
         assessment.token_usage = _usage_dict(getattr(response, "usage", None))
-        assessment.notes.extend([
-            "provider=openai_responses",
-            f"model={self.model}",
-            f"prompt_version={PROMPT_VERSION}",
-            f"input_sha256={input_hash}",
-        ])
+        assessment.notes.extend(
+            [
+                "provider=openai_responses",
+                f"model={self.model}",
+                f"prompt_version={PROMPT_VERSION}",
+                f"input_sha256={input_hash}",
+            ]
+        )
         response_id = getattr(response, "id", None)
         if response_id:
             assessment.notes.append(f"response_id={response_id}")

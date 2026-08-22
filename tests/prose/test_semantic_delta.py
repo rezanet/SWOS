@@ -41,26 +41,30 @@ def _structured_equivalence(source: str, candidate: str) -> dict:
         "independent_of_rewriter": True,
         "source_propositions": [proposition("p1", source)],
         "candidate_propositions": [proposition("c1", candidate)],
-        "source_to_candidate": [{
-            "source_id": "p1",
-            "candidate_ids": ["c1"],
-            "preserved": True,
-            "modality_preserved": True,
-            "scope_preserved": True,
-            "attribution_preserved": True,
-            "causal_force_preserved": True,
-            "relational_direction_preserved": True,
-            "confidence": 0.99,
-            "reason": "Equivalent proposition and referential scope.",
-        }],
-        "candidate_to_source": [{
-            "candidate_id": "c1",
-            "source_ids": ["p1"],
-            "licensed": True,
-            "new_claim": False,
-            "confidence": 0.99,
-            "reason": "Fully licensed by source.",
-        }],
+        "source_to_candidate": [
+            {
+                "source_id": "p1",
+                "candidate_ids": ["c1"],
+                "preserved": True,
+                "modality_preserved": True,
+                "scope_preserved": True,
+                "attribution_preserved": True,
+                "causal_force_preserved": True,
+                "relational_direction_preserved": True,
+                "confidence": 0.99,
+                "reason": "Equivalent proposition and referential scope.",
+            }
+        ],
+        "candidate_to_source": [
+            {
+                "candidate_id": "c1",
+                "source_ids": ["p1"],
+                "licensed": True,
+                "new_claim": False,
+                "confidence": 0.99,
+                "reason": "Fully licensed by source.",
+            }
+        ],
         "unresolved": [],
         "notes": ["Structured independent equivalence witness."],
     }
@@ -100,7 +104,9 @@ class SemanticDeltaTests(unittest.TestCase):
             candidate="The experiment proved difficult to reproduce.",
         )
         self.assertEqual(result.status, VerificationStatus.REVIEW)
-        self.assertIn("unresolved_equivalence", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertIn(
+            "unresolved_equivalence", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
     def test_safe_changed_text_can_pass_with_independent_verifier(self):
         result = verify_rewrite(
@@ -122,8 +128,8 @@ class SemanticDeltaTests(unittest.TestCase):
 
     def test_quote_change_is_rejected(self):
         result = verify_rewrite(
-            source='The paper states “no clear effect was observed”.',
-            candidate='The paper states “a clear effect was observed”.',
+            source="The paper states “no clear effect was observed”.",
+            candidate="The paper states “a clear effect was observed”.",
         )
         self.assertEqual(result.status, VerificationStatus.REJECT)
         self.assertIn("quotation_changed", [d.delta_type.value for d in result.semantic_deltas])
@@ -151,7 +157,9 @@ class SemanticDeltaTests(unittest.TestCase):
             candidate="The treatment improves retention.",
         )
         self.assertEqual(result.status, VerificationStatus.REPAIR)
-        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:modality_strengthened")
+        self.assertEqual(
+            result.verifier_skip_reason, "deterministic_repairable:modality_strengthened"
+        )
         self.assertIn("modality_strengthened", [d.delta_type.value for d in result.semantic_deltas])
 
     def test_suggestive_to_demonstrative_is_rejected(self):
@@ -167,8 +175,12 @@ class SemanticDeltaTests(unittest.TestCase):
             candidate="Exposure caused higher fatigue.",
         )
         self.assertEqual(result.status, VerificationStatus.REPAIR)
-        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:causal_strength_changed")
-        self.assertIn("causal_strength_changed", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertEqual(
+            result.verifier_skip_reason, "deterministic_repairable:causal_strength_changed"
+        )
+        self.assertIn(
+            "causal_strength_changed", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
     def test_anaphoric_all_routes_to_verifier_and_can_pass(self):
         source = (
@@ -179,9 +191,7 @@ class SemanticDeltaTests(unittest.TestCase):
             "The verifier, rewriter, deterministic checks, and provider contracts "
             "each serve different roles, all of which are important."
         )
-        verifier = StaticSemanticVerifierProvider(
-            _structured_equivalence(source, candidate)
-        )
+        verifier = StaticSemanticVerifierProvider(_structured_equivalence(source, candidate))
 
         result = verify_rewrite(
             source=source,
@@ -199,14 +209,8 @@ class SemanticDeltaTests(unittest.TestCase):
         )
 
     def test_anaphoric_all_without_verifier_requires_review(self):
-        source = (
-            "The verifier and rewriter perform different roles, "
-            "and these roles are important."
-        )
-        candidate = (
-            "The verifier and rewriter perform different roles, "
-            "all of which are important."
-        )
+        source = "The verifier and rewriter perform different roles, and these roles are important."
+        candidate = "The verifier and rewriter perform different roles, all of which are important."
 
         result = verify_rewrite(
             source=source,

@@ -7,22 +7,21 @@ from swos_prose.providers.mock import StaticSemanticVerifierProvider
 from swos_prose.providers.rewrite_mock import StaticRewriteProvider
 from swos_prose.rewrite import polish_text
 
-
-STRONG_SOURCE = (
-    "The revised workflow reduced implementation errors and simplified later review."
-)
+STRONG_SOURCE = "The revised workflow reduced implementation errors and simplified later review."
 
 
 class PolishDiagnosticsTests(unittest.TestCase):
     def test_reviewed_exemplar_abstains_before_any_provider_call(self):
         source = STRONG_SOURCE
         rewriter = StaticRewriteProvider("This provider must not be called.")
-        verifier = StaticSemanticVerifierProvider({
-            "equivalent": True,
-            "independent_of_rewriter": True,
-            "deltas": [],
-            "notes": [],
-        })
+        verifier = StaticSemanticVerifierProvider(
+            {
+                "equivalent": True,
+                "independent_of_rewriter": True,
+                "deltas": [],
+                "notes": [],
+            }
+        )
 
         result = polish_text(
             source=source,

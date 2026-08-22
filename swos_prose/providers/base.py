@@ -1,4 +1,5 @@
 """Provider contracts for model-assisted semantic verification."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -123,8 +124,12 @@ class PropositionReport:
             )
 
         return cls(
-            source_propositions=tuple(prop(item) for item in payload.get("source_propositions", [])),
-            candidate_propositions=tuple(prop(item) for item in payload.get("candidate_propositions", [])),
+            source_propositions=tuple(
+                prop(item) for item in payload.get("source_propositions", [])
+            ),
+            candidate_propositions=tuple(
+                prop(item) for item in payload.get("candidate_propositions", [])
+            ),
             source_to_candidate=tuple(s2c(item) for item in payload.get("source_to_candidate", [])),
             candidate_to_source=tuple(c2s(item) for item in payload.get("candidate_to_source", [])),
             unresolved=tuple(str(item) for item in payload.get("unresolved", [])),
@@ -274,5 +279,4 @@ class SemanticVerifierProvider(Protocol):
         candidate_anchors: list[SemanticAnchor],
         assurance: str,
         native_swos_context: dict | None,
-    ) -> ProviderAssessment:
-        ...
+    ) -> ProviderAssessment: ...

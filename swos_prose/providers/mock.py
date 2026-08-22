@@ -1,4 +1,5 @@
 """Static/mock semantic verifier provider for tests and adapter development."""
+
 from __future__ import annotations
 
 import copy

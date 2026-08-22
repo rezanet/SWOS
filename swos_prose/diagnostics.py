@@ -16,12 +16,12 @@ The exemplar set is intentionally tiny. Expanding zero-cost abstention coverage 
 a benchmark task, not a parser task: new exemplars must be reviewed and added from
 empirical evidence rather than inferred through increasingly permissive regexes.
 """
+
 from __future__ import annotations
 
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 from typing import Any
-
 
 _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 _REPEATED_WORD_RE = re.compile(r"\b([A-Za-z][A-Za-z'’-]*)\s+\1\b", re.IGNORECASE)
@@ -58,11 +58,13 @@ _FORCE_BEARING_RE = re.compile(
 # accepted. The set exists to prove the abstention plumbing and zero-provider-cost
 # contract without pretending that deterministic regexes can certify arbitrary
 # English prose. Benchmark evidence may justify adding more literal exemplars.
-_REVIEWED_ABSTENTION_EXEMPLARS = frozenset({
-    "The revised workflow reduced implementation errors and simplified later review.",
-    "The revised process reduced review effort and improved consistency.",
-    "The revised implementation reduced unnecessary repetition and improved readability.",
-})
+_REVIEWED_ABSTENTION_EXEMPLARS = frozenset(
+    {
+        "The revised workflow reduced implementation errors and simplified later review.",
+        "The revised process reduced review effort and improved consistency.",
+        "The revised implementation reduced unnecessary repetition and improved readability.",
+    }
+)
 
 # A few high-confidence agreement risks are cheap reasons to avoid abstention.
 # False positives are safe: they merely spend the normal rewrite/verifier path.
@@ -111,7 +113,7 @@ def _sentence_word_counts(text: str) -> list[int]:
     chunks: list[str] = []
     start = 0
     for match in _SENTENCE_END_RE.finditer(text):
-        chunks.append(text[start:match.end()])
+        chunks.append(text[start : match.end()])
         start = match.end()
     if text[start:].strip():
         chunks.append(text[start:])

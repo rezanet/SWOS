@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from contextlib import redirect_stderr, redirect_stdout
-from io import StringIO
 import json
 import os
-from pathlib import Path
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
+from io import StringIO
+from pathlib import Path
 from unittest.mock import Mock, patch
 
 from swos_prose import cli
@@ -116,8 +116,12 @@ class PolishCliTests(unittest.TestCase):
         with (
             patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}, clear=True),
             patch.object(sys, "argv", argv),
-            patch("swos_prose.providers.openai_rewrite.OpenAIResponsesRewriteProvider") as rewrite_cls,
-            patch("swos_prose.providers.openai_responses.OpenAIResponsesSemanticVerifierProvider") as verifier_cls,
+            patch(
+                "swos_prose.providers.openai_rewrite.OpenAIResponsesRewriteProvider"
+            ) as rewrite_cls,
+            patch(
+                "swos_prose.providers.openai_responses.OpenAIResponsesSemanticVerifierProvider"
+            ) as verifier_cls,
             patch("swos_prose.cli.polish_text", return_value=result) as polish,
             redirect_stdout(stdout),
             redirect_stderr(stderr),

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Verify every selected commit carries a real DCO Signed-off-by trailer."""
+
 import re
 import subprocess
 import sys
@@ -9,9 +10,7 @@ SIGNOFF_VALUE = re.compile(r"^.+\s<[^<>\s]+@[^<>\s]+>$")
 
 
 def git(*args):
-    return subprocess.run(
-        ["git", *args], capture_output=True, text=True, check=True
-    ).stdout.strip()
+    return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout.strip()
 
 
 def selected_range(base, head):

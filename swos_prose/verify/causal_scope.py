@@ -6,13 +6,13 @@ claim/evidence scope, so the deterministic layer does not mistake a preserved
 phrase such as ``do not claim ... caused`` for an affirmative causal assertion.
 Ambiguous or changed denied content remains verifier work.
 """
+
 from __future__ import annotations
 
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 
 from ..anchors import ASSOCIATION_RE, CAUSAL_RE
-
 
 # Evidence-led nominal association paraphrase observed in live dogfood. Keep this
 # narrow rather than treating arbitrary uses of the noun "association" as a
@@ -122,10 +122,7 @@ def causal_polarity_signals(text: str) -> CausalPolaritySignals:
 
     for match in CAUSAL_RE.finditer(text):
         normalized = " ".join(match.group(0).split()).casefold()
-        in_denied_scope = any(
-            start <= match.start() < end
-            for start, end in denied_spans
-        )
+        in_denied_scope = any(start <= match.start() < end for start, end in denied_spans)
         if in_denied_scope:
             denied.append(normalized)
         else:

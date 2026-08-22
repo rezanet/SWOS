@@ -5,11 +5,11 @@ unquestioned verdict. It checks whether mapped propositions preserve their
 claim category and epistemic status, while remaining compatible with older
 provider fixtures that do not yet populate Slice 4 fields.
 """
+
 from __future__ import annotations
 
 from ..models import DeltaType, SemanticDelta, Severity
 from ..providers.base import Proposition, PropositionReport
-
 
 UNKNOWN = {None, "", "unknown"}
 
@@ -69,35 +69,43 @@ def _classification_pair_deltas(
     if source_claim is not None or candidate_claim is not None:
         if not _known(source_claim) or not _known(candidate_claim):
             if source_claim != candidate_claim:
-                deltas.append(_review(
-                    "Mapped propositions do not both have a resolved claim_type classification.",
+                deltas.append(
+                    _review(
+                        "Mapped propositions do not both have a resolved claim_type classification.",
+                        source_span=source.text,
+                        candidate_span=candidate.text,
+                    )
+                )
+        elif source_claim != candidate_claim:
+            deltas.append(
+                _review(
+                    f"Claim type changed from {source_claim!r} to {candidate_claim!r}; semantic review is required.",
                     source_span=source.text,
                     candidate_span=candidate.text,
-                ))
-        elif source_claim != candidate_claim:
-            deltas.append(_review(
-                f"Claim type changed from {source_claim!r} to {candidate_claim!r}; semantic review is required.",
-                source_span=source.text,
-                candidate_span=candidate.text,
-            ))
+                )
+            )
 
     source_epi = _normalise(source.epistemic_type)
     candidate_epi = _normalise(candidate.epistemic_type)
     if source_epi is not None or candidate_epi is not None:
         if not _known(source_epi) or not _known(candidate_epi):
             if source_epi != candidate_epi:
-                deltas.append(_review(
-                    "Mapped propositions do not both have a resolved epistemic_type classification.",
+                deltas.append(
+                    _review(
+                        "Mapped propositions do not both have a resolved epistemic_type classification.",
+                        source_span=source.text,
+                        candidate_span=candidate.text,
+                    )
+                )
+        elif source_epi != candidate_epi:
+            deltas.append(
+                _delta(
+                    DeltaType.EPISTEMIC_TYPE_CHANGED,
+                    f"Epistemic type changed from {source_epi!r} to {candidate_epi!r}.",
                     source_span=source.text,
                     candidate_span=candidate.text,
-                ))
-        elif source_epi != candidate_epi:
-            deltas.append(_delta(
-                DeltaType.EPISTEMIC_TYPE_CHANGED,
-                f"Epistemic type changed from {source_epi!r} to {candidate_epi!r}.",
-                source_span=source.text,
-                candidate_span=candidate.text,
-            ))
+                )
+            )
 
     return deltas
 
@@ -144,26 +152,26 @@ def coverage_deltas(
                 continue
             sources = [source_props[item] for item in mapping.source_ids if item in source_props]
             claim_types = {
-                _normalise(item.claim_type)
-                for item in sources
-                if _known(item.claim_type)
+                _normalise(item.claim_type) for item in sources if _known(item.claim_type)
             }
             epistemic_types = {
-                _normalise(item.epistemic_type)
-                for item in sources
-                if _known(item.epistemic_type)
+                _normalise(item.epistemic_type) for item in sources if _known(item.epistemic_type)
             }
             if len(claim_types) > 1:
-                deltas.append(_review(
-                    "A candidate proposition merges source propositions with heterogeneous claim types; scalar classification is insufficient to prove preservation.",
-                    source_span=" | ".join(item.text for item in sources),
-                    candidate_span=candidate.text,
-                ))
+                deltas.append(
+                    _review(
+                        "A candidate proposition merges source propositions with heterogeneous claim types; scalar classification is insufficient to prove preservation.",
+                        source_span=" | ".join(item.text for item in sources),
+                        candidate_span=candidate.text,
+                    )
+                )
             if len(epistemic_types) > 1:
-                deltas.append(_review(
-                    "A candidate proposition merges source propositions with heterogeneous epistemic types; scalar classification is insufficient to prove preservation.",
-                    source_span=" | ".join(item.text for item in sources),
-                    candidate_span=candidate.text,
-                ))
+                deltas.append(
+                    _review(
+                        "A candidate proposition merges source propositions with heterogeneous epistemic types; scalar classification is insufficient to prove preservation.",
+                        source_span=" | ".join(item.text for item in sources),
+                        candidate_span=candidate.text,
+                    )
+                )
 
     return deltas

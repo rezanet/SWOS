@@ -1,4 +1,5 @@
 """Provider contract for SWOS Prose rewrite generation."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -32,5 +33,4 @@ class RewriteProvider(Protocol):
         rewrite_plan: dict[str, Any],
         context_before: str | None = None,
         context_after: str | None = None,
-    ) -> RewriteCandidate:
-        ...
+    ) -> RewriteCandidate: ...

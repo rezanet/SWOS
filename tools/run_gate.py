@@ -22,7 +22,18 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 
 RECOGNISED_RULE_EFFECTS = {"allow", "continue", "deny", "escalate", "require_approval", "require"}
-RECOGNISED_CONDITION_OPS = {"equals", "in", "not_in", "exists", "min_items", "max_items", "gt", "gte", "lt", "lte"}
+RECOGNISED_CONDITION_OPS = {
+    "equals",
+    "in",
+    "not_in",
+    "exists",
+    "min_items",
+    "max_items",
+    "gt",
+    "gte",
+    "lt",
+    "lte",
+}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -106,7 +117,9 @@ def compare_condition(actual: Any, condition: Any) -> tuple[bool, str | None]:
     return actual == condition, None if actual == condition else f"equals {condition!r}"
 
 
-def condition_matches(context: dict[str, Any], when_clause: dict[str, Any]) -> tuple[bool, list[str]]:
+def condition_matches(
+    context: dict[str, Any], when_clause: dict[str, Any]
+) -> tuple[bool, list[str]]:
     evidence: list[str] = []
     for path, expected in when_clause.items():
         present, actual = resolve_path(context, path)
@@ -154,7 +167,14 @@ def validate_policy(policy: dict[str, Any]) -> list[str]:
     return errors
 
 
-def evaluate_policy(policy: dict[str, Any], context: dict[str, Any], *, gate_id: str, work_id: str, evaluated_by: str) -> dict[str, Any]:
+def evaluate_policy(
+    policy: dict[str, Any],
+    context: dict[str, Any],
+    *,
+    gate_id: str,
+    work_id: str,
+    evaluated_by: str,
+) -> dict[str, Any]:
     evidence: list[str] = []
     final_result = "pass"
     waiver = context.get("waiver")
@@ -169,7 +189,9 @@ def evaluate_policy(policy: dict[str, Any], context: dict[str, Any], *, gate_id:
         matched_any_rule = True
         rule_id = rule["id"]
         effect = rule["effect"]
-        reason = rule.get("reason") or rule.get("else", {}).get("reason") or f"rule {rule_id} matched"
+        reason = (
+            rule.get("reason") or rule.get("else", {}).get("reason") or f"rule {rule_id} matched"
+        )
         evidence.extend([f"{rule_id}: {item}" for item in rule_evidence] or [f"{rule_id}: matched"])
 
         if effect in {"allow", "continue"}:
@@ -177,7 +199,9 @@ def evaluate_policy(policy: dict[str, Any], context: dict[str, Any], *, gate_id:
 
         if effect == "require":
             required_fields = rule.get("requires", [])
-            missing_fields = [field for field in required_fields if not resolve_path(context, field)[0]]
+            missing_fields = [
+                field for field in required_fields if not resolve_path(context, field)[0]
+            ]
             if missing_fields:
                 final_result = "fail"
                 evidence.append(f"{rule_id}: required fields missing - {', '.join(missing_fields)}")
@@ -230,7 +254,9 @@ def evaluate_policy(policy: dict[str, Any], context: dict[str, Any], *, gate_id:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Evaluate a SWOS governance policy.")
-    parser.add_argument("--policy", required=True, help="Path to a frozen governance policy JSON file")
+    parser.add_argument(
+        "--policy", required=True, help="Path to a frozen governance policy JSON file"
+    )
     parser.add_argument("--context", required=True, help="Path to the runtime context JSON file")
     parser.add_argument("--gate-id", default="gate-00000000-0000-4000-8000-000000000000")
     parser.add_argument("--work-id", required=True)

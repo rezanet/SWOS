@@ -3,6 +3,7 @@
 This module intentionally favours conservative, inspectable signals over opaque
 semantic scoring. Model-assisted proposition extraction is plugged in separately.
 """
+
 from __future__ import annotations
 
 import re
@@ -12,14 +13,13 @@ from decimal import Decimal, InvalidOperation
 
 from .models import SemanticAnchor
 
-
 NUMBER_RE = re.compile(r"(?<![\w.])(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?%?(?![\w.])")
 CITATION_RES = (
     re.compile(r"\[(?:\d+(?:\s*[-,]\s*\d+)*)\]"),
     re.compile(r"\([A-Z][A-Za-z'’.-]+(?:\s+et al\.)?,?\s+(?:19|20)\d{2}[a-z]?\)"),
 )
 QUOTE_RES = (
-    re.compile(r'“([^”]+)”'),
+    re.compile(r"“([^”]+)”"),
     re.compile(r'"([^"\n]+)"'),
 )
 
@@ -42,10 +42,20 @@ NEGATION_RE = re.compile(
     re.I,
 )
 WEAK_MODAL_RE = re.compile(r"\b(?:may|might|could|possibly|perhaps)\b", re.I)
-SUGGESTIVE_RE = re.compile(r"\b(?:suggests?|suggested|indicates?|indicated|appears?|seems?)\b", re.I)
-STRONG_EPISTEMIC_RE = re.compile(r"\b(?:demonstrates?|demonstrated|proves?|proved|establishes?|established|confirms?|confirmed)\b", re.I)
-ASSOCIATION_RE = re.compile(r"\b(?:associated\s+with|correlated\s+with|linked\s+to|related\s+to)\b", re.I)
-CAUSAL_RE = re.compile(r"\b(?:causes?|caused|leads?\s+to|led\s+to|results?\s+in|resulted\s+in|produces?|produced|drives?|drove|determines?|determined)\b", re.I)
+SUGGESTIVE_RE = re.compile(
+    r"\b(?:suggests?|suggested|indicates?|indicated|appears?|seems?)\b", re.I
+)
+STRONG_EPISTEMIC_RE = re.compile(
+    r"\b(?:demonstrates?|demonstrated|proves?|proved|establishes?|established|confirms?|confirmed)\b",
+    re.I,
+)
+ASSOCIATION_RE = re.compile(
+    r"\b(?:associated\s+with|correlated\s+with|linked\s+to|related\s+to)\b", re.I
+)
+CAUSAL_RE = re.compile(
+    r"\b(?:causes?|caused|leads?\s+to|led\s+to|results?\s+in|resulted\s+in|produces?|produced|drives?|drove|determines?|determined)\b",
+    re.I,
+)
 QUANTIFIER_RE = re.compile(r"\b(?:none|few|some|many|most|all|sometimes|often|always)\b", re.I)
 SCOPE_RES = (
     re.compile(r"\bin\s+(?:this|the)\s+(?:sample|cohort|study|dataset|population)\b", re.I),
@@ -60,13 +70,41 @@ ATTRIBUTION_RE = re.compile(
 )
 
 _ONES = (
-    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-    "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-    "seventeen", "eighteen", "nineteen",
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen",
 )
-_TENS = {20: "twenty", 30: "thirty", 40: "forty", 50: "fifty", 60: "sixty", 70: "seventy", 80: "eighty", 90: "ninety"}
+_TENS = {
+    20: "twenty",
+    30: "thirty",
+    40: "forty",
+    50: "fifty",
+    60: "sixty",
+    70: "seventy",
+    80: "eighty",
+    90: "ninety",
+}
 _SCALES = ((1_000_000_000, "billion"), (1_000_000, "million"), (1_000, "thousand"))
-_NUMBER_WORDS = set(_ONES) | set(_TENS.values()) | {"hundred", "thousand", "million", "billion", "and", "minus"}
+_NUMBER_WORDS = (
+    set(_ONES) | set(_TENS.values()) | {"hundred", "thousand", "million", "billion", "and", "minus"}
+)
 
 
 @dataclass(frozen=True)
@@ -105,7 +143,9 @@ def canonical_numeric_token(text: str) -> str:
 
 
 def _anchor(kind: str, text: str, start: int, end: int, index: int) -> SemanticAnchor:
-    normalized = canonical_numeric_token(text) if kind == "number" else " ".join(text.split()).casefold()
+    normalized = (
+        canonical_numeric_token(text) if kind == "number" else " ".join(text.split()).casefold()
+    )
     return SemanticAnchor(
         anchor_id=f"{kind}-{index:03d}",
         kind=kind,
@@ -122,18 +162,26 @@ def extract_anchors(text: str) -> list[SemanticAnchor]:
 
     for regex in QUOTE_RES:
         for match in regex.finditer(text):
-            anchors.append(_anchor("quotation", match.group(0), match.start(), match.end(), len(anchors) + 1))
+            anchors.append(
+                _anchor("quotation", match.group(0), match.start(), match.end(), len(anchors) + 1)
+            )
             protected_spans.append((match.start(), match.end()))
 
     for regex in CITATION_RES:
         for match in regex.finditer(text):
             if not _overlaps((match.start(), match.end()), protected_spans):
-                anchors.append(_anchor("citation", match.group(0), match.start(), match.end(), len(anchors) + 1))
+                anchors.append(
+                    _anchor(
+                        "citation", match.group(0), match.start(), match.end(), len(anchors) + 1
+                    )
+                )
                 protected_spans.append((match.start(), match.end()))
 
     for match in NUMBER_RE.finditer(text):
         if not _overlaps((match.start(), match.end()), protected_spans):
-            anchors.append(_anchor("number", match.group(0), match.start(), match.end(), len(anchors) + 1))
+            anchors.append(
+                _anchor("number", match.group(0), match.start(), match.end(), len(anchors) + 1)
+            )
 
     return sorted(anchors, key=lambda item: (item.start, item.end, item.kind))
 
@@ -193,7 +241,7 @@ def _word_number_occurrences(text: str, value: str) -> int:
         width = len(form_tokens)
         count = 0
         for index in range(0, len(tokens) - width + 1):
-            if tuple(tokens[index:index + width]) != form_tokens:
+            if tuple(tokens[index : index + width]) != form_tokens:
                 continue
             before = tokens[index - 1] if index > 0 else None
             after_index = index + width

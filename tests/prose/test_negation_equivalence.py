@@ -33,26 +33,30 @@ def _equivalent_payload(source: str, candidate: str) -> dict:
         "independent_of_rewriter": True,
         "source_propositions": [_proposition("p1", source)],
         "candidate_propositions": [_proposition("c1", candidate)],
-        "source_to_candidate": [{
-            "source_id": "p1",
-            "candidate_ids": ["c1"],
-            "preserved": True,
-            "modality_preserved": True,
-            "scope_preserved": True,
-            "attribution_preserved": True,
-            "causal_force_preserved": True,
-            "relational_direction_preserved": True,
-            "confidence": 0.99,
-            "reason": "Reviewed lexical-negation paraphrase preserves the proposition.",
-        }],
-        "candidate_to_source": [{
-            "candidate_id": "c1",
-            "source_ids": ["p1"],
-            "licensed": True,
-            "new_claim": False,
-            "confidence": 0.99,
-            "reason": "Candidate is fully licensed by the source.",
-        }],
+        "source_to_candidate": [
+            {
+                "source_id": "p1",
+                "candidate_ids": ["c1"],
+                "preserved": True,
+                "modality_preserved": True,
+                "scope_preserved": True,
+                "attribution_preserved": True,
+                "causal_force_preserved": True,
+                "relational_direction_preserved": True,
+                "confidence": 0.99,
+                "reason": "Reviewed lexical-negation paraphrase preserves the proposition.",
+            }
+        ],
+        "candidate_to_source": [
+            {
+                "candidate_id": "c1",
+                "source_ids": ["p1"],
+                "licensed": True,
+                "new_claim": False,
+                "confidence": 0.99,
+                "reason": "Candidate is fully licensed by the source.",
+            }
+        ],
         "unresolved": [],
         "notes": [],
     }
@@ -79,9 +83,7 @@ class ReviewedNegationEquivalenceTests(unittest.TestCase):
 
         for source, candidate in pairs:
             with self.subTest(source=source):
-                verifier = StaticSemanticVerifierProvider(
-                    _equivalent_payload(source, candidate)
-                )
+                verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
                 result = verify_rewrite(
                     source=source,
                     candidate=candidate,
@@ -136,12 +138,8 @@ class ReviewedNegationEquivalenceTests(unittest.TestCase):
         )
 
     def test_reviewed_negation_cannot_move_to_another_clause(self):
-        source = (
-            "The first condition is not sufficient, while the second condition is sufficient."
-        )
-        candidate = (
-            "The first condition is sufficient, while the second condition is insufficient."
-        )
+        source = "The first condition is not sufficient, while the second condition is sufficient."
+        candidate = "The first condition is sufficient, while the second condition is insufficient."
         verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
 
         result = verify_rewrite(
