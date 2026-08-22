@@ -11,6 +11,7 @@ from benchmark.runner import (
     BENCHMARK_VERSION,
     _base_report,
     _combined_result_usage,
+    _cost_method,
     _mode_preset_performance,
     _repair_summary,
     _resolved_model,
@@ -86,6 +87,22 @@ class ProseBenchmarkContractTests(unittest.TestCase):
             self.assertEqual(_resolved_model(None, "SWOS_TEST_MODEL"), "gpt-env")
         with patch.dict("os.environ", {}, clear=True):
             self.assertEqual(_resolved_model(None, "SWOS_TEST_MODEL"), "gpt-5.6")
+
+    def test_mixed_model_costs_are_fail_closed(self):
+        with patch.dict(
+            "os.environ",
+            {
+                "SWOS_PROSE_INPUT_USD_PER_1K": "0.01",
+                "SWOS_PROSE_OUTPUT_USD_PER_1K": "0.02",
+            },
+        ):
+            method = _cost_method(
+                {"rewriter": "gpt-rewriter", "verifier": "gpt-verifier", "repair": "gpt-rewriter"}
+            )
+
+        self.assertFalse(method["available"])
+        self.assertIsNone(method["rates"])
+        self.assertIn("models differ", method["note"])
 
     def test_combined_usage_includes_repair_attempt_tokens(self):
         result = SimpleNamespace(

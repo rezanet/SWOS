@@ -52,16 +52,25 @@ def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def _cost_method() -> dict[str, Any]:
+def _cost_method(model_identity: dict[str, str] | None = None) -> dict[str, Any]:
     rates = configured_cost_rates()
+    models = set(model_identity.values()) if model_identity else set()
+    mixed_models = len(models) > 1
+    available = rates is not None and not mixed_models
     return {
-        "available": rates is not None,
-        "rates": rates,
+        "available": available,
+        "rates": rates if not mixed_models else None,
         "input_rate_env": "SWOS_PROSE_INPUT_USD_PER_1K",
         "output_rate_env": "SWOS_PROSE_OUTPUT_USD_PER_1K",
         "note": (
             "Cost is an optional estimate from explicit input/output USD-per-1K-token rates; "
             "missing or invalid pricing is reported as unavailable, never as zero."
+            + (
+                " Cost is also unavailable when the selected provider models differ because "
+                "one global rate pair cannot represent mixed-model pricing."
+                if mixed_models
+                else ""
+            )
         ),
     }
 
@@ -394,7 +403,7 @@ def _combined_result_usage(result: Any) -> dict[str, int]:
     return totals
 
 
-def _combined_result_cost(result: Any) -> float | None:
+def _combined_result_cost(result: Any, *, cost_available: bool = True) -> float | None:
     """Sum configured costs for every provider call represented by a result."""
 
     costs: list[float | None] = []
@@ -420,6 +429,8 @@ def _combined_result_cost(result: Any) -> float | None:
         costs.append(verifier_cost)
     if not costs:
         return 0.0
+    if not cost_available:
+        return None
     if any(value is None for value in costs):
         return None
     return round(sum(float(value) for value in costs), 10)
@@ -533,6 +544,7 @@ def run_efficiency(
         "verifier": verifier.model,
         "repair": rewriter.model,
     }
+    cost_method = _cost_method(model_identity)
 
     total_without: dict[str, int] = {}
     saved: dict[str, int] = {}
@@ -569,7 +581,7 @@ def run_efficiency(
         )
         latency_ms = (perf_counter() - rewrite_started) * 1000
         usage = _combined_result_usage(result)
-        cost = _combined_result_cost(result)
+        cost = _combined_result_cost(result, cost_available=cost_method["available"])
         baseline_costs.append(cost)
         if would_skip:
             saved_costs.append(cost)
@@ -657,7 +669,7 @@ def run_efficiency(
             if baseline_cost not in (None, 0) and saved_cost is not None
             else None
         ),
-        "cost": _cost_method(),
+        "cost": cost_method,
         "model_identity": model_identity,
         "mode_preset_performance": _mode_preset_performance(records),
         "repair": _repair_summary(records),
@@ -754,11 +766,13 @@ def build_report(
     stability_runs: int,
 ) -> dict[str, Any]:
     report = _base_report(fixtures, mode)
-    report["performance"]["model_identity"] = {
+    performance_model_identity = {
         "rewriter": _resolved_model(rewrite_model, "SWOS_PROSE_OPENAI_REWRITE_MODEL"),
         "verifier": _resolved_model(verifier_model, "SWOS_PROSE_OPENAI_MODEL"),
         "repair": _resolved_model(rewrite_model, "SWOS_PROSE_OPENAI_REWRITE_MODEL"),
     }
+    report["performance"]["model_identity"] = performance_model_identity
+    report["performance"]["cost"] = _cost_method(performance_model_identity)
     validation = validate_corpus(fixtures)
     report["records"].append(
         {"kind": "diagnostics_validation", "items": validation["diagnostics_records"]}
