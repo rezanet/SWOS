@@ -254,6 +254,29 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
                 self.assertEqual(len(deltas), 1)
 
+    def test_context_sentence_matching_ignores_markdown_link_destinations(self):
+        source = "The study continued."
+        context_sentence = "[Access denied.](https://example.test)"
+
+        deltas = context_only_deltas(
+            source,
+            f"{source} Access denied.",
+            context_after=context_sentence,
+        )
+
+        self.assertEqual(len(deltas), 1)
+
+    def test_context_sentence_matching_preserves_raw_url_content(self):
+        context_sentence = "https://example.test/access-denied"
+
+        deltas = context_only_deltas(
+            "The study continued.",
+            f"The study continued. {context_sentence}",
+            context_after=context_sentence,
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_mid_sentence_initialism_remains_a_context_only_claim(self):
         deltas = context_only_deltas(
             "Regulators in the U.S. approved the plan.",

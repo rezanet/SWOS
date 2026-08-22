@@ -134,10 +134,67 @@ def _strip_markdown_wrapper(value: str) -> str:
     return surface
 
 
+def _find_markdown_closer(value: str, start: int, opening: str, closing: str) -> int | None:
+    depth = 0
+    escaped = False
+    for index in range(start, len(value)):
+        character = value[index]
+        if escaped:
+            escaped = False
+            continue
+        if character == "\\":
+            escaped = True
+            continue
+        if character == opening:
+            depth += 1
+        elif character == closing:
+            depth -= 1
+            if depth == 0:
+                return index
+    return None
+
+
+def _strip_markdown_links(value: str) -> str:
+    """Replace valid Markdown link syntax with its visible label only.
+
+    A link destination is presentation metadata for this context-only
+    comparison, while a raw URL outside link syntax remains untouched as
+    potentially meaning-bearing prose.
+    """
+
+    surface = value.strip()
+    pieces: list[str] = []
+    copy_start = 0
+    index = 0
+    changed = False
+    while index < len(surface):
+        if surface[index] != "[" or (index > 0 and surface[index - 1] == "!"):
+            index += 1
+            continue
+        label_end = _find_markdown_closer(surface, index, "[", "]")
+        if label_end is None or label_end + 1 >= len(surface) or surface[label_end + 1] != "(":
+            index += 1
+            continue
+        destination_end = _find_markdown_closer(surface, label_end + 1, "(", ")")
+        if destination_end is None or not surface[label_end + 2 : destination_end].strip():
+            index += 1
+            continue
+        pieces.append(surface[copy_start:index])
+        pieces.append(surface[index + 1 : label_end])
+        copy_start = destination_end + 1
+        index = copy_start
+        changed = True
+    if not changed:
+        return surface
+    pieces.append(surface[copy_start:])
+    return "".join(pieces).strip()
+
+
 def _canonical_context_surface(value: str) -> str:
     surface = value.strip()
     while True:
-        unwrapped = _CONTEXT_WRAPPER_RE.sub("", surface)
+        unwrapped = _strip_markdown_links(surface)
+        unwrapped = _CONTEXT_WRAPPER_RE.sub("", unwrapped)
         unwrapped = _strip_markdown_wrapper(unwrapped)
         unpresented = _CONTEXT_PRESENTATION_PREFIX_RE.sub("", unwrapped).strip()
         if unpresented == surface:
