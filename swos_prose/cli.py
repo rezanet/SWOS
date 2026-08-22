@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from .context import inspect_context
 from .diagnostics import diagnose_polish
 from .modes import SUPPORTED_MODES, SUPPORTED_PRESETS
 from .pipeline import verify_rewrite
@@ -120,11 +121,12 @@ def _run_polish(args: argparse.Namespace) -> int:
     source = _read(args.source)
     context_before = _read_optional(args.context_before)
     context_after = _read_optional(args.context_after)
+    context_safety = inspect_context(context_before, context_after)
 
     # Preserve the library's zero-provider boundary. Exact reviewed diagnostics
     # exemplars (and empty input) must not require the OpenAI SDK, credentials,
     # or provider construction.
-    local_no_provider = not source.strip()
+    local_no_provider = not source.strip() or not context_safety.accepted
     if not local_no_provider and not args.skip_diagnostics:
         diagnostics = diagnose_polish(
             source,

@@ -234,6 +234,14 @@ class GProse95ContextSafetyTests(unittest.TestCase):
         self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
         self.assertIn("context", " ".join(diagnostics.signals).casefold())
 
+    def test_diagnostics_abstention_exemplar_is_scoped_to_default_polish_policy(self):
+        source = "The revised workflow reduced implementation errors and simplified later review."
+
+        diagnostics = diagnose_polish(source, mode="tighten", preset="executive")
+
+        self.assertEqual(diagnostics.recommendation, "PROCEED_TO_REWRITE")
+        self.assertEqual(diagnostics.positive_evidence, ())
+
     def test_provider_receives_context_as_explicit_untrusted_read_only_metadata(self):
         class CapturingVerifier:
             def __init__(self):

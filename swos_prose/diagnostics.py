@@ -143,8 +143,12 @@ def _positive_structure_evidence(
     *,
     word_count: int,
     sentence_count: int,
+    mode: str,
+    preset: str | None,
 ) -> tuple[str, ...]:
     """Recognise only an explicitly reviewed literal source exemplar."""
+    if mode != "polish" or preset is not None:
+        return ()
     if not (_MIN_ABSTAIN_WORDS <= word_count <= _MAX_ABSTAIN_WORDS):
         return ()
     if sentence_count != 1:
@@ -217,6 +221,8 @@ def diagnose_polish(
         source,
         word_count=word_count,
         sentence_count=sentence_count,
+        mode=mode,
+        preset=preset,
     )
     if not positive_evidence:
         signals.append("no_reviewed_abstention_exemplar")
