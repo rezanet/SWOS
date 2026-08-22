@@ -16,6 +16,7 @@ _INSTRUCTION_LIKE_RE = re.compile(
 _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 _SENTENCE_TERMINATORS = frozenset(".!?")
 _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
+_CONTEXT_SURFACE_NOISE_RE = re.compile(r"[.!?,;\"'()\[\]{}“”‘’]+")
 
 
 @dataclass(frozen=True)
@@ -79,7 +80,11 @@ def inspect_context(before: str | None = None, after: str | None = None) -> Cont
 
 
 def _normalise_sentence(value: str) -> str:
-    return " ".join(_WORD_RE.findall(value.casefold()))
+    # Keep meaning-bearing operators and identifier punctuation (for example
+    # ``C#`` vs ``C++`` and ``foo::bar`` vs ``foo/bar``). Only sentence/display
+    # delimiters are discarded before whitespace is canonicalised.
+    surface = _CONTEXT_SURFACE_NOISE_RE.sub(" ", value.casefold())
+    return " ".join(surface.split())
 
 
 def _sentences(value: str) -> list[tuple[str, str]]:

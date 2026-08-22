@@ -186,6 +186,23 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_sentence_matching_preserves_semantic_symbols(self):
+        cases = (
+            ("C# works.", "C++ works."),
+            ("The value is < 3.", "The value is > 3."),
+            ("Use foo::bar.", "Use foo/bar."),
+        )
+
+        for source, context_sentence in cases:
+            with self.subTest(source=source, context_sentence=context_sentence):
+                deltas = context_only_deltas(
+                    source,
+                    context_sentence,
+                    context_after=context_sentence,
+                )
+
+                self.assertEqual(len(deltas), 1)
+
     def test_context_sentence_matching_splits_after_sentence_final_abbreviation(self):
         deltas = context_only_deltas(
             "The study was reviewed.",
