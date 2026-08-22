@@ -186,6 +186,15 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_sentence_matching_splits_after_sentence_final_abbreviation(self):
+        deltas = context_only_deltas(
+            "The study was reviewed.",
+            "The study was reviewed. Access denied.",
+            context_after="The approval came from the U.S. Access denied.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_short_context_sentence_is_not_discarded(self):
         deltas = context_only_deltas(
             "The test ran.",

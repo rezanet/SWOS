@@ -4,6 +4,7 @@ import json
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from benchmark.runner import (
     ACTIVE_CORPUS_COUNT,
@@ -11,6 +12,7 @@ from benchmark.runner import (
     _base_report,
     _combined_result_usage,
     _repair_summary,
+    _resolved_model,
     load_corpus,
     validate_corpus,
 )
@@ -76,6 +78,13 @@ class ProseBenchmarkContractTests(unittest.TestCase):
         self.assertEqual(frozen["corpus"]["fixture_count"], 50)
         frozen_at = (ROOT / "benchmark" / "FROZEN_AT").read_text(encoding="utf-8")
         self.assertIn("benchmark_version: 0.2.0-rc1", frozen_at)
+
+    def test_resolved_model_identity_prefers_explicit_then_environment_then_default(self):
+        self.assertEqual(_resolved_model("gpt-explicit", "SWOS_TEST_MODEL"), "gpt-explicit")
+        with patch.dict("os.environ", {"SWOS_TEST_MODEL": "gpt-env"}):
+            self.assertEqual(_resolved_model(None, "SWOS_TEST_MODEL"), "gpt-env")
+        with patch.dict("os.environ", {}, clear=True):
+            self.assertEqual(_resolved_model(None, "SWOS_TEST_MODEL"), "gpt-5.6")
 
     def test_combined_usage_includes_repair_attempt_tokens(self):
         result = SimpleNamespace(

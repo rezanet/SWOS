@@ -66,6 +66,10 @@ def _cost_method() -> dict[str, Any]:
     }
 
 
+def _resolved_model(model: str | None, env_name: str, default: str = "gpt-5.6") -> str:
+    return model or os.environ.get(env_name, default)
+
+
 def _canonical_hash(fixtures: list[dict[str, Any]]) -> str:
     payload = json.dumps(fixtures, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
@@ -360,6 +364,7 @@ def run_safety(
         else 0.0,
         "cost_estimate_total": _aggregate_cost(records),
         "cost": _cost_method(),
+        "model_identity": {"verifier": provider.model},
         "note": (
             "For material-change probes, PASS is unsafe. REVIEW and REJECT are fail-closed. "
             "For equivalent probes, non-PASS outcomes are reported as quality/stability costs, "
@@ -516,6 +521,11 @@ def run_efficiency(
     _require_live()
     rewriter = OpenAIResponsesRewriteProvider(model=rewrite_model)
     verifier = OpenAIResponsesSemanticVerifierProvider(model=verifier_model)
+    model_identity = {
+        "rewriter": rewriter.model,
+        "verifier": verifier.model,
+        "repair": rewriter.model,
+    }
 
     total_without: dict[str, int] = {}
     saved: dict[str, int] = {}
@@ -582,6 +592,7 @@ def run_efficiency(
                 "latency_ms": latency_ms,
                 "diagnostics_latency_ms": diagnostics_latency_ms,
                 "provider_calls": _result_provider_calls(result),
+                "model_identity": model_identity,
             }
         )
 
@@ -634,6 +645,7 @@ def run_efficiency(
             else None
         ),
         "cost": _cost_method(),
+        "model_identity": model_identity,
         "mode_preset_performance": _mode_preset_performance(records),
         "repair": _repair_summary(records),
         "latency_ms_total": round(sum(latencies), 3),
@@ -708,6 +720,7 @@ def run_stability(
         else 0.0,
         "cost_estimate_total": _aggregate_cost(records),
         "cost": _cost_method(),
+        "model_identity": {"verifier": provider.model},
         "repeated_verifier_overhead": {
             "total_draws": len(records),
             "verifier_calls": _provider_call_summary(records)["verifier"],
@@ -728,6 +741,11 @@ def build_report(
     stability_runs: int,
 ) -> dict[str, Any]:
     report = _base_report(fixtures, mode)
+    report["performance"]["model_identity"] = {
+        "rewriter": _resolved_model(rewrite_model, "SWOS_PROSE_OPENAI_REWRITE_MODEL"),
+        "verifier": _resolved_model(verifier_model, "SWOS_PROSE_OPENAI_MODEL"),
+        "repair": _resolved_model(rewrite_model, "SWOS_PROSE_OPENAI_REWRITE_MODEL"),
+    }
     validation = validate_corpus(fixtures)
     report["records"].append(
         {"kind": "diagnostics_validation", "items": validation["diagnostics_records"]}

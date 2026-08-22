@@ -16,10 +16,6 @@ _INSTRUCTION_LIKE_RE = re.compile(
 _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 _SENTENCE_TERMINATORS = frozenset(".!?")
 _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
-_ABBREVIATION_RE = re.compile(
-    r"(?:\b[A-Za-z]\.){2,}$|(?:\b(?:e\.g|i\.e|etc|mr|mrs|ms|dr|prof|sr|jr|st|vs)\.)$",
-    re.IGNORECASE,
-)
 
 
 @dataclass(frozen=True)
@@ -98,13 +94,6 @@ def _sentences(value: str) -> list[tuple[str, str]]:
     for index, character in enumerate(value):
         if character not in _SENTENCE_TERMINATORS:
             continue
-        if character == ".":
-            fragment = value[start : index + 1].strip()
-            if _ABBREVIATION_RE.search(fragment):
-                continue
-            initial = fragment.lstrip("\"'([{“‘")
-            if len(initial) == 2 and initial[0].isalpha() and initial[1] == ".":
-                continue
         end = index + 1
         while end < len(value) and value[end] in _CLOSING_SENTENCE_DELIMITERS:
             end += 1
