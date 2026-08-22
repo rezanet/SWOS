@@ -203,6 +203,36 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
                 self.assertEqual(len(deltas), 1)
 
+    def test_context_sentence_matching_preserves_quantifier_punctuation(self):
+        deltas = context_only_deltas(
+            "No more than five items are required.",
+            "No, more than five items are required.",
+            context_after="No, more than five items are required.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
+    def test_mid_sentence_initialism_does_not_create_context_fragments(self):
+        deltas = context_only_deltas(
+            "Regulators in the U.S. approved the plan.",
+            "U.S. regulators approved the plan.",
+            context_after="U.S. regulators approved the plan.",
+        )
+
+        self.assertEqual(deltas, [])
+
+    def test_added_initialism_sentence_remains_context_only(self):
+        source = "Regulators in the U.S. approved the plan."
+        context_sentence = "U.S. regulators approved the plan."
+
+        deltas = context_only_deltas(
+            source,
+            f"{source} {context_sentence}",
+            context_after=context_sentence,
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_context_sentence_matching_splits_after_sentence_final_abbreviation(self):
         deltas = context_only_deltas(
             "The study was reviewed.",

@@ -16,7 +16,11 @@ _INSTRUCTION_LIKE_RE = re.compile(
 _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 _SENTENCE_TERMINATORS = frozenset(".!?")
 _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
-_CONTEXT_SURFACE_NOISE_RE = re.compile(r"[.!?,;\"'()\[\]{}“”‘’]+")
+_INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
+_CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
+_CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?]+$")
+_CONTEXT_IGNORED_SYMBOLS = frozenset(".!?\"'()[]{}“”‘’")
+_CONTEXT_FUNCTION_WORDS = frozenset({"a", "an", "the", "in", "of", "to", "from"})
 
 
 @dataclass(frozen=True)
@@ -83,8 +87,60 @@ def _normalise_sentence(value: str) -> str:
     # Keep meaning-bearing operators and identifier punctuation (for example
     # ``C#`` vs ``C++`` and ``foo::bar`` vs ``foo/bar``). Only sentence/display
     # delimiters are discarded before whitespace is canonicalised.
-    surface = _CONTEXT_SURFACE_NOISE_RE.sub(" ", value.casefold())
+    surface = value.casefold().strip()
+    while True:
+        unwrapped = _CONTEXT_WRAPPER_RE.sub("", surface)
+        if unwrapped == surface:
+            break
+        surface = unwrapped.strip()
+    surface = _CONTEXT_TERMINAL_PUNCTUATION_RE.sub("", surface.rstrip())
     return " ".join(surface.split())
+
+
+def _content_tokens(value: str) -> tuple[str, ...]:
+    without_initialisms = _INITIALISM_RE.sub(" ", value.casefold())
+    return tuple(
+        token
+        for token in _WORD_RE.findall(without_initialisms)
+        if token not in _CONTEXT_FUNCTION_WORDS
+    )
+
+
+def _initialism_signature(value: str) -> tuple[str, ...]:
+    return tuple(match.group(0).casefold() for match in _INITIALISM_RE.finditer(value))
+
+
+def _semantic_symbol_signature(value: str) -> tuple[str, ...]:
+    return tuple(
+        character.casefold()
+        for character in value
+        if (
+            not character.isspace()
+            and not character.isalnum()
+            and character not in _CONTEXT_IGNORED_SYMBOLS
+        )
+    )
+
+
+def _source_licenses_context_sentence(
+    context_surface: str,
+    source_sentences: list[tuple[str, str]],
+    *,
+    candidate_sentence_count: int,
+) -> bool:
+    """Allow only a same-length, punctuation-preserving source reordering."""
+
+    if candidate_sentence_count != len(source_sentences):
+        return False
+    context_tokens = _content_tokens(context_surface)
+    context_initialisms = _initialism_signature(context_surface)
+    context_symbols = _semantic_symbol_signature(context_surface)
+    return any(
+        _content_tokens(source_surface) == context_tokens
+        and _initialism_signature(source_surface) == context_initialisms
+        and _semantic_symbol_signature(source_surface) == context_symbols
+        for source_surface, _ in source_sentences
+    )
 
 
 def _sentences(value: str) -> list[tuple[str, str]]:
@@ -104,7 +160,16 @@ def _sentences(value: str) -> list[tuple[str, str]]:
             end += 1
         if end < len(value) and not value[end].isspace():
             continue
-        append_surface(value[start:end].strip())
+        fragment = value[start:end].strip()
+        following = value[end:].lstrip()
+        if (
+            character == "."
+            and _INITIALISM_RE.search(fragment)
+            and following
+            and following[0].islower()
+        ):
+            continue
+        append_surface(fragment)
         start = end
 
     tail = value[start:].strip()
@@ -129,14 +194,22 @@ def context_only_deltas(
 
     if not candidate or source == candidate:
         return []
-    source_sentences = {normalised for _, normalised in _sentences(source)}
-    candidate_sentences = {normalised for _, normalised in _sentences(candidate)}
+    source_sentence_items = _sentences(source)
+    candidate_sentence_items = _sentences(candidate)
+    source_sentences = {normalised for _, normalised in source_sentence_items}
+    candidate_sentences = {normalised for _, normalised in candidate_sentence_items}
     deltas: list[SemanticDelta] = []
     for label, value in (("before", context_before), ("after", context_after)):
         if not value:
             continue
         for surface, normalised in _sentences(value):
             if normalised in source_sentences:
+                continue
+            if _source_licenses_context_sentence(
+                surface,
+                source_sentence_items,
+                candidate_sentence_count=len(candidate_sentence_items),
+            ):
                 continue
             if normalised in candidate_sentences:
                 deltas.append(
