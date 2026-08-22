@@ -17,10 +17,43 @@ _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 _SENTENCE_TERMINATORS = frozenset(".!?")
 _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
 _INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
+_INITIALISM_PREAMBLE_RE = re.compile(
+    r"\b(?:in|on|at|from|to)\s+(?:a|an|the)\s+(?=(?:[A-Za-z]\.){2,})",
+    re.IGNORECASE,
+)
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
 _CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?]+$")
 _CONTEXT_IGNORED_SYMBOLS = frozenset(".!?\"'()[]{}“”‘’")
-_CONTEXT_FUNCTION_WORDS = frozenset({"a", "an", "the", "in", "of", "to", "from"})
+_CONTEXT_FUNCTION_WORDS = frozenset({"a", "an", "the"})
+_TECHNICAL_SENTENCE_START_WORDS = frozenset(
+    {
+        "api",
+        "bash",
+        "curl",
+        "docker",
+        "git",
+        "http",
+        "https",
+        "jq",
+        "kubectl",
+        "kubernetes",
+        "linux",
+        "make",
+        "nginx",
+        "npm",
+        "postgres",
+        "powershell",
+        "pytest",
+        "python",
+        "redis",
+        "sql",
+        "ssh",
+        "systemd",
+        "terraform",
+        "windows",
+        "yarn",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -122,6 +155,18 @@ def _semantic_symbol_signature(value: str) -> tuple[str, ...]:
     )
 
 
+def _looks_like_technical_sentence_start(value: str) -> bool:
+    match = re.match(r"[^\s.!?,;:()\[\]{}]+", value)
+    if match is None:
+        return False
+    token = match.group(0).casefold()
+    return (
+        token in _TECHNICAL_SENTENCE_START_WORDS
+        or any(character.isdigit() for character in token)
+        or any(character in "_/-\\" for character in token)
+    )
+
+
 def _source_licenses_context_sentence(
     context_surface: str,
     source_sentences: list[tuple[str, str]],
@@ -136,7 +181,10 @@ def _source_licenses_context_sentence(
     context_initialisms = _initialism_signature(context_surface)
     context_symbols = _semantic_symbol_signature(context_surface)
     return any(
-        _content_tokens(source_surface) == context_tokens
+        (
+            _content_tokens(source_surface) == context_tokens
+            or _content_tokens(_INITIALISM_PREAMBLE_RE.sub("", source_surface)) == context_tokens
+        )
         and _initialism_signature(source_surface) == context_initialisms
         and _semantic_symbol_signature(source_surface) == context_symbols
         for source_surface, _ in source_sentences
@@ -167,6 +215,7 @@ def _sentences(value: str) -> list[tuple[str, str]]:
             and _INITIALISM_RE.search(fragment)
             and following
             and following[0].islower()
+            and not _looks_like_technical_sentence_start(following)
         ):
             continue
         append_surface(fragment)

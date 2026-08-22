@@ -585,6 +585,12 @@ def run_efficiency(
                 "repair_attempt_count": len(result.repair_attempts),
                 "repair_success": result.repair_success,
                 "repair_failure_reason": result.repair_failure_reason,
+                "rewrite_notes": list(result.notes),
+                "verifier_notes": (
+                    list(result.verification.verifier_notes)
+                    if result.verification is not None
+                    else []
+                ),
                 "baseline_token_usage": usage,
                 "baseline_cost_estimate": cost,
                 "mode": fixture["mode"],

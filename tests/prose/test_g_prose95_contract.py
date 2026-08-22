@@ -233,6 +233,24 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_only_guard_preserves_relational_words(self):
+        deltas = context_only_deltas(
+            "Alice sent the report to Bob.",
+            "Alice sent the report from Bob.",
+            context_after="Alice sent the report from Bob.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
+    def test_sentence_final_initialism_splits_before_technical_identifier(self):
+        deltas = context_only_deltas(
+            "The study was reviewed.",
+            "The study was reviewed. kubectl failed.",
+            context_after="The approval came from the U.S. kubectl failed.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_context_sentence_matching_splits_after_sentence_final_abbreviation(self):
         deltas = context_only_deltas(
             "The study was reviewed.",
