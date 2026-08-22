@@ -1,0 +1,15 @@
+{
+  "fixture_id": "prose-076",
+  "category": "context-safety-material-leakage",
+  "benchmark_group": "g-prose95-context",
+  "mode": "clarify",
+  "preset": "executive",
+  "assurance": "strict",
+  "source": "The audit identified a control gap.",
+  "semantic_probe_candidate": "The audit identified a control gap. The system is fully compliant.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "context_after": "The system is fully compliant.",
+  "notes": "A context-only proposition must not enter the candidate or receive automatic PASS."
+}

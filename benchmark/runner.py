@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Governed benchmark harness for the active SWOS Prose M1 benchmark.
+"""Governed benchmark harness for the active SWOS Prose G-Prose95 benchmark.
 
 The benchmark deliberately separates four questions:
 
-* validate: Is the active 56-case corpus well-formed, and do deterministic diagnostics
+* validate: Is the active 76-case corpus well-formed, and do deterministic diagnostics
   obey their fail-closed fixture contract?
 * safety: Does the semantic verifier ever PASS a human-labelled material change?
 * efficiency: How many provider tokens would the current diagnostics abstentions
   avoid relative to an observed diagnostics-disabled polish run?
-* stability: Across repeated draws of the 11 inherited live probes, how does
+* stability: Across repeated draws of the 16 governed live probes, how does
   PASS/REVIEW/REJECT vary?
 
 Diagnostics are not scored as a grammar classifier. An unreviewed good sentence
@@ -25,21 +25,24 @@ import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from time import perf_counter
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from swos_prose.cost import configured_cost_rates
 from swos_prose.diagnostics import diagnose_polish
+from swos_prose.modes import SUPPORTED_MODES, SUPPORTED_PRESETS, writer_policy
 from swos_prose.pipeline import verify_rewrite
 from swos_prose.providers.openai_responses import OpenAIResponsesSemanticVerifierProvider
 from swos_prose.providers.openai_rewrite import OpenAIResponsesRewriteProvider
 from swos_prose.rewrite import polish_text
 
-BENCHMARK_VERSION = "0.3.0-m1"
+BENCHMARK_VERSION = "0.4.0-g-prose95"
 SCHEMA_VERSION = "1.0"
-ACTIVE_CORPUS_COUNT = 56
+ACTIVE_CORPUS_COUNT = 76
 DEFAULT_CORPUS = ROOT / "benchmark" / "corpus"
 FIXTURE_SCHEMA = ROOT / "benchmark" / "fixture_schema.json"
 REPORT_SCHEMA = ROOT / "benchmark" / "report_schema.json"
@@ -47,6 +50,20 @@ REPORT_SCHEMA = ROOT / "benchmark" / "report_schema.json"
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def _cost_method() -> dict[str, Any]:
+    rates = configured_cost_rates()
+    return {
+        "available": rates is not None,
+        "rates": rates,
+        "input_rate_env": "SWOS_PROSE_INPUT_USD_PER_1K",
+        "output_rate_env": "SWOS_PROSE_OUTPUT_USD_PER_1K",
+        "note": (
+            "Cost is an optional estimate from explicit input/output USD-per-1K-token rates; "
+            "missing or invalid pricing is reported as unavailable, never as zero."
+        ),
+    }
 
 
 def _canonical_hash(fixtures: list[dict[str, Any]]) -> str:
@@ -80,8 +97,15 @@ def validate_fixture_shape(fixture: dict[str, Any]) -> list[str]:
     if missing:
         errors.append(f"missing fields: {', '.join(missing)}")
         return errors
-    if fixture["mode"] != "polish":
-        errors.append("mode must be polish")
+    if fixture["mode"] not in SUPPORTED_MODES:
+        errors.append(f"mode must be one of {SUPPORTED_MODES}")
+    preset = fixture.get("preset")
+    if preset is not None and preset not in SUPPORTED_PRESETS:
+        errors.append(f"preset must be one of {SUPPORTED_PRESETS} or null")
+    try:
+        writer_policy(fixture["mode"], preset)
+    except ValueError as exc:
+        errors.append(str(exc))
     if fixture["assurance"] != "strict":
         errors.append("assurance must be strict")
     if fixture["semantic_relation"] not in {"equivalent", "material_change"}:
@@ -151,6 +175,8 @@ def validate_corpus(
             fixture["source"],
             context_before=fixture.get("context_before"),
             context_after=fixture.get("context_after"),
+            mode=fixture["mode"],
+            preset=fixture.get("preset"),
         )
         expected = fixture["diagnostics_expectation"]
         actual = diagnostics.recommendation
@@ -208,6 +234,13 @@ def _base_report(fixtures: list[dict[str, Any]], mode: str) -> dict[str, Any]:
             "groups": dict(sorted(groups.items())),
             "semantic_relations": dict(sorted(relations.items())),
             "stability_probe_count": sum(1 for item in fixtures if item["stability_probe"]),
+            "mode_preset_matrix": dict(
+                sorted(
+                    Counter(
+                        f"{item['mode']}::{item.get('preset') or 'none'}" for item in fixtures
+                    ).items()
+                )
+            ),
         },
         "diagnostics_contract": {
             "unsafe_abstentions": validation["unsafe_abstentions"],
@@ -226,6 +259,7 @@ def _base_report(fixtures: list[dict[str, Any]], mode: str) -> dict[str, Any]:
         "semantic_safety": None,
         "token_efficiency": None,
         "stability": None,
+        "performance": {"cost": _cost_method()},
         "records": [],
     }
 
@@ -235,12 +269,17 @@ def _require_live() -> None:
         raise RuntimeError("OPENAI_API_KEY is required for live benchmark modes.")
 
 
-def _semantic_record(fixture: dict[str, Any], result: Any, draw: int = 1) -> dict[str, Any]:
+def _semantic_record(
+    fixture: dict[str, Any], result: Any, draw: int = 1, latency_ms: float | None = None
+) -> dict[str, Any]:
     status = result.status.value
     unsafe_pass = fixture["semantic_relation"] == "material_change" and status == "PASS"
+    verifier_calls = getattr(result, "verifier_call_count", int(bool(result.verifier_used)))
     return {
         "fixture_id": fixture["fixture_id"],
         "draw": draw,
+        "mode": fixture["mode"],
+        "preset": fixture.get("preset"),
         "semantic_relation": fixture["semantic_relation"],
         "status": status,
         "unsafe_pass": unsafe_pass,
@@ -248,8 +287,35 @@ def _semantic_record(fixture: dict[str, Any], result: Any, draw: int = 1) -> dic
         "verifier_skip_reason": result.verifier_skip_reason,
         "semantic_deltas": [delta.to_dict() for delta in result.semantic_deltas],
         "token_usage": result.token_usage,
+        "cost_estimate": result.cost_estimate,
+        "latency_ms": latency_ms,
+        "provider_calls": {
+            "rewrite": 0,
+            "verifier": verifier_calls,
+            "repair": 0,
+            "total": verifier_calls,
+        },
         "verifier_notes": list(result.verifier_notes),
+        "context_safety": result.context_safety,
     }
+
+
+def _aggregate_cost(records: list[dict[str, Any]], cost_key: str = "cost_estimate") -> float | None:
+    calls = [record for record in records if record.get("provider_calls", {}).get("total", 0) > 0]
+    if not calls:
+        return 0.0
+    values = [record.get(cost_key) for record in calls]
+    if any(value is None for value in values):
+        return None
+    return round(sum(float(value) for value in values), 10)
+
+
+def _provider_call_summary(records: list[dict[str, Any]]) -> dict[str, int]:
+    totals = {"rewrite": 0, "verifier": 0, "repair": 0, "total": 0}
+    for record in records:
+        for key in totals:
+            totals[key] += int(record.get("provider_calls", {}).get(key, 0))
+    return totals
 
 
 def run_safety(
@@ -259,13 +325,18 @@ def run_safety(
     provider = OpenAIResponsesSemanticVerifierProvider(model=verifier_model)
     records: list[dict[str, Any]] = []
     for fixture in fixtures:
+        started = perf_counter()
         result = verify_rewrite(
             source=fixture["source"],
             candidate=fixture["semantic_probe_candidate"],
             assurance=fixture["assurance"],
             verifier_provider=provider,
+            context_before=fixture.get("context_before"),
+            context_after=fixture.get("context_after"),
         )
-        records.append(_semantic_record(fixture, result))
+        records.append(
+            _semantic_record(fixture, result, latency_ms=(perf_counter() - started) * 1000)
+        )
 
     unsafe = [item["fixture_id"] for item in records if item["unsafe_pass"]]
     equivalent_counts = Counter(
@@ -280,6 +351,15 @@ def run_safety(
         "equivalent_status_counts": dict(sorted(equivalent_counts.items())),
         "material_change_status_counts": dict(sorted(changed_counts.items())),
         "safety_gate_passed": not unsafe,
+        "provider_calls": _provider_call_summary(records),
+        "latency_ms_total": round(sum(record["latency_ms"] or 0 for record in records), 3),
+        "average_latency_ms": round(
+            sum(record["latency_ms"] or 0 for record in records) / len(records), 3
+        )
+        if records
+        else 0.0,
+        "cost_estimate_total": _aggregate_cost(records),
+        "cost": _cost_method(),
         "note": (
             "For material-change probes, PASS is unsafe. REVIEW and REJECT are fail-closed. "
             "For equivalent probes, non-PASS outcomes are reported as quality/stability costs, "
@@ -301,9 +381,86 @@ def _combined_result_usage(result: Any) -> dict[str, int]:
     _sum_usage(result.rewrite_token_usage, totals)
     for attempt in result.repair_attempts:
         _sum_usage(attempt.token_usage, totals)
-    if result.verification is not None:
+    verifier_usage = getattr(result, "verifier_token_usage", None)
+    if verifier_usage is not None:
+        _sum_usage(verifier_usage, totals)
+    elif result.verification is not None:
         _sum_usage(result.verification.token_usage, totals)
     return totals
+
+
+def _combined_result_cost(result: Any) -> float | None:
+    """Sum configured costs for every provider call represented by a result."""
+
+    costs: list[float | None] = []
+    if not result.generation_skipped_by_diagnostics:
+        costs.append(result.rewrite_cost_estimate)
+    for attempt in result.repair_attempts:
+        if getattr(attempt, "provider_called", True):
+            costs.append(attempt.cost_estimate)
+    verifier_calls = getattr(
+        result,
+        "verifier_call_count",
+        int(result.verification is not None and result.verification.verifier_used),
+    )
+    if verifier_calls:
+        verifier_cost = getattr(result, "verifier_cost_estimate", None)
+        if verifier_cost is None and result.verification is not None:
+            verifier_cost = result.verification.cost_estimate
+        costs.append(verifier_cost)
+    if not costs:
+        return 0.0
+    if any(value is None for value in costs):
+        return None
+    return round(sum(float(value) for value in costs), 10)
+
+
+def _result_provider_calls(result: Any) -> dict[str, int]:
+    rewrite = 0 if result.generation_skipped_by_diagnostics else 1
+    repair = sum(
+        1 for attempt in result.repair_attempts if getattr(attempt, "provider_called", True)
+    )
+    verifier = getattr(
+        result,
+        "verifier_call_count",
+        int(result.verification is not None and result.verification.verifier_used),
+    )
+    return {
+        "rewrite": rewrite,
+        "verifier": verifier,
+        "repair": repair,
+        "total": rewrite + verifier + repair,
+    }
+
+
+def _mode_preset_performance(records: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for record in records:
+        grouped[f"{record['mode']}::{record.get('preset') or 'none'}"].append(record)
+    result: dict[str, dict[str, Any]] = {}
+    for key, items in sorted(grouped.items()):
+        latencies = [item["latency_ms"] for item in items if item.get("latency_ms") is not None]
+        result[key] = {
+            "fixture_count": len(items),
+            "provider_calls": _provider_call_summary(items),
+            "baseline_token_usage": dict(
+                sorted(
+                    {
+                        token: sum(
+                            item.get("baseline_token_usage", {}).get(token, 0) for item in items
+                        )
+                        for token in {
+                            token
+                            for item in items
+                            for token in item.get("baseline_token_usage", {})
+                        }
+                    }.items()
+                )
+            ),
+            "baseline_cost_estimate_total": _aggregate_cost(items, "baseline_cost_estimate"),
+            "average_latency_ms": round(sum(latencies) / len(latencies), 3) if latencies else None,
+        }
+    return result
 
 
 def run_efficiency(
@@ -326,17 +483,24 @@ def run_efficiency(
     saved: dict[str, int] = {}
     records: list[dict[str, Any]] = []
     unsafe_abstentions: list[str] = []
+    baseline_costs: list[float | None] = []
+    saved_costs: list[float | None] = []
 
     for fixture in fixtures:
+        diagnostics_started = perf_counter()
         diagnostics = diagnose_polish(
             fixture["source"],
             context_before=fixture.get("context_before"),
             context_after=fixture.get("context_after"),
+            mode=fixture["mode"],
+            preset=fixture.get("preset"),
         )
+        diagnostics_latency_ms = (perf_counter() - diagnostics_started) * 1000
         would_skip = diagnostics.no_change_recommended
         if would_skip and fixture["diagnostics_expectation"]["must_not_abstain"]:
             unsafe_abstentions.append(fixture["fixture_id"])
 
+        rewrite_started = perf_counter()
         result = polish_text(
             source=fixture["source"],
             rewrite_provider=rewriter,
@@ -345,8 +509,15 @@ def run_efficiency(
             context_before=fixture.get("context_before"),
             context_after=fixture.get("context_after"),
             run_diagnostics=False,
+            mode=fixture["mode"],
+            preset=fixture.get("preset"),
         )
+        latency_ms = (perf_counter() - rewrite_started) * 1000
         usage = _combined_result_usage(result)
+        cost = _combined_result_cost(result)
+        baseline_costs.append(cost)
+        if would_skip:
+            saved_costs.append(cost)
         for key, value in usage.items():
             total_without[key] = total_without.get(key, 0) + value
             if would_skip:
@@ -360,6 +531,12 @@ def run_efficiency(
                 "baseline_status": result.verification_status,
                 "baseline_safe_for_automatic_use": result.safe_for_automatic_use,
                 "baseline_token_usage": usage,
+                "baseline_cost_estimate": cost,
+                "mode": fixture["mode"],
+                "preset": fixture.get("preset"),
+                "latency_ms": latency_ms,
+                "diagnostics_latency_ms": diagnostics_latency_ms,
+                "provider_calls": _result_provider_calls(result),
             }
         )
 
@@ -370,6 +547,27 @@ def run_efficiency(
     total_base = total_without.get("total_tokens", 0)
     total_saved = saved.get("total_tokens", 0)
     savings_pct = (100.0 * total_saved / total_base) if total_base else None
+    baseline_cost = (
+        None
+        if any(value is None for value in baseline_costs)
+        else round(sum(float(value) for value in baseline_costs), 10)
+    )
+    saved_cost = (
+        None
+        if any(value is None for value in saved_costs)
+        else round(sum(float(value) for value in saved_costs), 10)
+    )
+    with_diagnostics_cost = (
+        round(baseline_cost - saved_cost, 10)
+        if baseline_cost is not None and saved_cost is not None
+        else None
+    )
+    baseline_calls = _provider_call_summary(records)
+    saved_calls = {
+        key: sum(item["provider_calls"][key] for item in records if item["diagnostics_would_skip"])
+        for key in ("rewrite", "verifier", "repair", "total")
+    }
+    latencies = [item["latency_ms"] for item in records]
 
     return {
         "method": "observed_no_diagnostics_plus_exact_skip_counterfactual",
@@ -377,6 +575,23 @@ def run_efficiency(
         "counterfactual_with_diagnostics": dict(sorted(with_diagnostics.items())),
         "tokens_saved_by_diagnostics": dict(sorted(saved.items())),
         "total_token_savings_percent": savings_pct,
+        "baseline_provider_calls": baseline_calls,
+        "provider_calls_saved_by_diagnostics": saved_calls,
+        "counterfactual_provider_calls": {
+            key: baseline_calls[key] - saved_calls[key] for key in baseline_calls
+        },
+        "baseline_cost_estimate_total": baseline_cost,
+        "cost_saved_by_diagnostics": saved_cost,
+        "counterfactual_cost_estimate_total": with_diagnostics_cost,
+        "cost_savings_percent": (
+            100.0 * saved_cost / baseline_cost
+            if baseline_cost not in (None, 0) and saved_cost is not None
+            else None
+        ),
+        "cost": _cost_method(),
+        "mode_preset_performance": _mode_preset_performance(records),
+        "latency_ms_total": round(sum(latencies), 3),
+        "average_latency_ms": round(sum(latencies) / len(latencies), 3) if latencies else 0.0,
         "abstention_count": sum(1 for item in records if item["diagnostics_would_skip"]),
         "abstention_rate": (
             sum(1 for item in records if item["diagnostics_would_skip"]) / len(records)
@@ -409,13 +624,21 @@ def run_stability(
 
     for draw in range(1, runs + 1):
         for fixture in probes:
+            started = perf_counter()
             result = verify_rewrite(
                 source=fixture["source"],
                 candidate=fixture["semantic_probe_candidate"],
                 assurance=fixture["assurance"],
                 verifier_provider=provider,
+                context_before=fixture.get("context_before"),
+                context_after=fixture.get("context_after"),
             )
-            record = _semantic_record(fixture, result, draw=draw)
+            record = _semantic_record(
+                fixture,
+                result,
+                draw=draw,
+                latency_ms=(perf_counter() - started) * 1000,
+            )
             records.append(record)
             distributions[fixture["fixture_id"]][record["status"]] += 1
             if record["unsafe_pass"]:
@@ -430,6 +653,20 @@ def run_stability(
         },
         "unsafe_pass_count": len(unsafe_passes),
         "unsafe_passes": unsafe_passes,
+        "provider_calls": _provider_call_summary(records),
+        "latency_ms_total": round(sum(record["latency_ms"] or 0 for record in records), 3),
+        "average_latency_ms": round(
+            sum(record["latency_ms"] or 0 for record in records) / len(records), 3
+        )
+        if records
+        else 0.0,
+        "cost_estimate_total": _aggregate_cost(records),
+        "cost": _cost_method(),
+        "repeated_verifier_overhead": {
+            "total_draws": len(records),
+            "verifier_calls": _provider_call_summary(records)["verifier"],
+            "note": "Measured wall-clock and provider-call totals across repeated verifier draws.",
+        },
         "note": (
             "Variance on equivalent probes quantifies verifier stability. Any PASS on a "
             "material-change probe is a safety failure."
@@ -469,7 +706,7 @@ def build_report(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the governed SWOS Prose v0.2 benchmark")
+    parser = argparse.ArgumentParser(description="Run the governed SWOS Prose G-Prose95 benchmark")
     parser.add_argument(
         "--mode",
         choices=("validate", "safety", "efficiency", "stability", "all"),

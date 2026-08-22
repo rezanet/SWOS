@@ -285,10 +285,10 @@ class OpenAIRewriteAdapterTests(unittest.TestCase):
         )
         self.assertEqual(client.responses.calls[0]["temperature"], 0.25)
 
-    def test_openai_polish_adapter_rejects_unimplemented_mode(self):
+    def test_openai_adapter_rejects_unknown_mode(self):
         provider = OpenAIResponsesRewriteProvider(model="test-model", client=FakeClient("x"))
         with self.assertRaises(ValueError):
-            provider.rewrite(source="x", mode="naturalise", protected_anchors=[], rewrite_plan={})
+            provider.rewrite(source="x", mode="invent", protected_anchors=[], rewrite_plan={})
 
     def test_openai_repair_adapter_is_stateless_and_returns_plain_candidate(self):
         from swos_prose.models import DeltaType, SemanticDelta, Severity

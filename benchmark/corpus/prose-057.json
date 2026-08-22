@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-057",
+  "category": "mode-naturalise-equivalent",
+  "benchmark_group": "g-prose95-modes",
+  "mode": "naturalise",
+  "preset": "scholarly-natural",
+  "assurance": "strict",
+  "source": "The analysis was conducted in a way that was consistent with the preregistered method.",
+  "semantic_probe_candidate": "The analysis followed the preregistered method.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": true,
+  "notes": "Naturalise must remove stiffness without changing the methodological claim."
+}

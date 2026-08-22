@@ -4,7 +4,7 @@ description: Semantic-safe prose polishing for text whose meaning is already set
 license: MIT
 compatibility: Requires the installable SWOS Prose Python package (`pip install -e .` from the SWOS repo root). Changed prose needs a rewrite provider and an independent semantic verifier; bundled OpenAI Responses adapters require an API key. Exact reviewed diagnostics exemplars can abstain locally with zero provider calls. No host-specific runtime is required.
 metadata:
-  version: 0.3.0-dev
+  version: 0.4.0-dev
   swos_component: prose
   spec: agent-skills
   benchmark: benchmark/baseline.json
@@ -28,19 +28,19 @@ this `SKILL.md` does not install the engine. From the SWOS repository root:
 python3 -m pip install -e .
 ```
 
-## Development surface: v0.3.0-dev / Self-Healing M1
+## Development surface: G-Prose95 / Full Engine
 
-Only `mode=polish` is implemented. M1 adds **bounded local repair** after semantic
-verification identifies a reviewed, high-confidence lexical drift. Repair is a
-salvage operation, not repeated whole-text generation.
-
-`naturalise`, `clarify` and `tighten` remain user intents, not separate implemented
-modes. Do not advertise or invoke nonexistent modes. Supported assurance levels
-remain `standard`, `strict` and `review`; prefer `strict` for force-sensitive prose.
+The implemented modes are `polish`, `naturalise`, `clarify` and `tighten`. Five
+explicit register presets are available: `scholarly-natural`, `precise-technical`,
+`plain-intelligent`, `elegant-essay` and `executive`. All modes use the same
+semantic-safe pipeline. **Bounded local repair** remains a salvage operation after
+verification identifies a reviewed, high-confidence lexical drift; it is never
+repeated whole-text generation. Supported assurance levels remain `standard`,
+`strict` and `review`; prefer `strict` for force-sensitive prose.
 
 ## Safety contract
 
-A polish may improve sentence construction, local flow, concision, unnecessary
+A writer mode may improve sentence construction, local flow, concision, unnecessary
 repetition, natural readability, wording and syntax. It must preserve every
 material proposition; attribution; uncertainty and epistemic status; modality;
 degree and scalar force; negation; causal force; scope and quantifiers;
@@ -59,7 +59,7 @@ possibility into certainty, or a qualified statement into an unqualified one.
    not approve its own work.
 3. **Verify independently.** Changed text is checked by deterministic semantic
    deltas and, when required, an independent semantic verifier.
-4. **Repair only a bounded local defect.** M1 can repair modality, quantifier,
+4. **Repair only a bounded local defect.** The M1 loop can repair modality, quantifier,
    attribution, negation or causal-strength drift only when the offending region
    is localised at >=95% confidence. Numbers, citations, quotations, structural
    scope changes and proposition additions/removals are not repairable. At most
@@ -95,8 +95,8 @@ an author's position, translate, perform free creative rewriting, repair changed
 protected numbers/citations/quotations, or structurally reconstruct missing
 scopes or propositions.
 
-Verifier stability remains tracked separately in issue #32; safe uncertainty
-remains `REVIEW`/`REJECT` instead of being coerced into PASS.
+Verifier stability is reported as a distribution in the active G-Prose95 benchmark;
+safe uncertainty remains `REVIEW`/`REJECT` instead of being coerced into PASS.
 
 ## Governed benchmark evidence
 
@@ -108,19 +108,27 @@ diagnostics produced 0 unsafe abstentions, the exact reviewed fast path abstaine
 on 3/50 cases, measured token savings were 3.04%, and 11 stability probes repeated
 five times produced 0 unsafe PASS outcomes.
 
-M1 adds six repair fixtures to the active development corpus, taking it to 56
-cases. The deterministic M1 repair contract proves localisation, confinement and
-state transitions; stochastic model repair quality must be reported separately.
+The active G-Prose95 corpus contains 76 cases covering all modes, all five presets,
+equivalent and material-change probes, context traps, and 16 stability probes.
+The six M1 repair fixtures remain governed. The deterministic repair contract
+proves localisation, confinement and state transitions; stochastic model repair
+quality must be reported separately.
 Benchmark observations are not universal guarantees.
+
+Live benchmark reports also record provider calls, latency and optional cost
+estimates. Cost remains unavailable unless both explicit USD-per-1K-token rates
+are configured, and pricing telemetry never changes a safety outcome.
 
 ## CLI
 
-Plain `swos-prose polish` prints only `final_text`; use `--json` for diagnostics,
-verification, repair provenance and token records.
+Plain `swos-prose polish` prints only `final_text`; use `--mode`, `--preset`, and
+`--json` for the selected policy, diagnostics, verification, repair provenance,
+and token/cost records.
 
 ```bash
 export OPENAI_API_KEY=...
-swos-prose polish --source "The analysis was performed using a t-test." --assurance strict --json
+swos-prose polish --mode naturalise --preset scholarly-natural \
+  --source "The analysis was performed using a t-test." --assurance strict --json
 ```
 
 Use `--skip-diagnostics` only for semantic-calibration runs that must force the

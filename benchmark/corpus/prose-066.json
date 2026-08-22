@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-066",
+  "category": "preset-plain-intelligent-material-quantifier",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "clarify",
+  "preset": "plain-intelligent",
+  "assurance": "strict",
+  "source": "Some participants reported fatigue after the intervention.",
+  "semantic_probe_candidate": "All participants reported fatigue after the intervention.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Plain language must not broaden a quantifier."
+}

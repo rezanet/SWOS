@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-072",
+  "category": "preset-scholarly-natural-material-attribution",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "clarify",
+  "preset": "scholarly-natural",
+  "assurance": "strict",
+  "source": "Smith argues that the classification is unstable.",
+  "semantic_probe_candidate": "The classification is unstable.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Removing attribution converts a reported claim into an unqualified assertion."
+}

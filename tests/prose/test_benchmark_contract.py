@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class ProseBenchmarkContractTests(unittest.TestCase):
-    def test_governed_corpus_has_exactly_fifty_six_unique_fixtures(self):
+    def test_governed_corpus_has_exactly_active_unique_fixtures(self):
         fixtures = load_corpus()
         self.assertEqual(len(fixtures), ACTIVE_CORPUS_COUNT)
         self.assertEqual(len({item["fixture_id"] for item in fixtures}), ACTIVE_CORPUS_COUNT)
@@ -45,11 +45,28 @@ class ProseBenchmarkContractTests(unittest.TestCase):
 
     def test_stability_subset_remains_the_inherited_eleven_case_suite(self):
         fixtures = load_corpus()
-        self.assertEqual(sum(1 for item in fixtures if item["stability_probe"]), 11)
+        self.assertEqual(sum(1 for item in fixtures if item["stability_probe"]), 16)
+
+    def test_g_prose95_corpus_covers_all_modes_and_presets(self):
+        fixtures = load_corpus()
+        self.assertEqual(
+            {item["mode"] for item in fixtures},
+            {"polish", "naturalise", "clarify", "tighten"},
+        )
+        self.assertEqual(
+            {item["preset"] for item in fixtures if item.get("preset")},
+            {
+                "scholarly-natural",
+                "precise-technical",
+                "plain-intelligent",
+                "elegant-essay",
+                "executive",
+            },
+        )
 
     def test_active_report_has_m1_identity_and_frozen_evidence_stays_v02(self):
         report = _base_report(load_corpus(), "validate")
-        self.assertEqual(report["benchmark_version"], "0.3.0-m1")
+        self.assertEqual(report["benchmark_version"], "0.4.0-g-prose95")
         self.assertEqual(report["benchmark_version"], BENCHMARK_VERSION)
         self.assertEqual(report["corpus"]["fixture_count"], ACTIVE_CORPUS_COUNT)
 

@@ -120,6 +120,9 @@ class RepairExecution:
     attempts: list[RepairAttempt]
     success: bool
     failure_reason: str | None = None
+    verifier_call_count: int = 0
+    verifier_token_usage: dict[str, int] | None = None
+    verifier_cost_estimate: float | None = None
 
 
 class RepairProvider(Protocol):
@@ -137,6 +140,22 @@ class RepairProvider(Protocol):
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def _add_usage(total: dict[str, int], usage: dict[str, int] | None) -> None:
+    if not usage:
+        return
+    for key, value in usage.items():
+        if isinstance(value, int):
+            total[key] = total.get(key, 0) + value
+
+
+def _cost_total(values: list[float | None]) -> float | None:
+    if not values:
+        return 0.0
+    if any(value is None for value in values):
+        return None
+    return round(sum(float(value) for value in values), 10)
 
 
 def _tokens(text: str) -> list[tuple[str, int, int]]:
@@ -582,6 +601,8 @@ def _failed_attempt(
     reason: str,
     usage=None,
     provider_notes: list[str] | None = None,
+    cost_estimate: float | None = None,
+    provider_called: bool = False,
 ) -> RepairAttempt:
     return RepairAttempt(
         number,
@@ -596,6 +617,8 @@ def _failed_attempt(
         _utc_now(),
         usage,
         list(provider_notes or []),
+        cost_estimate,
+        provider_called,
     )
 
 
@@ -612,21 +635,52 @@ def repair_loop(
     if not 1 <= max_attempts <= MAX_REPAIR_ATTEMPTS:
         raise ValueError(f"max_attempts must be between 1 and {MAX_REPAIR_ATTEMPTS}")
     current, verification, attempts = candidate, initial_verification, []
-    if verification.status is VerificationStatus.PASS:
-        return RepairExecution(current, verification, attempts, False)
-    if not verification.semantic_deltas:
+    verifier_call_count = getattr(
+        verification, "verifier_call_count", int(bool(verification.verifier_used))
+    )
+    verifier_usage: dict[str, int] = {}
+    _add_usage(verifier_usage, verification.token_usage)
+    verifier_costs: list[float | None] = [verification.cost_estimate] if verifier_call_count else []
+
+    def record_verification(result: VerificationResult) -> None:
+        nonlocal verifier_call_count
+        verifier_call_count += getattr(
+            result, "verifier_call_count", int(bool(result.verifier_used))
+        )
+        _add_usage(verifier_usage, result.token_usage)
+        if getattr(result, "verifier_call_count", int(bool(result.verifier_used))):
+            verifier_costs.append(result.cost_estimate)
+
+    def finish(
+        final_candidate: str,
+        final_verification: VerificationResult,
+        successful: bool,
+        failure_reason: str | None = None,
+    ) -> RepairExecution:
         return RepairExecution(
+            final_candidate,
+            final_verification,
+            attempts,
+            successful,
+            failure_reason,
+            verifier_call_count,
+            verifier_usage or None,
+            _cost_total(verifier_costs),
+        )
+
+    if verification.status is VerificationStatus.PASS:
+        return finish(current, verification, False)
+    if not verification.semantic_deltas:
+        return finish(
             current,
             verification,
-            attempts,
             False,
             "No structured semantic delta is available for bounded repair.",
         )
     if any(not d.repairable for d in verification.semantic_deltas):
-        return RepairExecution(
+        return finish(
             current,
             verification,
-            attempts,
             False,
             "At least one semantic delta is not bounded and repairable; repair bypassed.",
         )
@@ -635,10 +689,9 @@ def repair_loop(
         if not verification.semantic_deltas or any(
             not d.repairable for d in verification.semantic_deltas
         ):
-            return RepairExecution(
+            return finish(
                 current,
                 verification,
-                attempts,
                 False,
                 "Repair stopped because the remaining delta set is not fully repairable.",
             )
@@ -655,7 +708,7 @@ def repair_loop(
                     reason,
                 )
             )
-            return RepairExecution(current, verification, attempts, False, reason)
+            return finish(current, verification, False, reason)
 
         offending = current[span.candidate_start : span.candidate_end]
         prompt = render_repair_prompt(
@@ -673,17 +726,31 @@ def repair_loop(
         except (TypeError, ValueError, RuntimeError) as exc:
             reason = f"Repair provider failed: {exc}"
             attempts.append(
-                _failed_attempt(number, offending, current, verification.semantic_deltas, reason)
+                _failed_attempt(
+                    number,
+                    offending,
+                    current,
+                    verification.semantic_deltas,
+                    reason,
+                    provider_called=True,
+                )
             )
-            return RepairExecution(current, verification, attempts, False, reason)
+            return finish(current, verification, False, reason)
         if not isinstance(proposal, RewriteCandidate) or not isinstance(
             proposal.candidate_text, str
         ):
             reason = "Repair provider returned a malformed result object."
             attempts.append(
-                _failed_attempt(number, offending, current, verification.semantic_deltas, reason)
+                _failed_attempt(
+                    number,
+                    offending,
+                    current,
+                    verification.semantic_deltas,
+                    reason,
+                    provider_called=True,
+                )
             )
-            return RepairExecution(current, verification, attempts, False, reason)
+            return finish(current, verification, False, reason)
 
         repaired = proposal.candidate_text
         repaired_span = _confined_middle(
@@ -702,11 +769,14 @@ def repair_loop(
                     reason,
                     proposal.token_usage,
                     proposal.notes,
+                    proposal.cost_estimate,
+                    True,
                 )
             )
-            return RepairExecution(current, verification, attempts, False, reason)
+            return finish(current, verification, False, reason)
 
         new_verification = verify_candidate(repaired)
+        record_verification(new_verification)
         success = new_verification.status is VerificationStatus.PASS
         attempts.append(
             RepairAttempt(
@@ -722,20 +792,26 @@ def repair_loop(
                 _utc_now(),
                 proposal.token_usage,
                 list(proposal.notes),
+                proposal.cost_estimate,
+                True,
+                getattr(
+                    new_verification,
+                    "verifier_call_count",
+                    int(bool(new_verification.verifier_used)),
+                ),
+                new_verification.token_usage,
+                new_verification.cost_estimate,
             )
         )
         if success:
-            return RepairExecution(repaired, new_verification, attempts, True)
+            return finish(repaired, new_verification, True)
         current, verification = repaired, new_verification
         if any(not d.repairable for d in verification.semantic_deltas):
-            return RepairExecution(
+            return finish(
                 current,
                 verification,
-                attempts,
                 False,
                 "Re-verification produced a non-repairable delta; repair stopped.",
             )
 
-    return RepairExecution(
-        current, verification, attempts, False, "Maximum repair attempts exceeded."
-    )
+    return finish(current, verification, False, "Maximum repair attempts exceeded.")

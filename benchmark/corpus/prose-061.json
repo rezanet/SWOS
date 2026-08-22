@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-061",
+  "category": "mode-tighten-equivalent",
+  "benchmark_group": "g-prose95-modes",
+  "mode": "tighten",
+  "preset": "precise-technical",
+  "assurance": "strict",
+  "source": "Due to the fact that the sample was small, the estimate was imprecise.",
+  "semantic_probe_candidate": "Because the sample was small, the estimate was imprecise.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": true,
+  "notes": "Tightening a reviewed expansion must preserve the causal qualification."
+}

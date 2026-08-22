@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-069",
+  "category": "preset-executive-equivalent",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "naturalise",
+  "preset": "executive",
+  "assurance": "strict",
+  "source": "The review identified three unresolved risks in the rollout plan.",
+  "semantic_probe_candidate": "The review found three unresolved risks in the rollout plan.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Executive register must remain concise without losing count or uncertainty."
+}

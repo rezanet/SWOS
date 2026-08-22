@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-074",
+  "category": "preset-precise-technical-material-quotation",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "tighten",
+  "preset": "precise-technical",
+  "assurance": "strict",
+  "source": "The paper states “no clear effect was observed”.",
+  "semantic_probe_candidate": "The paper states “a clear effect was observed”.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Protected quotation content is a hard invariant and bypasses repair."
+}

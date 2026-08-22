@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-068",
+  "category": "preset-elegant-essay-material-causality",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "tighten",
+  "preset": "elegant-essay",
+  "assurance": "strict",
+  "source": "Exposure was associated with higher fatigue among participants.",
+  "semantic_probe_candidate": "Exposure caused higher fatigue among participants.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Elegant wording must not strengthen association into causation."
+}
