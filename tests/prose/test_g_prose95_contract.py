@@ -288,6 +288,17 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_only_guard_splits_unicode_sentence_terminators(self):
+        source = "The study continued."
+        context_sentence = "アクセスが拒否されました。"
+        deltas = context_only_deltas(
+            source,
+            f"{source} {context_sentence}",
+            context_after="前の文です。アクセスが拒否されました。",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_sentence_final_initialism_splits_before_technical_identifier(self):
         deltas = context_only_deltas(
             "The study was reviewed.",

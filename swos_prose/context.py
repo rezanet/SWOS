@@ -14,13 +14,14 @@ _INSTRUCTION_LIKE_RE = re.compile(
     re.IGNORECASE,
 )
 _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
-_SENTENCE_TERMINATORS = frozenset(".!?")
+_SENTENCE_TERMINATORS = frozenset(".!?。！？｡")
+_NO_SPACE_SENTENCE_TERMINATORS = frozenset("。！？｡")
 _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
 _INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
 _INITIALISM_AT_FRAGMENT_END_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}$")
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
-_CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?]+$")
-_CONTEXT_IGNORED_SYMBOLS = frozenset(".!?")
+_CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?。！？｡]+$")
+_CONTEXT_IGNORED_SYMBOLS = frozenset(".!?。！？｡")
 _TECHNICAL_SENTENCE_START_WORDS = frozenset(
     {
         "api",
@@ -207,7 +208,11 @@ def _sentences(value: str) -> list[tuple[str, str]]:
         end = index + 1
         while end < len(value) and value[end] in _CLOSING_SENTENCE_DELIMITERS:
             end += 1
-        if end < len(value) and not value[end].isspace():
+        if (
+            end < len(value)
+            and not value[end].isspace()
+            and character not in _NO_SPACE_SENTENCE_TERMINATORS
+        ):
             continue
         fragment = value[start:end].strip()
         following = value[end:].lstrip()
