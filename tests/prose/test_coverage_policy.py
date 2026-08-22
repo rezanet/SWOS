@@ -1,6 +1,8 @@
+import io
 import json
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
@@ -29,7 +31,8 @@ class CoveragePolicyTests(unittest.TestCase):
             path = Path(directory) / "coverage.json"
             path.write_text(json.dumps(report), encoding="utf-8")
             with patch("sys.argv", ["check_coverage", "--coverage-json", str(path)]):
-                return main()
+                with redirect_stdout(io.StringIO()):
+                    return main()
 
     def test_policy_accepts_windows_coverage_paths(self) -> None:
         self.assertEqual(self._run(_report(80.0)), 0)
