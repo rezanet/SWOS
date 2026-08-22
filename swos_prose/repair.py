@@ -265,16 +265,21 @@ def _negative_prefix_tokens(text: str) -> tuple[str, ...]:
 
 
 def _modal_edit_only(edit: LexicalEdit, delta: SemanticDelta) -> bool:
-    if delta.delta_type is not DeltaType.MODALITY_STRENGTHENED:
+    if delta.delta_type not in {DeltaType.MODALITY_STRENGTHENED, DeltaType.MODALITY_WEAKENED}:
         return False
     source_modals = [token for token in edit.source_tokens if token in _WEAK_MODAL_MARKERS]
     candidate_modals = [token for token in edit.candidate_tokens if token in _WEAK_MODAL_MARKERS]
-    if len(source_modals) != 1 or candidate_modals:
+    if delta.delta_type is DeltaType.MODALITY_STRENGTHENED:
+        if len(source_modals) != 1 or candidate_modals:
+            return False
+    elif source_modals or len(candidate_modals) != 1:
         return False
     source_rest = [token for token in edit.source_tokens if token not in _WEAK_MODAL_MARKERS]
     candidate_rest = [token for token in edit.candidate_tokens if token not in _WEAK_MODAL_MARKERS]
-    if not source_rest:
+    if delta.delta_type is DeltaType.MODALITY_STRENGTHENED and not source_rest:
         return not candidate_rest or (len(candidate_rest) == 1 and candidate_rest[0] in _MODAL_FINITE_CARRIERS)
+    if delta.delta_type is DeltaType.MODALITY_WEAKENED and not candidate_rest:
+        return not source_rest or (len(source_rest) == 1 and source_rest[0] in _MODAL_FINITE_CARRIERS)
     if len(source_rest) == 1 and len(candidate_rest) == 1:
         return _same_lexeme(source_rest[0], candidate_rest[0])
     return False
@@ -357,8 +362,13 @@ def _reviewed_repair_shape(source: str, candidate: str, delta: SemanticDelta) ->
         return False
 
     if delta.delta_type in {DeltaType.MODALITY_STRENGTHENED, DeltaType.MODALITY_WEAKENED}:
+        marker_span = (
+            delta.source_span
+            if delta.delta_type is DeltaType.MODALITY_STRENGTHENED
+            else delta.candidate_span
+        )
         return (
-            _single_marker(delta.source_span, _WEAK_MODAL_MARKERS) is not None
+            _single_marker(marker_span, _WEAK_MODAL_MARKERS) is not None
             and "explicit weak modal" in delta.explanation.casefold()
             and _modal_edit_only(edit, delta)
         )
@@ -464,8 +474,14 @@ def _confined_middle(candidate: str, repaired: str, start: int, end: int) -> str
     return middle
 
 
-def _failed_attempt(number: int, span: str, candidate: str, deltas: list[SemanticDelta], reason: str, usage=None) -> RepairAttempt:
-    return RepairAttempt(number, span, "", candidate, candidate, list(deltas), list(deltas), False, reason, _utc_now(), usage)
+def _failed_attempt(
+    number: int, span: str, candidate: str, deltas: list[SemanticDelta], reason: str,
+    usage=None, provider_notes: list[str] | None = None,
+) -> RepairAttempt:
+    return RepairAttempt(
+        number, span, "", candidate, candidate, list(deltas), list(deltas), False,
+        reason, _utc_now(), usage, list(provider_notes or []),
+    )
 
 
 def repair_loop(
@@ -514,7 +530,10 @@ def repair_loop(
         repaired_span = _confined_middle(current, repaired, span.candidate_start, span.candidate_end)
         if repaired_span is None:
             reason = "Repair changed text outside the authorised local span or made no local change."
-            attempts.append(_failed_attempt(number, offending, current, verification.semantic_deltas, reason, proposal.token_usage))
+            attempts.append(_failed_attempt(
+                number, offending, current, verification.semantic_deltas, reason,
+                proposal.token_usage, proposal.notes,
+            ))
             return RepairExecution(current, verification, attempts, False, reason)
 
         new_verification = verify_candidate(repaired)
@@ -523,7 +542,7 @@ def repair_loop(
             number, offending, repaired_span, current, repaired,
             list(verification.semantic_deltas), list(new_verification.semantic_deltas),
             success, None if success else f"Re-verification returned {new_verification.status.value}.",
-            _utc_now(), proposal.token_usage,
+            _utc_now(), proposal.token_usage, list(proposal.notes),
         ))
         if success:
             return RepairExecution(repaired, new_verification, attempts, True)

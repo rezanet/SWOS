@@ -1,4 +1,4 @@
-# SWOS Prose v0.2 Benchmark
+# SWOS Prose Active Benchmark (M1)
 
 This directory is the empirical release gate for SWOS Prose. It is intentionally
 separate from `skills/swos-prose`: packaging must describe measured behaviour, not
@@ -16,6 +16,10 @@ Every fixture carries:
 - a `must_not_abstain` safety label;
 - category and benchmark-group metadata;
 - an opt-in `stability_probe` flag.
+
+The active corpus identity is `0.3.0-m1`. This benchmark identity is deliberately
+separate from the development package version (`0.3.0-dev`) and from the frozen
+v0.2 evidence described below.
 
 The 11 stability probes reproduce the current trusted live verifier suite so issue
 #32 can be measured as a distribution rather than a lucky single draw.

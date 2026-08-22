@@ -23,7 +23,8 @@ pre-generation diagnostics, one rewrite proposal when needed, deterministic
 semantic-delta checks, and independent semantic verification. `REVIEW`, `REJECT`
 or provider failure never silently releases the candidate.
 
-The active governed benchmark contains 56 cases. The frozen v0.2 release evidence
+The active governed benchmark contains 56 cases and is identified as benchmark
+`0.3.0-m1`. The frozen v0.2 release evidence
 remains preserved at [`benchmark/artifacts/raw-evidence-v0.2/`](benchmark/artifacts/raw-evidence-v0.2/)
 and its compact claim surface is [`benchmark/baseline.json`](benchmark/baseline.json);
 that historical evidence covers 50 cases and is not the active runner input. On the

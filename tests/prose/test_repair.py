@@ -5,6 +5,7 @@ import unittest
 from swos_prose.models import DeltaType, SemanticDelta, Severity, VerificationResult, VerificationStatus
 from swos_prose.providers.rewrite_base import RewriteCandidate
 from swos_prose.providers.rewrite_mock import StaticRewriteProvider
+from swos_prose.providers.mock import StaticSemanticVerifierProvider
 from swos_prose.repair import MAX_REPAIR_ATTEMPTS, annotate_local_repairability, locate_span, render_repair_prompt, repair_loop
 from swos_prose.rewrite import polish_text
 
@@ -19,7 +20,17 @@ class ScriptedRepairProvider:
         self.requests.append(kwargs)
         index = min(self.calls, len(self.responses) - 1)
         self.calls += 1
-        return RewriteCandidate(candidate_text=self.responses[index], token_usage={"input_tokens": 20, "output_tokens": 5, "total_tokens": 25})
+        return RewriteCandidate(
+            candidate_text=self.responses[index],
+            notes=[
+                "provider=scripted-repair",
+                "model=test-model",
+                "prompt_version=test-v1",
+                "input_sha256=test-input",
+                "response_id=test-response",
+            ],
+            token_usage={"input_tokens": 20, "output_tokens": 5, "total_tokens": 25},
+        )
 
 
 class BoundedRepairIntegrationTests(unittest.TestCase):
@@ -48,7 +59,83 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
                 self.assertIsNone(result.repair_failure_reason)
                 self.assertEqual(len(result.repair_attempts), 1)
                 self.assertTrue(result.repair_attempts[0].success)
+                self.assertEqual(
+                    result.repair_attempts[0].provider_notes,
+                    [
+                        "provider=scripted-repair",
+                        "model=test-model",
+                        "prompt_version=test-v1",
+                        "input_sha256=test-input",
+                        "response_id=test-response",
+                    ],
+                )
+                serialized = result.to_dict()
+                self.assertEqual(
+                    serialized["repair_attempts"][0]["provider_notes"],
+                    result.repair_attempts[0].provider_notes,
+                )
+                self.assertIn("response_id=test-response", serialized["notes"])
                 self.assertEqual(repairer.calls, 1)
+
+    def test_modality_weakening_repair_path_is_reachable(self):
+        source = "The findings indicate benefits."
+        defective = "The findings may indicate benefits."
+        verifier = StaticSemanticVerifierProvider({
+            "equivalent": False,
+            "deltas": [{
+                "type": "modality_weakened",
+                "source_span": "indicate",
+                "candidate_span": "may",
+                "severity": "blocker",
+                "explanation": "Candidate introduces an explicit weak modal.",
+                "confidence": 1.0,
+            }],
+        })
+        repairer = ScriptedRepairProvider(source)
+        result = polish_text(
+            source=source,
+            rewrite_provider=StaticRewriteProvider(defective),
+            verifier_provider=verifier,
+            assurance="standard",
+            run_diagnostics=False,
+            repair_provider=repairer,
+        )
+
+        self.assertEqual(result.verification_status, VerificationStatus.PASS.value)
+        self.assertTrue(result.repair_success)
+        self.assertEqual(result.final_text, source)
+        self.assertEqual(repairer.calls, 1)
+        self.assertEqual(len(result.repair_attempts), 1)
+
+    def test_modality_weakening_with_unrelated_content_never_enters_repair(self):
+        source = "The findings indicate benefits."
+        defective = "The findings may describe harms."
+        verifier = StaticSemanticVerifierProvider({
+            "equivalent": False,
+            "deltas": [{
+                "type": "modality_weakened",
+                "source_span": "indicate",
+                "candidate_span": "may",
+                "severity": "blocker",
+                "explanation": "Candidate introduces an explicit weak modal.",
+                "confidence": 1.0,
+            }],
+        })
+        repairer = ScriptedRepairProvider(source)
+        result = polish_text(
+            source=source,
+            rewrite_provider=StaticRewriteProvider(defective),
+            verifier_provider=verifier,
+            assurance="standard",
+            run_diagnostics=False,
+            repair_provider=repairer,
+        )
+
+        self.assertEqual(result.verification_status, VerificationStatus.REJECT.value)
+        self.assertFalse(result.repair_success)
+        self.assertEqual(result.repair_attempts, [])
+        self.assertEqual(repairer.calls, 0)
+        self.assertEqual(result.final_text, source)
 
     def test_number_change_is_never_sent_to_repair(self):
         source = "The response rate was 18.7%."

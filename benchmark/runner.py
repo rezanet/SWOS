@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Governed benchmark harness for SWOS Prose v0.2.
+"""Governed benchmark harness for the active SWOS Prose M1 benchmark.
 
 The benchmark deliberately separates four questions:
 
@@ -36,7 +36,7 @@ from swos_prose.rewrite import polish_text
 from swos_prose.providers.openai_responses import OpenAIResponsesSemanticVerifierProvider
 from swos_prose.providers.openai_rewrite import OpenAIResponsesRewriteProvider
 
-BENCHMARK_VERSION = "0.2.0-rc1"
+BENCHMARK_VERSION = "0.3.0-m1"
 SCHEMA_VERSION = "1.0"
 ACTIVE_CORPUS_COUNT = 56
 DEFAULT_CORPUS = ROOT / "benchmark" / "corpus"

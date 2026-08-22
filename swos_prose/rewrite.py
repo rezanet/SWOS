@@ -201,11 +201,15 @@ def polish_text(
         suffix = f" Repair detail: {execution.failure_reason}" if execution.failure_reason else ""
         decision_note = f"Candidate verification returned {verification.status.value}; the original source was preserved.{suffix}"
 
+    repair_provider_notes = [
+        note for attempt in execution.attempts for note in attempt.provider_notes
+    ]
     return PolishResult(
         source=source, candidate=verified_candidate, final_text=final_text, assurance=assurance,
         verification=verification, used_source_fallback=used_source_fallback,
         diagnostics_before=diagnostics_before, repair_attempts=execution.attempts,
         repair_success=execution.success, repair_failure_reason=execution.failure_reason,
-        notes=[*proposal.notes, decision_note], rewrite_token_usage=proposal.token_usage,
+        notes=[*proposal.notes, *repair_provider_notes, decision_note],
+        rewrite_token_usage=proposal.token_usage,
         rewrite_cost_estimate=proposal.cost_estimate,
     )

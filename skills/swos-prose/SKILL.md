@@ -145,6 +145,10 @@ print(result.repair_success)
 print(result.repair_attempts)
 ```
 
+Each serialized repair attempt includes additive `provider_notes` provenance
+from the repair invocation (when supplied), including provider/model, prompt
+version, input hash and response ID metadata.
+
 Consumers should use `final_text`, not raw `candidate`, unless deliberately
 building a review interface. `verify_rewrite` remains a verification primitive;
 the higher-level polish pipeline owns bounded repair.

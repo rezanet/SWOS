@@ -97,6 +97,7 @@ class RepairAttempt:
     failure_reason: str | None
     timestamp: str
     token_usage: dict[str, int] | None = None
+    provider_notes: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -111,6 +112,7 @@ class RepairAttempt:
             "failure_reason": self.failure_reason,
             "timestamp": self.timestamp,
             "token_usage": self.token_usage,
+            "provider_notes": list(self.provider_notes),
         }
 
 
