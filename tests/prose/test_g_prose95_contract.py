@@ -212,14 +212,14 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
-    def test_mid_sentence_initialism_does_not_create_context_fragments(self):
+    def test_mid_sentence_initialism_remains_a_context_only_claim(self):
         deltas = context_only_deltas(
             "Regulators in the U.S. approved the plan.",
             "U.S. regulators approved the plan.",
             context_after="U.S. regulators approved the plan.",
         )
 
-        self.assertEqual(deltas, [])
+        self.assertEqual(len(deltas), 1)
 
     def test_added_initialism_sentence_remains_context_only(self):
         source = "Regulators in the U.S. approved the plan."

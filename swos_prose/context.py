@@ -18,10 +18,6 @@ _SENTENCE_TERMINATORS = frozenset(".!?")
 _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
 _INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
 _INITIALISM_AT_FRAGMENT_END_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}$")
-_INITIALISM_PREAMBLE_RE = re.compile(
-    r"\b(?:in|on|at|from|to)\s+(?:a|an|the)\s+(?=(?:[A-Za-z]\.){2,})",
-    re.IGNORECASE,
-)
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
 _CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?]+$")
 _CONTEXT_IGNORED_SYMBOLS = frozenset(".!?\"'()[]{}“”‘’")
@@ -165,14 +161,6 @@ def _content_tokens(value: str) -> tuple[str, ...]:
     return tuple(tokens)
 
 
-def _casefold_sentence_initial(value: str) -> str:
-    leading = len(value) - len(value.lstrip())
-    word = _WORD_RE.match(value, leading)
-    if word is None:
-        return value
-    return f"{value[: word.start()]}{word.group(0).casefold()}{value[word.end() :]}"
-
-
 def _looks_like_technical_sentence_start(value: str) -> bool:
     match = re.match(r"[^\s.!?,;:()\[\]{}]+", value)
     if match is None:
@@ -198,19 +186,7 @@ def _source_licenses_context_sentence(
     context_tokens = _content_tokens(context_surface)
     context_terminal = _terminal_punctuation(context_surface)
     return any(
-        (
-            _content_tokens(source_surface) == context_tokens
-            or (
-                (preamble := _INITIALISM_PREAMBLE_RE.search(source_surface)) is not None
-                and (initialism := _INITIALISM_RE.match(source_surface, preamble.end())) is not None
-                and _content_tokens(
-                    f"{initialism.group(0)} "
-                    f"{_casefold_sentence_initial(source_surface[: preamble.start()])} "
-                    f"{source_surface[initialism.end() :]}"
-                )
-                == context_tokens
-            )
-        )
+        _content_tokens(source_surface) == context_tokens
         and _terminal_punctuation(source_surface) == context_terminal
         for source_surface, _ in source_sentences
     )
