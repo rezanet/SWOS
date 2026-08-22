@@ -25,7 +25,6 @@ _INITIALISM_PREAMBLE_RE = re.compile(
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
 _CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?]+$")
 _CONTEXT_IGNORED_SYMBOLS = frozenset(".!?\"'()[]{}“”‘’")
-_CONTEXT_FUNCTION_WORDS = frozenset()
 _TECHNICAL_SENTENCE_START_WORDS = frozenset(
     {
         "api",
@@ -132,16 +131,15 @@ def _normalise_sentence(value: str) -> str:
 
 
 def _content_tokens(value: str) -> tuple[str, ...]:
-    without_initialisms = _INITIALISM_RE.sub(" ", value.casefold())
-    return tuple(
-        token
-        for token in _WORD_RE.findall(without_initialisms)
-        if token not in _CONTEXT_FUNCTION_WORDS
-    )
-
-
-def _initialism_signature(value: str) -> tuple[str, ...]:
-    return tuple(match.group(0).casefold() for match in _INITIALISM_RE.finditer(value))
+    folded = value.casefold()
+    tokens: list[str] = []
+    start = 0
+    for match in _INITIALISM_RE.finditer(folded):
+        tokens.extend(_WORD_RE.findall(folded[start : match.start()]))
+        tokens.append(match.group(0))
+        start = match.end()
+    tokens.extend(_WORD_RE.findall(folded[start:]))
+    return tuple(tokens)
 
 
 def _semantic_symbol_signature(value: str) -> tuple[str, ...]:
@@ -174,19 +172,25 @@ def _source_licenses_context_sentence(
     *,
     candidate_sentence_count: int,
 ) -> bool:
-    """Allow only a same-length, punctuation-preserving source reordering."""
+    """Allow only a same-length, punctuation-preserving licensed sentence."""
 
     if candidate_sentence_count != len(source_sentences):
         return False
     context_tokens = _content_tokens(context_surface)
-    context_initialisms = _initialism_signature(context_surface)
     context_symbols = _semantic_symbol_signature(context_surface)
     return any(
         (
             _content_tokens(source_surface) == context_tokens
-            or _content_tokens(_INITIALISM_PREAMBLE_RE.sub("", source_surface)) == context_tokens
+            or (
+                (preamble := _INITIALISM_PREAMBLE_RE.search(source_surface)) is not None
+                and (initialism := _INITIALISM_RE.match(source_surface, preamble.end())) is not None
+                and _content_tokens(
+                    f"{initialism.group(0)} {source_surface[: preamble.start()]} "
+                    f"{source_surface[initialism.end() :]}"
+                )
+                == context_tokens
+            )
         )
-        and _initialism_signature(source_surface) == context_initialisms
         and _semantic_symbol_signature(source_surface) == context_symbols
         for source_surface, _ in source_sentences
     )
