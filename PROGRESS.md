@@ -22,11 +22,14 @@ quality measurements, not claims about completion of the larger SWOS roadmap.
 PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/rezanet/SWOS/pull/37)
 
 - exact base: `ff0b4d52048b6e07b23fb1a33c064b47ee174b95`
-- current branch head: `fea3ba7d9f3b2258e9df09c658aaf8d01a0e47d6`
+- implementation/evidence head before this final ledger-only follow-up:
+  `ff1ec102c7f128d4e10bfde7b823627680b6fea0`
 - commits: `ff2605bf69eae7e857c32016cadcf2d50f4b290a` (Ruff formatting baseline),
   `fa8612dd2ddfacb9156c644489fe1db124db0311` (quality substrate),
   `3ba1e92268dc23f0f3f308caa19f9c591720d122` (progress ledger),
-  `fea3ba7d9f3b2258e9df09c658aaf8d01a0e47d6` (quiet coverage-policy tests)
+  `fea3ba7d9f3b2258e9df09c658aaf8d01a0e47d6` (quiet coverage-policy tests),
+  `c5602251e206b25b0cb2909563469141df8ee57c` and
+  `ff1ec102c7f128d4e10bfde7b823627680b6fea0` (ledger-only evidence corrections)
 - no v1.1 reranker/reference-runtime work is included or started
 
 ### Local evidence
@@ -48,9 +51,10 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
 
 ### Exact-head hosted evidence
 
-- SWOS CI #155 / run `32565431253`, SWOS Prose Benchmark #31 / run
-  `32565431257`, SWOS Engineering Quality #4 / run `32565431261`, and SWOS
-  CodeQL #4 / run `32565431304` all completed green for the exact head.
+- SWOS CI #156 / run `32565677709`, SWOS Prose Benchmark #32 / run
+  `32565677699`, SWOS Engineering Quality #5 / run `32565677696`, and SWOS
+  CodeQL #5 / run `32565677682` all completed green for the exact implementation
+  and evidence head above.
 - The hosted Python 3.11 quality job measured 85.46% package coverage and passed
   every configured critical-module floor.
 - The active `Protect main` ruleset is active and now requires the 18 deterministic
@@ -62,7 +66,9 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
 
 ### Merge gate
 
-PR #37 is ready for independent adversarial review at the exact head. Merge and
+PR #37 is ready for independent adversarial review at the exact implementation
+head. The final follow-up containing this ledger sentence is documentation-only;
+it changes no source, workflow or required-check configuration. Merge and
 post-merge main CI remain outstanding; no v1.1 work may begin after this gate.
 
 Live Luna/OpenAI verifier, dogfood and benchmark results remain stochastic
