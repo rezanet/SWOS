@@ -120,7 +120,7 @@ def _normalise_sentence(value: str) -> str:
     # Keep meaning-bearing operators and identifier punctuation (for example
     # ``C#`` vs ``C++`` and ``foo::bar`` vs ``foo/bar``). Only sentence/display
     # delimiters are discarded before whitespace is canonicalised.
-    surface = value.casefold().strip()
+    surface = value.strip()
     while True:
         unwrapped = _CONTEXT_WRAPPER_RE.sub("", surface)
         if unwrapped == surface:
@@ -144,7 +144,7 @@ def _terminal_punctuation(value: str) -> str:
 def _content_tokens(value: str) -> tuple[str, ...]:
     """Return ordered words, initialisms, and meaning-bearing punctuation."""
 
-    folded = value.casefold()
+    folded = value
     tokens: list[str] = []
     index = 0
     while index < len(folded):
@@ -163,6 +163,14 @@ def _content_tokens(value: str) -> tuple[str, ...]:
             tokens.append(character)
         index += 1
     return tuple(tokens)
+
+
+def _casefold_sentence_initial(value: str) -> str:
+    leading = len(value) - len(value.lstrip())
+    word = _WORD_RE.match(value, leading)
+    if word is None:
+        return value
+    return f"{value[: word.start()]}{word.group(0).casefold()}{value[word.end() :]}"
 
 
 def _looks_like_technical_sentence_start(value: str) -> bool:
@@ -196,7 +204,8 @@ def _source_licenses_context_sentence(
                 (preamble := _INITIALISM_PREAMBLE_RE.search(source_surface)) is not None
                 and (initialism := _INITIALISM_RE.match(source_surface, preamble.end())) is not None
                 and _content_tokens(
-                    f"{initialism.group(0)} {source_surface[: preamble.start()]} "
+                    f"{initialism.group(0)} "
+                    f"{_casefold_sentence_initial(source_surface[: preamble.start()])} "
                     f"{source_surface[initialism.end() :]}"
                 )
                 == context_tokens

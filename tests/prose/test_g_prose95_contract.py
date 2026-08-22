@@ -278,6 +278,15 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_only_guard_preserves_case_sensitive_tokens(self):
+        deltas = context_only_deltas(
+            "Variable A is set.",
+            "Variable a is set.",
+            context_after="Variable a is set.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_sentence_final_initialism_splits_before_technical_identifier(self):
         deltas = context_only_deltas(
             "The study was reviewed.",
