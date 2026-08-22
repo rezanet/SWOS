@@ -224,7 +224,7 @@ Final exact-head hosted workflows:
 | SWOS Engineering Quality | run 32599881448; quality 97096456862; SCA 97096456893; Bandit 97096456785 | success |
 | SWOS CodeQL | run 32599881495; CodeQL job 97096456971 | success |
 | PR Prose Benchmark | run 32599881487; contract 97096456954; live job 97096457413 skipped by design | success |
-| Manual exact-head Prose Benchmark | run 32585308712; contract 97060673283; live evidence 97060673221 | success |
+| Manual exact-head Prose Benchmark | run 32599944576; contract 97096608775; live evidence 97096608663 | success |
 
 Adversarial review history:
 
