@@ -8,7 +8,7 @@ Goal: **G1 — Complete SWOS Prose M1 and make PR #40 merge-ready**
 
 **GOAL ACHIEVED — READY FOR INDEPENDENT REVIEW.**
 
-PR #40 is open, non-draft, and unmerged. The exact final code/evidence head is green locally and on hosted CI, the final exact-head hosted benchmark completed successfully, and the final adversarial review gate is pending only the independent review of this completed evidence package. No merge, release tag, v1.1 release, or out-of-scope platform work was performed.
+PR #40 is open, non-draft, and unmerged. The exact final code/evidence head is green locally and on hosted CI, the final exact-head hosted benchmark completed successfully, and all 44 existing review threads are resolved. A fresh `@codex review` request on the report head was refused by the external Codex usage limit before a new review was produced; this report does not claim a clean final bot review. No merge, release tag, v1.1 release, or out-of-scope platform work was performed.
 
 The safety claims below are empirical observations on the governed benchmark commit identified in this report. They are not universal guarantees for arbitrary future prose or model behavior.
 
@@ -226,6 +226,10 @@ Final exact-head hosted workflows:
 | SWOS CodeQL | run 32601458516; CodeQL job 97100237040; analysis check 97100322542 | success |
 | PR Prose Benchmark | run 32601458448; contract 97100236762; live job 97100237447 skipped by design | success |
 | Manual exact-head Prose Benchmark | run 32601464301; contract 97100254397; live evidence 97100254468 | success |
+| Report-head SWOS CI | head a4798d22579708bd47e5c2a1f3b1328d961c84c6; run 32602544078; DCO 97102918175; schema 97102918071; skills 97102918140; prose tests 97102918147; governance 97102918155; OpenAI live 97102918250; eval jobs 97102936782, 97102936783, 97102936784, 97102936786, 97102936804, 97102936819, 97102936820, 97102936833 | success |
+| Report-head Engineering Quality | head a4798d22579708bd47e5c2a1f3b1328d961c84c6; run 32602544005; quality 97102917800; SCA 97102917868; Bandit 97102917880 | success |
+| Report-head CodeQL | head a4798d22579708bd47e5c2a1f3b1328d961c84c6; run 32602544004; CodeQL job 97102917798 | success |
+| Report-head PR Prose Benchmark | head a4798d22579708bd47e5c2a1f3b1328d961c84c6; run 32602544013; contract 97102917878; live job 97102918432 skipped by design | success |
 
 Adversarial review history:
 
@@ -235,7 +239,9 @@ Adversarial review history:
 - review 5000575291 then identified a Markdown link-label bypass and stale report evidence; the link-label bypass is fixed in 2b9b52a, and review 5001087978 identified a terminal-delimiter punctuation bypass that is fixed in deb60c0;
 - review 5001140299 identified three additional context-boundary P1s — unlisted lowercase technical starts, wrapper normalization order, and image alt labels — fixed in 317bf7e with focused regressions;
 - this report records the final hosted evidence from 317bf7e;
-- the final exact-head Codex review and resolution of all remaining threads are the last PR governance actions before independent review.
+- all 44 review threads are resolved, including replies and resolutions for the three 5001140299 findings;
+- the final `@codex review` request was comment 5382937477 on report head a4798d22579708bd47e5c2a1f3b1328d961c84c6; the bot response comment 5382937970 reported that the Codex usage limit had been reached, so no new review ID or clean final bot verdict exists;
+- the external bot re-review remains a pre-merge follow-up when quota permits; independent review can begin from this evidence package.
 
 ## 10. Files changed from the exact base
 
@@ -289,7 +295,8 @@ Deviations and limitations:
 3. The full Windows Ruff format check is affected by the existing CRLF/autocrlf working-tree behavior. Scoped changed-file formatting and hosted Linux quality are green.
 4. The benchmark claims zero unsafe PASSes and zero unsafe abstentions only for the governed corpus SHA above, not universally.
 5. The final report commit SHA is supplied in the handoff because the report cannot contain its own Git object ID.
+6. The final exact-head Codex re-review could not be completed because the external review service reported its usage limit. This is an availability limitation, not an observed correctness or safety finding; the preceding review's three P1 findings are fixed and all 44 threads are resolved.
 
-Unresolved correctness/safety items: none observed in the final hosted evidence. The final exact-head Codex review and thread-resolution state remain to be recorded after this report is pushed; no merge action is authorized in this builder task.
+Unresolved correctness/safety items: none observed in the final hosted evidence. Unresolved governance availability item: final Codex re-review of the report head is pending quota availability. No merge action is authorized in this builder task.
 
-**Recommendation: READY FOR INDEPENDENT REVIEW.** PR #40 is merge-ready for an independent reviewer. Stop here pending that review and the user's separate merge decision; do not merge or tag in this builder task.
+**Recommendation: READY FOR INDEPENDENT REVIEW.** PR #40 is merge-ready for an independent reviewer, with the external Codex re-review explicitly outstanding before merge. Stop here pending that review and the user's separate merge decision; do not merge or tag in this builder task.
