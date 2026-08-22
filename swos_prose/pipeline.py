@@ -144,7 +144,7 @@ def verify_rewrite(
             context_safety=context_info.to_dict(),
         )
 
-    if _terminal_newline_equivalent(source, candidate):
+    if context_info.accepted and _terminal_newline_equivalent(source, candidate):
         return VerificationResult(
             status=VerificationStatus.PASS,
             source=source,

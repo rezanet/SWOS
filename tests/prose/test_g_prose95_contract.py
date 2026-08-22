@@ -407,6 +407,20 @@ class GProse95CostEvidenceTests(unittest.TestCase):
         self.assertFalse(result.verifier_used)
         self.assertEqual(verifier.calls, 0)
 
+    def test_rejected_context_blocks_terminal_newline_fast_path(self):
+        verifier = StaticSemanticVerifierProvider({})
+        source = "Source prose."
+        result = verify_rewrite(
+            source=source,
+            candidate=source + "\n",
+            verifier_provider=verifier,
+            context_after="invalid\x00context",
+        )
+
+        self.assertEqual(result.status, VerificationStatus.REVIEW)
+        self.assertFalse(result.verifier_used)
+        self.assertEqual(verifier.calls, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
