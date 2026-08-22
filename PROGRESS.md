@@ -29,7 +29,9 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
   `3ba1e92268dc23f0f3f308caa19f9c591720d122` (progress ledger),
   `fea3ba7d9f3b2258e9df09c658aaf8d01a0e47d6` (quiet coverage-policy tests),
   `c5602251e206b25b0cb2909563469141df8ee57c` and
-  `ff1ec102c7f128d4e10bfde7b823627680b6fea0` (ledger-only evidence corrections)
+  `ff1ec102c7f128d4e10bfde7b823627680b6fea0` (ledger-only evidence corrections),
+  and final PR head `240045b145a8ac8b8bb6809931b417a7923bc912` (documentation-only
+  distinction between implementation/evidence and final ledger heads)
 - no v1.1 reranker/reference-runtime work is included or started
 
 ### Local evidence
@@ -55,6 +57,10 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
   `32565677699`, SWOS Engineering Quality #5 / run `32565677696`, and SWOS
   CodeQL #5 / run `32565677682` all completed green for the exact implementation
   and evidence head above.
+- The final PR head `240045b145a8ac8b8bb6809931b417a7923bc912` also completed
+  green on SWOS CI #157 / run `32565827013`, SWOS Prose Benchmark #33 / run
+  `32565827006`, SWOS Engineering Quality #6 / run `32565827022`, and SWOS
+  CodeQL #6 / run `32565827025`.
 - The hosted Python 3.11 quality job measured 85.46% package coverage and passed
   every configured critical-module floor.
 - The active `Protect main` ruleset is active and now requires the 18 deterministic
@@ -64,12 +70,22 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
   two expected-outcome failures (both `REVIEW`) and its five-case
   no-diagnostics dogfood reported 2 `NO_CHANGE_RECOMMENDED` and 3 `PASS`.
 
-### Merge gate
+### Verified merge gate
 
-PR #37 is ready for independent adversarial review at the exact implementation
-head. The final follow-up containing this ledger sentence is documentation-only;
-it changes no source, workflow or required-check configuration. Merge and
-post-merge main CI remain outstanding; no v1.1 work may begin after this gate.
+- PR #37 was squash-merged from expected final head
+  `240045b145a8ac8b8bb6809931b417a7923bc912` as main merge SHA
+  `15919f373bbee50fb05b87ed5be8980c66f734d6`.
+- Post-merge main SWOS CI #158 / run `32565943168`, Engineering Quality #7 /
+  run `32565943304`, CodeQL #7 / run `32565943190`, and the dependency-graph
+  update run `32565945667` all completed successfully. SWOS CI included the
+  DCO, semantic-delta, schema, governance, eight evaluation-plane, and live
+  evidence jobs; the hosted quality run included Ruff, 186 deterministic tests,
+  85.46% coverage, SCA, and Bandit.
+- The active `Protect main` ruleset therefore enforced all 18 deterministic
+  contexts on the G2 merge. This ledger update changes documentation only; it
+  does not change source, workflow, or required-check configuration.
+
+No v1.1 reranker/reference-runtime work may begin after this gate.
 
 Live Luna/OpenAI verifier, dogfood and benchmark results remain stochastic
 evidence and are not substitutes for deterministic merge gates.
