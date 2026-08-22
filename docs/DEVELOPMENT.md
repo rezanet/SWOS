@@ -72,9 +72,10 @@ standalone `Signed-off-by:` trailer before pushing. When a hosted squash merge
 is used, the merge message must contain a real line break before that trailer;
 an escaped `\n` sequence is text, not a DCO trailer. Verify the post-merge DCO
 job on the exact `main` SHA before treating the milestone as complete. If a
-hosted merge produces an unsigned commit, preserve the history, record the
-deviation, and remediate with a signed governed follow-up rather than rewriting
-`main`.
+hosted merge produces an unsigned commit, preserve the history and record it as
+a historical DCO deviation. A signed governed follow-up makes the new commit
+range pass but does not retroactively remediate the unsigned commit; do not
+rewrite `main` without explicit authority.
 
 ## Live evidence
 

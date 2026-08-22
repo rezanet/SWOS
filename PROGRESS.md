@@ -84,6 +84,14 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
 - The active `Protect main` ruleset therefore enforced all 18 deterministic
   contexts on the G2 merge. This ledger update changes documentation only; it
   does not change source, workflow, or required-check configuration.
+- Documentation-only PR #38 subsequently produced historical SWOS CI run
+  `32566386846`: every semantic, schema, governance, evaluation-plane and live
+  job passed, while DCO correctly rejected the GitHub-generated squash commit
+  `1a2a0b1e907072722d037fd7657059f0dae05292` because its message contained a
+  literal escaped `\n\nSigned-off-by` sequence rather than a standalone trailer.
+  This is recorded as a historical DCO deviation, alongside the earlier M1
+  squash deviation; the signed follow-up is a process guard, not a retroactive
+  history repair, and `main` is not rewritten.
 
 No v1.1 reranker/reference-runtime work may begin after this gate.
 
