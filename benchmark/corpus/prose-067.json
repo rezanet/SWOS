@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-067",
+  "category": "preset-elegant-essay-equivalent",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "tighten",
+  "preset": "elegant-essay",
+  "assurance": "strict",
+  "source": "The revised design, although modest in scope, improved consistency.",
+  "semantic_probe_candidate": "Although modest in scope, the revised design improved consistency.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Essay rhythm may change while the qualification remains attached."
+}

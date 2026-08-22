@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-060",
+  "category": "mode-clarify-material-quantifier",
+  "benchmark_group": "g-prose95-modes",
+  "mode": "clarify",
+  "preset": "plain-intelligent",
+  "assurance": "strict",
+  "source": "The sample included only first-year students in the final analysis.",
+  "semantic_probe_candidate": "The sample included all students in the final analysis.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Broadening only to all students changes scope and must not pass."
+}

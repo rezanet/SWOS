@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-071",
+  "category": "preset-scholarly-natural-equivalent-attribution",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "clarify",
+  "preset": "scholarly-natural",
+  "assurance": "strict",
+  "source": "Smith argues that the classification is unstable.",
+  "semantic_probe_candidate": "Smith contends that the classification is unstable.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Scholarly register changes must preserve the attributed speech act."
+}

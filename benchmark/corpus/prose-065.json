@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-065",
+  "category": "preset-plain-intelligent-equivalent",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "clarify",
+  "preset": "plain-intelligent",
+  "assurance": "strict",
+  "source": "The findings suggest that the policy could reduce delays.",
+  "semantic_probe_candidate": "The findings indicate that the policy might reduce delays.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": true,
+  "notes": "Plain language must preserve the layered uncertainty and possibility."
+}

@@ -9,7 +9,9 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from .context import inspect_context
 from .diagnostics import diagnose_polish
+from .modes import SUPPORTED_MODES, SUPPORTED_PRESETS
 from .pipeline import verify_rewrite
 from .rewrite import polish_text
 
@@ -87,6 +89,8 @@ def _run_verify(args: argparse.Namespace) -> int:
 def _polish_status(result: Any) -> str:
     if result.generation_skipped_by_diagnostics:
         return "NO_CHANGE_RECOMMENDED"
+    if getattr(result, "context_rejected", False) is True:
+        return "CONTEXT_REJECTED"
     if result.verification_status is not None:
         return result.verification_status
     if result.used_source_fallback:
@@ -101,7 +105,10 @@ def _emit_polish_result(result: Any, *, as_json: bool) -> int:
         # Plain mode is deliberately composable: stdout is only the text callers
         # should keep. Operational status belongs on stderr.
         print(result.final_text)
-        print(f"SWOS Prose polish: {_polish_status(result)}", file=sys.stderr)
+        mode = getattr(result, "mode", "polish")
+        if not isinstance(mode, str):
+            mode = "polish"
+        print(f"SWOS Prose {mode}: {_polish_status(result)}", file=sys.stderr)
     return 0 if result.safe_for_automatic_use else 1
 
 
@@ -116,16 +123,19 @@ def _run_polish(args: argparse.Namespace) -> int:
     source = _read(args.source)
     context_before = _read_optional(args.context_before)
     context_after = _read_optional(args.context_after)
+    context_safety = inspect_context(context_before, context_after)
 
     # Preserve the library's zero-provider boundary. Exact reviewed diagnostics
     # exemplars (and empty input) must not require the OpenAI SDK, credentials,
     # or provider construction.
-    local_no_provider = not source.strip()
+    local_no_provider = not source.strip() or not context_safety.accepted
     if not local_no_provider and not args.skip_diagnostics:
         diagnostics = diagnose_polish(
             source,
             context_before=context_before,
             context_after=context_after,
+            mode=args.mode,
+            preset=args.preset,
         )
         local_no_provider = diagnostics.no_change_recommended
 
@@ -139,6 +149,8 @@ def _run_polish(args: argparse.Namespace) -> int:
                 context_before=context_before,
                 context_after=context_after,
                 run_diagnostics=not args.skip_diagnostics,
+                mode=args.mode,
+                preset=args.preset,
             )
         except (RuntimeError, TypeError, ValueError) as exc:
             print(f"SWOS Prose polish failed safely: {exc}", file=sys.stderr)
@@ -173,6 +185,8 @@ def _run_polish(args: argparse.Namespace) -> int:
             context_before=context_before,
             context_after=context_after,
             run_diagnostics=not args.skip_diagnostics,
+            mode=args.mode,
+            preset=args.preset,
         )
     except (RuntimeError, TypeError, ValueError) as exc:
         print(f"SWOS Prose polish failed safely: {exc}", file=sys.stderr)
@@ -207,6 +221,8 @@ def _run_dogfood(args: argparse.Namespace) -> int:
             verifier_provider=verifier,
             assurance=args.assurance,
             run_diagnostics=not args.skip_diagnostics,
+            mode=args.mode,
+            preset=args.preset,
         )
     except (RuntimeError, TypeError, ValueError) as exc:
         print(f"SWOS Prose dogfood failed safely: {exc}")
@@ -233,6 +249,18 @@ def main() -> int:
 
     polish = sub.add_parser("polish", help="Polish one source while preserving semantic force")
     polish.add_argument("--source", required=True, help="Source file path or literal text")
+    polish.add_argument(
+        "--mode",
+        choices=SUPPORTED_MODES,
+        default="polish",
+        help="Writer mode; all modes use the same semantic verification pipeline",
+    )
+    polish.add_argument(
+        "--preset",
+        choices=SUPPORTED_PRESETS,
+        default=None,
+        help="Optional explicit register preset",
+    )
     polish.add_argument(
         "--context-before",
         default=None,
@@ -272,6 +300,8 @@ def main() -> int:
         "--input-dir", required=True, help="Directory containing local .md/.txt samples"
     )
     dogfood.add_argument("--output-dir", required=True, help="Directory for local JSON results")
+    dogfood.add_argument("--mode", choices=SUPPORTED_MODES, default="polish")
+    dogfood.add_argument("--preset", choices=SUPPORTED_PRESETS, default=None)
     dogfood.add_argument("--assurance", choices=("standard", "strict", "review"), default="strict")
     dogfood.add_argument(
         "--env-file",

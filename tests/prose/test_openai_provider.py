@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
+import os
 import unittest
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from swos_prose.models import VerificationStatus
 from swos_prose.pipeline import verify_rewrite
@@ -148,6 +150,30 @@ class OpenAIProviderUnitTests(unittest.TestCase):
         )
 
         self.assertEqual(client.responses.calls[0]["temperature"], 0.25)
+
+    def test_verifier_cost_is_recorded_only_from_explicit_rates(self):
+        payload = one_to_one_payload(
+            proposition("p1", "The model performs poorly."),
+            proposition("c1", "The model underperforms."),
+        )
+        client = FakeClient(payload)
+        provider = OpenAIResponsesSemanticVerifierProvider(model="test-model", client=client)
+        with patch.dict(
+            os.environ,
+            {
+                "SWOS_PROSE_INPUT_USD_PER_1K": "0.01",
+                "SWOS_PROSE_OUTPUT_USD_PER_1K": "0.02",
+            },
+        ):
+            assessment = provider.verify(
+                source="The model performs poorly.",
+                candidate="The model underperforms.",
+                source_anchors=[],
+                candidate_anchors=[],
+                assurance="strict",
+                native_swos_context=None,
+            )
+        self.assertEqual(assessment.cost_estimate, 0.00555)
 
     def test_modal_scope_relocation_cannot_pass_even_if_provider_boolean_says_preserved(self):
         source = "The data may suggest that X causes Y."

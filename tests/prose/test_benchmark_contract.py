@@ -4,12 +4,18 @@ import json
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from benchmark.runner import (
     ACTIVE_CORPUS_COUNT,
     BENCHMARK_VERSION,
     _base_report,
     _combined_result_usage,
+    _cost_method,
+    _mode_preset_performance,
+    _provider_output_token_limits,
+    _repair_summary,
+    _resolved_model,
     load_corpus,
     validate_corpus,
 )
@@ -18,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class ProseBenchmarkContractTests(unittest.TestCase):
-    def test_governed_corpus_has_exactly_fifty_six_unique_fixtures(self):
+    def test_governed_corpus_has_exactly_active_unique_fixtures(self):
         fixtures = load_corpus()
         self.assertEqual(len(fixtures), ACTIVE_CORPUS_COUNT)
         self.assertEqual(len({item["fixture_id"] for item in fixtures}), ACTIVE_CORPUS_COUNT)
@@ -45,11 +51,28 @@ class ProseBenchmarkContractTests(unittest.TestCase):
 
     def test_stability_subset_remains_the_inherited_eleven_case_suite(self):
         fixtures = load_corpus()
-        self.assertEqual(sum(1 for item in fixtures if item["stability_probe"]), 11)
+        self.assertEqual(sum(1 for item in fixtures if item["stability_probe"]), 16)
+
+    def test_g_prose95_corpus_covers_all_modes_and_presets(self):
+        fixtures = load_corpus()
+        self.assertEqual(
+            {item["mode"] for item in fixtures},
+            {"polish", "naturalise", "clarify", "tighten"},
+        )
+        self.assertEqual(
+            {item["preset"] for item in fixtures if item.get("preset")},
+            {
+                "scholarly-natural",
+                "precise-technical",
+                "plain-intelligent",
+                "elegant-essay",
+                "executive",
+            },
+        )
 
     def test_active_report_has_m1_identity_and_frozen_evidence_stays_v02(self):
         report = _base_report(load_corpus(), "validate")
-        self.assertEqual(report["benchmark_version"], "0.3.0-m1")
+        self.assertEqual(report["benchmark_version"], "0.4.0-g-prose95")
         self.assertEqual(report["benchmark_version"], BENCHMARK_VERSION)
         self.assertEqual(report["corpus"]["fixture_count"], ACTIVE_CORPUS_COUNT)
 
@@ -58,6 +81,37 @@ class ProseBenchmarkContractTests(unittest.TestCase):
         self.assertEqual(frozen["corpus"]["fixture_count"], 50)
         frozen_at = (ROOT / "benchmark" / "FROZEN_AT").read_text(encoding="utf-8")
         self.assertIn("benchmark_version: 0.2.0-rc1", frozen_at)
+
+    def test_resolved_model_identity_prefers_explicit_then_environment_then_default(self):
+        self.assertEqual(_resolved_model("gpt-explicit", "SWOS_TEST_MODEL"), "gpt-explicit")
+        with patch.dict("os.environ", {"SWOS_TEST_MODEL": "gpt-env"}):
+            self.assertEqual(_resolved_model(None, "SWOS_TEST_MODEL"), "gpt-env")
+        with patch.dict("os.environ", {}, clear=True):
+            self.assertEqual(_resolved_model(None, "SWOS_TEST_MODEL"), "gpt-5.6")
+
+    def test_mixed_model_costs_are_fail_closed(self):
+        with patch.dict(
+            "os.environ",
+            {
+                "SWOS_PROSE_INPUT_USD_PER_1K": "0.01",
+                "SWOS_PROSE_OUTPUT_USD_PER_1K": "0.02",
+            },
+        ):
+            method = _cost_method(
+                {"rewriter": "gpt-rewriter", "verifier": "gpt-verifier", "repair": "gpt-rewriter"}
+            )
+
+        self.assertFalse(method["available"])
+        self.assertIsNone(method["rates"])
+        self.assertIn("models differ", method["note"])
+
+    def test_provider_output_token_limits_are_explicit(self):
+        limits = _provider_output_token_limits(
+            SimpleNamespace(max_output_tokens=4000),
+            SimpleNamespace(max_output_tokens=6000),
+        )
+
+        self.assertEqual(limits, {"rewrite": 4000, "repair": 4000, "verifier": 6000})
 
     def test_combined_usage_includes_repair_attempt_tokens(self):
         result = SimpleNamespace(
@@ -77,6 +131,62 @@ class ProseBenchmarkContractTests(unittest.TestCase):
             _combined_result_usage(result),
             {"input_tokens": 170, "output_tokens": 35, "total_tokens": 205},
         )
+
+    def test_repair_summary_preserves_outcomes_and_fallbacks(self):
+        records = [
+            {
+                "repair_attempt_count": 0,
+                "repair_success": False,
+                "used_source_fallback": True,
+                "provider_calls": {"repair": 0},
+            },
+            {
+                "repair_attempt_count": 1,
+                "repair_success": True,
+                "used_source_fallback": False,
+                "provider_calls": {"repair": 1},
+            },
+            {
+                "repair_attempt_count": 2,
+                "repair_success": False,
+                "used_source_fallback": True,
+                "provider_calls": {"repair": 2},
+            },
+        ]
+
+        summary = _repair_summary(records)
+        self.assertEqual(summary["cases_attempted"], 2)
+        self.assertEqual(summary["cases_with_provider_call"], 2)
+        self.assertEqual(summary["total_attempts"], 3)
+        self.assertEqual(summary["successes"], 1)
+        self.assertEqual(summary["fallback_count"], 2)
+        self.assertEqual(summary["attempt_count_distribution"], {"0": 1, "1": 1, "2": 1})
+
+    def test_mode_preset_performance_aggregates_status_counts(self):
+        summary = _mode_preset_performance(
+            [
+                {
+                    "mode": "tighten",
+                    "preset": "executive",
+                    "baseline_status": "PASS",
+                    "latency_ms": 1.0,
+                    "provider_calls": {"rewrite": 1, "verifier": 1, "repair": 0, "total": 2},
+                    "baseline_token_usage": {},
+                    "baseline_cost_estimate": None,
+                },
+                {
+                    "mode": "tighten",
+                    "preset": "executive",
+                    "baseline_status": "REVIEW",
+                    "latency_ms": 2.0,
+                    "provider_calls": {"rewrite": 1, "verifier": 1, "repair": 0, "total": 2},
+                    "baseline_token_usage": {},
+                    "baseline_cost_estimate": None,
+                },
+            ]
+        )
+
+        self.assertEqual(summary["tighten::executive"]["status_counts"], {"PASS": 1, "REVIEW": 1})
 
 
 if __name__ == "__main__":

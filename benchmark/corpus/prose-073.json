@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-073",
+  "category": "preset-precise-technical-equivalent-citation",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "tighten",
+  "preset": "precise-technical",
+  "assurance": "strict",
+  "source": "The result was replicated in the follow-up study [17].",
+  "semantic_probe_candidate": "A follow-up study replicated the result [17].",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Tightening must preserve the citation and the replication claim."
+}

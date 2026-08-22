@@ -45,6 +45,7 @@ class DeltaType(str, Enum):
     CONDITION_CHANGED = "condition_changed"
     EXCEPTION_REMOVED = "exception_removed"
     EPISTEMIC_TYPE_CHANGED = "epistemic_type_changed"
+    CONTEXT_ONLY_CLAIM = "context_only_claim"
     MALFORMED_PROVIDER_RESPONSE = "malformed_provider_response"
     UNRESOLVED_EQUIVALENCE = "unresolved_equivalence"
 
@@ -99,6 +100,11 @@ class RepairAttempt:
     timestamp: str
     token_usage: dict[str, int] | None = None
     provider_notes: list[str] = field(default_factory=list)
+    cost_estimate: float | None = None
+    provider_called: bool = False
+    verification_call_count: int = 0
+    verification_token_usage: dict[str, int] | None = None
+    verification_cost_estimate: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -114,6 +120,11 @@ class RepairAttempt:
             "timestamp": self.timestamp,
             "token_usage": self.token_usage,
             "provider_notes": list(self.provider_notes),
+            "cost_estimate": self.cost_estimate,
+            "provider_called": self.provider_called,
+            "verification_call_count": self.verification_call_count,
+            "verification_token_usage": self.verification_token_usage,
+            "verification_cost_estimate": self.verification_cost_estimate,
         }
 
 
@@ -126,12 +137,14 @@ class VerificationResult:
     source_anchors: list[SemanticAnchor] = field(default_factory=list)
     candidate_anchors: list[SemanticAnchor] = field(default_factory=list)
     verifier_used: bool = False
+    verifier_call_count: int = 0
     verifier_independent: bool | None = None
     verifier_skip_reason: str | None = None
     verifier_notes: list[str] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
     token_usage: dict[str, int] | None = None
     cost_estimate: float | None = None
+    context_safety: dict[str, Any] | None = None
 
     @property
     def safe_for_automatic_use(self) -> bool:
@@ -147,10 +160,12 @@ class VerificationResult:
             "source_anchors": [anchor.to_dict() for anchor in self.source_anchors],
             "candidate_anchors": [anchor.to_dict() for anchor in self.candidate_anchors],
             "verifier_used": self.verifier_used,
+            "verifier_call_count": self.verifier_call_count,
             "verifier_independent": self.verifier_independent,
             "verifier_skip_reason": self.verifier_skip_reason,
             "verifier_notes": self.verifier_notes,
             "notes": self.notes,
             "token_usage": self.token_usage,
             "cost_estimate": self.cost_estimate,
+            "context_safety": self.context_safety,
         }

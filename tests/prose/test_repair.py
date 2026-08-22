@@ -95,6 +95,8 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
                 self.assertIsNone(result.repair_failure_reason)
                 self.assertEqual(len(result.repair_attempts), 1)
                 self.assertTrue(result.repair_attempts[0].success)
+                self.assertTrue(result.repair_attempts[0].provider_called)
+                self.assertEqual(result.repair_attempts[0].verification_call_count, 0)
                 self.assertEqual(
                     result.repair_attempts[0].provider_notes,
                     [
@@ -110,6 +112,7 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
                     serialized["repair_attempts"][0]["provider_notes"],
                     result.repair_attempts[0].provider_notes,
                 )
+                self.assertTrue(serialized["repair_attempts"][0]["provider_called"])
                 self.assertIn("response_id=test-response", serialized["notes"])
                 self.assertEqual(repairer.calls, 1)
 
