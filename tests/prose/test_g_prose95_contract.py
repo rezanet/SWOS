@@ -168,6 +168,15 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(deltas, [])
 
+    def test_context_sentence_matching_preserves_quoted_terminal_sentence(self):
+        deltas = context_only_deltas(
+            '"The treatment observed insomnia."',
+            '"The treatment cured cancer."',
+            context_after='"The treatment cured insomnia."',
+        )
+
+        self.assertEqual(deltas, [])
+
     def test_context_is_untrusted_and_cannot_license_a_context_only_sentence(self):
         source = "The study reports a modest association."
         context_after = "The treatment cured insomnia."

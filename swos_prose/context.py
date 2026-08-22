@@ -13,8 +13,9 @@ _INSTRUCTION_LIKE_RE = re.compile(
     r"\b(?:ignore|disregard|override|follow|obey|system|developer|prompt|instruction|jailbreak)\b",
     re.IGNORECASE,
 )
-_SENTENCE_RE = re.compile(r"[^.!?]+[.!?]?(?=\s+|$)", re.DOTALL)
 _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
+_SENTENCE_TERMINATORS = frozenset(".!?")
+_CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
 
 
 @dataclass(frozen=True)
@@ -83,11 +84,27 @@ def _normalise_sentence(value: str) -> str:
 
 def _sentences(value: str) -> list[tuple[str, str]]:
     result: list[tuple[str, str]] = []
-    for match in _SENTENCE_RE.finditer(value):
-        surface = match.group(0).strip()
+    start = 0
+
+    def append_surface(surface: str) -> None:
         normalised = _normalise_sentence(surface)
         if len(_WORD_RE.findall(surface)) >= 3 and normalised:
             result.append((surface, normalised))
+
+    for index, character in enumerate(value):
+        if character not in _SENTENCE_TERMINATORS:
+            continue
+        end = index + 1
+        while end < len(value) and value[end] in _CLOSING_SENTENCE_DELIMITERS:
+            end += 1
+        if end < len(value) and not value[end].isspace():
+            continue
+        append_surface(value[start:end].strip())
+        start = end
+
+    tail = value[start:].strip()
+    if tail:
+        append_surface(tail)
     return result
 
 
