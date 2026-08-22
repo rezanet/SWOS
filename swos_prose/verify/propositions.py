@@ -37,6 +37,64 @@ ATTRIBUTION_RE = re.compile(
     re.IGNORECASE,
 )
 
+# The only relation-context adjunct normalized here is the exact form observed
+# in live dogfood. Do not widen this to generic study/cohort/population suffixes:
+# those scopes can differ materially and must remain visible to frame validation.
+_REVIEWED_RELATION_CONTEXT_SUFFIX_RE = re.compile(
+    r"\s+in\s+(?:the|this)\s+observed\s+tests\s*$",
+    re.IGNORECASE,
+)
+_REVIEWED_RELATION_CONTEXT_PREFIX_RE = re.compile(
+    r"^\s*in\s+(?:the|this)\s+observed\s+tests\s*,\s*",
+    re.IGNORECASE,
+)
+_REVIEWED_RELATION_CONTEXT_ANY_RE = re.compile(
+    r"\bin\s+(?:the|this)\s+observed\s+tests\b",
+    re.IGNORECASE,
+)
+
+_REPORTING_ACT_CANONICAL = {
+    "argue": "argue",
+    "argues": "argue",
+    "claim": "claim",
+    "claims": "claim",
+    "report": "report",
+    "reports": "report",
+    "state": "state",
+    "states": "state",
+    "suggest": "suggest",
+    "suggests": "suggest",
+    "find": "find",
+    "finds": "find",
+    "found": "find",
+    "observe": "observe",
+    "observes": "observe",
+    "propose": "propose",
+    "proposes": "propose",
+    "speculate": "speculate",
+    "speculates": "speculate",
+}
+
+# Structured verifier output is semantic rather than necessarily a verbatim
+# surface transcription. Accept only reviewed morphological/copular variants of
+# the four relation families the deterministic parser itself understands.
+_RELATION_CANONICAL = {
+    "associated": "associated with",
+    "associated with": "associated with",
+    "association": "associated with",
+    "association with": "associated with",
+    "correlated": "correlated with",
+    "correlated with": "correlated with",
+    "correlation": "correlated with",
+    "correlation with": "correlated with",
+    "linked": "linked to",
+    "linked to": "linked to",
+    "link": "linked to",
+    "link to": "linked to",
+    "related": "related to",
+    "related to": "related to",
+}
+
 
 def _delta(
     delta_type: DeltaType,
@@ -97,6 +155,17 @@ def _normalise_role(text: str) -> str:
     return value
 
 
+def _normalise_relation_object(text: str) -> str:
+    """Return the base relation object, omitting only observed live context."""
+    value = " ".join(text.split()).strip(" .,:;!?")
+    value = _REVIEWED_RELATION_CONTEXT_SUFFIX_RE.sub("", value).rstrip()
+    return _normalise_role(value)
+
+
+def _normalise_frame_text(text: str) -> str:
+    return " ".join(text.casefold().split()).strip(" .,:;!?")
+
+
 def _normalise_optional(text: str | None) -> str | None:
     if text is None:
         return None
@@ -109,8 +178,49 @@ def _normalise_attribution(attribution: Attribution | None) -> tuple[str, str] |
     return (_normalise_role(attribution.agent), _normalise_role(attribution.act))
 
 
+def _canonical_reporting_act(text: str | None) -> str | None:
+    if text is None:
+        return None
+    value = _normalise_frame_text(text)
+    value = re.sub(r"\s+that$", "", value)
+    return _REPORTING_ACT_CANONICAL.get(value)
+
+
+def _canonical_relation(text: str | None) -> str | None:
+    """Canonicalise only relation variants already understood by the core."""
+    if text is None:
+        return None
+    value = _normalise_frame_text(text)
+    value = re.sub(r"^(?:is|are|was|were)\s+", "", value)
+    return _RELATION_CANONICAL.get(value)
+
+
+def _raw_embedded_claim_text(proposition: Proposition) -> str:
+    """Return the complete claim following a reviewed attribution wrapper."""
+    match = ATTRIBUTION_RE.match(proposition.text)
+    if match is None:
+        return proposition.text
+    text = proposition.text[match.end():].lstrip()
+    # Live prose may punctuate a fronted adjunct as ``reports that, in ...``.
+    # Remove only that one wrapper comma; the claim text itself remains intact.
+    if text.startswith(","):
+        text = text[1:].lstrip()
+    return text
+
+
+def _embedded_relation_text(proposition: Proposition) -> str:
+    """Return the inner relation surface after reviewed context extraction."""
+    text = _raw_embedded_claim_text(proposition)
+    text = _REVIEWED_RELATION_CONTEXT_PREFIX_RE.sub("", text)
+    return text
+
+
+def _relation_match(proposition: Proposition) -> re.Match[str] | None:
+    return RELATION_RE.match(_embedded_relation_text(proposition))
+
+
 def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | None:
-    match = RELATION_RE.match(proposition.text)
+    match = _relation_match(proposition)
     if not match:
         return None
     sign_token = match.group("sign")
@@ -121,9 +231,46 @@ def _relation_parts(proposition: Proposition) -> tuple[str, str, str, str] | Non
     return (
         _normalise_role(match.group("subject")),
         " ".join(match.group("relation").casefold().split()),
-        _normalise_role(match.group("object")),
+        _normalise_relation_object(match.group("object")),
         sign,
     )
+
+
+def _reviewed_relation_context(proposition: Proposition) -> str | None:
+    """Return the complete reviewed evidence-context surface.
+
+    Once ``in the observed tests`` appears, retain the entire remaining surface.
+    This helper deliberately makes no attempt to strip clauses, resolve
+    coreference, or decide semantic equivalence. Any changed continuation stays
+    visible to mapped-frame validation and may conservatively route to REVIEW.
+    A single terminal full stop is treated as ordinary assertion punctuation;
+    question marks, exclamation marks, and ellipses remain semantically visible.
+    """
+    text = _raw_embedded_claim_text(proposition)
+    match = _REVIEWED_RELATION_CONTEXT_ANY_RE.search(text)
+    if match is None:
+        return None
+    value = " ".join(text[match.start():].casefold().split()).strip()
+    if value.endswith(".") and not value.endswith("..."):
+        value = value[:-1].rstrip()
+    return value
+
+
+def _relation_object_matches(proposition: Proposition, provider_object: str) -> bool:
+    """Compare an object without allowing the provider to invent context.
+
+    The provider may either preserve the exact surface object or omit the one
+    reviewed ``in the observed tests`` suffix seen in live dogfood. The reverse
+    is not allowed: a provider-only scope adjunct must remain a frame conflict.
+    """
+    match = _relation_match(proposition)
+    if match is None:
+        return True
+    surface_object = match.group("object")
+    surface_full = _normalise_role(surface_object)
+    surface_base = _normalise_relation_object(surface_object)
+    supplied = _normalise_role(provider_object)
+    return supplied in {surface_full, surface_base}
 
 
 def _temporal_parts(proposition: Proposition) -> tuple[str, str] | None:
@@ -146,27 +293,78 @@ def _raw_attribution(proposition: Proposition) -> tuple[str, str] | None:
     return (_normalise_role(match.group("agent")), _normalise_role(match.group("act")))
 
 
+def _outer_attribution_frame_mismatches(
+    proposition: Proposition,
+    raw_attribution: tuple[str, str],
+) -> list[str] | None:
+    """Validate a provider frame that models the outer reporting proposition.
+
+    Luna may validly emit both ``Chen reports P`` and ``P`` as separate material
+    propositions. When relation names the reporting act, validate the reporter,
+    act, complete embedded claim, and any deterministic inner relation sign. The
+    inner proposition remains independently verified when emitted separately.
+    """
+    provider_act = _canonical_reporting_act(proposition.relation)
+    raw_act = _canonical_reporting_act(raw_attribution[1])
+    if provider_act is None or raw_act is None or provider_act != raw_act:
+        return None
+
+    mismatches: list[str] = []
+    if proposition.subject is not None and _normalise_role(proposition.subject) != raw_attribution[0]:
+        mismatches.append("subject")
+
+    embedded = _normalise_frame_text(_raw_embedded_claim_text(proposition))
+    if proposition.object is None or _normalise_frame_text(proposition.object) != embedded:
+        mismatches.append("object")
+
+    parsed = _relation_parts(proposition)
+    if parsed is not None and parsed[3] in {"positive", "negative"}:
+        if _normalise_optional(proposition.relation_sign) != parsed[3]:
+            mismatches.append("relation_sign")
+    return mismatches
+
+
 def _provider_frame_mismatches(proposition: Proposition) -> list[str]:
     mismatches: list[str] = []
-    parsed = _relation_parts(proposition)
-    if parsed is not None:
-        if proposition.subject is not None and _normalise_role(proposition.subject) != parsed[0]:
-            mismatches.append("subject")
-        if proposition.relation is not None and _normalise_optional(proposition.relation) != parsed[1]:
-            mismatches.append("relation")
-        if proposition.object is not None and _normalise_role(proposition.object) != parsed[2]:
-            mismatches.append("object")
-        if parsed[3] in {"positive", "negative"} and _normalise_optional(proposition.relation_sign) != parsed[3]:
-            mismatches.append("relation_sign")
-
     raw_attribution = _raw_attribution(proposition)
+
+    outer_mismatches = (
+        _outer_attribution_frame_mismatches(proposition, raw_attribution)
+        if raw_attribution is not None
+        else None
+    )
+    if outer_mismatches is not None:
+        mismatches.extend(outer_mismatches)
+    else:
+        parsed = _relation_parts(proposition)
+        if parsed is not None:
+            if proposition.subject is not None and _normalise_role(proposition.subject) != parsed[0]:
+                mismatches.append("subject")
+            if proposition.relation is not None and _canonical_relation(proposition.relation) != parsed[1]:
+                mismatches.append("relation")
+            if proposition.object is not None and not _relation_object_matches(proposition, proposition.object):
+                mismatches.append("object")
+            if parsed[3] in {"positive", "negative"} and _normalise_optional(proposition.relation_sign) != parsed[3]:
+                mismatches.append("relation_sign")
+
     if raw_attribution is not None and _normalise_attribution(proposition.attribution) != raw_attribution:
         mismatches.append("attribution")
     return mismatches
 
 
+def _structured_frame_supports_relation(proposition: Proposition, relation: str) -> bool:
+    """Return whether structured fields validly support the parsed inner relation."""
+    if _canonical_relation(proposition.relation) == relation:
+        return not _provider_frame_mismatches(proposition)
+    raw_attribution = _raw_attribution(proposition)
+    if raw_attribution is None:
+        return False
+    outer = _outer_attribution_frame_mismatches(proposition, raw_attribution)
+    return outer == [] and not _provider_frame_mismatches(proposition)
+
+
 def _is_symmetric_swap(source: Proposition, candidate: Proposition) -> bool:
-    """Return true only when raw text and structured frames prove a safe symmetric swap."""
+    """Return true only when text and structured frames prove a safe symmetric swap."""
     left = _relation_parts(source)
     right = _relation_parts(candidate)
     if left is None or right is None:
@@ -177,13 +375,9 @@ def _is_symmetric_swap(source: Proposition, candidate: Proposition) -> bool:
         return False
     if not (left[0] == right[2] and left[2] == right[0]):
         return False
-    if source.relation is None or candidate.relation is None:
-        return False
     return (
-        _normalise_optional(source.relation) == left[1]
-        and _normalise_optional(candidate.relation) == right[1]
-        and not _provider_frame_mismatches(source)
-        and not _provider_frame_mismatches(candidate)
+        _structured_frame_supports_relation(source, left[1])
+        and _structured_frame_supports_relation(candidate, right[1])
     )
 
 
@@ -225,6 +419,15 @@ def _core_relation_delta(source: Proposition, candidate: Proposition) -> Semanti
 def _frame_consistency_deltas(source: Proposition, candidate: Proposition) -> list[SemanticDelta]:
     """Surface contradictions or missing high-risk structure in provider frames."""
     deltas: list[SemanticDelta] = []
+
+    source_context = _reviewed_relation_context(source)
+    candidate_context = _reviewed_relation_context(candidate)
+    if source_context != candidate_context:
+        deltas.append(_unresolved(
+            "Mapped relational proposition changes reviewed evidence-context scope.",
+            source_span=source.text,
+            candidate_span=candidate.text,
+        ))
 
     source_modality = _normalise_optional(source.modality)
     candidate_modality = _normalise_optional(candidate.modality)
@@ -456,6 +659,28 @@ def deltas_from_proposition_report(
             deltas.append(_delta(
                 DeltaType.CAUSAL_STRENGTH_CHANGED,
                 f"Causal/relational force is not preserved for source proposition {source_id}.",
+                source_span=proposition.text,
+                candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
+            ))
+
+        mapped_candidates = [
+            candidate_props[item]
+            for item in mapping.candidate_ids
+            if item in candidate_props
+        ]
+        reviewed_context_touched = (
+            _reviewed_relation_context(proposition) is not None
+            or any(_reviewed_relation_context(item) is not None for item in mapped_candidates)
+        )
+        non_unit_mapping = len(mapping.candidate_ids) != 1 or any(
+            candidate_mappings.get(item) is not None
+            and len(candidate_mappings[item].source_ids) != 1
+            for item in mapping.candidate_ids
+            if item in candidate_props
+        )
+        if reviewed_context_touched and non_unit_mapping:
+            deltas.append(_unresolved(
+                "Reviewed evidence-context propositions require a one-to-one semantic mapping for automatic approval.",
                 source_span=proposition.text,
                 candidate_span=_candidate_text(mapping.candidate_ids, candidate_props),
             ))

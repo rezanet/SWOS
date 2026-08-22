@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-010",
+  "category": "epistemic-status",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "We hypothesized that the drug would reduce symptoms.",
+  "semantic_probe_candidate": "The drug was expected to reduce symptoms.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "force_bearing_language_requires_richer_editorial_path"
+  },
+  "stability_probe": true,
+  "notes": "",
+  "benchmark_group": "modality-degree"
+}

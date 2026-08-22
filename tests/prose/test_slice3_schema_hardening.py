@@ -159,20 +159,23 @@ class Slice3SchemaHardeningTests(unittest.TestCase):
         self.assertEqual(result.status, VerificationStatus.REJECT)
         self.assertIn(DeltaType.RELATION_SIGN_CHANGED, [d.delta_type for d in result.semantic_deltas])
 
-    def test_attribution_speech_act_change_is_rejected_even_if_mapping_claims_preserved(self):
+    def test_attribution_speech_act_change_routes_to_repair_before_provider(self):
         source = "Smith argues that the policy is effective."
         candidate = "Smith states that the policy is effective."
         payload = one_to_one(
             prop("p1", source, attribution={"agent": "Smith", "act": "argues"}),
             prop("c1", candidate, attribution={"agent": "Smith", "act": "states"}),
         )
+        provider = StaticSemanticVerifierProvider(payload)
         result = verify_rewrite(
             source=source,
             candidate=candidate,
             assurance="strict",
-            verifier_provider=StaticSemanticVerifierProvider(payload),
+            verifier_provider=provider,
         )
-        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertEqual(result.status, VerificationStatus.REPAIR)
+        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:attribution_changed")
+        self.assertEqual(provider.calls, 0)
         self.assertIn(DeltaType.ATTRIBUTION_CHANGED, [d.delta_type for d in result.semantic_deltas])
 
     def test_attribution_drop_is_already_a_deterministic_blocker(self):

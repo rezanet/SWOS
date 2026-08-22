@@ -1,0 +1,13 @@
+{
+  "fixture_id": "repair-001",
+  "category": "repair-local-modality",
+  "benchmark_group": "repair",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The findings may indicate a relationship between the variables.",
+  "semantic_probe_candidate": "The findings indicate a relationship between the variables.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "M1 positive repair fixture: bounded modality deletion must repair to the source-licensed force and PASS re-verification."
+}

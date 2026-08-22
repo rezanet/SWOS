@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-041",
+  "category": "numbers-citations",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The effect estimate was 1.24 (95% CI 1.10–1.39).",
+  "semantic_probe_candidate": "The effect estimate was 1.24 (95% CI 1.10–1.39).",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "numbers-citations"
+}

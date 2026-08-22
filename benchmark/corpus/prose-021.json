@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-021",
+  "category": "malformed-grammar",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The revised report reduced several errors but contain obvious mistakes.",
+  "semantic_probe_candidate": "The revised report reduced several errors but contains obvious mistakes.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "Regression for contrastive malformed tail.",
+  "benchmark_group": "prose-defect"
+}

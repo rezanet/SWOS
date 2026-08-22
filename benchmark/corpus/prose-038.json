@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-038",
+  "category": "attribution-causality",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The paper attributes the decline to several interacting factors.",
+  "semantic_probe_candidate": "The decline was caused by a single factor.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "attribution-causality"
+}

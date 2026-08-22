@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swos-prose"
+version = "0.3.0-dev"
+description = "Semantic-safe prose editing for SWOS"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "SWOS Contributors"}]
+license = {text = "MIT"}
+dependencies = [
+    "openai>=1.70.0",
+]
+
+[project.scripts]
+swos-prose = "swos_prose.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["swos_prose*"]

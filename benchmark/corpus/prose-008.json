@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-008",
+  "category": "uncertainty",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The available evidence is not sufficient to establish a causal relationship.",
+  "semantic_probe_candidate": "The available evidence is insufficient to establish a causal relationship.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": true,
+  "notes": "Known conservative PASS/REVIEW wobble is acceptable.",
+  "benchmark_group": "semantic-equivalence"
+}

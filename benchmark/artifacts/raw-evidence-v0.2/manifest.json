@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "evidence_kind": "swos-prose-v0.2-live-benchmark",
+  "workflow_run_id": 32450085166,
+  "artifact_id": 9435636550,
+  "evidence_source_commit": "7637a487a93266e30fcbefbc40ad2266fec600b8",
+  "raw_report": {
+    "filename": "baseline.json",
+    "bytes": 237086,
+    "sha256": "1287335a681acd5890588bd3f9d3aa6e61ccac6d35aa8de9b65b840ef5597c9a"
+  },
+  "compressed_payload": {
+    "format": "xz",
+    "bytes": 13380,
+    "sha256": "c994d4eaede343b31391a4a284a08784c3c10e52cd0f1677cf8de0be6d62aed9",
+    "transport_encoding": "base64",
+    "encoded_characters": 17840
+  },
+  "source_actions_artifact": {
+    "name": "swos-prose-v0.2-benchmark",
+    "zip_sha256": "c8347bb7578923664972ec6682e98303931ed4593497297f0a169520bc243202"
+  },
+  "parts": [
+    {
+      "path": "part-001.b64",
+      "characters": 3600,
+      "git_blob_sha": "53aeb03543a594d1a7e31a66d6a73dc328d75110"
+    },
+    {
+      "path": "part-002.b64",
+      "characters": 3600,
+      "git_blob_sha": "fa8c9b2850e12c7c62a0d3217e4552f93c745de8"
+    },
+    {
+      "path": "part-003.b64",
+      "characters": 3600,
+      "git_blob_sha": "55febb3639ac911d9c1e338e955c2691db8ce0a9"
+    },
+    {
+      "path": "part-004.b64",
+      "characters": 3600,
+      "git_blob_sha": "41d29152d0da660121491c5a92226c3816cda0fd"
+    },
+    {
+      "path": "part-005.b64",
+      "characters": 3440,
+      "git_blob_sha": "819edb1753cb647605e53c177245f89982c80f31"
+    }
+  ],
+  "reconstruction": "cat part-*.b64 | base64 -d > baseline.json.xz && xz -dc baseline.json.xz > baseline.json"
+}

@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-026",
+  "category": "modality-degree",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The effect was substantially larger in the second cohort.",
+  "semantic_probe_candidate": "The effect was larger in the second cohort.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "force_bearing_language_requires_richer_editorial_path"
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "modality-degree"
+}

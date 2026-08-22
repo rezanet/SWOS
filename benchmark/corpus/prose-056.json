@@ -1,0 +1,13 @@
+{
+  "fixture_id": "repair-006",
+  "category": "repair-hard-invariant-number",
+  "benchmark_group": "repair",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The response rate was 18.7%.",
+  "semantic_probe_candidate": "The response rate was 19%.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "M1 negative repair fixture: protected number drift must bypass repair and remain REJECT."
+}

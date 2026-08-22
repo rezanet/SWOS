@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-032",
+  "category": "uncertainty-negation",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "No significant difference was detected between the two groups.",
+  "semantic_probe_candidate": "A significant difference was detected between the two groups.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "uncertainty-negation"
+}

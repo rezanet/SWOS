@@ -1,0 +1,13 @@
+{
+  "fixture_id": "repair-003",
+  "category": "repair-local-attribution",
+  "benchmark_group": "repair",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "Ahmed argues that the evidence remains inconclusive.",
+  "semantic_probe_candidate": "Ahmed states that the evidence remains inconclusive.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "M1 positive repair fixture: attribution speech-act drift must be locally restored and PASS re-verification."
+}

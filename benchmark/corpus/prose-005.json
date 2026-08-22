@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-005",
+  "category": "methodological-lexical",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The analysis was performed using a t-test.",
+  "semantic_probe_candidate": "The analysis used a t-test.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "avoidable_expansion:was_performed_using"
+  },
+  "stability_probe": true,
+  "notes": "",
+  "benchmark_group": "semantic-equivalence"
+}

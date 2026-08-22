@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-025",
+  "category": "modality-degree",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The intervention slightly reduced processing time in the pilot.",
+  "semantic_probe_candidate": "The intervention reduced processing time in the pilot.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "force_bearing_language_requires_richer_editorial_path"
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "modality-degree"
+}

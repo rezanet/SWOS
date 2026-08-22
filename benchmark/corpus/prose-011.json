@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-011",
+  "category": "parenthetical-materiality",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The findings, which were surprising, suggest a new approach.",
+  "semantic_probe_candidate": "The findings suggest a new approach.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "punctuated_clause_structure_requires_richer_editorial_path"
+  },
+  "stability_probe": true,
+  "notes": "PASS or REVIEW may be reasonable depending on materiality judgment.",
+  "benchmark_group": "semantic-equivalence"
+}

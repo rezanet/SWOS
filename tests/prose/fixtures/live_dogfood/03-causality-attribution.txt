@@ -1,0 +1,1 @@
+Chen et al. report that processor load was associated with longer response times in the observed tests, but they do not claim that processor load caused the delay.

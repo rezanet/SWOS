@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-037",
+  "category": "attribution-causality",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "Garcia argues that the evidence supports a limited interpretation.",
+  "semantic_probe_candidate": "Garcia proves that the evidence supports a limited interpretation.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "attribution-causality"
+}

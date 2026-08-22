@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-040",
+  "category": "numbers-citations",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The temperature increased from 18 °C to 21 °C during the trial.",
+  "semantic_probe_candidate": "The temperature increased from 18 °C to 22 °C during the trial.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true
+  },
+  "stability_probe": false,
+  "notes": "",
+  "benchmark_group": "numbers-citations"
+}

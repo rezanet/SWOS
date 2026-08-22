@@ -1,0 +1,16 @@
+{
+  "fixture_id": "prose-015",
+  "category": "already-good-unreviewed",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The updated protocol reduced transcription errors and clarified later checks.",
+  "semantic_probe_candidate": "The updated protocol lowered transcription errors and clarified later checks.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": false
+  },
+  "stability_probe": false,
+  "notes": "Proceeding is conservative, not a diagnostic error; benchmark records coverage.",
+  "benchmark_group": "already-good"
+}

@@ -1,0 +1,17 @@
+{
+  "fixture_id": "prose-019",
+  "category": "malformed-grammar",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The report contain several error that make it difficult to read.",
+  "semantic_probe_candidate": "The report contains several errors that make it difficult to read.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {
+    "outcome": "PROCEED_TO_REWRITE",
+    "must_not_abstain": true,
+    "expected_signal": "possible_quantifier_number_agreement_problem"
+  },
+  "stability_probe": false,
+  "notes": "Diagnostics must not certify malformed grammar.",
+  "benchmark_group": "prose-defect"
+}
