@@ -126,8 +126,19 @@ def _normalise_sentence(value: str) -> str:
         if unwrapped == surface:
             break
         surface = unwrapped.strip()
-    surface = _CONTEXT_TERMINAL_PUNCTUATION_RE.sub("", surface.rstrip())
-    return " ".join(surface.split())
+    terminal = _terminal_punctuation(surface)
+    if terminal:
+        surface = surface.rstrip()[: -len(terminal)].rstrip()
+    normalised = " ".join(surface.split())
+    return f"{normalised}{terminal}"
+
+
+def _terminal_punctuation(value: str) -> str:
+    surface = value.rstrip()
+    while surface and surface[-1] in _CLOSING_SENTENCE_DELIMITERS:
+        surface = surface[:-1].rstrip()
+    match = _CONTEXT_TERMINAL_PUNCTUATION_RE.search(surface)
+    return match.group(0) if match is not None else ""
 
 
 def _content_tokens(value: str) -> tuple[str, ...]:
@@ -177,6 +188,7 @@ def _source_licenses_context_sentence(
     if candidate_sentence_count != len(source_sentences):
         return False
     context_tokens = _content_tokens(context_surface)
+    context_terminal = _terminal_punctuation(context_surface)
     return any(
         (
             _content_tokens(source_surface) == context_tokens
@@ -190,6 +202,7 @@ def _source_licenses_context_sentence(
                 == context_tokens
             )
         )
+        and _terminal_punctuation(source_surface) == context_terminal
         for source_surface, _ in source_sentences
     )
 

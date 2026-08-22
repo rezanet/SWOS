@@ -269,6 +269,15 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_only_guard_preserves_terminal_sentence_force(self):
+        deltas = context_only_deltas(
+            "Access denied?",
+            "Access denied.",
+            context_after="Access denied.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_sentence_final_initialism_splits_before_technical_identifier(self):
         deltas = context_only_deltas(
             "The study was reviewed.",
