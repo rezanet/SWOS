@@ -206,7 +206,7 @@ def _normalise_sentence(value: str) -> str:
     # Keep meaning-bearing operators and identifier punctuation (for example
     # ``C#`` vs ``C++`` and ``foo::bar`` vs ``foo/bar``). Only sentence/display
     # delimiters are discarded before whitespace is canonicalised.
-    surface = _canonical_context_surface(value)
+    surface = _strip_closing_sentence_delimiters(_canonical_context_surface(value))
     terminal = _terminal_punctuation(surface)
     if terminal:
         surface = surface.rstrip()[: -len(terminal)].rstrip()
@@ -219,10 +219,15 @@ def _terminal_punctuation(value: str) -> str:
     return match.group(0) if match is not None else ""
 
 
-def _terminal_punctuation_match(value: str) -> re.Match[str] | None:
-    surface = _canonical_context_surface(value.rstrip())
+def _strip_closing_sentence_delimiters(value: str) -> str:
+    surface = value.rstrip()
     while surface and surface[-1] in _CLOSING_SENTENCE_DELIMITERS:
         surface = surface[:-1].rstrip()
+    return surface
+
+
+def _terminal_punctuation_match(value: str) -> re.Match[str] | None:
+    surface = _strip_closing_sentence_delimiters(_canonical_context_surface(value.rstrip()))
     return _CONTEXT_TERMINAL_PUNCTUATION_RE.search(surface)
 
 

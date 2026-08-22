@@ -177,6 +177,23 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(deltas, [])
 
+    def test_context_sentence_matching_ignores_closing_sentence_delimiters(self):
+        source = "The study continued."
+
+        for context_sentence in (
+            '"Access denied."',
+            "(Access denied.)",
+            "[Access denied.]",
+        ):
+            with self.subTest(context_sentence=context_sentence):
+                deltas = context_only_deltas(
+                    source,
+                    f"{source} Access denied.",
+                    context_after=context_sentence,
+                )
+
+                self.assertEqual(len(deltas), 1)
+
     def test_context_sentence_matching_preserves_abbreviation_entity(self):
         deltas = context_only_deltas(
             "U.K. regulators approved the plan.",
