@@ -260,6 +260,15 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_only_guard_preserves_punctuation_position(self):
+        deltas = context_only_deltas(
+            "The panda eats shoots, and leaves.",
+            "The panda eats, shoots and leaves.",
+            context_after="The panda eats, shoots and leaves.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_sentence_final_initialism_splits_before_technical_identifier(self):
         deltas = context_only_deltas(
             "The study was reviewed.",

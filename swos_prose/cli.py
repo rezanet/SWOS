@@ -89,6 +89,8 @@ def _run_verify(args: argparse.Namespace) -> int:
 def _polish_status(result: Any) -> str:
     if result.generation_skipped_by_diagnostics:
         return "NO_CHANGE_RECOMMENDED"
+    if getattr(result, "context_rejected", False) is True:
+        return "CONTEXT_REJECTED"
     if result.verification_status is not None:
         return result.verification_status
     if result.used_source_fallback:

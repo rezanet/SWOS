@@ -11,6 +11,7 @@ from benchmark.runner import (
     BENCHMARK_VERSION,
     _base_report,
     _combined_result_usage,
+    _mode_preset_performance,
     _repair_summary,
     _resolved_model,
     load_corpus,
@@ -134,6 +135,32 @@ class ProseBenchmarkContractTests(unittest.TestCase):
         self.assertEqual(summary["successes"], 1)
         self.assertEqual(summary["fallback_count"], 2)
         self.assertEqual(summary["attempt_count_distribution"], {"0": 1, "1": 1, "2": 1})
+
+    def test_mode_preset_performance_aggregates_status_counts(self):
+        summary = _mode_preset_performance(
+            [
+                {
+                    "mode": "tighten",
+                    "preset": "executive",
+                    "baseline_status": "PASS",
+                    "latency_ms": 1.0,
+                    "provider_calls": {"rewrite": 1, "verifier": 1, "repair": 0, "total": 2},
+                    "baseline_token_usage": {},
+                    "baseline_cost_estimate": None,
+                },
+                {
+                    "mode": "tighten",
+                    "preset": "executive",
+                    "baseline_status": "REVIEW",
+                    "latency_ms": 2.0,
+                    "provider_calls": {"rewrite": 1, "verifier": 1, "repair": 0, "total": 2},
+                    "baseline_token_usage": {},
+                    "baseline_cost_estimate": None,
+                },
+            ]
+        )
+
+        self.assertEqual(summary["tighten::executive"]["status_counts"], {"PASS": 1, "REVIEW": 1})
 
 
 if __name__ == "__main__":

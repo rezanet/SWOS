@@ -98,6 +98,10 @@ class PolishResult:
         return self.verification.status.value if self.verification is not None else None
 
     @property
+    def context_rejected(self) -> bool:
+        return bool(self.context_safety and not self.context_safety.get("accepted", True))
+
+    @property
     def generation_skipped_by_diagnostics(self) -> bool:
         return (
             self.diagnostics_before is not None
@@ -116,6 +120,7 @@ class PolishResult:
             "final_text": self.final_text,
             "used_source_fallback": self.used_source_fallback,
             "safe_for_automatic_use": self.safe_for_automatic_use,
+            "context_rejected": self.context_rejected,
             "verification_status": self.verification_status,
             "verification": self.verification.to_dict() if self.verification is not None else None,
             "diagnostics_before": self.diagnostics_before.to_dict()

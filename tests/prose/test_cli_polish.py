@@ -102,6 +102,7 @@ class PolishCliTests(unittest.TestCase):
         self.assertEqual(payload["final_text"], source)
         self.assertFalse(payload["safe_for_automatic_use"])
         self.assertTrue(payload["used_source_fallback"])
+        self.assertTrue(payload["context_rejected"])
         self.assertFalse(payload["context_safety"]["accepted"])
         self.assertNotIn("OPENAI_API_KEY", stderr.getvalue())
         sentinel_rewrite.assert_not_called()

@@ -131,27 +131,27 @@ def _normalise_sentence(value: str) -> str:
 
 
 def _content_tokens(value: str) -> tuple[str, ...]:
+    """Return ordered words, initialisms, and meaning-bearing punctuation."""
+
     folded = value.casefold()
     tokens: list[str] = []
-    start = 0
-    for match in _INITIALISM_RE.finditer(folded):
-        tokens.extend(_WORD_RE.findall(folded[start : match.start()]))
-        tokens.append(match.group(0))
-        start = match.end()
-    tokens.extend(_WORD_RE.findall(folded[start:]))
+    index = 0
+    while index < len(folded):
+        initialism = _INITIALISM_RE.match(folded, index)
+        if initialism is not None:
+            tokens.append(initialism.group(0))
+            index = initialism.end()
+            continue
+        word = _WORD_RE.match(folded, index)
+        if word is not None:
+            tokens.append(word.group(0))
+            index = word.end()
+            continue
+        character = folded[index]
+        if not character.isspace() and character not in _CONTEXT_IGNORED_SYMBOLS:
+            tokens.append(character)
+        index += 1
     return tuple(tokens)
-
-
-def _semantic_symbol_signature(value: str) -> tuple[str, ...]:
-    return tuple(
-        character.casefold()
-        for character in value
-        if (
-            not character.isspace()
-            and not character.isalnum()
-            and character not in _CONTEXT_IGNORED_SYMBOLS
-        )
-    )
 
 
 def _looks_like_technical_sentence_start(value: str) -> bool:
@@ -177,7 +177,6 @@ def _source_licenses_context_sentence(
     if candidate_sentence_count != len(source_sentences):
         return False
     context_tokens = _content_tokens(context_surface)
-    context_symbols = _semantic_symbol_signature(context_surface)
     return any(
         (
             _content_tokens(source_surface) == context_tokens
@@ -191,7 +190,6 @@ def _source_licenses_context_sentence(
                 == context_tokens
             )
         )
-        and _semantic_symbol_signature(source_surface) == context_symbols
         for source_surface, _ in source_sentences
     )
 

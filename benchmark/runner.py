@@ -456,6 +456,13 @@ def _mode_preset_performance(records: list[dict[str, Any]]) -> dict[str, dict[st
         latencies = [item["latency_ms"] for item in items if item.get("latency_ms") is not None]
         result[key] = {
             "fixture_count": len(items),
+            "status_counts": dict(
+                sorted(
+                    Counter(
+                        item.get("baseline_status") or "NO_VERIFICATION" for item in items
+                    ).items()
+                )
+            ),
             "provider_calls": _provider_call_summary(items),
             "baseline_token_usage": dict(
                 sorted(
