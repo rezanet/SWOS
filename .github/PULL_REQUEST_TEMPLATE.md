@@ -16,7 +16,7 @@ For SWOS Prose, research, citation, or reasoning changes, describe any effect on
 
 ## Checklist
 
-- [ ] I have read [CONTRIBUTING.md](../CONTRIBUTING.md).
+- [ ] I have read [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md).
 - [ ] My commits include the required DCO `Signed-off-by:` line.
 - [ ] This PR targets `main` unless there is an explicit reason not to.
 - [ ] I added or updated tests/fixtures that prove the change works, where applicable.
