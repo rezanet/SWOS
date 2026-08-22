@@ -242,6 +242,15 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_context_only_guard_preserves_determiners(self):
+        deltas = context_only_deltas(
+            "A reviewer approved the plan.",
+            "The reviewer approved the plan.",
+            context_after="The reviewer approved the plan.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_sentence_final_initialism_splits_before_technical_identifier(self):
         deltas = context_only_deltas(
             "The study was reviewed.",

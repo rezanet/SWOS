@@ -25,7 +25,7 @@ _INITIALISM_PREAMBLE_RE = re.compile(
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
 _CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?]+$")
 _CONTEXT_IGNORED_SYMBOLS = frozenset(".!?\"'()[]{}“”‘’")
-_CONTEXT_FUNCTION_WORDS = frozenset({"a", "an", "the"})
+_CONTEXT_FUNCTION_WORDS = frozenset()
 _TECHNICAL_SENTENCE_START_WORDS = frozenset(
     {
         "api",
