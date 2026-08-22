@@ -20,6 +20,7 @@ _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
 _INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
 _INITIALISM_AT_FRAGMENT_END_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}$")
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
+_CONTEXT_MARKDOWN_WRAPPERS = ("```", "***", "___", "~~", "``", "**", "__", "`", "*", "_")
 _CONTEXT_PRESENTATION_PREFIX_RE = re.compile(
     r"^(?:(?:>{1,3}\s+(?=[^\W\d_]|[\"'“‘]))|"
     r"(?:#{1,6}\s+(?=[^\W\d_]|[\"'“‘]))|"
@@ -119,17 +120,36 @@ def inspect_context(before: str | None = None, after: str | None = None) -> Cont
     )
 
 
+def _strip_markdown_wrapper(value: str) -> str:
+    surface = value.strip()
+    for wrapper in _CONTEXT_MARKDOWN_WRAPPERS:
+        if (
+            len(surface) > len(wrapper) * 2
+            and surface.startswith(wrapper)
+            and surface.endswith(wrapper)
+        ):
+            inner = surface[len(wrapper) : -len(wrapper)].strip()
+            if inner:
+                return inner
+    return surface
+
+
+def _canonical_context_surface(value: str) -> str:
+    surface = value.strip()
+    while True:
+        unwrapped = _CONTEXT_WRAPPER_RE.sub("", surface)
+        unwrapped = _strip_markdown_wrapper(unwrapped)
+        unpresented = _CONTEXT_PRESENTATION_PREFIX_RE.sub("", unwrapped).strip()
+        if unpresented == surface:
+            return surface
+        surface = unpresented
+
+
 def _normalise_sentence(value: str) -> str:
     # Keep meaning-bearing operators and identifier punctuation (for example
     # ``C#`` vs ``C++`` and ``foo::bar`` vs ``foo/bar``). Only sentence/display
     # delimiters are discarded before whitespace is canonicalised.
-    surface = value.strip()
-    while True:
-        unwrapped = _CONTEXT_WRAPPER_RE.sub("", surface)
-        unpresented = _CONTEXT_PRESENTATION_PREFIX_RE.sub("", unwrapped).strip()
-        if unpresented == surface:
-            break
-        surface = unpresented
+    surface = _canonical_context_surface(value)
     terminal = _terminal_punctuation(surface)
     if terminal:
         surface = surface.rstrip()[: -len(terminal)].rstrip()
@@ -143,7 +163,7 @@ def _terminal_punctuation(value: str) -> str:
 
 
 def _terminal_punctuation_match(value: str) -> re.Match[str] | None:
-    surface = value.rstrip()
+    surface = _canonical_context_surface(value.rstrip())
     while surface and surface[-1] in _CLOSING_SENTENCE_DELIMITERS:
         surface = surface[:-1].rstrip()
     return _CONTEXT_TERMINAL_PUNCTUATION_RE.search(surface)
@@ -152,7 +172,7 @@ def _terminal_punctuation_match(value: str) -> re.Match[str] | None:
 def _content_tokens(value: str) -> tuple[str, ...]:
     """Return ordered words, initialisms, and meaning-bearing punctuation."""
 
-    folded = _CONTEXT_PRESENTATION_PREFIX_RE.sub("", value.strip())
+    folded = _canonical_context_surface(value)
     tokens: list[str] = []
     index = 0
     terminal_match = _terminal_punctuation_match(value)

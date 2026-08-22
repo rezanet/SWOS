@@ -13,6 +13,7 @@ from benchmark.runner import (
     _combined_result_usage,
     _cost_method,
     _mode_preset_performance,
+    _provider_output_token_limits,
     _repair_summary,
     _resolved_model,
     load_corpus,
@@ -103,6 +104,14 @@ class ProseBenchmarkContractTests(unittest.TestCase):
         self.assertFalse(method["available"])
         self.assertIsNone(method["rates"])
         self.assertIn("models differ", method["note"])
+
+    def test_provider_output_token_limits_are_explicit(self):
+        limits = _provider_output_token_limits(
+            SimpleNamespace(max_output_tokens=4000),
+            SimpleNamespace(max_output_tokens=6000),
+        )
+
+        self.assertEqual(limits, {"rewrite": 4000, "repair": 4000, "verifier": 6000})
 
     def test_combined_usage_includes_repair_attempt_tokens(self):
         result = SimpleNamespace(

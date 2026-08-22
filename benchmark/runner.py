@@ -79,6 +79,14 @@ def _resolved_model(model: str | None, env_name: str, default: str = "gpt-5.6") 
     return model or os.environ.get(env_name, default)
 
 
+def _provider_output_token_limits(rewriter: Any, verifier: Any) -> dict[str, int]:
+    return {
+        "rewrite": rewriter.max_output_tokens,
+        "repair": rewriter.max_output_tokens,
+        "verifier": verifier.max_output_tokens,
+    }
+
+
 def _canonical_hash(fixtures: list[dict[str, Any]]) -> str:
     payload = json.dumps(fixtures, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
@@ -544,6 +552,7 @@ def run_efficiency(
         "verifier": verifier.model,
         "repair": rewriter.model,
     }
+    output_token_limits = _provider_output_token_limits(rewriter, verifier)
     cost_method = _cost_method(model_identity)
 
     total_without: dict[str, int] = {}
@@ -618,6 +627,7 @@ def run_efficiency(
                 "diagnostics_latency_ms": diagnostics_latency_ms,
                 "provider_calls": _result_provider_calls(result),
                 "model_identity": model_identity,
+                "output_token_limits": output_token_limits,
             }
         )
 
@@ -671,6 +681,7 @@ def run_efficiency(
         ),
         "cost": cost_method,
         "model_identity": model_identity,
+        "output_token_limits": output_token_limits,
         "mode_preset_performance": _mode_preset_performance(records),
         "repair": _repair_summary(records),
         "latency_ms_total": round(sum(latencies), 3),
