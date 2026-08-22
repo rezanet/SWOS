@@ -29,8 +29,7 @@ def _proposition(prop_id: str, text: str) -> dict:
 class ReviewedContextMappingCardinalityTests(unittest.TestCase):
     def test_split_mapping_touching_reviewed_context_requires_review(self):
         source = (
-            "A was associated with B in the observed tests, but they do not "
-            "claim that A caused B."
+            "A was associated with B in the observed tests, but they do not claim that A caused B."
         )
         candidate = (
             "A was associated with B in the observed tests. They do not claim "
@@ -44,18 +43,20 @@ class ReviewedContextMappingCardinalityTests(unittest.TestCase):
                 _proposition("c1", "A was associated with B in the observed tests."),
                 _proposition("c2", "They do not claim that memory usage caused B."),
             ],
-            "source_to_candidate": [{
-                "source_id": "s1",
-                "candidate_ids": ["c1", "c2"],
-                "preserved": True,
-                "modality_preserved": True,
-                "scope_preserved": True,
-                "attribution_preserved": True,
-                "causal_force_preserved": True,
-                "relational_direction_preserved": True,
-                "confidence": 0.99,
-                "reason": "Provider claims the split preserves the source proposition.",
-            }],
+            "source_to_candidate": [
+                {
+                    "source_id": "s1",
+                    "candidate_ids": ["c1", "c2"],
+                    "preserved": True,
+                    "modality_preserved": True,
+                    "scope_preserved": True,
+                    "attribution_preserved": True,
+                    "causal_force_preserved": True,
+                    "relational_direction_preserved": True,
+                    "confidence": 0.99,
+                    "reason": "Provider claims the split preserves the source proposition.",
+                }
+            ],
             "candidate_to_source": [
                 {
                     "candidate_id": "c1",

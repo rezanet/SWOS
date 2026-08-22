@@ -1,11 +1,12 @@
 """CLI for SWOS Prose verification, polishing and local dogfooding."""
+
 from __future__ import annotations
 
 import argparse
 import json
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 from typing import Any
 
 from .diagnostics import diagnose_polish
@@ -248,8 +249,12 @@ def main() -> int:
         default=None,
         help="Optional simple KEY=VALUE file to load explicitly; existing environment variables win",
     )
-    polish.add_argument("--rewriter-model", default=None, help="Optional rewrite-provider model override")
-    polish.add_argument("--verifier-model", default=None, help="Optional verifier-provider model override")
+    polish.add_argument(
+        "--rewriter-model", default=None, help="Optional rewrite-provider model override"
+    )
+    polish.add_argument(
+        "--verifier-model", default=None, help="Optional verifier-provider model override"
+    )
     polish.add_argument(
         "--skip-diagnostics",
         action="store_true",
@@ -260,8 +265,12 @@ def main() -> int:
     )
     polish.add_argument("--json", action="store_true", dest="as_json")
 
-    dogfood = sub.add_parser("dogfood", help="Run local polish dogfood samples and save JSON results")
-    dogfood.add_argument("--input-dir", required=True, help="Directory containing local .md/.txt samples")
+    dogfood = sub.add_parser(
+        "dogfood", help="Run local polish dogfood samples and save JSON results"
+    )
+    dogfood.add_argument(
+        "--input-dir", required=True, help="Directory containing local .md/.txt samples"
+    )
     dogfood.add_argument("--output-dir", required=True, help="Directory for local JSON results")
     dogfood.add_argument("--assurance", choices=("standard", "strict", "review"), default="strict")
     dogfood.add_argument(
@@ -269,8 +278,12 @@ def main() -> int:
         default=None,
         help="Optional simple KEY=VALUE file to load explicitly; existing environment variables win",
     )
-    dogfood.add_argument("--rewriter-model", default=None, help="Optional rewrite-provider model override")
-    dogfood.add_argument("--verifier-model", default=None, help="Optional verifier-provider model override")
+    dogfood.add_argument(
+        "--rewriter-model", default=None, help="Optional rewrite-provider model override"
+    )
+    dogfood.add_argument(
+        "--verifier-model", default=None, help="Optional verifier-provider model override"
+    )
     dogfood.add_argument(
         "--skip-diagnostics",
         action="store_true",

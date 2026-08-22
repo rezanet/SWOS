@@ -37,26 +37,30 @@ def _equivalent_payload(source: str, candidate: str) -> dict:
         "independent_of_rewriter": True,
         "source_propositions": [_proposition("p1", source)],
         "candidate_propositions": [_proposition("c1", candidate)],
-        "source_to_candidate": [{
-            "source_id": "p1",
-            "candidate_ids": ["c1"],
-            "preserved": True,
-            "modality_preserved": True,
-            "scope_preserved": True,
-            "attribution_preserved": True,
-            "causal_force_preserved": True,
-            "relational_direction_preserved": True,
-            "confidence": 0.99,
-            "reason": "Equivalent polish paraphrase.",
-        }],
-        "candidate_to_source": [{
-            "candidate_id": "c1",
-            "source_ids": ["p1"],
-            "licensed": True,
-            "new_claim": False,
-            "confidence": 0.99,
-            "reason": "Licensed by source.",
-        }],
+        "source_to_candidate": [
+            {
+                "source_id": "p1",
+                "candidate_ids": ["c1"],
+                "preserved": True,
+                "modality_preserved": True,
+                "scope_preserved": True,
+                "attribution_preserved": True,
+                "causal_force_preserved": True,
+                "relational_direction_preserved": True,
+                "confidence": 0.99,
+                "reason": "Equivalent polish paraphrase.",
+            }
+        ],
+        "candidate_to_source": [
+            {
+                "candidate_id": "c1",
+                "source_ids": ["p1"],
+                "licensed": True,
+                "new_claim": False,
+                "confidence": 0.99,
+                "reason": "Licensed by source.",
+            }
+        ],
         "unresolved": [],
         "notes": [],
     }
@@ -101,7 +105,9 @@ class DogfoodCollectorTests(unittest.TestCase):
                 input_dir=corpus,
                 output_dir=results,
                 rewrite_provider=StaticRewriteProvider(candidate),
-                verifier_provider=StaticSemanticVerifierProvider(_equivalent_payload(source, candidate)),
+                verifier_provider=StaticSemanticVerifierProvider(
+                    _equivalent_payload(source, candidate)
+                ),
                 assurance="strict",
             )
 
@@ -191,16 +197,16 @@ class DogfoodCollectorTests(unittest.TestCase):
             self.assertEqual(records[0]["verifier_notes"], [])
 
     def test_diagnostics_abstention_records_no_provider_cost(self):
-        source = (
-            "The revised workflow reduced implementation errors and simplified later review."
-        )
+        source = "The revised workflow reduced implementation errors and simplified later review."
         rewriter = StaticRewriteProvider("This provider must not be called.")
-        verifier = StaticSemanticVerifierProvider({
-            "equivalent": True,
-            "independent_of_rewriter": True,
-            "deltas": [],
-            "notes": [],
-        })
+        verifier = StaticSemanticVerifierProvider(
+            {
+                "equivalent": True,
+                "independent_of_rewriter": True,
+                "deltas": [],
+                "notes": [],
+            }
+        )
 
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -247,7 +253,9 @@ class DogfoodCollectorTests(unittest.TestCase):
                 input_dir=corpus,
                 output_dir=results,
                 rewrite_provider=StaticRewriteProvider(candidate),
-                verifier_provider=StaticSemanticVerifierProvider(_equivalent_payload(source, candidate)),
+                verifier_provider=StaticSemanticVerifierProvider(
+                    _equivalent_payload(source, candidate)
+                ),
                 assurance="strict",
                 run_diagnostics=False,
             )

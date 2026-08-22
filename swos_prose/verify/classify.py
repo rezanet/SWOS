@@ -1,4 +1,5 @@
 """Decision classification for SWOS Prose verification results."""
+
 from __future__ import annotations
 
 from ..models import SemanticDelta, Severity, VerificationStatus

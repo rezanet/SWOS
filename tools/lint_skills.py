@@ -6,6 +6,7 @@ Skills specification is enforced. They belong in adapters/, never in skills/.
 
 Usage:  python3 tools/lint_skills.py [--strict]
 """
+
 import re
 import sys
 from pathlib import Path
@@ -17,9 +18,17 @@ ALLOWED = {"name", "description", "license", "compatibility", "metadata", "allow
 
 # Known host extensions, reported with a pointed message rather than a generic one.
 HOST_EXTENSIONS = {
-    "argument-hint", "paths", "hooks", "context", "agent",
-    "disable-model-invocation", "user-invocable", "disallowed-tools",
-    "model", "effort", "background",
+    "argument-hint",
+    "paths",
+    "hooks",
+    "context",
+    "agent",
+    "disable-model-invocation",
+    "user-invocable",
+    "disallowed-tools",
+    "model",
+    "effort",
+    "background",
 }
 
 NAME_RE = re.compile(r"^[a-z0-9-]{1,64}$")
@@ -37,7 +46,7 @@ def parse_frontmatter(text):
     if end == -1:
         return None, None
     block = text[3:end]
-    body = text[end + 4:]
+    body = text[end + 4 :]
     keys = {}
     for line in block.splitlines():
         if not line or line.startswith("#") or line[0] in " \t-":
@@ -82,7 +91,9 @@ def main():
 
         name = keys.get("name", "")
         if name and not NAME_RE.match(name):
-            errors.append(f"{rel}: name '{name}' must be lowercase letters, numbers and hyphens, max {NAME_MAX} chars")
+            errors.append(
+                f"{rel}: name '{name}' must be lowercase letters, numbers and hyphens, max {NAME_MAX} chars"
+            )
         if name and name != dir_name:
             errors.append(f"{rel}: name '{name}' must equal the parent directory name '{dir_name}'")
 

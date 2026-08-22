@@ -1,8 +1,9 @@
 """Deterministic and heuristic semantic-delta checks."""
+
 from __future__ import annotations
 
-from collections import Counter
 import re
+from collections import Counter
 
 from ..anchors import (
     anchor_multiset,
@@ -21,10 +22,7 @@ from .negation_equivalence import (
     REVIEWED_NEGATION_EQUIVALENCES,
 )
 
-
-_ANAPHORIC_ALL_RE = re.compile(
-    r"\ball\s+of\s+(?:which|whom|them|these|those)\b", re.I
-)
+_ANAPHORIC_ALL_RE = re.compile(r"\ball\s+of\s+(?:which|whom|them|these|those)\b", re.I)
 _REVIEWED_LEXICAL_NEGATION_RE = re.compile(
     r"\b(?:" + "|".join(re.escape(item) for item in REVIEWED_LEXICAL_NEGATION_TERMS) + r")\b",
     re.I,
@@ -67,19 +65,25 @@ def _delta(
 
 
 def _counter_text(counter: Counter[str]) -> str:
-    return ", ".join(f"{item} x{count}" if count > 1 else item for item, count in sorted(counter.items()))
+    return ", ".join(
+        f"{item} x{count}" if count > 1 else item for item, count in sorted(counter.items())
+    )
 
 
 def _reviewed_lexical_negations(text: str) -> tuple[str, ...]:
-    return tuple(match.group(0).casefold() for match in _REVIEWED_LEXICAL_NEGATION_RE.finditer(text))
+    return tuple(
+        match.group(0).casefold() for match in _REVIEWED_LEXICAL_NEGATION_RE.finditer(text)
+    )
 
 
-def _local_contexts(text: str, pattern: re.Pattern[str]) -> Counter[tuple[tuple[str, ...], tuple[str, ...]]]:
+def _local_contexts(
+    text: str, pattern: re.Pattern[str]
+) -> Counter[tuple[tuple[str, ...], tuple[str, ...]]]:
     """Return narrow two-token context keys around reviewed negation forms."""
     contexts: Counter[tuple[tuple[str, ...], tuple[str, ...]]] = Counter()
     for match in pattern.finditer(text):
-        before = tuple(item.casefold() for item in _WORD_RE.findall(text[:match.start()])[-2:])
-        after = tuple(item.casefold() for item in _WORD_RE.findall(text[match.end():])[:2])
+        before = tuple(item.casefold() for item in _WORD_RE.findall(text[: match.start()])[-2:])
+        after = tuple(item.casefold() for item in _WORD_RE.findall(text[match.end() :])[:2])
         contexts[(before, after)] += 1
     return contexts
 
@@ -121,14 +125,16 @@ def _compare_hard_anchors(source: str, candidate: str) -> tuple[list, list, list
         candidate_anchors,
     )
     if number_left != number_right:
-        deltas.append(_delta(
-            DeltaType.NUMBER_CHANGED,
-            "Protected number anchors differ between source and candidate after conservative numeric canonicalization.",
-            source_span=_counter_text(number_left) or None,
-            candidate_span=_counter_text(number_right) or None,
-            severity=Severity.BLOCKER,
-            repairable=False,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.NUMBER_CHANGED,
+                "Protected number anchors differ between source and candidate after conservative numeric canonicalization.",
+                source_span=_counter_text(number_left) or None,
+                candidate_span=_counter_text(number_right) or None,
+                severity=Severity.BLOCKER,
+                repairable=False,
+            )
+        )
 
     mapping = {
         "citation": DeltaType.CITATION_REMOVED,
@@ -138,14 +144,16 @@ def _compare_hard_anchors(source: str, candidate: str) -> tuple[list, list, list
         left = anchor_multiset(source_anchors, kind)
         right = anchor_multiset(candidate_anchors, kind)
         if left != right:
-            deltas.append(_delta(
-                delta_type,
-                f"Protected {kind} anchors differ between source and candidate.",
-                source_span=_counter_text(left) or None,
-                candidate_span=_counter_text(right) or None,
-                severity=Severity.BLOCKER,
-                repairable=False,
-            ))
+            deltas.append(
+                _delta(
+                    delta_type,
+                    f"Protected {kind} anchors differ between source and candidate.",
+                    source_span=_counter_text(left) or None,
+                    candidate_span=_counter_text(right) or None,
+                    severity=Severity.BLOCKER,
+                    repairable=False,
+                )
+            )
 
     return source_anchors, candidate_anchors, deltas
 
@@ -176,14 +184,12 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
         # stays in the same narrow lexical context.
         left_adjusted_count = len(left.negations) + len(left_reviewed)
         right_adjusted_count = len(right.negations) + len(right_reviewed)
-        reviewed_contexts_match = (
-            _reviewed_negation_context_signature(source)
-            == _reviewed_negation_context_signature(candidate)
-        )
+        reviewed_contexts_match = _reviewed_negation_context_signature(
+            source
+        ) == _reviewed_negation_context_signature(candidate)
         if base_negation_mismatch:
             negation_mismatch = not (
-                left_adjusted_count == right_adjusted_count
-                and reviewed_contexts_match
+                left_adjusted_count == right_adjusted_count and reviewed_contexts_match
             )
         else:
             negation_mismatch = left_adjusted_count != right_adjusted_count
@@ -193,28 +199,34 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
     if negation_mismatch:
         left_spans = (*left.negations, *left_reviewed)
         right_spans = (*right.negations, *right_reviewed)
-        deltas.append(_delta(
-            DeltaType.NEGATION_CHANGED,
-            "Negation polarity, count, or reviewed lexical-negation context differs between source and candidate.",
-            source_span=", ".join(left_spans) or None,
-            candidate_span=", ".join(right_spans) or None,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.NEGATION_CHANGED,
+                "Negation polarity, count, or reviewed lexical-negation context differs between source and candidate.",
+                source_span=", ".join(left_spans) or None,
+                candidate_span=", ".join(right_spans) or None,
+            )
+        )
 
     if left.weak_modals and not right.weak_modals:
-        deltas.append(_delta(
-            DeltaType.MODALITY_STRENGTHENED,
-            "Source contains an explicit weak modal that the candidate removes.",
-            source_span=", ".join(left.weak_modals),
-            candidate_span=", ".join(right.weak_modals) or None,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.MODALITY_STRENGTHENED,
+                "Source contains an explicit weak modal that the candidate removes.",
+                source_span=", ".join(left.weak_modals),
+                candidate_span=", ".join(right.weak_modals) or None,
+            )
+        )
 
     if left.suggestive_markers and right.strong_epistemic_markers:
-        deltas.append(_delta(
-            DeltaType.MODALITY_STRENGTHENED,
-            "Candidate replaces suggestive evidence language with a stronger epistemic verb.",
-            source_span=", ".join(left.suggestive_markers),
-            candidate_span=", ".join(right.strong_epistemic_markers),
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.MODALITY_STRENGTHENED,
+                "Candidate replaces suggestive evidence language with a stronger epistemic verb.",
+                source_span=", ".join(left.suggestive_markers),
+                candidate_span=", ".join(right.strong_epistemic_markers),
+            )
+        )
 
     # Causal words inside a reviewed denied claim/evidence scope are not treated
     # as affirmative causal assertions. The denied proposition still matters: if
@@ -229,26 +241,28 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
     # *any* affirmative causal marker. Otherwise an unrelated source-side causal
     # claim can mask association -> causation strengthening in another clause.
     lost_association = len(right_associations) < len(left_associations)
-    introduced_affirmative_causality = (
-        len(right_causal.affirmative) > len(left_causal.affirmative)
-    )
+    introduced_affirmative_causality = len(right_causal.affirmative) > len(left_causal.affirmative)
 
     if left_associations and lost_association and introduced_affirmative_causality:
-        deltas.append(_delta(
-            DeltaType.CAUSAL_STRENGTH_CHANGED,
-            "Candidate replaces at least one associative relation with additional affirmative causal language.",
-            source_span=", ".join(left_associations),
-            candidate_span=", ".join(right_causal.affirmative),
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.CAUSAL_STRENGTH_CHANGED,
+                "Candidate replaces at least one associative relation with additional affirmative causal language.",
+                source_span=", ".join(left_associations),
+                candidate_span=", ".join(right_causal.affirmative),
+            )
+        )
     elif not left_causal.affirmative and right_causal.affirmative:
-        deltas.append(_delta(
-            DeltaType.CAUSAL_STRENGTH_CHANGED,
-            "Candidate introduces affirmative causal language absent from the source.",
-            source_span=None,
-            candidate_span=", ".join(right_causal.affirmative),
-            severity=Severity.WARNING,
-            confidence=0.9,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.CAUSAL_STRENGTH_CHANGED,
+                "Candidate introduces affirmative causal language absent from the source.",
+                source_span=None,
+                candidate_span=", ".join(right_causal.affirmative),
+                severity=Severity.WARNING,
+                confidence=0.9,
+            )
+        )
 
     # Balanced global counts can still hide a strengthening in one proposition
     # offset by weakening another. Textual relation order is not enough to prove
@@ -261,30 +275,33 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
         and Counter(left_relation_sequence) == Counter(right_relation_sequence)
         and {"association", "causal"}.issubset(set(left_relation_sequence))
     ):
-        deltas.append(_delta(
-            DeltaType.CAUSAL_STRENGTH_CHANGED,
-            "Association and affirmative-causal markers are redistributed across the text; proposition-level alignment is required.",
-            source_span=" -> ".join(left_relation_sequence),
-            candidate_span=" -> ".join(right_relation_sequence),
-            severity=Severity.WARNING,
-            confidence=0.9,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.CAUSAL_STRENGTH_CHANGED,
+                "Association and affirmative-causal markers are redistributed across the text; proposition-level alignment is required.",
+                source_span=" -> ".join(left_relation_sequence),
+                candidate_span=" -> ".join(right_relation_sequence),
+                severity=Severity.WARNING,
+                confidence=0.9,
+            )
+        )
 
     if Counter(left_causal.denied) != Counter(right_causal.denied):
-        deltas.append(_delta(
-            DeltaType.CAUSAL_STRENGTH_CHANGED,
-            "Causal wording inside a denied claim/evidence scope differs and requires semantic review.",
-            source_span=", ".join(left_causal.denied) or None,
-            candidate_span=", ".join(right_causal.denied) or None,
-            severity=Severity.WARNING,
-            confidence=0.9,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.CAUSAL_STRENGTH_CHANGED,
+                "Causal wording inside a denied claim/evidence scope differs and requires semantic review.",
+                source_span=", ".join(left_causal.denied) or None,
+                candidate_span=", ".join(right_causal.denied) or None,
+                severity=Severity.WARNING,
+                confidence=0.9,
+            )
+        )
 
     if Counter(left.quantifiers) != Counter(right.quantifiers):
         strong = {"most", "all", "always"}
-        introduced_strong = (
-            strong.intersection(right.quantifiers)
-            - strong.intersection(left.quantifiers)
+        introduced_strong = strong.intersection(right.quantifiers) - strong.intersection(
+            left.quantifiers
         )
 
         # A newly introduced strong quantifier is normally blocking. One narrow
@@ -311,33 +328,39 @@ def deterministic_deltas(source: str, candidate: str) -> tuple[list, list, list[
                 "verification of scope and binding."
             )
 
-        deltas.append(_delta(
-            DeltaType.QUANTIFIER_CHANGED,
-            explanation,
-            source_span=", ".join(left.quantifiers) or None,
-            candidate_span=", ".join(right.quantifiers) or None,
-            severity=severity,
-            confidence=0.9,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.QUANTIFIER_CHANGED,
+                explanation,
+                source_span=", ".join(left.quantifiers) or None,
+                candidate_span=", ".join(right.quantifiers) or None,
+                severity=severity,
+                confidence=0.9,
+            )
+        )
 
     if left.scope_markers and Counter(left.scope_markers) != Counter(right.scope_markers):
-        deltas.append(_delta(
-            DeltaType.SCOPE_BROADENED,
-            "A source scope/condition marker is not preserved literally; semantic review is required.",
-            source_span=", ".join(left.scope_markers),
-            candidate_span=", ".join(right.scope_markers) or None,
-            severity=Severity.WARNING,
-            confidence=0.8,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.SCOPE_BROADENED,
+                "A source scope/condition marker is not preserved literally; semantic review is required.",
+                source_span=", ".join(left.scope_markers),
+                candidate_span=", ".join(right.scope_markers) or None,
+                severity=Severity.WARNING,
+                confidence=0.8,
+            )
+        )
 
     if left.attributions and Counter(left.attributions) != Counter(right.attributions):
-        deltas.append(_delta(
-            DeltaType.ATTRIBUTION_CHANGED,
-            "Attribution language differs between source and candidate.",
-            source_span=", ".join(left.attributions),
-            candidate_span=", ".join(right.attributions) or None,
-            severity=Severity.BLOCKER if not right.attributions else Severity.WARNING,
-            confidence=0.9,
-        ))
+        deltas.append(
+            _delta(
+                DeltaType.ATTRIBUTION_CHANGED,
+                "Attribution language differs between source and candidate.",
+                source_span=", ".join(left.attributions),
+                candidate_span=", ".join(right.attributions) or None,
+                severity=Severity.BLOCKER if not right.attributions else Severity.WARNING,
+                confidence=0.9,
+            )
+        )
 
     return source_anchors, candidate_anchors, deltas

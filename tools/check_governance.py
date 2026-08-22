@@ -3,6 +3,7 @@
 
 Usage:  python3 tools/check_governance.py
 """
+
 import json
 import sys
 from pathlib import Path
@@ -36,7 +37,9 @@ def main():
         checked += 1
 
         if pol.get("gate_type") != gate_type:
-            errors.append(f"{filename}: gate_type is '{pol.get('gate_type')}', expected '{gate_type}'")
+            errors.append(
+                f"{filename}: gate_type is '{pol.get('gate_type')}', expected '{gate_type}'"
+            )
 
         if pol.get("default_effect") not in ("deny", "escalate"):
             errors.append(f"{filename}: default_effect must be deny or escalate (fail closed)")
@@ -46,7 +49,9 @@ def main():
 
         refs = pol.get("nist_ai_rmf", [])
         if not refs:
-            errors.append(f"{filename}: no NIST AI RMF references. Gate records must carry them for audit mapping.")
+            errors.append(
+                f"{filename}: no NIST AI RMF references. Gate records must carry them for audit mapping."
+            )
         for ref in refs:
             if not any(ref.startswith(fn) for fn in NIST_FUNCTIONS):
                 errors.append(f"{filename}: '{ref}' is not a recognised AI RMF function reference")
@@ -56,9 +61,16 @@ def main():
 
     # Every risk in the register must name a detection method.
     register = (ROOT / "governance" / "risk-register.md").read_text(encoding="utf-8")
-    for risk in ("Citation laundering", "False originality", "Over-association",
-                 "Method blindness", "Memory contamination", "Evaluation gaming",
-                 "Privacy and IP exposure", "Agent autonomy drift"):
+    for risk in (
+        "Citation laundering",
+        "False originality",
+        "Over-association",
+        "Method blindness",
+        "Memory contamination",
+        "Evaluation gaming",
+        "Privacy and IP exposure",
+        "Agent autonomy drift",
+    ):
         if risk not in register:
             errors.append(f"risk-register.md: named risk '{risk}' is missing")
     checked += 1

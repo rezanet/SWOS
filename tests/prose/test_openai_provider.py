@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import json
-from types import SimpleNamespace
 import unittest
+from types import SimpleNamespace
 
 from swos_prose.models import VerificationStatus
 from swos_prose.pipeline import verify_rewrite
@@ -47,26 +47,30 @@ def one_to_one_payload(source_prop: dict, candidate_prop: dict) -> dict:
         "equivalent": True,
         "source_propositions": [source_prop],
         "candidate_propositions": [candidate_prop],
-        "source_to_candidate": [{
-            "source_id": source_prop["id"],
-            "candidate_ids": [candidate_prop["id"]],
-            "preserved": True,
-            "modality_preserved": True,
-            "scope_preserved": True,
-            "attribution_preserved": True,
-            "causal_force_preserved": True,
-            "relational_direction_preserved": True,
-            "confidence": 0.99,
-            "reason": "Equivalent proposition.",
-        }],
-        "candidate_to_source": [{
-            "candidate_id": candidate_prop["id"],
-            "source_ids": [source_prop["id"]],
-            "licensed": True,
-            "new_claim": False,
-            "confidence": 0.99,
-            "reason": "Licensed by source.",
-        }],
+        "source_to_candidate": [
+            {
+                "source_id": source_prop["id"],
+                "candidate_ids": [candidate_prop["id"]],
+                "preserved": True,
+                "modality_preserved": True,
+                "scope_preserved": True,
+                "attribution_preserved": True,
+                "causal_force_preserved": True,
+                "relational_direction_preserved": True,
+                "confidence": 0.99,
+                "reason": "Equivalent proposition.",
+            }
+        ],
+        "candidate_to_source": [
+            {
+                "candidate_id": candidate_prop["id"],
+                "source_ids": [source_prop["id"]],
+                "licensed": True,
+                "new_claim": False,
+                "confidence": 0.99,
+                "reason": "Licensed by source.",
+            }
+        ],
         "unresolved": [],
         "notes": [],
     }
@@ -149,71 +153,184 @@ class OpenAIProviderUnitTests(unittest.TestCase):
         source = "The data may suggest that X causes Y."
         candidate = "The data suggests that X may cause Y."
         payload = one_to_one_payload(
-            proposition("p1", source, subject="data", relation="suggest", object_="X causes Y", modality="may", modality_scope="suggestion", causal_force="causal"),
-            proposition("c1", candidate, subject="data", relation="suggest", object_="X may cause Y", modality="may", modality_scope="embedded causation", causal_force="causal"),
+            proposition(
+                "p1",
+                source,
+                subject="data",
+                relation="suggest",
+                object_="X causes Y",
+                modality="may",
+                modality_scope="suggestion",
+                causal_force="causal",
+            ),
+            proposition(
+                "c1",
+                candidate,
+                subject="data",
+                relation="suggest",
+                object_="X may cause Y",
+                modality="may",
+                modality_scope="embedded causation",
+                causal_force="causal",
+            ),
         )
-        provider = OpenAIResponsesSemanticVerifierProvider(model="test-model", client=FakeClient(payload))
-        result = verify_rewrite(source=source, candidate=candidate, assurance="strict", verifier_provider=provider)
+        provider = OpenAIResponsesSemanticVerifierProvider(
+            model="test-model", client=FakeClient(payload)
+        )
+        result = verify_rewrite(
+            source=source, candidate=candidate, assurance="strict", verifier_provider=provider
+        )
         self.assertEqual(result.status, VerificationStatus.REVIEW)
-        self.assertIn("unresolved_equivalence", [item.delta_type.value for item in result.semantic_deltas])
+        self.assertIn(
+            "unresolved_equivalence", [item.delta_type.value for item in result.semantic_deltas]
+        )
 
     def test_causal_force_weakening_is_rejected_from_structured_frames(self):
         source = "X caused Y."
         candidate = "X was associated with Y."
         payload = one_to_one_payload(
-            proposition("p1", source, subject="X", relation="caused", object_="Y", causal_force="causal"),
-            proposition("c1", candidate, subject="X", relation="associated with", object_="Y", causal_force="association"),
+            proposition(
+                "p1", source, subject="X", relation="caused", object_="Y", causal_force="causal"
+            ),
+            proposition(
+                "c1",
+                candidate,
+                subject="X",
+                relation="associated with",
+                object_="Y",
+                causal_force="association",
+            ),
         )
-        provider = OpenAIResponsesSemanticVerifierProvider(model="test-model", client=FakeClient(payload))
-        result = verify_rewrite(source=source, candidate=candidate, assurance="strict", verifier_provider=provider)
+        provider = OpenAIResponsesSemanticVerifierProvider(
+            model="test-model", client=FakeClient(payload)
+        )
+        result = verify_rewrite(
+            source=source, candidate=candidate, assurance="strict", verifier_provider=provider
+        )
         self.assertEqual(result.status, VerificationStatus.REJECT)
-        self.assertIn("causal_strength_changed", [item.delta_type.value for item in result.semantic_deltas])
+        self.assertIn(
+            "causal_strength_changed", [item.delta_type.value for item in result.semantic_deltas]
+        )
 
     def test_temporal_inverse_wording_can_pass_when_canonical_chronology_matches(self):
         source = "The intervention preceded the outcome."
         candidate = "The outcome followed the intervention."
         canonical = "before(intervention,outcome)"
         payload = one_to_one_payload(
-            proposition("p1", source, subject="intervention", relation="preceded", object_="outcome", temporal_relation=canonical),
-            proposition("c1", candidate, subject="outcome", relation="followed", object_="intervention", temporal_relation=canonical),
+            proposition(
+                "p1",
+                source,
+                subject="intervention",
+                relation="preceded",
+                object_="outcome",
+                temporal_relation=canonical,
+            ),
+            proposition(
+                "c1",
+                candidate,
+                subject="outcome",
+                relation="followed",
+                object_="intervention",
+                temporal_relation=canonical,
+            ),
         )
-        provider = OpenAIResponsesSemanticVerifierProvider(model="test-model", client=FakeClient(payload))
-        result = verify_rewrite(source=source, candidate=candidate, assurance="strict", verifier_provider=provider)
+        provider = OpenAIResponsesSemanticVerifierProvider(
+            model="test-model", client=FakeClient(payload)
+        )
+        result = verify_rewrite(
+            source=source, candidate=candidate, assurance="strict", verifier_provider=provider
+        )
         self.assertEqual(result.status, VerificationStatus.PASS)
 
     def test_negative_performance_lexical_normalisation_can_pass(self):
         source = "The model performs poorly under these conditions."
         candidate = "The model underperforms under these conditions."
         payload = one_to_one_payload(
-            proposition("p1", source, subject="model", relation="performs", object_="poorly under these conditions", normative_stance="negative"),
-            proposition("c1", candidate, subject="model", relation="underperforms", object_="under these conditions", normative_stance="negative"),
+            proposition(
+                "p1",
+                source,
+                subject="model",
+                relation="performs",
+                object_="poorly under these conditions",
+                normative_stance="negative",
+            ),
+            proposition(
+                "c1",
+                candidate,
+                subject="model",
+                relation="underperforms",
+                object_="under these conditions",
+                normative_stance="negative",
+            ),
         )
-        provider = OpenAIResponsesSemanticVerifierProvider(model="test-model", client=FakeClient(payload))
-        result = verify_rewrite(source=source, candidate=candidate, assurance="strict", verifier_provider=provider)
+        provider = OpenAIResponsesSemanticVerifierProvider(
+            model="test-model", client=FakeClient(payload)
+        )
+        result = verify_rewrite(
+            source=source, candidate=candidate, assurance="strict", verifier_provider=provider
+        )
         self.assertEqual(result.status, VerificationStatus.PASS)
 
     def test_symmetric_association_swap_can_pass_with_structured_frame_proof(self):
         source = "Depression is associated with a sedentary lifestyle."
         candidate = "A sedentary lifestyle is associated with depression."
         payload = one_to_one_payload(
-            proposition("p1", source, subject="Depression", relation="associated with", object_="a sedentary lifestyle", causal_force="association"),
-            proposition("c1", candidate, subject="A sedentary lifestyle", relation="associated with", object_="depression", causal_force="association"),
+            proposition(
+                "p1",
+                source,
+                subject="Depression",
+                relation="associated with",
+                object_="a sedentary lifestyle",
+                causal_force="association",
+            ),
+            proposition(
+                "c1",
+                candidate,
+                subject="A sedentary lifestyle",
+                relation="associated with",
+                object_="depression",
+                causal_force="association",
+            ),
         )
-        provider = OpenAIResponsesSemanticVerifierProvider(model="test-model", client=FakeClient(payload))
-        result = verify_rewrite(source=source, candidate=candidate, assurance="strict", verifier_provider=provider)
+        provider = OpenAIResponsesSemanticVerifierProvider(
+            model="test-model", client=FakeClient(payload)
+        )
+        result = verify_rewrite(
+            source=source, candidate=candidate, assurance="strict", verifier_provider=provider
+        )
         self.assertEqual(result.status, VerificationStatus.PASS)
 
     def test_temporal_relation_change_is_rejected_even_if_provider_claims_preserved(self):
         source = "The intervention preceded the outcome."
         candidate = "The intervention followed the outcome."
         payload = one_to_one_payload(
-            proposition("p1", source, subject="intervention", relation="preceded", object_="outcome", temporal_relation="before(intervention,outcome)"),
-            proposition("c1", candidate, subject="intervention", relation="followed", object_="outcome", temporal_relation="before(outcome,intervention)"),
+            proposition(
+                "p1",
+                source,
+                subject="intervention",
+                relation="preceded",
+                object_="outcome",
+                temporal_relation="before(intervention,outcome)",
+            ),
+            proposition(
+                "c1",
+                candidate,
+                subject="intervention",
+                relation="followed",
+                object_="outcome",
+                temporal_relation="before(outcome,intervention)",
+            ),
         )
-        provider = OpenAIResponsesSemanticVerifierProvider(model="test-model", client=FakeClient(payload))
-        result = verify_rewrite(source=source, candidate=candidate, assurance="strict", verifier_provider=provider)
+        provider = OpenAIResponsesSemanticVerifierProvider(
+            model="test-model", client=FakeClient(payload)
+        )
+        result = verify_rewrite(
+            source=source, candidate=candidate, assurance="strict", verifier_provider=provider
+        )
         self.assertEqual(result.status, VerificationStatus.REJECT)
-        self.assertIn("chronology_changed", [item.delta_type.value for item in result.semantic_deltas])
+        self.assertIn(
+            "chronology_changed", [item.delta_type.value for item in result.semantic_deltas]
+        )
 
 
 if __name__ == "__main__":

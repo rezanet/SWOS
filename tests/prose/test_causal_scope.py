@@ -44,32 +44,32 @@ def _equivalent_payload(
     return {
         "equivalent": True,
         "independent_of_rewriter": True,
-        "source_propositions": [
-            _proposition("p1", source, attribution=attribution)
+        "source_propositions": [_proposition("p1", source, attribution=attribution)],
+        "candidate_propositions": [_proposition("c1", candidate, attribution=attribution)],
+        "source_to_candidate": [
+            {
+                "source_id": "p1",
+                "candidate_ids": ["c1"],
+                "preserved": True,
+                "modality_preserved": True,
+                "scope_preserved": True,
+                "attribution_preserved": True,
+                "causal_force_preserved": True,
+                "relational_direction_preserved": True,
+                "confidence": 0.99,
+                "reason": "Equivalent attribution/causality paraphrase.",
+            }
         ],
-        "candidate_propositions": [
-            _proposition("c1", candidate, attribution=attribution)
+        "candidate_to_source": [
+            {
+                "candidate_id": "c1",
+                "source_ids": ["p1"],
+                "licensed": True,
+                "new_claim": False,
+                "confidence": 0.99,
+                "reason": "Candidate is fully licensed by the source.",
+            }
         ],
-        "source_to_candidate": [{
-            "source_id": "p1",
-            "candidate_ids": ["c1"],
-            "preserved": True,
-            "modality_preserved": True,
-            "scope_preserved": True,
-            "attribution_preserved": True,
-            "causal_force_preserved": True,
-            "relational_direction_preserved": True,
-            "confidence": 0.99,
-            "reason": "Equivalent attribution/causality paraphrase.",
-        }],
-        "candidate_to_source": [{
-            "candidate_id": "c1",
-            "source_ids": ["p1"],
-            "licensed": True,
-            "new_claim": False,
-            "confidence": 0.99,
-            "reason": "Candidate is fully licensed by the source.",
-        }],
         "unresolved": [],
         "notes": [],
     }
@@ -142,7 +142,9 @@ class CausalScopeTests(unittest.TestCase):
         )
 
         self.assertEqual(result.status, VerificationStatus.REPAIR)
-        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:causal_strength_changed")
+        self.assertEqual(
+            result.verifier_skip_reason, "deterministic_repairable:causal_strength_changed"
+        )
         self.assertEqual(verifier.calls, 0)
         self.assertIn(
             "causal_strength_changed",
@@ -169,12 +171,8 @@ class CausalScopeTests(unittest.TestCase):
         )
 
     def test_contrasting_clause_is_outside_denial_scope(self):
-        source = (
-            "The report does not claim that X caused Y, but Z was associated with W."
-        )
-        candidate = (
-            "The report does not claim that X caused Y, but Z caused W."
-        )
+        source = "The report does not claim that X caused Y, but Z was associated with W."
+        candidate = "The report does not claim that X caused Y, but Z caused W."
         verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
 
         result = verify_rewrite(

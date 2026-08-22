@@ -12,7 +12,6 @@ from swos_prose.verify.propositions import (
     _provider_frame_mismatches,
 )
 
-
 SOURCE = (
     "Chen et al. report that processor load was associated with longer response "
     "times in the observed tests, but they do not claim that processor load "
@@ -81,7 +80,9 @@ def _mapping(source_id: str, candidate_id: str) -> tuple[dict, dict]:
     )
 
 
-def _exact_chen_payload(*, candidate_subject: str = "processor load", candidate_agent: str = "Chen et al.") -> dict:
+def _exact_chen_payload(
+    *, candidate_subject: str = "processor load", candidate_agent: str = "Chen et al."
+) -> dict:
     s1_to_c1, c1_to_s1 = _mapping("s1", "c1")
     s2_to_c2, c2_to_s2 = _mapping("s2", "c2")
     attribution = {"agent": "Chen et al.", "act": "report"}
@@ -135,7 +136,8 @@ class AttributedRelationFrameTests(unittest.TestCase):
         )
 
         malformed = [
-            delta for delta in result.semantic_deltas
+            delta
+            for delta in result.semantic_deltas
             if delta.delta_type == DeltaType.MALFORMED_PROVIDER_RESPONSE
         ]
         self.assertEqual(malformed, [])
@@ -162,9 +164,7 @@ class AttributedRelationFrameTests(unittest.TestCase):
         self.assertEqual(result.status, VerificationStatus.REVIEW)
 
     def test_attribution_mismatch_remains_independently_detectable(self):
-        provider = StaticSemanticVerifierProvider(
-            _exact_chen_payload(candidate_agent="Lee")
-        )
+        provider = StaticSemanticVerifierProvider(_exact_chen_payload(candidate_agent="Lee"))
 
         result = verify_rewrite(
             source=SOURCE,
@@ -326,10 +326,7 @@ class AttributedRelationFrameTests(unittest.TestCase):
         )
         candidate = Proposition(
             proposition_id="c3",
-            text=(
-                "A was associated with B in the observed tests and in field "
-                "deployments."
-            ),
+            text=("A was associated with B in the observed tests and in field deployments."),
             subject="A",
             relation="associated with",
             object="B in the observed tests and in field deployments",
@@ -354,14 +351,11 @@ class AttributedRelationFrameTests(unittest.TestCase):
         candidate = Proposition(
             proposition_id="c4",
             text=(
-                "A was associated with B in the observed tests, as well as in "
-                "field deployments."
+                "A was associated with B in the observed tests, as well as in field deployments."
             ),
             subject="A",
             relation="associated with",
-            object=(
-                "B in the observed tests, as well as in field deployments"
-            ),
+            object=("B in the observed tests, as well as in field deployments"),
             relation_sign="neutral",
         )
 
@@ -382,10 +376,7 @@ class AttributedRelationFrameTests(unittest.TestCase):
         )
         candidate = Proposition(
             proposition_id="c5",
-            text=(
-                "A was associated with B in the observed tests, but also in field "
-                "deployments."
-            ),
+            text=("A was associated with B in the observed tests, but also in field deployments."),
             subject="A",
             relation="associated with",
             object="B in the observed tests, but also in field deployments",
@@ -415,9 +406,7 @@ class AttributedRelationFrameTests(unittest.TestCase):
             ),
             subject="A",
             relation="associated with",
-            object=(
-                "B in the observed tests, and was also associated with B in field deployments"
-            ),
+            object=("B in the observed tests, and was also associated with B in field deployments"),
             relation_sign="neutral",
         )
 
@@ -468,9 +457,7 @@ class AttributedRelationFrameTests(unittest.TestCase):
             ),
             subject="A",
             relation="associated with",
-            object=(
-                "B in the observed tests, while being associated with B in field deployments"
-            ),
+            object=("B in the observed tests, while being associated with B in field deployments"),
             relation_sign="neutral",
         )
 

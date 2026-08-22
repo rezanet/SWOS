@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import json
+import unittest
 from pathlib import Path
 from types import SimpleNamespace
-import unittest
 
 from benchmark.runner import (
     ACTIVE_CORPUS_COUNT,
@@ -27,7 +27,10 @@ class ProseBenchmarkContractTests(unittest.TestCase):
         fixtures = load_corpus()
         repairs = [item for item in fixtures if item["benchmark_group"] == "repair"]
         self.assertEqual(len(repairs), 6)
-        self.assertEqual({item["fixture_id"] for item in repairs}, {f"repair-{index:03d}" for index in range(1, 7)})
+        self.assertEqual(
+            {item["fixture_id"] for item in repairs},
+            {f"repair-{index:03d}" for index in range(1, 7)},
+        )
         self.assertTrue(all(item["semantic_relation"] == "material_change" for item in repairs))
 
     def test_diagnostics_contract_has_no_unsafe_abstentions(self):
@@ -60,7 +63,9 @@ class ProseBenchmarkContractTests(unittest.TestCase):
         result = SimpleNamespace(
             rewrite_token_usage={"input_tokens": 100, "output_tokens": 20, "total_tokens": 120},
             repair_attempts=[
-                SimpleNamespace(token_usage={"input_tokens": 30, "output_tokens": 5, "total_tokens": 35}),
+                SimpleNamespace(
+                    token_usage={"input_tokens": 30, "output_tokens": 5, "total_tokens": 35}
+                ),
                 SimpleNamespace(token_usage=None),
             ],
             verification=SimpleNamespace(

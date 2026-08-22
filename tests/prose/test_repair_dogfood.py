@@ -48,8 +48,12 @@ class RepairDogfoodTests(unittest.TestCase):
             corpus.mkdir()
             (corpus / "repair.txt").write_text(source, encoding="utf-8")
             records = collect_dogfood(
-                input_dir=corpus, output_dir=results, rewrite_provider=provider,
-                verifier_provider=None, assurance="strict", run_diagnostics=False,
+                input_dir=corpus,
+                output_dir=results,
+                rewrite_provider=provider,
+                verifier_provider=None,
+                assurance="strict",
+                run_diagnostics=False,
             )
             self.assertEqual(len(records), 1)
             record = records[0]

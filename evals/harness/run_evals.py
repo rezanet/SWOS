@@ -8,6 +8,7 @@ Usage:
   python3 evals/harness/run_evals.py --all
   python3 evals/harness/run_evals.py --planes citation,adversarial --fail-on-gate
 """
+
 import argparse
 import json
 import sys
@@ -17,8 +18,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "evals" / "fixtures"
 
-PLANES = ["retrieval", "grounding", "citation", "scholarly",
-          "governance", "regression", "memory_contamination", "adversarial"]
+PLANES = [
+    "retrieval",
+    "grounding",
+    "citation",
+    "scholarly",
+    "governance",
+    "regression",
+    "memory_contamination",
+    "adversarial",
+]
 
 # Metrics that block release at zero tolerance. Degrading any of these is not a
 # trade-off; it is a defect.
@@ -70,17 +79,28 @@ def run_plane(plane, system_under_test=None):
     if system_under_test is None:
         if not fixtures and plane in FIXTURE_DIRS:
             return {
-                "plane": plane, "gate_result": "fail", "fixtures_run": 0,
-                "metrics": [], "failures": [{"fixture_id": "-",
-                    "reason": "No fixtures found. A plane with no fixture cannot gate anything."}],
+                "plane": plane,
+                "gate_result": "fail",
+                "fixtures_run": 0,
+                "metrics": [],
+                "failures": [
+                    {
+                        "fixture_id": "-",
+                        "reason": "No fixtures found. A plane with no fixture cannot gate anything.",
+                    }
+                ],
             }
         for fx in fixtures:
             missing = [k for k in ("fixture_id", "description") if k not in fx]
             if "pass_condition" not in fx and "expected" not in fx and "baseline_metrics" not in fx:
                 missing.append("pass_condition or expected")
             if missing:
-                failures.append({"fixture_id": fx.get("fixture_id", "?"),
-                                 "reason": f"malformed fixture, missing: {', '.join(missing)}"})
+                failures.append(
+                    {
+                        "fixture_id": fx.get("fixture_id", "?"),
+                        "reason": f"malformed fixture, missing: {', '.join(missing)}",
+                    }
+                )
         return {
             "plane": plane,
             "gate_result": "fail" if failures else ("warn" if not fixtures else "pass"),
@@ -89,7 +109,7 @@ def run_plane(plane, system_under_test=None):
             "failures": failures,
             "mode": "contract_mode",
             "note": "No system under test bound. Fixture conformance checked; "
-                    "quality not measured. Bind a system with --system to gate a release.",
+            "quality not measured. Bind a system with --system to gate a release.",
         }
 
     raise NotImplementedError(
@@ -108,9 +128,11 @@ def main():
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
-    selected = PLANES if args.all or not args.planes else [
-        p.strip() for p in args.planes.split(",") if p.strip()
-    ]
+    selected = (
+        PLANES
+        if args.all or not args.planes
+        else [p.strip() for p in args.planes.split(",") if p.strip()]
+    )
     unknown = [p for p in selected if p not in PLANES]
     if unknown:
         print(f"error: unknown plane(s): {', '.join(unknown)}")

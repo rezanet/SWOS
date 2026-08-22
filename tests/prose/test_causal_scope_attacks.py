@@ -78,12 +78,8 @@ class CausalScopeAttackTests(unittest.TestCase):
         self.assertEqual(signals.affirmative, ("caused",))
 
     def test_unpunctuated_coordinate_strengthening_remains_hard_blocked(self):
-        source = (
-            "Evidence does not show benefit and exposure was associated with fatigue."
-        )
-        candidate = (
-            "Evidence does not show benefit and exposure caused fatigue."
-        )
+        source = "Evidence does not show benefit and exposure was associated with fatigue."
+        candidate = "Evidence does not show benefit and exposure caused fatigue."
         verifier = _MustNotRunVerifier()
 
         result = verify_rewrite(
@@ -101,9 +97,7 @@ class CausalScopeAttackTests(unittest.TestCase):
         )
 
     def test_explicit_outer_reporting_clause_ends_that_complement_denial(self):
-        sentence = (
-            "The report does not claim that X caused Y but it concludes Z caused W."
-        )
+        sentence = "The report does not claim that X caused Y but it concludes Z caused W."
 
         signals = causal_polarity_signals(sentence)
 
@@ -112,12 +106,9 @@ class CausalScopeAttackTests(unittest.TestCase):
 
     def test_later_outer_clause_strengthening_remains_hard_blocked(self):
         source = (
-            "The report does not claim that X caused Y but it concludes "
-            "Z was associated with W."
+            "The report does not claim that X caused Y but it concludes Z was associated with W."
         )
-        candidate = (
-            "The report does not claim that X caused Y but it concludes Z caused W."
-        )
+        candidate = "The report does not claim that X caused Y but it concludes Z caused W."
         verifier = _MustNotRunVerifier()
 
         result = verify_rewrite(

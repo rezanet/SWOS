@@ -2,11 +2,23 @@ from __future__ import annotations
 
 import unittest
 
-from swos_prose.models import DeltaType, SemanticDelta, Severity, VerificationResult, VerificationStatus
+from swos_prose.models import (
+    DeltaType,
+    SemanticDelta,
+    Severity,
+    VerificationResult,
+    VerificationStatus,
+)
+from swos_prose.providers.mock import StaticSemanticVerifierProvider
 from swos_prose.providers.rewrite_base import RewriteCandidate
 from swos_prose.providers.rewrite_mock import StaticRewriteProvider
-from swos_prose.providers.mock import StaticSemanticVerifierProvider
-from swos_prose.repair import MAX_REPAIR_ATTEMPTS, annotate_local_repairability, locate_span, render_repair_prompt, repair_loop
+from swos_prose.repair import (
+    MAX_REPAIR_ATTEMPTS,
+    annotate_local_repairability,
+    locate_span,
+    render_repair_prompt,
+    repair_loop,
+)
 from swos_prose.rewrite import polish_text
 
 
@@ -35,11 +47,31 @@ class ScriptedRepairProvider:
 
 class BoundedRepairIntegrationTests(unittest.TestCase):
     CASES = (
-        ("modality", "The findings may indicate a relationship between the variables.", "The findings indicate a relationship between the variables."),
-        ("quantifier", "Some participants reported fatigue after the session.", "Participants reported fatigue after the session."),
-        ("attribution", "Ahmed argues that the evidence is limited.", "Ahmed states that the evidence is limited."),
-        ("negation", "The intervention did not change the measured outcome.", "The intervention changed the measured outcome."),
-        ("causal_force", "Exposure was associated with the observed outcome.", "Exposure caused the observed outcome."),
+        (
+            "modality",
+            "The findings may indicate a relationship between the variables.",
+            "The findings indicate a relationship between the variables.",
+        ),
+        (
+            "quantifier",
+            "Some participants reported fatigue after the session.",
+            "Participants reported fatigue after the session.",
+        ),
+        (
+            "attribution",
+            "Ahmed argues that the evidence is limited.",
+            "Ahmed states that the evidence is limited.",
+        ),
+        (
+            "negation",
+            "The intervention did not change the measured outcome.",
+            "The intervention changed the measured outcome.",
+        ),
+        (
+            "causal_force",
+            "Exposure was associated with the observed outcome.",
+            "Exposure caused the observed outcome.",
+        ),
     )
 
     def test_five_reviewed_local_drift_families_repair_and_reverify(self):
@@ -47,8 +79,12 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
             with self.subTest(name=name):
                 repairer = ScriptedRepairProvider(source)
                 result = polish_text(
-                    source=source, rewrite_provider=StaticRewriteProvider(defective), verifier_provider=None,
-                    assurance="strict", run_diagnostics=False, repair_provider=repairer,
+                    source=source,
+                    rewrite_provider=StaticRewriteProvider(defective),
+                    verifier_provider=None,
+                    assurance="strict",
+                    run_diagnostics=False,
+                    repair_provider=repairer,
                 )
                 self.assertEqual(result.verification_status, VerificationStatus.PASS.value)
                 self.assertEqual(result.final_text, source)
@@ -80,17 +116,21 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
     def test_modality_weakening_repair_path_is_reachable(self):
         source = "The findings indicate benefits."
         defective = "The findings may indicate benefits."
-        verifier = StaticSemanticVerifierProvider({
-            "equivalent": False,
-            "deltas": [{
-                "type": "modality_weakened",
-                "source_span": "indicate",
-                "candidate_span": "may",
-                "severity": "blocker",
-                "explanation": "Candidate introduces an explicit weak modal.",
-                "confidence": 1.0,
-            }],
-        })
+        verifier = StaticSemanticVerifierProvider(
+            {
+                "equivalent": False,
+                "deltas": [
+                    {
+                        "type": "modality_weakened",
+                        "source_span": "indicate",
+                        "candidate_span": "may",
+                        "severity": "blocker",
+                        "explanation": "Candidate introduces an explicit weak modal.",
+                        "confidence": 1.0,
+                    }
+                ],
+            }
+        )
         repairer = ScriptedRepairProvider(source)
         result = polish_text(
             source=source,
@@ -110,17 +150,21 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
     def test_modality_weakening_with_unrelated_content_never_enters_repair(self):
         source = "The findings indicate benefits."
         defective = "The findings may describe harms."
-        verifier = StaticSemanticVerifierProvider({
-            "equivalent": False,
-            "deltas": [{
-                "type": "modality_weakened",
-                "source_span": "indicate",
-                "candidate_span": "may",
-                "severity": "blocker",
-                "explanation": "Candidate introduces an explicit weak modal.",
-                "confidence": 1.0,
-            }],
-        })
+        verifier = StaticSemanticVerifierProvider(
+            {
+                "equivalent": False,
+                "deltas": [
+                    {
+                        "type": "modality_weakened",
+                        "source_span": "indicate",
+                        "candidate_span": "may",
+                        "severity": "blocker",
+                        "explanation": "Candidate introduces an explicit weak modal.",
+                        "confidence": 1.0,
+                    }
+                ],
+            }
+        )
         repairer = ScriptedRepairProvider(source)
         result = polish_text(
             source=source,
@@ -141,8 +185,12 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
         source = "The response rate was 18.7%."
         repairer = ScriptedRepairProvider(source)
         result = polish_text(
-            source=source, rewrite_provider=StaticRewriteProvider("The response rate was 19%."),
-            verifier_provider=None, assurance="strict", run_diagnostics=False, repair_provider=repairer,
+            source=source,
+            rewrite_provider=StaticRewriteProvider("The response rate was 19%."),
+            verifier_provider=None,
+            assurance="strict",
+            run_diagnostics=False,
+            repair_provider=repairer,
         )
         self.assertEqual(result.verification_status, VerificationStatus.REJECT.value)
         self.assertEqual(result.final_text, source)
@@ -155,8 +203,11 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
         source = "The findings may indicate a relationship."
         repairer = ScriptedRepairProvider("Clearly, the findings may indicate a relationship.")
         result = polish_text(
-            source=source, rewrite_provider=StaticRewriteProvider("The findings indicate a relationship."),
-            verifier_provider=None, run_diagnostics=False, repair_provider=repairer,
+            source=source,
+            rewrite_provider=StaticRewriteProvider("The findings indicate a relationship."),
+            verifier_provider=None,
+            run_diagnostics=False,
+            repair_provider=repairer,
         )
         self.assertEqual(result.final_text, source)
         self.assertTrue(result.used_source_fallback)
@@ -213,8 +264,12 @@ class BoundedRepairIntegrationTests(unittest.TestCase):
         source = "The analysis was performed using a t-test."
         candidate = "The analysis used a t-test."
         delta = SemanticDelta(
-            delta_type=DeltaType.CONDITION_CHANGED, source_span=source, candidate_span=candidate,
-            severity=Severity.BLOCKER, explanation="Synthetic structural condition delta.", repairable=True,
+            delta_type=DeltaType.CONDITION_CHANGED,
+            source_span=source,
+            candidate_span=candidate,
+            severity=Severity.BLOCKER,
+            explanation="Synthetic structural condition delta.",
+            repairable=True,
         )
         annotated = annotate_local_repairability(source, candidate, [delta])
         self.assertEqual(len(annotated), 1)
@@ -227,44 +282,59 @@ class RepairLocalisationTests(unittest.TestCase):
         source = "Ahmed argues that the evidence is limited."
         candidate = "Ahmed states that the evidence is limited."
         delta = SemanticDelta(
-            delta_type=DeltaType.ATTRIBUTION_CHANGED, source_span="ahmed::argues", candidate_span="ahmed::states",
-            severity=Severity.WARNING, explanation="Attribution language differs.",
+            delta_type=DeltaType.ATTRIBUTION_CHANGED,
+            source_span="ahmed::argues",
+            candidate_span="ahmed::states",
+            severity=Severity.WARNING,
+            explanation="Attribution language differs.",
         )
         span = locate_span(source, candidate, delta)
         self.assertIsNotNone(span)
-        self.assertEqual(source[span.source_start:span.source_end], "argues")
-        self.assertEqual(candidate[span.candidate_start:span.candidate_end], "states")
+        self.assertEqual(source[span.source_start : span.source_end], "argues")
+        self.assertEqual(candidate[span.candidate_start : span.candidate_end], "states")
         self.assertGreaterEqual(span.confidence, 0.95)
 
     def test_causal_relation_localises_bound_preposition_with_head(self):
         source = "Exposure was associated with the observed outcome."
         candidate = "Exposure caused the observed outcome."
         delta = SemanticDelta(
-            delta_type=DeltaType.CAUSAL_STRENGTH_CHANGED, source_span="associated with", candidate_span="caused",
-            severity=Severity.BLOCKER, explanation="Causal force strengthened.",
+            delta_type=DeltaType.CAUSAL_STRENGTH_CHANGED,
+            source_span="associated with",
+            candidate_span="caused",
+            severity=Severity.BLOCKER,
+            explanation="Causal force strengthened.",
         )
         span = locate_span(source, candidate, delta)
         self.assertIsNotNone(span)
-        self.assertEqual(source[span.source_start:span.source_end], "was associated with")
-        self.assertEqual(candidate[span.candidate_start:span.candidate_end], "caused")
+        self.assertEqual(source[span.source_start : span.source_end], "was associated with")
+        self.assertEqual(candidate[span.candidate_start : span.candidate_end], "caused")
 
     def test_repeated_marker_is_ambiguous_and_not_guessed(self):
         source = "The first result may vary and the second may vary."
         candidate = "The first result varies and the second varies."
         delta = SemanticDelta(
-            delta_type=DeltaType.MODALITY_STRENGTHENED, source_span="may", candidate_span=None,
-            severity=Severity.BLOCKER, explanation="Weak modality removed.",
+            delta_type=DeltaType.MODALITY_STRENGTHENED,
+            source_span="may",
+            candidate_span=None,
+            severity=Severity.BLOCKER,
+            explanation="Weak modality removed.",
         )
         self.assertIsNone(locate_span(source, candidate, delta))
 
     def test_prompt_forbids_surrounding_rewrite_and_additions(self):
         delta = SemanticDelta(
-            delta_type=DeltaType.MODALITY_STRENGTHENED, source_span="may indicate", candidate_span="indicate",
-            severity=Severity.BLOCKER, explanation="Weak modality was removed.", repairable=True,
+            delta_type=DeltaType.MODALITY_STRENGTHENED,
+            source_span="may indicate",
+            candidate_span="indicate",
+            severity=Severity.BLOCKER,
+            explanation="Weak modality was removed.",
+            repairable=True,
         )
         prompt = render_repair_prompt(
-            source="The findings may indicate a relationship.", candidate="The findings indicate a relationship.",
-            delta=delta, offending_span="indicate",
+            source="The findings may indicate a relationship.",
+            candidate="The findings indicate a relationship.",
+            delta=delta,
+            offending_span="indicate",
         ).casefold()
         self.assertIn("replace only the offending span", prompt)
         self.assertIn("do not change anything else", prompt)
@@ -275,11 +345,20 @@ class RepairLocalisationTests(unittest.TestCase):
 class RepairAttemptCapTests(unittest.TestCase):
     def _repair_result(self, candidate: str, marker: str | None) -> VerificationResult:
         return VerificationResult(
-            status=VerificationStatus.REPAIR, source="The findings may indicate a relationship.", candidate=candidate,
-            semantic_deltas=[SemanticDelta(
-                delta_type=DeltaType.MODALITY_STRENGTHENED, source_span="may", candidate_span=marker,
-                severity=Severity.BLOCKER, explanation="Modal force remains different.", repairable=True, confidence=1.0,
-            )],
+            status=VerificationStatus.REPAIR,
+            source="The findings may indicate a relationship.",
+            candidate=candidate,
+            semantic_deltas=[
+                SemanticDelta(
+                    delta_type=DeltaType.MODALITY_STRENGTHENED,
+                    source_span="may",
+                    candidate_span=marker,
+                    severity=Severity.BLOCKER,
+                    explanation="Modal force remains different.",
+                    repairable=True,
+                    confidence=1.0,
+                )
+            ],
         )
 
     def test_repair_loop_stops_after_exactly_two_failed_attempts(self):
@@ -290,15 +369,20 @@ class RepairAttemptCapTests(unittest.TestCase):
             "The findings could indicate a relationship.",
             source,
         )
+
         def verify(text: str) -> VerificationResult:
             if "might" in text:
                 return self._repair_result(text, "might")
             if "could" in text:
                 return self._repair_result(text, "could")
             raise AssertionError(f"Unexpected candidate: {text}")
+
         execution = repair_loop(
-            source=source, candidate=candidate, initial_verification=self._repair_result(candidate, None),
-            repair_provider=repairer, verify_candidate=verify,
+            source=source,
+            candidate=candidate,
+            initial_verification=self._repair_result(candidate, None),
+            repair_provider=repairer,
+            verify_candidate=verify,
         )
         self.assertFalse(execution.success)
         self.assertEqual(len(execution.attempts), MAX_REPAIR_ATTEMPTS)
@@ -310,8 +394,11 @@ class RepairAttemptCapTests(unittest.TestCase):
         candidate = "The findings indicate a relationship."
         with self.assertRaises(ValueError):
             repair_loop(
-                source=source, candidate=candidate, initial_verification=self._repair_result(candidate, None),
-                repair_provider=ScriptedRepairProvider(source), verify_candidate=lambda _: self._repair_result(candidate, None),
+                source=source,
+                candidate=candidate,
+                initial_verification=self._repair_result(candidate, None),
+                repair_provider=ScriptedRepairProvider(source),
+                verify_candidate=lambda _: self._repair_result(candidate, None),
                 max_attempts=MAX_REPAIR_ATTEMPTS + 1,
             )
 

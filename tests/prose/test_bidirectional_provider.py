@@ -101,8 +101,7 @@ class BidirectionalProviderTests(unittest.TestCase):
         result = verify_rewrite(
             source="The sample was small, and the estimate was imprecise.",
             candidate=(
-                "The sample was small, and the estimate was imprecise. "
-                "The study was underpowered."
+                "The sample was small, and the estimate was imprecise. The study was underpowered."
             ),
             assurance="strict",
             verifier_provider=provider,
@@ -159,7 +158,9 @@ class BidirectionalProviderTests(unittest.TestCase):
             verifier_provider=provider,
         )
         self.assertEqual(result.status, VerificationStatus.REJECT)
-        self.assertIn("epistemic_type_changed", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertIn(
+            "epistemic_type_changed", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
     def test_unresolved_report_routes_to_review(self):
         payload = complete_equivalent_payload()
@@ -172,13 +173,17 @@ class BidirectionalProviderTests(unittest.TestCase):
             verifier_provider=provider,
         )
         self.assertEqual(result.status, VerificationStatus.REVIEW)
-        self.assertIn("unresolved_equivalence", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertIn(
+            "unresolved_equivalence", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
     def test_strict_bare_equivalence_is_not_enough(self):
-        provider = StaticSemanticVerifierProvider({
-            "equivalent": True,
-            "independent_of_rewriter": True,
-        })
+        provider = StaticSemanticVerifierProvider(
+            {
+                "equivalent": True,
+                "independent_of_rewriter": True,
+            }
+        )
         result = verify_rewrite(
             source="The experiment was difficult to reproduce.",
             candidate="The experiment proved difficult to reproduce.",
@@ -209,7 +214,9 @@ class BidirectionalProviderTests(unittest.TestCase):
             verifier_provider=provider,
         )
         self.assertEqual(result.status, VerificationStatus.REJECT)
-        self.assertIn("malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertIn(
+            "malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
     def test_standard_missing_source_mapping_routes_to_review(self):
         payload = complete_equivalent_payload()
@@ -225,7 +232,9 @@ class BidirectionalProviderTests(unittest.TestCase):
 
     def test_orphan_candidate_without_licensing_mapping_is_rejected(self):
         payload = complete_equivalent_payload()
-        payload["candidate_propositions"].append({"id": "c3", "text": "The hypothesis was confirmed."})
+        payload["candidate_propositions"].append(
+            {"id": "c3", "text": "The hypothesis was confirmed."}
+        )
         provider = StaticSemanticVerifierProvider(payload)
         result = verify_rewrite(
             source="The sample was small, and the estimate was imprecise.",
@@ -247,7 +256,9 @@ class BidirectionalProviderTests(unittest.TestCase):
             verifier_provider=provider,
         )
         self.assertEqual(result.status, VerificationStatus.REVIEW)
-        self.assertIn("malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertIn(
+            "malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
     def test_unknown_source_id_in_mapping_never_crashes_and_routes_to_review(self):
         payload = complete_equivalent_payload()
@@ -260,7 +271,9 @@ class BidirectionalProviderTests(unittest.TestCase):
             verifier_provider=provider,
         )
         self.assertEqual(result.status, VerificationStatus.REVIEW)
-        self.assertIn("malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertIn(
+            "malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
     def test_core_detects_relation_direction_reversal_even_if_provider_says_preserved(self):
         payload = {
@@ -314,25 +327,27 @@ class BidirectionalProviderTests(unittest.TestCase):
                 "object": "A",
             }
         ]
-        payload["candidate_propositions"] = [
-            {"id": "c1", "text": "A is associated with B."}
+        payload["candidate_propositions"] = [{"id": "c1", "text": "A is associated with B."}]
+        payload["source_to_candidate"] = [
+            {
+                "source_id": "p1",
+                "candidate_ids": ["c1"],
+                "preserved": True,
+                "modality_preserved": True,
+                "scope_preserved": True,
+                "attribution_preserved": True,
+                "causal_force_preserved": True,
+                "relational_direction_preserved": True,
+            }
         ]
-        payload["source_to_candidate"] = [{
-            "source_id": "p1",
-            "candidate_ids": ["c1"],
-            "preserved": True,
-            "modality_preserved": True,
-            "scope_preserved": True,
-            "attribution_preserved": True,
-            "causal_force_preserved": True,
-            "relational_direction_preserved": True,
-        }]
-        payload["candidate_to_source"] = [{
-            "candidate_id": "c1",
-            "source_ids": ["p1"],
-            "licensed": True,
-            "new_claim": False,
-        }]
+        payload["candidate_to_source"] = [
+            {
+                "candidate_id": "c1",
+                "source_ids": ["p1"],
+                "licensed": True,
+                "new_claim": False,
+            }
+        ]
         provider = StaticSemanticVerifierProvider(payload)
         result = verify_rewrite(
             source="A is associated with B.",
@@ -341,7 +356,9 @@ class BidirectionalProviderTests(unittest.TestCase):
             verifier_provider=provider,
         )
         self.assertEqual(result.status, VerificationStatus.REVIEW)
-        self.assertIn("malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertIn(
+            "malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
     def test_empty_source_and_candidate_is_explicit_no_change_pass(self):
         result = verify_rewrite(source="", candidate="", assurance="strict")
@@ -354,13 +371,15 @@ class BidirectionalProviderTests(unittest.TestCase):
         self.assertIn("claim_added", [d.delta_type.value for d in result.semantic_deltas])
 
     def test_changed_heading_with_empty_proposition_report_routes_to_review(self):
-        provider = StaticSemanticVerifierProvider({
-            "equivalent": True,
-            "source_propositions": [],
-            "candidate_propositions": [],
-            "source_to_candidate": [],
-            "candidate_to_source": [],
-        })
+        provider = StaticSemanticVerifierProvider(
+            {
+                "equivalent": True,
+                "source_propositions": [],
+                "candidate_propositions": [],
+                "source_to_candidate": [],
+                "candidate_to_source": [],
+            }
+        )
         result = verify_rewrite(
             source="Chapter 3: Methodology",
             candidate="Chapter 3: Methods",
@@ -370,10 +389,12 @@ class BidirectionalProviderTests(unittest.TestCase):
         self.assertEqual(result.status, VerificationStatus.REVIEW)
 
     def test_malformed_provider_payload_does_not_crash(self):
-        provider = StaticSemanticVerifierProvider({
-            "equivalent": True,
-            "source_propositions": [{"id": "p1"}],
-        })
+        provider = StaticSemanticVerifierProvider(
+            {
+                "equivalent": True,
+                "source_propositions": [{"id": "p1"}],
+            }
+        )
         result = verify_rewrite(
             source="The sample was small.",
             candidate="The sample remained small.",
@@ -381,7 +402,9 @@ class BidirectionalProviderTests(unittest.TestCase):
             verifier_provider=provider,
         )
         self.assertEqual(result.status, VerificationStatus.REVIEW)
-        self.assertIn("malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas])
+        self.assertIn(
+            "malformed_provider_response", [d.delta_type.value for d in result.semantic_deltas]
+        )
 
 
 if __name__ == "__main__":

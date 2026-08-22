@@ -2,11 +2,6 @@ name: SWOS Prose Benchmark
 
 on:
   pull_request:
-    paths:
-      - "benchmark/**"
-      - "swos_prose/**"
-      - "tests/prose/**"
-      - ".github/workflows/swos-prose-benchmark.yml"
   workflow_dispatch:
 
 jobs:

@@ -7,10 +7,8 @@ from swos_prose.models import VerificationStatus
 from swos_prose.pipeline import verify_rewrite
 from swos_prose.providers.openai_responses import OpenAIResponsesSemanticVerifierProvider
 
-
-RUN_LIVE = (
-    os.environ.get("SWOS_PROSE_RUN_LIVE_OPENAI") == "1"
-    and bool(os.environ.get("OPENAI_API_KEY"))
+RUN_LIVE = os.environ.get("SWOS_PROSE_RUN_LIVE_OPENAI") == "1" and bool(
+    os.environ.get("OPENAI_API_KEY")
 )
 
 

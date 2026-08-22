@@ -20,3 +20,30 @@ swos-prose = "swos_prose.cli:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["swos_prose*"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = [".git", ".venv", "build", "dist"]
+
+[tool.ruff.lint]
+# Keep the first repository-wide lint gate deliberately small and actionable:
+# syntax/pyflakes errors plus import ordering. More opinionated rules can be
+# proposed later once they have an explicit remediation plan.
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+# These benchmark entry points add the repository root to sys.path before
+# importing the package under test when invoked directly as scripts.
+"benchmark/*.py" = ["E402"]
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.coverage.run]
+branch = true
+source = ["swos_prose"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true

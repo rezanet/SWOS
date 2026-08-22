@@ -1,4 +1,5 @@
 """Core data models for the SWOS Prose semantic-delta engine."""
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field

@@ -1,0 +1,69 @@
+name: SWOS Engineering Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Engineering quality baseline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install locked developer environment
+        run: python -m pip install --requirement requirements-dev.lock
+      - name: Install SWOS without dependency re-resolution
+        run: python -m pip install --no-deps --no-build-isolation --editable .
+      - name: Check Ruff formatting
+        run: python -m ruff format --check swos_prose benchmark tools evals tests
+      - name: Run Ruff lint gate
+        run: python -m ruff check swos_prose benchmark tools evals tests
+      - name: Run deterministic Prose tests with coverage
+        run: |
+          python -m coverage erase
+          python -m coverage run --branch --source=swos_prose \
+            -m unittest discover -s tests/prose -p 'test_*.py'
+          python -m coverage json -o coverage.json
+          python -m coverage report --fail-under=80
+          python tools/check_coverage.py --coverage-json coverage.json
+      - name: Upload coverage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swos-engineering-coverage
+          path: coverage.json
+          retention-days: 14
+
+  dependency-audit:
+    name: Dependency/SCA audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Audit the committed dependency lock
+        run: |
+          python -m pip install --requirement requirements-dev.lock
+          python -m pip_audit --requirement requirements-dev.lock --strict
+
+  sast:
+    name: Python SAST (Bandit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install locked analysis tools
+        run: python -m pip install --requirement requirements-dev.lock
+      - name: Scan executable Python for high-confidence security issues
+        run: python -m bandit -r swos_prose benchmark tools evals -lll -ii
