@@ -65,6 +65,18 @@ Bandit is the local Python SAST gate. CodeQL runs as the hosted repository SAST
 workflow. A high-confidence/high-severity finding blocks the relevant check;
 warnings are recorded rather than silently suppressed.
 
+## Governed merge checklist
+
+Every authored commit must be created with `git commit -s` and inspected for a
+standalone `Signed-off-by:` trailer before pushing. When a hosted squash merge
+is used, the merge message must contain a real line break before that trailer;
+an escaped `\n` sequence is text, not a DCO trailer. Verify the post-merge DCO
+job on the exact `main` SHA before treating the milestone as complete. If a
+hosted merge produces an unsigned commit, preserve the history and record it as
+a historical DCO deviation. A signed governed follow-up makes the new commit
+range pass but does not retroactively remediate the unsigned commit; do not
+rewrite `main` without explicit authority.
+
 ## Live evidence
 
 Live verifier, dogfood and benchmark jobs use `OPENAI_API_KEY` only when the
