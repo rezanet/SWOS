@@ -22,9 +22,11 @@ quality measurements, not claims about completion of the larger SWOS roadmap.
 PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/rezanet/SWOS/pull/37)
 
 - exact base: `ff0b4d52048b6e07b23fb1a33c064b47ee174b95`
-- current branch head: `fa8612dd2ddfacb9156c644489fe1db124db0311`
+- current branch head: `fea3ba7d9f3b2258e9df09c658aaf8d01a0e47d6`
 - commits: `ff2605bf69eae7e857c32016cadcf2d50f4b290a` (Ruff formatting baseline),
-  `fa8612dd2ddfacb9156c644489fe1db124db0311` (quality substrate)
+  `fa8612dd2ddfacb9156c644489fe1db124db0311` (quality substrate),
+  `3ba1e92268dc23f0f3f308caa19f9c591720d122` (progress ledger),
+  `fea3ba7d9f3b2258e9df09c658aaf8d01a0e47d6` (quiet coverage-policy tests)
 - no v1.1 reranker/reference-runtime work is included or started
 
 ### Local evidence
@@ -44,13 +46,24 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
 - a clean editable-install replay passed locally on Python 3.14; hosted CI is the
   authoritative Python 3.11 replay.
 
-### Hosted evidence pending at this ledger revision
+### Exact-head hosted evidence
 
-- PR #37 exact-head SWOS CI, Engineering Quality, CodeQL and benchmark runs are
-  required before merge.
-- the `Protect main` ruleset currently enforces deletion protection, non-fast-forward
-  protection, linear history and review-thread resolution; required status checks
-  still need to be verified/updated against the new exact job contexts.
+- SWOS CI #154 / run `32565204213`, SWOS Prose Benchmark #30 / run
+  `32565204228`, SWOS Engineering Quality #3 / run `32565204235`, and SWOS
+  CodeQL #3 / run `32565204175` all completed green for the exact head.
+- The hosted Python 3.11 quality job measured 85.46% package coverage and passed
+  every configured critical-module floor.
+- The active `Protect main` ruleset is active and now requires the 18 deterministic
+  status contexts, linear history and review-thread resolution. The stochastic
+  live OpenAI job is intentionally absent from that required list.
+- The live workflow completed as a non-gating success; its verifier substep had
+  two expected-outcome failures (one `REJECT`, one `REVIEW`) and its five-case
+  no-diagnostics dogfood reported 2 `NO_CHANGE_RECOMMENDED` and 3 `PASS`.
+
+### Merge gate
+
+PR #37 is ready for independent adversarial review at the exact head. Merge and
+post-merge main CI remain outstanding; no v1.1 work may begin after this gate.
 
 Live Luna/OpenAI verifier, dogfood and benchmark results remain stochastic
 evidence and are not substitutes for deterministic merge gates.
