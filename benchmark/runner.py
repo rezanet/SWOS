@@ -393,7 +393,12 @@ def _combined_result_cost(result: Any) -> float | None:
     """Sum configured costs for every provider call represented by a result."""
 
     costs: list[float | None] = []
-    if not result.generation_skipped_by_diagnostics:
+    rewrite_calls = getattr(
+        result,
+        "rewrite_call_count",
+        int(not result.generation_skipped_by_diagnostics),
+    )
+    if rewrite_calls:
         costs.append(result.rewrite_cost_estimate)
     for attempt in result.repair_attempts:
         if getattr(attempt, "provider_called", True):
@@ -416,7 +421,11 @@ def _combined_result_cost(result: Any) -> float | None:
 
 
 def _result_provider_calls(result: Any) -> dict[str, int]:
-    rewrite = 0 if result.generation_skipped_by_diagnostics else 1
+    rewrite = getattr(
+        result,
+        "rewrite_call_count",
+        int(not result.generation_skipped_by_diagnostics),
+    )
     repair = sum(
         1 for attempt in result.repair_attempts if getattr(attempt, "provider_called", True)
     )
@@ -461,6 +470,35 @@ def _mode_preset_performance(records: list[dict[str, Any]]) -> dict[str, dict[st
             "average_latency_ms": round(sum(latencies) / len(latencies), 3) if latencies else None,
         }
     return result
+
+
+def _repair_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
+    attempt_counts = Counter(record["repair_attempt_count"] for record in records)
+    outcomes = Counter(
+        (
+            "success"
+            if record["repair_success"]
+            else "failed"
+            if record["repair_attempt_count"]
+            else "not_attempted"
+        )
+        for record in records
+    )
+    attempted = [record for record in records if record["repair_attempt_count"]]
+    successes = sum(1 for record in attempted if record["repair_success"])
+    return {
+        "cases_attempted": len(attempted),
+        "cases_with_provider_call": sum(
+            1 for record in records if record["provider_calls"]["repair"]
+        ),
+        "total_attempts": sum(record["repair_attempt_count"] for record in records),
+        "successes": successes,
+        "success_rate": successes / len(attempted) if attempted else 0.0,
+        "fallback_count": sum(1 for record in records if record["used_source_fallback"]),
+        "attempt_count_distribution": dict(sorted((str(k), v) for k, v in attempt_counts.items())),
+        "outcome_counts": dict(sorted(outcomes.items())),
+        "note": "Repair records include every bounded attempt, outcome, fallback, and provider-call count.",
+    }
 
 
 def run_efficiency(
@@ -530,6 +568,13 @@ def run_efficiency(
                 "diagnostics_signals": list(diagnostics.signals),
                 "baseline_status": result.verification_status,
                 "baseline_safe_for_automatic_use": result.safe_for_automatic_use,
+                "verification_status": result.verification_status,
+                "used_source_fallback": result.used_source_fallback,
+                "final_text_equals_source": result.final_text == fixture["source"],
+                "repair_attempts": [attempt.to_dict() for attempt in result.repair_attempts],
+                "repair_attempt_count": len(result.repair_attempts),
+                "repair_success": result.repair_success,
+                "repair_failure_reason": result.repair_failure_reason,
                 "baseline_token_usage": usage,
                 "baseline_cost_estimate": cost,
                 "mode": fixture["mode"],
@@ -590,6 +635,7 @@ def run_efficiency(
         ),
         "cost": _cost_method(),
         "mode_preset_performance": _mode_preset_performance(records),
+        "repair": _repair_summary(records),
         "latency_ms_total": round(sum(latencies), 3),
         "average_latency_ms": round(sum(latencies) / len(latencies), 3) if latencies else 0.0,
         "abstention_count": sum(1 for item in records if item["diagnostics_would_skip"]),

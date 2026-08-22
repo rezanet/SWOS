@@ -108,6 +108,7 @@ def context_only_deltas(
     if not candidate or source == candidate:
         return []
     source_sentences = {normalised for _, normalised in _sentences(source)}
+    candidate_sentences = {normalised for _, normalised in _sentences(candidate)}
     deltas: list[SemanticDelta] = []
     for label, value in (("before", context_before), ("after", context_after)):
         if not value:
@@ -115,7 +116,7 @@ def context_only_deltas(
         for surface, normalised in _sentences(value):
             if normalised in source_sentences:
                 continue
-            if normalised in _normalise_sentence(candidate):
+            if normalised in candidate_sentences:
                 deltas.append(
                     SemanticDelta(
                         delta_type=DeltaType.CONTEXT_ONLY_CLAIM,

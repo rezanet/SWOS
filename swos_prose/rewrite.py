@@ -69,6 +69,7 @@ class PolishResult:
     repair_success: bool = False
     repair_failure_reason: str | None = None
     notes: list[str] = field(default_factory=list)
+    rewrite_call_count: int = 0
     rewrite_token_usage: dict[str, int] | None = None
     rewrite_cost_estimate: float | None = None
     verifier_call_count: int = 0
@@ -125,6 +126,7 @@ class PolishResult:
             "repair_success": self.repair_success,
             "repair_failure_reason": self.repair_failure_reason,
             "notes": self.notes,
+            "rewrite_call_count": self.rewrite_call_count,
             "rewrite_token_usage": self.rewrite_token_usage,
             "rewrite_cost_estimate": self.rewrite_cost_estimate,
             "verifier_call_count": self.verifier_call_count,
@@ -234,6 +236,7 @@ def edit_text(
         )
 
     protected_anchors = [a.to_dict() for a in extract_anchors(source) if a.protected]
+    rewrite_call_count = 1
     try:
         proposal = rewrite_provider.rewrite(
             source=source,
@@ -255,6 +258,7 @@ def edit_text(
             preset=preset,
             context_safety=context_info.to_dict(),
             diagnostics_before=diagnostics_before,
+            rewrite_call_count=rewrite_call_count,
             notes=[f"Rewrite provider failed; source preserved: {exc}"],
         )
     if not isinstance(proposal, RewriteCandidate):
@@ -269,6 +273,7 @@ def edit_text(
             preset=preset,
             context_safety=context_info.to_dict(),
             diagnostics_before=diagnostics_before,
+            rewrite_call_count=rewrite_call_count,
             notes=["Rewrite provider returned a malformed result object; source preserved."],
         )
     candidate = proposal.candidate_text
@@ -284,6 +289,7 @@ def edit_text(
             preset=preset,
             context_safety=context_info.to_dict(),
             diagnostics_before=diagnostics_before,
+            rewrite_call_count=rewrite_call_count,
             notes=["Rewrite provider returned a non-string candidate; source preserved."],
         )
 
@@ -329,6 +335,7 @@ def edit_text(
         repair_success=execution.success,
         repair_failure_reason=execution.failure_reason,
         notes=[*proposal.notes, *repair_provider_notes, decision_note],
+        rewrite_call_count=rewrite_call_count,
         rewrite_token_usage=proposal.token_usage,
         rewrite_cost_estimate=proposal.cost_estimate,
         verifier_call_count=execution.verifier_call_count,

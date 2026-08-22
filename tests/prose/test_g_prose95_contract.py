@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from benchmark.runner import _combined_result_cost
+from swos_prose.context import context_only_deltas
 from swos_prose.cost import estimate_cost
 from swos_prose.diagnostics import diagnose_polish
 from swos_prose.models import VerificationStatus
@@ -153,10 +154,20 @@ class GProse95ModeAndPresetTests(unittest.TestCase):
 
         self.assertEqual(result.mode, "polish")
         self.assertIsNone(result.preset)
+        self.assertEqual(result.rewrite_call_count, 1)
         self.assertEqual(result.to_dict()["mode"], "polish")
 
 
 class GProse95ContextSafetyTests(unittest.TestCase):
+    def test_context_sentence_must_match_a_candidate_sentence_boundary(self):
+        deltas = context_only_deltas(
+            "The subsystem is fully compliant.",
+            "The subsystem remains fully compliant.",
+            context_after="System remains fully compliant.",
+        )
+
+        self.assertEqual(deltas, [])
+
     def test_context_is_untrusted_and_cannot_license_a_context_only_sentence(self):
         source = "The study reports a modest association."
         context_after = "The treatment cured insomnia."
@@ -309,6 +320,18 @@ class GProse95CostEvidenceTests(unittest.TestCase):
             verification=SimpleNamespace(verifier_used=True, cost_estimate=0.03),
         )
         self.assertEqual(_combined_result_cost(result), 0.06)
+
+    def test_invalid_context_returns_without_a_rewrite_call(self):
+        result = edit_text(
+            source="Source prose.",
+            rewrite_provider=StaticRewriteProvider("Changed prose."),
+            verifier_provider=None,
+            context_after="x" * 12001,
+            run_diagnostics=False,
+        )
+
+        self.assertEqual(result.rewrite_call_count, 0)
+        self.assertTrue(result.used_source_fallback)
 
 
 if __name__ == "__main__":

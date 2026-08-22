@@ -10,6 +10,7 @@ from benchmark.runner import (
     BENCHMARK_VERSION,
     _base_report,
     _combined_result_usage,
+    _repair_summary,
     load_corpus,
     validate_corpus,
 )
@@ -94,6 +95,36 @@ class ProseBenchmarkContractTests(unittest.TestCase):
             _combined_result_usage(result),
             {"input_tokens": 170, "output_tokens": 35, "total_tokens": 205},
         )
+
+    def test_repair_summary_preserves_outcomes_and_fallbacks(self):
+        records = [
+            {
+                "repair_attempt_count": 0,
+                "repair_success": False,
+                "used_source_fallback": True,
+                "provider_calls": {"repair": 0},
+            },
+            {
+                "repair_attempt_count": 1,
+                "repair_success": True,
+                "used_source_fallback": False,
+                "provider_calls": {"repair": 1},
+            },
+            {
+                "repair_attempt_count": 2,
+                "repair_success": False,
+                "used_source_fallback": True,
+                "provider_calls": {"repair": 2},
+            },
+        ]
+
+        summary = _repair_summary(records)
+        self.assertEqual(summary["cases_attempted"], 2)
+        self.assertEqual(summary["cases_with_provider_call"], 2)
+        self.assertEqual(summary["total_attempts"], 3)
+        self.assertEqual(summary["successes"], 1)
+        self.assertEqual(summary["fallback_count"], 2)
+        self.assertEqual(summary["attempt_count_distribution"], {"0": 1, "1": 1, "2": 1})
 
 
 if __name__ == "__main__":
