@@ -14,14 +14,17 @@ _INSTRUCTION_LIKE_RE = re.compile(
     re.IGNORECASE,
 )
 _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
-_SENTENCE_TERMINATORS = frozenset(".!?。！？｡")
-_NO_SPACE_SENTENCE_TERMINATORS = frozenset("。！？｡")
+_SENTENCE_TERMINATORS = frozenset(".!?。！？｡؟।॥‼⁇⁈⁉⸮")
+_NO_SPACE_SENTENCE_TERMINATORS = frozenset("。！？｡؟।॥‼⁇⁈⁉⸮")
 _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
 _INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
 _INITIALISM_AT_FRAGMENT_END_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}$")
 _CONTEXT_WRAPPER_RE = re.compile(r"^[\"'([{“‘]+|[\"')]}”’]+$")
-_CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?。！？｡]+$")
-_CONTEXT_IGNORED_SYMBOLS = frozenset(".!?。！？｡")
+_CONTEXT_PRESENTATION_PREFIX_RE = re.compile(
+    r"^(?:(?:>{1,3}\s*)|(?:#{1,6}\s+)|(?:[-+*•◦▪‣]\s+)|(?:\d{1,9}[.)]\s+))+"
+)
+_CONTEXT_TERMINAL_PUNCTUATION_RE = re.compile(r"[.!?。！？｡؟।॥‼⁇⁈⁉⸮]+$")
+_CONTEXT_IGNORED_SYMBOLS = frozenset(".!?。！？｡؟।॥‼⁇⁈⁉⸮")
 _TECHNICAL_SENTENCE_START_WORDS = frozenset(
     {
         "api",
@@ -120,9 +123,10 @@ def _normalise_sentence(value: str) -> str:
     surface = value.strip()
     while True:
         unwrapped = _CONTEXT_WRAPPER_RE.sub("", surface)
-        if unwrapped == surface:
+        unpresented = _CONTEXT_PRESENTATION_PREFIX_RE.sub("", unwrapped).strip()
+        if unpresented == surface:
             break
-        surface = unwrapped.strip()
+        surface = unpresented
     terminal = _terminal_punctuation(surface)
     if terminal:
         surface = surface.rstrip()[: -len(terminal)].rstrip()
@@ -131,19 +135,25 @@ def _normalise_sentence(value: str) -> str:
 
 
 def _terminal_punctuation(value: str) -> str:
+    match = _terminal_punctuation_match(value)
+    return match.group(0) if match is not None else ""
+
+
+def _terminal_punctuation_match(value: str) -> re.Match[str] | None:
     surface = value.rstrip()
     while surface and surface[-1] in _CLOSING_SENTENCE_DELIMITERS:
         surface = surface[:-1].rstrip()
-    match = _CONTEXT_TERMINAL_PUNCTUATION_RE.search(surface)
-    return match.group(0) if match is not None else ""
+    return _CONTEXT_TERMINAL_PUNCTUATION_RE.search(surface)
 
 
 def _content_tokens(value: str) -> tuple[str, ...]:
     """Return ordered words, initialisms, and meaning-bearing punctuation."""
 
-    folded = value
+    folded = _CONTEXT_PRESENTATION_PREFIX_RE.sub("", value.strip())
     tokens: list[str] = []
     index = 0
+    terminal_match = _terminal_punctuation_match(value)
+    terminal_start = terminal_match.start() if terminal_match is not None else None
     while index < len(folded):
         initialism = _INITIALISM_RE.match(folded, index)
         if initialism is not None:
@@ -156,7 +166,11 @@ def _content_tokens(value: str) -> tuple[str, ...]:
             index = word.end()
             continue
         character = folded[index]
-        if not character.isspace() and character not in _CONTEXT_IGNORED_SYMBOLS:
+        if not character.isspace() and (
+            character not in _CONTEXT_IGNORED_SYMBOLS
+            or terminal_start is None
+            or index < terminal_start
+        ):
             tokens.append(character)
         index += 1
     return tuple(tokens)

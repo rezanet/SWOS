@@ -192,6 +192,7 @@ class GProse95ContextSafetyTests(unittest.TestCase):
             ("The value is < 3.", "The value is > 3."),
             ("Use foo::bar.", "Use foo/bar."),
             ("The result is (a+b)*c.", "The result is a+(b*c)."),
+            ("The coordinates are 1.2.", "The coordinates are 1 2."),
         )
 
         for source, context_sentence in cases:
@@ -209,6 +210,18 @@ class GProse95ContextSafetyTests(unittest.TestCase):
             "No more than five items are required.",
             "No, more than five items are required.",
             context_after="No, more than five items are required.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
+    def test_context_sentence_matching_ignores_presentation_prefixes(self):
+        source = "The study continued."
+        context_sentence = "- Access denied."
+
+        deltas = context_only_deltas(
+            source,
+            f"{source} Access denied.",
+            context_after=context_sentence,
         )
 
         self.assertEqual(len(deltas), 1)
