@@ -17,6 +17,7 @@ _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 _SENTENCE_TERMINATORS = frozenset(".!?")
 _CLOSING_SENTENCE_DELIMITERS = frozenset("\"')]}”’")
 _INITIALISM_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}")
+_INITIALISM_AT_FRAGMENT_END_RE = re.compile(r"(?:\b[A-Za-z]\.){2,}$")
 _INITIALISM_PREAMBLE_RE = re.compile(
     r"\b(?:in|on|at|from|to)\s+(?:a|an|the)\s+(?=(?:[A-Za-z]\.){2,})",
     re.IGNORECASE,
@@ -212,7 +213,7 @@ def _sentences(value: str) -> list[tuple[str, str]]:
         following = value[end:].lstrip()
         if (
             character == "."
-            and _INITIALISM_RE.search(fragment)
+            and _INITIALISM_AT_FRAGMENT_END_RE.search(fragment)
             and following
             and following[0].islower()
             and not _looks_like_technical_sentence_start(following)

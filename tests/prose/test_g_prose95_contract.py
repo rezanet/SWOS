@@ -251,6 +251,15 @@ class GProse95ContextSafetyTests(unittest.TestCase):
 
         self.assertEqual(len(deltas), 1)
 
+    def test_initialism_does_not_hide_a_later_lowercase_sentence(self):
+        deltas = context_only_deltas(
+            "The study continued.",
+            "The study continued. access denied.",
+            context_after="The U.S. approved it. access denied.",
+        )
+
+        self.assertEqual(len(deltas), 1)
+
     def test_context_sentence_matching_splits_after_sentence_final_abbreviation(self):
         deltas = context_only_deltas(
             "The study was reviewed.",
