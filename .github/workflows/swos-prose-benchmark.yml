@@ -20,16 +20,21 @@ jobs:
           python-version: "3.11"
       - name: Install benchmark schema validator
         run: python3 -m pip install jsonschema
-      - name: Validate 50-case corpus and diagnostics contract
+      - name: Validate 56-case corpus and diagnostics contract
         run: |
           python3 benchmark/runner.py \
             --mode validate \
-            --expect-count 50 \
+            --expect-count 56 \
             --output /tmp/swos-prose-benchmark-validate.json
           cat /tmp/swos-prose-benchmark-validate.json
+      - name: Validate bounded M1 repair contract
+        run: |
+          python3 benchmark/repair_contract.py \
+            --output /tmp/swos-prose-repair-contract.json
+          cat /tmp/swos-prose-repair-contract.json
 
   benchmark-live:
-    name: Prose benchmark live baseline (non-gating)
+    name: Prose benchmark live M1 evidence (non-gating)
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
@@ -48,7 +53,7 @@ jobs:
       - name: Install OpenAI SDK
         if: env.OPENAI_API_KEY != ''
         run: python3 -m pip install openai jsonschema
-      - name: Run full 50-case live baseline
+      - name: Run full 56-case live M1 benchmark
         id: live-benchmark
         if: env.OPENAI_API_KEY != ''
         continue-on-error: true
@@ -57,28 +62,28 @@ jobs:
           mkdir -p /tmp/swos-prose-benchmark
           python3 benchmark/runner.py \
             --mode all \
-            --expect-count 50 \
+            --expect-count 56 \
             --stability-runs 5 \
             --rewriter-model gpt-5.6-luna \
             --verifier-model gpt-5.6-luna \
             --fail-on-unsafe \
-            --output /tmp/swos-prose-benchmark/baseline.json
+            --output /tmp/swos-prose-benchmark/m1.json
       - name: Publish benchmark summary
         if: env.OPENAI_API_KEY != '' && always()
         run: |
           {
-            echo "## SWOS Prose v0.2 benchmark"
+            echo "## SWOS Prose M1 benchmark"
             echo
             echo "Live benchmark step outcome: ${{ steps.live-benchmark.outcome }}"
             echo
-            if [[ -f /tmp/swos-prose-benchmark/baseline.json ]]; then
-              python3 -c 'import json; r=json.load(open("/tmp/swos-prose-benchmark/baseline.json")); print("Corpus:", r["corpus"]["fixture_count"]); print("Unsafe diagnostic abstentions:", len(r["diagnostics_contract"]["unsafe_abstentions"])); print("Unsafe semantic PASSes:", r["semantic_safety"]["unsafe_pass_count"]); print("Diagnostics abstentions:", r["token_efficiency"]["abstention_count"]); print("Observed/counterfactual token savings %:", r["token_efficiency"]["total_token_savings_percent"]); print("Stability draws per probe:", r["stability"]["runs_per_probe"])'
+            if [[ -f /tmp/swos-prose-benchmark/m1.json ]]; then
+              python3 -c 'import json; r=json.load(open("/tmp/swos-prose-benchmark/m1.json")); print("Corpus:", r["corpus"]["fixture_count"]); print("Unsafe diagnostic abstentions:", len(r["diagnostics_contract"]["unsafe_abstentions"])); print("Unsafe semantic PASSes:", r["semantic_safety"]["unsafe_pass_count"]); print("Diagnostics abstentions:", r["token_efficiency"]["abstention_count"]); print("Observed/counterfactual token savings %:", r["token_efficiency"]["total_token_savings_percent"]); print("Stability draws per probe:", r["stability"]["runs_per_probe"])'
             fi
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Upload live benchmark evidence
         if: env.OPENAI_API_KEY != '' && always()
         uses: actions/upload-artifact@v4
         with:
-          name: swos-prose-v0.2-benchmark
+          name: swos-prose-m1-benchmark
           path: /tmp/swos-prose-benchmark
           retention-days: 14

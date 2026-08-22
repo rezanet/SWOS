@@ -23,11 +23,15 @@ pre-generation diagnostics, one rewrite proposal when needed, deterministic
 semantic-delta checks, and independent semantic verification. `REVIEW`, `REJECT`
 or provider failure never silently releases the candidate.
 
-The frozen governed v0.2 benchmark contains 50 cases. On that benchmark SWOS Prose
-recorded **0 unsafe semantic PASS outcomes**, **0 unsafe diagnostic abstentions**,
-and **3.04% token savings** from its intentionally tiny exact-exemplar diagnostics
-fast path. Equivalent-pair verifier wobble remains visible and is tracked
-separately rather than being disguised as a safety success.
+The active governed benchmark contains 56 cases and is identified as benchmark
+`0.3.0-m1`. The frozen v0.2 release evidence
+remains preserved at [`benchmark/artifacts/raw-evidence-v0.2/`](benchmark/artifacts/raw-evidence-v0.2/)
+and its compact claim surface is [`benchmark/baseline.json`](benchmark/baseline.json);
+that historical evidence covers 50 cases and is not the active runner input. On the
+frozen benchmark SWOS Prose recorded **0 unsafe semantic PASS outcomes**, **0 unsafe
+diagnostic abstentions**, and **3.04% token savings** from its intentionally tiny
+exact-exemplar diagnostics fast path. Equivalent-pair verifier wobble remains visible
+and is tracked separately rather than being disguised as a safety success.
 
 - Portable skill: [`skills/swos-prose/SKILL.md`](skills/swos-prose/SKILL.md)
 - Frozen baseline: [`benchmark/baseline.json`](benchmark/baseline.json)
@@ -205,7 +209,7 @@ Full component and interface model: [`docs/architecture/`](docs/architecture/).
 make validate          # every artefact against the frozen schemas
 make lint-skills       # six-field Agent Skills frontmatter constraint
 make eval              # all eight evaluation planes
-make benchmark-prose   # deterministic governed 50-case prose benchmark contract
+make benchmark-prose   # deterministic active 56-case prose benchmark contract
 ls examples/worked-example/   # a complete output bundle with audit pack
 ```
 

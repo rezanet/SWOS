@@ -129,7 +129,7 @@ class CausalScopeTests(unittest.TestCase):
         self.assertNotIn("causal_strength_changed", delta_types)
         self.assertNotIn("malformed_provider_response", delta_types)
 
-    def test_affirmative_association_to_causation_remains_hard_blocked(self):
+    def test_simple_affirmative_association_to_causation_routes_to_repair(self):
         source = "Exposure was associated with higher fatigue."
         candidate = "Exposure caused higher fatigue."
         verifier = StaticSemanticVerifierProvider(_equivalent_payload(source, candidate))
@@ -141,7 +141,8 @@ class CausalScopeTests(unittest.TestCase):
             verifier_provider=verifier,
         )
 
-        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertEqual(result.status, VerificationStatus.REPAIR)
+        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:causal_strength_changed")
         self.assertEqual(verifier.calls, 0)
         self.assertIn(
             "causal_strength_changed",

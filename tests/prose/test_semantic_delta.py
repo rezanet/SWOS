@@ -136,20 +136,22 @@ class SemanticDeltaTests(unittest.TestCase):
         self.assertEqual(result.status, VerificationStatus.REJECT)
         self.assertIn("citation_removed", [d.delta_type.value for d in result.semantic_deltas])
 
-    def test_negation_flip_is_rejected(self):
+    def test_simple_negation_flip_routes_to_repair(self):
         result = verify_rewrite(
             source="The study did not demonstrate a benefit.",
             candidate="The study demonstrated a benefit.",
         )
-        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertEqual(result.status, VerificationStatus.REPAIR)
+        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:negation_changed")
         self.assertIn("negation_changed", [d.delta_type.value for d in result.semantic_deltas])
 
-    def test_weak_modal_removal_is_rejected(self):
+    def test_weak_modal_removal_routes_to_repair(self):
         result = verify_rewrite(
             source="The treatment may improve retention.",
             candidate="The treatment improves retention.",
         )
-        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertEqual(result.status, VerificationStatus.REPAIR)
+        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:modality_strengthened")
         self.assertIn("modality_strengthened", [d.delta_type.value for d in result.semantic_deltas])
 
     def test_suggestive_to_demonstrative_is_rejected(self):
@@ -159,12 +161,13 @@ class SemanticDeltaTests(unittest.TestCase):
         )
         self.assertEqual(result.status, VerificationStatus.REJECT)
 
-    def test_association_to_causation_is_rejected(self):
+    def test_simple_association_to_causation_routes_to_repair(self):
         result = verify_rewrite(
             source="Exposure was associated with higher fatigue.",
             candidate="Exposure caused higher fatigue.",
         )
-        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertEqual(result.status, VerificationStatus.REPAIR)
+        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:causal_strength_changed")
         self.assertIn("causal_strength_changed", [d.delta_type.value for d in result.semantic_deltas])
 
     def test_anaphoric_all_routes_to_verifier_and_can_pass(self):
@@ -232,12 +235,13 @@ class SemanticDeltaTests(unittest.TestCase):
             "deterministic_blocker:quantifier_changed",
         )
 
-    def test_quantifier_strengthening_is_rejected(self):
+    def test_quantifier_strengthening_routes_to_repair(self):
         result = verify_rewrite(
             source="Some participants reported fatigue.",
             candidate="Most participants reported fatigue.",
         )
-        self.assertEqual(result.status, VerificationStatus.REJECT)
+        self.assertEqual(result.status, VerificationStatus.REPAIR)
+        self.assertEqual(result.verifier_skip_reason, "deterministic_repairable:quantifier_changed")
         self.assertIn("quantifier_changed", [d.delta_type.value for d in result.semantic_deltas])
 
     def test_scope_removal_never_auto_passes(self):

@@ -1,0 +1,13 @@
+{
+  "fixture_id": "repair-004",
+  "category": "repair-local-negation",
+  "benchmark_group": "repair",
+  "mode": "polish",
+  "assurance": "strict",
+  "source": "The intervention did not change the measured outcome.",
+  "semantic_probe_candidate": "The intervention changed the measured outcome.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "M1 positive repair fixture: local polarity drift must be restored and PASS re-verification."
+}
