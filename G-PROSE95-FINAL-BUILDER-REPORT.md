@@ -21,12 +21,13 @@ This is an empirical milestone result, not a universal or 100% guarantee. Safety
 | Exact base/start commit | 2004efd5ac444e5eb639ac77e7eebcbabb6573a6 |
 | Main implementation commit | f77aad639bbf4b182937c436e7944ca836136967 |
 | CI benchmark-workflow correction | a9a62be123397c73d19739ce4b52af7d81c7348c |
-| Final adversarial-fix/evidence head | 567d5c7d9f60d22521d8a5b0d29422ee9d7393bd |
+| First adversarial-fix head | 567d5c7d9f60d22521d8a5b0d29422ee9d7393bd |
+| Final quoted-boundary fix/evidence head | c2fbcbcdef289de3f69c992af1081bfab9546b0e |
 | Pull request | https://github.com/rezanet/SWOS/pull/40 |
 | Merge state | Open; not merged by this goal |
 | Release/tag state | No tag or release created |
 
-All three G-Prose95 implementation commits are DCO-signed with git commit -s. The final report is a docs-only commit after the evidence head; its exact branch SHA is reported in the final handoff because a Git commit cannot contain its own object ID.
+All four G-Prose95 implementation commits are DCO-signed with git commit -s. The final report is a docs-only commit after the evidence head; its exact branch SHA is reported in the final handoff because a Git commit cannot contain its own object ID.
 
 ## 3. Delivered engine surface
 
@@ -99,12 +100,12 @@ The frozen v0.2 evidence was not rewritten. benchmark/FROZEN_AT remains the v0.2
 
 Final hosted campaign:
 
-- workflow run: 32570178134;
-- exact head: 567d5c7d9f60d22521d8a5b0d29422ee9d7393bd;
-- contract job: 97024439568 — success;
-- live benchmark job: 97024439498 — success;
-- evidence artifact: swos-prose-g-prose95-benchmark, artifact ID 9475303328;
-- generated report timestamp: 2026-08-22T11:24:21Z;
+- workflow run: 32571873495;
+- exact head: c2fbcbcdef289de3f69c992af1081bfab9546b0e;
+- contract job: 97028340373 — success;
+- live benchmark job: 97028340267 — success;
+- evidence artifact: swos-prose-g-prose95-benchmark, artifact ID 9475729754;
+- generated report timestamp: 2026-08-22T12:01:54Z;
 - benchmark version: 0.4.0-g-prose95.
 
 Final semantic-safety result:
@@ -112,11 +113,11 @@ Final semantic-safety result:
 | Measure | Result |
 |---|---:|
 | Unsafe semantic PASSes | 0 |
-| Equivalent fixture statuses | PASS 31, REJECT 7 |
+| Equivalent fixture statuses | PASS 29, REJECT 5, REVIEW 4 |
 | Material-change fixture statuses | REJECT 25, REPAIR 13 |
 | Verifier calls | 44 |
-| Total semantic-safety latency | 291,743.969 ms |
-| Average semantic-safety latency | 3,838.736 ms |
+| Total semantic-safety latency | 314,502.130 ms |
+| Average semantic-safety latency | 4,138.186 ms |
 
 REPAIR is retained as a governed final disposition for material-change probes; it is not counted as an unsafe PASS. The safety gate passed.
 
@@ -125,23 +126,23 @@ Final diagnostics and efficiency result:
 - unsafe diagnostic abstentions: 0;
 - expectation mismatches: 0;
 - reviewed abstentions: 3;
-- baseline tokens without diagnostics: 122,617;
-- counterfactual tokens with exact diagnostics skips: 116,726;
-- observed/counterfactual tokens saved: 5,891 (4.80439090827536%);
-- baseline provider calls: 94 (rewrite 76, verifier 18, repair 0);
-- counterfactual provider calls: 90, with 4 calls saved by diagnostics;
-- efficiency latency: 245,268.181 ms total, 3,227.213 ms average;
+- baseline tokens without diagnostics: 118,840;
+- counterfactual tokens with exact diagnostics skips: 116,169;
+- observed/counterfactual tokens saved: 2,671 (2.24755974419387%);
+- baseline provider calls: 93 (rewrite 76, verifier 17, repair 0);
+- counterfactual provider calls: 90, with 3 calls saved by diagnostics;
+- efficiency latency: 227,136.001 ms total, 2,988.632 ms average;
 - unsafe abstentions in efficiency evidence: 0.
 
-The final efficiency record retained the complete repair distribution: 76 records, zero repair attempts, zero repair provider calls, two source fallbacks, and an attempt-count distribution of {"0": 76}. This is an observed result for the diagnostics-disabled active corpus, not a claim that the repair path is untested; the deterministic M1 repair contract below exercises the bounded repair orchestration directly.
+The final efficiency record retained the complete repair distribution: 76 records, zero repair attempts, zero repair provider calls, three source fallbacks, and an attempt-count distribution of {"0": 76}. This is an observed result for the diagnostics-disabled active corpus, not a claim that the repair path is untested; the deterministic M1 repair contract below exercises the bounded repair orchestration directly.
 
 Final stability result:
 
 - 16 probes × 5 draws = 80 verifier draws;
 - unsafe stability PASSes: 0;
 - verifier calls: 80;
-- total stability latency: 518,398.488 ms;
-- average stability latency: 6,479.981 ms;
+- total stability latency: 523,096.786 ms;
+- average stability latency: 6,538.710 ms;
 - repeated-verifier overhead: 80 draws / 80 verifier calls.
 
 ## 7. Repair contract and adversarial regressions
@@ -164,11 +165,11 @@ The adversarial regression suite covers:
 
 ## 8. Local validation evidence
 
-All substantive local gates passed on the final evidence head 567d5c7:
+All substantive local gates passed on the final evidence head c2fbcbc:
 
 | Gate | Result |
 |---|---|
-| Prose unit/contract tests | 205 tests, 11 expected live skips, OK |
+| Prose unit/contract tests | 206 tests, 11 expected live skips, OK |
 | Schema validation | 30 artefacts, OK |
 | Agent Skills validation | 5 skills, OK |
 | Governance validation | 8 artefacts, six mechanised controls, OK |
@@ -177,7 +178,7 @@ All substantive local gates passed on the final evidence head 567d5c7:
 | Deterministic repair contract | 6/6 contract cases, no failures |
 | Scoped Ruff format check | All five changed review-fix files already formatted |
 | Ruff lint | All checks passed |
-| Coverage | 85.48% executable swos_prose scope; policy PASS |
+| Coverage | 85.58% executable swos_prose scope; policy PASS |
 | Critical repair floor | 82.14% (required 80%) |
 | Critical pipeline floor | 88.54% (required 85%) |
 | Critical causal floor | 98.78% (required 90%) |
@@ -190,25 +191,27 @@ The Windows checkout-wide Ruff format check reports 33 files as reformattable be
 
 ## 9. Hosted CI and review provenance
 
-The exact evidence head passed the hosted checks below:
+The exact corrected evidence head passed the hosted checks below:
 
 | Workflow run | Result and job evidence |
 |---|---|
-| SWOS CI 32569981255 | success; schema 97023976713, skills 97023976725, prose tests 97023976757, governance 97023976640, DCO 97023976706, OpenAI live evidence 97023976689, eight evaluation jobs 97023995859, 97023995871, 97023995875, 97023995884, 97023995886, 97023995892, 97023995925, 97023996019 |
-| SWOS Engineering Quality 32569981256 | success; quality baseline 97023976758, SCA 97023976721, Bandit 97023976641 |
-| SWOS CodeQL 32569981257 | success; CodeQL job 97023976486 |
-| PR benchmark contract 32569981258 | success; contract job 97023976626; live job intentionally skipped on pull requests |
-| Final manual G-Prose95 benchmark 32570178134 | success; contract 97024439568, live evidence 97024439498, artifact 9475303328 |
+| SWOS CI 32571536690 | success; schema 97027570138, skills 97027570108, prose tests 97027570115, governance 97027570075, DCO 97027570073, OpenAI live evidence 97027569996, eight evaluation jobs 97027588548, 97027588557, 97027588559, 97027588578, 97027588588, 97027588593, 97027588622, 97027588652 |
+| SWOS Engineering Quality 32571536664 | success; quality baseline 97027569960, SCA 97027569871, Bandit 97027569924 |
+| SWOS CodeQL 32571536776 | success; CodeQL job 97027570196 |
+| PR benchmark contract 32571536722 | success; contract job 97027569957; live job intentionally skipped on pull requests |
+| Final manual G-Prose95 benchmark 32571873495 | success; contract 97028340373, live evidence 97028340267, artifact 9475729754 |
 
-The exact-head OpenAI live-evidence job 97023976689 passed live verifier regressions (11 tests, OK) and a five-case strict dogfood batch (5 samples: NO_CHANGE_RECOMMENDED 4, PASS 1), with five JSON evidence files uploaded. The hosted live benchmark used gpt-5.6-luna for rewrite and verification.
+The exact-head OpenAI live-evidence job 97027569996 passed live verifier regressions (11 tests, OK) and a five-case strict dogfood batch (5 samples: NO_CHANGE_RECOMMENDED 4, PASS 1), with five JSON evidence files uploaded. The hosted live benchmark used gpt-5.6-luna for rewrite and verification.
 
 Codex adversarial review:
 
 - initial review on a9a62be raised three P2 findings;
 - all three were fixed in 567d5c7 with regression tests and benchmark provenance changes;
 - replies were posted as review comments 3835888724, 3835888768, and 3835888783;
-- fresh exact-head Codex review 5000014379 reviewed 567d5c7d9f60d22521d8a5b0d29422ee9d7393bd and returned no suggestions;
-- original review threads PRRT_kwDOT9f0pM6bYSyI, PRRT_kwDOT9f0pM6bYSyM, and PRRT_kwDOT9f0pM6bYSyP are resolved.
+- exact-head review 5000014379 reviewed 567d5c7d9f60d22521d8a5b0d29422ee9d7393bd without suggestions, but a later report-head review surfaced the quoted-boundary P2 3835894566 and the stale-report-claim P2 3835948521;
+- the quoted-boundary fix was committed as c2fbcbc, with replies 3835963601 and 3835963683;
+- fresh exact-code-head Codex review 5000124484 reviewed c2fbcbcdef289de3f69c992af1081bfab9546b0e and returned no suggestions;
+- review threads PRRT_kwDOT9f0pM6bYSyI, PRRT_kwDOT9f0pM6bYSyM, PRRT_kwDOT9f0pM6bYSyP, PRRT_kwDOT9f0pM6bYX3P, and PRRT_kwDOT9f0pM6bYgs1 are resolved.
 
 ## 10. Cost and performance accounting
 
@@ -216,9 +219,9 @@ Cost accounting is implemented and reported fail-closed. The final benchmark cor
 
 Observed performance on the final hosted campaign was:
 
-- semantic safety: 44 verifier calls, 291,743.969 ms total, 3,838.736 ms average;
-- diagnostics-disabled efficiency: 94 baseline calls, 245,268.181 ms total, 3,227.213 ms average;
-- stability: 80 verifier calls, 518,398.488 ms total, 6,479.981 ms average.
+- semantic safety: 44 verifier calls, 314,502.130 ms total, 4,138.186 ms average;
+- diagnostics-disabled efficiency: 93 baseline calls, 227,136.001 ms total, 2,988.632 ms average;
+- stability: 80 verifier calls, 523,096.786 ms total, 6,538.710 ms average.
 
 The complete per-mode/per-preset accounting is retained in the uploaded benchmark JSON. The governed fixture matrix is:
 
@@ -237,7 +240,7 @@ tighten::precise-technical=4
 
 ## 11. Files changed from the exact base
 
-The implementation/evidence diff from 2004efd5ac444e5eb639ac77e7eebcbabb6573a6 contains 53 files and 2,102 insertions / 159 deletions:
+The implementation/evidence diff from 2004efd5ac444e5eb639ac77e7eebcbabb6573a6 contains 53 files and 2,128 insertions / 159 deletions:
 
 ~~~text
 .env.example
@@ -285,8 +288,9 @@ Deviations and limitations:
 1. Pricing rates were intentionally absent, so dollar costs are unavailable while token counts and call counts remain measured.
 2. The manual hosted benchmark is a non-gating workflow by design; it completed successfully and its artifact is recorded above.
 3. Local full-worktree Ruff format output is affected by Windows CRLF/autocrlf behavior. Hosted Linux CI is green, and unrelated files were left untouched.
-4. Historical repository governance records include the earlier M1 squash-merge DCO accounting discrepancy (32563838579) and a prior docs PR #38 escaped-newline DCO issue. Those inherited records were not changed by G-Prose95; the exact G-Prose95 head passed its own DCO job.
-5. The branch remains unmerged and untagged so an independent reviewer retains the merge decision.
+4. The first report-bearing head was intentionally superseded after the later exact-head review found the quoted-terminal-boundary edge case; the corrected parser, fresh benchmark, updated report, and second re-review are the final evidence.
+5. Historical repository governance records include the earlier M1 squash-merge DCO accounting discrepancy (32563838579) and a prior docs PR #38 escaped-newline DCO issue. Those inherited records were not changed by G-Prose95; the exact G-Prose95 head passed its own DCO job.
+6. The branch remains unmerged and untagged so an independent reviewer retains the merge decision.
 
 Risks and remaining gap:
 
@@ -297,4 +301,4 @@ Risks and remaining gap:
 
 ## 13. Recommendation
 
-**READY FOR INDEPENDENT REVIEW.** The code/evidence head is green, the exact-head hosted benchmark is successful, the three adversarial P2 findings are fixed and resolved after clean re-review, and PR #40 is merge-ready. Stop here pending independent review and the user's merge decision.
+**READY FOR INDEPENDENT REVIEW.** The corrected code/evidence head is green, the exact-head hosted benchmark is successful, all five adversarial P2 threads are fixed and resolved after clean re-review, and PR #40 is merge-ready. Stop here pending independent review and the user's merge decision.
