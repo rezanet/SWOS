@@ -48,16 +48,16 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
 
 ### Exact-head hosted evidence
 
-- SWOS CI #154 / run `32565204213`, SWOS Prose Benchmark #30 / run
-  `32565204228`, SWOS Engineering Quality #3 / run `32565204235`, and SWOS
-  CodeQL #3 / run `32565204175` all completed green for the exact head.
+- SWOS CI #155 / run `32565431253`, SWOS Prose Benchmark #31 / run
+  `32565431257`, SWOS Engineering Quality #4 / run `32565431261`, and SWOS
+  CodeQL #4 / run `32565431304` all completed green for the exact head.
 - The hosted Python 3.11 quality job measured 85.46% package coverage and passed
   every configured critical-module floor.
 - The active `Protect main` ruleset is active and now requires the 18 deterministic
   status contexts, linear history and review-thread resolution. The stochastic
   live OpenAI job is intentionally absent from that required list.
 - The live workflow completed as a non-gating success; its verifier substep had
-  two expected-outcome failures (one `REJECT`, one `REVIEW`) and its five-case
+  two expected-outcome failures (both `REVIEW`) and its five-case
   no-diagnostics dogfood reported 2 `NO_CHANGE_RECOMMENDED` and 3 `PASS`.
 
 ### Merge gate
