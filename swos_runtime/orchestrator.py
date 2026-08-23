@@ -837,6 +837,13 @@ class AutonomousSWOS:
             labels = self._source_labels(ranked)
             rebuild_evidence()
 
+        if sources:
+            blockers = [
+                blocker
+                for blocker in blockers
+                if blocker != "No retrievable sources were available."
+            ]
+
         labels = self._source_labels(ranked)
         _write_json(
             output / "retrieval.json",
