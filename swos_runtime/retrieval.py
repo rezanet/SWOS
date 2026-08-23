@@ -50,8 +50,8 @@ def _urlopen(url: str, *, timeout: int = 30) -> bytes:
         return response.read(2_500_000)
 
 
-def _html_text(url: str) -> str:
-    raw = _urlopen(url)
+def _html_text(url: str, *, timeout: int = 30) -> str:
+    raw = _urlopen(url, timeout=timeout)
     if raw.startswith(b"%PDF"):
         return ""
     parser = _TextExtractor()
@@ -362,7 +362,7 @@ class PublicWebRetriever:
                 continue
             seen.add(url)
             try:
-                text = _html_text(url)
+                text = _html_text(url, timeout=8)
             except Exception as exc:
                 self.events.append(
                     {"provider": "openai_web_fetch", "query": query, "url": url, "error": str(exc)}
@@ -403,8 +403,8 @@ class PublicWebRetriever:
         for query in queries[:6]:
             found.extend(self._openalex(query, limit=2))
             found.extend(self._crossref(query, limit=2))
-        for query in queries[:4]:
-            found.extend(self._openai_web(query, limit=3))
+        for query in queries[:3]:
+            found.extend(self._openai_web(query, limit=2))
         deduped: list[SourceRecord] = []
         seen: set[str] = set()
         for source in found:
