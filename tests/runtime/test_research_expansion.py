@@ -65,14 +65,10 @@ class ResearchExpansionTests(unittest.TestCase):
             )
             self.assertEqual(outcome.status, "APPROVED", outcome.blocking_reasons)
             self.assertEqual(retriever.calls, 2)
-            retrieval = json.loads(
-                (Path(tmp) / "retrieval.json").read_text(encoding="utf-8")
-            )
+            retrieval = json.loads((Path(tmp) / "retrieval.json").read_text(encoding="utf-8"))
             self.assertEqual(len(retrieval["research_expansions"]), 1)
             self.assertEqual(retrieval["research_expansions"][0]["new_sources"], 1)
-            matrix = json.loads(
-                (Path(tmp) / "evidence-matrix.json").read_text(encoding="utf-8")
-            )
+            matrix = json.loads((Path(tmp) / "evidence-matrix.json").read_text(encoding="utf-8"))
             self.assertTrue(matrix["coverage"]["counter_evidence_present"])
 
 
