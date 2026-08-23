@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a completed Autonomous SWOS run against the canonical acceptance contract."""
+"""Validate a completed Autonomous SWOS run against its request and governance contract."""
 
 from __future__ import annotations
 
@@ -39,6 +39,11 @@ def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def is_legal_topic(topic: str) -> bool:
+    lowered = topic.lower()
+    return any(term in lowered for term in ("court", "witness", "legal", " law ", "evidence act"))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("run_dir", type=Path)
@@ -61,6 +66,7 @@ def main() -> int:
     references = load(root / "references.json")
     sources = load(root / "source-register.json")
     article = (root / "article.md").read_text(encoding="utf-8")
+    request = manifest.get("request", {})
 
     if not verify_manifest(root, manifest):
         failures.append("run manifest hashes do not verify")
@@ -87,25 +93,31 @@ def main() -> int:
     ):
         failures.append("one or more used references are unverified")
 
-    primary_ids = {
-        item["source_id"]
-        for item in sources
-        if item.get("primary") and item.get("metadata_verified")
-    }
-    evidence_source_ids = {
-        citation.get("source_id")
-        for row in evidence.get("rows", [])
-        for citation in row.get("citations", [])
-    }
-    if not primary_ids.intersection(evidence_source_ids):
-        failures.append("no verified primary legal authority is represented in Evidence Matrix")
+    topic = str(request.get("topic") or "")
+    if args.canonical or is_legal_topic(topic):
+        primary_ids = {
+            item["source_id"]
+            for item in sources
+            if item.get("primary") and item.get("metadata_verified")
+        }
+        evidence_source_ids = {
+            citation.get("source_id")
+            for row in evidence.get("rows", [])
+            for citation in row.get("citations", [])
+        }
+        if not primary_ids.intersection(evidence_source_ids):
+            failures.append("no verified primary legal authority is represented in Evidence Matrix")
 
     words = body_word_count(article)
-    if not 2125 <= words <= 2875:
-        failures.append(f"article body has {words} words; canonical range is 2125-2875")
+    target = int(request.get("length") or 2500)
+    minimum = int(target * 0.85)
+    maximum = int(target * 1.15)
+    if not minimum <= words <= maximum:
+        failures.append(
+            f"article body has {words} words; request-derived range is {minimum}-{maximum}"
+        )
 
     if args.canonical:
-        request = manifest.get("request", {})
         if request.get("topic") != CANONICAL_TOPIC:
             failures.append("manifest topic does not match canonical legal-AI acceptance topic")
         if request.get("length") != 2500:
