@@ -1,5 +1,6 @@
 name: SWOS Historical Pigment Article Acceptance
 
+# Domain-neutral acceptance rerun after removing legal benchmark leakage.
 on:
   pull_request:
     paths:
