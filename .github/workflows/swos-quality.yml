@@ -22,15 +22,21 @@ jobs:
         run: python -m pip install --requirement requirements-dev.lock
       - name: Install SWOS without dependency re-resolution
         run: python -m pip install --no-deps --no-build-isolation --editable .
+      - name: Smoke test both packaged CLI entry points
+        run: |
+          swos-prose --help >/dev/null
+          swos --help >/dev/null
       - name: Check Ruff formatting
-        run: python -m ruff format --check swos_prose benchmark tools evals tests
+        run: python -m ruff format --check swos_prose swos_runtime benchmark tools evals tests
       - name: Run Ruff lint gate
-        run: python -m ruff check swos_prose benchmark tools evals tests
-      - name: Run deterministic Prose tests with coverage
+        run: python -m ruff check swos_prose swos_runtime benchmark tools evals tests
+      - name: Run deterministic Prose and autonomous-runtime tests with coverage
         run: |
           python -m coverage erase
-          python -m coverage run --branch --source=swos_prose \
+          python -m coverage run --branch --source=swos_prose,swos_runtime \
             -m unittest discover -s tests/prose -p 'test_*.py'
+          python -m coverage run --append --branch --source=swos_prose,swos_runtime \
+            -m unittest discover -s tests/runtime -p 'test_*.py'
           python -m coverage json -o coverage.json
           python -m coverage report --fail-under=80
           python tools/check_coverage.py --coverage-json coverage.json
@@ -66,4 +72,4 @@ jobs:
       - name: Install locked analysis tools
         run: python -m pip install --requirement requirements-dev.lock
       - name: Scan executable Python for high-confidence security issues
-        run: python -m bandit -r swos_prose benchmark tools evals -lll -ii
+        run: python -m bandit -r swos_prose swos_runtime benchmark tools evals -lll -ii
