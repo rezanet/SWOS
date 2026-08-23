@@ -7,7 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
-from swos_runtime.governance import body_word_count, verify_manifest
+from swos_runtime.governance import body_word_count, cross_encoder_executed, verify_manifest
 from swos_runtime.orchestrator import AutonomousSWOS
 
 CANONICAL_TOPIC = "Can an AI-operated machine be a witness in court?"
@@ -76,11 +76,8 @@ def main() -> int:
         failures.append("human intervention occurred")
     if control.get("normal_user_questions_asked") != 0:
         failures.append("normal user questions were asked mid-run")
-    if (
-        control.get("cross_encoder", {}).get("method")
-        != "openai_joint_query_document_cross_encoder"
-    ):
-        failures.append("reference cross-encoder did not execute")
+    if not cross_encoder_executed(control.get("cross_encoder", {})):
+        failures.append("governed joint query/document cross-encoder did not execute")
     if len(evidence.get("rows", [])) < 5:
         failures.append("fewer than five verified Evidence Matrix rows")
     if not evidence.get("coverage", {}).get("counter_evidence_present"):
