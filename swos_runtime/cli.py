@@ -6,6 +6,12 @@ import argparse
 import json
 from pathlib import Path
 
+from .host_bundle import (
+    HostBundleRetriever,
+    HostBundleStageProvider,
+    host_prose_transform,
+    load_host_bundle,
+)
 from .models import ResearchRequest
 from .orchestrator import AutonomousSWOS
 
@@ -26,6 +32,15 @@ def main() -> int:
     write.add_argument("--depth", default="rigorous")
     write.add_argument("--jurisdiction", default=None)
     write.add_argument("--output", type=Path, required=True)
+    write.add_argument(
+        "--host-bundle",
+        type=Path,
+        default=None,
+        help=(
+            "Use a host-native ChatGPT/Codex/Claude stage bundle instead of the default "
+            "API-backed model provider. No API credential is required by this binding."
+        ),
+    )
     write.add_argument("--json", action="store_true", dest="as_json")
     args = parser.parse_args()
 
@@ -38,7 +53,16 @@ def main() -> int:
             depth=args.depth,
             jurisdiction=args.jurisdiction,
         )
-        outcome = AutonomousSWOS().run(request, args.output)
+        if args.host_bundle is not None:
+            bundle = load_host_bundle(args.host_bundle)
+            runtime = AutonomousSWOS(
+                stage_provider=HostBundleStageProvider(bundle),
+                retriever=HostBundleRetriever(bundle),
+                prose_transform=host_prose_transform(bundle),
+            )
+        else:
+            runtime = AutonomousSWOS()
+        outcome = runtime.run(request, args.output)
         if args.as_json:
             print(json.dumps(outcome.to_dict(), indent=2))
         else:
