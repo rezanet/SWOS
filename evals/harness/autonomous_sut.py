@@ -9,7 +9,7 @@ from swos_runtime.governance import (
     can_write_durable_rpm,
     detect_prompt_injection,
 )
-from swos_runtime.orchestrator import AutonomousSWOS, RUNTIME_VERSION
+from swos_runtime.orchestrator import RUNTIME_VERSION
 
 
 def _result(fixture: dict[str, Any], passed: bool, observation: str) -> dict[str, Any]:

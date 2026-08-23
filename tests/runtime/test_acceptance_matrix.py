@@ -5,9 +5,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from test_runtime import FakeProvider, FakeRetriever, safe_prose
+
 from swos_runtime.models import ResearchRequest
 from swos_runtime.orchestrator import AutonomousSWOS
-from test_runtime import FakeProvider, FakeRetriever, safe_prose
 
 
 class InjectingRetriever(FakeRetriever):
