@@ -1,6 +1,6 @@
 name: SWOS Historical Pigment Article Acceptance
 
-# Domain-neutral acceptance rerun with bounded evidence research expansion.
+# Domain-neutral acceptance rerun with web authority discovery and bounded research repair.
 on:
   pull_request:
     paths:
