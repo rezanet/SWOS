@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-064",
+  "category": "preset-precise-technical-material-number",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "naturalise",
+  "preset": "precise-technical",
+  "assurance": "strict",
+  "source": "The service returned a response with a median latency of 240 ms.",
+  "semantic_probe_candidate": "The service returned a response with a median latency of 24 ms.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "A protected technical number change is a hard invariant."
+}

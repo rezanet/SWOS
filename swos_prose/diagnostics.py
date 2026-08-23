@@ -23,6 +23,9 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
+from .context import inspect_context
+from .modes import writer_policy
+
 _WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 _REPEATED_WORD_RE = re.compile(r"\b([A-Za-z][A-Za-z'’-]*)\s+\1\b", re.IGNORECASE)
 _SENTENCE_END_RE = re.compile(r"[.!?](?:\s+|$)")
@@ -91,6 +94,8 @@ class PolishDiagnostics:
     word_count: int
     sentence_count: int
     max_sentence_words: int
+    mode: str = "polish"
+    preset: str | None = None
 
     @property
     def no_change_recommended(self) -> bool:
@@ -105,6 +110,8 @@ class PolishDiagnostics:
             "word_count": self.word_count,
             "sentence_count": self.sentence_count,
             "max_sentence_words": self.max_sentence_words,
+            "mode": self.mode,
+            "preset": self.preset,
         }
 
 
@@ -136,8 +143,12 @@ def _positive_structure_evidence(
     *,
     word_count: int,
     sentence_count: int,
+    mode: str,
+    preset: str | None,
 ) -> tuple[str, ...]:
     """Recognise only an explicitly reviewed literal source exemplar."""
+    if mode != "polish" or preset is not None:
+        return ()
     if not (_MIN_ABSTAIN_WORDS <= word_count <= _MAX_ABSTAIN_WORDS):
         return ()
     if sentence_count != 1:
@@ -152,6 +163,8 @@ def diagnose_polish(
     *,
     context_before: str | None = None,
     context_after: str | None = None,
+    mode: str = "polish",
+    preset: str | None = None,
 ) -> PolishDiagnostics:
     """Return a conservative pre-generation recommendation for polish mode.
 
@@ -170,6 +183,8 @@ def diagnose_polish(
         raise TypeError("context_before must be a string or None")
     if context_after is not None and not isinstance(context_after, str):
         raise TypeError("context_after must be a string or None")
+    writer_policy(mode, preset)
+    context_safety = inspect_context(context_before, context_after)
 
     words = _WORD_RE.findall(source)
     sentence_word_counts = _sentence_word_counts(source)
@@ -196,6 +211,7 @@ def diagnose_polish(
         signals.append("possible_quantifier_number_agreement_problem")
     if (context_before and context_before.strip()) or (context_after and context_after.strip()):
         signals.append("neighboring_context_requires_context_aware_diagnostics")
+    signals.extend(context_safety.signals)
 
     for name, pattern in _WORDINESS_PATTERNS:
         if pattern.search(source):
@@ -205,6 +221,8 @@ def diagnose_polish(
         source,
         word_count=word_count,
         sentence_count=sentence_count,
+        mode=mode,
+        preset=preset,
     )
     if not positive_evidence:
         signals.append("no_reviewed_abstention_exemplar")
@@ -218,6 +236,8 @@ def diagnose_polish(
             word_count=word_count,
             sentence_count=sentence_count,
             max_sentence_words=max_sentence_words,
+            mode=mode,
+            preset=preset,
         )
 
     return PolishDiagnostics(
@@ -228,4 +248,6 @@ def diagnose_polish(
         word_count=word_count,
         sentence_count=sentence_count,
         max_sentence_words=max_sentence_words,
+        mode=mode,
+        preset=preset,
     )

@@ -12,19 +12,22 @@ reproducibility, governance compliance and auditability.
 
 ---
 
-## SWOS Prose v0.2
+## SWOS Prose G-Prose95 (development)
 
 **SWOS Prose is the post-draft semantic-safe editing layer: rewrite the language,
 preserve the meaning.** It operates after claims and evidence are settled, and it
 fails closed to the source whenever a proposed rewrite cannot be approved safely.
 
-The v0.2 released surface implements `mode=polish` only. It combines conservative
-pre-generation diagnostics, one rewrite proposal when needed, deterministic
-semantic-delta checks, and independent semantic verification. `REVIEW`, `REJECT`
-or provider failure never silently releases the candidate.
+The governed prose surface supports `mode=polish`, `naturalise`, `clarify`, and
+`tighten`, with explicit `scholarly-natural`, `precise-technical`,
+`plain-intelligent`, `elegant-essay`, and `executive` presets. Every mode uses
+conservative pre-generation diagnostics, one rewrite proposal when needed,
+deterministic semantic-delta checks, independent semantic verification, and the
+bounded M1 repair loop. `REVIEW`, `REJECT` or provider failure never silently
+releases the candidate.
 
-The active governed benchmark contains 56 cases and is identified as benchmark
-`0.3.0-m1`. The frozen v0.2 release evidence
+The active governed benchmark contains 76 cases and is identified as benchmark
+`0.4.0-g-prose95`. The frozen v0.2 release evidence
 remains preserved at [`benchmark/artifacts/raw-evidence-v0.2/`](benchmark/artifacts/raw-evidence-v0.2/)
 and its compact claim surface is [`benchmark/baseline.json`](benchmark/baseline.json);
 that historical evidence covers 50 cases and is not the active runner input. On the
@@ -41,6 +44,8 @@ and is tracked separately rather than being disguised as a safety success.
 ```bash
 export OPENAI_API_KEY=...
 python3 -m swos_prose.cli polish \
+  --mode naturalise \
+  --preset scholarly-natural \
   --source "The analysis was performed using a t-test." \
   --assurance strict \
   --json
@@ -209,7 +214,7 @@ Full component and interface model: [`docs/architecture/`](docs/architecture/).
 make validate          # every artefact against the frozen schemas
 make lint-skills       # six-field Agent Skills frontmatter constraint
 make eval              # all eight evaluation planes
-make benchmark-prose   # deterministic active 56-case prose benchmark contract
+  make benchmark-prose   # deterministic active 76-case prose benchmark contract
 ls examples/worked-example/   # a complete output bundle with audit pack
 ```
 

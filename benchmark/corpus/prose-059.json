@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-059",
+  "category": "mode-clarify-equivalent",
+  "benchmark_group": "g-prose95-modes",
+  "mode": "clarify",
+  "preset": "plain-intelligent",
+  "assurance": "strict",
+  "source": "The report states that the estimate is uncertain.",
+  "semantic_probe_candidate": "The report says the estimate remains uncertain.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": true,
+  "notes": "Clarification may improve the reporting sentence but must preserve uncertainty."
+}

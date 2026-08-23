@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-058",
+  "category": "mode-naturalise-material-modality",
+  "benchmark_group": "g-prose95-modes",
+  "mode": "naturalise",
+  "preset": "scholarly-natural",
+  "assurance": "strict",
+  "source": "The intervention may improve retention for the participating students.",
+  "semantic_probe_candidate": "The intervention improves retention for the participating students.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Removing may strengthens the commitment and must remain unsafe."
+}

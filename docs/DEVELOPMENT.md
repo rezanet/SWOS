@@ -45,7 +45,7 @@ workflow:
 
 `make quality` runs the same quality gates on systems with GNU Make. `make ci`
 also runs schema validation, Agent Skills portability, governance, all eight
-evaluation planes, semantic-delta tests and the active 56-case benchmark
+evaluation planes, semantic-delta tests and the active 76-case benchmark
 contract.
 
 Coverage measures every executable module under `swos_prose`; tests and tooling
@@ -85,3 +85,8 @@ as evidence, but they do not replace deterministic semantic, schema, governance,
 DCO, benchmark-contract or evaluation gates. Local live runs should set the
 variables from `.env.example` in the process environment and must never commit
 the values.
+
+Optional benchmark cost telemetry requires both
+`SWOS_PROSE_INPUT_USD_PER_1K` and `SWOS_PROSE_OUTPUT_USD_PER_1K`. Missing or
+invalid rates remain explicitly unavailable and never affect PASS, REVIEW or
+REJECT decisions.

@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-063",
+  "category": "preset-precise-technical-equivalent",
+  "benchmark_group": "g-prose95-presets",
+  "mode": "naturalise",
+  "preset": "precise-technical",
+  "assurance": "strict",
+  "source": "The service returned a response with a median latency of 240 ms.",
+  "semantic_probe_candidate": "The service returned a response at a median latency of 240 ms.",
+  "semantic_relation": "equivalent",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": true,
+  "notes": "Technical naturalisation must retain the exact measured latency and unit."
+}

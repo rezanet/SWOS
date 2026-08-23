@@ -1,0 +1,14 @@
+{
+  "fixture_id": "prose-062",
+  "category": "mode-tighten-material-negation",
+  "benchmark_group": "g-prose95-modes",
+  "mode": "tighten",
+  "preset": "precise-technical",
+  "assurance": "strict",
+  "source": "The association was not evidence that the intervention caused improvement.",
+  "semantic_probe_candidate": "The association was evidence that the intervention caused improvement.",
+  "semantic_relation": "material_change",
+  "diagnostics_expectation": {"outcome": "PROCEED_TO_REWRITE", "must_not_abstain": true},
+  "stability_probe": false,
+  "notes": "Tightening must never remove a material negation."
+}

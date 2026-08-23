@@ -74,6 +74,39 @@ class PolishCliTests(unittest.TestCase):
         self.assertEqual(stderr.getvalue(), "")
         sentinel_rewrite.assert_not_called()
 
+    def test_rejected_context_uses_zero_provider_path_without_api_key(self):
+        source = "A source sentence."
+        stdout = StringIO()
+        stderr = StringIO()
+        argv = [
+            "swos-prose",
+            "polish",
+            "--source",
+            source,
+            "--context-after",
+            "invalid\x00context",
+            "--json",
+        ]
+
+        with (
+            patch.dict(os.environ, {}, clear=True),
+            patch.object(sys, "argv", argv),
+            patch("swos_prose.cli._ProviderMustNotRun.rewrite") as sentinel_rewrite,
+            redirect_stdout(stdout),
+            redirect_stderr(stderr),
+        ):
+            code = cli.main()
+
+        payload = json.loads(stdout.getvalue())
+        self.assertEqual(code, 1)
+        self.assertEqual(payload["final_text"], source)
+        self.assertFalse(payload["safe_for_automatic_use"])
+        self.assertTrue(payload["used_source_fallback"])
+        self.assertTrue(payload["context_rejected"])
+        self.assertFalse(payload["context_safety"]["accepted"])
+        self.assertNotIn("OPENAI_API_KEY", stderr.getvalue())
+        sentinel_rewrite.assert_not_called()
+
     def test_long_literal_source_falls_back_from_filesystem_error(self):
         source = "A" * 1000
         content, was_file = cli.resolve_input(source)
@@ -176,6 +209,49 @@ class PolishCliTests(unittest.TestCase):
         self.assertIn('"verification_status": "REVIEW"', stdout.getvalue())
         self.assertEqual(stderr.getvalue(), "")
         self.assertFalse(polish.call_args.kwargs["run_diagnostics"])
+
+    def test_mode_and_preset_are_forwarded_to_the_common_pipeline(self):
+        result = Mock()
+        result.final_text = "Naturalised sentence."
+        result.safe_for_automatic_use = True
+        result.generation_skipped_by_diagnostics = False
+        result.verification_status = "PASS"
+        result.used_source_fallback = False
+        result.to_dict.return_value = {
+            "mode": "naturalise",
+            "preset": "executive",
+            "final_text": "Naturalised sentence.",
+            "verification_status": "PASS",
+        }
+        stdout = StringIO()
+        stderr = StringIO()
+        argv = [
+            "swos-prose",
+            "polish",
+            "--source",
+            "Source sentence.",
+            "--mode",
+            "naturalise",
+            "--preset",
+            "executive",
+            "--json",
+        ]
+
+        with (
+            patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}, clear=True),
+            patch.object(sys, "argv", argv),
+            patch("swos_prose.providers.openai_rewrite.OpenAIResponsesRewriteProvider"),
+            patch("swos_prose.providers.openai_responses.OpenAIResponsesSemanticVerifierProvider"),
+            patch("swos_prose.cli.polish_text", return_value=result) as polish,
+            redirect_stdout(stdout),
+            redirect_stderr(stderr),
+        ):
+            code = cli.main()
+
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(stdout.getvalue())["mode"], "naturalise")
+        self.assertEqual(polish.call_args.kwargs["mode"], "naturalise")
+        self.assertEqual(polish.call_args.kwargs["preset"], "executive")
 
 
 if __name__ == "__main__":

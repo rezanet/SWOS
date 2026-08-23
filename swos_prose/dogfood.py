@@ -71,8 +71,8 @@ def _record_for(path: Path, root: Path, result: PolishResult) -> dict[str, Any]:
     verification = result.verification
     return {
         "file": path.relative_to(root).as_posix(),
-        "mode": "polish",
-        "preset": None,
+        "mode": result.mode,
+        "preset": result.preset,
         "assurance": result.assurance,
         "status": _status_for(result),
         "source_text": result.source,
@@ -101,9 +101,17 @@ def _record_for(path: Path, root: Path, result: PolishResult) -> dict[str, Any]:
         "diagnostics_before": result.diagnostics_before.to_dict()
         if result.diagnostics_before is not None
         else None,
+        "context_safety": result.context_safety,
         "diagnostics_after": None,
         "rewrite_token_usage": result.rewrite_token_usage,
+        "rewrite_cost_estimate": result.rewrite_cost_estimate,
         "verification_token_usage": verification.token_usage if verification is not None else None,
+        "verification_cost_estimate": verification.cost_estimate
+        if verification is not None
+        else None,
+        "verifier_call_count": result.verifier_call_count,
+        "verifier_token_usage": result.verifier_token_usage,
+        "verifier_cost_estimate": result.verifier_cost_estimate,
         "notes": result.notes,
         "human_review": {"category": None, "notes": None},
     }
@@ -117,6 +125,8 @@ def collect_dogfood(
     verifier_provider: SemanticVerifierProvider | None,
     assurance: str = "strict",
     run_diagnostics: bool = True,
+    mode: str = "polish",
+    preset: str | None = None,
 ) -> list[dict[str, Any]]:
     source_root, result_root = Path(input_dir), Path(output_dir)
     if not source_root.exists() or not source_root.is_dir():
@@ -138,6 +148,8 @@ def collect_dogfood(
             verifier_provider=verifier_provider,
             assurance=assurance,
             run_diagnostics=run_diagnostics,
+            mode=mode,
+            preset=preset,
         )
         record = _record_for(path, source_root, result)
         relative = path.relative_to(source_root)
@@ -157,8 +169,8 @@ def collect_dogfood(
     total_repair_attempts = sum(len(item["repair_attempts"]) for item in records)
     repair_successes = sum(1 for item in repair_attempted if item["repair_success"])
     summary = {
-        "mode": "polish",
-        "preset": None,
+        "mode": mode,
+        "preset": preset,
         "assurance": assurance,
         "diagnostics_enabled": run_diagnostics,
         "sample_count": len(records),
@@ -179,7 +191,7 @@ def collect_dogfood(
             else 0.0,
         },
         "files": [item["file"] for item in records],
-        "note": f"{diagnostics_note} Presets are not implemented yet.",
+        "note": f"{diagnostics_note} Mode and preset policy are recorded per sample.",
     }
     (result_root / "summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
