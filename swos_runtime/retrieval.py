@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import re
 import urllib.parse
 import urllib.request
@@ -50,8 +51,11 @@ def _urlopen(url: str, *, timeout: int = 30) -> bytes:
 
 
 def _html_text(url: str) -> str:
+    raw = _urlopen(url)
+    if raw.startswith(b"%PDF"):
+        return ""
     parser = _TextExtractor()
-    parser.feed(_urlopen(url).decode("utf-8", errors="replace"))
+    parser.feed(raw.decode("utf-8", errors="replace"))
     return parser.text()
 
 
@@ -77,8 +81,57 @@ def _openalex_abstract(inverted: Any) -> str:
     return " ".join(word for _, word in positions)
 
 
+def _query_terms(query: str) -> list[str]:
+    stop = {
+        "about",
+        "after",
+        "against",
+        "article",
+        "because",
+        "between",
+        "could",
+        "evidence",
+        "historical",
+        "should",
+        "their",
+        "these",
+        "through",
+        "under",
+        "which",
+        "with",
+        "would",
+        "write",
+    }
+    words = re.findall(r"[A-Za-z][A-Za-z'-]{3,}", query)
+    terms: list[str] = []
+    for word in words:
+        lowered = word.lower()
+        if lowered in stop or lowered in {term.lower() for term in terms}:
+            continue
+        terms.append(word)
+        if len(terms) >= 10:
+            break
+    return terms or [query[:80]]
+
+
+def _walk_urls(value: Any) -> list[tuple[str, str]]:
+    """Collect source URLs/titles from a Responses API payload without trusting prose output."""
+    found: list[tuple[str, str]] = []
+    if isinstance(value, dict):
+        url = value.get("url")
+        if isinstance(url, str) and url.startswith(("http://", "https://")):
+            title = value.get("title")
+            found.append((url, str(title or url)))
+        for child in value.values():
+            found.extend(_walk_urls(child))
+    elif isinstance(value, list):
+        for child in value:
+            found.extend(_walk_urls(child))
+    return found
+
+
 class PublicWebRetriever:
-    """Reference retrieval across primary legal and open scholarly sources."""
+    """Reference retrieval across primary law, open scholarship and authoritative web sources."""
 
     AU_EVIDENCE_ACT = (
         "https://www.legislation.gov.au/C2004A04858/2025-06-10/"
@@ -91,6 +144,7 @@ class PublicWebRetriever:
 
     def __init__(self) -> None:
         self.events: list[dict[str, Any]] = []
+        self._web_client: Any | None = None
 
     @staticmethod
     def _is_legal_topic(topic: str) -> bool:
@@ -270,6 +324,73 @@ class PublicWebRetriever:
             )
         return found
 
+    def _openai_web(self, query: str, *, limit: int = 3) -> list[SourceRecord]:
+        """Discover authoritative URLs with web search, then fetch page text ourselves."""
+        if not os.environ.get("OPENAI_API_KEY"):
+            return []
+        try:
+            if self._web_client is None:
+                from openai import OpenAI
+
+                self._web_client = OpenAI()
+            response = self._web_client.responses.create(
+                model=os.environ.get("SWOS_RUNTIME_MODEL", "gpt-5.6-luna"),
+                tools=[{"type": "web_search"}],
+                tool_choice="required",
+                include=["web_search_call.action.sources"],
+                input=(
+                    "Find authoritative source pages directly relevant to this research query. "
+                    "Prefer museums, conservation institutes, universities, government or standards "
+                    "bodies, scholarly publishers, and digitised primary sources where appropriate. "
+                    "Do not answer the research question; use web search only to discover sources.\n\n"
+                    f"QUERY: {query}"
+                ),
+                max_output_tokens=250,
+                store=False,
+            )
+            payload = response.model_dump() if hasattr(response, "model_dump") else response
+            discovered = _walk_urls(payload)
+        except Exception as exc:
+            self.events.append({"provider": "openai_web_search", "query": query, "error": str(exc)})
+            return []
+
+        terms = _query_terms(query)
+        found: list[SourceRecord] = []
+        seen: set[str] = set()
+        for url, title in discovered:
+            if url in seen:
+                continue
+            seen.add(url)
+            try:
+                text = _html_text(url)
+            except Exception as exc:
+                self.events.append(
+                    {"provider": "openai_web_fetch", "query": query, "url": url, "error": str(exc)}
+                )
+                continue
+            if len(text) < 400:
+                continue
+            targeted = _windows(text, terms)
+            if len(targeted) < 300:
+                continue
+            found.append(
+                SourceRecord(
+                    source_id=swos_id("src"),
+                    title=title.strip() or url,
+                    url=url,
+                    source_type="web_reference",
+                    provider="openai_web_search",
+                    text=targeted,
+                    metadata_verified=True,
+                    retrieval_query=query,
+                    raw_rank=len(found) + 1,
+                    injection_detected=detect_prompt_injection(targeted),
+                )
+            )
+            if len(found) >= limit:
+                break
+        return found
+
     def retrieve(
         self, topic: str, queries: list[str], *, max_sources: int = 14
     ) -> list[SourceRecord]:
@@ -282,6 +403,8 @@ class PublicWebRetriever:
         for query in queries[:6]:
             found.extend(self._openalex(query, limit=2))
             found.extend(self._crossref(query, limit=2))
+        for query in queries[:4]:
+            found.extend(self._openai_web(query, limit=3))
         deduped: list[SourceRecord] = []
         seen: set[str] = set()
         for source in found:
