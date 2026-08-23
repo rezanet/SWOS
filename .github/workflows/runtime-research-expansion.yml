@@ -20,52 +20,30 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Apply bounded research and security patch
+      - name: Clear stale retrieval blocker after successful expansion
         run: |
           python - <<'PY'
           from pathlib import Path
 
-          orchestrator = Path('swos_runtime/orchestrator.py')
-          text = orchestrator.read_text(encoding='utf-8')
-
-          old = '''    citation_markers,\n    exact_quote_supported,\n    verify_manifest,\n'''
-          new = '''    citation_markers,\n    detect_prompt_injection,\n    exact_quote_supported,\n    verify_manifest,\n'''
+          path = Path('swos_runtime/orchestrator.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''            labels = self._source_labels(ranked)\n            rebuild_evidence()\n\n        labels = self._source_labels(ranked)\n'''
+          new = '''            labels = self._source_labels(ranked)\n            rebuild_evidence()\n\n        if sources:\n            blockers = [\n                blocker\n                for blocker in blockers\n                if blocker != "No retrievable sources were available."\n            ]\n\n        labels = self._source_labels(ranked)\n'''
           if text.count(old) != 1:
-              raise SystemExit('orchestrator governance import anchor mismatch')
-          text = text.replace(old, new)
-
-          old = '''        if sources:\n            ranked, rerank_record = self.stage_provider.rerank(request.topic, sources, top_k=10)\n        labels = self._source_labels(ranked)\n'''
-          new = '''        if sources:\n            ranked, rerank_record = self.stage_provider.rerank(request.topic, sources, top_k=10)\n        for source in ranked:\n            source.injection_detected = source.injection_detected or detect_prompt_injection(\n                source.text\n            )\n        labels = self._source_labels(ranked)\n'''
-          if text.count(old) != 1:
-              raise SystemExit('initial rerank anchor mismatch')
-          text = text.replace(old, new)
-
-          old = '''        evidence_matrix = {\n            "schema_version": "1.0.0",\n            "work_id": work_id,\n            "coverage": {\n                "total_claims": 0,\n                "supported_claims": 0,\n                "unsupported_claims": 0,\n                "uncertain_claims": 0,\n                "counter_evidence_present": False,\n                "source_diversity_index": 0,\n            },\n            "rows": [],\n        }\n        evidence_rows: list[dict[str, Any]] = []\n        rejected_evidence: list[dict[str, Any]] = []\n        if ranked:\n            evidence_candidates = self.stage_provider.build_evidence(request.topic, ranked).get(\n                "claims", []\n            )\n            evidence_matrix, evidence_rows, rejected_evidence = self._build_evidence_matrix(\n                work_id, evidence_candidates, ranked\n            )\n        _write_json(output / "evidence-matrix.json", evidence_matrix)\n        _write_json(output / "evidence-rejections.json", rejected_evidence)\n'''
-          new = '''        evidence_matrix = {\n            "schema_version": "1.0.0",\n            "work_id": work_id,\n            "coverage": {\n                "total_claims": 0,\n                "supported_claims": 0,\n                "unsupported_claims": 0,\n                "uncertain_claims": 0,\n                "counter_evidence_present": False,\n                "source_diversity_index": 0,\n            },\n            "rows": [],\n        }\n        evidence_rows: list[dict[str, Any]] = []\n        rejected_evidence: list[dict[str, Any]] = []\n        research_expansions: list[dict[str, Any]] = []\n\n        def rebuild_evidence() -> None:\n            nonlocal evidence_matrix, evidence_rows, rejected_evidence\n            if not ranked:\n                return\n            evidence_candidates = self.stage_provider.build_evidence(request.topic, ranked).get(\n                "claims", []\n            )\n            matrix, rows, rejections = self._build_evidence_matrix(\n                work_id, evidence_candidates, ranked\n            )\n            evidence_matrix = matrix\n            evidence_rows = rows\n            rejected_evidence.extend(rejections)\n\n        rebuild_evidence()\n\n        for attempt in range(1, 3):\n            needs_claims = len(evidence_rows) < 5\n            needs_counter = not evidence_matrix["coverage"].get("counter_evidence_present")\n            if not needs_claims and not needs_counter:\n                break\n\n            expansion_queries: list[str] = []\n            if needs_counter:\n                expansion_queries.extend(\n                    str(item) for item in plan.get("rival_theses", [])[:3] if str(item).strip()\n                )\n            if needs_claims:\n                expansion_queries.extend(\n                    str(item)\n                    for item in plan.get("known_uncertainties", [])[:2]\n                    if str(item).strip()\n                )\n            expansion_queries.append(\n                f"{request.topic} counterexamples exceptions limitations evidence"\n            )\n\n            before_keys = {\n                (source.identifiers.get("doi") or source.url or source.title).lower()\n                for source in sources\n            }\n            expanded = self.retriever.retrieve(request.topic, expansion_queries)\n            added = []\n            for source in expanded:\n                key = (source.identifiers.get("doi") or source.url or source.title).lower()\n                if key in before_keys:\n                    continue\n                before_keys.add(key)\n                sources.append(source)\n                added.append(source)\n\n            expansion_record = {\n                "attempt": attempt,\n                "reason": {\n                    "fewer_than_five_verified_claims": needs_claims,\n                    "missing_counter_or_limitation": needs_counter,\n                },\n                "queries": expansion_queries,\n                "new_sources": len(added),\n            }\n            research_expansions.append(expansion_record)\n            chain.append("research.expanded", expansion_record)\n            if not added:\n                break\n\n            ranked, rerank_record = self.stage_provider.rerank(\n                request.topic, sources, top_k=10\n            )\n            for source in ranked:\n                source.injection_detected = source.injection_detected or detect_prompt_injection(\n                    source.text\n                )\n            labels = self._source_labels(ranked)\n            rebuild_evidence()\n\n        labels = self._source_labels(ranked)\n        _write_json(\n            output / "retrieval.json",\n            {\n                "queries": plan.get("queries", []),\n                "research_expansions": research_expansions,\n                "retriever_events": getattr(self.retriever, "events", []),\n                "source_count": len(sources),\n            },\n        )\n        _write_json(output / "reranking.json", rerank_record)\n        _write_json(\n            output / "source-register.json",\n            [\n                {**source.to_dict(include_text=False), "marker": labels.get(source.source_id)}\n                for source in ranked\n            ],\n        )\n        security_events = [\n            {\n                "event": "security.injection_attempt",\n                "source_id": source.source_id,\n                "title": source.title,\n                "instruction_followed": False,\n                "content_preserved_in_source_record": True,\n            }\n            for source in ranked\n            if source.injection_detected\n        ]\n        _write_json(output / "security-report.json", {"events": security_events})\n        _write_json(output / "evidence-matrix.json", evidence_matrix)\n        _write_json(output / "evidence-rejections.json", rejected_evidence)\n'''
-          if text.count(old) != 1:
-              raise SystemExit('evidence block anchor mismatch')
-          text = text.replace(old, new)
-          orchestrator.write_text(text, encoding='utf-8')
-
-          retrieval = Path('swos_runtime/retrieval.py')
-          rtext = retrieval.read_text(encoding='utf-8')
-          old = '        for query in queries[:3]:\n'
-          new = '        for query in queries[:6]:\n'
-          if rtext.count(old) != 1:
-              raise SystemExit('retrieval query-budget anchor mismatch')
-          retrieval.write_text(rtext.replace(old, new), encoding='utf-8')
+              raise SystemExit('post-expansion blocker anchor mismatch')
+          path.write_text(text.replace(old, new), encoding='utf-8')
           PY
       - name: Install locked developer tools
         run: python -m pip install --requirement requirements-dev.lock
       - name: Format, lint and run runtime tests
         run: |
-          python -m ruff format swos_runtime/orchestrator.py swos_runtime/retrieval.py
-          python -m ruff check swos_runtime/orchestrator.py swos_runtime/retrieval.py
+          python -m ruff format swos_runtime/orchestrator.py
+          python -m ruff check swos_runtime/orchestrator.py
           python -m unittest discover -s tests/runtime -p 'test_*.py'
-      - name: Commit hardening patch
+      - name: Commit stale-blocker fix
         run: |
           git config user.name "Reza Negarestani"
           git config user.email "13441247+rezanet@users.noreply.github.com"
-          git add swos_runtime/orchestrator.py swos_runtime/retrieval.py
-          git commit -m "fix(runtime): add bounded evidence research expansion" -m "Signed-off-by: Reza Negarestani <13441247+rezanet@users.noreply.github.com>"
+          git add swos_runtime/orchestrator.py
+          git commit -m "fix(runtime): clear stale retrieval blocker after expansion" -m "Signed-off-by: Reza Negarestani <13441247+rezanet@users.noreply.github.com>"
           git push origin HEAD:programme/autonomous-swos
