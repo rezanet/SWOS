@@ -27,19 +27,36 @@ jobs:
 
           path = Path('swos_runtime/retrieval.py')
           text = path.read_text(encoding='utf-8')
-          replacements = {
-              'def _html_text(url: str) -> str:\n    raw = _urlopen(url)\n':
-              'def _html_text(url: str, *, timeout: int = 30) -> str:\n    raw = _urlopen(url, timeout=timeout)\n',
-              '                text = _html_text(url)\n':
-              '                text = _html_text(url, timeout=8)\n',
-              '        for query in queries[:4]:\n            found.extend(self._openai_web(query, limit=3))\n':
-              '        for query in queries[:3]:\n            found.extend(self._openai_web(query, limit=2))\n',
-          }
-          for old, new in replacements.items():
-              count = text.count(old)
-              if count != 1:
-                  raise SystemExit(f'web retrieval tuning anchor mismatch: {old[:70]!r} count={count}')
-              text = text.replace(old, new)
+
+          old = 'def _html_text(url: str) -> str:\n    raw = _urlopen(url)\n'
+          new = 'def _html_text(url: str, *, timeout: int = 30) -> str:\n    raw = _urlopen(url, timeout=timeout)\n'
+          if text.count(old) != 1:
+              raise SystemExit(f'_html_text signature anchor mismatch count={text.count(old)}')
+          text = text.replace(old, new)
+
+          marker = '    def _openai_web(self, query: str, *, limit: int = 3) -> list[SourceRecord]:\n'
+          if text.count(marker) != 1:
+              raise SystemExit('openai web marker mismatch')
+          before, web_section = text.split(marker, 1)
+          old_fetch = '                text = _html_text(url)\n'
+          if old_fetch not in web_section:
+              raise SystemExit('openai web fetch anchor missing')
+          web_section = web_section.replace(
+              old_fetch, '                text = _html_text(url, timeout=8)\n', 1
+          )
+          text = before + marker + web_section
+
+          old_budget = (
+              '        for query in queries[:4]:\n'
+              '            found.extend(self._openai_web(query, limit=3))\n'
+          )
+          new_budget = (
+              '        for query in queries[:3]:\n'
+              '            found.extend(self._openai_web(query, limit=2))\n'
+          )
+          if text.count(old_budget) != 1:
+              raise SystemExit(f'web search budget anchor mismatch count={text.count(old_budget)}')
+          text = text.replace(old_budget, new_budget)
           path.write_text(text, encoding='utf-8')
           PY
       - name: Install locked developer tools
