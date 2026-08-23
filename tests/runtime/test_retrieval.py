@@ -8,10 +8,10 @@ from unittest.mock import patch
 from swos_runtime.models import SourceRecord, swos_id
 from swos_runtime.retrieval import (
     PublicWebRetriever,
-    _TextExtractor,
     _html_text,
     _openalex_abstract,
     _query_terms,
+    _TextExtractor,
     _walk_urls,
     _windows,
 )
@@ -179,8 +179,9 @@ class RetrievalTests(unittest.TestCase):
                 return "short"
             return long_page
 
-        with patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}, clear=False), patch(
-            "swos_runtime.retrieval._html_text", side_effect=fake_html
+        with (
+            patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}, clear=False),
+            patch("swos_runtime.retrieval._html_text", side_effect=fake_html),
         ):
             records = retriever._openai_web("pigment nomenclature chemistry", limit=2)
         self.assertEqual(len(records), 1)
@@ -240,9 +241,11 @@ class RetrievalTests(unittest.TestCase):
             text="y" * 500,
             metadata_verified=True,
         )
-        with patch.object(retriever, "_openalex", return_value=[duplicate]), patch.object(
-            retriever, "_crossref", return_value=[duplicate]
-        ), patch.object(retriever, "_openai_web", return_value=[another]):
+        with (
+            patch.object(retriever, "_openalex", return_value=[duplicate]),
+            patch.object(retriever, "_crossref", return_value=[duplicate]),
+            patch.object(retriever, "_openai_web", return_value=[another]),
+        ):
             results = retriever.retrieve("pigment names", ["q1", "q2"], max_sources=2)
         self.assertEqual(len(results), 2)
         self.assertEqual({source.title for source in results}, {"Same", "Another"})
