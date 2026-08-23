@@ -122,8 +122,8 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install jsonschema
-      - name: Run evaluation plane
-        run: python3 evals/harness/run_evals.py --planes ${{ matrix.plane }} --fail-on-gate
+      - name: Run evaluation plane against Autonomous SWOS
+        run: python3 evals/harness/run_evals.py --planes ${{ matrix.plane }} --system autonomous-swos --fail-on-gate
 
   governance:
     name: Governance policy check
