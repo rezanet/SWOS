@@ -338,6 +338,36 @@ class AutonomousSWOS:
         return graph, raw
 
     @staticmethod
+    def _review_requires_research(findings: list[dict[str, Any]]) -> bool:
+        research_categories = {
+            "fabricated_citation",
+            "citation_metadata_error",
+            "citation_laundering",
+            "unsupported_claim",
+            "overclaim",
+            "missing_counter_evidence",
+            "coverage_gap",
+            "source_bias",
+            "hidden_premise",
+            "invalid_inference",
+            "over_association",
+            "genre_mismatch",
+        }
+        return any(finding.get("category") in research_categories for finding in findings)
+
+    @staticmethod
+    def _enforce_requested_title(article: str, topic: str) -> str:
+        match = re.search(r"\btitled\s+['\"]([^'\"]+)['\"]", topic, flags=re.IGNORECASE)
+        if not match:
+            return article
+        requested = match.group(1).strip()
+        if not requested:
+            return article
+        if re.search(r"(?m)^#\s+.+$", article):
+            return re.sub(r"(?m)^#\s+.+$", f"# {requested}", article, count=1)
+        return f"# {requested}\n\n{article.lstrip()}"
+
+    @staticmethod
     def _source_labels(sources: list[SourceRecord]) -> dict[str, str]:
         return {source.source_id: f"S{index}" for index, source in enumerate(sources, start=1)}
 
@@ -962,10 +992,12 @@ class AutonomousSWOS:
             article = self.stage_provider.draft(
                 request.to_dict(), plan, evidence_rows, argument_raw, source_labels
             )
+            article = self._enforce_requested_title(article, request.topic)
             states.append(_state_entry("draft_generated", "build", "draft-complete"))
             chain.append("draft.generated", {"body_words": body_word_count(article)})
             article, prose_evidence = self._apply_prose(article, request)
-            for iteration in range(1, 4):
+            article = self._enforce_requested_title(article, request.topic)
+            for iteration in range(1, 5):
                 review_result = self.stage_provider.review(
                     article, evidence_rows, argument_raw, ranked, iteration=iteration
                 )
@@ -975,13 +1007,141 @@ class AutonomousSWOS:
                 blocking = self._blocking_findings(documents)
                 if not blocking:
                     break
-                if iteration == 3:
+                if iteration == 4:
                     break
-                article = self.stage_provider.revise(
-                    article, blocking, evidence_rows, argument_raw, source_labels
-                )
+
+                research_repaired = False
+                if self._review_requires_research(blocking):
+                    repair_plan = self.stage_provider.plan_review_repair(request.topic, blocking)
+                    repair_queries = [
+                        str(query).strip()
+                        for query in repair_plan.get("queries", [])
+                        if str(query).strip()
+                    ][:6]
+                    before_keys = {
+                        (source.identifiers.get("doi") or source.url or source.title).lower()
+                        for source in sources
+                    }
+                    expanded = self.retriever.retrieve(request.topic, repair_queries)
+                    added: list[SourceRecord] = []
+                    for source in expanded:
+                        key = (source.identifiers.get("doi") or source.url or source.title).lower()
+                        if key in before_keys:
+                            continue
+                        before_keys.add(key)
+                        sources.append(source)
+                        added.append(source)
+
+                    repair_record = {
+                        "attempt": len(research_expansions) + 1,
+                        "phase": "review_repair",
+                        "review_iteration": iteration,
+                        "trigger_categories": sorted(
+                            {str(finding.get("category")) for finding in blocking}
+                        ),
+                        "research_goal": repair_plan.get("research_goal"),
+                        "queries": repair_queries,
+                        "new_sources": len(added),
+                    }
+                    research_expansions.append(repair_record)
+                    chain.append("research.review_repair", repair_record)
+
+                    if added:
+                        old_ranked = ranked
+                        old_rerank = rerank_record
+                        old_labels = labels
+                        old_matrix = evidence_matrix
+                        old_rows = evidence_rows
+                        old_argument_graph = argument_graph
+                        old_argument_raw = argument_raw
+
+                        ranked, rerank_record = self.stage_provider.rerank(
+                            request.topic, sources, top_k=12
+                        )
+                        for source in ranked:
+                            source.injection_detected = (
+                                source.injection_detected or detect_prompt_injection(source.text)
+                            )
+                        labels = self._source_labels(ranked)
+                        rebuild_evidence()
+                        used_source_ids = {row["source_id"] for row in evidence_rows}
+                        evidence_gate_ok = (
+                            len(evidence_rows) >= 5
+                            and evidence_matrix["coverage"].get("counter_evidence_present")
+                            and (
+                                not _legal_topic(request.topic)
+                                or any(
+                                    source.primary and source.source_id in used_source_ids
+                                    for source in ranked
+                                )
+                            )
+                        )
+                        if evidence_gate_ok:
+                            for row in evidence_rows:
+                                row["source_marker"] = labels[row["source_id"]]
+                            argument_graph, argument_raw = self._build_argument_graph(
+                                work_id,
+                                request.topic,
+                                evidence_rows,
+                                plan.get("rival_theses", []),
+                            )
+                            states.append(
+                                _state_entry(
+                                    "evidence_gathering",
+                                    "build",
+                                    "review-driven-research-complete",
+                                )
+                            )
+                            states.append(
+                                _state_entry(
+                                    "evidence_verified",
+                                    "validate",
+                                    "review-driven-evidence-pass",
+                                )
+                            )
+                            states.append(
+                                _state_entry(
+                                    "argument_constructed",
+                                    "build",
+                                    "review-driven-argument-rebuild",
+                                )
+                            )
+                            article = self.stage_provider.draft(
+                                request.to_dict(),
+                                plan,
+                                evidence_rows,
+                                argument_raw,
+                                labels,
+                            )
+                            article = self._enforce_requested_title(article, request.topic)
+                            source_labels = labels
+                            research_repaired = True
+                        else:
+                            ranked = old_ranked
+                            rerank_record = old_rerank
+                            labels = old_labels
+                            evidence_matrix = old_matrix
+                            evidence_rows = old_rows
+                            argument_graph = old_argument_graph
+                            argument_raw = old_argument_raw
+
+                if not research_repaired:
+                    argument_categories = {"hidden_premise", "invalid_inference", "structure"}
+                    if any(finding.get("category") in argument_categories for finding in blocking):
+                        argument_graph, argument_raw = self._build_argument_graph(
+                            work_id,
+                            request.topic,
+                            evidence_rows,
+                            plan.get("rival_theses", []),
+                        )
+                    article = self.stage_provider.revise(
+                        article, blocking, evidence_rows, argument_raw, source_labels
+                    )
+                    article = self._enforce_requested_title(article, request.topic)
+
                 revision_count += 1
                 article, revision_prose = self._apply_prose(article, request)
+                article = self._enforce_requested_title(article, request.topic)
                 prose_evidence.setdefault("revision_passes", []).append(revision_prose)
             states.append(_state_entry("reviewed", "validate", "independent-review-complete"))
             if revision_count:
@@ -996,6 +1156,41 @@ class AutonomousSWOS:
                     "latest_blockers": len(self._blocking_findings(latest_review_documents)),
                 },
             )
+
+        # Persist the final research/evidence/argument state after any reviewer-driven repairs.
+        labels = self._source_labels(ranked)
+        _write_json(
+            output / "retrieval.json",
+            {
+                "queries": plan.get("queries", []),
+                "research_expansions": research_expansions,
+                "retriever_events": getattr(self.retriever, "events", []),
+                "source_count": len(sources),
+            },
+        )
+        _write_json(output / "reranking.json", rerank_record)
+        _write_json(
+            output / "source-register.json",
+            [
+                {**source.to_dict(include_text=False), "marker": labels.get(source.source_id)}
+                for source in ranked
+            ],
+        )
+        security_events = [
+            {
+                "event": "security.injection_attempt",
+                "source_id": source.source_id,
+                "title": source.title,
+                "instruction_followed": False,
+                "content_preserved_in_source_record": True,
+            }
+            for source in ranked
+            if source.injection_detected
+        ]
+        _write_json(output / "security-report.json", {"events": security_events})
+        _write_json(output / "evidence-matrix.json", evidence_matrix)
+        _write_json(output / "evidence-rejections.json", rejected_evidence)
+        _write_json(output / "argument-graph.json", argument_graph)
 
         for document in all_review_documents:
             filename = f"{document['iteration']:02d}-{document['reviewer_role']}.json"

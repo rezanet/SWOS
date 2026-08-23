@@ -527,6 +527,38 @@ Reserve blocker/major for a defect that prevents defensible automatic delivery. 
             max_output_tokens=10000,
         )
 
+    def plan_review_repair(self, topic: str, findings: list[dict[str, Any]]) -> dict[str, Any]:
+        schema = _object_schema(
+            {
+                "research_goal": {"type": "string"},
+                "queries": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 6,
+                    "items": {"type": "string"},
+                },
+            },
+            ["research_goal", "queries"],
+        )
+        instructions = """You are the SWOS Research Repair Planner. Convert blocker/major reviewer findings into targeted research queries only.
+Seek evidence that directly resolves the cited defect: period-specific or primary documentary evidence, specialist scholarly or museum/conservation evidence, and concrete counterexamples or boundary cases when requested.
+Do not answer the research question, do not invent sources, and do not ask the user. Prefer queries likely to retrieve authoritative full-text pages rather than generic commentary."""
+        compact = [
+            {
+                "category": finding.get("category"),
+                "description": finding.get("description"),
+                "required_action": finding.get("required_action"),
+            }
+            for finding in findings
+        ]
+        return self.json_call(
+            "review_research_plan",
+            instructions,
+            {"topic": topic, "blocking_findings": compact},
+            schema,
+            max_output_tokens=4000,
+        )
+
     def revise(
         self,
         article: str,
