@@ -164,7 +164,7 @@ class FakeProvider:
         }
 
     def draft(self, request, plan, evidence_rows, argument, source_labels):
-        del plan, evidence_rows, argument
+        del request, plan, evidence_rows, argument
         self.draft_called = True
         markers = list(source_labels.values())[:3]
         sentence = (
@@ -264,7 +264,7 @@ class RuntimeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             outcome = runtime.run(
                 ResearchRequest(
-                    topic="Does governed retrieval improve scholarly control?", length=900
+                    topic="Does governed retrieval improve scholarly control?", length=1500
                 ),
                 tmp,
             )
