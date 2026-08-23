@@ -51,6 +51,22 @@ def body_word_count(article: str) -> int:
     return len(re.findall(r"\b[\w’'-]+\b", article_body(article)))
 
 
+def cross_encoder_executed(record: dict[str, Any]) -> bool:
+    """Return whether a governed joint query/document reranker actually ran.
+
+    The gate is capability-based, not vendor-based.  The legacy OpenAI method
+    name is accepted for backward compatibility with already-produced evidence.
+    """
+    if not isinstance(record, dict):
+        return False
+    if (
+        record.get("executed") is True
+        and record.get("capability") == "joint_query_document_cross_encoder"
+    ):
+        return True
+    return record.get("method") == "openai_joint_query_document_cross_encoder"
+
+
 class IntegrityChain:
     """Append-only hash chain for material runtime events."""
 
