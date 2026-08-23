@@ -90,7 +90,9 @@ def _bound_plane(plane, fixtures, system_under_test):
             "gate_result": "fail",
             "fixtures_run": 0,
             "metrics": [],
-            "failures": [{"fixture_id": "-", "reason": f"Unknown system adapter: {system_under_test}"}],
+            "failures": [
+                {"fixture_id": "-", "reason": f"Unknown system adapter: {system_under_test}"}
+            ],
             "mode": "bound_sut",
         }
     from evals.harness.autonomous_sut import evaluate_fixture
@@ -136,14 +138,20 @@ def main():
     parser.add_argument("--out", default=None)
     args = parser.parse_args()
 
-    selected = PLANES if args.all or not args.planes else [p.strip() for p in args.planes.split(",") if p.strip()]
+    selected = (
+        PLANES
+        if args.all or not args.planes
+        else [p.strip() for p in args.planes.split(",") if p.strip()]
+    )
     unknown = [plane for plane in selected if plane not in PLANES]
     if unknown:
         print(f"error: unknown plane(s): {', '.join(unknown)}")
         return 2
 
     results = [run_plane(plane, args.system) for plane in selected]
-    blocking = [result["plane"] for result in results if result["gate_result"] in ("fail", "not_run")]
+    blocking = [
+        result["plane"] for result in results if result["gate_result"] in ("fail", "not_run")
+    ]
     decision = "block" if blocking else "release"
     document = {
         "schema_version": "1.0.0",
@@ -165,7 +173,9 @@ def main():
     print("SWOS evaluation harness 1.1.0")
     print("-" * (width + 34))
     for result in results:
-        mark = {"pass": "PASS", "warn": "WARN", "fail": "FAIL", "not_run": "SKIP"}[result["gate_result"]]
+        mark = {"pass": "PASS", "warn": "WARN", "fail": "FAIL", "not_run": "SKIP"}[
+            result["gate_result"]
+        ]
         print(f"  {result['plane']:<{width}}  {mark}   fixtures: {result['fixtures_run']}")
         for failure in result.get("failures", []):
             print(f"      ! {failure['fixture_id']}: {failure['reason']}")

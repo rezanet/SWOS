@@ -169,14 +169,23 @@ class AutonomousSWOS:
         for candidate in candidates:
             source = source_map.get(str(candidate.get("source_id", "")))
             if source is None or not source.metadata_verified:
-                rejected.append({"candidate": candidate, "reason": "source missing or metadata unverified"})
+                rejected.append(
+                    {"candidate": candidate, "reason": "source missing or metadata unverified"}
+                )
                 continue
             if not exact_quote_supported(str(candidate.get("exact_quote", "")), source):
-                rejected.append({"candidate": candidate, "reason": "evidence quote not found verbatim in source"})
+                rejected.append(
+                    {
+                        "candidate": candidate,
+                        "reason": "evidence quote not found verbatim in source",
+                    }
+                )
                 continue
             deterministic_valid.append(candidate)
 
-        audits = self.stage_provider.audit_evidence(deterministic_valid, source_map).get("audits", [])
+        audits = self.stage_provider.audit_evidence(deterministic_valid, source_map).get(
+            "audits", []
+        )
         audit_by_index = {
             int(item["index"]): item
             for item in audits
@@ -248,7 +257,9 @@ class AutonomousSWOS:
                     "confidence": candidate.get("confidence", "medium"),
                 }
             )
-        counter_present = any(row.get("stance") in {"counter", "limitation"} for row in internal_rows)
+        counter_present = any(
+            row.get("stance") in {"counter", "limitation"} for row in internal_rows
+        )
         providers = {source.provider for source in sources if source.metadata_verified}
         matrix = {
             "schema_version": "1.0.0",
@@ -280,7 +291,9 @@ class AutonomousSWOS:
             local = str(raw_node.get("local_id", "node"))
             node_id = swos_id("arg")
             local_to_id[local] = node_id
-            claims = [cid for cid in raw_node.get("evidence_claim_ids", []) if cid in valid_claim_ids]
+            claims = [
+                cid for cid in raw_node.get("evidence_claim_ids", []) if cid in valid_claim_ids
+            ]
             nodes.append(
                 {
                     "node_id": node_id,
@@ -305,7 +318,9 @@ class AutonomousSWOS:
                         "relation_confidence": "medium",
                     }
                 )
-        thesis_id = next((node["node_id"] for node in nodes if node["node_type"] == "claim"), nodes[0]["node_id"])
+        thesis_id = next(
+            (node["node_id"] for node in nodes if node["node_type"] == "claim"), nodes[0]["node_id"]
+        )
         graph = {
             "schema_version": "1.0.0",
             "work_id": work_id,
@@ -326,7 +341,9 @@ class AutonomousSWOS:
         return {source.source_id: f"S{index}" for index, source in enumerate(sources, start=1)}
 
     @staticmethod
-    def _append_references(article: str, sources: list[SourceRecord], labels: dict[str, str]) -> str:
+    def _append_references(
+        article: str, sources: list[SourceRecord], labels: dict[str, str]
+    ) -> str:
         article = re.split(r"(?im)^\s*##\s+References\s*$", article)[0].strip()
         used_markers = set(citation_markers(article))
         lines = ["## References"]
@@ -508,7 +525,9 @@ class AutonomousSWOS:
         }
 
     @staticmethod
-    def _build_sdl(work_id: str, scope_hint: str, status: str, evidence_refs: list[str]) -> dict[str, Any]:
+    def _build_sdl(
+        work_id: str, scope_hint: str, status: str, evidence_refs: list[str]
+    ) -> dict[str, Any]:
         actor = {
             "actor_type": "orchestrator",
             "actor_id": "swos-autonomous-reference-runtime",
@@ -526,7 +545,10 @@ class AutonomousSWOS:
                     "question": "How should an underspecified jurisdictional scope be handled without interrupting the user?",
                     "options_considered": [
                         {"option": "Apply the governed comparative/default scope and record it."},
-                        {"option": "Interrupt the user for routine scope clarification.", "why_rejected": "Violates the Autonomy Contract when a conservative useful default exists."},
+                        {
+                            "option": "Interrupt the user for routine scope clarification.",
+                            "why_rejected": "Violates the Autonomy Contract when a conservative useful default exists.",
+                        },
                     ],
                     "selected_option": scope_hint,
                     "rationale": "Ordinary ambiguity is resolved by a transparent, conservative assumption rather than making the user orchestrate the workflow.",
@@ -552,7 +574,10 @@ class AutonomousSWOS:
                     ],
                     "selected_option": status,
                     "rationale": "Selected from deterministic evidence, citation, review, semantic, provenance and package-integrity gates.",
-                    "criteria_applied": ["SWOS constitutional rules 3-7", "Autonomous SWOS final gate"],
+                    "criteria_applied": [
+                        "SWOS constitutional rules 3-7",
+                        "Autonomous SWOS final gate",
+                    ],
                     "evidence_refs": evidence_refs,
                     "counter_evidence_refs": [],
                     "argument_refs": [],
@@ -593,7 +618,9 @@ class AutonomousSWOS:
         current = "approved" if status == "APPROVED" else states[-1]["state"]
         history = list(states)
         if status == "APPROVED" and history[-1]["state"] != "approved":
-            history.append(_state_entry("approved", "release", "automatic-delivery-governance-pass"))
+            history.append(
+                _state_entry("approved", "release", "automatic-delivery-governance-pass")
+            )
         return {
             "schema_version": "1.0.0",
             "work_id": work_id,
@@ -669,7 +696,9 @@ class AutonomousSWOS:
         plan = self.stage_provider.plan(request.to_dict(), scope_hint)
         _write_json(output / "research-plan.json", plan)
         states.append(_state_entry("planned", "design", "research-plan-complete"))
-        chain.append("research.planned", {"scope": plan.get("scope"), "queries": plan.get("queries", [])})
+        chain.append(
+            "research.planned", {"scope": plan.get("scope"), "queries": plan.get("queries", [])}
+        )
 
         sources = self.retriever.retrieve(request.topic, plan.get("queries", []))
         states.append(_state_entry("evidence_gathering", "build", "retrieval-complete"))
@@ -708,7 +737,10 @@ class AutonomousSWOS:
             if source.injection_detected
         ]
         _write_json(output / "security-report.json", {"events": security_events})
-        chain.append("retrieval.complete", {"source_count": len(ranked), "security_events": len(security_events)})
+        chain.append(
+            "retrieval.complete",
+            {"source_count": len(ranked), "security_events": len(security_events)},
+        )
 
         evidence_matrix = {
             "schema_version": "1.0.0",
@@ -726,7 +758,9 @@ class AutonomousSWOS:
         evidence_rows: list[dict[str, Any]] = []
         rejected_evidence: list[dict[str, Any]] = []
         if ranked:
-            evidence_candidates = self.stage_provider.build_evidence(request.topic, ranked).get("claims", [])
+            evidence_candidates = self.stage_provider.build_evidence(request.topic, ranked).get(
+                "claims", []
+            )
             evidence_matrix, evidence_rows, rejected_evidence = self._build_evidence_matrix(
                 work_id, evidence_candidates, ranked
             )
@@ -740,24 +774,35 @@ class AutonomousSWOS:
             },
         )
         if not evidence_rows:
-            blockers.append("No claim survived exact-span and independent citation-support verification.")
+            blockers.append(
+                "No claim survived exact-span and independent citation-support verification."
+            )
 
         used_source_ids = {row["source_id"] for row in evidence_rows}
         if _legal_topic(request.topic) and not any(
             source.primary and source.source_id in used_source_ids for source in ranked
         ):
-            blockers.append("No verified primary legal authority survived into the Evidence Matrix.")
+            blockers.append(
+                "No verified primary legal authority survived into the Evidence Matrix."
+            )
         if rerank_record.get("method") != "openai_joint_query_document_cross_encoder":
             blockers.append("The governed semantic cross-encoder reranker did not execute.")
         if len(evidence_rows) < 5:
             blockers.append("Fewer than five verified evidence claims survived the evidence gate.")
         if not evidence_matrix["coverage"].get("counter_evidence_present"):
-            blockers.append("No verified limitation or counter-evidence survived the evidence gate.")
+            blockers.append(
+                "No verified limitation or counter-evidence survived the evidence gate."
+            )
 
         argument_graph = {
             "schema_version": "1.0.0",
             "work_id": work_id,
-            "thesis": {"node_id": swos_id("arg"), "statement": "", "contribution_type": "synthesis", "rival_theses_considered": plan.get("rival_theses", [])},
+            "thesis": {
+                "node_id": swos_id("arg"),
+                "statement": "",
+                "contribution_type": "synthesis",
+                "rival_theses_considered": plan.get("rival_theses", []),
+            },
             "nodes": [],
             "edges": [],
             "unresolved_objections": [],
@@ -773,12 +818,23 @@ class AutonomousSWOS:
         _write_json(output / "argument-graph.json", argument_graph)
         if not blockers:
             states.append(_state_entry("argument_constructed", "build", "argument-graph-complete"))
-        chain.append("argument.constructed", {"nodes": len(argument_graph.get("nodes", [])), "edges": len(argument_graph.get("edges", []))})
+        chain.append(
+            "argument.constructed",
+            {
+                "nodes": len(argument_graph.get("nodes", [])),
+                "edges": len(argument_graph.get("edges", [])),
+            },
+        )
 
         preliminary_status = "REVIEW_REQUIRED" if blockers else "APPROVED"
-        preliminary_epg = self._build_epg(work_id, ranked, evidence_matrix, argument_graph, preliminary_status)
+        preliminary_epg = self._build_epg(
+            work_id, ranked, evidence_matrix, argument_graph, preliminary_status
+        )
         preliminary_sdl = self._build_sdl(
-            work_id, scope_hint, preliminary_status, [row["claim_id"] for row in evidence_matrix.get("rows", [])]
+            work_id,
+            scope_hint,
+            preliminary_status,
+            [row["claim_id"] for row in evidence_matrix.get("rows", [])],
         )
         _write_json(output / "provenance.json", preliminary_epg)
         _write_json(output / "decision-ledger.json", preliminary_sdl)
@@ -823,7 +879,9 @@ class AutonomousSWOS:
             chain.append(
                 "review.complete",
                 {
-                    "iterations": max((doc["iteration"] for doc in all_review_documents), default=0),
+                    "iterations": max(
+                        (doc["iteration"] for doc in all_review_documents), default=0
+                    ),
                     "revisions": revision_count,
                     "latest_blockers": len(self._blocking_findings(latest_review_documents)),
                 },
@@ -861,7 +919,9 @@ class AutonomousSWOS:
 
         latest_blockers = self._blocking_findings(latest_review_documents)
         if latest_blockers:
-            blockers.append(f"Final reviewer panel retained {len(latest_blockers)} blocker/major finding(s).")
+            blockers.append(
+                f"Final reviewer panel retained {len(latest_blockers)} blocker/major finding(s)."
+            )
         if article:
             word_count = body_word_count(article)
             minimum = int(request.length * 0.85)
@@ -888,7 +948,10 @@ class AutonomousSWOS:
         provisional_status = "REVIEW_REQUIRED" if blockers else "APPROVED"
         epg = self._build_epg(work_id, ranked, evidence_matrix, argument_graph, provisional_status)
         sdl = self._build_sdl(
-            work_id, scope_hint, provisional_status, [row["claim_id"] for row in evidence_matrix.get("rows", [])]
+            work_id,
+            scope_hint,
+            provisional_status,
+            [row["claim_id"] for row in evidence_matrix.get("rows", [])],
         )
         scholarly_state = self._scholarly_state(work_id, states, provisional_status)
         _write_json(output / "provenance.json", epg)
@@ -902,7 +965,10 @@ class AutonomousSWOS:
         if status != provisional_status:
             epg = self._build_epg(work_id, ranked, evidence_matrix, argument_graph, status)
             sdl = self._build_sdl(
-                work_id, scope_hint, status, [row["claim_id"] for row in evidence_matrix.get("rows", [])]
+                work_id,
+                scope_hint,
+                status,
+                [row["claim_id"] for row in evidence_matrix.get("rows", [])],
             )
             scholarly_state = self._scholarly_state(work_id, states, status)
             _write_json(output / "provenance.json", epg)

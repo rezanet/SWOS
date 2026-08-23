@@ -70,7 +70,10 @@ def main() -> int:
         failures.append("human intervention occurred")
     if control.get("normal_user_questions_asked") != 0:
         failures.append("normal user questions were asked mid-run")
-    if control.get("cross_encoder", {}).get("method") != "openai_joint_query_document_cross_encoder":
+    if (
+        control.get("cross_encoder", {}).get("method")
+        != "openai_joint_query_document_cross_encoder"
+    ):
         failures.append("reference cross-encoder did not execute")
     if len(evidence.get("rows", [])) < 5:
         failures.append("fewer than five verified Evidence Matrix rows")
@@ -78,10 +81,17 @@ def main() -> int:
         failures.append("no verified counter/limitation evidence")
     if len(references) < 3:
         failures.append("fewer than three verified references used in article")
-    if any(not item.get("metadata_verified") or not item.get("existence_verified") for item in references):
+    if any(
+        not item.get("metadata_verified") or not item.get("existence_verified")
+        for item in references
+    ):
         failures.append("one or more used references are unverified")
 
-    primary_ids = {item["source_id"] for item in sources if item.get("primary") and item.get("metadata_verified")}
+    primary_ids = {
+        item["source_id"]
+        for item in sources
+        if item.get("primary") and item.get("metadata_verified")
+    }
     evidence_source_ids = {
         citation.get("source_id")
         for row in evidence.get("rows", [])
@@ -118,7 +128,9 @@ def main() -> int:
         return 1
 
     print("AUTONOMOUS RUN VALIDATION: PASS")
-    print(f"status=APPROVED body_words={words} references={len(references)} evidence_rows={len(evidence.get('rows', []))}")
+    print(
+        f"status=APPROVED body_words={words} references={len(references)} evidence_rows={len(evidence.get('rows', []))}"
+    )
     return 0
 
 

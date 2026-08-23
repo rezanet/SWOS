@@ -105,7 +105,12 @@ class PublicWebRetriever:
                 "primary_law",
                 "Australia",
                 True,
-                ["12 competence", "13 competence", "146 evidence produced", "147 documents produced"],
+                [
+                    "12 competence",
+                    "13 competence",
+                    "146 evidence produced",
+                    "147 documents produced",
+                ],
             ),
             (
                 "Youth Justice and Criminal Evidence Act 1999 (UK), s 53",
@@ -141,14 +146,18 @@ class PublicWebRetriever:
             ),
         ]
         found: list[SourceRecord] = []
-        for rank, (title, url, source_type, jurisdiction, primary, terms) in enumerate(specs, start=1):
+        for rank, (title, url, source_type, jurisdiction, primary, terms) in enumerate(
+            specs, start=1
+        ):
             try:
                 text = _html_text(url)
             except Exception as exc:
                 self.events.append({"provider": "seed_legal", "url": url, "error": str(exc)})
                 continue
             targeted = _windows(text, terms)
-            verified = len(targeted) > 300 and any(term.split()[0].lower() in targeted.lower() for term in terms)
+            verified = len(targeted) > 300 and any(
+                term.split()[0].lower() in targeted.lower() for term in terms
+            )
             found.append(
                 SourceRecord(
                     source_id=swos_id("src"),
@@ -261,7 +270,9 @@ class PublicWebRetriever:
             )
         return found
 
-    def retrieve(self, topic: str, queries: list[str], *, max_sources: int = 14) -> list[SourceRecord]:
+    def retrieve(
+        self, topic: str, queries: list[str], *, max_sources: int = 14
+    ) -> list[SourceRecord]:
         queries = [q.strip() for q in queries if isinstance(q, str) and q.strip()]
         if not queries:
             queries = [topic]

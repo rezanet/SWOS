@@ -82,7 +82,9 @@ class IntegrityChain:
                 "previous_hash": entry.get("previous_hash"),
             }
             digest = hashlib.sha256(
-                json.dumps(material, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+                json.dumps(
+                    material, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+                ).encode()
             ).hexdigest()
             if (
                 entry.get("sequence") != expected_sequence
