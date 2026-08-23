@@ -279,7 +279,7 @@ class PublicWebRetriever:
         found: list[SourceRecord] = []
         if self._is_legal_topic(topic):
             found.extend(self._seed_legal_sources(queries[0]))
-        for query in queries[:3]:
+        for query in queries[:6]:
             found.extend(self._openalex(query, limit=2))
             found.extend(self._crossref(query, limit=2))
         deduped: list[SourceRecord] = []

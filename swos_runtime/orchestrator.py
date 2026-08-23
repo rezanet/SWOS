@@ -14,6 +14,7 @@ from .governance import (
     body_word_count,
     canonical_sha256,
     citation_markers,
+    detect_prompt_injection,
     exact_quote_supported,
     verify_manifest,
 )
@@ -708,6 +709,10 @@ class AutonomousSWOS:
         rerank_record: dict[str, Any] = {"method": "not_run", "scores": []}
         if sources:
             ranked, rerank_record = self.stage_provider.rerank(request.topic, sources, top_k=10)
+        for source in ranked:
+            source.injection_detected = source.injection_detected or detect_prompt_injection(
+                source.text
+            )
         labels = self._source_labels(ranked)
         _write_json(
             output / "retrieval.json",
@@ -757,13 +762,111 @@ class AutonomousSWOS:
         }
         evidence_rows: list[dict[str, Any]] = []
         rejected_evidence: list[dict[str, Any]] = []
-        if ranked:
+        research_expansions: list[dict[str, Any]] = []
+
+        def rebuild_evidence() -> None:
+            nonlocal evidence_matrix, evidence_rows, rejected_evidence
+            if not ranked:
+                return
             evidence_candidates = self.stage_provider.build_evidence(request.topic, ranked).get(
                 "claims", []
             )
-            evidence_matrix, evidence_rows, rejected_evidence = self._build_evidence_matrix(
+            matrix, rows, rejections = self._build_evidence_matrix(
                 work_id, evidence_candidates, ranked
             )
+            evidence_matrix = matrix
+            evidence_rows = rows
+            rejected_evidence.extend(rejections)
+
+        rebuild_evidence()
+
+        for attempt in range(1, 3):
+            needs_claims = len(evidence_rows) < 5
+            needs_counter = not evidence_matrix["coverage"].get("counter_evidence_present")
+            if not needs_claims and not needs_counter:
+                break
+
+            expansion_queries: list[str] = []
+            if needs_counter:
+                expansion_queries.extend(
+                    str(item) for item in plan.get("rival_theses", [])[:3] if str(item).strip()
+                )
+            if needs_claims:
+                expansion_queries.extend(
+                    str(item)
+                    for item in plan.get("known_uncertainties", [])[:2]
+                    if str(item).strip()
+                )
+            expansion_queries.append(
+                f"{request.topic} counterexamples exceptions limitations evidence"
+            )
+
+            before_keys = {
+                (source.identifiers.get("doi") or source.url or source.title).lower()
+                for source in sources
+            }
+            expanded = self.retriever.retrieve(request.topic, expansion_queries)
+            added = []
+            for source in expanded:
+                key = (source.identifiers.get("doi") or source.url or source.title).lower()
+                if key in before_keys:
+                    continue
+                before_keys.add(key)
+                sources.append(source)
+                added.append(source)
+
+            expansion_record = {
+                "attempt": attempt,
+                "reason": {
+                    "fewer_than_five_verified_claims": needs_claims,
+                    "missing_counter_or_limitation": needs_counter,
+                },
+                "queries": expansion_queries,
+                "new_sources": len(added),
+            }
+            research_expansions.append(expansion_record)
+            chain.append("research.expanded", expansion_record)
+            if not added:
+                break
+
+            ranked, rerank_record = self.stage_provider.rerank(request.topic, sources, top_k=10)
+            for source in ranked:
+                source.injection_detected = source.injection_detected or detect_prompt_injection(
+                    source.text
+                )
+            labels = self._source_labels(ranked)
+            rebuild_evidence()
+
+        labels = self._source_labels(ranked)
+        _write_json(
+            output / "retrieval.json",
+            {
+                "queries": plan.get("queries", []),
+                "research_expansions": research_expansions,
+                "retriever_events": getattr(self.retriever, "events", []),
+                "source_count": len(sources),
+            },
+        )
+        _write_json(output / "reranking.json", rerank_record)
+        _write_json(
+            output / "source-register.json",
+            [
+                {**source.to_dict(include_text=False), "marker": labels.get(source.source_id)}
+                for source in ranked
+            ],
+        )
+        security_events = [
+            {
+                "event": "security.injection_attempt",
+                "source_id": source.source_id,
+                "title": source.title,
+                "instruction_followed": False,
+                "content_preserved_in_source_record": True,
+            }
+            for source in ranked
+            if source.injection_detected
+        ]
+        _write_json(output / "security-report.json", {"events": security_events})
         _write_json(output / "evidence-matrix.json", evidence_matrix)
         _write_json(output / "evidence-rejections.json", rejected_evidence)
         chain.append(
