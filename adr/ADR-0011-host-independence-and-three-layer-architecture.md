@@ -1,72 +1,100 @@
 # ADR-0011: Host independence and three-layer architecture
 
-**Status:** Accepted
-**Date:** 2026-08-24
+**Status:** Accepted  
+**Date:** 2026-08-24  
 **Deciders:** Governance owner, contract owner, portability owner, maintainers
 
 ## Context
 
-SWOS already describes itself as host-agnostic and model-agnostic, and its portability specification places host-specific behaviour in adapters. The Autonomous SWOS runtime in PR #41, however, exposed a stronger requirement: portability must govern not only packaging but also the definition of scholarly validity.
+SWOS is intended to remain SWOS when the underlying intelligence changes. A run may use a subscription host today, a direct API tomorrow, several models in one workflow, or a future local scholarly model without changing the definition of scholarly validity.
 
-A SWOS run must not become valid or invalid because its planning, reranking, evidence construction, drafting, reviewing, or revision capability happened to be supplied by OpenAI, Anthropic, Gemini, a local model, a subscription host, or a direct API. Vendor identity is provenance. It is not scholarly authority.
-
-Without an explicit constitutional boundary, provider details can leak into orchestration and release gates. That would make SWOS behaviour an accidental property of the current model stack rather than a property of SWOS.
+PR #41 exposed four ways vendor identity could otherwise leak into the system: provider-specific release checks, a monolithic provider-shaped orchestrator, scholarly prompts living inside an adapter, and reviewer “independence” inferred from separate calls rather than proved by the execution environment.
 
 ## Decision
 
-SWOS adopts the **Host Independence Rule** as a constitutional requirement:
+SWOS adopts the **Host Independence Rule**:
 
-> No SWOS core workflow, governance decision, schema, artefact, evaluation gate, or release criterion may depend on a specific model vendor, model family, API, authentication mechanism, or commercial access mode.
+> No SWOS core workflow, governance decision, scholarly instruction, schema, artefact, evaluation gate or release criterion may depend on a specific model vendor, model family, API, authentication mechanism or commercial access mode.
 
-OpenAI, Anthropic, Gemini, local models, subscription hosts, direct APIs, and future execution providers belong outside SWOS Core behind adapters or capability bindings.
+The operational layering is:
 
-Changing the model or execution host **must not change the definition of what constitutes valid SWOS research**. Different providers may produce different candidate outputs, but every candidate is judged by the same SWOS evidence, provenance, argument, review, governance, integrity, and audit contracts.
+1. **SWOS Core** owns the scholarly state machine, deterministic validation, Evidence Matrix, Argument Graph, review/revision policy, scholarly state, EPG, SDL, RPM, governance gates, integrity chain and audit package.
+2. **Capability Layer / CapabilityBroker** exposes bounded provider-neutral capabilities through frozen SWOS contracts.
+3. **Host / Provider Adapters** translate host, API, replay or local execution facilities into those contracts.
 
-SWOS is split conceptually and operationally into three layers:
+The model is a replaceable worker. SWOS owns stage authority and release authority.
 
-1. **SWOS Core** — owns the scholarly state machine, Evidence Matrix, Argument Graph, citation verification, review/revision policy, scholarly state, EPG, SDL, RPM, governance gates, integrity chain, and audit package.
-2. **Capability Layer** — exposes provider-neutral scholarly capabilities through explicit contracts. Capabilities are identified by what they do, never by vendor identity.
-3. **Host / Provider Adapters** — Codex, ChatGPT, Claude Code, direct APIs, local models, MCP hosts, and future providers translate host facilities into the Capability Layer contracts.
+## Canonical instruction ownership
 
-The model is a replaceable worker. SWOS owns the process and the decision boundary.
+Scholarly stage instructions are SWOS assets, not adapter assets. The canonical instruction set is versioned and hashed. Adapters may translate transport syntax but may not redefine the intellectual task.
+
+```text
+SWOS stage contract
++ SWOS canonical instruction
++ governed run state
+        ↓
+adapter
+        ↓
+model / host / local worker
+```
+
+Replacing an adapter therefore cannot silently replace the Research Planner, Evidence Builder, Citation Auditor, Argument Architect, Drafting Agent, Reviewer Panel or Revision Agent definition.
+
+## Intelligence versus authority
+
+Models may generate text and may provide judgements that cannot be made deterministically. Those judgements are recorded as evidence about a SWOS decision, including judgement type, adapter, host, model, confidence, assurance and independence limitations.
+
+SWOS independently performs available deterministic checks and owns the resulting state transition. A model may say that a citation supports a claim; SWOS still checks source identity, metadata eligibility, exact quote presence, marker validity, required counter-evidence, schema/state conditions, review requirements and integrity evidence.
+
+## Reviewer independence
+
+Reviewer independence is an explicit assurance property. A separate call or separate context does not prove independence or blindness.
+
+An adapter must declare `review_mode`, `independence`, `blind_review_supported` and `independence_limitations`. SWOS decides whether the declaration satisfies the requested assurance profile. The current automatic-delivery profile permits limited independence but does not rename it independent review.
+
+## Host bundle decision
+
+The host bundle is retained and deliberately demoted.
+
+Its normative role is **replay / interchange / debugging / reproducibility**. Live subscription/agent-host execution uses `swos.work-orders.v1`, where SWOS issues bounded work orders and chooses every next stage.
+
+A canonical bundle is emitted from accepted stage outputs so a completed run can be replayed later without the original host. Replay preserves the original execution provenance while declaring that the current execution mode is replay.
 
 ## Normative consequences
 
-* SWOS Core must not import provider SDKs or require provider credentials.
-* Core release gates must test SWOS capability and evidence properties, never provider names or model identifiers.
-* Provider/model/API/authentication/access-mode details may be recorded in provenance and cost/usage evidence, but cannot define correctness.
-* Canonical prompts and stage instructions are SWOS assets; adapters may translate transport or host syntax but may not redefine the scholarly contract.
-* Unsupported adapter capabilities must fail closed or cause a declared assurance downgrade; silent degradation is forbidden.
-* Reviewer independence must be declared as a capability/assurance property rather than inferred from vendor or model names.
-* A host-native subscription run and an API-backed run must be eligible for the same SWOS release state when they satisfy the same contracts.
-* Host bundles remain valid as replay/interchange evidence, but bundle replay is not the definition of host-native autonomy.
+* SWOS Core must not import provider SDKs or instantiate provider-specific workers.
+* Core release gates test SWOS capability/contract evidence, never provider method names.
+* `AutonomousSWOS` depends on `CapabilityBroker`; concrete adapter selection belongs outside core.
+* Provider/model/authentication/access-mode details are provenance, diagnostics and resource evidence only.
+* Canonical stage instructions are SWOS-owned, versioned and hashed.
+* Model judgements are advisory governance evidence, not self-approving decisions.
+* Reviewer independence/blindness must be explicitly declared and never inferred.
+* Unsupported capabilities or inadequate assurance fail closed; silent degradation is prohibited.
+* Host-native subscription and API-backed runs are judged by the same SWOS contracts.
+* Host-bundle replay does not count as proof of live host autonomy.
 
 ## Enforcement
 
-The rule is enforced by:
+Enforcement is provided by:
 
 * `governance/policies/host-independence.md`;
-* `contracts/capability-contract/README.md`;
-* `docs/architecture/host-independent-three-layer-architecture.md`;
-* adapter conformance tests;
-* portability acceptance across at least one API-backed and one host-native execution mode;
-* a vendor-leakage CI gate for SWOS Core paths;
-* review of every new release criterion for provider-specific assumptions.
+* `contracts/capability-contract/capabilities-v1.json`;
+* `contracts/stage-instruction/stage-instructions-v1.json`;
+* `swos_runtime/broker.py` and `swos_runtime/work_orders.py`;
+* adapter conformance and final-governance tests;
+* the host-independence CI checker;
+* portability acceptance through at least one API-backed and one host-native execution mode.
 
-Because SWOS precedence is `governance policy > frozen schema > master contract > agent contract > discipline pack > host adapter`, the frozen Host Independence policy is authoritative immediately without mutating the already-frozen v1.0 Master Prompt Contract. The next constitutional contract revision must incorporate this rule explicitly.
+The legacy provider-shaped runtime is preserved only as historical/reference code outside the core authority path so regression evidence is not lost while the architecture is corrected.
 
 ## Consequences
 
-* Provider integrations become replaceable infrastructure rather than architectural identity.
-* SWOS can run through subscription hosts, APIs, local models, or future systems without changing scholarly validity.
-* Some existing runtime code must move or be refactored because OpenAI-specific defaults and release checks currently cross the core boundary.
-* Provider-specific benchmarking remains useful, but it measures an adapter/model implementation rather than redefining SWOS correctness.
-* Cross-host acceptance becomes a release concern rather than optional portability documentation.
+Provider integrations become replaceable infrastructure rather than architectural identity. SWOS may mix several conforming workers in one future run. Provider-specific benchmarking remains useful, but it measures an implementation of a capability rather than redefining SWOS correctness.
 
 ## Alternatives considered
 
-**Keep OpenAI as the canonical reference implementation inside core.** Rejected because a reference implementation can quietly become the definition of correctness.
+**Keep one provider as the canonical reference implementation inside core.** Rejected because the reference implementation can quietly become the definition of scholarly validity.
 
-**Treat host portability as packaging only.** Rejected because a package can be portable while its release gates remain vendor-bound.
+**Treat portability as packaging only.** Rejected because a portable package can still contain vendor-bound prompts and gates.
 
-**Maintain separate SWOS variants per provider.** Rejected because that creates multiple definitions of scholarly validity and destroys the operating-system boundary.
+**Maintain separate SWOS variants per provider.** Rejected because that creates multiple scholarly operating systems instead of one governed SWOS.
