@@ -52,13 +52,21 @@ def body_word_count(article: str) -> int:
 
 
 def cross_encoder_executed(record: dict[str, Any]) -> bool:
-    """Return whether a governed joint query/document reranker actually ran.
+    """Return whether the governed SWOS semantic-rerank capability ran.
 
-    The gate is capability-based, not vendor-based.  The legacy OpenAI method
-    name is accepted for backward compatibility with already-produced evidence.
+    Scholarly validity is defined by the frozen SWOS capability contract, never
+    by a vendor or model name. Older capability/method identities remain readable
+    only so historical evidence can still be audited; new evidence must use
+    ``semantic_rerank`` with ``swos.semantic-rerank.v1``.
     """
     if not isinstance(record, dict):
         return False
+    if (
+        record.get("executed") is True
+        and record.get("capability") == "semantic_rerank"
+        and record.get("contract") == "swos.semantic-rerank.v1"
+    ):
+        return True
     if (
         record.get("executed") is True
         and record.get("capability") == "joint_query_document_cross_encoder"
