@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Any, Callable
 
-from .capabilities import CAPABILITY_CONTRACTS, CAPABILITY_CONTRACT_SET
+from .capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
 
 
 class CapabilityBrokerError(RuntimeError):
