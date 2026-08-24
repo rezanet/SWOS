@@ -127,7 +127,14 @@ def main() -> int:
         if args.command == "export-host-bundle":
             run = WorkOrderRun(args.run_dir)
             path = run.export_host_bundle(args.output)
-            _print({"host_bundle": str(path), "bundle_role": "replay_interchange_debug_reproducibility", **run.status()}, args.as_json)
+            _print(
+                {
+                    "host_bundle": str(path),
+                    "bundle_role": "replay_interchange_debug_reproducibility",
+                    **run.status(),
+                },
+                args.as_json,
+            )
             return 0
 
         if args.command == "finalise":
