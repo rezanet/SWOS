@@ -1,8 +1,8 @@
 """Persistent SWOS work-order protocol for live host execution.
 
-SWOS owns stage ordering, canonical instructions, contract validation and state
-transitions. A host or adapter fulfils one bounded capability at a time. The
-host never chooses the next scholarly stage and never owns the release decision.
+SWOS owns stage ordering, canonical instructions, deterministic validation and
+state transitions. A host or adapter fulfils one bounded capability at a time.
+Models may propose or judge; SWOS decides whether a stage result can advance.
 """
 
 from __future__ import annotations
@@ -13,7 +13,9 @@ from pathlib import Path
 from typing import Any
 
 from .capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
+from .governance import citation_markers, exact_quote_supported
 from .instructions import INSTRUCTION_SET, instruction_record
+from .models import SourceRecord
 
 PROTOCOL_VERSION = "swos.work-orders.v1"
 MAX_REVIEW_ITERATIONS = 3
@@ -35,6 +37,14 @@ JUDGEMENT_TYPES = {
     "argument_construction": "argument_proposal",
     "semantic_verification": "semantic_preservation",
     "hostile_review": "scholarly_review",
+}
+VALID_SUPPORT_LEVELS = {
+    "directly_supports",
+    "partially_supports",
+    "context_only",
+    "contradicts",
+    "citation_laundering_risk",
+    "invalid_citation",
 }
 
 
@@ -101,14 +111,13 @@ def _validate_request(payload: Any) -> dict[str, Any]:
 def _blocking_findings(review: Any) -> list[dict[str, Any]]:
     if not isinstance(review, dict):
         return []
-    findings: list[dict[str, Any]] = []
-    for panel in review.get("reviews", []):
-        if not isinstance(panel, dict):
-            continue
-        for finding in panel.get("findings", []):
-            if isinstance(finding, dict) and finding.get("severity") in {"blocker", "major"}:
-                findings.append(finding)
-    return findings
+    return [
+        finding
+        for panel in review.get("reviews", [])
+        if isinstance(panel, dict)
+        for finding in panel.get("findings", [])
+        if isinstance(finding, dict) and finding.get("severity") in {"blocker", "major"}
+    ]
 
 
 def _review_assurance(declaration: dict[str, Any]) -> dict[str, Any]:
@@ -194,6 +203,30 @@ class WorkOrderRun:
             if item.get("stage") == stage
         ]
 
+    def _retrieved_sources(self) -> list[SourceRecord]:
+        payload = self._latest("source_retrieval") or {}
+        return [
+            SourceRecord(**item)
+            for item in payload.get("sources", [])
+            if isinstance(item, dict)
+        ]
+
+    def _source_labels(self) -> dict[str, str]:
+        return {
+            source.source_id: f"S{index}"
+            for index, source in enumerate(self._retrieved_sources(), start=1)
+        }
+
+    def _directly_supported_indices(self) -> set[int]:
+        audit = self._latest("citation_support_audit") or {}
+        return {
+            int(item["index"])
+            for item in audit.get("audits", [])
+            if isinstance(item, dict)
+            and isinstance(item.get("index"), int)
+            and item.get("support_level") == "directly_supports"
+        }
+
     def _latest_revision_or_draft(self) -> str | None:
         for stage in ("revision", "draft_generation"):
             payload = self._latest(stage)
@@ -242,6 +275,7 @@ class WorkOrderRun:
                 "evidence_candidates": latest("evidence_extraction") or {},
                 "citation_audit": latest("citation_support_audit") or {},
                 "argument": latest("argument_construction") or {},
+                "source_markers": self._source_labels(),
             }
         if stage == "revision":
             return {
@@ -250,6 +284,7 @@ class WorkOrderRun:
                 "evidence_candidates": latest("evidence_extraction") or {},
                 "citation_audit": latest("citation_support_audit") or {},
                 "argument": latest("argument_construction") or {},
+                "source_markers": self._source_labels(),
             }
         if stage == "prose_transformation":
             return {
@@ -309,6 +344,7 @@ class WorkOrderRun:
                     "capability",
                     "contract",
                     "contract_passed",
+                    "executed",
                     "instruction_id",
                     "instruction_sha256",
                     "judgement_evidence_when_applicable",
@@ -339,18 +375,19 @@ class WorkOrderRun:
             raise WorkOrderError("submission execution_mode does not match run adapter")
         instruction = instruction_record(stage)
         normalized = dict(provenance)
-        normalized["instruction_set"] = instruction["instruction_set"]
-        normalized["instruction_id"] = instruction["instruction_id"]
-        normalized["instruction_sha256"] = instruction["sha256"]
-        normalized["capability"] = stage
-        normalized["contract"] = CAPABILITY_CONTRACTS[stage]
+        normalized.update(
+            {
+                "instruction_set": instruction["instruction_set"],
+                "instruction_id": instruction["instruction_id"],
+                "instruction_sha256": instruction["sha256"],
+                "capability": stage,
+                "contract": CAPABILITY_CONTRACTS[stage],
+            }
+        )
         return normalized
 
     def _judgement_evidence(
-        self,
-        stage: str,
-        result: dict[str, Any],
-        provenance: dict[str, Any],
+        self, stage: str, result: dict[str, Any], provenance: dict[str, Any]
     ) -> dict[str, Any] | None:
         judgement_type = JUDGEMENT_TYPES.get(stage)
         if not judgement_type:
@@ -375,6 +412,87 @@ class WorkOrderRun:
             "authority": "advisory_evidence_for_swos_governance",
         }
 
+    def _validate_retrieval(self, result: dict[str, Any]) -> None:
+        sources = result.get("sources")
+        if not isinstance(sources, list) or not sources:
+            raise WorkOrderError("source retrieval must return a non-empty sources array")
+        seen: set[str] = set()
+        for index, source in enumerate(sources):
+            if not isinstance(source, dict):
+                raise WorkOrderError(f"retrieved source {index} must be an object")
+            for key in ("source_id", "title", "url", "text"):
+                if not isinstance(source.get(key), str) or not source[key].strip():
+                    raise WorkOrderError(f"retrieved source {index} missing non-empty {key}")
+            source_id = source["source_id"]
+            if source_id in seen:
+                raise WorkOrderError(f"duplicate retrieved source_id: {source_id}")
+            seen.add(source_id)
+
+    def _validate_evidence(self, result: dict[str, Any]) -> None:
+        claims = result.get("claims")
+        if not isinstance(claims, list) or not claims:
+            raise WorkOrderError("evidence extraction must return claims array")
+        sources = {source.source_id: source for source in self._retrieved_sources()}
+        for index, claim in enumerate(claims):
+            if not isinstance(claim, dict):
+                raise WorkOrderError(f"evidence claim {index} must be an object")
+            source_id = claim.get("source_id")
+            quote = claim.get("exact_quote")
+            source = sources.get(str(source_id or ""))
+            if source is None:
+                raise WorkOrderError(f"evidence claim {index} references unknown source_id")
+            if not source.metadata_verified:
+                raise WorkOrderError(
+                    f"evidence claim {index} cannot advance because source metadata is unverified"
+                )
+            if not isinstance(quote, str) or not exact_quote_supported(quote, source):
+                raise WorkOrderError(
+                    f"evidence claim {index} exact_quote does not occur in the retrieved source"
+                )
+
+    def _validate_citation_audit(self, result: dict[str, Any]) -> None:
+        audits = result.get("audits")
+        if not isinstance(audits, list):
+            raise WorkOrderError("citation support audit must return audits array")
+        claims = (self._latest("evidence_extraction") or {}).get("claims", [])
+        seen: set[int] = set()
+        for item in audits:
+            if not isinstance(item, dict) or not isinstance(item.get("index"), int):
+                raise WorkOrderError("each citation audit requires an integer index")
+            index = item["index"]
+            if index < 0 or index >= len(claims) or index in seen:
+                raise WorkOrderError(f"invalid or duplicate citation audit index: {index}")
+            seen.add(index)
+            if item.get("support_level") not in VALID_SUPPORT_LEVELS:
+                raise WorkOrderError(f"invalid citation support level at index {index}")
+        if len(seen) != len(claims):
+            raise WorkOrderError("citation support audit must judge every evidence candidate")
+
+    def _validate_argument(self, result: dict[str, Any]) -> None:
+        nodes = result.get("nodes")
+        if not isinstance(nodes, list) or not nodes:
+            raise WorkOrderError("argument construction must return non-empty nodes")
+        supported = self._directly_supported_indices()
+        for node in nodes:
+            if not isinstance(node, dict):
+                raise WorkOrderError("argument node must be an object")
+            for value in node.get("evidence_indices", []):
+                if not isinstance(value, int) or value not in supported:
+                    raise WorkOrderError(
+                        "argument may reference only evidence candidates judged directly_supports"
+                    )
+
+    def _validate_article(self, stage: str, result: dict[str, Any]) -> None:
+        article = result.get("article") or result.get("text")
+        if not isinstance(article, str) or not article.strip():
+            raise WorkOrderError(f"{stage} must return non-empty article text")
+        markers = set(citation_markers(article))
+        valid = set(self._source_labels().values())
+        if not markers or not markers.issubset(valid):
+            raise WorkOrderError(f"{stage} contains missing or invalid SWOS source markers")
+        if len(markers) < min(3, len(valid)):
+            raise WorkOrderError(f"{stage} does not use the governed minimum source-marker coverage")
+
     def _validate_stage_result(self, stage: str, result: Any) -> dict[str, Any]:
         if not isinstance(result, dict):
             raise WorkOrderError("stage submission must be a JSON object")
@@ -383,58 +501,52 @@ class WorkOrderRun:
         contract = normalized.get("contract")
         if contract not in {None, CAPABILITY_CONTRACTS[stage]}:
             raise WorkOrderError(f"submission contract mismatch for {stage}: {contract!r}")
-        normalized["capability"] = stage
-        normalized["contract"] = CAPABILITY_CONTRACTS[stage]
-        normalized["contract_passed"] = True
-        normalized["provenance"] = provenance
-        judgement = self._judgement_evidence(stage, normalized, provenance)
-        if judgement is not None:
-            normalized["judgement_evidence"] = judgement
+        normalized.update(
+            {
+                "capability": stage,
+                "contract": CAPABILITY_CONTRACTS[stage],
+                "contract_passed": True,
+                "executed": True,
+                "provenance": provenance,
+            }
+        )
 
         if stage == "research_planning":
-            required = ("research_question", "scope", "queries", "rival_theses")
-            for key in required:
+            for key in ("research_question", "scope", "queries", "rival_theses"):
                 if key not in normalized:
                     raise WorkOrderError(f"research plan missing {key!r}")
             if not isinstance(normalized.get("queries"), list) or len(normalized["queries"]) < 3:
                 raise WorkOrderError("research plan requires at least three queries")
         elif stage == "source_retrieval":
-            sources = normalized.get("sources")
-            if not isinstance(sources, list) or not sources:
-                raise WorkOrderError("source retrieval must return a non-empty sources array")
+            self._validate_retrieval(normalized)
         elif stage == "semantic_rerank":
             if not isinstance(normalized.get("scores"), list):
                 raise WorkOrderError("semantic rerank must return scores array")
         elif stage == "evidence_extraction":
-            claims = normalized.get("claims")
-            if not isinstance(claims, list) or not claims:
-                raise WorkOrderError("evidence extraction must return claims array")
-            for claim in claims:
-                if (
-                    not isinstance(claim, dict)
-                    or not claim.get("exact_quote")
-                    or not claim.get("source_id")
-                ):
-                    raise WorkOrderError("every evidence claim requires source_id and exact_quote")
+            self._validate_evidence(normalized)
         elif stage == "citation_support_audit":
-            if not isinstance(normalized.get("audits"), list):
-                raise WorkOrderError("citation support audit must return audits array")
+            self._validate_citation_audit(normalized)
         elif stage == "argument_construction":
-            if not isinstance(normalized.get("nodes"), list) or not normalized.get("nodes"):
-                raise WorkOrderError("argument construction must return non-empty nodes")
+            self._validate_argument(normalized)
         elif stage in {"draft_generation", "revision"}:
-            article = normalized.get("article") or normalized.get("text")
-            if not isinstance(article, str) or not article.strip():
-                raise WorkOrderError(f"{stage} must return non-empty article text")
+            self._validate_article(stage, normalized)
         elif stage == "prose_transformation":
             candidate = normalized.get("candidate") or normalized.get("final_text")
             if not isinstance(candidate, str) or not candidate.strip():
                 raise WorkOrderError("prose transformation must return candidate text")
+            source_markers = set(citation_markers(self._latest_revision_or_draft() or ""))
+            candidate_markers = set(citation_markers(candidate))
+            if candidate_markers != source_markers:
+                raise WorkOrderError("prose transformation changed protected SWOS source markers")
         elif stage == "semantic_verification":
             if normalized.get("status") not in {"PASS", "REVIEW", "REJECT"}:
                 raise WorkOrderError("semantic verification status must be PASS, REVIEW or REJECT")
         elif stage == "hostile_review" and not isinstance(normalized.get("reviews"), list):
             raise WorkOrderError("hostile review must return reviews array")
+
+        judgement = self._judgement_evidence(stage, normalized, provenance)
+        if judgement is not None:
+            normalized["judgement_evidence"] = judgement
         return normalized
 
     def _advance(self, stage: str, result: dict[str, Any]) -> None:
@@ -476,6 +588,7 @@ class WorkOrderRun:
                 "capability": stage,
                 "contract": CAPABILITY_CONTRACTS[stage],
                 "contract_passed": True,
+                "executed": True,
                 "instruction_id": validated["provenance"]["instruction_id"],
                 "instruction_sha256": validated["provenance"]["instruction_sha256"],
                 "submission": relative,
@@ -526,8 +639,7 @@ class WorkOrderRun:
             for payload in self._all("revision")
             if isinstance(payload, dict)
         ]
-        review_decl = _require_capability(adapter, "hostile_review")
-        review = _review_assurance(review_decl)
+        review = _review_assurance(_require_capability(adapter, "hostile_review"))
         bundle = {
             "bundle_role": "replay_interchange_debug_reproducibility",
             "host": {
@@ -559,7 +671,7 @@ class WorkOrderRun:
                 "semantic_verification": verification,
             },
             "prose": {
-                "adapter_mode": "host_native_swos_prose_contract",
+                "adapter_mode": "swos_prose_contract_record",
                 "safe_for_automatic_use": safe,
                 "final_text": final_text,
                 "semantic_verification": verification,
