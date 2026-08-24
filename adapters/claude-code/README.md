@@ -1,57 +1,39 @@
-# Claude Code Adapter
+# Claude Code adapter
 
-Claude Code implements the Agent Skills open standard and adds host extensions.
-Those extensions are useful and **must not leak into SWOS core skills**.
+This adapter maps Claude Code host capabilities onto SWOS contracts. Claude Code is an execution host; it is not part of the SWOS scholarly authority layer.
 
-## Install
+## v2 subscription capability contract
+
+`subscription-capabilities-v1.json` declares the host-native subscription capabilities required by `swos.capabilities.v1`.
+
+The declaration is intentionally conservative:
+
+- `execution_mode = host_native_subscription`;
+- `api_key_used = false`;
+- `paid_api_calls = 0`;
+- citation/reviewer independence is `limited`;
+- `blind_review_supported = false` until a real acceptance run proves a stronger property.
+
+A separate context is not automatically called an independent reviewer.
+
+## G-PORT acceptance
+
+Claude Code is the required second-host proof for SWOS v2 portability. The canonical case is:
+
+`Can an AI-operated machine be a witness in court?`
+
+The host must execute the SWOS work-order protocol with `ANTHROPIC_API_KEY` absent. The resulting run must pass the same full governed outcome validator used for the API and Codex cases.
+
+After a successful live run, generate the evidence record with:
 
 ```bash
-cp -r skills/swos-core skills/swos-research-planner \
-      skills/swos-citation-auditor skills/swos-reviewer \
-      ~/.claude/skills/
-python3 adapters/claude-code/apply_overlay.py --target ~/.claude/skills/
+python tools/record_portability_acceptance.py \
+  claude_code_subscription \
+  <run-output-dir>
 ```
 
-`apply_overlay.py` merges `overlay.yaml` into the installed copies. It never
-modifies the repository originals.
+The evidence record is committed under `acceptance/portability/evidence/`. It must not be hand-authored or inferred from the adapter declaration alone.
 
-## Host extensions isolated here
+## Existing compatibility files
 
-| Extension | SWOS use |
-|---|---|
-| `disable-model-invocation` | Set on `swos-reviewer` so review is user-initiated, not auto-triggered mid-draft |
-| `user-invocable` | `/swos-citation-auditor` as an explicit command |
-| `context: fork` / `agent` | Runs the hostile reviewer in a forked context - the mechanism for **blind review** |
-| `allowed-tools` / `disallowed-tools` | Binds the agent contract tool lists to host tools |
-| Hooks | Emits EPG activity records on tool call and skill activation |
-| Path globs | Auto-suggests `swos-citation-auditor` on files with reference sections |
-| Model / effort overrides | Higher effort for argument construction, lower for formatting |
-| Live change detection | Reloads discipline packs during development |
-
-## Why this matters
-
-Outside Claude Code, only the six specification fields are accepted. Custom keys
-such as `argument-hint`, `paths`, `hooks`, `context`, `agent`,
-`disable-model-invocation`, `user-invocable`, `disallowed-tools`, `model`,
-`effort` and `background` cause a hard validation error where the specification is
-enforced:
-
-```
-Unexpected key(s) in SKILL.md frontmatter: argument-hint.
-Allowed properties are: allowed-tools, compatibility, description, license, metadata, name.
-```
-
-Overlay, do not embed.
-
-## Blind review binding
-
-```yaml
-swos-reviewer:
-  context: fork
-  agent: hostile-reviewer
-  disable-model-invocation: true
-```
-
-Forking gives the hostile reviewer a context without the prior draft rationale.
-This is the host mechanism that satisfies the `blind_review` field in
-`reviewer-finding.schema.json`.
+`capability-matrix.json` and `overlay.yaml` remain compatibility/installation metadata. They do not override the frozen SWOS capability contracts or the G-PORT acceptance standard.
