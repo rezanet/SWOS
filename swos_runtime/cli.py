@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
+from .finalizer import finalize_work_order_run
 from .host_bundle import (
     HostBundleRetriever,
     HostBundleStageProvider,
@@ -26,20 +27,6 @@ def _print(payload, as_json: bool) -> None:
                 print(f"{key}: {value}")
         else:
             print(payload)
-
-
-def _request_from_dict(payload: dict) -> ResearchRequest:
-    fields = {
-        "topic",
-        "length",
-        "audience",
-        "style",
-        "depth",
-        "jurisdiction",
-        "citation_style",
-        "date_cutoff",
-    }
-    return ResearchRequest(**{key: value for key, value in payload.items() if key in fields})
 
 
 def main() -> int:
@@ -102,7 +89,7 @@ def main() -> int:
 
     finalise = sub.add_parser(
         "finalise",
-        help="Run final SWOS governance/replay from a completed host-native subscription run",
+        help="Run provider-neutral SWOS governance and audit assembly for a host-native run",
     )
     finalise.add_argument("run_dir", type=Path)
     finalise.add_argument("--output", type=Path, required=True)
@@ -150,16 +137,7 @@ def main() -> int:
 
         if args.command == "finalise":
             run = WorkOrderRun(args.run_dir)
-            if run.status()["status"] != "READY_TO_FINALISE":
-                raise WorkOrderError(f"run must be READY_TO_FINALISE, got {run.status()['status']}")
-            bundle_path = run.export_host_bundle()
-            bundle = load_host_bundle(bundle_path)
-            runtime = AutonomousSWOS(
-                stage_provider=HostBundleStageProvider(bundle),
-                retriever=HostBundleRetriever(bundle),
-                prose_transform=host_prose_transform(bundle),
-            )
-            outcome = runtime.run(_request_from_dict(run.state["request"]), args.output)
+            outcome = finalize_work_order_run(run, args.output)
             (run.run_dir / "final-outcome.json").write_text(
                 json.dumps(outcome.to_dict(), indent=2) + "\n", encoding="utf-8"
             )
