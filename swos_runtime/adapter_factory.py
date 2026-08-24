@@ -80,9 +80,7 @@ def _openai_prose_binding():
 
 def build_openai_api_broker() -> tuple[CapabilityBroker, dict[str, Any]]:
     """Compose OpenAI model capabilities with SWOS public-web retrieval."""
-    manifest = _load_manifest(
-        _repo_root() / "adapters" / "openai-api" / "capabilities-v1.json"
-    )
+    manifest = _load_manifest(_repo_root() / "adapters" / "openai-api" / "capabilities-v1.json")
     manifest = copy.deepcopy(manifest)
     # The selected execution stack includes a retrieval binding, so the effective
     # adapter presented to SWOS satisfies source_retrieval even though the model
