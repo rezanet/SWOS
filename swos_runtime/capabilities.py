@@ -57,11 +57,15 @@ class AdapterCapabilities:
     api_key_used: bool = False
     paid_api_calls: int = 0
 
-    def supports(self, capability: str, *, accepted_levels: Iterable[str] = ("full", "native")) -> bool:
+    def supports(
+        self, capability: str, *, accepted_levels: Iterable[str] = ("full", "native")
+    ) -> bool:
         declaration = self.declarations.get(capability)
         return bool(declaration and declaration.level in set(accepted_levels))
 
-    def require(self, capability: str, *, accepted_levels: Iterable[str] = ("full", "native")) -> CapabilityDeclaration:
+    def require(
+        self, capability: str, *, accepted_levels: Iterable[str] = ("full", "native")
+    ) -> CapabilityDeclaration:
         declaration = self.declarations.get(capability)
         if declaration is None:
             raise CapabilityError(
