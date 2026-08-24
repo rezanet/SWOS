@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 from swos_runtime.governance import body_word_count, cross_encoder_executed, verify_manifest
-from swos_runtime.orchestrator import AutonomousSWOS
+from swos_runtime.schema_validation import validate_frozen_run_schemas
 
 CANONICAL_TOPIC = "Can an AI-operated machine be a witness in court?"
 REQUIRED_FILES = {
@@ -77,7 +77,7 @@ def main() -> int:
     if control.get("normal_user_questions_asked") != 0:
         failures.append("normal user questions were asked mid-run")
     if not cross_encoder_executed(control.get("cross_encoder", {})):
-        failures.append("governed joint query/document cross-encoder did not execute")
+        failures.append("governed semantic rerank did not execute")
     if len(evidence.get("rows", [])) < 5:
         failures.append("fewer than five verified Evidence Matrix rows")
     if not evidence.get("coverage", {}).get("counter_evidence_present"):
@@ -126,7 +126,7 @@ def main() -> int:
         if request.get("depth") != "rigorous":
             failures.append("canonical depth mismatch")
 
-    schema_errors = AutonomousSWOS._validate_schemas(root)
+    schema_errors = validate_frozen_run_schemas(root)
     if schema_errors:
         failures.extend(f"schema: {error}" for error in schema_errors)
 
