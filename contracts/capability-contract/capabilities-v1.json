@@ -1,0 +1,95 @@
+{
+  "contract_set": "swos.capabilities.v1",
+  "status": "frozen",
+  "principle": "SWOS owns the scholarly process. Models provide capabilities.",
+  "capabilities": {
+    "research_planning": {
+      "contract": "swos.research-planning.v1",
+      "input": "ResearchRequest + governed scope hint",
+      "output": "research plan object",
+      "assurance": ["structured_output", "no_source_invention"],
+      "provenance": ["adapter", "model_host", "model", "execution_mode"],
+      "failure": "fail_closed"
+    },
+    "source_retrieval": {
+      "contract": "swos.source-retrieval.v1",
+      "input": "topic + governed queries",
+      "output": "SourceRecord[]",
+      "assurance": ["source_identity", "metadata_provenance", "untrusted_content_boundary"],
+      "provenance": ["adapter", "retrieval_provider", "network_mode"],
+      "failure": "return_empty_and_block_release"
+    },
+    "semantic_rerank": {
+      "contract": "swos.semantic-rerank.v1",
+      "input": "query + SourceRecord[]",
+      "output": "ranked SourceRecord[] + capability evidence",
+      "assurance": ["joint_query_document_scoring", "score_provenance"],
+      "provenance": ["adapter", "model_host", "model", "execution_mode"],
+      "failure": "fail_closed"
+    },
+    "evidence_extraction": {
+      "contract": "swos.evidence-extraction.v1",
+      "input": "topic + retrieved source text",
+      "output": "atomic candidate claims with exact quotes",
+      "assurance": ["exact_quote_required", "no_model_memory"],
+      "provenance": ["adapter", "model_host", "model"],
+      "failure": "fail_closed"
+    },
+    "citation_support_audit": {
+      "contract": "swos.citation-support-audit.v1",
+      "input": "candidate claim + exact quote + verified source metadata",
+      "output": "support classification",
+      "assurance": ["independent_judgement_declared", "conservative_uncertainty"],
+      "provenance": ["adapter", "model_host", "model", "independence"],
+      "failure": "classify_invalid_or_review"
+    },
+    "argument_construction": {
+      "contract": "swos.argument-construction.v1",
+      "input": "verified Evidence Matrix + rival theses",
+      "output": "Argument Graph proposal",
+      "assurance": ["verified_evidence_only", "objections_and_qualifiers"],
+      "provenance": ["adapter", "model_host", "model"],
+      "failure": "fail_closed"
+    },
+    "draft_generation": {
+      "contract": "swos.draft-generation.v1",
+      "input": "ResearchRequest + verified Evidence Matrix + Argument Graph",
+      "output": "article body with valid source markers",
+      "assurance": ["verified_evidence_only", "no_invented_markers"],
+      "provenance": ["adapter", "model_host", "model"],
+      "failure": "fail_closed"
+    },
+    "semantic_verification": {
+      "contract": "swos.semantic-verification.v1",
+      "input": "source text + candidate text + context",
+      "output": "PASS|REVIEW|REJECT with evidence",
+      "assurance": ["fail_closed", "semantic_delta_evidence"],
+      "provenance": ["adapter", "model_host", "model", "assurance_level"],
+      "failure": "preserve_source"
+    },
+    "hostile_review": {
+      "contract": "swos.hostile-review.v1",
+      "input": "article + evidence + argument + source register",
+      "output": "role-based reviewer findings",
+      "assurance": ["independence_declared", "bounded_review"],
+      "provenance": ["adapter", "model_host", "model", "independence"],
+      "failure": "review_required"
+    },
+    "revision": {
+      "contract": "swos.revision.v1",
+      "input": "article + blocking findings + verified evidence + argument",
+      "output": "full revised article",
+      "assurance": ["verified_evidence_only", "bounded_iteration"],
+      "provenance": ["adapter", "model_host", "model"],
+      "failure": "preserve_prior_article_and_review_required"
+    },
+    "prose_transformation": {
+      "contract": "swos.prose-transformation.v1",
+      "input": "article chunk + mode/preset + semantic context",
+      "output": "safe final text + semantic verification record",
+      "assurance": ["semantic_preservation", "source_fallback"],
+      "provenance": ["adapter", "model_host", "model", "assurance_level"],
+      "failure": "preserve_source"
+    }
+  }
+}
