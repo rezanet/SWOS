@@ -1,122 +1,156 @@
 # Host Independence Policy
 
-**Policy ID:** GOV-HOST-INDEPENDENCE-001
-**Status:** Frozen
-**Effective date:** 2026-08-24
-**Authority:** SWOS Governance Control Plane
+**Policy ID:** GOV-HOST-INDEPENDENCE-001  
+**Status:** Frozen  
+**Effective date:** 2026-08-24  
+**Authority:** SWOS Governance Control Plane  
 **Related ADR:** `adr/ADR-0011-host-independence-and-three-layer-architecture.md`
 
 ## Constitutional rule
 
 **SWOS owns the scholarly process. Models provide capabilities.**
 
-No SWOS core workflow, governance decision, schema, artefact, evaluation gate, or release criterion may depend on a specific model vendor, model family, API, authentication mechanism, or commercial access mode.
+No SWOS core workflow, scholarly instruction, governance decision, schema, artefact, evaluation gate or release criterion may depend on a specific model vendor, model family, API, authentication mechanism or commercial access mode.
 
-Changing the model or execution host must not change the definition of what constitutes valid SWOS research.
+A model may be replaced, upgraded, mixed with other models, or supplied locally without changing the definition of valid SWOS research.
 
-## Scope
+## Required runtime architecture
 
-This policy applies to:
+```text
+User request
+    ↓
+SWOS Core / scholarly state machine
+    ↓
+CapabilityBroker
+    ↓
+selected adapter(s)
+    ↓
+model / host / retrieval / tool capability
+    ↓
+SWOS work-order result validation
+    ↓
+SWOS governance
+```
 
-* orchestration and scholarly state transitions;
-* Evidence Matrix and Argument Graph construction/validation;
-* citation and evidence verification;
-* reviewer and revision policy;
-* EPG, SDL, RPM, audit, integrity, and release controls;
-* evaluation fixtures, gates, and acceptance criteria;
-* core prompts, contracts, and schemas;
-* runtime configuration and capability selection.
+SWOS Core owns stage eligibility, deterministic validation, evidence/argument structures, review policy, EPG, SDL, RPM, integrity, audit and release decisions. Adapters own transport and execution details only.
 
-## Required architecture
+### Capability identity
 
-SWOS is divided into three responsibility layers.
+SWOS asks whether an adapter can satisfy a named SWOS capability contract, not which vendor it belongs to. A validity gate therefore tests properties such as:
 
-### 1. SWOS Core
+```text
+capability == semantic_rerank
+contract == swos.semantic-rerank.v1
+contract_passed == true
+```
 
-SWOS Core owns scholarly validity. It includes the research state machine, Evidence Matrix, Argument Graph, citation verification, review/revision policy, scholarly state, EPG, SDL, RPM, governance gates, integrity chain, and audit package.
+A provider-specific method string is implementation/debug provenance only and cannot satisfy a release gate by itself.
 
-Core code and contracts MUST:
+## Canonical scholarly instruction ownership
 
-* express requirements in provider-neutral terms;
-* validate capability outputs against SWOS contracts;
-* fail closed when required capabilities or assurance are unavailable;
-* preserve provider/model identity only as provenance, diagnostics, performance, or cost information.
+Research Planner, Evidence Builder, Citation Auditor, Argument Architect, Drafting Agent, semantic verifier, Reviewer Panel and Revision Agent instructions are canonical SWOS assets.
 
-Core code and contracts MUST NOT:
+The normative flow is:
 
-* import a provider SDK as a condition of core operation;
-* require a provider credential as a condition of scholarly validity;
-* compare provider, model, API, or authentication names to decide release eligibility;
-* weaken or strengthen a SWOS gate because a particular vendor supplied an output.
+```text
+SWOS capability contract
++ SWOS canonical instruction id/hash/text
++ governed run state
+        ↓
+adapter transport translation
+        ↓
+model / host
+```
 
-### 2. Capability Layer
+Adapters MAY translate message roles, JSON schema syntax, tool-call format or host-specific packaging. They MUST NOT redefine, weaken, extend or privately own the scholarly instruction.
 
-The Capability Layer defines bounded tasks by function, input contract, output contract, assurance requirement, provenance requirement, and failure semantics.
+A stage result must preserve the canonical instruction ID and hash in provenance so a replay can prove which SWOS instruction governed the work.
 
-A capability is identified by what SWOS requires, for example `research_planning`, `source_retrieval`, `semantic_rerank`, `evidence_build`, `citation_support_audit`, `argument_build`, `draft_generation`, `semantic_verification`, `hostile_review`, `revision`, or `prose_transform`.
+## Intelligence and authority
 
-Capability conformance is evaluated against SWOS contracts, never vendor identity.
+**Models may propose. SWOS decides.**
 
-### 3. Host / Provider Adapters
+Model judgement is not itself a governance decision. Where model judgement is used, SWOS records at minimum:
 
-Host and provider adapters translate available execution facilities into Capability Layer contracts. Examples include Codex/ChatGPT subscription execution, Claude Code subscription execution, OpenAI API, Anthropic API, local models, MCP hosts, replay bundles, and future providers.
+* `judgement_type`;
+* capability and contract;
+* adapter;
+* host;
+* model identifier where exposed;
+* confidence where supplied;
+* assurance declaration;
+* reviewer independence and limitations where relevant;
+* canonical instruction ID/hash;
+* authority classification showing that the judgement is advisory evidence for SWOS governance.
 
-Adapters MUST declare capability support and degradation explicitly. Silent degradation is prohibited.
+SWOS independently performs every deterministic check available to it before permitting the corresponding state transition or release, including source identity, metadata eligibility, exact-quote presence, citation-marker validity, counter-evidence requirements, schema conformance, state eligibility, review requirements and integrity-chain validation.
+
+## Reviewer independence truthfulness
+
+A second model call, separate conversation or separate context is not automatically independent peer review.
+
+Adapters must explicitly declare:
+
+* `review_mode`;
+* `independence`;
+* `blind_review_supported`;
+* `independence_limitations`;
+* relevant assurance properties.
+
+SWOS must never infer blindness from a model/provider name or from the mere fact that a separate call/context was used.
+
+For the current `automatic_delivery` assurance level, declared **limited** independence is permitted when all deterministic gates and bounded-review requirements pass. `unknown`, `none` or `unsupported` independence blocks automatic delivery. A future higher-assurance profile may require verified independent review.
+
+## Live host execution and host bundle role
+
+The primary subscription/agent-host mechanism is `swos.work-orders.v1`:
+
+```text
+LIVE HOST EXECUTION
+        ↓
+SWOS work-order protocol
+        ↓
+bounded host stage outputs
+        ↓
+SWOS validation/state transition
+        ↓
+canonical host bundle / audit record
+```
+
+`host_bundle` is retained as a **replay / interchange / debugging / reproducibility format**. It is not a fictional subscription API and not the primary live execution mechanism.
+
+A completed run may be replayed later without the original host. Replay is a new execution mode whose provenance preserves the original host information while making clear that no original live host/API call occurred during replay.
 
 ## Release invariants
 
-A release gate MAY require:
+A release gate MAY require a named SWOS capability, contract conformance, a minimum assurance level, verified evidence/provenance properties, declared reviewer independence, deterministic integrity/schema checks, bounded resource policy and a complete audit package.
 
-* a named SWOS capability;
-* a minimum assurance level;
-* verified evidence or provenance properties;
-* declared reviewer independence;
-* deterministic integrity or schema checks;
-* bounded cost/usage policy;
-* a complete audit package.
-
-A release gate MUST NOT require:
-
-* a particular vendor;
-* a particular commercial model name;
-* an API key when the required capability is supplied through another conforming execution mode;
-* direct API billing when a conforming host-native execution mode is available;
-* a provider-specific method string as proof that a SWOS capability executed.
+A release gate MUST NOT require a particular vendor, commercial model name, API key, billing mode, provider-specific method string or provider-specific prompt representation.
 
 ## Provenance
 
-Provider and model information is still required when available. A run should record:
+Provider/model details remain useful provenance. Runs should record adapter, execution mode, host/model identity where exposed, capability, contract, canonical instruction identity, assurance/independence, API credential use, paid-call evidence where observable, and token/latency/cost evidence where observable.
 
-* adapter and execution mode;
-* model host and model identifier where exposed;
-* capability invoked;
-* assurance and independence properties;
-* API credential use;
-* paid API-call count or equivalent usage evidence when observable;
-* token, latency, and cost evidence when observable.
+These fields describe **how** a capability was supplied. They do not define scholarly validity.
 
-These fields describe **how** a capability was supplied. They do not define whether the scholarly result is valid.
+## Portability conformance
 
-## Conformance test
+The same governed acceptance contract must be executable through materially different bindings without changing the release definition. At minimum the v2 portability gate requires:
 
-A host-independent SWOS implementation must be capable of running the same governed acceptance contract through materially different execution bindings without changing the release definition.
+1. one direct/API-backed execution; and
+2. one host-native subscription execution with no model API credential and no paid model API calls.
 
-At minimum, the v2 portability gate requires:
-
-1. one API-backed execution; and
-2. one host-native subscription execution with no provider API credential and no paid provider API calls.
-
-The outputs need not be textually identical. They must be judged by the same SWOS evidence, argument, citation, review, state, governance, integrity, and audit criteria.
+A replay run is useful reproducibility evidence but does not substitute for the host-native portability test.
 
 ## Violations
 
-The following are policy violations:
+The following block release until removed or isolated behind an adapter boundary:
 
-* provider SDK imports in SWOS Core paths;
-* provider/model names embedded in core release decisions;
-* provider-specific schemas presented as canonical SWOS artefacts;
+* provider SDK imports in SWOS Core;
+* provider/model names in core release decisions;
+* provider-specific method strings as capability proof;
+* scholarly prompt text owned privately by an adapter;
 * hidden capability degradation;
-* declaring host independence solely because a replay bundle can be consumed;
-* making one vendor's prompt or response format the canonical scholarly contract.
-
-A violation blocks release until removed or isolated behind an adapter boundary.
+* fabricated reviewer independence or blindness;
+* treating replay-bundle consumption as proof of live host autonomy;
+* allowing a model judgement to bypass a deterministic SWOS check.
