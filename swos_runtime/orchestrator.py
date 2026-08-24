@@ -7,6 +7,7 @@ SDKs, model product names or provider-specific prompt behaviour.
 
 from __future__ import annotations
 
+import json
 import tempfile
 from pathlib import Path
 from typing import Any, Callable
@@ -15,7 +16,7 @@ from .broker import CapabilityBroker, CapabilityBrokerError
 from .capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
 from .finalizer import finalize_work_order_run
 from .models import ResearchRequest, RunOutcome, SourceRecord
-from .work_orders import BASE_STAGE_SEQUENCE, WorkOrderRun
+from .work_orders import WorkOrderError, WorkOrderRun
 
 RUNTIME_VERSION = "0.2.0"
 
@@ -40,11 +41,7 @@ def _scope_hint(request: ResearchRequest) -> str:
 def _injected_manifest(broker: CapabilityBroker) -> dict[str, Any]:
     """Describe an injected test/local binding without introducing vendor identity."""
     capabilities = {
-        name: {
-            "level": "native",
-            "contract": contract,
-            "assurance": [],
-        }
+        name: {"level": "native", "contract": contract, "assurance": []}
         for name, contract in CAPABILITY_CONTRACTS.items()
     }
     for review_capability in ("citation_support_audit", "hostile_review"):
@@ -73,13 +70,15 @@ def _injected_manifest(broker: CapabilityBroker) -> dict[str, Any]:
 
 
 def _sources(payload: dict[str, Any]) -> list[SourceRecord]:
-    values = payload.get("sources", [])
-    return [SourceRecord(**item) for item in values if isinstance(item, dict)]
+    return [
+        SourceRecord(**item)
+        for item in payload.get("sources", [])
+        if isinstance(item, dict)
+    ]
 
 
 def _ranked_sources(run: WorkOrderRun) -> list[SourceRecord]:
-    retrieval = run._latest("source_retrieval") or {}
-    sources = _sources(retrieval)
+    sources = _sources(run._latest("source_retrieval") or {})
     rerank = run._latest("semantic_rerank") or {}
     scores = {
         str(item.get("source_id")): float(item.get("score", 0))
@@ -100,11 +99,12 @@ def _ranked_sources(run: WorkOrderRun) -> list[SourceRecord]:
 
 
 def _source_labels(run: WorkOrderRun) -> dict[str, str]:
-    # Labels are deterministic from canonical retrieval order, not model ranking.
-    retrieval = run._latest("source_retrieval") or {}
+    # Citation labels are SWOS-owned and deterministic from retrieval order.
     return {
         source.source_id: f"S{index}"
-        for index, source in enumerate(_sources(retrieval), start=1)
+        for index, source in enumerate(
+            _sources(run._latest("source_retrieval") or {}), start=1
+        )
     }
 
 
@@ -121,16 +121,15 @@ def _verified_candidate_rows(run: WorkOrderRun) -> list[dict[str, Any]]:
         if not isinstance(candidate, dict):
             continue
         support = str(audits.get(index, {}).get("support_level") or "invalid_citation")
-        if support != "directly_supports":
-            continue
-        rows.append(
-            {
-                **candidate,
-                "claim_id": f"candidate-{index}",
-                "candidate_index": index,
-                "support_level": support,
-            }
-        )
+        if support == "directly_supports":
+            rows.append(
+                {
+                    **candidate,
+                    "claim_id": f"candidate-{index}",
+                    "candidate_index": index,
+                    "support_level": support,
+                }
+            )
     return rows
 
 
@@ -201,6 +200,7 @@ class AutonomousSWOS:
         )
 
     def _provenance(self, stage: str, *, model: str | None = None) -> dict[str, Any]:
+        del stage
         return {
             "adapter": self.adapter_manifest.get("adapter", self.broker.adapter),
             "model_host": self.adapter_manifest.get("model_host", self.broker.model_host),
@@ -223,8 +223,13 @@ class AutonomousSWOS:
         request = run.state["request"]
 
         if stage == "research_planning":
-            result = self.broker.research_planning(request, _scope_hint(ResearchRequest(**request)))
-            self._submit(run, result, stage)
+            self._submit(
+                run,
+                self.broker.research_planning(
+                    request, _scope_hint(ResearchRequest(**request))
+                ),
+                stage,
+            )
             return
 
         if stage == "source_retrieval":
@@ -243,23 +248,29 @@ class AutonomousSWOS:
             ranked, record = self.broker.semantic_rerank(
                 str(request["topic"]), _sources(run._latest("source_retrieval") or {})
             )
-            payload = dict(record)
-            payload["ranked_source_ids"] = [source.source_id for source in ranked]
-            self._submit(run, payload, stage)
+            self._submit(
+                run,
+                {**record, "ranked_source_ids": [source.source_id for source in ranked]},
+                stage,
+            )
             return
 
         if stage == "evidence_extraction":
-            result = self.broker.evidence_extraction(
-                str(request["topic"]), _ranked_sources(run)
+            self._submit(
+                run,
+                self.broker.evidence_extraction(
+                    str(request["topic"]), _ranked_sources(run)
+                ),
+                stage,
             )
-            self._submit(run, result, stage)
             return
 
         if stage == "citation_support_audit":
             candidates = (run._latest("evidence_extraction") or {}).get("claims", [])
             source_map = {source.source_id: source for source in _ranked_sources(run)}
-            result = self.broker.citation_support_audit(candidates, source_map)
-            self._submit(run, result, stage)
+            self._submit(
+                run, self.broker.citation_support_audit(candidates, source_map), stage
+            )
             return
 
         if stage == "argument_construction":
@@ -274,26 +285,25 @@ class AutonomousSWOS:
 
         if stage == "draft_generation":
             plan = run._latest("research_planning") or {}
-            result = self.broker.draft_generation(
+            article = self.broker.draft_generation(
                 request,
                 plan,
                 _verified_candidate_rows(run),
                 run._latest("argument_construction") or {},
                 _source_labels(run),
             )
-            self._submit(run, {"article": result}, stage)
+            self._submit(run, {"article": article}, stage)
             return
 
         if stage == "revision":
-            article = run._latest_revision_or_draft() or ""
-            result = self.broker.revision(
-                article,
+            article = self.broker.revision(
+                run._latest_revision_or_draft() or "",
                 _blocking_review_findings(run),
                 _verified_candidate_rows(run),
                 run._latest("argument_construction") or {},
                 _source_labels(run),
             )
-            self._submit(run, {"article": result}, stage)
+            self._submit(run, {"article": article}, stage)
             return
 
         if stage == "prose_transformation":
@@ -307,7 +317,9 @@ class AutonomousSWOS:
         if stage == "semantic_verification":
             transform = run._latest("prose_transformation") or {}
             source = run._latest_revision_or_draft() or ""
-            candidate = str(transform.get("candidate") or transform.get("final_text") or source)
+            candidate = str(
+                transform.get("candidate") or transform.get("final_text") or source
+            )
             try:
                 result = self.broker.semantic_verification(
                     source,
@@ -337,18 +349,59 @@ class AutonomousSWOS:
             transform = run._latest("prose_transformation") or {}
             source = run._latest_revision_or_draft() or ""
             candidate = transform.get("candidate") or transform.get("final_text")
-            article = candidate if verification.get("status") == "PASS" and isinstance(candidate, str) else source
-            result = self.broker.hostile_review(
-                article,
-                _verified_candidate_rows(run),
-                run._latest("argument_construction") or {},
-                _ranked_sources(run),
-                iteration=run.state.get("review_iteration", 0) + 1,
+            article = (
+                candidate
+                if verification.get("status") == "PASS" and isinstance(candidate, str)
+                else source
             )
-            self._submit(run, result, stage)
+            self._submit(
+                run,
+                self.broker.hostile_review(
+                    article,
+                    _verified_candidate_rows(run),
+                    run._latest("argument_construction") or {},
+                    _ranked_sources(run),
+                    iteration=run.state.get("review_iteration", 0) + 1,
+                ),
+                stage,
+            )
             return
 
         raise RuntimeError(f"unsupported SWOS core stage: {stage}")
+
+    @staticmethod
+    def _review_required_outcome(
+        run: WorkOrderRun,
+        output: Path,
+        reason: str,
+    ) -> RunOutcome:
+        article = output / "article.md"
+        if not article.exists():
+            article.write_text(
+                "# Review required\n\nNo article was drafted or released because a SWOS capability or deterministic governance check failed.\n",
+                encoding="utf-8",
+            )
+        failure = {
+            "status": "REVIEW_REQUIRED",
+            "run_id": run.state["run_id"],
+            "next_stage": run.state.get("stage"),
+            "reason": reason,
+            "authority_boundary": "Models propose or judge. SWOS decides.",
+        }
+        (output / "run-failure.json").write_text(
+            json.dumps(failure, indent=2) + "\n", encoding="utf-8"
+        )
+        return RunOutcome(
+            run_id=run.state["run_id"],
+            work_id="work-unfinalised",
+            status="REVIEW_REQUIRED",
+            output_dir=str(output),
+            article_word_count=0,
+            human_interventions=0,
+            normal_user_questions_asked=0,
+            unresolved_questions=[reason],
+            blocking_reasons=[reason],
+        )
 
     def run(self, request: ResearchRequest, output_dir: str | Path) -> RunOutcome:
         output = Path(output_dir)
@@ -359,21 +412,21 @@ class AutonomousSWOS:
                 adapter_manifest=self.adapter_manifest,
                 root=run_root,
             )
-            while run.status()["status"] == "ACTIVE":
-                self._fulfil(run)
+            try:
+                while run.status()["status"] == "ACTIVE":
+                    self._fulfil(run)
+            except (WorkOrderError, CapabilityBrokerError, ValueError, TypeError) as exc:
+                return self._review_required_outcome(run, output, str(exc))
+
             if run.status()["status"] != "READY_TO_FINALISE":
-                # The neutral finalizer intentionally requires a completed review gate.
-                return RunOutcome(
-                    run_id=run.state["run_id"],
-                    work_id="work-unfinalised",
-                    status=run.status()["status"],
-                    output_dir=str(output),
-                    article_word_count=0,
-                    human_interventions=0,
-                    normal_user_questions_asked=0,
-                    unresolved_questions=["SWOS work-order run did not reach finalisation."],
-                    blocking_reasons=list(run.state.get("blocking_findings") or []),
+                findings = list(run.state.get("blocking_findings") or [])
+                reason = (
+                    "; ".join(str(item.get("description") or item) for item in findings)
+                    if findings
+                    else "SWOS work-order run did not reach the final governance gate."
                 )
-            # The bundle is a reproducibility artefact, not the execution mechanism.
+                return self._review_required_outcome(run, output, reason)
+
+            # The bundle is emitted for replay/reproducibility, not used as the live mechanism.
             run.export_host_bundle(output / "host-bundle.json")
             return finalize_work_order_run(run, output)
