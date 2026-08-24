@@ -6,38 +6,46 @@
 
 **SWOS owns the scholarly process. Models provide capabilities.**
 
-A subscription host is not an API provider. SWOS therefore uses inversion of control: SWOS persists the run state and issues the next bounded work order; the host fulfils that capability and submits the result; SWOS validates it and alone chooses the next stage.
+A subscription host is not an API provider. SWOS uses inversion of control: SWOS persists run state, issues one bounded work order, validates the returned result, and alone chooses the next scholarly stage.
 
 ## User contract
 
-The user gives one request. Normal intermediate stages do not require user orchestration.
+The user gives one request. Normal intermediate stages require no user orchestration.
 
 ```text
 swos start request.json --adapter adapters/codex/subscription-capabilities-v1.json
 ```
 
-The host driver then loops:
+The installed host driver loops automatically:
 
 ```text
 while SWOS status == ACTIVE:
     order = swos next-work <run-dir>
-    result = host.fulfil(order.capability, order.contract, order.inputs)
+    result = host.fulfil(
+        order.capability,
+        order.contract,
+        order.canonical_instruction,
+        order.inputs
+    )
     swos submit <run-dir> result.json
 ```
 
-When the run reaches `READY_TO_FINALISE`, SWOS—not the host—performs deterministic final governance and audit assembly:
+No paid model API is implied by this protocol.
 
-```text
-swos finalise <run-dir> --output <output-dir>
-```
+## Work-order authority
 
-Finalisation consumes the accepted work-order submissions and frozen SWOS contracts. It does not call a model merely to decide whether the run is valid.
+Every work order contains:
 
-No paid model API is implied by this protocol. A subscription adapter declares its actual access mode and must record `api_key_used` and `paid_api_calls` truthfully.
+* SWOS capability name;
+* frozen capability contract;
+* canonical SWOS instruction ID, hash and text;
+* exact governed inputs for the stage;
+* adapter assurance declaration;
+* required provenance fields.
 
-## Stage ownership
+The host does not choose, skip, merge or reorder scholarly stages.
 
-SWOS decides the stage sequence and validates every submission. The host may not skip or reorder stages.
+## Stage sequence
 
 1. `research_planning`
 2. `source_retrieval`
@@ -49,55 +57,57 @@ SWOS decides the stage sequence and validates every submission. The host may not
 8. `prose_transformation`
 9. `semantic_verification`
 10. `hostile_review`
-11. `revision` when required, followed by prose verification and re-review
-12. deterministic SWOS finalisation when the review gate reaches `READY_TO_FINALISE`
+11. `revision` when required, followed by transformation, semantic verification and re-review
 
-Review loops are bounded. Failure to clear blocker/major findings within the bound produces `REVIEW_REQUIRED`; the host does not silently self-approve.
+Review loops are bounded. Failure to clear blocker/major findings within the bound becomes `REVIEW_REQUIRED`.
 
-## Work order
+## Deterministic SWOS validation
 
-Every `next-work.json` identifies:
+A model result is a proposal. Before advancing, SWOS performs deterministic checks available at that boundary. These include source identity, metadata eligibility, exact-quote presence, citation-audit completeness, evidence references, source-marker integrity and protected-marker preservation during prose transformation.
 
-- the SWOS capability;
-- the frozen capability contract;
-- the exact inputs for that stage;
-- the selected adapter and execution mode;
-- assurance declarations;
-- the provenance fields the submission must return.
+Final governance repeats release-critical checks, validates frozen schemas and integrity evidence, and records the release decision in SWOS artefacts.
 
-Example:
+## Reviewer assurance
 
-```json
-{
-  "protocol_version": "swos.work-orders.v1",
-  "next_stage": "semantic_rerank",
-  "capability": "semantic_rerank",
-  "contract": "swos.semantic-rerank.v1",
-  "inputs": {"query": "...", "sources": []}
-}
-```
+The work order carries the adapter's declared review assurance. Separate calls or contexts do not automatically become independent or blind review. SWOS records `review_mode`, `independence`, `blind_review_supported` and limitations and applies the requested assurance policy.
 
-## Final governance boundary
+## Model judgement evidence
 
-The provider-neutral finaliser constructs the normal SWOS output and audit package from accepted work-order evidence. It validates exact source spans, citation-support judgements, counter-evidence coverage, argument structure, reviewer findings, article source markers, word-count bounds, frozen schemas, scholarly state, provenance, the SDL, the RPM snapshot, the integrity chain and the final manifest.
-
-Adapter, host and model names remain in provenance for reproducibility and audit. They are not pass/fail criteria. A run does not become more valid because its worker was OpenAI, Claude, Codex, Gemini or a future local model.
+For judgement-bearing stages, SWOS records model judgement as advisory evidence with adapter, host, model, confidence, assurance, independence information and canonical instruction identity. The judgement cannot self-authorise a SWOS transition or release.
 
 ## Host bundle
 
-The host bundle remains a canonical replay/interchange artefact, but it is generated by SWOS from accepted work-order submissions. It is not the primary interaction or finalisation mechanism and users must not hand-assemble it.
+The canonical host bundle remains part of the architecture, but its role is secondary:
+
+**replay / interchange / debugging / reproducibility**.
+
+```text
+LIVE HOST EXECUTION
+        ↓
+SWOS work-order protocol
+        ↓
+accepted bounded stage outputs
+        ↓
+canonical host bundle / audit record
+        ↓
+replay or independent inspection later
+```
+
+The user never hand-assembles the bundle. SWOS emits it from accepted submissions. A completed run can therefore be replayed later without the original host while preserving the original execution provenance.
+
+Replay is explicitly marked `execution_mode: replay`; it is not evidence that a live subscription host was used during replay.
 
 ## Separation of authority
 
-The host supplies judgement and generation capability. SWOS retains authority for:
+The host supplies intelligence and tools. SWOS retains authority for:
 
-- state transitions;
-- stage eligibility;
-- evidence/citation deterministic checks;
-- contract validation;
-- review-loop bounds;
-- governance and release decisions;
-- provenance and integrity records;
-- audit package completeness.
+* stage transitions and eligibility;
+* canonical scholarly instructions;
+* capability-contract validation;
+* deterministic evidence/citation checks;
+* review-loop bounds and assurance policy;
+* governance/release decisions;
+* provenance and integrity records;
+* audit-package completeness.
 
-Changing Codex to Claude, an API provider, or a future local model therefore changes the worker, not the definition of valid SWOS research.
+Changing the worker therefore changes capability implementation, not the definition of SWOS research.
