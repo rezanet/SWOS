@@ -76,7 +76,9 @@ class CapabilityBroker:
             "independence_limitations": list(declaration.get("independence_limitations") or []),
         }
 
-    def provenance(self, capability: str, *, instruction_stage: str | None = None) -> dict[str, Any]:
+    def provenance(
+        self, capability: str, *, instruction_stage: str | None = None
+    ) -> dict[str, Any]:
         instruction = instruction_record(instruction_stage or capability)
         declaration = self.capability_declaration(capability)
         return {
