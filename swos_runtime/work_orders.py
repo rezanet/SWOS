@@ -16,7 +16,6 @@ from .capabilities import CAPABILITY_CONTRACTS, CAPABILITY_CONTRACT_SET
 
 PROTOCOL_VERSION = "swos.work-orders.v1"
 MAX_REVIEW_ITERATIONS = 3
-
 BASE_STAGE_SEQUENCE = [
     "research_planning",
     "source_retrieval",
@@ -41,9 +40,7 @@ def _read_json(path: str | Path) -> Any:
 
 def _write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def _load_adapter_manifest(path: str | Path) -> dict[str, Any]:
@@ -101,10 +98,7 @@ def _blocking_findings(review: Any) -> list[dict[str, Any]]:
         if not isinstance(panel, dict):
             continue
         for finding in panel.get("findings", []):
-            if (
-                isinstance(finding, dict)
-                and finding.get("severity") in {"blocker", "major"}
-            ):
+            if isinstance(finding, dict) and finding.get("severity") in {"blocker", "major"}:
                 findings.append(finding)
     return findings
 
@@ -130,7 +124,6 @@ class WorkOrderRun:
         request = _validate_request(request)
         for capability in [*BASE_STAGE_SEQUENCE, "revision"]:
             _require_capability(adapter_manifest, capability)
-
         run_id = f"host-{uuid.uuid4()}"
         run_dir = Path(root) / run_id
         run_dir.mkdir(parents=True, exist_ok=False)
@@ -195,7 +188,6 @@ class WorkOrderRun:
     def _work_inputs(self, stage: str) -> dict[str, Any]:
         request = self.state["request"]
         latest = self._latest
-
         if stage == "research_planning":
             return {"request": request}
         if stage == "source_retrieval":
@@ -206,10 +198,7 @@ class WorkOrderRun:
                 "research_plan": plan,
             }
         if stage == "semantic_rerank":
-            return {
-                "query": request["topic"],
-                "sources": latest("source_retrieval") or {},
-            }
+            return {"query": request["topic"], "sources": latest("source_retrieval") or {}}
         if stage == "evidence_extraction":
             return {
                 "topic": request["topic"],
@@ -220,9 +209,7 @@ class WorkOrderRun:
             return {
                 "candidates": latest("evidence_extraction") or {},
                 "sources": latest("source_retrieval") or {},
-                "instruction": (
-                    "Judge support only; uncertainty must not become directly_supports."
-                ),
+                "instruction": "Judge support only; uncertainty must not become directly_supports.",
             }
         if stage == "argument_construction":
             return {
@@ -260,19 +247,13 @@ class WorkOrderRun:
                 "source": self._latest_revision_or_draft(),
                 "candidate": transform.get("candidate") or transform.get("final_text"),
                 "assurance": "strict",
-                "instruction": (
-                    "Return PASS only when the candidate preserves meaning and protected facts."
-                ),
+                "instruction": "Return PASS only when the candidate preserves meaning and protected facts.",
             }
         if stage == "hostile_review":
             verification = latest("semantic_verification") or {}
             transform = latest("prose_transformation") or {}
             source = self._latest_revision_or_draft()
-            article = (
-                transform.get("candidate")
-                if verification.get("status") == "PASS"
-                else source
-            )
+            article = transform.get("candidate") if verification.get("status") == "PASS" else source
             return {
                 "iteration": self.state.get("review_iteration", 0) + 1,
                 "article": article,
@@ -339,7 +320,6 @@ class WorkOrderRun:
         contract = result.get("contract")
         if contract not in {None, CAPABILITY_CONTRACTS[stage]}:
             raise WorkOrderError(f"submission contract mismatch for {stage}: {contract!r}")
-
         if stage == "research_planning":
             required = ("research_question", "scope", "queries", "rival_theses")
             for key in required:
@@ -366,9 +346,7 @@ class WorkOrderRun:
                     or not claim.get("exact_quote")
                     or not claim.get("source_id")
                 ):
-                    raise WorkOrderError(
-                        "every evidence claim requires source_id and exact_quote"
-                    )
+                    raise WorkOrderError("every evidence claim requires source_id and exact_quote")
         elif stage == "citation_support_audit":
             if not isinstance(result.get("audits"), list):
                 raise WorkOrderError("citation support audit must return audits array")
@@ -385,12 +363,9 @@ class WorkOrderRun:
                 raise WorkOrderError("prose transformation must return candidate text")
         elif stage == "semantic_verification":
             if result.get("status") not in {"PASS", "REVIEW", "REJECT"}:
-                raise WorkOrderError(
-                    "semantic verification status must be PASS, REVIEW or REJECT"
-                )
-        elif stage == "hostile_review":
-            if not isinstance(result.get("reviews"), list):
-                raise WorkOrderError("hostile review must return reviews array")
+                raise WorkOrderError("semantic verification status must be PASS, REVIEW or REJECT")
+        elif stage == "hostile_review" and not isinstance(result.get("reviews"), list):
+            raise WorkOrderError("hostile review must return reviews array")
         return result
 
     def _advance(self, stage: str, result: dict[str, Any]) -> None:
@@ -408,12 +383,10 @@ class WorkOrderRun:
             self.state["status"] = "READY_TO_FINALISE"
             self.state["stage"] = None
             return
-
         if stage == "revision":
             self.state["revision_count"] = self.state.get("revision_count", 0) + 1
             self.state["stage"] = "prose_transformation"
             return
-
         index = BASE_STAGE_SEQUENCE.index(stage)
         self.state["stage"] = BASE_STAGE_SEQUENCE[index + 1]
 
@@ -426,9 +399,7 @@ class WorkOrderRun:
         filename = f"{count:02d}-{stage}.json"
         relative = f"submissions/{filename}"
         _write_json(self.run_dir / relative, validated)
-        self.state.setdefault("submissions", []).append(
-            {"stage": stage, "file": relative}
-        )
+        self.state.setdefault("submissions", []).append({"stage": stage, "file": relative})
         self.state.setdefault("history", []).append(
             {
                 "event": "stage_accepted",
@@ -456,10 +427,8 @@ class WorkOrderRun:
 
     def export_host_bundle(self, output_path: str | Path | None = None) -> Path:
         """Generate the replay/interchange bundle from accepted host work."""
-
         if self.state.get("status") not in {"READY_TO_FINALISE", "REVIEW_REQUIRED"}:
             raise WorkOrderError("host bundle can be exported only after review completion")
-
         adapter = self.state["adapter"]
         retrieval = self._latest("source_retrieval") or {}
         verification = self._latest("semantic_verification") or {}
@@ -474,7 +443,6 @@ class WorkOrderRun:
             for payload in self._all("revision")
             if isinstance(payload, dict)
         ]
-
         bundle = {
             "host": {
                 "adapter": adapter.get("adapter"),
@@ -491,9 +459,7 @@ class WorkOrderRun:
             "sources": retrieval.get("sources", []),
             "stages": {
                 "research_plan": self._latest("research_planning") or {},
-                "rerank_scores": (self._latest("semantic_rerank") or {}).get(
-                    "scores", []
-                ),
+                "rerank_scores": (self._latest("semantic_rerank") or {}).get("scores", []),
                 "evidence_build": self._latest("evidence_extraction") or {},
                 "evidence_audit": self._latest("citation_support_audit") or {},
                 "argument_build": self._latest("argument_construction") or {},
