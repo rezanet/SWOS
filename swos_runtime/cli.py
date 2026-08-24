@@ -6,13 +6,8 @@ import argparse
 import json
 from pathlib import Path
 
+from .adapter_factory import build_openai_api_broker, build_replay_broker
 from .finalizer import finalize_work_order_run
-from .host_bundle import (
-    HostBundleRetriever,
-    HostBundleStageProvider,
-    host_prose_transform,
-    load_host_bundle,
-)
 from .models import ResearchRequest
 from .orchestrator import AutonomousSWOS
 from .work_orders import WorkOrderError, WorkOrderRun
@@ -21,12 +16,11 @@ from .work_orders import WorkOrderError, WorkOrderRun
 def _print(payload, as_json: bool) -> None:
     if as_json:
         print(json.dumps(payload, indent=2, ensure_ascii=False))
+    elif isinstance(payload, dict):
+        for key, value in payload.items():
+            print(f"{key}: {value}")
     else:
-        if isinstance(payload, dict):
-            for key, value in payload.items():
-                print(f"{key}: {value}")
-        else:
-            print(payload)
+        print(payload)
 
 
 def main() -> int:
@@ -47,19 +41,25 @@ def main() -> int:
     write.add_argument("--jurisdiction", default=None)
     write.add_argument("--output", type=Path, required=True)
     write.add_argument(
+        "--adapter",
+        choices=["openai-api"],
+        default="openai-api",
+        help="Concrete direct-execution adapter. SWOS core remains provider-neutral.",
+    )
+    write.add_argument(
         "--host-bundle",
         type=Path,
         default=None,
         help=(
-            "Replay a SWOS-generated host-native bundle instead of the default API-backed "
-            "reference binding. Users should not hand-assemble host bundles."
+            "Replay a canonical SWOS host bundle for reproducibility/debugging. "
+            "This is not the live subscription execution mechanism."
         ),
     )
     write.add_argument("--json", action="store_true", dest="as_json")
 
     start = sub.add_parser(
         "start",
-        help="Start a host-native subscription run and issue the first SWOS work order",
+        help="Start a live host/subscription run and issue the first SWOS work order",
     )
     start.add_argument("request", type=Path, help="JSON ResearchRequest")
     start.add_argument("--adapter", type=Path, required=True, help="swos.capabilities.v1 manifest")
@@ -70,18 +70,18 @@ def main() -> int:
     next_work.add_argument("run_dir", type=Path)
     next_work.add_argument("--json", action="store_true", dest="as_json")
 
-    submit = sub.add_parser("submit", help="Submit one host capability result to SWOS")
+    submit = sub.add_parser("submit", help="Submit one bounded host capability result to SWOS")
     submit.add_argument("run_dir", type=Path)
     submit.add_argument("result", type=Path)
     submit.add_argument("--json", action="store_true", dest="as_json")
 
-    status = sub.add_parser("status", help="Show a host-native SWOS run state")
+    status = sub.add_parser("status", help="Show a SWOS work-order run state")
     status.add_argument("run_dir", type=Path)
     status.add_argument("--json", action="store_true", dest="as_json")
 
     export = sub.add_parser(
         "export-host-bundle",
-        help="Generate the replay/interchange bundle from accepted SWOS work-order submissions",
+        help="Generate replay/interchange/debug/reproducibility evidence from accepted work",
     )
     export.add_argument("run_dir", type=Path)
     export.add_argument("--output", type=Path, default=None)
@@ -89,7 +89,7 @@ def main() -> int:
 
     finalise = sub.add_parser(
         "finalise",
-        help="Run provider-neutral SWOS governance and audit assembly for a host-native run",
+        help="Run provider-neutral SWOS governance and audit assembly",
     )
     finalise.add_argument("run_dir", type=Path)
     finalise.add_argument("--output", type=Path, required=True)
@@ -104,17 +104,12 @@ def main() -> int:
                 adapter_path=args.adapter,
                 root=args.run_root,
             )
-            payload = {**run.status(), "work_order": run.work_order()}
-            _print(payload, args.as_json)
+            _print({**run.status(), "work_order": run.work_order()}, args.as_json)
             return 0
 
         if args.command == "next-work":
             run = WorkOrderRun(args.run_dir)
-            order = run.work_order()
-            if order is None:
-                _print(run.status(), args.as_json)
-                return 0
-            _print(order, args.as_json)
+            _print(run.work_order() or run.status(), args.as_json)
             return 0
 
         if args.command == "submit":
@@ -132,7 +127,7 @@ def main() -> int:
         if args.command == "export-host-bundle":
             run = WorkOrderRun(args.run_dir)
             path = run.export_host_bundle(args.output)
-            _print({"host_bundle": str(path), **run.status()}, args.as_json)
+            _print({"host_bundle": str(path), "bundle_role": "replay_interchange_debug_reproducibility", **run.status()}, args.as_json)
             return 0
 
         if args.command == "finalise":
@@ -158,14 +153,10 @@ def main() -> int:
                 jurisdiction=args.jurisdiction,
             )
             if args.host_bundle is not None:
-                bundle = load_host_bundle(args.host_bundle)
-                runtime = AutonomousSWOS(
-                    stage_provider=HostBundleStageProvider(bundle),
-                    retriever=HostBundleRetriever(bundle),
-                    prose_transform=host_prose_transform(bundle),
-                )
+                broker, manifest = build_replay_broker(args.host_bundle)
             else:
-                runtime = AutonomousSWOS()
+                broker, manifest = build_openai_api_broker()
+            runtime = AutonomousSWOS(broker=broker, adapter_manifest=manifest)
             outcome = runtime.run(request, args.output)
             if args.as_json:
                 print(json.dumps(outcome.to_dict(), indent=2))
