@@ -1,9 +1,9 @@
-"""Host-native execution binding for Autonomous SWOS.
+"""Canonical SWOS host-bundle replay/interchange adapter.
 
-A host bundle lets ChatGPT/Codex, Claude Code, or another conforming host supply
-model-stage outputs without requiring an API credential.  The orchestrator and
-governance gates remain unchanged: this module only translates host outputs into
-the same interfaces used by the API-backed reference provider.
+A host bundle is NOT the primary live subscription execution mechanism. Live
+hosts use ``swos.work-orders.v1``. SWOS may then emit a canonical host bundle as
+a replay, interchange, debugging and reproducibility artefact so a completed run
+can be inspected or replayed later without the original host.
 """
 
 from __future__ import annotations
@@ -15,9 +15,11 @@ from typing import Any
 
 from .models import SourceRecord
 
+HOST_BUNDLE_ROLE = "replay_interchange_debug_reproducibility"
+
 
 class HostBundleError(ValueError):
-    """Raised when a host bundle is incomplete or internally inconsistent."""
+    """Raised when a replay/interchange bundle is incomplete or inconsistent."""
 
 
 def load_host_bundle(path: str | Path) -> dict[str, Any]:
@@ -30,11 +32,12 @@ def load_host_bundle(path: str | Path) -> dict[str, Any]:
         raise HostBundleError("host bundle must contain a sources array")
     if not isinstance(payload.get("stages"), dict):
         raise HostBundleError("host bundle must contain a stages object")
+    payload.setdefault("bundle_role", HOST_BUNDLE_ROLE)
     return payload
 
 
 class HostBundleRetriever:
-    """Return host-supplied source snapshots through the standard retriever seam."""
+    """Replay stored source snapshots through the retrieval capability seam."""
 
     def __init__(self, bundle: dict[str, Any]) -> None:
         self.bundle = bundle
@@ -51,32 +54,43 @@ class HostBundleRetriever:
             records.append(SourceRecord(**copy.deepcopy(raw)))
         self.events.append(
             {
-                "provider": "host_bundle",
+                "provider": "host_bundle_replay",
                 "queries": [str(query) for query in queries],
                 "source_count": len(records),
                 "network_used_by_runtime": False,
+                "bundle_role": self.bundle.get("bundle_role", HOST_BUNDLE_ROLE),
             }
         )
         return records
 
 
 class HostBundleStageProvider:
-    """Replay host-produced scholarly stages through the normal provider contract."""
+    """Replay recorded scholarly stage outputs through adapter interfaces."""
 
     def __init__(self, bundle: dict[str, Any]) -> None:
         self.bundle = bundle
         host = bundle.get("host", {})
-        self.model = str(host.get("model") or host.get("model_host") or "host-native-model")
+        self.model = str(host.get("model") or host.get("model_host") or "recorded-host-model")
         self.review_model = self.model
         self.blind_review_supported = bool(host.get("blind_review_supported", False))
         self.execution_metadata = {
-            "execution_mode": str(host.get("execution_mode") or "host_native_subscription"),
-            "adapter": str(host.get("adapter") or "host-bundle"),
+            "execution_mode": "replay",
+            "original_execution_mode": str(
+                host.get("execution_mode") or "host_native_subscription"
+            ),
+            "adapter": "replay",
+            "original_adapter": str(host.get("adapter") or "unknown-host-adapter"),
             "model_host": str(host.get("model_host") or "unknown-host"),
             "model": self.model,
-            "api_key_used": bool(host.get("api_key_used", False)),
-            "paid_api_calls": int(host.get("paid_api_calls", 0)),
+            "api_key_used": False,
+            "paid_api_calls": 0,
+            "original_api_key_used": bool(host.get("api_key_used", False)),
+            "original_paid_api_calls": int(host.get("paid_api_calls", 0)),
+            "review_mode": str(host.get("review_mode") or "recorded"),
+            "independence": str(host.get("independence") or "unknown"),
+            "independence_limitations": list(host.get("independence_limitations") or []),
             "blind_review_supported": self.blind_review_supported,
+            "bundle_role": bundle.get("bundle_role", HOST_BUNDLE_ROLE),
         }
         self.calls: list[dict[str, Any]] = []
         self._review_index = 0
@@ -92,7 +106,7 @@ class HostBundleStageProvider:
             {
                 "stage": name,
                 "model": self.model,
-                "execution_mode": self.execution_metadata["execution_mode"],
+                "execution_mode": "replay",
                 "response_id": None,
                 "input_tokens": None,
                 "output_tokens": None,
@@ -134,10 +148,12 @@ class HostBundleStageProvider:
             reverse=True,
         )
         return ranked[:top_k], {
-            "method": "host_native_joint_query_document_cross_encoder",
-            "capability": "joint_query_document_cross_encoder",
+            "implementation": "host_bundle_replay",
+            "capability": "semantic_rerank",
+            "contract": "swos.semantic-rerank.v1",
+            "contract_passed": True,
             "executed": True,
-            "execution_mode": self.execution_metadata["execution_mode"],
+            "execution_mode": "replay",
             "model": self.model,
             "top_k": top_k,
             "scores": raw,
@@ -204,7 +220,7 @@ class HostBundleStageProvider:
             {
                 "stage": f"review_{self._review_index}",
                 "model": self.model,
-                "execution_mode": self.execution_metadata["execution_mode"],
+                "execution_mode": "replay",
                 "response_id": None,
                 "cost_estimate_usd": 0.0,
                 "elapsed_seconds": 0.0,
@@ -243,9 +259,21 @@ class HostBundleStageProvider:
             raise HostBundleError("revision must be non-empty text")
         return value.strip()
 
+    def semantic_verify(
+        self,
+        source: str,
+        candidate: str,
+        context: dict[str, Any],
+    ) -> dict[str, Any]:
+        del source, candidate, context
+        value = self._stage("semantic_verification")
+        if not isinstance(value, dict):
+            raise HostBundleError("semantic_verification must be an object")
+        return value
+
 
 def host_prose_transform(bundle: dict[str, Any]):
-    """Build a governed prose transform from host-supplied Prose evidence."""
+    """Build a governed replay prose transform from stored Prose evidence."""
 
     def transform(article: str, request: Any) -> tuple[str, dict[str, Any]]:
         del request
@@ -264,7 +292,8 @@ def host_prose_transform(bundle: dict[str, Any]):
             used_source_fallback = False
         return final_text, {
             "invoked": True,
-            "adapter_mode": str(prose.get("adapter_mode") or "host_native_swos_prose_contract"),
+            "adapter_mode": "host_bundle_replay",
+            "bundle_role": bundle.get("bundle_role", HOST_BUNDLE_ROLE),
             "all_changed_text_safe": safe or used_source_fallback,
             "chunks": [
                 {
