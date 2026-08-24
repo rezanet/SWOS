@@ -30,6 +30,8 @@ jobs:
         run: python -m ruff format --check swos_prose swos_runtime benchmark tools evals tests
       - name: Run Ruff lint gate
         run: python -m ruff check swos_prose swos_runtime benchmark tools evals tests
+      - name: Enforce SWOS Host Independence Rule
+        run: python tools/check_host_independence.py
       - name: Run deterministic Prose and autonomous-runtime tests with coverage
         run: |
           python -m coverage erase
