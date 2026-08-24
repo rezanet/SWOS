@@ -64,9 +64,7 @@ class CapabilityBroker:
             result = self.retrieval_binding.retrieve(topic, queries)
         else:
             try:
-                result = self.retrieval_binding.retrieve(
-                    topic, queries, max_sources=max_sources
-                )
+                result = self.retrieval_binding.retrieve(topic, queries, max_sources=max_sources)
             except TypeError:
                 result = self.retrieval_binding.retrieve(topic, queries)
         self._event("source_retrieval", source_count=len(result))
@@ -116,9 +114,7 @@ class CapabilityBroker:
         argument: dict[str, Any],
         source_labels: dict[str, str],
     ) -> str:
-        result = self.stage_binding.draft(
-            request, plan, evidence_rows, argument, source_labels
-        )
+        result = self.stage_binding.draft(request, plan, evidence_rows, argument, source_labels)
         self._event("draft_generation")
         return result
 
@@ -169,9 +165,7 @@ class CapabilityBroker:
 
     def prose_transformation(self, article: str, request: Any) -> tuple[str, dict[str, Any]]:
         if self.prose_binding is None:
-            raise CapabilityBrokerError(
-                "selected adapter does not provide prose_transformation"
-            )
+            raise CapabilityBrokerError("selected adapter does not provide prose_transformation")
         final_text, evidence = self.prose_binding(article, request)
         record = dict(evidence or {})
         record.setdefault("capability", "prose_transformation")
