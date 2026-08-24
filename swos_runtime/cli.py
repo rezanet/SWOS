@@ -151,9 +151,7 @@ def main() -> int:
         if args.command == "finalise":
             run = WorkOrderRun(args.run_dir)
             if run.status()["status"] != "READY_TO_FINALISE":
-                raise WorkOrderError(
-                    f"run must be READY_TO_FINALISE, got {run.status()['status']}"
-                )
+                raise WorkOrderError(f"run must be READY_TO_FINALISE, got {run.status()['status']}")
             bundle_path = run.export_host_bundle()
             bundle = load_host_bundle(bundle_path)
             runtime = AutonomousSWOS(
