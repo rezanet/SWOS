@@ -1,4 +1,4 @@
-name: Autonomous SWOS Canonical Acceptance
+name: Autonomous SWOS Canonical Acceptance — G-HOST API Baseline
 
 on:
   pull_request:
@@ -16,7 +16,7 @@ env:
 
 jobs:
   canonical-legal-ai:
-    name: Canonical legal-AI article
+    name: G-HOST A — API canonical legal-AI article
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -27,7 +27,7 @@ jobs:
       - name: Require configured live provider credential
         run: |
           if [[ -z "$OPENAI_API_KEY" ]]; then
-            echo "OPENAI_API_KEY is not configured. Canonical autonomous acceptance is NOT RUN and cannot pass." >&2
+            echo "Provider API credential is not configured. G-HOST API baseline is NOT RUN and cannot pass." >&2
             exit 2
           fi
       - name: Install locked environment and SWOS
@@ -41,6 +41,7 @@ jobs:
           rm -rf /tmp/swos-autonomous-canonical
           set -o pipefail
           swos research-write \
+            --adapter openai-api \
             --topic "Can an AI-operated machine be a witness in court?" \
             --length 2500 \
             --audience "intelligent general reader" \
@@ -48,12 +49,18 @@ jobs:
             --depth rigorous \
             --output /tmp/swos-autonomous-canonical \
             --json 2>&1 | tee /tmp/swos-autonomous-cli.log
-      - name: Independently validate article and complete audit package
+      - name: Validate complete governed outcome contract
         run: python tools/validate_autonomous_run.py /tmp/swos-autonomous-canonical --canonical
+      - name: Generate G-HOST API portability evidence record
+        run: |
+          python tools/record_portability_acceptance.py \
+            openai_api \
+            /tmp/swos-autonomous-canonical \
+            --output /tmp/openai_api-portability-evidence.json
       - name: Summarise canonical evidence
         if: always()
         run: |
-          echo '## Autonomous SWOS canonical acceptance' >> "$GITHUB_STEP_SUMMARY"
+          echo '## SWOS G-HOST API baseline' >> "$GITHUB_STEP_SUMMARY"
           if [[ -f /tmp/swos-autonomous-canonical/run-control.json ]]; then
             echo '```json' >> "$GITHUB_STEP_SUMMARY"
             cat /tmp/swos-autonomous-canonical/run-control.json >> "$GITHUB_STEP_SUMMARY"
@@ -61,12 +68,13 @@ jobs:
           else
             echo 'No governed run-control artefact was produced.' >> "$GITHUB_STEP_SUMMARY"
           fi
-      - name: Upload complete canonical run evidence
+      - name: Upload complete canonical run and portability evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: autonomous-swos-canonical-legal-ai
+          name: g-host-api-canonical-legal-ai
           path: |
             /tmp/swos-autonomous-canonical
             /tmp/swos-autonomous-cli.log
+            /tmp/openai_api-portability-evidence.json
           retention-days: 14
