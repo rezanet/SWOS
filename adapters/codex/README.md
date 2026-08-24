@@ -1,42 +1,34 @@
-# OpenAI Codex / ChatGPT Adapter
+# Codex adapter
 
-Skills build on the open Agent Skills standard: a directory with `SKILL.md` plus
-optional `scripts/`, `references/` and `assets/`, and an optional
-`agents/openai.yaml` carrying UI metadata, invocation policy and tool
-dependencies. Skills are the authoring format; plugins are the distribution
-surface across ChatGPT web, desktop and mobile, the Codex CLI and IDE extensions.
+This adapter maps Codex/ChatGPT host capabilities onto SWOS contracts. Codex is an execution host; SWOS retains the scholarly state machine, instructions, evidence rules, review policy and release authority.
 
-## Install
+## v2 subscription capability contract
 
-```
-.agents/
-  skills/
-    swos-core/
-      SKILL.md
-      agents/openai.yaml
-      references/
-```
+`subscription-capabilities-v1.json` is the `swos.capabilities.v1` declaration for host-native subscription execution.
 
-Discovery scopes: REPO, USER, ADMIN, SYSTEM. SWOS is normally installed at REPO
-scope for a research project, or ADMIN scope for an organisation-wide standard.
+The subscription path is required to operate with:
 
-## Context budget
+- `execution_mode = host_native_subscription`;
+- `OPENAI_API_KEY` absent;
+- `api_key_used = false`;
+- `paid_api_calls = 0`.
 
-The host allocates roughly 2% of the context window to skill listing, or 8,000
-characters when the window size is unknown. Four SWOS skills at ~100 tokens of
-`description` each fit comfortably. **Do not add more core skills to work around a
-description that fails to trigger** - fix the description.
+## G-HOST acceptance
 
-## Invocation policy
+G-HOST requires both the direct API baseline and this Codex/ChatGPT subscription path to PASS the same canonical SWOS acceptance contract.
 
-```yaml
-# agents/openai.yaml - swos-reviewer
-allow_implicit_invocation: false
+Canonical case:
+
+`Can an AI-operated machine be a witness in court?`
+
+The host must follow the SWOS work-order protocol from one user request through finalisation. It may use its native subscription capabilities, but it may not replace SWOS stage ordering, canonical instructions or governance decisions.
+
+After a successful live run, generate the portability evidence record with:
+
+```bash
+python tools/record_portability_acceptance.py \
+  codex_chatgpt_subscription \
+  <run-output-dir>
 ```
 
-Review is deliberate. Implicit invocation of a reviewer mid-draft produces
-review theatre: the panel runs before the evidence work is complete and passes
-work it should have blocked.
-
-For `swos-core`, implicit invocation is appropriate - the skill's whole purpose is
-to intercept a writing request before drafting starts.
+A replay/host bundle cannot substitute for this live host execution. The evidence record must prove the canonical validator passed with no provider API credential and no paid model API calls.
