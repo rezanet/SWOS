@@ -8,13 +8,41 @@
   "capabilities": {
     "research_planning": {"level": "full", "contract": "swos.research-planning.v1"},
     "source_retrieval": {"level": "external_required", "contract": "swos.source-retrieval.v1"},
-    "semantic_rerank": {"level": "full", "contract": "swos.semantic-rerank.v1"},
+    "semantic_rerank": {"level": "full", "contract": "swos.semantic-rerank.v1", "assurance": ["joint_query_document_scoring", "structured_output"]},
     "evidence_extraction": {"level": "full", "contract": "swos.evidence-extraction.v1"},
-    "citation_support_audit": {"level": "full", "contract": "swos.citation-support-audit.v1", "independence": "separate_review_call"},
+    "citation_support_audit": {
+      "level": "full",
+      "contract": "swos.citation-support-audit.v1",
+      "assurance": ["conservative_support_judgement", "separate_api_call"],
+      "review_mode": "same-provider-separate-call",
+      "independence": "limited",
+      "blind_review_supported": false,
+      "independence_limitations": [
+        "A separate API call is not automatically an independent reviewer.",
+        "The review may use the same provider, model family or configured model as generation.",
+        "Blind review is not claimed unless a stronger adapter explicitly proves it."
+      ]
+    },
     "argument_construction": {"level": "full", "contract": "swos.argument-construction.v1"},
     "draft_generation": {"level": "full", "contract": "swos.draft-generation.v1"},
-    "semantic_verification": {"level": "full", "contract": "swos.semantic-verification.v1"},
-    "hostile_review": {"level": "full", "contract": "swos.hostile-review.v1", "independence": "separate_review_call"},
+    "semantic_verification": {
+      "level": "full",
+      "contract": "swos.semantic-verification.v1",
+      "assurance": ["separate_semantic_judgement", "deterministic_checks_remain_authoritative"]
+    },
+    "hostile_review": {
+      "level": "full",
+      "contract": "swos.hostile-review.v1",
+      "assurance": ["bounded_review", "separate_api_call"],
+      "review_mode": "same-provider-separate-call",
+      "independence": "limited",
+      "blind_review_supported": false,
+      "independence_limitations": [
+        "Separate model calls reduce direct context carry-over but do not prove reviewer independence.",
+        "The configured review model may be identical to the drafting model.",
+        "Blind review is not claimed by this adapter."
+      ]
+    },
     "revision": {"level": "full", "contract": "swos.revision.v1"},
     "prose_transformation": {"level": "full", "contract": "swos.prose-transformation.v1"}
   }
