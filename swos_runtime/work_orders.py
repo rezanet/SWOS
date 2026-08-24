@@ -1,8 +1,8 @@
-"""Persistent host-native work-order protocol for subscription execution.
+"""Persistent SWOS work-order protocol for live host execution.
 
-SWOS owns stage ordering and validation. A host such as Codex or Claude fulfils
-one bounded capability work order at a time and submits the result. The host
-never chooses the next scholarly stage.
+SWOS owns stage ordering, canonical instructions, contract validation and state
+transitions. A host or adapter fulfils one bounded capability at a time. The
+host never chooses the next scholarly stage and never owns the release decision.
 """
 
 from __future__ import annotations
@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from .capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
+from .instructions import INSTRUCTION_SET, instruction_record
 
 PROTOCOL_VERSION = "swos.work-orders.v1"
 MAX_REVIEW_ITERATIONS = 3
@@ -28,10 +29,17 @@ BASE_STAGE_SEQUENCE = [
     "semantic_verification",
     "hostile_review",
 ]
+JUDGEMENT_TYPES = {
+    "semantic_rerank": "relevance_ranking",
+    "citation_support_audit": "citation_support",
+    "argument_construction": "argument_proposal",
+    "semantic_verification": "semantic_preservation",
+    "hostile_review": "scholarly_review",
+}
 
 
 class WorkOrderError(RuntimeError):
-    """Raised for invalid host-native work-order transitions or submissions."""
+    """Raised for invalid work-order transitions or submissions."""
 
 
 def _read_json(path: str | Path) -> Any:
@@ -103,8 +111,17 @@ def _blocking_findings(review: Any) -> list[dict[str, Any]]:
     return findings
 
 
+def _review_assurance(declaration: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "review_mode": str(declaration.get("review_mode") or "unspecified"),
+        "independence": str(declaration.get("independence") or "unknown"),
+        "blind_review_supported": bool(declaration.get("blind_review_supported", False)),
+        "independence_limitations": list(declaration.get("independence_limitations") or []),
+    }
+
+
 class WorkOrderRun:
-    """A persistent SWOS-controlled host-native run."""
+    """A persistent SWOS-controlled live execution run."""
 
     def __init__(self, run_dir: str | Path) -> None:
         self.run_dir = Path(run_dir)
@@ -129,6 +146,7 @@ class WorkOrderRun:
         run_dir.mkdir(parents=True, exist_ok=False)
         state = {
             "protocol_version": PROTOCOL_VERSION,
+            "instruction_set": INSTRUCTION_SET,
             "run_id": run_id,
             "status": "ACTIVE",
             "request": request,
@@ -209,7 +227,6 @@ class WorkOrderRun:
             return {
                 "candidates": latest("evidence_extraction") or {},
                 "sources": latest("source_retrieval") or {},
-                "instruction": "Judge support only; uncertainty must not become directly_supports.",
             }
         if stage == "argument_construction":
             return {
@@ -239,7 +256,6 @@ class WorkOrderRun:
                 "article": self._latest_revision_or_draft(),
                 "mode": "polish",
                 "preset": request.get("style", "scholarly-natural"),
-                "instruction": "Change language only; preserve meaning and source markers.",
             }
         if stage == "semantic_verification":
             transform = latest("prose_transformation") or {}
@@ -247,7 +263,6 @@ class WorkOrderRun:
                 "source": self._latest_revision_or_draft(),
                 "candidate": transform.get("candidate") or transform.get("final_text"),
                 "assurance": "strict",
-                "instruction": "Return PASS only when the candidate preserves meaning and protected facts.",
             }
         if stage == "hostile_review":
             verification = latest("semantic_verification") or {}
@@ -269,12 +284,14 @@ class WorkOrderRun:
             return None
         stage = self.state["stage"]
         declaration = _require_capability(self.state["adapter"], stage)
+        instruction = instruction_record(stage)
         return {
             "protocol_version": PROTOCOL_VERSION,
             "run_id": self.state["run_id"],
             "next_stage": stage,
             "capability": stage,
             "contract": CAPABILITY_CONTRACTS[stage],
+            "canonical_instruction": instruction,
             "adapter": self.state["adapter"].get("adapter"),
             "execution_mode": self.state["adapter"].get("execution_mode"),
             "assurance_declaration": declaration,
@@ -288,6 +305,14 @@ class WorkOrderRun:
                     "model",
                     "execution_mode",
                 ],
+                "swos_stamps": [
+                    "capability",
+                    "contract",
+                    "contract_passed",
+                    "instruction_id",
+                    "instruction_sha256",
+                    "judgement_evidence_when_applicable",
+                ],
             },
         }
 
@@ -300,7 +325,7 @@ class WorkOrderRun:
             return
         _write_json(path, order)
 
-    def _validate_provenance(self, result: dict[str, Any]) -> None:
+    def _validate_provenance(self, stage: str, result: dict[str, Any]) -> dict[str, Any]:
         provenance = result.get("provenance")
         if not isinstance(provenance, dict):
             raise WorkOrderError("submission must include provenance object")
@@ -312,32 +337,76 @@ class WorkOrderRun:
             raise WorkOrderError("submission adapter does not match run adapter")
         if provenance.get("execution_mode") != adapter.get("execution_mode"):
             raise WorkOrderError("submission execution_mode does not match run adapter")
+        instruction = instruction_record(stage)
+        normalized = dict(provenance)
+        normalized["instruction_set"] = instruction["instruction_set"]
+        normalized["instruction_id"] = instruction["instruction_id"]
+        normalized["instruction_sha256"] = instruction["sha256"]
+        normalized["capability"] = stage
+        normalized["contract"] = CAPABILITY_CONTRACTS[stage]
+        return normalized
+
+    def _judgement_evidence(
+        self,
+        stage: str,
+        result: dict[str, Any],
+        provenance: dict[str, Any],
+    ) -> dict[str, Any] | None:
+        judgement_type = JUDGEMENT_TYPES.get(stage)
+        if not judgement_type:
+            return None
+        declaration = _require_capability(self.state["adapter"], stage)
+        review = _review_assurance(declaration)
+        return {
+            "judgement_type": judgement_type,
+            "capability": stage,
+            "contract": CAPABILITY_CONTRACTS[stage],
+            "adapter": provenance["adapter"],
+            "host": provenance["model_host"],
+            "model": provenance["model"],
+            "confidence": str(result.get("confidence") or "unreported"),
+            "assurance": list(declaration.get("assurance") or []),
+            "review_mode": review["review_mode"],
+            "independence": review["independence"],
+            "blind_review_supported": review["blind_review_supported"],
+            "independence_limitations": review["independence_limitations"],
+            "instruction_id": provenance["instruction_id"],
+            "instruction_sha256": provenance["instruction_sha256"],
+            "authority": "advisory_evidence_for_swos_governance",
+        }
 
     def _validate_stage_result(self, stage: str, result: Any) -> dict[str, Any]:
         if not isinstance(result, dict):
             raise WorkOrderError("stage submission must be a JSON object")
-        self._validate_provenance(result)
-        contract = result.get("contract")
+        normalized = dict(result)
+        provenance = self._validate_provenance(stage, normalized)
+        contract = normalized.get("contract")
         if contract not in {None, CAPABILITY_CONTRACTS[stage]}:
             raise WorkOrderError(f"submission contract mismatch for {stage}: {contract!r}")
+        normalized["capability"] = stage
+        normalized["contract"] = CAPABILITY_CONTRACTS[stage]
+        normalized["contract_passed"] = True
+        normalized["provenance"] = provenance
+        judgement = self._judgement_evidence(stage, normalized, provenance)
+        if judgement is not None:
+            normalized["judgement_evidence"] = judgement
+
         if stage == "research_planning":
             required = ("research_question", "scope", "queries", "rival_theses")
             for key in required:
-                if key not in result:
+                if key not in normalized:
                     raise WorkOrderError(f"research plan missing {key!r}")
-            if not isinstance(result.get("queries"), list) or len(result["queries"]) < 3:
+            if not isinstance(normalized.get("queries"), list) or len(normalized["queries"]) < 3:
                 raise WorkOrderError("research plan requires at least three queries")
         elif stage == "source_retrieval":
-            sources = result.get("sources")
+            sources = normalized.get("sources")
             if not isinstance(sources, list) or not sources:
                 raise WorkOrderError("source retrieval must return a non-empty sources array")
         elif stage == "semantic_rerank":
-            if not isinstance(result.get("scores"), list):
+            if not isinstance(normalized.get("scores"), list):
                 raise WorkOrderError("semantic rerank must return scores array")
-            if result.get("capability") not in {None, "semantic_rerank"}:
-                raise WorkOrderError("semantic rerank capability identity mismatch")
         elif stage == "evidence_extraction":
-            claims = result.get("claims")
+            claims = normalized.get("claims")
             if not isinstance(claims, list) or not claims:
                 raise WorkOrderError("evidence extraction must return claims array")
             for claim in claims:
@@ -348,25 +417,25 @@ class WorkOrderRun:
                 ):
                     raise WorkOrderError("every evidence claim requires source_id and exact_quote")
         elif stage == "citation_support_audit":
-            if not isinstance(result.get("audits"), list):
+            if not isinstance(normalized.get("audits"), list):
                 raise WorkOrderError("citation support audit must return audits array")
         elif stage == "argument_construction":
-            if not isinstance(result.get("nodes"), list) or not result.get("nodes"):
+            if not isinstance(normalized.get("nodes"), list) or not normalized.get("nodes"):
                 raise WorkOrderError("argument construction must return non-empty nodes")
         elif stage in {"draft_generation", "revision"}:
-            article = result.get("article") or result.get("text")
+            article = normalized.get("article") or normalized.get("text")
             if not isinstance(article, str) or not article.strip():
                 raise WorkOrderError(f"{stage} must return non-empty article text")
         elif stage == "prose_transformation":
-            candidate = result.get("candidate") or result.get("final_text")
+            candidate = normalized.get("candidate") or normalized.get("final_text")
             if not isinstance(candidate, str) or not candidate.strip():
                 raise WorkOrderError("prose transformation must return candidate text")
         elif stage == "semantic_verification":
-            if result.get("status") not in {"PASS", "REVIEW", "REJECT"}:
+            if normalized.get("status") not in {"PASS", "REVIEW", "REJECT"}:
                 raise WorkOrderError("semantic verification status must be PASS, REVIEW or REJECT")
-        elif stage == "hostile_review" and not isinstance(result.get("reviews"), list):
+        elif stage == "hostile_review" and not isinstance(normalized.get("reviews"), list):
             raise WorkOrderError("hostile review must return reviews array")
-        return result
+        return normalized
 
     def _advance(self, stage: str, result: dict[str, Any]) -> None:
         if stage == "hostile_review":
@@ -404,7 +473,11 @@ class WorkOrderRun:
             {
                 "event": "stage_accepted",
                 "stage": stage,
+                "capability": stage,
                 "contract": CAPABILITY_CONTRACTS[stage],
+                "contract_passed": True,
+                "instruction_id": validated["provenance"]["instruction_id"],
+                "instruction_sha256": validated["provenance"]["instruction_sha256"],
                 "submission": relative,
             }
         )
@@ -416,6 +489,7 @@ class WorkOrderRun:
     def status(self) -> dict[str, Any]:
         return {
             "protocol_version": PROTOCOL_VERSION,
+            "instruction_set": self.state.get("instruction_set", INSTRUCTION_SET),
             "run_id": self.state["run_id"],
             "status": self.state["status"],
             "next_stage": self.state.get("stage"),
@@ -425,8 +499,17 @@ class WorkOrderRun:
             "run_dir": str(self.run_dir),
         }
 
+    def judgement_evidence(self) -> list[dict[str, Any]]:
+        records = []
+        for item in self.state.get("submissions", []):
+            payload = _read_json(self.run_dir / item["file"])
+            judgement = payload.get("judgement_evidence") if isinstance(payload, dict) else None
+            if isinstance(judgement, dict):
+                records.append(judgement)
+        return records
+
     def export_host_bundle(self, output_path: str | Path | None = None) -> Path:
-        """Generate the replay/interchange bundle from accepted host work."""
+        """Generate canonical replay/interchange/debug/reproducibility evidence."""
         if self.state.get("status") not in {"READY_TO_FINALISE", "REVIEW_REQUIRED"}:
             raise WorkOrderError("host bundle can be exported only after review completion")
         adapter = self.state["adapter"]
@@ -443,7 +526,10 @@ class WorkOrderRun:
             for payload in self._all("revision")
             if isinstance(payload, dict)
         ]
+        review_decl = _require_capability(adapter, "hostile_review")
+        review = _review_assurance(review_decl)
         bundle = {
+            "bundle_role": "replay_interchange_debug_reproducibility",
             "host": {
                 "adapter": adapter.get("adapter"),
                 "model_host": adapter.get("model_host"),
@@ -453,8 +539,12 @@ class WorkOrderRun:
                 "execution_mode": adapter.get("execution_mode"),
                 "api_key_used": bool(adapter.get("api_key_used", False)),
                 "paid_api_calls": int(adapter.get("paid_api_calls", 0)),
-                "blind_review_supported": False,
+                "review_mode": review["review_mode"],
+                "independence": review["independence"],
+                "independence_limitations": review["independence_limitations"],
+                "blind_review_supported": review["blind_review_supported"],
                 "capability_contract_set": CAPABILITY_CONTRACT_SET,
+                "instruction_set": INSTRUCTION_SET,
             },
             "sources": retrieval.get("sources", []),
             "stages": {
@@ -466,6 +556,7 @@ class WorkOrderRun:
                 "draft": draft.get("article") or draft.get("text"),
                 "reviews": self._all("hostile_review"),
                 "revisions": [item for item in revisions if isinstance(item, str)],
+                "semantic_verification": verification,
             },
             "prose": {
                 "adapter_mode": "host_native_swos_prose_contract",
@@ -473,8 +564,10 @@ class WorkOrderRun:
                 "final_text": final_text,
                 "semantic_verification": verification,
             },
+            "judgement_evidence": self.judgement_evidence(),
             "work_order_run": {
                 "protocol_version": PROTOCOL_VERSION,
+                "instruction_set": INSTRUCTION_SET,
                 "run_id": self.state["run_id"],
                 "review_iteration": self.state.get("review_iteration", 0),
                 "revision_count": self.state.get("revision_count", 0),
