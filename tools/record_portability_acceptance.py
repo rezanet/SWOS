@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from tools.validate_autonomous_run import CANONICAL_REQUEST, load, validate_run
+from validate_autonomous_run import CANONICAL_REQUEST, load, validate_run
 
 DEFAULT_MATRIX = Path("acceptance/portability/matrix-v1.json")
 DEFAULT_EVIDENCE_DIR = Path("acceptance/portability/evidence")
