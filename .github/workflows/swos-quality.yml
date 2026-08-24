@@ -32,6 +32,10 @@ jobs:
         run: python -m ruff check swos_prose swos_runtime benchmark tools evals tests
       - name: Enforce SWOS Host Independence Rule
         run: python tools/check_host_independence.py
+      - name: Enforce vendor leakage architectural lint
+        run: python tools/check_vendor_leakage.py
+      - name: Validate frozen portability matrix
+        run: python tools/check_portability_acceptance.py --definitions-only
       - name: Run deterministic Prose and autonomous-runtime tests with coverage
         run: |
           python -m coverage erase
