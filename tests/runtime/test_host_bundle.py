@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 
 from swos_runtime.host_bundle import (
+    HOST_BUNDLE_ROLE,
     HostBundleError,
     HostBundleRetriever,
     HostBundleStageProvider,
@@ -18,11 +19,15 @@ from swos_runtime.host_bundle import (
 class HostBundleTests(unittest.TestCase):
     def _bundle(self):
         return {
+            "bundle_role": HOST_BUNDLE_ROLE,
             "host": {
-                "adapter": "codex",
-                "model_host": "ChatGPT",
-                "model": "GPT-5.6 Sol",
+                "adapter": "future-host",
+                "model_host": "Future Host",
+                "model": "Future Model",
                 "execution_mode": "host_native_subscription",
+                "review_mode": "same-host-separate-context",
+                "independence": "limited",
+                "independence_limitations": ["same host"],
                 "blind_review_supported": False,
                 "api_key_used": False,
                 "paid_api_calls": 0,
@@ -60,6 +65,7 @@ class HostBundleTests(unittest.TestCase):
                 "argument_build": {"thesis": "t", "nodes": [], "edges": []},
                 "draft": "# Draft\n\nText [S1].",
                 "reviews": [{"reviews": []}],
+                "semantic_verification": {"status": "PASS", "reason": "recorded", "issues": []},
             },
             "prose": {
                 "adapter_mode": "host_native_swos_prose_contract",
@@ -74,7 +80,7 @@ class HostBundleTests(unittest.TestCase):
             with self.assertRaises(HostBundleError):
                 load_host_bundle(path)
 
-    def test_retriever_and_reranker_use_no_runtime_network_or_api_key(self):
+    def test_bundle_is_replay_not_live_subscription_execution(self):
         bundle = self._bundle()
         with unittest.mock.patch.dict(os.environ, {}, clear=True):
             retriever = HostBundleRetriever(bundle)
@@ -84,10 +90,15 @@ class HostBundleTests(unittest.TestCase):
         self.assertEqual(len(ranked), 1)
         self.assertEqual(ranked[0].rerank_score, 91)
         self.assertTrue(record["executed"])
-        self.assertEqual(record["capability"], "joint_query_document_cross_encoder")
+        self.assertEqual(record["capability"], "semantic_rerank")
+        self.assertEqual(record["contract"], "swos.semantic-rerank.v1")
+        self.assertTrue(record["contract_passed"])
+        self.assertEqual(provider.execution_metadata["execution_mode"], "replay")
+        self.assertEqual(provider.execution_metadata["bundle_role"], HOST_BUNDLE_ROLE)
         self.assertFalse(provider.execution_metadata["api_key_used"])
         self.assertEqual(provider.execution_metadata["paid_api_calls"], 0)
         self.assertFalse(provider.blind_review_supported)
+        self.assertEqual(provider.execution_metadata["independence"], "limited")
         self.assertFalse(retriever.events[0]["network_used_by_runtime"])
 
     def test_missing_stage_fails_closed(self):
@@ -105,8 +116,9 @@ class HostBundleTests(unittest.TestCase):
         self.assertEqual(final, "Original text")
         self.assertTrue(evidence["chunks"][0]["used_source_fallback"])
         self.assertTrue(evidence["all_changed_text_safe"])
+        self.assertEqual(evidence["bundle_role"], HOST_BUNDLE_ROLE)
 
-    def test_provider_reads_stage_outputs_and_records_zero_cost_host_calls(self):
+    def test_provider_reads_recorded_outputs_at_zero_replay_cost(self):
         provider = HostBundleStageProvider(self._bundle())
         plan = provider.plan({}, "scope")
         self.assertEqual(plan["research_question"], "Question")
@@ -114,6 +126,8 @@ class HostBundleTests(unittest.TestCase):
         self.assertIn("Draft", draft)
         review = provider.review("", [], {}, [], iteration=1)
         self.assertEqual(review, {"reviews": []})
+        semantic = provider.semantic_verify("a", "a", {})
+        self.assertEqual(semantic["status"], "PASS")
         self.assertTrue(provider.calls)
         self.assertTrue(all(call.get("cost_estimate_usd") == 0 for call in provider.calls))
 
