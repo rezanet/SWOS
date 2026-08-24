@@ -1,0 +1,21 @@
+{
+  "contract_set": "swos.capabilities.v1",
+  "adapter": "codex-subscription",
+  "model_host": "ChatGPT/Codex",
+  "execution_mode": "host_native_subscription",
+  "api_key_used": false,
+  "paid_api_calls": 0,
+  "capabilities": {
+    "research_planning": {"level": "native", "contract": "swos.research-planning.v1"},
+    "source_retrieval": {"level": "native", "contract": "swos.source-retrieval.v1"},
+    "semantic_rerank": {"level": "native", "contract": "swos.semantic-rerank.v1"},
+    "evidence_extraction": {"level": "native", "contract": "swos.evidence-extraction.v1"},
+    "citation_support_audit": {"level": "native", "contract": "swos.citation-support-audit.v1", "independence": "limited_same_host"},
+    "argument_construction": {"level": "native", "contract": "swos.argument-construction.v1"},
+    "draft_generation": {"level": "native", "contract": "swos.draft-generation.v1"},
+    "semantic_verification": {"level": "native", "contract": "swos.semantic-verification.v1"},
+    "hostile_review": {"level": "native", "contract": "swos.hostile-review.v1", "independence": "limited_same_host"},
+    "revision": {"level": "native", "contract": "swos.revision.v1"},
+    "prose_transformation": {"level": "native", "contract": "swos.prose-transformation.v1"}
+  }
+}
