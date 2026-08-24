@@ -1,0 +1,21 @@
+{
+  "contract_set": "swos.capabilities.v1",
+  "adapter": "openai-api",
+  "model_host": "OpenAI API",
+  "execution_mode": "direct_api",
+  "api_key_used": true,
+  "paid_api_calls": 1,
+  "capabilities": {
+    "research_planning": {"level": "full", "contract": "swos.research-planning.v1"},
+    "source_retrieval": {"level": "external_required", "contract": "swos.source-retrieval.v1"},
+    "semantic_rerank": {"level": "full", "contract": "swos.semantic-rerank.v1"},
+    "evidence_extraction": {"level": "full", "contract": "swos.evidence-extraction.v1"},
+    "citation_support_audit": {"level": "full", "contract": "swos.citation-support-audit.v1", "independence": "separate_review_call"},
+    "argument_construction": {"level": "full", "contract": "swos.argument-construction.v1"},
+    "draft_generation": {"level": "full", "contract": "swos.draft-generation.v1"},
+    "semantic_verification": {"level": "full", "contract": "swos.semantic-verification.v1"},
+    "hostile_review": {"level": "full", "contract": "swos.hostile-review.v1", "independence": "separate_review_call"},
+    "revision": {"level": "full", "contract": "swos.revision.v1"},
+    "prose_transformation": {"level": "full", "contract": "swos.prose-transformation.v1"}
+  }
+}
