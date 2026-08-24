@@ -41,7 +41,9 @@ def _read_json(path: str | Path) -> Any:
 
 def _write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def _load_adapter_manifest(path: str | Path) -> dict[str, Any]:
@@ -58,8 +60,7 @@ def _load_adapter_manifest(path: str | Path) -> dict[str, Any]:
 
 
 def _require_capability(adapter: dict[str, Any], capability: str) -> dict[str, Any]:
-    declarations = adapter.get("capabilities", {})
-    declaration = declarations.get(capability)
+    declaration = adapter.get("capabilities", {}).get(capability)
     if not isinstance(declaration, dict):
         raise WorkOrderError(
             f"adapter {adapter.get('adapter', '?')!r} does not declare {capability!r}"
@@ -67,7 +68,7 @@ def _require_capability(adapter: dict[str, Any], capability: str) -> dict[str, A
     if declaration.get("level") not in {"full", "native"}:
         raise WorkOrderError(
             f"adapter {adapter.get('adapter', '?')!r} declares {capability!r} as "
-            f"{declaration.get('level')!r}; autonomous host execution requires full/native"
+            f"{declaration.get('level')!r}; autonomous execution requires full/native"
         )
     expected = CAPABILITY_CONTRACTS[capability]
     if declaration.get("contract") != expected:
@@ -100,13 +101,12 @@ def _blocking_findings(review: Any) -> list[dict[str, Any]]:
         if not isinstance(panel, dict):
             continue
         for finding in panel.get("findings", []):
-            if isinstance(finding, dict) and finding.get("severity") in {"blocker", "major"}:
+            if (
+                isinstance(finding, dict)
+                and finding.get("severity") in {"blocker", "major"}
+            ):
                 findings.append(finding)
     return findings
-
-
-def _submission_name(stage: str, count: int) -> str:
-    return f"{count:02d}-{stage}.json"
 
 
 class WorkOrderRun:
@@ -128,9 +128,8 @@ class WorkOrderRun:
         root: str | Path,
     ) -> "WorkOrderRun":
         request = _validate_request(request)
-        for capability in BASE_STAGE_SEQUENCE:
+        for capability in [*BASE_STAGE_SEQUENCE, "revision"]:
             _require_capability(adapter_manifest, capability)
-        _require_capability(adapter_manifest, "revision")
 
         run_id = f"host-{uuid.uuid4()}"
         run_dir = Path(root) / run_id
@@ -156,7 +155,11 @@ class WorkOrderRun:
 
     @classmethod
     def start_from_files(
-        cls, *, request_path: str | Path, adapter_path: str | Path, root: str | Path
+        cls,
+        *,
+        request_path: str | Path,
+        adapter_path: str | Path,
+        root: str | Path,
     ) -> "WorkOrderRun":
         return cls.start(
             request=_read_json(request_path),
@@ -173,25 +176,30 @@ class WorkOrderRun:
                 return _read_json(self.run_dir / item["file"])
         return None
 
+    def _all(self, stage: str) -> list[Any]:
+        return [
+            _read_json(self.run_dir / item["file"])
+            for item in self.state.get("submissions", [])
+            if item.get("stage") == stage
+        ]
+
     def _latest_revision_or_draft(self) -> str | None:
-        revision = self._latest("revision")
-        if isinstance(revision, dict):
-            text = revision.get("article") or revision.get("text")
-            if isinstance(text, str) and text.strip():
-                return text.strip()
-        draft = self._latest("draft_generation")
-        if isinstance(draft, dict):
-            text = draft.get("article") or draft.get("text")
-            if isinstance(text, str) and text.strip():
-                return text.strip()
+        for stage in ("revision", "draft_generation"):
+            payload = self._latest(stage)
+            if isinstance(payload, dict):
+                text = payload.get("article") or payload.get("text")
+                if isinstance(text, str) and text.strip():
+                    return text.strip()
         return None
 
     def _work_inputs(self, stage: str) -> dict[str, Any]:
         request = self.state["request"]
+        latest = self._latest
+
         if stage == "research_planning":
             return {"request": request}
         if stage == "source_retrieval":
-            plan = self._latest("research_planning") or {}
+            plan = latest("research_planning") or {}
             return {
                 "topic": request["topic"],
                 "queries": plan.get("queries", []),
@@ -200,42 +208,44 @@ class WorkOrderRun:
         if stage == "semantic_rerank":
             return {
                 "query": request["topic"],
-                "sources": self._latest("source_retrieval") or [],
+                "sources": latest("source_retrieval") or {},
             }
         if stage == "evidence_extraction":
             return {
                 "topic": request["topic"],
-                "sources": self._latest("source_retrieval") or [],
-                "rerank": self._latest("semantic_rerank") or {},
+                "sources": latest("source_retrieval") or {},
+                "rerank": latest("semantic_rerank") or {},
             }
         if stage == "citation_support_audit":
             return {
-                "candidates": self._latest("evidence_extraction") or {},
-                "sources": self._latest("source_retrieval") or [],
-                "instruction": "Judge support only; uncertainty must not become directly_supports.",
+                "candidates": latest("evidence_extraction") or {},
+                "sources": latest("source_retrieval") or {},
+                "instruction": (
+                    "Judge support only; uncertainty must not become directly_supports."
+                ),
             }
         if stage == "argument_construction":
             return {
                 "topic": request["topic"],
-                "research_plan": self._latest("research_planning") or {},
-                "evidence_candidates": self._latest("evidence_extraction") or {},
-                "citation_audit": self._latest("citation_support_audit") or {},
+                "research_plan": latest("research_planning") or {},
+                "evidence_candidates": latest("evidence_extraction") or {},
+                "citation_audit": latest("citation_support_audit") or {},
             }
         if stage == "draft_generation":
             return {
                 "request": request,
-                "research_plan": self._latest("research_planning") or {},
-                "evidence_candidates": self._latest("evidence_extraction") or {},
-                "citation_audit": self._latest("citation_support_audit") or {},
-                "argument": self._latest("argument_construction") or {},
+                "research_plan": latest("research_planning") or {},
+                "evidence_candidates": latest("evidence_extraction") or {},
+                "citation_audit": latest("citation_support_audit") or {},
+                "argument": latest("argument_construction") or {},
             }
         if stage == "revision":
             return {
                 "article": self._latest_revision_or_draft(),
-                "review": self._latest("hostile_review") or {},
-                "evidence_candidates": self._latest("evidence_extraction") or {},
-                "citation_audit": self._latest("citation_support_audit") or {},
-                "argument": self._latest("argument_construction") or {},
+                "review": latest("hostile_review") or {},
+                "evidence_candidates": latest("evidence_extraction") or {},
+                "citation_audit": latest("citation_support_audit") or {},
+                "argument": latest("argument_construction") or {},
             }
         if stage == "prose_transformation":
             return {
@@ -245,18 +255,18 @@ class WorkOrderRun:
                 "instruction": "Change language only; preserve meaning and source markers.",
             }
         if stage == "semantic_verification":
-            source = self._latest_revision_or_draft()
-            transform = self._latest("prose_transformation") or {}
-            candidate = transform.get("candidate") or transform.get("final_text")
+            transform = latest("prose_transformation") or {}
             return {
-                "source": source,
-                "candidate": candidate,
+                "source": self._latest_revision_or_draft(),
+                "candidate": transform.get("candidate") or transform.get("final_text"),
                 "assurance": "strict",
-                "instruction": "Return PASS only when the candidate preserves meaning and protected facts.",
+                "instruction": (
+                    "Return PASS only when the candidate preserves meaning and protected facts."
+                ),
             }
         if stage == "hostile_review":
-            verification = self._latest("semantic_verification") or {}
-            transform = self._latest("prose_transformation") or {}
+            verification = latest("semantic_verification") or {}
+            transform = latest("prose_transformation") or {}
             source = self._latest_revision_or_draft()
             article = (
                 transform.get("candidate")
@@ -266,10 +276,10 @@ class WorkOrderRun:
             return {
                 "iteration": self.state.get("review_iteration", 0) + 1,
                 "article": article,
-                "evidence_candidates": self._latest("evidence_extraction") or {},
-                "citation_audit": self._latest("citation_support_audit") or {},
-                "argument": self._latest("argument_construction") or {},
-                "sources": self._latest("source_retrieval") or [],
+                "evidence_candidates": latest("evidence_extraction") or {},
+                "citation_audit": latest("citation_support_audit") or {},
+                "argument": latest("argument_construction") or {},
+                "sources": latest("source_retrieval") or {},
             }
         raise WorkOrderError(f"unsupported work-order stage: {stage}")
 
@@ -302,12 +312,12 @@ class WorkOrderRun:
 
     def _persist_work_order(self) -> None:
         order = self.work_order()
+        path = self.run_dir / "next-work.json"
         if order is None:
-            path = self.run_dir / "next-work.json"
             if path.exists():
                 path.unlink()
             return
-        _write_json(self.run_dir / "next-work.json", order)
+        _write_json(path, order)
 
     def _validate_provenance(self, result: dict[str, Any]) -> None:
         provenance = result.get("provenance")
@@ -326,13 +336,13 @@ class WorkOrderRun:
         if not isinstance(result, dict):
             raise WorkOrderError("stage submission must be a JSON object")
         self._validate_provenance(result)
-        if result.get("contract") not in {None, CAPABILITY_CONTRACTS[stage]}:
-            raise WorkOrderError(
-                f"submission contract mismatch for {stage}: {result.get('contract')!r}"
-            )
+        contract = result.get("contract")
+        if contract not in {None, CAPABILITY_CONTRACTS[stage]}:
+            raise WorkOrderError(f"submission contract mismatch for {stage}: {contract!r}")
 
         if stage == "research_planning":
-            for key in ("research_question", "scope", "queries", "rival_theses"):
+            required = ("research_question", "scope", "queries", "rival_theses")
+            for key in required:
                 if key not in result:
                     raise WorkOrderError(f"research plan missing {key!r}")
             if not isinstance(result.get("queries"), list) or len(result["queries"]) < 3:
@@ -351,8 +361,14 @@ class WorkOrderRun:
             if not isinstance(claims, list) or not claims:
                 raise WorkOrderError("evidence extraction must return claims array")
             for claim in claims:
-                if not isinstance(claim, dict) or not claim.get("exact_quote") or not claim.get("source_id"):
-                    raise WorkOrderError("every evidence claim requires source_id and exact_quote")
+                if (
+                    not isinstance(claim, dict)
+                    or not claim.get("exact_quote")
+                    or not claim.get("source_id")
+                ):
+                    raise WorkOrderError(
+                        "every evidence claim requires source_id and exact_quote"
+                    )
         elif stage == "citation_support_audit":
             if not isinstance(result.get("audits"), list):
                 raise WorkOrderError("citation support audit must return audits array")
@@ -369,14 +385,15 @@ class WorkOrderRun:
                 raise WorkOrderError("prose transformation must return candidate text")
         elif stage == "semantic_verification":
             if result.get("status") not in {"PASS", "REVIEW", "REJECT"}:
-                raise WorkOrderError("semantic verification status must be PASS, REVIEW or REJECT")
+                raise WorkOrderError(
+                    "semantic verification status must be PASS, REVIEW or REJECT"
+                )
         elif stage == "hostile_review":
             if not isinstance(result.get("reviews"), list):
                 raise WorkOrderError("hostile review must return reviews array")
         return result
 
     def _advance(self, stage: str, result: dict[str, Any]) -> None:
-        sequence_index = BASE_STAGE_SEQUENCE.index(stage) if stage in BASE_STAGE_SEQUENCE else None
         if stage == "hostile_review":
             self.state["review_iteration"] = self.state.get("review_iteration", 0) + 1
             blockers = _blocking_findings(result)
@@ -391,13 +408,14 @@ class WorkOrderRun:
             self.state["status"] = "READY_TO_FINALISE"
             self.state["stage"] = None
             return
+
         if stage == "revision":
             self.state["revision_count"] = self.state.get("revision_count", 0) + 1
             self.state["stage"] = "prose_transformation"
             return
-        if sequence_index is None:
-            raise WorkOrderError(f"cannot advance unknown stage: {stage}")
-        self.state["stage"] = BASE_STAGE_SEQUENCE[sequence_index + 1]
+
+        index = BASE_STAGE_SEQUENCE.index(stage)
+        self.state["stage"] = BASE_STAGE_SEQUENCE[index + 1]
 
     def submit(self, result: dict[str, Any]) -> dict[str, Any]:
         if self.state.get("status") != "ACTIVE":
@@ -405,15 +423,18 @@ class WorkOrderRun:
         stage = self.state["stage"]
         validated = self._validate_stage_result(stage, result)
         count = len(self.state.get("submissions", [])) + 1
-        filename = _submission_name(stage, count)
-        _write_json(self.run_dir / "submissions" / filename, validated)
-        self.state.setdefault("submissions", []).append({"stage": stage, "file": f"submissions/{filename}"})
+        filename = f"{count:02d}-{stage}.json"
+        relative = f"submissions/{filename}"
+        _write_json(self.run_dir / relative, validated)
+        self.state.setdefault("submissions", []).append(
+            {"stage": stage, "file": relative}
+        )
         self.state.setdefault("history", []).append(
             {
                 "event": "stage_accepted",
                 "stage": stage,
                 "contract": CAPABILITY_CONTRACTS[stage],
-                "submission": f"submissions/{filename}",
+                "submission": relative,
             }
         )
         self._advance(stage, validated)
@@ -434,13 +455,11 @@ class WorkOrderRun:
         }
 
     def export_host_bundle(self, output_path: str | Path | None = None) -> Path:
-        """Export the accepted host work as the replay/interchange bundle.
-
-        This is generated by SWOS; users never hand-assemble it.
-        """
+        """Generate the replay/interchange bundle from accepted host work."""
 
         if self.state.get("status") not in {"READY_TO_FINALISE", "REVIEW_REQUIRED"}:
             raise WorkOrderError("host bundle can be exported only after review completion")
+
         adapter = self.state["adapter"]
         retrieval = self._latest("source_retrieval") or {}
         verification = self._latest("semantic_verification") or {}
@@ -449,21 +468,20 @@ class WorkOrderRun:
         candidate = transform.get("candidate") or transform.get("final_text")
         safe = verification.get("status") == "PASS"
         final_text = candidate if safe and isinstance(candidate, str) else source_text
-        reviews = [
-            _read_json(self.run_dir / item["file"])
-            for item in self.state.get("submissions", [])
-            if item.get("stage") == "hostile_review"
-        ]
+        draft = self._latest("draft_generation") or {}
         revisions = [
-            (_read_json(self.run_dir / item["file"]).get("article") or _read_json(self.run_dir / item["file"]).get("text"))
-            for item in self.state.get("submissions", [])
-            if item.get("stage") == "revision"
+            payload.get("article") or payload.get("text")
+            for payload in self._all("revision")
+            if isinstance(payload, dict)
         ]
+
         bundle = {
             "host": {
                 "adapter": adapter.get("adapter"),
                 "model_host": adapter.get("model_host"),
-                "model": (transform.get("provenance") or {}).get("model", adapter.get("model_host")),
+                "model": (transform.get("provenance") or {}).get(
+                    "model", adapter.get("model_host")
+                ),
                 "execution_mode": adapter.get("execution_mode"),
                 "api_key_used": bool(adapter.get("api_key_used", False)),
                 "paid_api_calls": int(adapter.get("paid_api_calls", 0)),
@@ -473,13 +491,14 @@ class WorkOrderRun:
             "sources": retrieval.get("sources", []),
             "stages": {
                 "research_plan": self._latest("research_planning") or {},
-                "rerank_scores": (self._latest("semantic_rerank") or {}).get("scores", []),
+                "rerank_scores": (self._latest("semantic_rerank") or {}).get(
+                    "scores", []
+                ),
                 "evidence_build": self._latest("evidence_extraction") or {},
                 "evidence_audit": self._latest("citation_support_audit") or {},
                 "argument_build": self._latest("argument_construction") or {},
-                "draft": (self._latest("draft_generation") or {}).get("article")
-                or (self._latest("draft_generation") or {}).get("text"),
-                "reviews": reviews,
+                "draft": draft.get("article") or draft.get("text"),
+                "reviews": self._all("hostile_review"),
                 "revisions": [item for item in revisions if isinstance(item, str)],
             },
             "prose": {
