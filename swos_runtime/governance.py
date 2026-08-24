@@ -8,6 +8,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from .capabilities import capability_satisfied
 from .models import SourceRecord
 
 INJECTION_PATTERNS = (
@@ -52,27 +53,13 @@ def body_word_count(article: str) -> int:
 
 
 def cross_encoder_executed(record: dict[str, Any]) -> bool:
-    """Return whether the governed SWOS semantic-rerank capability ran.
+    """Return whether the SWOS semantic-rerank capability contract was satisfied.
 
-    Scholarly validity is defined by the frozen SWOS capability contract, never
-    by a vendor or model name. Older capability/method identities remain readable
-    only so historical evidence can still be audited; new evidence must use
-    ``semantic_rerank`` with ``swos.semantic-rerank.v1``.
+    Core governance never checks a provider method or vendor identity. Replay
+    adapters are responsible for normalising historical implementation records
+    into current SWOS capability evidence before governance sees them.
     """
-    if not isinstance(record, dict):
-        return False
-    if (
-        record.get("executed") is True
-        and record.get("capability") == "semantic_rerank"
-        and record.get("contract") == "swos.semantic-rerank.v1"
-    ):
-        return True
-    if (
-        record.get("executed") is True
-        and record.get("capability") == "joint_query_document_cross_encoder"
-    ):
-        return True
-    return record.get("method") == "openai_joint_query_document_cross_encoder"
+    return isinstance(record, dict) and capability_satisfied(record, "semantic_rerank")
 
 
 class IntegrityChain:
