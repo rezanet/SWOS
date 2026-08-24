@@ -2,9 +2,8 @@ from __future__ import annotations
 
 import tempfile
 import unittest
-from pathlib import Path
 
-from swos_runtime.capabilities import CAPABILITY_CONTRACTS, CAPABILITY_CONTRACT_SET
+from swos_runtime.capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
 from swos_runtime.work_orders import WorkOrderError, WorkOrderRun
 
 
