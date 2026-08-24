@@ -12,7 +12,7 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-from .capabilities import CAPABILITY_CONTRACTS, CAPABILITY_CONTRACT_SET
+from .capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
 
 PROTOCOL_VERSION = "swos.work-orders.v1"
 MAX_REVIEW_ITERATIONS = 3
