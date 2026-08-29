@@ -12,6 +12,19 @@ reproducibility, governance compliance and auditability.
 
 ---
 
+## Vision and programme
+
+SWOS treats scholarly writing as an epistemic-control problem: evidence,
+claims, arguments, provenance, uncertainty, governance and human approval must
+precede release. The philosophical rationale and explicit boundaries are
+canonical in [`VISION.md`](VISION.md); the implementation sequence is in the
+[authoritative Phase 1 roadmap](docs/roadmap.md).
+
+The version tracks remain distinct: Core/specification `1.0.0`, reference
+runtime `v1.1`, and Research Grade `v2.0`.
+
+---
+
 ## SWOS Prose G-Prose95 (development)
 
 **SWOS Prose is the post-draft semantic-safe editing layer: rewrite the language,

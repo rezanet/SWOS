@@ -1,0 +1,2198 @@
+{
+  "manifest_version": "1.0.0",
+  "generated_at": "2026-08-29",
+  "corpus": {
+    "include_roots": [
+      ".",
+      "adr",
+      "adapters",
+      "acceptance",
+      "benchmark",
+      "contracts",
+      "discipline-packs",
+      "docs",
+      "evals",
+      "examples",
+      "governance",
+      "releases",
+      "reviewer-packs",
+      "schemas",
+      "skills",
+      "tasks",
+      "specs",
+      ".specify/memory"
+    ],
+    "include_files": [
+      "LICENSE"
+    ],
+    "exclude_prefixes": [
+      ".agents",
+      ".github",
+      "tests",
+      "dogfood",
+      "acceptance/portability/evidence",
+      "benchmark/artifacts/raw-evidence-v0.2",
+      ".specify/templates",
+      ".specify/scripts",
+      ".specify/integrations"
+    ]
+  },
+  "source_inputs": [
+    {
+      "filename": "SWOS_Roadmap_and_Implementation_Plan.md",
+      "sha256": "c901379801190991c1a9ef1465b62c6aca51620d297b3b73b8cd8d37393dd7a9",
+      "date": "2026-08-29",
+      "role": "research_input",
+      "derived_canonical_documents": [
+        "swos-vision",
+        "docs-roadmap",
+        "specs-001-swos-v1-1-programme-foundation-spec-md"
+      ]
+    },
+    {
+      "filename": "SWOS_Strategic_Roadmap.docx",
+      "sha256": "2d1088b8b7b713237b2e4bdb74d78137a4d3899a6c2322656b686717fe949bef",
+      "date": "2026-08-29",
+      "role": "research_input",
+      "derived_canonical_documents": [
+        "swos-vision",
+        "docs-roadmap"
+      ]
+    },
+    {
+      "filename": "Research on Enterprise-Grade Writing Skills.docx",
+      "sha256": "678deda54c55387ae500deea4e4bcb9eac8d01850ff23e07cc2798ab43fbd9eb",
+      "date": "2026-08-29",
+      "role": "research_input",
+      "derived_canonical_documents": [
+        "swos-vision",
+        "swos-constitution",
+        "docs-roadmap"
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "id": "swos-constitution",
+      "path": ".specify/memory/constitution.md",
+      "title": "SWOS Constitution",
+      "owner": "SWOS Maintainers",
+      "authority": "constitutional",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-swos-constitution"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "baseline-report-md",
+      "path": "BASELINE_REPORT.md",
+      "title": "SWOS 100% Completion Baseline Report",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-baseline-report-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "changelog-md",
+      "path": "CHANGELOG.md",
+      "title": "Changelog",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-changelog-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "code-of-conduct-md",
+      "path": "CODE_OF_CONDUCT.md",
+      "title": "Code of Conduct",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-code-of-conduct-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contributing-md",
+      "path": "CONTRIBUTING.md",
+      "title": "Contributing to SWOS",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contributing-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "g-prose95-final-builder-report-md",
+      "path": "G-PROSE95-FINAL-BUILDER-REPORT.md",
+      "title": "G-Prose95 Final Builder Report",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-g-prose95-final-builder-report-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-md",
+      "path": "GOVERNANCE.md",
+      "title": "Project Governance",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "license",
+      "path": "LICENSE",
+      "title": "License",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-license"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "progress-md",
+      "path": "PROGRESS.md",
+      "title": "SWOS engineering progress",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-progress-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "root-readme",
+      "path": "README.md",
+      "title": "SWOS - Scholarly Writing Operating System",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-root-readme"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "security-md",
+      "path": "SECURITY.md",
+      "title": "Security Policy",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-security-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "swos-solution-architecture-md",
+      "path": "SWOS-Solution-Architecture.md",
+      "title": "SWOS — Scholarly Writing Operating System",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-swos-solution-architecture-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "swos-vision",
+      "path": "VISION.md",
+      "title": "SWOS Vision",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-swos-vision"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "acceptance-portability-readme-md",
+      "path": "acceptance/portability/README.md",
+      "title": "SWOS v2 Portability Acceptance",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-acceptance-portability-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adapters-readme-md",
+      "path": "adapters/README.md",
+      "title": "Host Adapters",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adapters-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adapters-agent-skills-readme-md",
+      "path": "adapters/agent-skills/README.md",
+      "title": "Agent Skills Adapter (reference)",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adapters-agent-skills-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adapters-claude-code-readme-md",
+      "path": "adapters/claude-code/README.md",
+      "title": "Claude Code adapter",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adapters-claude-code-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adapters-cli-readme-md",
+      "path": "adapters/cli/README.md",
+      "title": "CLI Adapter",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adapters-cli-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adapters-codex-readme-md",
+      "path": "adapters/codex/README.md",
+      "title": "Codex adapter",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adapters-codex-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adapters-ide-readme-md",
+      "path": "adapters/ide/README.md",
+      "title": "IDE Agent Adapter",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adapters-ide-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adapters-mcp-readme-md",
+      "path": "adapters/mcp/README.md",
+      "title": "MCP Adapter (optional)",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adapters-mcp-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0001-contract-first-architecture-md",
+      "path": "adr/ADR-0001-contract-first-architecture.md",
+      "title": "ADR-0001: Contract-first architecture",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0001-contract-first-architecture-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0002-w3c-prov-dm-as-the-provenance-baseline-md",
+      "path": "adr/ADR-0002-w3c-prov-dm-as-the-provenance-baseline.md",
+      "title": "ADR-0002: W3C PROV-DM as the provenance baseline",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0002-w3c-prov-dm-as-the-provenance-baseline-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0003-six-field-frontmatter-constraint-for-core-skills-md",
+      "path": "adr/ADR-0003-six-field-frontmatter-constraint-for-core-skills.md",
+      "title": "ADR-0003: Six-field frontmatter constraint for core skills",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0003-six-field-frontmatter-constraint-for-core-skills-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0004-epg-and-sdl-are-separate-artefacts-md",
+      "path": "adr/ADR-0004-epg-and-sdl-are-separate-artefacts.md",
+      "title": "ADR-0004: EPG and SDL are separate artefacts",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0004-epg-and-sdl-are-separate-artefacts-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0005-discipline-specialists-ship-as-packs-not-agents-md",
+      "path": "adr/ADR-0005-discipline-specialists-ship-as-packs-not-agents.md",
+      "title": "ADR-0005: Discipline specialists ship as packs, not agents",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0005-discipline-specialists-ship-as-packs-not-agents-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0006-mit-licence-for-code-separate-licensing-for-data-md",
+      "path": "adr/ADR-0006-mit-licence-for-code-separate-licensing-for-data.md",
+      "title": "ADR-0006: MIT licence for code, separate licensing for data",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0006-mit-licence-for-code-separate-licensing-for-data-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0007-evaluation-gates-run-in-ci-not-in-documentation-md",
+      "path": "adr/ADR-0007-evaluation-gates-run-in-ci-not-in-documentation.md",
+      "title": "ADR-0007: Evaluation gates run in CI, not in documentation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0007-evaluation-gates-run-in-ci-not-in-documentation-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0008-memory-writes-require-provenance-and-a-decision-record-md",
+      "path": "adr/ADR-0008-memory-writes-require-provenance-and-a-decision-record.md",
+      "title": "ADR-0008: Memory writes require provenance and a decision record",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0008-memory-writes-require-provenance-and-a-decision-record-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0009-mcp-is-optional-never-mandatory-md",
+      "path": "adr/ADR-0009-mcp-is-optional-never-mandatory.md",
+      "title": "ADR-0009: MCP is optional, never mandatory",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0009-mcp-is-optional-never-mandatory-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0010-review-loops-are-bounded-at-three-iterations-md",
+      "path": "adr/ADR-0010-review-loops-are-bounded-at-three-iterations.md",
+      "title": "ADR-0010: Review loops are bounded at three iterations",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0010-review-loops-are-bounded-at-three-iterations-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-adr-0011-host-independence-and-three-layer-architecture-md",
+      "path": "adr/ADR-0011-host-independence-and-three-layer-architecture.md",
+      "title": "ADR-0011: Host independence and three-layer architecture",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-adr-0011-host-independence-and-three-layer-architecture-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "adr-readme-md",
+      "path": "adr/README.md",
+      "title": "Architecture Decision Records",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-adr-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "benchmark-readme-md",
+      "path": "benchmark/README.md",
+      "title": "SWOS Prose Active Benchmark (G-Prose95)",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-benchmark-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "benchmark-artifacts-readme-md",
+      "path": "benchmark/artifacts/README.md",
+      "title": "Frozen benchmark evidence",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-benchmark-artifacts-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-readme-md",
+      "path": "contracts/agent-prompt-pack/README.md",
+      "title": "Agent Prompt Pack",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-adversarial-reviewer-md",
+      "path": "contracts/agent-prompt-pack/adversarial-reviewer.md",
+      "title": "Adversarial Reviewer",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-adversarial-reviewer-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-argument-architect-md",
+      "path": "contracts/agent-prompt-pack/argument-architect.md",
+      "title": "Argument Architect",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-argument-architect-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-citation-auditor-md",
+      "path": "contracts/agent-prompt-pack/citation-auditor.md",
+      "title": "Citation Auditor",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-citation-auditor-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-editor-md",
+      "path": "contracts/agent-prompt-pack/editor.md",
+      "title": "Editor",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-editor-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-governance-officer-md",
+      "path": "contracts/agent-prompt-pack/governance-officer.md",
+      "title": "Governance Officer",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-governance-officer-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-methodologist-md",
+      "path": "contracts/agent-prompt-pack/methodologist.md",
+      "title": "Methodologist",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-methodologist-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-orchestrator-md",
+      "path": "contracts/agent-prompt-pack/orchestrator.md",
+      "title": "Orchestrator",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-orchestrator-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-research-librarian-md",
+      "path": "contracts/agent-prompt-pack/research-librarian.md",
+      "title": "Research Librarian",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-research-librarian-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-agent-prompt-pack-source-quality-analyst-md",
+      "path": "contracts/agent-prompt-pack/source-quality-analyst.md",
+      "title": "Source Quality Analyst",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-agent-prompt-pack-source-quality-analyst-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-capability-contract-readme-md",
+      "path": "contracts/capability-contract/README.md",
+      "title": "SWOS Capability Contract",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-capability-contract-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-evaluation-contract-evaluation-contract-md",
+      "path": "contracts/evaluation-contract/EVALUATION-CONTRACT.md",
+      "title": "SWOS Evaluation Contract",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-evaluation-contract-evaluation-contract-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-host-adapter-contract-host-adapter-contract-md",
+      "path": "contracts/host-adapter-contract/HOST-ADAPTER-CONTRACT.md",
+      "title": "SWOS Host Adapter Contract",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-host-adapter-contract-host-adapter-contract-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-master-prompt-contract-amendment-0001-host-independence-md",
+      "path": "contracts/master-prompt-contract/AMENDMENT-0001-HOST-INDEPENDENCE.md",
+      "title": "Constitutional Amendment 0001 — Host Independence",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-master-prompt-contract-amendment-0001-host-independence-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-master-prompt-contract-master-prompt-contract-md",
+      "path": "contracts/master-prompt-contract/MASTER-PROMPT-CONTRACT.md",
+      "title": "SWOS Master Prompt Contract",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-master-prompt-contract-master-prompt-contract-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-master-prompt-contract-readme-md",
+      "path": "contracts/master-prompt-contract/README.md",
+      "title": "Master Prompt Contract",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-master-prompt-contract-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-memory-contract-memory-governance-contract-md",
+      "path": "contracts/memory-contract/MEMORY-GOVERNANCE-CONTRACT.md",
+      "title": "SWOS Memory Governance Contract",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-memory-contract-memory-governance-contract-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "contracts-tool-contract-tool-contract-md",
+      "path": "contracts/tool-contract/TOOL-CONTRACT.md",
+      "title": "SWOS Tool Contract",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-contracts-tool-contract-tool-contract-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-readme-md",
+      "path": "discipline-packs/README.md",
+      "title": "Discipline Packs",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-template-pack-md",
+      "path": "discipline-packs/_template/PACK.md",
+      "title": "Discipline Pack: TEMPLATE - replace with the discipline name",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-template-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-art-criticism-pack-md",
+      "path": "discipline-packs/art-criticism/PACK.md",
+      "title": "Discipline Pack: Art Criticism",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-art-criticism-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-art-history-pack-md",
+      "path": "discipline-packs/art-history/PACK.md",
+      "title": "Discipline Pack: Art History",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-art-history-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-engineering-pack-md",
+      "path": "discipline-packs/engineering/PACK.md",
+      "title": "Discipline Pack: Engineering",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-engineering-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-humanities-pack-md",
+      "path": "discipline-packs/humanities/PACK.md",
+      "title": "Discipline Pack: Humanities",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-humanities-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-interdisciplinary-pack-md",
+      "path": "discipline-packs/interdisciplinary/PACK.md",
+      "title": "Discipline Pack: Interdisciplinary Scholarship",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-interdisciplinary-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-materials-science-pack-md",
+      "path": "discipline-packs/materials-science/PACK.md",
+      "title": "Discipline Pack: Materials Science",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-materials-science-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-philosophy-pack-md",
+      "path": "discipline-packs/philosophy/PACK.md",
+      "title": "Discipline Pack: Philosophy",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-philosophy-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-psychology-pack-md",
+      "path": "discipline-packs/psychology/PACK.md",
+      "title": "Discipline Pack: Psychology",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-psychology-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "discipline-packs-technical-writing-pack-md",
+      "path": "discipline-packs/technical-writing/PACK.md",
+      "title": "Discipline Pack: Technical Writing",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-discipline-packs-technical-writing-pack-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-development-md",
+      "path": "docs/DEVELOPMENT.md",
+      "title": "SWOS development and quality baseline",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-development-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-g-prose95-spec-md",
+      "path": "docs/G-PROSE95-SPEC.md",
+      "title": "G-Prose95 Specification",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-g-prose95-spec-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-anti-patterns-md",
+      "path": "docs/anti-patterns.md",
+      "title": "Forbidden Anti-Patterns",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-anti-patterns-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-01-vision-and-principles-md",
+      "path": "docs/architecture/01-vision-and-principles.md",
+      "title": "Technical Vision Derivative",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-01-vision-and-principles-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-02-capability-model-md",
+      "path": "docs/architecture/02-capability-model.md",
+      "title": "Capability Model",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-02-capability-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-03-component-model-md",
+      "path": "docs/architecture/03-component-model.md",
+      "title": "Component Model",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-03-component-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-04-interface-model-md",
+      "path": "docs/architecture/04-interface-model.md",
+      "title": "Interface Model",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-04-interface-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-05-lifecycle-model-md",
+      "path": "docs/architecture/05-lifecycle-model.md",
+      "title": "Lifecycle Model",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-05-lifecycle-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-06-non-functional-requirements-md",
+      "path": "docs/architecture/06-non-functional-requirements.md",
+      "title": "Non-Functional Requirements",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-06-non-functional-requirements-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-07-solution-architecture-blueprint-md",
+      "path": "docs/architecture/07-solution-architecture-blueprint.md",
+      "title": "Solution Architecture Blueprint",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-07-solution-architecture-blueprint-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-readme-md",
+      "path": "docs/architecture/README.md",
+      "title": "SWOS Architecture",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-capability-layer-md",
+      "path": "docs/architecture/capability-layer.md",
+      "title": "SWOS Capability Layer",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-capability-layer-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-host-independent-three-layer-architecture-md",
+      "path": "docs/architecture/host-independent-three-layer-architecture.md",
+      "title": "SWOS Host-Independent Three-Layer Architecture",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-host-independent-three-layer-architecture-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-architecture-subscription-work-order-protocol-md",
+      "path": "docs/architecture/subscription-work-order-protocol.md",
+      "title": "Subscription Work-Order Protocol",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-architecture-subscription-work-order-protocol-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-glossary-md",
+      "path": "docs/glossary.md",
+      "title": "Glossary",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-glossary-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-knowledge-and-reasoning-spec-md",
+      "path": "docs/knowledge-and-reasoning-spec.md",
+      "title": "Knowledge & Reasoning Specification",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-knowledge-and-reasoning-spec-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-operations-and-lifecycle-playbook-md",
+      "path": "docs/operations-and-lifecycle-playbook.md",
+      "title": "Operations and Lifecycle Playbook",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-operations-and-lifecycle-playbook-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-portability-and-adapter-spec-md",
+      "path": "docs/portability-and-adapter-spec.md",
+      "title": "Portability and Adapter Specification",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-portability-and-adapter-spec-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-roadmap",
+      "path": "docs/roadmap.md",
+      "title": "SWOS Programme Roadmap and Phase 1 Implementation Plan",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-docs-roadmap"
+      ],
+      "supersedes": [
+        "tasks-plan-g-prose95",
+        "tasks-todo-g-prose95"
+      ],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-swos-prose-milestone-1-slice-2-md",
+      "path": "docs/swos-prose/MILESTONE-1-SLICE-2.md",
+      "title": "SWOS Prose — Milestone 1 Slice 2: Bidirectional Verifier Contract",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-docs-swos-prose-milestone-1-slice-2-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-swos-prose-milestone-1-slice-3-md",
+      "path": "docs/swos-prose/MILESTONE-1-SLICE-3.md",
+      "title": "SWOS Prose — Milestone 1 Slice 3: First Real Semantic Verifier",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-docs-swos-prose-milestone-1-slice-3-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-swos-prose-milestone-1-slice-4-md",
+      "path": "docs/swos-prose/MILESTONE-1-SLICE-4.md",
+      "title": "SWOS Prose — Milestone 1 Slice 4: Proposition Coverage and Granularity",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-docs-swos-prose-milestone-1-slice-4-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-swos-prose-milestone-1-md",
+      "path": "docs/swos-prose/MILESTONE-1.md",
+      "title": "SWOS Prose — Milestone 1: Semantic Delta Engine",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-docs-swos-prose-milestone-1-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "docs-swos-prose-milestone-2-polish-md",
+      "path": "docs/swos-prose/MILESTONE-2-POLISH.md",
+      "title": "SWOS Prose — Milestone 2: Polish Pipeline",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-docs-swos-prose-milestone-2-polish-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "evals-readme-md",
+      "path": "evals/README.md",
+      "title": "Evaluation Harness",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-evals-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "evals-metrics-md",
+      "path": "evals/metrics.md",
+      "title": "Metric Definitions",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-evals-metrics-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-test-articles-can-a-machine-be-a-witness-md",
+      "path": "examples/test-articles/can-a-machine-be-a-witness.md",
+      "title": "Can a Machine Be a Witness?",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-test-articles-can-a-machine-be-a-witness-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-test-articles-the-cure-that-fails-by-succeeding-md",
+      "path": "examples/test-articles/the-cure-that-fails-by-succeeding.md",
+      "title": "The Cure That Fails by Succeeding",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-test-articles-the-cure-that-fails-by-succeeding-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-test-articles-the-painting-that-proves-nothing-md",
+      "path": "examples/test-articles/the-painting-that-proves-nothing.md",
+      "title": "The Painting That Proves Nothing",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-test-articles-the-painting-that-proves-nothing-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-worked-example-readme-md",
+      "path": "examples/worked-example/README.md",
+      "title": "Worked Example - Complete Output Bundle",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-worked-example-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-worked-example-citation-audit-md",
+      "path": "examples/worked-example/citation-audit.md",
+      "title": "Citation Audit",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-worked-example-citation-audit-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-worked-example-disclosure-md",
+      "path": "examples/worked-example/disclosure.md",
+      "title": "AI-Use Disclosure",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-worked-example-disclosure-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-worked-example-manuscript-md",
+      "path": "examples/worked-example/manuscript.md",
+      "title": "Evidential Sufficiency for Causal Claims about Intervention X in Older Adults",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-worked-example-manuscript-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-worked-example-research-plan-md",
+      "path": "examples/worked-example/research-plan.md",
+      "title": "Research Plan",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-worked-example-research-plan-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-worked-example-uncertainty-statement-md",
+      "path": "examples/worked-example/uncertainty-statement.md",
+      "title": "Uncertainty Statement",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-worked-example-uncertainty-statement-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "examples-worked-example-unsupported-claims-md",
+      "path": "examples/worked-example/unsupported-claims.md",
+      "title": "Unsupported Claim Report",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-examples-worked-example-unsupported-claims-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-readme-md",
+      "path": "governance/README.md",
+      "title": "Governance Control Plane",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-access-model-md",
+      "path": "governance/access-model.md",
+      "title": "Access Model",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-access-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-approval-matrix-md",
+      "path": "governance/approval-matrix.md",
+      "title": "Human Approval Threshold Matrix",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-approval-matrix-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-audit-model-md",
+      "path": "governance/audit-model.md",
+      "title": "Audit Model",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-audit-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-data-classification-md",
+      "path": "governance/data-classification.md",
+      "title": "Data Classification",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-data-classification-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-incident-and-correction-md",
+      "path": "governance/incident-and-correction.md",
+      "title": "Incident and Correction Workflow",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-incident-and-correction-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-nist-ai-rmf-crosswalk-md",
+      "path": "governance/nist-ai-rmf-crosswalk.md",
+      "title": "NIST AI RMF 1.0 Crosswalk",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-nist-ai-rmf-crosswalk-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-policies-host-independence-md",
+      "path": "governance/policies/host-independence.md",
+      "title": "Host Independence Policy",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-policies-host-independence-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-policy-model-md",
+      "path": "governance/policy-model.md",
+      "title": "Policy Model",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-policy-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-retention-and-deletion-md",
+      "path": "governance/retention-and-deletion.md",
+      "title": "Retention and Deletion",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-retention-and-deletion-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-risk-register-md",
+      "path": "governance/risk-register.md",
+      "title": "Risk Register",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-risk-register-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "governance-source-rights-policy-md",
+      "path": "governance/source-rights-policy.md",
+      "title": "Source Rights and Licence Policy",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-governance-source-rights-policy-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "releases-v1-0-0-backout-md",
+      "path": "releases/v1.0.0/BACKOUT.md",
+      "title": "SWOS v1.0.0 Backout Record",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "semver",
+      "version": "1.0.0",
+      "canonical_for": [
+        "document-releases-v1-0-0-backout-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "releases-v1-0-0-release-audit-md",
+      "path": "releases/v1.0.0/RELEASE-AUDIT.md",
+      "title": "SWOS v1.0.0 Final Release Audit",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "semver",
+      "version": "1.0.0",
+      "canonical_for": [
+        "document-releases-v1-0-0-release-audit-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "releases-v1-0-0-release-notes-md",
+      "path": "releases/v1.0.0/RELEASE-NOTES.md",
+      "title": "SWOS v1.0.0 — Specification Lock",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "semver",
+      "version": "1.0.0",
+      "canonical_for": [
+        "document-releases-v1-0-0-release-notes-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "reviewer-packs-readme-md",
+      "path": "reviewer-packs/README.md",
+      "title": "Reviewer Packs",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-reviewer-packs-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "reviewer-packs-argument-examiner-md",
+      "path": "reviewer-packs/argument-examiner.md",
+      "title": "Reviewer Pack: Argument Examiner",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-reviewer-packs-argument-examiner-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "reviewer-packs-citation-auditor-md",
+      "path": "reviewer-packs/citation-auditor.md",
+      "title": "Reviewer Pack: Citation Auditor",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-reviewer-packs-citation-auditor-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "reviewer-packs-discipline-expert-md",
+      "path": "reviewer-packs/discipline-expert.md",
+      "title": "Reviewer Pack: Discipline Expert",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-reviewer-packs-discipline-expert-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "reviewer-packs-editor-md",
+      "path": "reviewer-packs/editor.md",
+      "title": "Reviewer Pack: Editor",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-reviewer-packs-editor-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "reviewer-packs-governance-reviewer-md",
+      "path": "reviewer-packs/governance-reviewer.md",
+      "title": "Reviewer Pack: Governance Reviewer",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-reviewer-packs-governance-reviewer-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "reviewer-packs-hostile-reviewer-md",
+      "path": "reviewer-packs/hostile-reviewer.md",
+      "title": "Reviewer Pack: Hostile Reviewer",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-reviewer-packs-hostile-reviewer-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "reviewer-packs-methodologist-md",
+      "path": "reviewer-packs/methodologist.md",
+      "title": "Reviewer Pack: Methodologist",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-reviewer-packs-methodologist-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "schemas-state-state-model-md",
+      "path": "schemas/state/STATE-MODEL.md",
+      "title": "Scholarly State Model",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-schemas-state-state-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "skills-readme-md",
+      "path": "skills/README.md",
+      "title": "SWOS Skills",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-skills-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "skills-swos-citation-auditor-skill-md",
+      "path": "skills/swos-citation-auditor/SKILL.md",
+      "title": "SWOS Citation Auditor",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-skills-swos-citation-auditor-skill-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "skills-swos-core-skill-md",
+      "path": "skills/swos-core/SKILL.md",
+      "title": "SWOS Core",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-skills-swos-core-skill-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "skills-swos-core-references-readme-md",
+      "path": "skills/swos-core/references/README.md",
+      "title": "swos-core execution-stage resources",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-skills-swos-core-references-readme-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "skills-swos-prose-skill-md",
+      "path": "skills/swos-prose/SKILL.md",
+      "title": "SWOS Prose",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-skills-swos-prose-skill-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "skills-swos-research-planner-skill-md",
+      "path": "skills/swos-research-planner/SKILL.md",
+      "title": "SWOS Research Planner",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-skills-swos-research-planner-skill-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "skills-swos-reviewer-skill-md",
+      "path": "skills/swos-reviewer/SKILL.md",
+      "title": "SWOS Reviewer Panel",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-skills-swos-reviewer-skill-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "skills-swos-subscription-driver-skill-md",
+      "path": "skills/swos-subscription-driver/SKILL.md",
+      "title": "SWOS Subscription Driver",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-skills-swos-subscription-driver-skill-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-001-swos-v1-1-programme-foundation-checklists-requirements-md",
+      "path": "specs/001-swos-v1-1-programme-foundation/checklists/requirements.md",
+      "title": "Requirements Checklist: SWOS v1.1 Programme Foundation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-001-swos-v1-1-programme-foundation-checklists-requirements-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-001-swos-v1-1-programme-foundation-data-model-md",
+      "path": "specs/001-swos-v1-1-programme-foundation/data-model.md",
+      "title": "Data Model: SWOS v1.1 Programme Foundation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-001-swos-v1-1-programme-foundation-data-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-001-swos-v1-1-programme-foundation-plan-md",
+      "path": "specs/001-swos-v1-1-programme-foundation/plan.md",
+      "title": "Implementation Plan: SWOS v1.1 Programme Foundation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-001-swos-v1-1-programme-foundation-plan-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-001-swos-v1-1-programme-foundation-quickstart-md",
+      "path": "specs/001-swos-v1-1-programme-foundation/quickstart.md",
+      "title": "Foundation Validation Quickstart",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-001-swos-v1-1-programme-foundation-quickstart-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-001-swos-v1-1-programme-foundation-research-md",
+      "path": "specs/001-swos-v1-1-programme-foundation/research.md",
+      "title": "Research Notes: SWOS v1.1 Programme Foundation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-001-swos-v1-1-programme-foundation-research-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-001-swos-v1-1-programme-foundation-spec-md",
+      "path": "specs/001-swos-v1-1-programme-foundation/spec.md",
+      "title": "Feature Specification: SWOS v1.1 Programme Foundation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-001-swos-v1-1-programme-foundation-spec-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-001-swos-v1-1-programme-foundation-tasks-md",
+      "path": "specs/001-swos-v1-1-programme-foundation/tasks.md",
+      "title": "Tasks: SWOS v1.1 Programme Foundation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-001-swos-v1-1-programme-foundation-tasks-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "tasks-plan-g-prose95",
+      "path": "tasks/plan.md",
+      "title": "G-Prose95 Implementation Plan",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-tasks-plan-g-prose95"
+      ],
+      "supersedes": [],
+      "superseded_by": [
+        "docs-roadmap"
+      ]
+    },
+    {
+      "id": "tasks-todo-g-prose95",
+      "path": "tasks/todo.md",
+      "title": "G-Prose95 Task List",
+      "owner": "SWOS Maintainers",
+      "authority": "historical",
+      "status": "historical",
+      "version_scheme": "date",
+      "version": "2026-08-23",
+      "canonical_for": [
+        "document-tasks-todo-g-prose95"
+      ],
+      "supersedes": [],
+      "superseded_by": [
+        "docs-roadmap"
+      ]
+    }
+  ]
+}

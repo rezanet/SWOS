@@ -1,0 +1,124 @@
+name: SWOS Live Compatibility Evidence
+
+# This workflow is deliberately manual and non-required. It records operational
+# compatibility evidence for one immutable selected commit; it is not an
+# ordinary PR merge check and must never be used to hide a missing provider.
+on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: "Exact 40-character commit SHA to validate"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  SWOS_PROSE_RUN_LIVE_OPENAI: "1"
+  SWOS_PROSE_OPENAI_MODEL: gpt-5.6-luna
+  SWOS_PROSE_OPENAI_REWRITE_MODEL: gpt-5.6-luna
+
+jobs:
+  live-evidence:
+    name: Live OpenAI compatibility evidence (non-required)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit_sha }}
+          fetch-depth: 0
+
+      - name: Record and verify selected exact SHA
+        id: selected-sha
+        env:
+          REQUESTED_SHA: ${{ inputs.commit_sha }}
+        run: |
+          set -euo pipefail
+          if ! [[ "$REQUESTED_SHA" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo "commit_sha must be an exact 40-character hexadecimal commit SHA." >&2
+            exit 2
+          fi
+          actual_sha="$(git rev-parse HEAD)"
+          requested_sha="$(printf '%s' "$REQUESTED_SHA" | tr '[:upper:]' '[:lower:]')"
+          if [[ "$actual_sha" != "$requested_sha" ]]; then
+            echo "Checked-out SHA $actual_sha does not match requested SHA $requested_sha." >&2
+            exit 2
+          fi
+          printf '%s\n' "$actual_sha" | tee /tmp/swos-live-selected-sha.txt
+          echo "sha=$actual_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Require configured live provider credential
+        run: |
+          set -euo pipefail
+          if [[ -z "$OPENAI_API_KEY" ]]; then
+            echo "OPENAI_API_KEY is absent. Live compatibility evidence is NOT RUN and cannot pass." >&2
+            exit 2
+          fi
+
+      - name: Install locked environment and SWOS
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements-dev.lock
+          python -m pip install --no-deps --no-build-isolation --editable .
+
+      - name: Run live OpenAI semantic-verifier regressions
+        id: live-verifier
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests/prose -p 'test_openai_live.py' 2>&1 \
+            | tee /tmp/swos-prose-live-verifier.log
+
+      - name: Run five-case polish dogfood batch
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/swos-prose-dogfood
+          python3 -m swos_prose.cli dogfood \
+            --input-dir tests/prose/fixtures/live_dogfood \
+            --output-dir /tmp/swos-prose-dogfood \
+            --assurance strict \
+            --rewriter-model gpt-5.6-luna \
+            --verifier-model gpt-5.6-luna \
+            --skip-diagnostics
+          test -s /tmp/swos-prose-dogfood/summary.json
+
+      - name: Require complete live evidence
+        run: |
+          set -euo pipefail
+          test -s /tmp/swos-live-selected-sha.txt
+          test -s /tmp/swos-prose-live-verifier.log
+          test -s /tmp/swos-prose-dogfood/summary.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          summary = json.loads(Path('/tmp/swos-prose-dogfood/summary.json').read_text())
+          required = {'results', 'summary'}
+          missing = sorted(required - summary.keys())
+          if missing:
+              raise SystemExit(f'Missing live evidence fields: {missing}')
+          PY
+
+      - name: Summarise live evidence
+        if: always()
+        run: |
+          {
+            echo '## SWOS live compatibility evidence'
+            echo
+            echo "Selected exact SHA: ${{ steps.selected-sha.outputs.sha }}"
+            echo
+            echo 'Provider failures, exhausted credits, absent credentials, or missing evidence fail this workflow.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload live evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swos-live-compatibility-evidence-${{ github.run_id }}
+          path: |
+            /tmp/swos-live-selected-sha.txt
+            /tmp/swos-prose-live-verifier.log
+            /tmp/swos-prose-dogfood
+          retention-days: 14

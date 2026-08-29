@@ -32,7 +32,8 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
   `ff1ec102c7f128d4e10bfde7b823627680b6fea0` (ledger-only evidence corrections),
   and final PR head `240045b145a8ac8b8bb6809931b417a7923bc912` (documentation-only
   distinction between implementation/evidence and final ledger heads)
-- no v1.1 reranker/reference-runtime work is included or started
+- PR #41 landed the reference-runtime foundation for v1.1; cross-encoder
+  reranking and the remaining Phase 1 capabilities are not yet complete
 
 ### Local evidence
 
@@ -93,7 +94,10 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
   squash deviation; the signed follow-up is a process guard, not a retroactive
   history repair, and `main` is not rewritten.
 
-No v1.1 reranker/reference-runtime work may begin after this gate.
+The historical G-Prose95 gate is closed. The v1.1 reference-runtime programme
+may now proceed from the exact PR #41 main head under the authoritative
+[`docs/roadmap.md`](docs/roadmap.md); this file does not claim that v1.1 is
+complete.
 
 Live Luna/OpenAI verifier, dogfood and benchmark results remain stochastic
 evidence and are not substitutes for deterministic merge gates.
@@ -115,13 +119,13 @@ evidence and are not substitutes for deterministic merge gates.
 |---|---|---|---|
 | 0 | Repository Discovery and Baseline | **COMPLETE** | `BASELINE_REPORT.md`; repo/issues/PRs/architecture/CI inspected |
 | 1 | Environment, CI and Quality Baseline | **COMPLETE** | PR #37 merged as `15919f373bbee50fb05b87ed5be8980c66f734d6`; reproducible lock, Ruff, >=80% executable coverage floor, critical-module floors, pip-audit, Bandit, CodeQL, required checks/ruleset, existing governance and eight-plane gates preserved |
-| 2 | Core Reference Implementation / roadmap v1.1 | NOT STARTED | Cross-encoder reranker remains the first implementation target, followed by orchestrator/state store, EPG/SDL/RPM stores, corpus adapters, end-to-end CLI and SUT-bound harness |
+| 2 | Core Reference Implementation / roadmap v1.1 | **FOUNDATION LANDED** | PR #41 merged the reference runtime, capability contracts, adapters and portability substrate; cross-encoder reranking and the remaining Phase 1 slices remain open |
 | 3 | Host/User Interaction Layer | NOT STARTED | Complete specified host adapters/operator UX only when the reference runtime exists; no fictional browser frontend unless requirements introduce one |
 | 4 | Feature Completion and Semantic Hardening | **IN PROGRESS** | SWOS Prose M1 and G-Prose95 landed; remaining open semantic issues include #4, #5, #6, #7, #12, #13, #14, #16 and verifier-stability issue #32 |
 | 5 | Security Hardening | **IN PROGRESS** | Engineering substrate now includes SCA/SAST/CodeQL and repository protections; runtime egress, store integrity, memory poisoning, malformed-tool and production-surface controls remain future work |
 | 6 | Performance, Cost and Scalability | **IN PROGRESS** | G-Prose95 records provider calls, tokens, latency and fail-closed cost availability; retrieval/reranking, state-store, provenance-growth, throughput and concurrency performance remain unimplemented |
 | 7 | Testing and Quality Gates | **IN PROGRESS** | SWOS Prose executable coverage is above the 80% floor with higher critical-module floors; eight evaluation planes, benchmark contracts, SCA/SAST and deterministic Prose tests are enforced. Whole-system/SUT, mutation and broader runtime coverage remain future work |
-| 8 | Documentation, Distribution and Deployment | **IN PROGRESS** | Portable SWOS Prose skill, CLI, package metadata, development docs and governed benchmark documentation exist; full reference-runtime operator/deployment docs wait on v1.1 implementation |
+| 8 | Documentation, Distribution and Deployment | **IN PROGRESS** | Portable SWOS Prose skill, CLI, package metadata, development docs and governed benchmark documentation exist; reference-runtime operator/deployment docs remain part of the v1.1 programme |
 | 9 | Final Integration and Release | NOT STARTED | No v1.1/v2/v3 final release; exact final scope, SDL approval, release notes and verified tag remain future gates |
 
 ## Current Repository Release State
@@ -130,7 +134,7 @@ evidence and are not substitutes for deterministic merge gates.
 
 - `VERSION`: **1.0.0** — Specification Lock.
 - Contracts/schemas/governance/evaluation/portability foundation: released.
-- v1.1 Reference Implementation: not yet implemented.
+- v1.1 Reference Implementation: PR #41 provides the reference-runtime foundation; the complete v1.1 programme is not yet implemented, demonstrated or certified.
 - v2 Research Grade: future roadmap.
 - v3 Product Grade: future roadmap.
 
@@ -142,6 +146,21 @@ evidence and are not substitutes for deterministic merge gates.
 - Active governed G-Prose95 benchmark: **0.4.0-g-prose95**, 76 cases (38 equivalent / 38 material-change), 16 stability probes.
 - G-Prose95 final governed live evidence recorded zero unsafe semantic PASS outcomes and zero unsafe diagnostic abstentions on its exact benchmark campaign.
 - No new release tag was created for G-Prose95; development identity, benchmark identity and platform version remain distinct.
+
+### Capability status vocabulary
+
+The programme uses these distinct states and does not infer a later state from an
+earlier one:
+
+- **specified** — the requirement and acceptance evidence are written and reviewed;
+- **implemented** — code or configuration exists at the exact head;
+- **tested** — deterministic automated tests pass for the behavior;
+- **demonstrated** — a reproducible scenario produced the expected artefacts; and
+- **certified** — an authorized reviewer accepted the exact evidence for the
+  stated profile.
+
+PR #41 is implemented and tested at its merged head for its covered runtime
+surface. Its complete v1.1 demonstration and certification remain open.
 
 ## Completed Delivery Gates Since Baseline
 
@@ -229,7 +248,13 @@ These issues remain explicit hardening work. G-Prose95 does not silently close t
 - [x] #37 Engineering Substrate and CI Quality Baseline — merged
 - [x] #40 G-Prose95 full-engine surface — merged
 
-### v1.1 Reference Implementation — next major dependency
+### v1.1 Reference Implementation — remaining Phase 1 work
+
+PR #41 — **Autonomous SWOS: reference research-writing runtime** — is merged at
+`156e2b7faa70f9affce2ed93d7dc3cb6e19b938e`. It supplies the reference-runtime
+foundation, capability contracts, adapters and portability substrate. The
+following items remain open and must be reconciled against that exact head before
+new implementation begins:
 
 - [ ] **Cross-encoder reranker reference implementation — first**
 - [ ] Reference orchestrator

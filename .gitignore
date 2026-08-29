@@ -23,3 +23,9 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Spec Kit machine-local feature selection; checked-in skills remain reviewable.
+.specify/feature.json
+.agents/*
+!.agents/skills/
+!.agents/skills/**
