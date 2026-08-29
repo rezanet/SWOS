@@ -2161,6 +2161,126 @@
       "superseded_by": []
     },
     {
+      "id": "specs-002-swos-v1-1-runtime-reconciliation-capability-ledger-md",
+      "path": "specs/002-swos-v1-1-runtime-reconciliation/capability-ledger.md",
+      "title": "SWOS v1.1 Runtime Capability Ledger",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "runtime-v1-1-capability-reconciliation"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-002-swos-v1-1-runtime-reconciliation-checklists-requirements-md",
+      "path": "specs/002-swos-v1-1-runtime-reconciliation/checklists/requirements.md",
+      "title": "Requirements Checklist: SWOS v1.1 Runtime Reconciliation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-002-swos-v1-1-runtime-reconciliation-checklists-requirements-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-002-swos-v1-1-runtime-reconciliation-data-model-md",
+      "path": "specs/002-swos-v1-1-runtime-reconciliation/data-model.md",
+      "title": "Data Model: SWOS v1.1 Capability Ledger",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-002-swos-v1-1-runtime-reconciliation-data-model-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-002-swos-v1-1-runtime-reconciliation-plan-md",
+      "path": "specs/002-swos-v1-1-runtime-reconciliation/plan.md",
+      "title": "Implementation Plan: SWOS v1.1 Runtime Reconciliation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-002-swos-v1-1-runtime-reconciliation-plan-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-002-swos-v1-1-runtime-reconciliation-quickstart-md",
+      "path": "specs/002-swos-v1-1-runtime-reconciliation/quickstart.md",
+      "title": "Runtime Reconciliation Validation Quickstart",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-002-swos-v1-1-runtime-reconciliation-quickstart-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-002-swos-v1-1-runtime-reconciliation-research-md",
+      "path": "specs/002-swos-v1-1-runtime-reconciliation/research.md",
+      "title": "Research Notes: SWOS v1.1 Runtime Reconciliation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-002-swos-v1-1-runtime-reconciliation-research-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-002-swos-v1-1-runtime-reconciliation-spec-md",
+      "path": "specs/002-swos-v1-1-runtime-reconciliation/spec.md",
+      "title": "Feature Specification: SWOS v1.1 Runtime Reconciliation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-002-swos-v1-1-runtime-reconciliation-spec-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-002-swos-v1-1-runtime-reconciliation-tasks-md",
+      "path": "specs/002-swos-v1-1-runtime-reconciliation/tasks.md",
+      "title": "Tasks: SWOS v1.1 Runtime Reconciliation",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-002-swos-v1-1-runtime-reconciliation-tasks-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
       "id": "tasks-plan-g-prose95",
       "path": "tasks/plan.md",
       "title": "G-Prose95 Implementation Plan",
