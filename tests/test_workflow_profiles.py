@@ -54,6 +54,27 @@ class WorkflowProfileInspectionTests(unittest.TestCase):
             any("provider job is not manual-dispatch-only" in error for error in errors)
         )
 
+    def test_provider_job_with_compound_dispatch_or_pull_request_guard_is_rejected(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            shutil.copytree(REPOSITORY_ROOT / ".github", root / ".github")
+            workflow = root / ".github" / "workflows" / "swos-prose-benchmark.yml"
+            text = workflow.read_text(encoding="utf-8")
+            text = text.replace(
+                "if: github.event_name == 'workflow_dispatch'",
+                "if: github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request'",
+                1,
+            )
+            workflow.write_text(text, encoding="utf-8")
+
+            errors = inspect_workflow_files(root)
+
+        self.assertTrue(
+            any("provider job is not manual-dispatch-only" in error for error in errors)
+        )
+
     def test_live_benchmark_cannot_suppress_provider_failure(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)

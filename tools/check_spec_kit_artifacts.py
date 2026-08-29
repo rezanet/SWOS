@@ -25,17 +25,19 @@ PLACEHOLDER_MARKERS = (
 )
 
 
-def _feature_directory(repo_root: Path) -> Path:
+def _feature_directories(repo_root: Path) -> tuple[Path, ...]:
+    """Resolve the machine-selected feature or every checked-in feature."""
+
     feature_file = repo_root / ".specify" / "feature.json"
     if feature_file.is_file():
         payload = json.loads(feature_file.read_text(encoding="utf-8"))
         configured = payload.get("feature_directory")
         if isinstance(configured, str) and configured.strip():
-            return (repo_root / configured).resolve()
+            return ((repo_root / configured).resolve(),)
     candidates = sorted((repo_root / "specs").glob("*/spec.md"))
-    if len(candidates) == 1:
-        return candidates[0].parent.resolve()
-    raise ValueError("unable to resolve one active Spec Kit feature directory")
+    if candidates:
+        return tuple(candidate.parent.resolve() for candidate in candidates)
+    raise ValueError("unable to resolve any Spec Kit feature directories")
 
 
 def validate_feature_directory(feature_dir: Path) -> list[str]:
@@ -111,15 +113,39 @@ def validate_feature_directory(feature_dir: Path) -> list[str]:
     return sorted(set(errors))
 
 
+def validate_spec_kit_features(
+    repo_root: Path, feature_dirs: tuple[Path, ...] | None = None
+) -> list[str]:
+    """Validate selected features, or all checked-in features by default."""
+
+    resolved_root = repo_root.resolve()
+    directories = feature_dirs or _feature_directories(resolved_root)
+    errors: list[str] = []
+    for feature_dir in directories:
+        resolved_feature = feature_dir.resolve()
+        try:
+            label = resolved_feature.relative_to(resolved_root).as_posix()
+        except ValueError:
+            label = resolved_feature.as_posix()
+        errors.extend(f"{label}: {error}" for error in validate_feature_directory(resolved_feature))
+    return sorted(set(errors))
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo-root", type=Path, default=Path("."))
-    parser.add_argument("--feature-dir", type=Path, default=None)
+    parser.add_argument("--feature-dir", type=Path, action="append", default=None)
     args = parser.parse_args(argv)
     repo_root = args.repo_root.resolve()
     try:
-        feature_dir = (args.feature_dir or _feature_directory(repo_root)).resolve()
-        errors = validate_feature_directory(feature_dir)
+        feature_dirs = None
+        if args.feature_dir:
+            feature_dirs = tuple(
+                (path if path.is_absolute() else repo_root / path).resolve()
+                for path in args.feature_dir
+            )
+        resolved_features = feature_dirs or _feature_directories(repo_root)
+        errors = validate_spec_kit_features(repo_root, resolved_features)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         errors = [f"unable to inspect Spec Kit feature: {exc}"]
     if errors:
@@ -127,7 +153,13 @@ def main(argv: list[str] | None = None) -> int:
         for error in errors:
             print(f"- {error}", file=sys.stderr)
         return 1
-    print(f"Spec Kit artifact consistency check passed: {feature_dir}")
+    labels = ", ".join(
+        feature.relative_to(repo_root).as_posix()
+        if feature.is_relative_to(repo_root)
+        else feature.as_posix()
+        for feature in resolved_features
+    )
+    print(f"Spec Kit artifact consistency check passed: {labels}")
     return 0
 
 

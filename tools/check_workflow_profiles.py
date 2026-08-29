@@ -58,6 +58,24 @@ def job_block(text: str, job_id: str) -> str:
     return "\n".join(selected)
 
 
+def _job_condition(block: str) -> str | None:
+    match = re.search(r"^    if:\s*(.*?)\s*$", block, re.MULTILINE)
+    return match.group(1) if match else None
+
+
+def _is_dispatch_only_condition(condition: str | None) -> bool:
+    """Return whether a job condition exclusively selects manual dispatch."""
+
+    if condition is None:
+        return False
+    normalized = condition.strip()
+    if normalized.startswith("${{") and normalized.endswith("}}"):
+        normalized = normalized[3:-2].strip()
+    while normalized.startswith("(") and normalized.endswith(")"):
+        normalized = normalized[1:-1].strip()
+    return bool(re.fullmatch(r"github\.event_name\s*==\s*(['\"])workflow_dispatch\1", normalized))
+
+
 def _provider_jobs_are_dispatch_only(text: str, path: Path, errors: list[str]) -> None:
     if not any(marker.lower() in text.lower() for marker in PROVIDER_MARKERS):
         return
@@ -70,10 +88,7 @@ def _provider_jobs_are_dispatch_only(text: str, path: Path, errors: list[str]) -
     ):
         block = job_block(text, job_id)
         if any(marker.lower() in block.lower() for marker in PROVIDER_MARKERS):
-            if (
-                "github.event_name == 'workflow_dispatch'" not in block
-                and 'github.event_name == "workflow_dispatch"' not in block
-            ):
+            if not _is_dispatch_only_condition(_job_condition(block)):
                 errors.append(f"provider job is not manual-dispatch-only: {path}:{job_id}")
 
 
@@ -109,10 +124,7 @@ def inspect_workflow_files(repo_root: Path) -> list[str]:
                 errors.append("portability architecture job must use --definitions-only")
             if "--release" not in release:
                 errors.append("portability release job must use --release")
-            if (
-                "github.event_name == 'workflow_dispatch'" not in release
-                and 'github.event_name == "workflow_dispatch"' not in release
-            ):
+            if not _is_dispatch_only_condition(_job_condition(release)):
                 errors.append("portability release job must be dispatch-only")
             if "github.event.pull_request.draft" in release:
                 errors.append("portability release job must not run from pull_request conditions")
