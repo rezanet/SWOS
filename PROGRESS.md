@@ -97,3 +97,204 @@ No v1.1 reranker/reference-runtime work may begin after this gate.
 
 Live Luna/OpenAI verifier, dogfood and benchmark results remain stochastic
 evidence and are not substitutes for deterministic merge gates.
+## SWOS 100% Completion Progress (Programme Baseline)
+
+**Programme baseline:** 2026-08-22
+**Baseline main SHA:** `eb704e4baec57124a6d54065ff99ea3d5128c35c`
+**Baseline report:** [`BASELINE_REPORT.md`](BASELINE_REPORT.md)
+**Historical programme branch:** `programme/swos-100-completion-baseline`
+**Current programme branch:** `main`
+**Last reconciled:** 2026-08-23
+**Current reconciled main SHA:** `e79dbd3185703defa6bdba7fe2511ce3f260c9a8`
+
+> This file tracks progress against SWOS as defined by its contracts, issues, source and authoritative roadmap. Percentages are planning estimates, not quality scores or release claims.
+
+## Programme Status
+
+| Milestone | SWOS-native interpretation | Status | Evidence / blockers |
+|---|---|---|---|
+| 0 | Repository Discovery and Baseline | **COMPLETE** | `BASELINE_REPORT.md`; repo/issues/PRs/architecture/CI inspected |
+| 1 | Environment, CI and Quality Baseline | **COMPLETE** | PR #37 merged as `15919f373bbee50fb05b87ed5be8980c66f734d6`; reproducible lock, Ruff, >=80% executable coverage floor, critical-module floors, pip-audit, Bandit, CodeQL, required checks/ruleset, existing governance and eight-plane gates preserved |
+| 2 | Core Reference Implementation / roadmap v1.1 | NOT STARTED | Cross-encoder reranker remains the first implementation target, followed by orchestrator/state store, EPG/SDL/RPM stores, corpus adapters, end-to-end CLI and SUT-bound harness |
+| 3 | Host/User Interaction Layer | NOT STARTED | Complete specified host adapters/operator UX only when the reference runtime exists; no fictional browser frontend unless requirements introduce one |
+| 4 | Feature Completion and Semantic Hardening | **IN PROGRESS** | SWOS Prose M1 and G-Prose95 landed; remaining open semantic issues include #4, #5, #6, #7, #12, #13, #14, #16 and verifier-stability issue #32 |
+| 5 | Security Hardening | **IN PROGRESS** | Engineering substrate now includes SCA/SAST/CodeQL and repository protections; runtime egress, store integrity, memory poisoning, malformed-tool and production-surface controls remain future work |
+| 6 | Performance, Cost and Scalability | **IN PROGRESS** | G-Prose95 records provider calls, tokens, latency and fail-closed cost availability; retrieval/reranking, state-store, provenance-growth, throughput and concurrency performance remain unimplemented |
+| 7 | Testing and Quality Gates | **IN PROGRESS** | SWOS Prose executable coverage is above the 80% floor with higher critical-module floors; eight evaluation planes, benchmark contracts, SCA/SAST and deterministic Prose tests are enforced. Whole-system/SUT, mutation and broader runtime coverage remain future work |
+| 8 | Documentation, Distribution and Deployment | **IN PROGRESS** | Portable SWOS Prose skill, CLI, package metadata, development docs and governed benchmark documentation exist; full reference-runtime operator/deployment docs wait on v1.1 implementation |
+| 9 | Final Integration and Release | NOT STARTED | No v1.1/v2/v3 final release; exact final scope, SDL approval, release notes and verified tag remain future gates |
+
+## Current Repository Release State
+
+### Platform
+
+- `VERSION`: **1.0.0** — Specification Lock.
+- Contracts/schemas/governance/evaluation/portability foundation: released.
+- v1.1 Reference Implementation: not yet implemented.
+- v2 Research Grade: future roadmap.
+- v3 Product Grade: future roadmap.
+
+### SWOS Prose
+
+- Last formally released package surface: **0.2.0**.
+- Current development package on `main`: **0.4.0-dev**.
+- Frozen governed v0.2 benchmark: 50 cases; immutable release evidence remains preserved.
+- Active governed G-Prose95 benchmark: **0.4.0-g-prose95**, 76 cases (38 equivalent / 38 material-change), 16 stability probes.
+- G-Prose95 final governed live evidence recorded zero unsafe semantic PASS outcomes and zero unsafe diagnostic abstentions on its exact benchmark campaign.
+- No new release tag was created for G-Prose95; development identity, benchmark identity and platform version remain distinct.
+
+## Completed Delivery Gates Since Baseline
+
+### M1 — Self-Healing Engine
+
+PR **#36 — M1: Self-Healing Engine (Repair Loop)** is **MERGED**.
+
+- final PR head: `75cd3db94946a9928961c3e62a13971b78972ac1`;
+- merge SHA: `010de54ebcd0ec3dba98f75d71ec3a503d02a98b`;
+- active M1 benchmark identity: `0.3.0-m1`, 56 cases;
+- bounded lexical repair families: modality, quantifier, attribution, negation and causal-strength drift;
+- maximum two repair attempts;
+- local-span confinement and full re-verification preserved;
+- hard invariants bypass repair;
+- provider provenance and repair token accounting retained;
+- frozen v0.2 evidence unchanged.
+
+### Contributor workflow
+
+PR **#17 — contributor issue / PR templates** is **MERGED**.
+
+- final PR head: `bc7a036b2822a329139695509d38f46ad716cb47`;
+- merge SHA: `ff0b4d52048b6e07b23fb1a33c064b47ee174b95`.
+
+### G2 — Engineering Substrate and CI Quality Baseline
+
+PR **#37** is **MERGED**.
+
+- final PR head: `240045b145a8ac8b8bb6809931b417a7923bc912`;
+- merge SHA: `15919f373bbee50fb05b87ed5be8980c66f734d6`;
+- exact developer/CI dependency lock;
+- Ruff format/lint gates;
+- executable-Python coverage floor >=80% plus higher critical-module floors;
+- pip-audit SCA;
+- Bandit Python SAST;
+- CodeQL;
+- active benchmark contract on pull requests;
+- `Protect main` ruleset with deterministic required contexts, linear history and review-thread resolution;
+- schema, Agent Skills, governance, DCO and all eight evaluation planes preserved.
+
+PR #38 recorded the verified G2 merge; PR #39 hardened the governed squash/DCO checklist and records the historical unsigned-commit deviation without rewriting history.
+
+### G-Prose95 — Full SWOS Prose Engine Surface
+
+PR **#40 — G-Prose95: Complete SWOS Prose full-engine surface** is **MERGED**.
+
+- final implementation/evidence head: `317bf7e08944e62101528382214a6c147478997e`;
+- final PR head after report-only commits: `e0f4651733b0d196ec24215e6e6d7f52c17c5072`;
+- squash merge/main SHA: `e79dbd3185703defa6bdba7fe2511ce3f260c9a8`;
+- merge commit contains a standalone DCO `Signed-off-by:` trailer;
+- implemented modes: `polish`, `naturalise`, `clarify`, `tighten`;
+- implemented presets: `scholarly-natural`, `precise-technical`, `plain-intelligent`, `elegant-essay`, `executive`;
+- all modes share the same deterministic verification, independent semantic-verifier, bounded repair and fail-closed source-fallback path;
+- read-only surrounding context is explicitly untrusted and context-only claims are deterministically guarded;
+- diagnostics abstain only on reviewed positive evidence;
+- active benchmark expanded to 76 governed cases under `0.4.0-g-prose95`;
+- exact live campaign: zero unsafe material-change PASS outcomes and zero unsafe diagnostic abstentions;
+- final deterministic suite: 240 tests with 11 expected live skips on the final implementation head;
+- executable SWOS Prose coverage on hosted Linux: approximately 86%, with all critical floors passing;
+- Ruff, pip-audit, Bandit, CodeQL, schema, skills, governance and all eight evaluation planes passed in the governed PR evidence;
+- all 44 PR review threads were resolved;
+- final additional Codex bot review was unavailable because the external Codex review quota was exhausted; independent ChatGPT review found no remaining P0/P1/P2 blocker before merge;
+- no release/tag, v1.1 implementation or unrelated platform work was included.
+
+## Open Work Inventory
+
+### Open semantic / Prose issues
+
+- [ ] #4 lexical negation beyond explicit `not`/`never`
+- [ ] #5 attribution-force drift
+- [ ] #6 quantifier binding and modal scope
+- [ ] #7 relational direction and causal-role reversal
+- [ ] #12 causal explanations added during polish
+- [ ] #13 referential hallucination from read-only context
+- [ ] #14 qualification deletion during compression
+- [ ] #16 citation attachment broadening during reordering
+- [ ] #32 semantic-verifier stability on equivalent paraphrases
+
+These issues remain explicit hardening work. G-Prose95 does not silently close them merely because its governed benchmark passed.
+
+### Open pull-request carry-over from baseline
+
+- [x] #17 contributor issue / PR templates — merged
+- [x] #36 M1 Self-Healing Engine — merged
+- [x] #37 Engineering Substrate and CI Quality Baseline — merged
+- [x] #40 G-Prose95 full-engine surface — merged
+
+### v1.1 Reference Implementation — next major dependency
+
+- [ ] **Cross-encoder reranker reference implementation — first**
+- [ ] Reference orchestrator
+- [ ] Scholarly state store
+- [ ] EPG store with hash chaining
+- [ ] SDL store with hash chaining
+- [ ] RPM store with governed writes / hash chaining
+- [ ] Open scholarly-index corpus adapters
+- [ ] End-to-end SWOS CLI
+- [ ] Eight-plane harness bound to a real system under test
+
+### v2 Research Grade
+
+- [ ] RPM in production across projects
+- [ ] Formalised discipline ontologies
+- [ ] Trained citation-support classifier
+- [ ] Measured source-diversity controls
+- [ ] Discipline-specific method-critique depth
+- [ ] Full PROV round-trip certification
+- [ ] Image/object-analysis tool
+- [ ] Governed promotion of art history / art criticism to agents where justified
+- [ ] Multimodal scholarly reasoning
+
+### v3 Product Grade
+
+- [ ] Enterprise identity
+- [ ] RBAC / ABAC
+- [ ] Tenant isolation
+- [ ] Observability dashboards
+- [ ] Drift monitoring
+- [ ] Incident workflow automation
+- [ ] Compliance reporting
+- [ ] Cost controls
+- [ ] Service management
+
+## Quality Baseline — Reconciled 2026-08-23
+
+| Gate / metric | Current state |
+|---|---|
+| Frozen schema validation | **Enforced** |
+| Agent Skills six-field lint | **Enforced** |
+| Governance policy validation | **Enforced** |
+| Eight-plane evaluation harness | **Enforced** |
+| SWOS Prose unit/adversarial suite | **Enforced** |
+| SWOS Prose package/CLI smoke test | **Enforced** |
+| Live OpenAI evidence | Present and deliberately non-gating except unsafe/contract regressions |
+| DCO | **Enforced**; governed merge checklist hardened |
+| General Python lint/format | **Established — Ruff** |
+| Numeric executable-Python coverage | **Established — >=80% total floor plus critical-module floors** |
+| Dependency vulnerability scan | **Established — pip-audit** |
+| Python SAST | **Established — Bandit** |
+| Repository SAST | **Established — CodeQL** |
+| Secret scanning / push protection | Repository-managed protection documented under G2 |
+| Required GitHub checks | **Established under Protect main ruleset** |
+| Active Prose benchmark contract | **76-case G-Prose95 contract** |
+| Frozen v0.2 evidence | **Immutable and retained** |
+
+## Programme Gate
+
+Milestone 0 and the Engineering Substrate/CI baseline are complete. SWOS Prose has reached the governed G-Prose95 full-engine development surface and is no longer the principal implementation dependency.
+
+**Next major implementation goal:** roadmap v1.1 retrieval, beginning with the cross-encoder reranker reference implementation. Do not skip directly to the orchestrator or v2/v3 product work before the retrieval/reranking reference path is implemented and evaluated.
+
+## Project Completion Estimate
+
+The original **~35%** estimate was a baseline planning estimate taken before M1, G2 and G-Prose95 landed. It is now stale and is intentionally **not replaced by an invented percentage**.
+
+The next programme goal should establish a component-weighted completion ledger tied to acceptance tests for v1.1, v2 and v3. Until that exists, use milestone status and evidence rather than a single percentage as the authoritative progress indicator.
