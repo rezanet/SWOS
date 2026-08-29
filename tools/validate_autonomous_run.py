@@ -184,9 +184,7 @@ def validate_run(root: Path, *, canonical: bool = False) -> list[str]:
             if item.get("primary") and item.get("metadata_verified")
         }
         evidence_source_ids = {
-            citation.get("source_id")
-            for row in rows
-            for citation in row.get("citations", [])
+            citation.get("source_id") for row in rows for citation in row.get("citations", [])
         }
         if not primary_ids.intersection(evidence_source_ids):
             failures.append("no verified primary legal authority is represented in Evidence Matrix")
@@ -234,9 +232,7 @@ def validate_run(root: Path, *, canonical: bool = False) -> list[str]:
     }
     missing_activities = sorted(REQUIRED_STAGE_ACTIVITIES - activity_capabilities)
     if missing_activities:
-        failures.append(
-            "provenance is missing stage activities: " + ", ".join(missing_activities)
-        )
+        failures.append("provenance is missing stage activities: " + ", ".join(missing_activities))
     agent_kinds = {
         str(item.get("agent_kind"))
         for item in provenance.get("agents", [])
@@ -259,7 +255,10 @@ def validate_run(root: Path, *, canonical: bool = False) -> list[str]:
     if not chain_ok:
         failures.append("integrity chain does not verify")
 
-    if prose.get("safe_for_automatic_use") is not True and prose.get("used_source_fallback") is not True:
+    if (
+        prose.get("safe_for_automatic_use") is not True
+        and prose.get("used_source_fallback") is not True
+    ):
         failures.append("unsafe prose transformation reached release without source fallback")
 
     words = body_word_count(article)

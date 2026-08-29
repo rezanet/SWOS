@@ -44,9 +44,7 @@ def validate_frozen_run_schemas(output_dir: str | Path) -> list[str]:
             continue
         schema = json.loads((schema_dir / rel).read_text(encoding="utf-8"))
         instance = json.loads(path.read_text(encoding="utf-8"))
-        resolver = jsonschema.RefResolver(
-            base_uri=schema["$id"], referrer=schema, store=store
-        )
+        resolver = jsonschema.RefResolver(base_uri=schema["$id"], referrer=schema, store=store)
         validator = jsonschema.Draft202012Validator(schema, resolver=resolver)
         errors.extend(
             f"{filename}: {'/'.join(str(part) for part in err.path)}: {err.message}"
@@ -59,9 +57,7 @@ def validate_frozen_run_schemas(output_dir: str | Path) -> list[str]:
     resolver = jsonschema.RefResolver(
         base_uri=reviewer_schema["$id"], referrer=reviewer_schema, store=store
     )
-    reviewer_validator = jsonschema.Draft202012Validator(
-        reviewer_schema, resolver=resolver
-    )
+    reviewer_validator = jsonschema.Draft202012Validator(reviewer_schema, resolver=resolver)
     review_dir = output / "review-findings"
     if review_dir.is_dir():
         for path in sorted(review_dir.glob("*.json")):

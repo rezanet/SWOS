@@ -177,7 +177,11 @@ class HostNativeFinalizerTests(unittest.TestCase):
             run,
             {
                 "audits": [
-                    {"index": index, "support_level": "directly_supports", "reason": "exact support"}
+                    {
+                        "index": index,
+                        "support_level": "directly_supports",
+                        "reason": "exact support",
+                    }
                     for index in range(5)
                 ]
             },
@@ -200,9 +204,7 @@ class HostNativeFinalizerTests(unittest.TestCase):
                         "evidence_indices": [4],
                     },
                 ],
-                "edges": [
-                    {"from_local_id": "n2", "to_local_id": "n1", "relation": "qualifies"}
-                ],
+                "edges": [{"from_local_id": "n2", "to_local_id": "n1", "relation": "qualifies"}],
             },
         )
         article = self._article()
@@ -239,7 +241,9 @@ class HostNativeFinalizerTests(unittest.TestCase):
             self.assertEqual(control["execution"]["adapter"], "future-subscription")
             self.assertFalse(control["execution"]["api_key_used"])
             self.assertEqual(control["execution"]["paid_api_calls"], 0)
-            self.assertEqual(control["authority_boundary"], "Models propose or judge. SWOS decides.")
+            self.assertEqual(
+                control["authority_boundary"], "Models propose or judge. SWOS decides."
+            )
 
             assurance = json.loads((output / "review-assurance.json").read_text(encoding="utf-8"))
             self.assertEqual(assurance["hostile_review"]["independence"], "limited")
@@ -248,7 +252,9 @@ class HostNativeFinalizerTests(unittest.TestCase):
             self.assertTrue(review)
             self.assertFalse(review[0]["blind_review"])
 
-            judgements = json.loads((output / "judgement-evidence.json").read_text(encoding="utf-8"))
+            judgements = json.loads(
+                (output / "judgement-evidence.json").read_text(encoding="utf-8")
+            )
             self.assertTrue(judgements["records"])
             self.assertTrue(
                 all(
@@ -291,7 +297,9 @@ class HostNativeFinalizerTests(unittest.TestCase):
             self._submit(run, {"sources": self._sources()})
             self._submit(run, {"scores": []})
             bad = self._claims()
-            bad[0]["exact_quote"] = "This quotation is not present in the retrieved source text at all."
+            bad[0]["exact_quote"] = (
+                "This quotation is not present in the retrieved source text at all."
+            )
             with self.assertRaisesRegex(WorkOrderError, "does not occur"):
                 self._submit(run, {"claims": bad})
             self.assertEqual(run.status()["next_stage"], "evidence_extraction")
@@ -304,7 +312,9 @@ class HostNativeFinalizerTests(unittest.TestCase):
             run._save()
             outcome = finalize_work_order_run(run, Path(tmp) / "output")
             self.assertEqual(outcome.status, "REVIEW_REQUIRED")
-            self.assertTrue(any("review independence" in reason for reason in outcome.blocking_reasons))
+            self.assertTrue(
+                any("review independence" in reason for reason in outcome.blocking_reasons)
+            )
 
 
 if __name__ == "__main__":

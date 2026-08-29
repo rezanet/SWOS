@@ -68,13 +68,9 @@ def _validate_matrix(matrix: dict[str, Any]) -> list[str]:
     if matrix.get("equivalence_rule", {}).get("identical_article_text_required") is not False:
         failures.append("matrix incorrectly requires identical article text")
 
-    outcomes = set(
-        matrix.get("equivalence_rule", {}).get("required_governed_outcomes") or []
-    )
+    outcomes = set(matrix.get("equivalence_rule", {}).get("required_governed_outcomes") or [])
     if outcomes != EXPECTED_OUTCOMES:
-        failures.append(
-            "governed equivalence outcomes differ from the hard v2 acceptance contract"
-        )
+        failures.append("governed equivalence outcomes differ from the hard v2 acceptance contract")
 
     cases = _case_map(matrix)
     if set(cases) != EXPECTED_CASES:
@@ -121,12 +117,16 @@ def _validate_execution_constraint(
 
     different_adapter = constraints.get("adapter_must_differ_from_case")
     if different_adapter and different_adapter in records:
-        if execution.get("adapter") == records[different_adapter].get("execution", {}).get("adapter"):
+        if execution.get("adapter") == records[different_adapter].get("execution", {}).get(
+            "adapter"
+        ):
             failures.append(f"{case_id}: adapter did not change from {different_adapter}")
 
     same_provider = constraints.get("provider_must_match_case")
     if same_provider and same_provider in records:
-        if execution.get("model_host") != records[same_provider].get("execution", {}).get("model_host"):
+        if execution.get("model_host") != records[same_provider].get("execution", {}).get(
+            "model_host"
+        ):
             failures.append(f"{case_id}: provider/host differs from {same_provider}")
 
     different_model = constraints.get("model_must_differ_from_case")
@@ -172,7 +172,10 @@ def _validate_record(
     validation = record.get("validation", {})
     if validation.get("canonical_validator_passed") is not True:
         failures.append(f"{case_id}: canonical run validator did not pass")
-    if validation.get("manifest_status") != "APPROVED" or validation.get("control_status") != "APPROVED":
+    if (
+        validation.get("manifest_status") != "APPROVED"
+        or validation.get("control_status") != "APPROVED"
+    ):
         failures.append(f"{case_id}: governed run was not APPROVED")
     governed = validation.get("governed_outcomes", {})
     for outcome in EXPECTED_OUTCOMES:
@@ -213,8 +216,7 @@ def main() -> int:
     for gate_name, gate in matrix.get("gates", {}).items():
         required = list(gate.get("required_cases") or [])
         gate_status[gate_name] = all(
-            case_id in records and records[case_id].get("result") == "PASS"
-            for case_id in required
+            case_id in records and records[case_id].get("result") == "PASS" for case_id in required
         )
         if args.release and not gate_status[gate_name]:
             failures.append(f"{gate_name}: hard portability gate is not satisfied")
@@ -223,18 +225,12 @@ def main() -> int:
         print("SWOS PORTABILITY ACCEPTANCE: FAIL")
         for failure in failures:
             print(f"- {failure}")
-        print(
-            "gate_status="
-            + json.dumps(gate_status, sort_keys=True, separators=(",", ":"))
-        )
+        print("gate_status=" + json.dumps(gate_status, sort_keys=True, separators=(",", ":")))
         return 1
 
     mode = "RELEASE" if args.release else "DEFINITIONS"
     print(f"SWOS PORTABILITY ACCEPTANCE: PASS ({mode})")
-    print(
-        "gate_status="
-        + json.dumps(gate_status, sort_keys=True, separators=(",", ":"))
-    )
+    print("gate_status=" + json.dumps(gate_status, sort_keys=True, separators=(",", ":")))
     if not args.release:
         missing = sorted(EXPECTED_CASES - set(records))
         if missing:

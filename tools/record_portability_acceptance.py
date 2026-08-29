@@ -67,15 +67,24 @@ def _check_case_constraints(
     evidence_dir: Path,
 ) -> None:
     constraints = case.get("constraints", {})
-    if "execution_mode" in constraints and execution.get("execution_mode") != constraints["execution_mode"]:
+    if (
+        "execution_mode" in constraints
+        and execution.get("execution_mode") != constraints["execution_mode"]
+    ):
         raise ValueError(
             f"execution_mode={execution.get('execution_mode')!r}; expected {constraints['execution_mode']!r}"
         )
-    if "api_key_used" in constraints and execution.get("api_key_used") is not constraints["api_key_used"]:
+    if (
+        "api_key_used" in constraints
+        and execution.get("api_key_used") is not constraints["api_key_used"]
+    ):
         raise ValueError(
             f"api_key_used={execution.get('api_key_used')!r}; expected {constraints['api_key_used']!r}"
         )
-    if "paid_api_calls" in constraints and execution.get("paid_api_calls") != constraints["paid_api_calls"]:
+    if (
+        "paid_api_calls" in constraints
+        and execution.get("paid_api_calls") != constraints["paid_api_calls"]
+    ):
         raise ValueError(
             f"paid_api_calls={execution.get('paid_api_calls')!r}; expected {constraints['paid_api_calls']!r}"
         )

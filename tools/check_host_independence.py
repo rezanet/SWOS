@@ -81,7 +81,9 @@ def main() -> int:
     if host_bundle.is_file():
         text = host_bundle.read_text(encoding="utf-8")
         if "replay_interchange_debug_reproducibility" not in text:
-            failures.append("host bundle is not explicitly demoted to replay/interchange/debug/reproducibility")
+            failures.append(
+                "host bundle is not explicitly demoted to replay/interchange/debug/reproducibility"
+            )
 
     for path in ADAPTER_FILES:
         if path.is_file() and path.name != "llm.py":
@@ -98,7 +100,9 @@ def main() -> int:
         for failure in failures:
             print(f"- {failure}")
         return 1
-    print("Host Independence Rule: core is vendor-neutral; instructions and review assurance are SWOS-owned.")
+    print(
+        "Host Independence Rule: core is vendor-neutral; instructions and review assurance are SWOS-owned."
+    )
     return 0
 
 

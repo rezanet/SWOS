@@ -70,11 +70,7 @@ def _injected_manifest(broker: CapabilityBroker) -> dict[str, Any]:
 
 
 def _sources(payload: dict[str, Any]) -> list[SourceRecord]:
-    return [
-        SourceRecord(**item)
-        for item in payload.get("sources", [])
-        if isinstance(item, dict)
-    ]
+    return [SourceRecord(**item) for item in payload.get("sources", []) if isinstance(item, dict)]
 
 
 def _ranked_sources(run: WorkOrderRun) -> list[SourceRecord]:
@@ -102,9 +98,7 @@ def _source_labels(run: WorkOrderRun) -> dict[str, str]:
     # Citation labels are SWOS-owned and deterministic from retrieval order.
     return {
         source.source_id: f"S{index}"
-        for index, source in enumerate(
-            _sources(run._latest("source_retrieval") or {}), start=1
-        )
+        for index, source in enumerate(_sources(run._latest("source_retrieval") or {}), start=1)
     }
 
 
@@ -225,9 +219,7 @@ class AutonomousSWOS:
         if stage == "research_planning":
             self._submit(
                 run,
-                self.broker.research_planning(
-                    request, _scope_hint(ResearchRequest(**request))
-                ),
+                self.broker.research_planning(request, _scope_hint(ResearchRequest(**request))),
                 stage,
             )
             return
@@ -258,9 +250,7 @@ class AutonomousSWOS:
         if stage == "evidence_extraction":
             self._submit(
                 run,
-                self.broker.evidence_extraction(
-                    str(request["topic"]), _ranked_sources(run)
-                ),
+                self.broker.evidence_extraction(str(request["topic"]), _ranked_sources(run)),
                 stage,
             )
             return
@@ -268,9 +258,7 @@ class AutonomousSWOS:
         if stage == "citation_support_audit":
             candidates = (run._latest("evidence_extraction") or {}).get("claims", [])
             source_map = {source.source_id: source for source in _ranked_sources(run)}
-            self._submit(
-                run, self.broker.citation_support_audit(candidates, source_map), stage
-            )
+            self._submit(run, self.broker.citation_support_audit(candidates, source_map), stage)
             return
 
         if stage == "argument_construction":
@@ -317,9 +305,7 @@ class AutonomousSWOS:
         if stage == "semantic_verification":
             transform = run._latest("prose_transformation") or {}
             source = run._latest_revision_or_draft() or ""
-            candidate = str(
-                transform.get("candidate") or transform.get("final_text") or source
-            )
+            candidate = str(transform.get("candidate") or transform.get("final_text") or source)
             try:
                 result = self.broker.semantic_verification(
                     source,

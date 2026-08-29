@@ -206,9 +206,7 @@ class WorkOrderRun:
     def _retrieved_sources(self) -> list[SourceRecord]:
         payload = self._latest("source_retrieval") or {}
         return [
-            SourceRecord(**item)
-            for item in payload.get("sources", [])
-            if isinstance(item, dict)
+            SourceRecord(**item) for item in payload.get("sources", []) if isinstance(item, dict)
         ]
 
     def _source_labels(self) -> dict[str, str]:
@@ -491,7 +489,9 @@ class WorkOrderRun:
         if not markers or not markers.issubset(valid):
             raise WorkOrderError(f"{stage} contains missing or invalid SWOS source markers")
         if len(markers) < min(3, len(valid)):
-            raise WorkOrderError(f"{stage} does not use the governed minimum source-marker coverage")
+            raise WorkOrderError(
+                f"{stage} does not use the governed minimum source-marker coverage"
+            )
 
     def _validate_stage_result(self, stage: str, result: Any) -> dict[str, Any]:
         if not isinstance(result, dict):

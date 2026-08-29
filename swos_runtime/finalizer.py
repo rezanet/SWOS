@@ -275,10 +275,14 @@ def _evidence_matrix(
             rejected.append({"index": index, "candidate": candidate, "reason": "source missing"})
             continue
         if not source.metadata_verified:
-            rejected.append({"index": index, "candidate": candidate, "reason": "metadata unverified"})
+            rejected.append(
+                {"index": index, "candidate": candidate, "reason": "metadata unverified"}
+            )
             continue
         if not exact_quote_supported(quote, source):
-            rejected.append({"index": index, "candidate": candidate, "reason": "exact quote not found"})
+            rejected.append(
+                {"index": index, "candidate": candidate, "reason": "exact quote not found"}
+            )
             continue
         if support != "directly_supports":
             rejected.append(
@@ -783,9 +787,7 @@ def _scholarly_state(work_id: str, status: str, run: WorkOrderRun) -> dict[str, 
 def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOutcome:
     """Perform final SWOS governance without invoking model intelligence."""
     if run.status()["status"] != "READY_TO_FINALISE":
-        raise WorkOrderError(
-            f"run must be READY_TO_FINALISE, got {run.status()['status']}"
-        )
+        raise WorkOrderError(f"run must be READY_TO_FINALISE, got {run.status()['status']}")
 
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
@@ -898,9 +900,7 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
     review_documents, review_blockers = _review_documents(run, work_id, hostile_assurance)
     blockers.extend(review_blockers)
     for index, document in enumerate(review_documents, start=1):
-        _write_json(
-            review_dir / f"{index:02d}-{document['reviewer_role']}.json", document
-        )
+        _write_json(review_dir / f"{index:02d}-{document['reviewer_role']}.json", document)
     _write_json(output / "review-summary.json", review_documents)
 
     source_article = run._latest_revision_or_draft() or ""
@@ -953,7 +953,9 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
 
     article = _append_references(article, sources, labels) if article else article
     (output / "article.md").write_text(article, encoding="utf-8")
-    _write_json(output / "citation-map.json", _citation_map(article, labels) if article else {"markers": []})
+    _write_json(
+        output / "citation-map.json", _citation_map(article, labels) if article else {"markers": []}
+    )
     references = [
         {
             "marker": labels[source.source_id],
