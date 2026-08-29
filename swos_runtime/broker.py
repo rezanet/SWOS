@@ -34,6 +34,7 @@ class CapabilityBroker:
         *,
         stage_binding: Any,
         retrieval_binding: Any,
+        rerank_binding: Any | None = None,
         prose_binding: Callable[[str, Any], tuple[str, dict[str, Any]]] | None = None,
         adapter: str = "injected-adapter",
         model_host: str = "unknown-host",
@@ -42,6 +43,7 @@ class CapabilityBroker:
     ) -> None:
         self.stage_binding = stage_binding
         self.retrieval_binding = retrieval_binding
+        self.rerank_binding = rerank_binding or stage_binding
         self.prose_binding = prose_binding
         self.adapter_manifest = dict(adapter_manifest or {})
         self.adapter = str(self.adapter_manifest.get("adapter") or adapter)
@@ -176,11 +178,17 @@ class CapabilityBroker:
     def semantic_rerank(
         self, topic: str, sources: list[Any], *, top_k: int = 10
     ) -> tuple[list[Any], dict[str, Any]]:
-        ranked, raw = self.stage_binding.rerank(topic, sources, top_k=top_k)
+        ranked, raw = self.rerank_binding.rerank(topic, sources, top_k=top_k)
         record = dict(raw or {})
         # Adapter implementation details may remain for debugging, but SWOS validity
         # keys are capability + frozen contract, never method/provider identity.
-        record.update(self._event("semantic_rerank", top_k=top_k))
+        event = self._event("semantic_rerank", top_k=top_k)
+        reranker_model = record.get("reranker_model")
+        if reranker_model:
+            event["model"] = str(reranker_model)
+            if isinstance(event.get("judgement"), dict):
+                event["judgement"]["model"] = str(reranker_model)
+        record.update(event)
         return ranked, record
 
     def evidence_extraction(self, topic: str, sources: list[Any]) -> dict[str, Any]:

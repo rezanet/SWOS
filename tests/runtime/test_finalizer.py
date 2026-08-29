@@ -66,6 +66,16 @@ class HostNativeFinalizerTests(unittest.TestCase):
                     "Source A also supports the second independent proposition without adding extra scope."
                 ),
                 "metadata_verified": True,
+                "retraction_status": "clean",
+                "retraction_checked_at": "2026-08-30T00:00:00+00:00",
+                "retraction_check_source": "test-registry",
+                "licence": "cc-by",
+                "access_status": "open_access",
+                "redistribution_allowed": True,
+                "excerpt_limit_chars": 2400,
+                "licence_cleared": True,
+                "licence_checked_at": "2026-08-30T00:00:00+00:00",
+                "licence_check_source": "test-registry",
             },
             {
                 "source_id": "host-b",
@@ -78,6 +88,16 @@ class HostNativeFinalizerTests(unittest.TestCase):
                     "Source B also supports the fourth independent proposition without adding extra scope."
                 ),
                 "metadata_verified": True,
+                "retraction_status": "clean",
+                "retraction_checked_at": "2026-08-30T00:00:00+00:00",
+                "retraction_check_source": "test-registry",
+                "licence": "cc-by",
+                "access_status": "open_access",
+                "redistribution_allowed": True,
+                "excerpt_limit_chars": 2400,
+                "licence_cleared": True,
+                "licence_checked_at": "2026-08-30T00:00:00+00:00",
+                "licence_check_source": "test-registry",
             },
             {
                 "source_id": "host-c",
@@ -89,6 +109,16 @@ class HostNativeFinalizerTests(unittest.TestCase):
                     "Source C identifies an important limitation that prevents the conclusion from becoming universal."
                 ),
                 "metadata_verified": True,
+                "retraction_status": "clean",
+                "retraction_checked_at": "2026-08-30T00:00:00+00:00",
+                "retraction_check_source": "test-registry",
+                "licence": "cc-by",
+                "access_status": "open_access",
+                "redistribution_allowed": True,
+                "excerpt_limit_chars": 2400,
+                "licence_cleared": True,
+                "licence_checked_at": "2026-08-30T00:00:00+00:00",
+                "licence_check_source": "test-registry",
             },
         ]
 
@@ -265,6 +295,23 @@ class HostNativeFinalizerTests(unittest.TestCase):
 
             bundle = json.loads((output / "host-bundle.json").read_text(encoding="utf-8"))
             self.assertEqual(bundle["bundle_role"], "replay_interchange_debug_reproducibility")
+
+            sources = json.loads((output / "source-register.json").read_text(encoding="utf-8"))
+            self.assertTrue(all(source["retraction_status"] == "clean" for source in sources))
+            self.assertTrue(all(source["retraction_check_source"] for source in sources))
+            self.assertTrue(all(source["licence_cleared"] for source in sources))
+            self.assertTrue(all(source["licence_check_source"] for source in sources))
+
+            epg = json.loads((output / "provenance.json").read_text(encoding="utf-8"))
+            source_entities = [
+                entity for entity in epg["entities"] if entity["entity_type"] == "source_work"
+            ]
+            self.assertTrue(
+                all(entity["retraction_status"] == "clean" for entity in source_entities)
+            )
+            self.assertTrue(
+                all(entity["rights"]["redistribution_allowed"] for entity in source_entities)
+            )
 
             manifest = json.loads((output / "run-manifest.json").read_text(encoding="utf-8"))
             self.assertTrue(verify_manifest(output, manifest))

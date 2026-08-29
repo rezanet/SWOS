@@ -93,6 +93,8 @@ class RetrievalTests(unittest.TestCase):
                     "id": "https://openalex.org/W1",
                     "doi": "https://doi.org/10.1234/pigment",
                     "publication_date": "2025-01-02",
+                    "is_retracted": False,
+                    "open_access": {"is_oa": True},
                     "abstract_inverted_index": {
                         "Historical": [0],
                         "pigment": [1],
@@ -110,7 +112,10 @@ class RetrievalTests(unittest.TestCase):
                         "one": [13],
                         "formula": [14],
                     },
-                    "primary_location": {"landing_page_url": "https://publisher.example/article"},
+                    "primary_location": {
+                        "landing_page_url": "https://publisher.example/article",
+                        "license": "cc-by",
+                    },
                     "authorships": [
                         {"author": {"display_name": "A. Conservator"}},
                         {"author": {"display_name": "B. Scientist"}},
@@ -126,6 +131,8 @@ class RetrievalTests(unittest.TestCase):
         self.assertEqual(len(records), 1)
         self.assertEqual(records[0].identifiers["doi"], "10.1234/pigment")
         self.assertTrue(records[0].metadata_verified)
+        self.assertEqual(records[0].retraction_status, "clean")
+        self.assertTrue(records[0].licence_cleared)
         self.assertIn("A. Conservator", records[0].author or "")
 
         retriever = PublicWebRetriever()
@@ -146,6 +153,8 @@ class RetrievalTests(unittest.TestCase):
                         "abstract": "<jats:p>" + ("Direct historical context. " * 8) + "</jats:p>",
                         "author": [{"given": "Ada", "family": "Scholar"}],
                         "published": {"date-parts": [[2024, 7, 3]]},
+                        "relation": {"is-retracted-by": [{"id": "10.9999/retraction"}]},
+                        "license": [{"URL": "https://creativecommons.org/licenses/by/4.0/"}],
                     },
                 ]
             }
@@ -159,6 +168,8 @@ class RetrievalTests(unittest.TestCase):
         self.assertEqual(records[0].author, "Ada Scholar")
         self.assertEqual(records[0].published_date, "2024-07-03")
         self.assertTrue(records[0].metadata_verified)
+        self.assertEqual(records[0].retraction_status, "retracted")
+        self.assertTrue(records[0].licence_cleared)
 
         retriever = PublicWebRetriever()
         with patch("swos_runtime.retrieval._urlopen", side_effect=ValueError("bad json")):

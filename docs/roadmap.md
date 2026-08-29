@@ -90,6 +90,8 @@ exists; it needs the required tests, artefacts and exact-head evidence.
 
 ### 1. Reconcile the runtime contract
 
+**Status:** complete in Spec Kit feature `002`; capability ledger merged.
+
 **Depends on:** foundation slice.
 
 **Outputs:** a capability ledger mapping every v1.1 requirement to existing
@@ -102,6 +104,8 @@ become implementation tasks.
 `demonstrated` or `certified`, with an exact artefact or an explicit blocker.
 
 ### 2. Retrieval and citation assurance
+
+**Status:** implementation in Spec Kit feature `003`; exact-head PR evidence required.
 
 **Depends on:** runtime reconciliation.
 
@@ -117,6 +121,8 @@ recorded inputs, model/retriever identity and exact evidence.
 
 ### 3. Governed stores and audit pack
 
+**Status:** planned; begins only after feature `003` merges.
+
 **Depends on:** retrieval and citation assurance.
 
 **Outputs:** file-backed EPG, SDL, RPM, Evidence Matrix and Argument Graph;
@@ -129,6 +135,8 @@ verification.
 audit pack without hidden state.
 
 ### 4. Evaluation and human approval
+
+**Status:** planned; blocked on governed stores.
 
 **Depends on:** governed stores and audit pack.
 
@@ -143,6 +151,8 @@ automated component can approve its own output.
 approved by the responsible human reviewer.
 
 ### 5. Public proof and release
+
+**Status:** planned; blocked on evaluation and human approval.
 
 **Depends on:** evaluation and human approval.
 

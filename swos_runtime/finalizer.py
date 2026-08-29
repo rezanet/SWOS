@@ -126,6 +126,13 @@ def _actor() -> dict[str, str]:
     }
 
 
+def _nonnegative_int(value: Any) -> int:
+    try:
+        return max(0, int(value))
+    except (TypeError, ValueError, OverflowError):
+        return 0
+
+
 def _legal_topic(topic: str) -> bool:
     lowered = topic.lower()
     return any(term in lowered for term in ("court", "witness", "legal", " law ", "evidence act"))
@@ -227,6 +234,16 @@ def _canonical_sources(
             retrieval_query=str(raw.get("retrieval_query") or ""),
             raw_rank=index,
             injection_detected=detect_prompt_injection(text),
+            retraction_status=str(raw.get("retraction_status") or "not_checked"),
+            retraction_checked_at=raw.get("retraction_checked_at"),
+            retraction_check_source=raw.get("retraction_check_source"),
+            licence=str(raw.get("licence") or "unknown"),
+            access_status=str(raw.get("access_status") or "unknown"),
+            redistribution_allowed=bool(raw.get("redistribution_allowed", False)),
+            excerpt_limit_chars=_nonnegative_int(raw.get("excerpt_limit_chars")),
+            licence_cleared=bool(raw.get("licence_cleared", False)),
+            licence_checked_at=raw.get("licence_checked_at"),
+            licence_check_source=raw.get("licence_check_source"),
         )
         if not source.url:
             blockers.append(f"source {raw_id} has no URL")
@@ -277,6 +294,38 @@ def _evidence_matrix(
         if not source.metadata_verified:
             rejected.append(
                 {"index": index, "candidate": candidate, "reason": "metadata unverified"}
+            )
+            continue
+        if source.retraction_status != "clean":
+            rejected.append(
+                {
+                    "index": index,
+                    "candidate": candidate,
+                    "reason": f"source retraction status is {source.retraction_status}",
+                }
+            )
+            continue
+        if not source.retraction_checked_at or not source.retraction_check_source:
+            rejected.append(
+                {
+                    "index": index,
+                    "candidate": candidate,
+                    "reason": "source retraction check provenance is incomplete",
+                }
+            )
+            continue
+        if not source.licence_cleared:
+            rejected.append(
+                {"index": index, "candidate": candidate, "reason": "source licence not cleared"}
+            )
+            continue
+        if not source.licence_checked_at or not source.licence_check_source:
+            rejected.append(
+                {
+                    "index": index,
+                    "candidate": candidate,
+                    "reason": "source licence check provenance is incomplete",
+                }
             )
             continue
         if not exact_quote_supported(quote, source):
@@ -333,8 +382,8 @@ def _evidence_matrix(
                 "version": RUNTIME_VERSION,
             },
             "metadata_verified": True,
-            "retraction_checked": bool(candidate.get("retraction_checked", False)),
-            "licence_cleared": bool(candidate.get("licence_cleared", False)),
+            "retraction_checked": source.retraction_status == "clean",
+            "licence_cleared": source.licence_cleared,
         }
         row = {
             "claim_id": claim_id,
@@ -543,12 +592,12 @@ def _build_epg(
                 "label": source.title,
                 "identifiers": {**source.identifiers, "url": source.url},
                 "rights": {
-                    "licence": "source-controlled",
-                    "access_status": "unknown",
-                    "redistribution_allowed": False,
-                    "excerpt_limit_chars": 500,
+                    "licence": source.licence,
+                    "access_status": source.access_status,
+                    "redistribution_allowed": source.redistribution_allowed,
+                    "excerpt_limit_chars": source.excerpt_limit_chars,
                 },
-                "retraction_status": "not_checked",
+                "retraction_status": source.retraction_status,
                 "data_classification": "public",
             }
         )

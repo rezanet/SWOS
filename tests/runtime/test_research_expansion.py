@@ -32,6 +32,16 @@ class ExpandingRetriever(FakeRetriever):
                     "The terminology remains useful in bounded contexts while requiring qualification."
                 ),
                 metadata_verified=True,
+                retraction_status="clean",
+                retraction_checked_at="2026-08-30T00:00:00+00:00",
+                retraction_check_source="test-registry",
+                licence="cc-by",
+                access_status="open_access",
+                redistribution_allowed=True,
+                excerpt_limit_chars=2400,
+                licence_cleared=True,
+                licence_checked_at="2026-08-30T00:00:00+00:00",
+                licence_check_source="test-registry",
                 retrieval_query="counter-position",
             )
         ]
