@@ -163,6 +163,7 @@ class WorkOrderRun:
             "stage": "research_planning",
             "review_iteration": 0,
             "revision_count": 0,
+            "research_expansions": [],
             "submissions": [],
             "history": [],
         }
@@ -599,6 +600,44 @@ class WorkOrderRun:
         self._persist_work_order()
         return self.status()
 
+    def replace_latest_submission(self, stage: str, result: dict[str, Any]) -> dict[str, Any]:
+        """Replace a previously accepted stage after bounded research expansion."""
+        if self.state.get("status") != "ACTIVE":
+            raise WorkOrderError(f"run is not ACTIVE: {self.state.get('status')}")
+        for item in reversed(self.state.get("submissions", [])):
+            if item.get("stage") != stage:
+                continue
+            validated = self._validate_stage_result(stage, result)
+            _write_json(self.run_dir / item["file"], validated)
+            self.state.setdefault("history", []).append(
+                {
+                    "event": "stage_replaced",
+                    "stage": stage,
+                    "capability": stage,
+                    "contract": CAPABILITY_CONTRACTS[stage],
+                    "contract_passed": True,
+                    "executed": True,
+                    "instruction_id": validated["provenance"]["instruction_id"],
+                    "instruction_sha256": validated["provenance"]["instruction_sha256"],
+                    "submission": item["file"],
+                }
+            )
+            self._save()
+            self._persist_work_order()
+            return validated
+        raise WorkOrderError(f"cannot replace missing stage submission: {stage}")
+
+    def record_research_expansion(self, record: dict[str, Any]) -> None:
+        """Persist a bounded research expansion in the SWOS run ledger."""
+        if self.state.get("status") != "ACTIVE":
+            raise WorkOrderError(f"run is not ACTIVE: {self.state.get('status')}")
+        if not isinstance(record, dict):
+            raise WorkOrderError("research expansion record must be an object")
+        self.state.setdefault("research_expansions", []).append(dict(record))
+        self.state.setdefault("history", []).append({"event": "research_expanded", **dict(record)})
+        self._save()
+        self._persist_work_order()
+
     def status(self) -> dict[str, Any]:
         return {
             "protocol_version": PROTOCOL_VERSION,
@@ -683,6 +722,7 @@ class WorkOrderRun:
                 "run_id": self.state["run_id"],
                 "review_iteration": self.state.get("review_iteration", 0),
                 "revision_count": self.state.get("revision_count", 0),
+                "research_expansions": list(self.state.get("research_expansions", [])),
             },
         }
         path = Path(output_path) if output_path else self.run_dir / "host-bundle.json"

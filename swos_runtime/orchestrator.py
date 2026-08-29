@@ -15,10 +15,26 @@ from typing import Any, Callable
 from .broker import CapabilityBroker, CapabilityBrokerError
 from .capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
 from .finalizer import finalize_work_order_run
+from .governance import detect_prompt_injection, exact_quote_supported
 from .models import ResearchRequest, RunOutcome, SourceRecord
 from .work_orders import WorkOrderError, WorkOrderRun
 
 RUNTIME_VERSION = "0.2.0"
+MAX_RESEARCH_EXPANSIONS = 2
+REVIEW_RESEARCH_CATEGORIES = {
+    "fabricated_citation",
+    "citation_metadata_error",
+    "citation_laundering",
+    "unsupported_claim",
+    "overclaim",
+    "missing_counter_evidence",
+    "coverage_gap",
+    "source_bias",
+    "hidden_premise",
+    "invalid_inference",
+    "over_association",
+    "genre_mismatch",
+}
 
 
 def _legal_topic(topic: str) -> bool:
@@ -161,6 +177,32 @@ def _blocking_review_findings(run: WorkOrderRun) -> list[dict[str, Any]]:
     ]
 
 
+def _source_key(source: SourceRecord) -> str:
+    return (
+        str(source.identifiers.get("doi") or source.url or source.title or source.source_id)
+        .strip()
+        .lower()
+    )
+
+
+def _verified_claims(result: dict[str, Any], sources: list[SourceRecord]) -> list[dict[str, Any]]:
+    source_map = {source.source_id: source for source in sources}
+    verified: list[dict[str, Any]] = []
+    for claim in result.get("claims", []):
+        if not isinstance(claim, dict):
+            continue
+        source = source_map.get(str(claim.get("source_id") or ""))
+        quote = claim.get("exact_quote")
+        if (
+            source is not None
+            and source.metadata_verified
+            and isinstance(quote, str)
+            and exact_quote_supported(quote, source)
+        ):
+            verified.append(claim)
+    return verified
+
+
 class AutonomousSWOS:
     """Drive one SWOS request through a selected provider-neutral capability broker."""
 
@@ -209,6 +251,136 @@ class AutonomousSWOS:
         result["provenance"] = self._provenance(stage)
         run.submit(result)
 
+    @staticmethod
+    def _review_requires_research(findings: list[dict[str, Any]]) -> bool:
+        return any(finding.get("category") in REVIEW_RESEARCH_CATEGORIES for finding in findings)
+
+    @staticmethod
+    def _expansion_queries(
+        topic: str,
+        plan: dict[str, Any],
+        *,
+        needs_claims: bool,
+        needs_counter: bool,
+    ) -> list[str]:
+        queries: list[str] = []
+        if needs_counter:
+            queries.extend(
+                str(item) for item in plan.get("rival_theses", [])[:3] if str(item).strip()
+            )
+        if needs_claims:
+            queries.extend(
+                str(item) for item in plan.get("known_uncertainties", [])[:2] if str(item).strip()
+            )
+        queries.append(f"{topic} counterexamples exceptions limitations evidence")
+        return queries
+
+    def _replace_retrieval_state(
+        self,
+        run: WorkOrderRun,
+        sources: list[SourceRecord],
+        ranked: list[SourceRecord],
+        rerank_record: dict[str, Any],
+    ) -> None:
+        retrieval = dict(run._latest("source_retrieval") or {})
+        retrieval["sources"] = [source.to_dict(include_text=True) for source in sources]
+        retrieval["research_expansions"] = list(run.state.get("research_expansions", []))
+        retrieval["provenance"] = (run._latest("source_retrieval") or {}).get("provenance")
+        run.replace_latest_submission("source_retrieval", retrieval)
+
+        previous_rerank = run._latest("semantic_rerank") or {}
+        rerank = dict(rerank_record)
+        rerank["ranked_source_ids"] = [source.source_id for source in ranked]
+        rerank["provenance"] = previous_rerank.get("provenance")
+        run.replace_latest_submission("semantic_rerank", rerank)
+
+    def _expand_research(
+        self,
+        run: WorkOrderRun,
+        request: dict[str, Any],
+        queries: list[str],
+        *,
+        reason: dict[str, bool] | None = None,
+        phase: str | None = None,
+        review_iteration: int | None = None,
+        trigger_categories: list[str] | None = None,
+        research_goal: str | None = None,
+    ) -> list[SourceRecord]:
+        expansions = list(run.state.get("research_expansions", []))
+        if len(expansions) >= MAX_RESEARCH_EXPANSIONS:
+            return []
+
+        sources = _sources(run._latest("source_retrieval") or {})
+        before_keys = {_source_key(source) for source in sources}
+        expanded = self.broker.source_retrieval(str(request["topic"]), queries)
+        added: list[SourceRecord] = []
+        for source in expanded:
+            key = _source_key(source)
+            if key in before_keys:
+                continue
+            before_keys.add(key)
+            source.injection_detected = source.injection_detected or detect_prompt_injection(
+                source.text
+            )
+            sources.append(source)
+            added.append(source)
+
+        record: dict[str, Any] = {
+            "attempt": len(expansions) + 1,
+            "queries": list(queries),
+            "new_sources": len(added),
+        }
+        if phase:
+            record.update(
+                {
+                    "phase": phase,
+                    "review_iteration": review_iteration,
+                    "trigger_categories": sorted(set(trigger_categories or [])),
+                    "research_goal": research_goal,
+                }
+            )
+        else:
+            record["reason"] = dict(reason or {})
+        run.record_research_expansion(record)
+
+        if not added:
+            return []
+
+        ranked, rerank_record = self.broker.semantic_rerank(
+            str(request["topic"]), sources, top_k=12
+        )
+        for source in ranked:
+            source.injection_detected = source.injection_detected or detect_prompt_injection(
+                source.text
+            )
+        self._replace_retrieval_state(run, sources, ranked, rerank_record)
+        return added
+
+    def _rebuild_research_stages(self, run: WorkOrderRun, request: dict[str, Any]) -> None:
+        ranked = _ranked_sources(run)
+        evidence = self.broker.evidence_extraction(str(request["topic"]), ranked)
+        previous_evidence = run._latest("evidence_extraction") or {}
+        evidence["provenance"] = previous_evidence.get("provenance")
+        run.replace_latest_submission("evidence_extraction", evidence)
+
+        candidates = (run._latest("evidence_extraction") or {}).get("claims", [])
+        source_map = {source.source_id: source for source in ranked}
+        audit = self.broker.citation_support_audit(candidates, source_map)
+        previous_audit = run._latest("citation_support_audit") or {}
+        audit["provenance"] = previous_audit.get("provenance")
+        run.replace_latest_submission("citation_support_audit", audit)
+
+        plan = run._latest("research_planning") or {}
+        argument = self.broker.argument_construction(
+            str(request["topic"]),
+            _verified_candidate_rows(run),
+            list(plan.get("rival_theses") or []),
+        )
+        argument = _normalize_argument(argument)
+        previous_argument = run._latest("argument_construction") or {}
+        argument["provenance"] = previous_argument.get("provenance")
+        run.replace_latest_submission("argument_construction", argument)
+
     def _fulfil(self, run: WorkOrderRun) -> None:
         order = run.work_order()
         if order is None:
@@ -248,11 +420,39 @@ class AutonomousSWOS:
             return
 
         if stage == "evidence_extraction":
-            self._submit(
-                run,
-                self.broker.evidence_extraction(str(request["topic"]), _ranked_sources(run)),
-                stage,
-            )
+            evidence = self.broker.evidence_extraction(str(request["topic"]), _ranked_sources(run))
+            while len(run.state.get("research_expansions", [])) < MAX_RESEARCH_EXPANSIONS:
+                sources = _sources(run._latest("source_retrieval") or {})
+                verified = _verified_claims(evidence, sources)
+                needs_claims = len(verified) < 5
+                needs_counter = not any(
+                    str(claim.get("stance") or "").lower() in {"counter", "limitation"}
+                    for claim in verified
+                )
+                if not needs_claims and not needs_counter:
+                    break
+                plan = run._latest("research_planning") or {}
+                queries = self._expansion_queries(
+                    str(request["topic"]),
+                    plan,
+                    needs_claims=needs_claims,
+                    needs_counter=needs_counter,
+                )
+                added = self._expand_research(
+                    run,
+                    request,
+                    queries,
+                    reason={
+                        "fewer_than_five_verified_claims": needs_claims,
+                        "missing_counter_or_limitation": needs_counter,
+                    },
+                )
+                if not added:
+                    break
+                evidence = self.broker.evidence_extraction(
+                    str(request["topic"]), _ranked_sources(run)
+                )
+            self._submit(run, evidence, stage)
             return
 
         if stage == "citation_support_audit":
@@ -284,9 +484,38 @@ class AutonomousSWOS:
             return
 
         if stage == "revision":
+            blocking = _blocking_review_findings(run)
+            if self._review_requires_research(blocking):
+                repair_plan = self.broker.research_repair_planning(str(request["topic"]), blocking)
+                repair_queries = [
+                    str(query).strip()
+                    for query in repair_plan.get("queries", [])
+                    if str(query).strip()
+                ][:6]
+                added = self._expand_research(
+                    run,
+                    request,
+                    repair_queries,
+                    phase="review_repair",
+                    review_iteration=int(run.state.get("review_iteration", 0)),
+                    trigger_categories=[str(finding.get("category")) for finding in blocking],
+                    research_goal=str(repair_plan.get("research_goal") or ""),
+                )
+                if added:
+                    self._rebuild_research_stages(run, request)
+                    plan = run._latest("research_planning") or {}
+                    article = self.broker.draft_generation(
+                        request,
+                        plan,
+                        _verified_candidate_rows(run),
+                        run._latest("argument_construction") or {},
+                        _source_labels(run),
+                    )
+                    self._submit(run, {"article": article}, stage)
+                    return
             article = self.broker.revision(
                 run._latest_revision_or_draft() or "",
-                _blocking_review_findings(run),
+                blocking,
                 _verified_candidate_rows(run),
                 run._latest("argument_construction") or {},
                 _source_labels(run),

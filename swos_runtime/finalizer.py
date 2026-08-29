@@ -851,6 +851,10 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             "adapter": adapter.get("adapter"),
             "execution_mode": adapter.get("execution_mode"),
             "source_count": len(sources),
+            "research_expansions": list(
+                run.state.get("research_expansions", [])
+                or retrieval_submission.get("research_expansions", [])
+            ),
             "work_order_run_id": run.state["run_id"],
         },
     )
@@ -1094,6 +1098,7 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
         "normal_user_questions_asked": 0,
         "blocking_reasons": blockers,
         "revision_count": run.state.get("revision_count", 0),
+        "research_expansions": list(run.state.get("research_expansions", [])),
         "cross_encoder": rerank_record,
         "capability_contract_set": "swos.capabilities.v1",
         "instruction_set": run.state.get("instruction_set", "swos.stage-instructions.v1"),
