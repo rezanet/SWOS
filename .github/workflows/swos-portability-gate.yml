@@ -1,0 +1,44 @@
+name: SWOS v2 Portability Gate
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  architecture:
+    name: Portability architecture contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Reject vendor leakage from SWOS authority zones
+        run: python tools/check_vendor_leakage.py
+      - name: Validate frozen portability matrix and accumulated evidence
+        run: python tools/check_portability_acceptance.py --definitions-only
+
+  release-gates:
+    name: G-HOST + G-PORT release gate
+    runs-on: ubuntu-latest
+    needs: architecture
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Require complete PASS evidence for all six execution environments
+        run: python tools/check_portability_acceptance.py --release
+      - name: Explain governed portability standard
+        if: always()
+        run: |
+          echo '## SWOS v2 portability' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '**G-HOST:** API baseline + Codex/ChatGPT subscription must PASS the same SWOS contract.' >> "$GITHUB_STEP_SUMMARY"
+          echo '**G-PORT:** Claude Code subscription + replay + provider swap + model swap must PASS the same SWOS contract.' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Articles may differ. Evidence, argument, citation, review, scholarly-state, audit, integrity and release requirements may not.' >> "$GITHUB_STEP_SUMMARY"

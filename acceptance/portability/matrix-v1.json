@@ -1,0 +1,133 @@
+{
+  "contract_id": "swos.portability-acceptance.v1",
+  "status": "frozen",
+  "principle": "SWOS owns the scholarly process. Models provide capabilities.",
+  "canonical_request": {
+    "topic": "Can an AI-operated machine be a witness in court?",
+    "length": 2500,
+    "audience": "intelligent general reader",
+    "style": "scholarly-natural",
+    "depth": "rigorous"
+  },
+  "equivalence_rule": {
+    "identical_article_text_required": false,
+    "required_governed_outcomes": [
+      "valid_evidence_matrix",
+      "valid_argument_graph",
+      "verified_citations",
+      "required_counter_evidence",
+      "review_completed",
+      "correct_scholarly_state_transitions",
+      "no_unsupported_release",
+      "complete_audit_package",
+      "valid_integrity_chain",
+      "correct_provenance",
+      "approved_only_when_swos_requirements_pass"
+    ]
+  },
+  "gates": {
+    "G-HOST": {
+      "description": "Prove the same SWOS scholarly contract through API and subscription execution.",
+      "required_cases": [
+        "openai_api",
+        "codex_chatgpt_subscription"
+      ]
+    },
+    "G-PORT": {
+      "description": "Prove the abstraction survives a second host plus replay, provider replacement and model replacement.",
+      "required_cases": [
+        "claude_code_subscription",
+        "replay_host_bundle",
+        "api_provider_changed",
+        "model_changed_same_provider"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "openai_api",
+      "label": "OpenAI API",
+      "execution_class": "direct_api",
+      "api_key_policy": "required",
+      "forbidden_environment_variables": [],
+      "expected": "PASS",
+      "constraints": {
+        "execution_mode": "direct_api",
+        "api_key_used": true
+      }
+    },
+    {
+      "id": "codex_chatgpt_subscription",
+      "label": "Codex + ChatGPT subscription",
+      "execution_class": "host_native_subscription",
+      "api_key_policy": "forbidden",
+      "forbidden_environment_variables": [
+        "OPENAI_API_KEY"
+      ],
+      "expected": "PASS",
+      "constraints": {
+        "execution_mode": "host_native_subscription",
+        "api_key_used": false,
+        "paid_api_calls": 0,
+        "adapter_family": "codex"
+      }
+    },
+    {
+      "id": "claude_code_subscription",
+      "label": "Claude Code subscription",
+      "execution_class": "host_native_subscription",
+      "api_key_policy": "forbidden",
+      "forbidden_environment_variables": [
+        "ANTHROPIC_API_KEY"
+      ],
+      "expected": "PASS",
+      "constraints": {
+        "execution_mode": "host_native_subscription",
+        "api_key_used": false,
+        "paid_api_calls": 0,
+        "adapter_family": "claude-code"
+      }
+    },
+    {
+      "id": "replay_host_bundle",
+      "label": "Replay / host bundle",
+      "execution_class": "replay",
+      "api_key_policy": "forbidden",
+      "forbidden_environment_variables": [
+        "OPENAI_API_KEY",
+        "ANTHROPIC_API_KEY"
+      ],
+      "expected": "PASS",
+      "constraints": {
+        "execution_mode": "replay",
+        "api_key_used": false,
+        "paid_api_calls": 0
+      }
+    },
+    {
+      "id": "api_provider_changed",
+      "label": "API provider changed",
+      "execution_class": "direct_api",
+      "api_key_policy": "required",
+      "forbidden_environment_variables": [],
+      "expected": "PASS",
+      "constraints": {
+        "execution_mode": "direct_api",
+        "api_key_used": true,
+        "adapter_must_differ_from_case": "openai_api"
+      }
+    },
+    {
+      "id": "model_changed_same_provider",
+      "label": "Model changed within same provider",
+      "execution_class": "model_swap",
+      "api_key_policy": "execution_mode_dependent",
+      "forbidden_environment_variables": [],
+      "expected": "PASS",
+      "constraints": {
+        "provider_must_match_case": "openai_api",
+        "model_must_differ_from_case": "openai_api"
+      }
+    }
+  ]
+}

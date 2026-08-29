@@ -1,0 +1,49 @@
+{
+  "contract_set": "swos.capabilities.v1",
+  "adapter": "codex-subscription",
+  "model_host": "ChatGPT/Codex",
+  "execution_mode": "host_native_subscription",
+  "api_key_used": false,
+  "paid_api_calls": 0,
+  "capabilities": {
+    "research_planning": {"level": "native", "contract": "swos.research-planning.v1"},
+    "source_retrieval": {"level": "native", "contract": "swos.source-retrieval.v1"},
+    "semantic_rerank": {"level": "native", "contract": "swos.semantic-rerank.v1", "assurance": ["joint_query_document_scoring", "host_declared"]},
+    "evidence_extraction": {"level": "native", "contract": "swos.evidence-extraction.v1"},
+    "citation_support_audit": {
+      "level": "native",
+      "contract": "swos.citation-support-audit.v1",
+      "assurance": ["conservative_support_judgement", "same_host_separate_context"],
+      "review_mode": "same-host-separate-context",
+      "independence": "limited",
+      "blind_review_supported": false,
+      "independence_limitations": [
+        "The audit may run in the same host and model family as generation.",
+        "A separate context does not guarantee organisational, model or system-prompt independence.",
+        "Blind review is not claimed."
+      ]
+    },
+    "argument_construction": {"level": "native", "contract": "swos.argument-construction.v1"},
+    "draft_generation": {"level": "native", "contract": "swos.draft-generation.v1"},
+    "semantic_verification": {
+      "level": "native",
+      "contract": "swos.semantic-verification.v1",
+      "assurance": ["host_semantic_judgement", "deterministic_checks_remain_authoritative"]
+    },
+    "hostile_review": {
+      "level": "native",
+      "contract": "swos.hostile-review.v1",
+      "assurance": ["bounded_review", "same_host_separate_context"],
+      "review_mode": "same-host-separate-context",
+      "independence": "limited",
+      "blind_review_supported": false,
+      "independence_limitations": [
+        "The reviewer may run in the same host and model family as drafting.",
+        "Context separation reduces anchoring but is not genuine independent peer review.",
+        "Blind review is not claimed."
+      ]
+    },
+    "revision": {"level": "native", "contract": "swos.revision.v1"},
+    "prose_transformation": {"level": "native", "contract": "swos.prose-transformation.v1"}
+  }
+}

@@ -1,0 +1,71 @@
+name: SWOS Historical Pigment Article Acceptance
+
+# Domain-neutral acceptance on bounded web authority discovery and research repair.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  SWOS_RUNTIME_MODEL: gpt-5.6-luna
+  SWOS_RUNTIME_REVIEW_MODEL: gpt-5.6-luna
+  SWOS_PROSE_OPENAI_MODEL: gpt-5.6-luna
+  SWOS_PROSE_OPENAI_REWRITE_MODEL: gpt-5.6-luna
+
+jobs:
+  historical-pigment-ambiguity:
+    name: Historical pigment-name ambiguity article
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Require configured live provider credential
+        run: |
+          if [[ -z "$OPENAI_API_KEY" ]]; then
+            echo "OPENAI_API_KEY is not configured. Pigment acceptance is NOT RUN and cannot pass." >&2
+            exit 2
+          fi
+      - name: Install locked environment and SWOS
+        run: |
+          python -m pip install --requirement requirements-dev.lock
+          python -m pip install --no-deps --no-build-isolation --editable .
+      - name: Run one-request historical-pigment workflow
+        id: pigment
+        continue-on-error: true
+        run: |
+          rm -rf /tmp/swos-pigment-ambiguity
+          set -o pipefail
+          swos research-write \
+            --topic "Write an article titled 'Why Historical Pigment Names Are Often Chemically Ambiguous'. Governing proposition: Historical colour names encoded source, trade, grade, price and appearance. They were never built to identify a compound, and reading them as though they were produces a chain of confident errors that a five-part distinction between term, substance, preparation, product and object assertion prevents." \
+            --length 2500 \
+            --audience "intelligent general reader" \
+            --style scholarly-natural \
+            --depth rigorous \
+            --output /tmp/swos-pigment-ambiguity \
+            --json 2>&1 | tee /tmp/swos-pigment-cli.log
+      - name: Validate governed package
+        run: python tools/validate_autonomous_run.py /tmp/swos-pigment-ambiguity
+      - name: Check requested title appears in article
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          article = Path('/tmp/swos-pigment-ambiguity/article.md').read_text(encoding='utf-8')
+          title = 'Why Historical Pigment Names Are Often Chemically Ambiguous'
+          if title not in article:
+              raise SystemExit(f'Requested title missing from article: {title}')
+          print('Requested title is present.')
+          PY
+      - name: Upload complete pigment run evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swos-historical-pigment-ambiguity
+          path: |
+            /tmp/swos-pigment-ambiguity
+            /tmp/swos-pigment-cli.log
+          retention-days: 14
