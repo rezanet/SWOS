@@ -1,7 +1,6 @@
 name: Autonomous SWOS Canonical Acceptance — G-HOST API Baseline
 
 on:
-  pull_request:
   workflow_dispatch:
 
 permissions:

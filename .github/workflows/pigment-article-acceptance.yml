@@ -2,9 +2,6 @@ name: SWOS Historical Pigment Article Acceptance
 
 # Domain-neutral acceptance on bounded web authority discovery and research repair.
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/pigment-article-acceptance.yml"
   workflow_dispatch:
 
 permissions:
