@@ -2281,6 +2281,66 @@
       "superseded_by": []
     },
     {
+      "id": "specs-003-swos-v1-1-retrieval-citation-assurance-checklists-requirements-md",
+      "path": "specs/003-swos-v1-1-retrieval-citation-assurance/checklists/requirements.md",
+      "title": "Requirements Checklist: SWOS v1.1 Retrieval and Citation Assurance",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-003-swos-v1-1-retrieval-citation-assurance-checklists-requirements-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-003-swos-v1-1-retrieval-citation-assurance-plan-md",
+      "path": "specs/003-swos-v1-1-retrieval-citation-assurance/plan.md",
+      "title": "Implementation Plan: SWOS v1.1 Retrieval and Citation Assurance",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-003-swos-v1-1-retrieval-citation-assurance-plan-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-003-swos-v1-1-retrieval-citation-assurance-spec-md",
+      "path": "specs/003-swos-v1-1-retrieval-citation-assurance/spec.md",
+      "title": "Feature Specification: SWOS v1.1 Retrieval and Citation Assurance",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-003-swos-v1-1-retrieval-citation-assurance-spec-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-003-swos-v1-1-retrieval-citation-assurance-tasks-md",
+      "path": "specs/003-swos-v1-1-retrieval-citation-assurance/tasks.md",
+      "title": "Tasks: SWOS v1.1 Retrieval and Citation Assurance",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-003-swos-v1-1-retrieval-citation-assurance-tasks-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
       "id": "tasks-plan-g-prose95",
       "path": "tasks/plan.md",
       "title": "G-Prose95 Implementation Plan",

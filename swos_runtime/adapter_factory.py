@@ -20,6 +20,7 @@ from .host_bundle import (
     load_host_bundle,
 )
 from .llm import OpenAIStageProvider
+from .reranking import CrossEncoderReranker
 from .retrieval import PublicWebRetriever
 
 
@@ -91,11 +92,18 @@ def build_openai_api_broker() -> tuple[CapabilityBroker, dict[str, Any]]:
         "contract": "swos.source-retrieval.v1",
         "assurance": ["network_retrieval", "source_identity", "metadata_provenance"],
     }
+    manifest["capabilities"]["semantic_rerank"]["assurance"] = [
+        "explicit_cross_encoder",
+        "per_source_scores",
+        "model_identity",
+    ]
     stage = OpenAIStageProvider()
     retriever = PublicWebRetriever()
+    reranker = CrossEncoderReranker()
     broker = CapabilityBroker(
         stage_binding=stage,
         retrieval_binding=retriever,
+        rerank_binding=reranker,
         prose_binding=_openai_prose_binding(),
         adapter_manifest=manifest,
     )

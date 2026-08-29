@@ -53,6 +53,16 @@ class SourceRecord:
     raw_rank: int | None = None
     rerank_score: float | None = None
     injection_detected: bool = False
+    retraction_status: str = "not_checked"
+    retraction_checked_at: str | None = None
+    retraction_check_source: str | None = None
+    licence: str = "unknown"
+    access_status: str = "unknown"
+    redistribution_allowed: bool = False
+    excerpt_limit_chars: int = 0
+    licence_cleared: bool = False
+    licence_checked_at: str | None = None
+    licence_check_source: str | None = None
 
     def excerpt(self, limit: int = 2400) -> str:
         text = " ".join(self.text.split())

@@ -15,6 +15,9 @@ dependencies = [
     "jsonschema>=4.0.0",
 ]
 
+[project.optional-dependencies]
+retrieval = ["sentence-transformers>=5.0.0,<6"]
+
 [project.scripts]
 swos-prose = "swos_prose.cli:main"
 swos = "swos_runtime.cli:main"

@@ -8,11 +8,45 @@ import os
 import re
 import urllib.parse
 import urllib.request
+from datetime import datetime, timezone
 from html.parser import HTMLParser
 from typing import Any
 
 from .governance import detect_prompt_injection
 from .models import SourceRecord, swos_id
+
+
+def _now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _licence_assurance(value: Any, *, is_open: bool = False) -> dict[str, Any]:
+    licence = str(value or "").strip().lower()
+    cleared = licence.startswith("cc-") or licence.startswith(
+        ("https://creativecommons.org/licenses/", "https://creativecommons.org/publicdomain/")
+    )
+    return {
+        "licence": licence or "unknown",
+        "access_status": "open_access" if is_open else "unknown",
+        "redistribution_allowed": cleared,
+        "excerpt_limit_chars": 2400 if cleared else 0,
+        "licence_cleared": cleared,
+    }
+
+
+def _crossref_retraction(relation: Any) -> str:
+    if relation is None:
+        return "not_checked"
+    if not isinstance(relation, dict):
+        return "not_checked"
+    keys = {str(key).lower().replace("_", "-") for key in relation}
+    if keys & {"is-retracted-by", "retracts"}:
+        return "retracted"
+    if keys & {"is-expression-of-concern-by", "has-expression-of-concern"}:
+        return "expression_of_concern"
+    if keys & {"is-corrected-by", "updates", "is-updated-by"}:
+        return "corrected"
+    return "clean"
 
 
 class _TextExtractor(HTMLParser):
@@ -249,6 +283,18 @@ class PublicWebRetriever:
                 continue
             doi = str(item.get("doi") or "").replace("https://doi.org/", "")
             primary_location = item.get("primary_location") or {}
+            open_access = item.get("open_access") or {}
+            licence = _licence_assurance(
+                primary_location.get("license"), is_open=bool(open_access.get("is_oa"))
+            )
+            retraction_status = (
+                "retracted"
+                if item.get("is_retracted") is True
+                else "clean"
+                if item.get("is_retracted") is False
+                else "not_checked"
+            )
+            checked_at = _now()
             landing = str(primary_location.get("landing_page_url") or item.get("id") or "")
             authors = []
             for authorship in (item.get("authorships") or [])[:6]:
@@ -270,6 +316,16 @@ class PublicWebRetriever:
                     retrieval_query=query,
                     raw_rank=rank,
                     injection_detected=detect_prompt_injection(abstract),
+                    retraction_status=retraction_status,
+                    retraction_checked_at=(
+                        checked_at if retraction_status != "not_checked" else None
+                    ),
+                    retraction_check_source=(
+                        "openalex.is_retracted" if retraction_status != "not_checked" else None
+                    ),
+                    **licence,
+                    licence_checked_at=checked_at,
+                    licence_check_source="openalex.primary_location.license",
                 )
             )
         return found
@@ -279,7 +335,7 @@ class PublicWebRetriever:
             {
                 "query.bibliographic": query,
                 "rows": str(limit),
-                "select": "DOI,title,author,published,URL,abstract",
+                "select": "DOI,title,author,published,URL,abstract,relation,license",
             }
         )
         try:
@@ -305,6 +361,18 @@ class PublicWebRetriever:
             parts = ((item.get("published") or {}).get("date-parts") or [[]])[0]
             date = "-".join(f"{int(v):02d}" for v in parts) if parts else None
             doi = str(item.get("DOI") or "")
+            licences = item.get("license") or []
+            licence_url = next(
+                (
+                    str(entry.get("URL") or "")
+                    for entry in licences
+                    if isinstance(entry, dict) and entry.get("URL")
+                ),
+                "",
+            )
+            licence = _licence_assurance(licence_url, is_open=bool(licence_url))
+            retraction_status = _crossref_retraction(item.get("relation"))
+            checked_at = _now()
             found.append(
                 SourceRecord(
                     source_id=swos_id("src"),
@@ -320,6 +388,16 @@ class PublicWebRetriever:
                     retrieval_query=query,
                     raw_rank=rank,
                     injection_detected=detect_prompt_injection(abstract),
+                    retraction_status=retraction_status,
+                    retraction_checked_at=(
+                        checked_at if retraction_status != "not_checked" else None
+                    ),
+                    retraction_check_source=(
+                        "crossref.relation" if retraction_status != "not_checked" else None
+                    ),
+                    **licence,
+                    licence_checked_at=checked_at,
+                    licence_check_source="crossref.license",
                 )
             )
         return found
