@@ -1,5 +1,9 @@
 # G-Prose95 Task List
 
+> **Historical record.** This task list belongs to the completed G-Prose95 effort.
+> The authoritative current programme plan is [`docs/roadmap.md`](../docs/roadmap.md);
+> remaining unchecked items describe historical handoff work, not active v1.1 tasks.
+
 - [x] Establish current baseline and threat-model notes.
 - [x] Add contract tests for modes, presets, serialization, CLI, and API.
 - [x] Add contract tests for diagnostics, context safety, and fail-closed paths.

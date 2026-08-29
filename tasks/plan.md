@@ -1,5 +1,9 @@
 # G-Prose95 Implementation Plan
 
+> **Historical record.** This plan belongs to the completed G-Prose95 effort. The
+> authoritative current programme plan is [`docs/roadmap.md`](../docs/roadmap.md);
+> this file is retained for provenance and is not an active v1.1 task plan.
+
 This is the execution plan for the single G-Prose95 goal. It is not a sequence of
 independent milestones or release claims; all gates converge on one exact branch
 head and one final builder report.

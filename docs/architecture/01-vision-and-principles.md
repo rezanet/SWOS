@@ -1,91 +1,43 @@
-# Vision and Principles
+# Technical Vision Derivative
 
-## Vision
+> The canonical philosophical vision is [`VISION.md`](../../VISION.md). This
+> document is its technical derivative; it keeps the architecture concise and
+> does not duplicate the long-form reasoning.
 
-SWOS is a portable, governed scholarly reasoning platform supporting technical
-writing, enterprise reporting, engineering, philosophy, psychology, materials
-science, humanities, art history, art criticism and interdisciplinary
-scholarship.
+## Technical interpretation
 
-It operates like a research institute in software: **evidence is acquired before
-prose, arguments are explicit, provenance is preserved, decisions are logged,
-reviewers are role-based, memory is governed, and release requires evaluation
-evidence.**
+SWOS is a portable, governed scholarly reasoning platform. The reference
+architecture treats evidence, claims, arguments, provenance, decisions,
+uncertainty, review and release as explicit artefacts with machine-checkable
+boundaries.
 
-It produces not only a draft, but the evidence matrix, argument graph, citation
-audit, reviewer simulation, decision ledger, uncertainty statement and governance
-pack. That is the difference between a writing assistant and a scholarly
-operating system.
+| Vision commitment | Architectural consequence |
+|---|---|
+| Evidence before prose | Research planning and evidence artefacts precede manuscript generation. |
+| Typed support | Evidence Matrix entries distinguish claim status, citation identity and support relationship. |
+| Arguments as structures | Argument Graph stores claims, warrants, objections, rebuttals and rival readings. |
+| Provenance as justification | EPG, SDL and RPM preserve source, transformation, decision and correction lineage. |
+| Continuous governance | Lifecycle gates, policy checks, approvals and audit packs span the whole run. |
+| Human responsibility | Release requires a human approval record and separated review roles. |
+| Host independence | Contracts and schemas sit below replaceable hosts, models, retrievers and adapters. |
+| Minimal reference runtime | The initial implementation proves a local, reproducible file-backed path before breadth. |
 
-## The problem being solved
+## Boundary
 
-The real problem is not prose. It is **epistemic control**: what counts as
-evidence, what counts as interpretation, what level of confidence is justified,
-which claims lack support, and which decisions must survive audit.
+The architecture is an assurance layer, not a chatbot, giant prompt, hosted SaaS
+product, autonomous publisher, central memory service or enterprise identity
+platform. Those non-goals are defined philosophically in [`VISION.md`](../../VISION.md)
+and enforced technically through the contracts, governance policies and
+portability checks.
 
-A system that solves prose and not epistemic control produces fluent, plausible,
-well-cited-looking output whose failures are invisible precisely because it is
-fluent. The architecture must define authoritative stores, control boundaries,
-lifecycle states, verification gates, provenance, decision records, memory rules
-and evaluation evidence. Otherwise it becomes a beautifully worded liability.
+## Delivery sequence
 
-## Nine principles
+The architecture follows **Proof → Portability → Ecosystem → Standardisation**.
+The current programme targets the reference runtime track `v1.1`; Core/specification
+remains `1.0.0`, and Research Grade remains a future `v2.0` track.
 
-### 1. Evidence before prose
-No draft until an evidence plan, evidence matrix and citation-support
-classification exist. This is Rule #3 and it is the centre of gravity of the
-entire design.
+## Source of authority
 
-### 2. Prompt last, architecture first
-Prompts set roles, standards and output contracts. Tools, memory, knowledge
-structures, provenance, evaluation and governance provide the control surface.
-If a requirement can be solved outside the prompt, it must be.
-
-### 3. Every claim has an epistemic status
-Observed fact, source-backed claim, inference, interpretation, hypothesis,
-speculation, normative judgement, critical assessment, unverified claim. A system
-that cannot distinguish these cannot be trusted with any of them.
-
-### 4. Every citation has a support relationship
-Citation existence is insufficient. Classify whether the passage directly
-supports, partially supports, contextualises, contradicts or fails the claim.
-
-### 5. Argument is a graph, not paragraph soup
-Claims, warrants, backing, objections, rebuttals, implications and rival readings
-are represented explicitly, so their absence is detectable.
-
-### 6. Memory is governed, not merely long
-Control how memory is read, written, updated, contradicted, expired and deleted.
-Unsupported reflection never becomes fact.
-
-### 7. Review is role-based
-"Review critically" is not an architecture. Reviewer simulation needs citation
-auditors, methodologists, argument examiners, discipline experts, hostile
-reviewers, editors and governance reviewers - each with test, pass, fail and
-escalation criteria.
-
-### 8. Governance is continuous
-Governance overlays the whole lifecycle - Discover, Design, Build, Validate,
-Release, Operate, Evolve or Retire - as a cross-cutting function, not a gate at
-the end. Audit metadata is preferred to raw sensitive content.
-
-### 9. Portability is preserved by contract
-Contracts, schemas, events and evaluation artefacts are defined independently of
-implementation tools. Every host, model, retriever and store is replaceable
-without changing a scholarly contract.
-
-## What SWOS refuses to be
-
-* A prose stylist that improves fluency without touching evidence.
-* One giant prompt with the architecture hidden in prose.
-* A vendor-bound product.
-* An autonomous publisher. Human accountability for final judgement is a
-  principle, not a configuration option.
-
-## Treat fluency as a risk signal
-
-This deserves separate statement because it inverts the intuition most systems
-are built on. In SWOS, fluent output with thin evidence is a **more** dangerous
-result than rough output with strong evidence, because fluency suppresses the
-reader's scrutiny exactly when scrutiny is most needed. Every control in the
-platform follows from taking that seriously.
+This file explains how the vision maps to components. It does not redefine the
+constitution, frozen contracts or schemas. Changes that alter those boundaries
+require the Spec Kit workflow and a manifest update.

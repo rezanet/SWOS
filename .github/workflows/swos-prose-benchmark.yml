@@ -39,20 +39,28 @@ jobs:
       SWOS_PROSE_OPENAI_REWRITE_MODEL: gpt-5.6-luna
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Report live benchmark skip when no API key is configured
-        if: env.OPENAI_API_KEY == ''
-        run: echo "OPENAI_API_KEY is not configured; live SWOS Prose benchmark skipped."
+      - name: Record exact dispatch SHA
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD | tee /tmp/swos-prose-benchmark-sha.txt
+      - name: Require configured live provider credential
+        run: |
+          set -euo pipefail
+          if [[ -z "$OPENAI_API_KEY" ]]; then
+            echo "OPENAI_API_KEY is absent. Live benchmark evidence is NOT RUN and cannot pass." >&2
+            exit 2
+          fi
       - name: Install OpenAI SDK
-        if: env.OPENAI_API_KEY != ''
         run: python3 -m pip install openai jsonschema
       - name: Run full 76-case live G-Prose95 benchmark
         id: live-benchmark
-        if: env.OPENAI_API_KEY != ''
-        continue-on-error: true
         run: |
+          set -euo pipefail
           rm -rf /tmp/swos-prose-benchmark
           mkdir -p /tmp/swos-prose-benchmark
           python3 benchmark/runner.py \
@@ -63,11 +71,18 @@ jobs:
             --verifier-model gpt-5.6-luna \
             --fail-on-unsafe \
             --output /tmp/swos-prose-benchmark/g-prose95.json
+      - name: Require complete live benchmark evidence
+        run: |
+          set -euo pipefail
+          test -s /tmp/swos-prose-benchmark-sha.txt
+          test -s /tmp/swos-prose-benchmark/g-prose95.json
       - name: Publish benchmark summary
-        if: env.OPENAI_API_KEY != '' && always()
+        if: always()
         run: |
           {
             echo "## SWOS Prose G-Prose95 benchmark"
+            echo
+            echo "Selected exact SHA: $(cat /tmp/swos-prose-benchmark-sha.txt 2>/dev/null || echo unavailable)"
             echo
             echo "Live benchmark step outcome: ${{ steps.live-benchmark.outcome }}"
             echo
@@ -76,9 +91,11 @@ jobs:
             fi
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Upload live benchmark evidence
-        if: env.OPENAI_API_KEY != '' && always()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: swos-prose-g-prose95-benchmark
-          path: /tmp/swos-prose-benchmark
+          path: |
+            /tmp/swos-prose-benchmark-sha.txt
+            /tmp/swos-prose-benchmark
           retention-days: 14
