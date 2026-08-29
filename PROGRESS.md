@@ -102,7 +102,8 @@ evidence and are not substitutes for deterministic merge gates.
 **Programme baseline:** 2026-08-22
 **Baseline main SHA:** `eb704e4baec57124a6d54065ff99ea3d5128c35c`
 **Baseline report:** [`BASELINE_REPORT.md`](BASELINE_REPORT.md)
-**Current programme branch:** `programme/swos-100-completion-baseline`
+**Historical programme branch:** `programme/swos-100-completion-baseline`
+**Current programme branch:** `main`
 **Last reconciled:** 2026-08-23
 **Current reconciled main SHA:** `e79dbd3185703defa6bdba7fe2511ce3f260c9a8`
 
