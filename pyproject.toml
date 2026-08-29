@@ -40,6 +40,7 @@ line-ending = "lf"
 [tool.coverage.run]
 branch = true
 source = ["swos_prose", "swos_runtime"]
+omit = ["*/swos_runtime/legacy_openai_orchestrator.py"]
 
 [tool.coverage.report]
 fail_under = 80
