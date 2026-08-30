@@ -5,9 +5,11 @@ SWOS v1.1 reference runtime. It uses bounded, hash-pinned snapshots from officia
 NIST AI RMF resources. The snapshots make ordinary execution deterministic; they
 do not imply that upstream pages are immutable or that NIST endorses SWOS.
 
-Run and reproduce:
+Install the locked environment and SWOS package, then run and reproduce:
 
 ```powershell
+python -m pip install --requirement requirements-dev.lock
+python -m pip install --no-deps --no-build-isolation --editable .
 python tools/run_public_proof.py --project examples/public-proof/project.json --out .tmp/proof-a
 python tools/verify_public_proof.py --project examples/public-proof/project.json `
   --primary .tmp/proof-a --reproduce-at .tmp/proof-b `

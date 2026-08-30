@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,6 +20,17 @@ EXPECTED = Path("examples/public-proof/expected-proof.json")
 
 
 class PublicProofTests(unittest.TestCase):
+    def test_packaged_public_proof_import_is_self_contained(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [sys.executable, "-c", "import swos_runtime.public_proof"],
+                cwd=tmp,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_public_project_executes_real_runtime_and_all_eight_planes(self):
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "proof"
