@@ -121,7 +121,7 @@ recorded inputs, model/retriever identity and exact evidence.
 
 ### 3. Governed stores and audit pack
 
-**Status:** implementation in Spec Kit feature `004`; exact-head PR evidence required.
+**Status:** complete in Spec Kit feature `004`; exact-head PR evidence merged.
 
 **Depends on:** retrieval and citation assurance.
 
@@ -136,7 +136,7 @@ audit pack without hidden state.
 
 ### 4. Evaluation and human approval
 
-**Status:** planned; blocked on governed stores.
+**Status:** implementation in Spec Kit feature `005`; exact-head PR evidence required.
 
 **Depends on:** governed stores and audit pack.
 

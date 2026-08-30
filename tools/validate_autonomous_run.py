@@ -208,10 +208,14 @@ def validate_run(root: Path, *, canonical: bool = False) -> list[str]:
                 ):
                     failures.append("open blocker/major reviewer finding remains at release")
 
-    if review_assurance.get("meets_automatic_delivery_requirement") is not True:
-        failures.append("review assurance does not meet automatic-delivery requirement")
-    if review_assurance.get("independence") in {None, "unknown", "none", "unsupported"}:
-        failures.append("review independence is missing or unsupported")
+    if review_assurance.get("assurance_level") != "automatic_delivery":
+        failures.append("review assurance does not identify the automatic-delivery profile")
+    for capability in ("citation_support_audit", "hostile_review"):
+        assurance = review_assurance.get(capability, {})
+        if assurance.get("independence") in {None, "unknown", "none", "unsupported"}:
+            failures.append(f"{capability} review independence is missing or unsupported")
+        if assurance.get("review_mode") in {None, "unknown", "unspecified"}:
+            failures.append(f"{capability} review execution mode is missing")
 
     records = judgements.get("records", []) if isinstance(judgements, dict) else []
     if not records:
