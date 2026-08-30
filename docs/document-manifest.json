@@ -2341,6 +2341,66 @@
       "superseded_by": []
     },
     {
+      "id": "specs-004-swos-v1-1-governed-stores-checklists-requirements-md",
+      "path": "specs/004-swos-v1-1-governed-stores/checklists/requirements.md",
+      "title": "Requirements Checklist: SWOS v1.1 Governed Stores",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-004-swos-v1-1-governed-stores-checklists-requirements-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-004-swos-v1-1-governed-stores-plan-md",
+      "path": "specs/004-swos-v1-1-governed-stores/plan.md",
+      "title": "Implementation Plan: SWOS v1.1 Governed Stores",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-004-swos-v1-1-governed-stores-plan-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-004-swos-v1-1-governed-stores-spec-md",
+      "path": "specs/004-swos-v1-1-governed-stores/spec.md",
+      "title": "Feature Specification: SWOS v1.1 Governed Stores and Audit Verification",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-004-swos-v1-1-governed-stores-spec-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-004-swos-v1-1-governed-stores-tasks-md",
+      "path": "specs/004-swos-v1-1-governed-stores/tasks.md",
+      "title": "Tasks: SWOS v1.1 Governed Stores",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": [
+        "document-specs-004-swos-v1-1-governed-stores-tasks-md"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
       "id": "tasks-plan-g-prose95",
       "path": "tasks/plan.md",
       "title": "G-Prose95 Implementation Plan",

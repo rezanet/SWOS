@@ -26,6 +26,7 @@ from .governance import (
 )
 from .models import RunOutcome, SourceRecord, swos_id
 from .schema_validation import validate_frozen_run_schemas
+from .stores import StoreError, persist_run_stores
 from .work_orders import WorkOrderError, WorkOrderRun
 
 RUNTIME_VERSION = "0.2.0"
@@ -1118,6 +1119,11 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
         },
     )
 
+    try:
+        store_heads = persist_run_stores(output, actor=_actor(), recorded_at=_now())
+    except StoreError as exc:
+        raise WorkOrderError(f"governed store persistence failed: {exc}") from exc
+    chain.append("governed_stores.persisted", {"heads": store_heads})
     chain.append("governance.final", {"status": status, "blocking_reasons": blockers})
     chain.write(output / "integrity-chain.jsonl")
     if not chain.verify():
@@ -1164,6 +1170,7 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
         "started_from_one_request": True,
         "work_order_run_id": run.state["run_id"],
         "host_bundle_role": "replay_interchange_debug_reproducibility",
+        "governed_store_heads": store_heads,
     }
     _write_json(output / "run-control.json", run_control)
 
