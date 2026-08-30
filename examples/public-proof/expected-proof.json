@@ -1,7 +1,7 @@
 {
   "expected_proof_version": "swos.public-proof-expected.v1",
   "project_id": "nist-ai-risk-governance-2026-08-30",
-  "proof_fingerprint": "7710a916d055683e03730e6518d5e8913f05e0507e6d3bb2c963367a133dbdf1",
+  "proof_fingerprint": "7773dfa61f26ef8ed44e77ff8a96e6d4881ab154d363a9efe908d36b465cf9f7",
   "article_sha256": "2baeb0a7b7073ae55d7148b5d90763cc5af578c8145b6fc39e7e7375f5f7a7fd",
   "source_sha256": {
     "src-nist-ai-rmf-100-1": "a502eff0d22a6e67a9da54fe62a7ee947a3cb5a9b5a7c7f5042c8be427d0f9f8",

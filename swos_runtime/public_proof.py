@@ -331,12 +331,25 @@ def _normalized_proof(
     subject: EvaluationSubject, evaluation: dict[str, Any], project: dict[str, Any]
 ) -> dict[str, Any]:
     article = (subject.root / "article.md").read_text(encoding="utf-8")
+    source_urls = {
+        source.get("source_id"): source.get("url")
+        for source in subject.sources
+        if isinstance(source, dict)
+    }
     rows = [
         {
             "claim_text": row.get("claim_text"),
-            "exact_quotes": [citation.get("exact_quote") for citation in row.get("citations", [])],
-            "support": [citation.get("support_level") for citation in row.get("citations", [])],
-            "stance": row.get("stance"),
+            "epistemic_type": row.get("epistemic_type"),
+            "confidence": row.get("confidence"),
+            "citations": [
+                {
+                    "source_url": source_urls.get(citation.get("source_id")),
+                    "support_level": citation.get("support_level"),
+                    "quoted_text": (citation.get("evidence_span") or {}).get("quoted_text"),
+                    "support_rationale": citation.get("support_rationale"),
+                }
+                for citation in row.get("citations", [])
+            ],
             "verification_status": row.get("verification_status"),
         }
         for row in subject.evidence.get("rows", [])
