@@ -72,7 +72,7 @@ jobs:
           python-version: "3.11"
       - run: pip install jsonschema
       - name: Run evaluation plane against Autonomous SWOS
-        run: python3 evals/harness/run_evals.py --planes ${{ matrix.plane }} --system autonomous-swos --fail-on-gate
+        run: python3 evals/harness/run_evals.py --planes ${{ matrix.plane }} --system autonomous-swos --deterministic-subject --fail-on-gate
 
   governance:
     name: Governance policy check

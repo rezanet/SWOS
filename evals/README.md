@@ -7,6 +7,25 @@ make eval                                  # all eight planes
 python3 evals/harness/run_evals.py --planes citation,adversarial --fail-on-gate
 ```
 
+Runtime-bound mode requires one finalized SWOS run and evaluates every selected
+plane against that exact subject:
+
+```bash
+python3 evals/harness/run_evals.py --all --system autonomous-swos \
+  --run-dir path/to/finalized-run --out evaluation-result.json --fail-on-gate
+```
+
+Ordinary CI uses `--deterministic-subject` to build a credential-free run
+through the real reference runtime before executing a plane. This is test
+evidence, not a human release approval or a live-provider compatibility claim.
+Contract mode without `--system` validates fixture shape only and cannot claim
+runtime coverage.
+
+Passing all planes is an automated release recommendation. Release authority
+remains denied until a separate eligible human reviews the risk-first approval
+pack and records an exact, rationale-bearing decision under
+`swos.release-gate`.
+
 ## Eight planes
 
 | Plane | Blocking condition |

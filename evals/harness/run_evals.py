@@ -9,6 +9,7 @@ by CI for the reference runtime.
 import argparse
 import json
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -83,7 +84,7 @@ def _contract_plane(plane, fixtures):
     }
 
 
-def _bound_plane(plane, fixtures, system_under_test):
+def _bound_plane(plane, fixtures, system_under_test, run_dir):
     if system_under_test != "autonomous-swos":
         return {
             "plane": plane,
@@ -95,38 +96,64 @@ def _bound_plane(plane, fixtures, system_under_test):
             ],
             "mode": "bound_sut",
         }
-    from evals.harness.autonomous_sut import evaluate_fixture
+    if not run_dir:
+        return {
+            "plane": plane,
+            "gate_result": "fail",
+            "fixtures_run": 0,
+            "metrics": [],
+            "failures": [{"fixture_id": "-", "reason": "Runtime-bound mode requires --run-dir"}],
+            "mode": "bound_sut",
+        }
+    from swos_runtime.evaluation import EvaluationSubject, evaluate_plane
 
-    observations = [evaluate_fixture(plane, fixture) for fixture in fixtures]
-    failures = [
-        {"fixture_id": item["fixture_id"], "reason": item["observation"]}
-        for item in observations
-        if not item["passed"]
-    ]
-    return {
-        "plane": plane,
-        "gate_result": "fail" if failures or not fixtures else "pass",
-        "fixtures_run": len(fixtures),
-        "metrics": [
-            {
-                "metric": "bound_fixture_pass_rate",
-                "value": (sum(1 for item in observations if item["passed"]) / len(observations))
-                if observations
-                else 0.0,
-            }
-        ],
-        "failures": failures,
-        "observations": observations,
-        "mode": "bound_sut",
-        "system": system_under_test,
-    }
+    return evaluate_plane(EvaluationSubject.load(run_dir), plane, fixtures)
 
 
-def run_plane(plane, system_under_test=None):
+def run_plane(plane, system_under_test=None, run_dir=None):
     fixtures = load_fixtures(plane)
     if system_under_test is None:
         return _contract_plane(plane, fixtures)
-    return _bound_plane(plane, fixtures, system_under_test)
+    return _bound_plane(plane, fixtures, system_under_test, run_dir)
+
+
+def _execute(args, selected, run_dir):
+    if args.system:
+        from swos_runtime.evaluation import (
+            EvaluationSubject,
+            build_evaluation_result,
+            validate_evaluation_result,
+        )
+
+        subject = EvaluationSubject.load(run_dir)
+        fixtures = {plane: load_fixtures(plane) for plane in selected}
+        document = build_evaluation_result(
+            subject,
+            fixtures,
+            selected=selected,
+            decided_at=datetime.now(timezone.utc).isoformat(),
+        )
+        schema_errors = validate_evaluation_result(document)
+        if schema_errors:
+            raise RuntimeError("evaluation result schema failure: " + "; ".join(schema_errors))
+        return document
+
+    results = [run_plane(plane) for plane in selected]
+    blocking = [
+        result["plane"] for result in results if result["gate_result"] in ("fail", "not_run")
+    ]
+    return {
+        "schema_version": "1.0.0",
+        "work_id": "work-00000000-0000-0000-0000-000000000000",
+        "run_id": f"evl-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}",
+        "harness_version": "1.1.0",
+        "planes": results,
+        "release_decision": {
+            "decision": "block" if blocking else "release",
+            "blocking_planes": blocking,
+            "decided_at": datetime.now(timezone.utc).isoformat(),
+        },
+    }
 
 
 def main():
@@ -135,6 +162,12 @@ def main():
     parser.add_argument("--planes", default="")
     parser.add_argument("--fail-on-gate", action="store_true")
     parser.add_argument("--system", default=None, help="Bound system under test adapter id")
+    parser.add_argument("--run-dir", default=None, help="Finalized runtime subject directory")
+    parser.add_argument(
+        "--deterministic-subject",
+        action="store_true",
+        help="Build a credential-free real runtime subject for deterministic CI",
+    )
     parser.add_argument("--out", default=None)
     args = parser.parse_args()
 
@@ -148,24 +181,36 @@ def main():
         print(f"error: unknown plane(s): {', '.join(unknown)}")
         return 2
 
-    results = [run_plane(plane, args.system) for plane in selected]
+    if args.system and not args.run_dir and not args.deterministic_subject:
+        print("error: runtime-bound mode requires --run-dir")
+        return 2
+    if args.run_dir and args.deterministic_subject:
+        print("error: choose --run-dir or --deterministic-subject, not both")
+        return 2
+
+    temporary = None
+    run_dir = args.run_dir
+    if args.deterministic_subject:
+        from evals.harness.deterministic_subject import build_deterministic_subject
+
+        temporary = tempfile.TemporaryDirectory()
+        run_dir = temporary.name
+        outcome = build_deterministic_subject(run_dir)
+        if outcome.status != "APPROVED":
+            print("error: deterministic runtime subject did not pass automated assurance")
+            temporary.cleanup()
+            return 1
+    try:
+        document = _execute(args, selected, run_dir)
+    except (RuntimeError, ValueError) as exc:
+        print(f"error: {exc}")
+        if temporary:
+            temporary.cleanup()
+        return 1
+    results = document["planes"]
     blocking = [
         result["plane"] for result in results if result["gate_result"] in ("fail", "not_run")
     ]
-    decision = "block" if blocking else "release"
-    document = {
-        "schema_version": "1.0.0",
-        "work_id": "work-00000000-0000-0000-0000-000000000000",
-        "run_id": f"evl-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}",
-        "harness_version": "1.1.0",
-        "system_under_test": args.system,
-        "planes": results,
-        "release_decision": {
-            "decision": decision,
-            "blocking_planes": blocking,
-            "decided_at": datetime.now(timezone.utc).isoformat(),
-        },
-    }
     if args.out:
         Path(args.out).write_text(json.dumps(document, indent=2), encoding="utf-8")
 
@@ -180,11 +225,14 @@ def main():
         for failure in result.get("failures", []):
             print(f"      ! {failure['fixture_id']}: {failure['reason']}")
     print("-" * (width + 34))
-    print(f"  release decision: {decision.upper()}")
+    recommendation = document["release_decision"]["decision"]
+    print(f"  release recommendation: {recommendation.upper()}")
     print(f"  mode            : {'BOUND SUT ' + args.system if args.system else 'CONTRACT MODE'}")
     if blocking:
         print(f"  blocking planes : {', '.join(blocking)}")
-    return 1 if args.fail_on_gate and decision == "block" else 0
+    if temporary:
+        temporary.cleanup()
+    return 1 if args.fail_on_gate and blocking else 0
 
 
 if __name__ == "__main__":
