@@ -10,6 +10,8 @@ python -m unittest tests.runtime.test_release_evidence
 ## Execute and independently reproduce
 
 ```powershell
+python -m pip install --requirement requirements-dev.lock
+python -m pip install --no-deps --no-build-isolation --editable .
 python tools/run_public_proof.py --project examples/public-proof/project.json --out .tmp/proof-a
 python tools/verify_public_proof.py --project examples/public-proof/project.json `
   --primary .tmp/proof-a --reproduce-at .tmp/proof-b `
