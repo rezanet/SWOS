@@ -2537,6 +2537,123 @@
       "superseded_by": [
         "docs-roadmap"
       ]
+    },
+    {
+      "id": "examples-public-proof-readme",
+      "path": "examples/public-proof/README.md",
+      "title": "SWOS v1.1 Public Proof",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["public-proof-execution"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-006-public-proof-release-checklist",
+      "path": "specs/006-swos-v1-1-public-proof-release/checklists/requirements.md",
+      "title": "Specification Quality Checklist: SWOS v1.1 Public Proof and Release",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-006-public-proof-release-checklist"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-006-public-proof-release-contracts",
+      "path": "specs/006-swos-v1-1-public-proof-release/contracts/interfaces.md",
+      "title": "Interface Contracts: Public Proof and Release",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-006-public-proof-release-contracts"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-006-public-proof-release-data-model",
+      "path": "specs/006-swos-v1-1-public-proof-release/data-model.md",
+      "title": "Data Model: SWOS v1.1 Public Proof and Release",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-006-public-proof-release-data-model"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-006-public-proof-release-plan",
+      "path": "specs/006-swos-v1-1-public-proof-release/plan.md",
+      "title": "Implementation Plan: SWOS v1.1 Public Proof and Release",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-006-public-proof-release-plan"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-006-public-proof-release-quickstart",
+      "path": "specs/006-swos-v1-1-public-proof-release/quickstart.md",
+      "title": "Quickstart: Validate Public Proof and Release Evidence",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-006-public-proof-release-quickstart"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-006-public-proof-release-research",
+      "path": "specs/006-swos-v1-1-public-proof-release/research.md",
+      "title": "Research: SWOS v1.1 Public Proof and Release",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-006-public-proof-release-research"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-006-public-proof-release-spec",
+      "path": "specs/006-swos-v1-1-public-proof-release/spec.md",
+      "title": "Feature Specification: SWOS v1.1 Public Proof and Release",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-006-public-proof-release-spec"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-006-public-proof-release-tasks",
+      "path": "specs/006-swos-v1-1-public-proof-release/tasks.md",
+      "title": "Tasks: SWOS v1.1 Public Proof and Release",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-006-public-proof-release-tasks"],
+      "supersedes": [],
+      "superseded_by": []
     }
   ]
 }

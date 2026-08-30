@@ -65,13 +65,13 @@ requirement, not for a partial nearby artifact.
 | V11-EVAL-001 | All eight evaluation planes bound to the real runtime path | Evaluation | tested | `swos_runtime/evaluation.py`; thin `autonomous_sut.py` delegation; exact finalized-run subject loading | all eight planes against one deterministic real-runtime subject; missing, mutated, duplicate and partial-plane negative paths | Demonstration: schema-valid eight-plane result bound to one finalized run; certification: — | Public-source independent reproduction remains V11-PROOF-001. |
 | V11-EVAL-002 | Complete provenance and zero unresolved blockers at release gate | Evaluation | tested | subject manifest/schema/store/integrity verification; blocker and provenance plane gates; digest-bound approval pack | evaluation and release-approval positive and tamper/replay tests | Demonstration: deterministic complete run and fail-closed release verifier; certification: — | Exact public release evidence remains V11-REL-001. |
 | V11-APPROVAL-001 | Human approval record with separation of duties | Evaluation | tested | risk-first immutable approval pack; SDL-compatible human decision record; standalone fail-closed verifier | human-only, author/approver separation, owner separation, rationale, rejection, tamper and cross-run replay tests | Demonstration: deterministic synthetic human identities only; certification: — | A real named approval and authenticated signing authority belong to the public-proof release slice. |
-| V11-PROOF-001 | One independently reproducible public-source project | Public release | specified | Manual canonical workflows exist | — | Demonstration: no checked-in complete exact-head public proof; certification: — | Execute only after retrieval, stores and evaluation gates pass. |
-| V11-REL-001 | Release audit pack for the public proof | Public release | specified | Runtime can generate partial audit package | Deterministic complete-run test | Demonstration: no final public proof pack; certification: — | Assemble and independently reproduce after V11-PROOF-001. |
-| V11-REL-002 | Software Bill of Materials | Public release | specified | — | — | Demonstration: —; certification: — | Generate release SBOM from locked dependencies and package contents. |
-| V11-REL-003 | Build provenance tied to exact selected SHA | Public release | specified | Workflow exact-SHA recording foundation exists | Workflow-profile tests | Demonstration: —; certification: — | Produce build provenance for the release candidate and verify subject digests. |
-| V11-REL-004 | Signed checksums for release artifacts | Public release | specified | Existing run manifest checksum is unsigned | Manifest tamper test only | Demonstration: —; certification: — | Define signing authority/tool, sign checksums and verify signatures independently. |
-| V11-REL-005 | Conformance report | Public release | specified | Portability and autonomous validators can supply inputs | Definitions-only checks | Demonstration: —; certification: — | Compile exact profile results without upgrading unpassed compatibility claims. |
-| V11-REL-006 | Known-limitations statement | Public release | specified | Repository progress and risk documents contain inputs | — | Demonstration: —; certification: — | Publish release-scoped limitations, unresolved uncertainty and unsupported profiles. |
+| V11-PROOF-001 | One independently reproducible public-source project | Public release | demonstrated | `examples/public-proof/project.json`; `swos_runtime/public_proof.py`; real `AutonomousSWOS` path | source-integrity, all-plane, replay and tamper tests | Demonstration: two credential-free runs over hash-pinned NIST snapshots produce semantic fingerprint `7710a916…`; certification: — | Exact-head PR evidence is required before the demonstration is release evidence. |
+| V11-REL-001 | Release audit pack for the public proof | Public release | tested | `swos_runtime/release_evidence.py`; candidate builder/verifier | complete candidate and negative-path suite | Demonstration: synthetic human approval only; certification: — | Real owner approval and a trusted external signature remain mandatory. |
+| V11-REL-002 | Software Bill of Materials | Public release | tested | deterministic CycloneDX 1.5 generation from package metadata and `requirements-dev.lock` | SBOM content and unlocked-authority rejection tests | Demonstration: deterministic test candidate; certification: — | Final SBOM must be generated from the exact clean release head. |
+| V11-REL-003 | Build provenance tied to exact selected SHA | Public release | tested | exact clean-HEAD assertion; build provenance and subject digests | dirty-tree and mismatched-SHA negative tests | Demonstration: isolated temporary repository; certification: — | Final provenance awaits the selected merged SHA. |
+| V11-REL-004 | Signed checksums for release artifacts | Public release | tested | SHA-256 inventory plus external OpenSSH signature verification under namespace `swos-release` | valid ephemeral signature, wrong-principal, wrong-namespace and tamper tests | Demonstration: ephemeral test key only; certification: — | SWOS never creates or stores the release private key; a trusted real signer is pending. |
+| V11-REL-005 | Conformance report | Public release | tested | candidate conformance report limits claims to passed deterministic profiles | candidate verification tests | Demonstration: deterministic/offline profile only; certification: — | Live-compatible profiles remain unclaimed without manual evidence. |
+| V11-REL-006 | Known-limitations statement | Public release | tested | candidate-scoped known-limitations artifact | candidate content and checksum tests | Demonstration: deterministic test candidate; certification: — | Final statement must accompany the signed exact-head candidate. |
 
 ## Verified gap backlog
 
@@ -99,8 +99,10 @@ V11-EVAL-002 and V11-REVIEW-001/002 reproved against one exact real-runtime run.
 
 ### Slice 6 — public proof and release
 
-Execute V11-PROOF-001 and produce V11-REL-001 through V11-REL-006 against one
-exact selected SHA. Only this slice may seek independent `v1.1` certification.
+Implemented in Spec Kit feature `006`: V11-PROOF-001 and deterministic tooling
+for V11-REL-001 through V11-REL-006. Exact merged-head evidence, a real owner
+approval and a trusted external signature remain prerequisites for independent
+`v1.1` certification.
 
 ## Reconciliation verdict
 

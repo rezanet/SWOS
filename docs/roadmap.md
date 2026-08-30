@@ -136,7 +136,7 @@ audit pack without hidden state.
 
 ### 4. Evaluation and human approval
 
-**Status:** implementation in Spec Kit feature `005`; exact-head PR evidence required.
+**Status:** completed in Spec Kit feature `005` and merged through PR #48.
 
 **Depends on:** governed stores and audit pack.
 
@@ -152,7 +152,9 @@ approved by the responsible human reviewer.
 
 ### 5. Public proof and release
 
-**Status:** planned; blocked on evaluation and human approval.
+**Status:** implementation in Spec Kit feature `006`; deterministic public proof
+and release-evidence tooling are implemented. A real owner approval and trusted
+external signature remain release-authority gates, not ordinary PR checks.
 
 **Depends on:** evaluation and human approval.
 

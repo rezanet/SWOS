@@ -1,0 +1,24 @@
+{
+  "expected_proof_version": "swos.public-proof-expected.v1",
+  "project_id": "nist-ai-risk-governance-2026-08-30",
+  "proof_fingerprint": "7710a916d055683e03730e6518d5e8913f05e0507e6d3bb2c963367a133dbdf1",
+  "article_sha256": "2baeb0a7b7073ae55d7148b5d90763cc5af578c8145b6fc39e7e7375f5f7a7fd",
+  "source_sha256": {
+    "src-nist-ai-rmf-100-1": "a502eff0d22a6e67a9da54fe62a7ee947a3cb5a9b5a7c7f5042c8be427d0f9f8",
+    "src-nist-ai-rmf-core": "d8bfb6205bd2979bee02cee125afb42a295a61b7ab3bc14f2a71baf683ab6379",
+    "src-nist-ai-rmf-playbook-faq": "0aa95a6fdf7c13193b24d1efecba55ed44048d9d3c5661b7f2382aaf79dc55dc"
+  },
+  "required_planes": [
+    "retrieval",
+    "grounding",
+    "citation",
+    "scholarly",
+    "governance",
+    "regression",
+    "memory_contamination",
+    "adversarial"
+  ],
+  "expected_gate_result": "pass",
+  "expected_reproduction_decision": "pass",
+  "release_qualification": "demonstrated provider-free public proof; not a signed or human-approved release"
+}
