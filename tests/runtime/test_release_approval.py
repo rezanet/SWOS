@@ -41,7 +41,7 @@ APPROVER = {
 
 
 class ReleaseApprovalTests(unittest.TestCase):
-    def _prepare(self, root: Path, release: Path):
+    def _prepare(self, root: Path, release: Path, *, author=AUTHOR):
         outcome = build_deterministic_subject(root)
         self.assertEqual(outcome.status, "APPROVED", outcome.blocking_reasons)
         subject = EvaluationSubject.load(root)
@@ -57,7 +57,7 @@ class ReleaseApprovalTests(unittest.TestCase):
             root,
             evaluation_path,
             release,
-            author=AUTHOR,
+            author=author,
             contract_owner=CONTRACT_OWNER,
             evaluation_owner=EVALUATION_OWNER,
             created_at=TIME,
@@ -100,6 +100,22 @@ class ReleaseApprovalTests(unittest.TestCase):
 
             self.assertEqual(ledger["entries"][0]["human_approver"], APPROVER)
             self.assertEqual(gate["decision"], "allow", gate["reasons"])
+
+    def test_agent_author_requires_a_separate_human_approver(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "run"
+            release = Path(tmp) / "release"
+            agent = {
+                "actor_type": "orchestrator",
+                "actor_id": "swos-public-proof",
+                "display_name": "SWOS public proof",
+            }
+            pack = self._prepare(root, release, author=agent)
+
+            with self.assertRaises(ReleaseApprovalError):
+                record_release_decision(release, self._decision(pack, approver=agent))
+            record_release_decision(release, self._decision(pack))
+            self.assertEqual(verify_release(root, release)["decision"], "allow")
 
     def test_automation_self_approval_and_bad_bindings_fail(self):
         with tempfile.TemporaryDirectory() as tmp:

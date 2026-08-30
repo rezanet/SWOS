@@ -1,0 +1,88 @@
+{
+  "project_version": "swos.public-proof-project.v1",
+  "project_id": "nist-ai-risk-governance-2026-08-30",
+  "topic": "Why do accountable AI risk-management programmes require documented governance, measurement, independent review, and contextual adaptation?",
+  "requested_length": 1100,
+  "accessed_at": "2026-08-30",
+  "source_snapshots": [
+    {
+      "source_id": "src-nist-ai-rmf-100-1",
+      "title": "Artificial Intelligence Risk Management Framework (AI RMF 1.0)",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10",
+      "document_version": "NIST AI 100-1 (2023-01-26)",
+      "rights": "Official United States Government publication; bounded public snapshot",
+      "text": "The Framework is intended to be voluntary, rights-preserving, non-sector specific, and use-case agnostic. The AI RMF is intended to be practical, to adapt to the AI landscape as AI technologies continue to develop.",
+      "sha256": "a502eff0d22a6e67a9da54fe62a7ee947a3cb5a9b5a7c7f5042c8be427d0f9f8"
+    },
+    {
+      "source_id": "src-nist-ai-rmf-core",
+      "title": "AI RMF Core",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "document_version": "AI RMF 1.0 Core; accessed 2026-08-30",
+      "rights": "Official United States Government web guidance; bounded public snapshot",
+      "text": "The measure function employs quantitative, qualitative, or mixed-method tools, techniques, and methodologies to analyze, assess, benchmark, and monitor AI risk and related impacts. Processes for independent review can improve the effectiveness of testing and can mitigate internal biases and potential conflicts of interest.",
+      "sha256": "d8bfb6205bd2979bee02cee125afb42a295a61b7ab3bc14f2a71baf683ab6379"
+    },
+    {
+      "source_id": "src-nist-ai-rmf-playbook-faq",
+      "title": "NIST AI RMF Playbook FAQs",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework/nist-ai-rmf-playbook-faqs",
+      "document_version": "Playbook FAQ; accessed 2026-08-30",
+      "rights": "Official United States Government web guidance; bounded public snapshot",
+      "text": "The Playbook is not a one-size-fits-all resource – and it is neither a checklist nor an ordered list of steps for AI actors to implement. Playbook users are not expected to review or implement all of the suggestions or to go through it as an ordered series of steps.",
+      "sha256": "0aa95a6fdf7c13193b24d1efecba55ed44048d9d3c5661b7f2382aaf79dc55dc"
+    }
+  ],
+  "claims": [
+    {
+      "source_id": "src-nist-ai-rmf-100-1",
+      "claim": "The AI RMF is voluntary and use-case agnostic.",
+      "exact_quote": "The Framework is intended to be voluntary, rights-preserving, non-sector specific, and use-case agnostic.",
+      "stance": "support",
+      "rationale": "Directly states the framework's voluntary and adaptable scope."
+    },
+    {
+      "source_id": "src-nist-ai-rmf-100-1",
+      "claim": "AI risk management must adapt as the technology changes.",
+      "exact_quote": "The AI RMF is intended to be practical, to adapt to the AI landscape as AI technologies continue to develop.",
+      "stance": "limitation",
+      "rationale": "A static compliance snapshot is insufficient for a changing landscape."
+    },
+    {
+      "source_id": "src-nist-ai-rmf-core",
+      "claim": "Risk measurement can combine quantitative and qualitative methods.",
+      "exact_quote": "The measure function employs quantitative, qualitative, or mixed-method tools, techniques, and methodologies to analyze, assess, benchmark, and monitor AI risk and related impacts.",
+      "stance": "support",
+      "rationale": "Directly describes plural measurement methods and purposes."
+    },
+    {
+      "source_id": "src-nist-ai-rmf-core",
+      "claim": "Independent review can reduce bias and conflicts of interest.",
+      "exact_quote": "Processes for independent review can improve the effectiveness of testing and can mitigate internal biases and potential conflicts of interest.",
+      "stance": "support",
+      "rationale": "Directly connects review independence to assurance quality."
+    },
+    {
+      "source_id": "src-nist-ai-rmf-playbook-faq",
+      "claim": "The Playbook is not a universal checklist.",
+      "exact_quote": "The Playbook is not a one-size-fits-all resource – and it is neither a checklist nor an ordered list of steps for AI actors to implement.",
+      "stance": "limitation",
+      "rationale": "Prevents treating contextual guidance as a universal sequence."
+    },
+    {
+      "source_id": "src-nist-ai-rmf-playbook-faq",
+      "claim": "Users are not expected to implement every Playbook suggestion.",
+      "exact_quote": "Playbook users are not expected to review or implement all of the suggestions or to go through it as an ordered series of steps.",
+      "stance": "counter",
+      "rationale": "Counters breadth-first or checklist-completion interpretations."
+    }
+  ],
+  "known_limitations": [
+    "The NIST snapshots are bounded excerpts and require manual refresh evidence for freshness claims.",
+    "The deterministic provider demonstrates governance controls, not empirical language-model quality.",
+    "NIST is revising AI RMF 1.0, so this project identifies its source version and access date explicitly."
+  ]
+}

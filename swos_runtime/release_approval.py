@@ -119,7 +119,7 @@ def prepare_approval_pack(
         raise ReleaseApprovalError("evaluation result must be an object")
     _evaluation_bindings(subject, evaluation)
 
-    author_id = _actor_id(author, "author", human=True)
+    author_id = _actor_id(author, "author")
     contract_owner_id = _actor_id(contract_owner, "contract owner")
     evaluation_owner_id = _actor_id(evaluation_owner, "evaluation owner")
     if contract_owner_id == evaluation_owner_id:
@@ -230,7 +230,7 @@ def verify_approval_pack(run_dir: str | Path, release_dir: str | Path) -> list[s
         errors.append("approval-pack exact evidence bindings do not verify")
     roles = pack.get("roles", {})
     try:
-        _actor_id(roles.get("author"), "author", human=True)
+        _actor_id(roles.get("author"), "author")
         contract_id = _actor_id(roles.get("contract_owner"), "contract owner")
         evaluation_id = _actor_id(roles.get("evaluation_owner"), "evaluation owner")
         if contract_id == evaluation_id:
@@ -275,7 +275,7 @@ def record_release_decision(release_dir: str | Path, decision: dict[str, Any]) -
         raise ReleaseApprovalError("decision must be approve or reject")
     approver = decision.get("approver")
     approver_id = _actor_id(approver, "approver", human=True)
-    author_id = _actor_id(pack.get("roles", {}).get("author"), "author", human=True)
+    author_id = _actor_id(pack.get("roles", {}).get("author"), "author")
     if approver_id == author_id:
         raise ReleaseApprovalError("author and release approver must differ")
     if not str(decision.get("rationale") or "").strip():
@@ -373,7 +373,7 @@ def verify_release(run_dir: str | Path, release_dir: str | Path) -> dict[str, An
     approver = entry.get("human_approver")
     try:
         approver_id = _actor_id(approver, "approver", human=True)
-        author_id = _actor_id(pack.get("roles", {}).get("author"), "author", human=True)
+        author_id = _actor_id(pack.get("roles", {}).get("author"), "author")
         if approver_id == author_id:
             reasons.append("author and release approver are not separated")
     except ReleaseApprovalError as exc:
