@@ -15,6 +15,7 @@ from swos_runtime.governance import (
     verify_manifest,
 )
 from swos_runtime.schema_validation import validate_frozen_run_schemas
+from swos_runtime.stores import RUN_STORE_ARTIFACTS, verify_run_stores
 
 CANONICAL_TOPIC = "Can an AI-operated machine be a witness in court?"
 CANONICAL_REQUEST = {
@@ -47,6 +48,7 @@ REQUIRED_FILES = {
     "integrity-chain.jsonl",
     "run-manifest.json",
     "run-manifest.sha256",
+    *{f"governed-stores/{store_name}.jsonl" for store_name in RUN_STORE_ARTIFACTS},
 }
 REQUIRED_STAGE_ACTIVITIES = {
     "research_planning",
@@ -125,6 +127,10 @@ def validate_run(root: Path, *, canonical: bool = False) -> list[str]:
 
     if not verify_manifest(root, manifest):
         failures.append("run manifest hashes do not verify")
+    failures.extend(
+        f"governed store: {error}"
+        for error in verify_run_stores(root, expected_heads=control.get("governed_store_heads"))
+    )
     if control.get("status") != "APPROVED" or manifest.get("status") != "APPROVED":
         failures.append(f"run is not APPROVED: {control.get('status')}")
     if control.get("blocking_reasons"):

@@ -9,7 +9,9 @@ from swos_runtime.capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRA
 from swos_runtime.finalizer import finalize_work_order_run
 from swos_runtime.governance import verify_manifest
 from swos_runtime.schema_validation import validate_frozen_run_schemas
+from swos_runtime.stores import RUN_STORE_ARTIFACTS, verify_run_stores
 from swos_runtime.work_orders import WorkOrderError, WorkOrderRun
+from tools.validate_autonomous_run import validate_run
 
 
 class HostNativeFinalizerTests(unittest.TestCase):
@@ -271,6 +273,7 @@ class HostNativeFinalizerTests(unittest.TestCase):
             self.assertEqual(control["execution"]["adapter"], "future-subscription")
             self.assertFalse(control["execution"]["api_key_used"])
             self.assertEqual(control["execution"]["paid_api_calls"], 0)
+            self.assertEqual(set(control["governed_store_heads"]), set(RUN_STORE_ARTIFACTS))
             self.assertEqual(
                 control["authority_boundary"], "Models propose or judge. SWOS decides."
             )
@@ -315,6 +318,17 @@ class HostNativeFinalizerTests(unittest.TestCase):
 
             manifest = json.loads((output / "run-manifest.json").read_text(encoding="utf-8"))
             self.assertTrue(verify_manifest(output, manifest))
+            self.assertEqual(verify_run_stores(output), [])
+
+            epg_store = output / "governed-stores" / "epg.jsonl"
+            records = epg_store.read_text(encoding="utf-8").splitlines()
+            record = json.loads(records[0])
+            record["payload"]["schema_version"] = "tampered"
+            records[0] = json.dumps(record, sort_keys=True)
+            epg_store.write_text("\n".join(records) + "\n", encoding="utf-8")
+            self.assertTrue(
+                any(failure.startswith("governed store: epg:") for failure in validate_run(output))
+            )
 
     def test_missing_counter_evidence_fails_closed(self):
         with tempfile.TemporaryDirectory() as tmp:

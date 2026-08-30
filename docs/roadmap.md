@@ -105,7 +105,7 @@ become implementation tasks.
 
 ### 2. Retrieval and citation assurance
 
-**Status:** implementation in Spec Kit feature `003`; exact-head PR evidence required.
+**Status:** complete in Spec Kit feature `003`; exact-head PR evidence merged.
 
 **Depends on:** runtime reconciliation.
 
@@ -121,7 +121,7 @@ recorded inputs, model/retriever identity and exact evidence.
 
 ### 3. Governed stores and audit pack
 
-**Status:** planned; begins only after feature `003` merges.
+**Status:** implementation in Spec Kit feature `004`; exact-head PR evidence required.
 
 **Depends on:** retrieval and citation assurance.
 
