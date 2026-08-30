@@ -50,6 +50,14 @@ class PublicProofTests(unittest.TestCase):
             self.assertEqual(
                 result["normalized_proof"]["article_sha256"], expected["article_sha256"]
             )
+            relationships = [
+                citation
+                for row in result["normalized_proof"]["evidence"]
+                for citation in row["citations"]
+            ]
+            self.assertTrue(all(item["source_url"] for item in relationships))
+            self.assertTrue(all(item["quoted_text"] for item in relationships))
+            self.assertTrue(all(item["support_level"] for item in relationships))
 
     def test_independent_reproduction_matches_semantics_not_run_identity(self):
         with tempfile.TemporaryDirectory() as tmp:
