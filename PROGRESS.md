@@ -6,16 +6,23 @@ quality measurements, not claims about completion of the larger SWOS roadmap.
 ## Current exact-head reconciliation
 
 **Last reconciled:** 2026-08-31
-**Reference main SHA:** `df87cf2a6a21bfd9e3e10be541624ad95908b40b`
+**Accepted offline source-release SHA:** `b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`
 
 The v1.1 reference-runtime implementation path is merged through PRs #41,
-#45, #46, #47, #48, #49, #50, #51 and #52. PR #52 replaced mandatory signing
-with the exact-SHA release record and closed the release-gate integrity finding.
+#45, #46, #47, #48, #49, #50, #51 and #52. PR #53 reconciled this ledger and
+PR #54 recorded the accepted release. PR #52 replaced mandatory signing with
+the exact-SHA release record and closed the release-gate integrity finding.
 The final offline source-release evidence is accepted for target SHA
-`ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`: public proof is `APPROVED`,
+`b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`: public proof is `APPROVED`,
 independent reproduction is `pass`, candidate verification is `allow`, and the
 record is approved by `rezanet` / Reza Negarestani. This acceptance does not
 claim live compatibility, package distribution or signing.
+
+The post-merge SWOS CI run for `b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`
+failed only its DCO job because GitHub's squash-generated merge commit lacked a
+standalone `Signed-off-by` trailer; semantic, schema, governance and evaluation
+jobs passed. This is retained as a historical merge-metadata deviation; main
+history is not rewritten.
 
 ## Verified M1 history
 
@@ -126,7 +133,7 @@ evidence and are not substitutes for deterministic merge gates.
 **Historical programme branch:** `programme/swos-100-completion-baseline`
 **Current programme branch:** `main`
 **Last reconciled:** 2026-08-31
-**Current reconciled main SHA:** `df87cf2a6a21bfd9e3e10be541624ad95908b40b`
+**Current reconciled source-release SHA:** `b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`
 
 > This file tracks progress against SWOS as defined by its contracts, issues, source and authoritative roadmap. Percentages are planning estimates, not quality scores or release claims.
 
@@ -151,7 +158,7 @@ evidence and are not substitutes for deterministic merge gates.
 
 - `VERSION`: **1.0.0** — Specification Lock.
 - Contracts/schemas/governance/evaluation/portability foundation: released.
-- v1.1 Reference Implementation: PRs #41 and #45-#52 merge the reference-runtime capability path. It is implemented and deterministically tested; the offline source-release evidence is accepted for target SHA `ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`.
+- v1.1 Reference Implementation: PRs #41 and #45-#52 merge the reference-runtime capability path. It is implemented and deterministically tested; the offline source-release evidence is accepted for target SHA `b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`.
 - v2 Research Grade: future roadmap.
 - v3 Product Grade: future roadmap.
 
@@ -178,7 +185,7 @@ earlier one:
 
 PR #41 and the dependent PRs #45-#52 are implemented and tested at their
 merged heads. The v1.1 reference-runtime offline source-release evidence is
-certified for target SHA `ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`.
+certified for target SHA `b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`.
 
 ## Completed Delivery Gates Since Baseline
 
@@ -299,7 +306,7 @@ deterministic checks:
 - [x] Eight-plane harness bound to a real system under test
 
 The v1.1 offline source-release certification is complete for target SHA
-`ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`. The broader roadmap remains open:
+`b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`. The broader roadmap remains open:
 live compatibility, package distribution, future signing and v2 Research Grade
 work are separate claims and gates.
 
@@ -327,7 +334,7 @@ work are separate claims and gates.
 - [ ] Cost controls
 - [ ] Service management
 
-## Quality Baseline — Reconciled 2026-08-23
+## Quality Baseline — Reconciled 2026-08-31
 
 | Gate / metric | Current state |
 |---|---|
@@ -354,7 +361,7 @@ work are separate claims and gates.
 Milestone 0 and the Engineering Substrate/CI baseline are complete. SWOS Prose
 has reached the governed G-Prose95 full-engine development surface, and the
 v1.1 reference-runtime offline source-release gate is accepted for target SHA
-`ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`.
+`b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`.
 
 **Next major implementation goal:** define and implement the v2.0 Research
 Grade track under a new Spec Kit feature. Do not infer live compatibility,
