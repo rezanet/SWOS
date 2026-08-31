@@ -137,7 +137,7 @@ evidence and are not substitutes for deterministic merge gates.
 | 3 | Host/User Interaction Layer | NOT STARTED | Complete specified host adapters/operator UX only when the reference runtime exists; no fictional browser frontend unless requirements introduce one |
 | 4 | Feature Completion and Semantic Hardening | **IN PROGRESS** | SWOS Prose M1 and G-Prose95 landed; remaining open semantic issues include #4, #5, #6, #7, #12, #13, #14, #16 and verifier-stability issue #32 |
 | 5 | Security Hardening | **IN PROGRESS** | Engineering substrate now includes SCA/SAST/CodeQL and repository protections; runtime egress, store integrity, memory poisoning, malformed-tool and production-surface controls remain future work |
-| 6 | Performance, Cost and Scalability | **IN PROGRESS** | G-Prose95 records provider calls, tokens, latency and fail-closed cost availability; retrieval/reranking, state-store, provenance-growth, throughput and concurrency performance remain unimplemented |
+| 6 | Performance, Cost and Scalability | **IN PROGRESS** | G-Prose95 records provider calls, tokens, latency and fail-closed cost availability; retrieval/reranking and state-store performance baselines, provenance-growth, throughput and concurrency measurements remain future work |
 | 7 | Testing and Quality Gates | **IN PROGRESS** | SWOS Prose executable coverage is above the 80% floor with higher critical-module floors; eight evaluation planes, benchmark contracts, SCA/SAST and deterministic Prose tests are enforced. Whole-system/SUT, mutation and broader runtime coverage remain future work |
 | 8 | Documentation, Distribution and Deployment | **IN PROGRESS** | Portable SWOS Prose skill, CLI, package metadata, development docs and governed benchmark documentation exist; reference-runtime operator/deployment docs remain part of the v1.1 programme |
 | 9 | Final Integration and Release | **RELEASE EVIDENCE PENDING** | v1.1 implementation is merged; final main-head proof, release record, release notes and any verified tag remain future gates |
@@ -148,7 +148,7 @@ evidence and are not substitutes for deterministic merge gates.
 
 - `VERSION`: **1.0.0** — Specification Lock.
 - Contracts/schemas/governance/evaluation/portability foundation: released.
-- v1.1 Reference Implementation: PR #41 provides the reference-runtime foundation; the complete v1.1 programme is not yet implemented, demonstrated or certified.
+- v1.1 Reference Implementation: PRs #41 and #45-#52 merge the reference-runtime capability path. It is implemented and deterministically tested; final public-proof demonstration, exact-head release-record evidence and certification remain open.
 - v2 Research Grade: future roadmap.
 - v3 Product Grade: future roadmap.
 
