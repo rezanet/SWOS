@@ -375,7 +375,8 @@ associations are rejected.
 - **FR-027**: Media ingest MUST distinguish physical object, capture, rendition,
   derivative and region, preserving identifiers, rights, attribution, provider,
   byte digest, dimensions, format, colour/capture metadata, transformations,
-  access method, direct-inspection status and known mediation limits.
+  access method, references to separately provenance-bound object-inspection
+  activities, accessibility state and known mediation limits.
 - **FR-028**: The image/object-analysis contract MUST separate machine observations
   from interpretations and require every observation to name a reproducible
   target region, confidence, modality, model/tool version and provenance.
@@ -383,11 +384,13 @@ associations are rejected.
   relevant ontology concepts, uncertainty and any required historical,
   technical, provenance or textual evidence; an image match alone MUST NOT prove
   identity, attribution, date, intention, influence or originality.
-- **FR-030**: Rights to view, analyse, quote, cache, export and redistribute MUST be
-  evaluated separately, and unavailable rights MUST restrict storage/output
-  without being silently bypassed.
+- **FR-030**: Rights to view, analyse, transform, create a derivative, quote,
+  cache, export and redistribute MUST be evaluated separately; analysis MUST NOT
+  imply transformation/derivative permission, and unavailable rights MUST
+  restrict processing/storage/output without being silently bypassed.
 - **FR-031**: SWOS MUST recognise supported interoperable image/manifests and
-  embedded authenticity metadata when present, preserve their status and digest,
+  embedded authenticity and accessibility metadata when present, preserve their
+  status and digest,
   and treat absence or validity as evidence about media provenance only, not as
   proof of the depicted object's identity or an interpretation's truth.
 - **FR-032**: Multimodal failure, insufficient resolution, missing views,
@@ -395,8 +398,9 @@ associations are rejected.
   limited text-only path, never a synthetic visual PASS.
 - **FR-033**: Art-history and art-criticism packs MAY be promoted to agents only
   after their unique image/object tool contract, role separation, adversarial
-  gates, rollback path and exact-head promotion certificate all pass; otherwise
-  they MUST remain packs.
+  gates, agent contract/tool permissions, role-separated runtime routing,
+  executable pack-only rollback path and exact-head promotion certificate all
+  pass; otherwise they MUST remain packs.
 
 #### Delivery, compatibility and governance
 
@@ -462,10 +466,12 @@ associations are rejected.
 - **SC-002**: All nine discipline ontologies pass structural/semantic constraints;
   100% of normative pack statements and runtime terms have bidirectional mappings,
   and recompilation produces byte-identical runtime profiles.
-- **SC-003**: The adjudicated citation corpus contains at least 2,000 claim-span
-  pairs, at least 250 examples per support label and at least 100 examples per
-  discipline, with two independent annotations per item, adjudication, and no
-  source/document overlap between train, calibration and test splits.
+- **SC-003**: The adjudicated citation corpus contains at least 6,000 claim-span
+  pairs, at least 600 examples per support label and at least 300 examples per
+  discipline. Its locked test contains at least 1,500 pairs, 150 per label, 75 per
+  discipline and 300 adversarial non-direct cases. Every item has two independent
+  annotations plus adjudication, and no canonical work, source/document family or
+  claim family overlaps train, calibration, locked test, temporal or OOD splits.
 - **SC-004**: On the frozen held-out citation test set, direct-support precision is
   at least 0.95, contradiction recall at least 0.95, macro-F1 at least 0.85,
   expected calibration error at most 0.05, and selective error at most 0.02 while
@@ -483,8 +489,9 @@ associations are rejected.
   finalised SWOS run round-trip through every certified serialisation with equal
   semantic normal-form digests in two independent processors; 100% of invalid and
   lossy fixtures are rejected and no certificate survives input mutation.
-- **SC-008**: The multimodal evaluation corpus contains at least 60 rights-cleared
-  objects/renditions across at least six media/material classes, three mediation
+- **SC-008**: The multimodal evaluation corpus contains at least 60 distinct
+  rights-cleared objects/works and at least 96 rights-cleared renditions across at
+  least six media/material classes, three mediation
   conditions and both art disciplines; visual-anchor precision is at least 0.95,
   seeded invented-detail and reproduction-artefact cases have zero unsafe PASSes,
   and over-association/false-originality detection is at least 0.95.

@@ -17,7 +17,7 @@ then-current head; it is not a merge claim.
 - [ ] T002 [P] Add negative tests proving v1 `$id` semantics cannot be silently changed in `tests/runtime/test_research_grade_compatibility.py`
 - [ ] T003 [P] Add v2 schema identifier and version-dispatch contract tests in `tests/runtime/test_research_grade_schemas.py`
 - [ ] T004 Add explicit v1/v2 version routing with unknown-version denial in `swos_runtime/models.py`
-- [ ] T005 Create parallel Research Grade schema envelopes in `schemas/research-grade/` and make `tools/validate_schemas.py` discover them
+- [ ] T005 Create parallel Research Grade schema envelopes and implement their executable example validator in `tools/validate_contract_examples.py`; make `tools/validate_schemas.py` discover the v2 schema directory
 - [ ] T006 [P] Add `capabilities-v2.json` without editing v1 capability semantics in `contracts/capability-contract/capabilities-v2.json`
 - [ ] T007 [P] Add `stage-instructions-v2.json` without editing v1 stage semantics in `contracts/stage-instruction/stage-instructions-v2.json`
 - [ ] T008 Add byte/behavior compatibility and example validation to `.github/workflows/research-grade-ci.yml`
@@ -33,7 +33,7 @@ then-current head; it is not a merge claim.
 - [ ] T011 [P] Write audit-pack missing/extra/tampered/head-mismatch tests in `tests/runtime/test_research_grade_audit_pack.py`
 - [ ] T012 [P] Write tests proving fixture evaluators invoke injected production interfaces in `tests/runtime/test_research_grade_evaluation.py`
 - [ ] T013 Implement shared canonicalization, typed status/error codes, and resource-limit models in `swos_runtime/models.py`
-- [ ] T014 [P] Add RPM exchange, source diversity, media rights, and promotion policies in `governance/policies/rpm-exchange.policy.json`, `governance/policies/source-diversity.policy.json`, `governance/policies/media-rights.policy.json`, and `governance/policies/research-grade-promotion.policy.json`
+- [ ] T014 [P] Add authoritative v2 RPM operation, RPM exchange, source diversity, media rights, and promotion policies in `governance/policies/research-programme-memory-v2.policy.json`, `governance/policies/rpm-exchange.policy.json`, `governance/policies/source-diversity.policy.json`, `governance/policies/media-rights.policy.json`, and `governance/policies/research-grade-promotion.policy.json`; document the frozen v1 memory-policy relationship
 - [ ] T015 Add exact artifact identities to the evaluation subject in `swos_runtime/evaluation.py`
 - [ ] T016 Add Research Grade audit-pack schema and example in `schemas/research-grade/research-grade-audit-pack.schema.json` and `examples/research-grade/audit-pack.json`
 - [ ] T017 Implement audit-pack assembly and strict verification in `tools/assemble_research_grade_audit_pack.py`
@@ -53,10 +53,10 @@ and prove a different scope cannot observe or influence them.
 
 ### US1 tests first
 
-- [ ] T021 [P] [US1] Add schema/contract tests for scope, project binding, RPM v2, lifecycle, exchange, inspection, and read receipt in `tests/runtime/test_research_memory_contracts.py`
+- [ ] T021 [P] [US1] Add schema/contract tests for scope, project binding, authoritative policy version/digest, RPM v2, lifecycle, exchange, inspection, and read receipt in `tests/runtime/test_research_memory_contracts.py`
 - [ ] T022 [P] [US1] Add repository migration, transaction, chain, projection, corruption, and rebuild tests in `tests/runtime/test_programme_store.py`
 - [ ] T023 [P] [US1] Add missing/unregistered/cross-namespace/cross-programme/project-visibility isolation tests in `tests/runtime/test_research_memory_isolation.py`
-- [ ] T024 [P] [US1] Add EPG/SDL resolution, candidate-hash approval, stale-policy, expired-assessment, restricted-data, and TOCTOU tests in `tests/runtime/test_research_memory_writes.py`
+- [ ] T024 [P] [US1] Add EPG/SDL resolution, operation-hash approval, stale-policy, expired-assessment, restricted-data, and commit-time TOCTOU tests for every binding/write/correct/supersede/contradiction/expiry/delete/exception transition in `tests/runtime/test_research_memory_writes.py`
 - [ ] T025 [P] [US1] Add correction, supersession, contradiction, confirmation, exact-expiry, project retirement/unbinding, exceptional-read, and deletion tests in `tests/runtime/test_research_memory_lifecycle.py`
 - [ ] T026 [P] [US1] Add idempotence, collision, mapping, checksum, redaction, zip-slip, link, duplicate-path, and decompression-limit tests in `tests/runtime/test_rpm_exchange.py`
 - [ ] T027 [P] [US1] Add 8-process/2,000-write, lock-timeout, crash-injection, and all-or-nothing tests in `tests/runtime/test_programme_store_concurrency.py`
@@ -64,17 +64,17 @@ and prove a different scope cannot observe or influence them.
 ### US1 implementation
 
 - [ ] T028 [P] [US1] Define `ResearchScope`, bindings, candidates, assessments, events, projections, reads, and approvals in `swos_runtime/research_memory.py`
-- [ ] T029 [P] [US1] Add project-scope, RPM, lifecycle, exchange, and receipt schemas in `schemas/research-grade/project-scope.schema.json`, `schemas/research-grade/rpm-2.0.schema.json`, and `schemas/research-grade/rpm-exchange.schema.json`
+- [ ] T029 [P] [US1] Add project-scope, RPM operation/policy, lifecycle, exchange, and receipt schemas in `schemas/research-grade/project-scope.schema.json`, `schemas/research-grade/rpm-policy.schema.json`, `schemas/research-grade/rpm-2.0.schema.json`, and `schemas/research-grade/rpm-exchange.schema.json`
 - [ ] T030 [US1] Implement SQLite initialization, migrations, preflight, per-programme chain, transactions, integrity checks, and projection rebuild in `swos_runtime/programme_store.py`
 - [ ] T031 [US1] Implement explicit project registration and visibility enforcement in `swos_runtime/research_memory.py`
-- [ ] T032 [US1] Implement propose/assess/approve/commit with exact EPG, SDL, policy, classification, rights, contradiction, and expiry binding in `swos_runtime/research_memory.py`
+- [ ] T032 [US1] Implement one propose/assess/approve/commit service for project binding, write, correction, supersession, contradiction, expiry, deletion, and exceptional-read operations with exact EPG, SDL, policy, target-head, `as_of`, classification, rights, and expiry revalidation in `swos_runtime/research_memory.py`
 - [ ] T033 [US1] Implement classification/expiry-aware governed queries and EPG read receipts in `swos_runtime/research_memory.py`
-- [ ] T034 [US1] Implement immutable confirmation, correction, supersession, contradiction, expiry, project retirement/unbinding, and logical-deletion transitions in `swos_runtime/research_memory.py`
+- [ ] T034 [US1] Implement immutable confirmation, correction, supersession, contradiction, expiry, project retirement/unbinding, and logical-deletion transitions exclusively through the assessed operation service in `swos_runtime/research_memory.py`
 - [ ] T035 [US1] Implement bounded export, inspect-import, atomic commit, redaction, origin preservation, and deterministic diff in `swos_runtime/rpm_exchange.py`
 - [ ] T036 [US1] Add v1 `GovernedJsonStore` compatibility import/export adapters without changing v1 behavior in `swos_runtime/stores.py`
 - [ ] T037 [US1] Replace the hard-coded empty RPM snapshot with scoped service integration in `swos_runtime/finalizer.py`
 - [ ] T038 [US1] Bind work-order RPM reads/writes/exchange to exact run and EPG evidence in `swos_runtime/work_orders.py`
-- [ ] T039 [US1] Implement dry-run-first init/register/verify/expire/export/inspect/commit/rebuild commands in `tools/rpm.py`
+- [ ] T039 [US1] Implement dry-run-first init/register/assess-operation/commit-operation/verify/expire/export/inspect-import/commit-import/rebuild commands with explicit `--approval` inputs wherever required in `tools/rpm.py`
 - [ ] T040 [US1] Add deterministic three-project snapshot/delta/duplicate/fork/collision/contradiction/expiry/correction/retirement/replay fixtures in `evals/fixtures/research-memory/`
 - [ ] T041 [US1] Add 100k-item benchmark generator/runner and recorded runner schema in `benchmark/rpm/manifest.json` and `tools/run_rpm_benchmark.py`
 - [ ] T042 [US1] Document logical namespace, SQLite filesystem, logical deletion, backup, and recovery limitations in `docs/architecture/research-grade-memory.md`
@@ -91,7 +91,7 @@ for every pack with disagreement preserved.
 
 ### US2 tests first
 
-- [ ] T043 [P] [US2] Add SHACL, graph-isomorphism, stable-IRI, duplicate, dangling, cycle, weight, and enum/pack coverage tests in `tests/runtime/test_discipline_ontology.py`
+- [ ] T043 [P] [US2] Add SHACL, graph-isomorphism, stable-IRI, duplicate, dangling, cycle, weight, enum/pack coverage, v1 warning-window, v2 rejection, reversible migration, and rollback tests in `tests/runtime/test_discipline_ontology.py`
 - [ ] T044 [P] [US2] Add deterministic compile, digest, unknown-version, deprecation, and no-fallback tests in `tests/runtime/test_discipline_ontology_compiler.py`
 - [ ] T045 [P] [US2] Add structured criterion, mandatory failure, disagreement, evidence-link, and aggregation tests in `tests/runtime/test_discipline_critique.py`
 - [ ] T046 [P] [US2] Add positive, negative, boundary, and cross-discipline fixture contract tests for every pack in `tests/runtime/test_discipline_critique_fixtures.py`
@@ -99,7 +99,7 @@ for every pack with disagreement preserved.
 ### US2 implementation
 
 - [ ] T047 [P] [US2] Author core SKOS/OWL vocabulary, SHACL shapes, and JSON-LD context in `discipline-packs/ontology/swos-discipline-ontology.ttl`, `discipline-packs/ontology/swos-discipline-shapes.ttl`, and `discipline-packs/ontology/context.jsonld`
-- [ ] T048 [US2] Map the nine supported disciplines exactly once and retain `enterprise_reporting` only in frozen v1 while making v2 reject it without fallback in `discipline-packs/manifest-v2.json` and `schemas/research-grade/discipline-critique.schema.json`
+- [ ] T048 [US2] Author the narrowed-enum ADR, reversible migration, and one-minor-release deprecation-warning period in `adr/ADR-0012-research-grade-discipline-profile.md` and `tools/migrations/migrate_discipline_profile_v2.py`; map nine supported disciplines exactly once while frozen v1 retains `enterprise_reporting` and v2 rejects it without fallback in `discipline-packs/manifest-v2.json`
 - [ ] T049 [P] [US2] Author versioned method/evidence/proof/criterion/failure/source-role/diversity mappings in each `discipline-packs/<pack>/ontology.ttl`
 - [ ] T050 [US2] Implement offline registry loading, version/deprecation checks, and compiled profile lookup in `swos_runtime/discipline_ontology.py`
 - [ ] T051 [US2] Implement validated Turtle-to-JSON-LD-to-byte-stable-JSON compilation with source/shape/tool digests in `tools/compile_discipline_ontologies.py`
@@ -132,12 +132,12 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 ### US3 citation implementation
 
 - [ ] T064 [P] [US3] Add citation pair/decision and model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
-- [ ] T065 [US3] Implement verified model loading, deterministic batching, six-class decisions, OOD detection, and fail-closed abstention in `swos_runtime/citation_classifier.py`
+- [ ] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
 - [ ] T066 [US3] Implement temperature scaling, selective thresholds, metric confidence intervals, and immutable binding in `swos_runtime/citation_calibration.py`
 - [ ] T067 [US3] Preserve deterministic prechecks and integrate trained decisions behind `CapabilityBroker.citation_support_audit` in `swos_runtime/broker.py`
 - [ ] T068 [US3] Restrict final verification to core eligibility and store immutable classifier evidence/overrides in `swos_runtime/finalizer.py`
 - [ ] T069 [P] [US3] Write annotation guidelines, dataset card, source/licence manifest, split policy, and adjudication protocol in `benchmark/citation-support/`
-- [ ] T070 [US3] Implement bounded manifest-driven dataset build and leakage verification in `tools/build_citation_dataset.py`
+- [ ] T070 [US3] Implement and execute the bounded corpus workflow to acquire permitted pairs, double-annotate, adjudicate, approve, leakage-check, checksum, and freeze actual train/calibration/locked/OOD splits and `DATA-LICENCE.md` in `benchmark/citation-support/manifest.json` using `tools/build_citation_dataset.py`
 - [ ] T071 [US3] Implement immutable training and model-card/artifact-manifest generation in `tools/train_citation_classifier.py`
 - [ ] T072 [US3] Implement calibration-only fitting and artifact generation in `tools/calibrate_citation_classifier.py`
 - [ ] T073 [US3] Implement locked evaluation, raw predictions, slice metrics, confidence intervals, and gate report in `tools/evaluate_citation_classifier.py`
@@ -147,10 +147,10 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 
 - [ ] T075 [P] [US3] Add research-plan v2 diversity requirements and report schemas in `schemas/research-grade/research-plan-2.0.schema.json` and `schemas/research-grade/source-diversity-report.schema.json`
 - [ ] T076 [US3] Implement canonical source-family identity and venue/owner/region/language/period/method/source-type/access-mode/stance metadata evidence states in `swos_runtime/source_diversity.py`
-- [ ] T077 [US3] Implement per-dimension source-count/exposure metrics, worst-case gates, legacy composite threshold 0.50, family-count statuses, counter-position checks, and exceptions in `swos_runtime/source_diversity.py`
+- [ ] T077 [US3] Implement per-dimension source-count/exposure metrics, worst-case gates, separately versioned v2 geometric composite threshold 0.50, non-gating frozen v1 provider scalar, family-count statuses, counter-position checks, and exceptions in `swos_runtime/source_diversity.py`
 - [ ] T078 [US3] Replace provider-count diversity and propagate expansion/review/limitations through `swos_runtime/orchestrator.py` and `swos_runtime/finalizer.py`
-- [ ] T079 [P] [US3] Create balanced/concentrated/sparse/narrow/multilingual/historical/method-monoculture/duplicate/fake-diversity packets in `evals/fixtures/source-diversity/`
-- [ ] T080 [US3] Implement production-path diversity benchmark, reviewer labels, recall/false-block metrics, and report in `tools/run_source_diversity_benchmark.py`
+- [ ] T079 [P] [US3] Create separate tuning packets plus at least ten locked human-reviewed balanced/concentrated/sparse/narrow/multilingual/historical/method-monoculture/duplicate/fake-diversity packets per discipline in `evals/fixtures/source-diversity/`
+- [ ] T080 [US3] Implement production-path diversity benchmark and confidence-bound report proving 100% seeded fake/missing-strata detection, material-gap recall >=0.90, adequate/narrow false-block <=0.10, and ordering/provider invariance in `tools/run_source_diversity_benchmark.py`
 - [ ] T081 [US3] Replace citation/diversity fixture heuristics with production result scoring in `swos_runtime/evaluation.py` and update `evals/metrics.md`
 - [ ] T082 [US3] Publish model/dataset/diversity limitations and prohibited uses in `models/citation-support/<version>/model-card.md` and `docs/architecture/research-grade-citation.md`
 
@@ -200,26 +200,28 @@ without exact matching evidence.
 
 ### US5 tests first
 
-- [ ] T099 [P] [US5] Add object/media/rights/lineage/content-credential/accessibility schema and validation tests in `tests/runtime/test_media.py`
+- [ ] T099 [P] [US5] Add object/media/inspection, separate analyse/transform/create-derivative rights, conservative inheritance, lineage/content-credential, and structured accessibility/invalidation tests in `tests/runtime/test_media.py`
 - [ ] T100 [P] [US5] Add IIIF pixel/percent and bounded SVG normalization, digest, dimension, ambiguity, and out-of-bounds tests in `tests/runtime/test_region_selectors.py`
-- [ ] T101 [P] [US5] Add complete/partial/insufficient/denied/error, resource, and deterministic provider tests in `tests/runtime/test_image_analysis.py`
+- [ ] T101 [P] [US5] Add complete/partial/insufficient/denied/error, resource, deterministic fake, and real OpenAI adapter conformance tests in `tests/runtime/test_image_analysis.py`
 - [ ] T102 [P] [US5] Add observation/interpretation separation, weakest-leg cross-modal support, false-attribution/originality, and multi-view limitation tests in `tests/runtime/test_cross_modal_support.py`
 - [ ] T103 [P] [US5] Add default-off, exact-head/artifact mismatch, improvement, safety regression, expiry, approval, and rollback tests in `tests/runtime/test_capability_promotion.py`
 
 ### US5 implementation
 
-- [ ] T104 [P] [US5] Add object, media, observation, cross-modal, analysis-result, and promotion schemas in `schemas/research-grade/object-record.schema.json`, `schemas/research-grade/media-asset.schema.json`, `schemas/research-grade/visual-observation.schema.json`, `schemas/research-grade/cross-modal-support.schema.json`, `schemas/research-grade/image-analysis-result.schema.json`, and `schemas/research-grade/capability-promotion.schema.json`
-- [ ] T105 [US5] Implement object/media separation, byte identity, capture/rendition/derivative lineage, purpose rights, IIIF 3 ingest, accessibility, and export redaction in `swos_runtime/media.py`
+- [ ] T104 [P] [US5] Add object, media, inspection, accessibility, observation, cross-modal, analysis-result, specialist-agent, and promotion schemas in `schemas/research-grade/object-record.schema.json`, `schemas/research-grade/media-asset.schema.json`, `schemas/research-grade/object-inspection.schema.json`, `schemas/research-grade/accessibility-record.schema.json`, `schemas/research-grade/visual-observation.schema.json`, `schemas/research-grade/cross-modal-support.schema.json`, `schemas/research-grade/image-analysis-result.schema.json`, `schemas/research-grade/specialist-agent.schema.json`, and `schemas/research-grade/capability-promotion.schema.json`
+- [ ] T105 [US5] Implement object/media/inspection separation, byte identity, capture/rendition/derivative lineage, separate analyse/transform/create-derivative rights with restrictive inheritance, IIIF 3 ingest, structured accessibility invalidation, and export redaction in `swos_runtime/media.py`
 - [ ] T106 [US5] Implement digest-bound IIIF pixel/percent and bounded SVG selector normalization in `swos_runtime/media.py`
 - [ ] T107 [US5] Implement provider-neutral bounded 2D analysis protocol and deterministic fake with explicit statuses in `swos_runtime/image_analysis.py`
 - [ ] T108 [US5] Implement observation/interpretation separation, cross-modal weakest-leg policy, multi-view limits, and attribution/originality guardrails in `swos_runtime/image_analysis.py`
 - [ ] T109 [US5] Integrate image analysis through broker/work orders/orchestrator/finalizer/EPG without provider-owned verification in `swos_runtime/broker.py`, `swos_runtime/work_orders.py`, `swos_runtime/orchestrator.py`, and `swos_runtime/finalizer.py`
 - [ ] T110 [US5] Integrate staged art-history then art-criticism pack-assisted critique with ontology criteria in `swos_runtime/discipline_critique.py`
-- [ ] T111 [P] [US5] Build rights-cleared asset/object, region, cross-modal, discipline, accessibility, and adversarial corpus manifests and guidelines in `evals/fixtures/multimodal/`
-- [ ] T112 [US5] Implement raw case, agreement, region, cross-modal, false-originality, over-association, accessibility, stability, and regression metrics in `tools/run_multimodal_evals.py`
-- [ ] T113 [US5] Add optional live exact-head provider workflow with `NOT_RUN` semantics and immutable outputs in `.github/workflows/multimodal-evaluation.yml`
-- [ ] T114 [US5] Implement promotion assess/approve/commit/default-off/rollback and exact artifact binding in `swos_runtime/image_analysis.py`
-- [ ] T115 [US5] Document rights limitations, supported 2D scope, non-attribution, accessibility, provider, and promotion boundaries in `docs/architecture/research-grade-multimodal.md`
+- [ ] T111 [P] [US5] Build at least 60 distinct objects/works and 96 rights-cleared renditions plus region/cross-modal/discipline/accessibility/adversarial manifests, per-asset source/right URI/digest/allowed-use/attribution statements, guidelines, and mandatory `DATA-LICENCE.md` in `evals/fixtures/multimodal/`
+- [ ] T112 [US5] Implement raw case, agreement, region, cross-modal, false-originality, over-association, valid-reviewed-accessibility completeness numerator/denominator, stability, object/rendition minima, and regression metrics in `tools/run_multimodal_evals.py`
+- [ ] T113 [US5] Implement and register one real opt-in OpenAI image-input provider adapter and v2 capability declaration with bounded requests, purpose-rights enforcement, exact model/config/response evidence, and contract status mapping in `swos_runtime/image_analysis_openai.py` and `contracts/capability-contract/capabilities-v2.json`
+- [ ] T114 [US5] Create versioned art-history and art-criticism specialist-agent definitions, least-privilege image/object tool permissions, role-separated orchestrator routes, and executable pack-only fallback in `agents/research-grade/art-history.agent.json`, `agents/research-grade/art-criticism.agent.json`, and `swos_runtime/orchestrator.py`
+- [ ] T115 [US5] Add optional live exact-head provider workflow with `NOT_RUN` semantics and immutable outputs in `.github/workflows/multimodal-evaluation.yml`
+- [ ] T116 [US5] Implement paired promotion assess/approve/commit/default-off/rollback with identical non-agent artifacts, predetermined draws, >=0.08 improvement, lower 95% confidence bound above zero, mandatory successful live evidence, and exact artifact binding in `swos_runtime/image_analysis.py`
+- [ ] T117 [US5] Document rights limitations, supported 2D scope, non-attribution, accessibility, provider, and promotion boundaries in `docs/architecture/research-grade-multimodal.md`
 
 **Checkpoint**: SC-008 and SC-009 pass or agent promotion remains disabled with a named blocker.
 
@@ -227,18 +229,18 @@ without exact matching evidence.
 
 **Purpose**: prove one complete release candidate at one immutable head.
 
-- [ ] T116 [P] Add end-to-end three-project research-to-memory-to-critique-to-finalization-to-PROV-to-public-proof test in `tests/runtime/test_research_grade_end_to_end.py`
-- [ ] T117 [P] Add cross-story classification/rights/ontology/evidence identity preservation tests in `tests/runtime/test_research_grade_integrity.py`
-- [ ] T118 Run all existing v1.1/runtime/prose/eight-plane tests and record exact-head commands/results in `artifacts/research-grade/regression-report.json`
-- [ ] T119 Run ontology, RPM, classifier, diversity, critique, PROV, and multimodal locked evaluations and record immutable indexes in `artifacts/research-grade/evaluation-index.json`
-- [ ] T120 Run Ruff, schema/contract, coverage, security, portability, offline, deterministic-stability, and manifest checks and record results in `artifacts/research-grade/quality-report.json`
-- [ ] T121 Run reference RPM/PROV performance corpora and record runner fingerprints/raw measurements in `artifacts/research-grade/benchmark-index.json`
-- [ ] T122 Assemble and independently verify every FR/SC evidence pointer and limitation in `artifacts/research-grade/audit-pack.json`
-- [ ] T123 Update version, architecture, security, evaluation, roadmap, progress, and release documentation in `README.md`, `SECURITY.md`, `PROGRESS.md`, `docs/architecture/`, and `evals/metrics.md`
-- [ ] T124 Freeze the candidate SHA, push one cohesive implementation PR, and attach the exact audit-pack/check links in the PR description
-- [ ] T125 Obtain independent review of the frozen candidate, resolve every actionable thread, and record review identity/head/disposition in `artifacts/research-grade/review-evidence.json`
-- [ ] T126 Rerun all invalidated evidence after any review change, verify hosted checks are green on the final SHA, and update `artifacts/research-grade/audit-pack.json`
-- [ ] T127 Obtain explicit owner merge approval while retaining named no-production/no-merge gates in `artifacts/research-grade/release-decision.json`
+- [ ] T118 [P] Add end-to-end three-project research-to-memory-to-critique-to-finalization-to-PROV-to-public-proof test in `tests/runtime/test_research_grade_end_to_end.py`
+- [ ] T119 [P] Add cross-story classification/rights/ontology/evidence identity preservation tests in `tests/runtime/test_research_grade_integrity.py`
+- [ ] T120 Run all existing v1.1/runtime/prose/eight-plane tests and record exact-head commands/results in `artifacts/research-grade/regression-report.json`
+- [ ] T121 Run ontology, RPM, classifier, diversity, critique, PROV, and multimodal locked evaluations and record immutable indexes in `artifacts/research-grade/evaluation-index.json`
+- [ ] T122 Run Ruff, schema/contract, coverage, security, portability, offline, deterministic-stability, and manifest checks and record results in `artifacts/research-grade/quality-report.json`
+- [ ] T123 Run reference RPM/PROV performance corpora and record runner fingerprints/raw measurements in `artifacts/research-grade/benchmark-index.json`
+- [ ] T124 Assemble and independently verify every FR/SC evidence pointer and limitation in `artifacts/research-grade/audit-pack.json`
+- [ ] T125 Update version, architecture, security, evaluation, roadmap, progress, and release documentation in `README.md`, `SECURITY.md`, `PROGRESS.md`, `docs/architecture/`, and `evals/metrics.md`
+- [ ] T126 Freeze the candidate SHA, push one cohesive implementation PR, and attach the exact audit-pack/check links in the PR description
+- [ ] T127 Obtain ADR-plus-two-maintainer schema approval, maintainer-plus-discipline-steward ontology approval, two-maintainer-plus-evaluation-owner fixture approval, maintainer-plus-portability-owner provider-adapter approval, and reviewer-criteria approval on the frozen head; resolve every thread and record identities/dispositions in `artifacts/research-grade/review-evidence.json`
+- [ ] T128 Rerun all invalidated evidence after any review change, verify hosted checks are green on the final SHA, and update `artifacts/research-grade/audit-pack.json`
+- [ ] T129 Obtain explicit owner merge approval while retaining named no-production/no-merge gates in `artifacts/research-grade/release-decision.json`
 
 **Final checkpoint**: SC-010–SC-012 and every FR are evidenced at the final reviewed head. Merge and deployment remain separate actions.
 

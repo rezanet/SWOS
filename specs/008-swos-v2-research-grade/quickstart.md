@@ -71,7 +71,8 @@ independent oracle. Never advertise a format before all legs certify.
 ### US5: multimodal/object analysis
 
 Implement object/media/rights/selectors before provider integration. Add bounded
-2D analysis, observation/interpretation separation, cross-modal support, and
+2D analysis through both the deterministic fake and the real opt-in OpenAI
+adapter, observation/interpretation separation, cross-modal support, and
 discipline critique. Promotion remains default-off until exact-head corpus and
 human evidence satisfy every gate.
 
@@ -84,10 +85,10 @@ python -m unittest discover -s tests/runtime -p 'test_*.py'
 python -m unittest discover -s tests/prose -p 'test_*.py'
 python tools/validate_schemas.py
 python tools/validate_contract_examples.py
-python tools/compile_discipline_ontologies.py --check
-python tools/evaluate_citation_classifier.py --locked-manifest benchmark/citation-support/manifest.json --verify-only
+python tools/compile_discipline_ontologies.py --manifest discipline-packs/manifest-v2.json --shapes discipline-packs/ontology/swos-discipline-shapes.ttl --out discipline-packs/compiled/v2 --report artifacts/ontology/compile-report.json
+python tools/evaluate_citation_classifier.py --model-manifest models/citation-support/current/manifest.json --calibration models/citation-support/current/calibration.json --locked-test benchmark/citation-support/splits/locked-test.jsonl --predictions-out artifacts/citation-support/predictions.jsonl --report-out artifacts/citation-support/report.json
 python tools/run_source_diversity_benchmark.py --manifest benchmark/source-diversity/manifest.json
-python tools/certify_prov_roundtrip.py --corpus-manifest evals/fixtures/provenance/manifest.json --verify
+python tools/certify_prov_roundtrip.py --corpus-manifest evals/fixtures/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir artifacts/provenance --certificate-out artifacts/provenance/certificate.json
 python tools/run_rpm_benchmark.py --manifest benchmark/rpm/manifest.json
 python tools/run_multimodal_evals.py --manifest evals/fixtures/multimodal/manifest.json
 python evals/harness/run_evals.py --all-planes --fail-on-gate

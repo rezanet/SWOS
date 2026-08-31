@@ -31,24 +31,23 @@ class MemoryReadPolicy:
     review_mode: Literal["normal", "governance", "adversarial"] = "normal"
 
 class ResearchMemoryService(Protocol):
-    def register_project(self, scope: ResearchScope, manifest: Mapping) -> Binding: ...
-    def assess_write(self, scope: ResearchScope, candidate: MemoryCandidate,
-                     *, as_of: datetime) -> MemoryAssessment: ...
-    def commit_write(self, scope: ResearchScope, *, assessment_id: str,
-                     approval: HumanApproval, as_of: datetime) -> MemoryRecord: ...
+    def assess_operation(self, scope: ResearchScope, operation: RPMOperation,
+                         *, as_of: datetime) -> MemoryAssessment: ...
+    def commit_operation(self, scope: ResearchScope, *, assessment_id: str,
+                         approval: HumanApproval, as_of: datetime) -> RPMResult: ...
     def query(self, scope: ResearchScope, query: MemoryQuery,
               policy: MemoryReadPolicy, *, as_of: datetime) -> MemoryQueryResult: ...
-    def correct(self, scope: ResearchScope, target_id: str,
-                candidate: MemoryCandidate, approval: HumanApproval) -> MemoryRecord: ...
-    def supersede(self, scope: ResearchScope, target_id: str,
-                  candidate: MemoryCandidate, approval: HumanApproval) -> MemoryRecord: ...
-    def resolve_contradiction(self, scope: ResearchScope, contradiction_id: str,
-                              decision: SDLDecision) -> Resolution: ...
-    def expire_due(self, scope: ResearchScope, *, as_of: datetime,
-                   commit: bool = False) -> ExpiryReport: ...
-    def delete_payload(self, scope: ResearchScope, item_id: str,
-                       approval: HumanApproval) -> Tombstone: ...
+    def propose_expiry(self, scope: ResearchScope, *, as_of: datetime) -> ExpiryReport: ...
 ```
+
+`RPMOperation` is a versioned discriminated union for project registration or
+retirement, write, confirm, status change, correction, supersession,
+contradiction open/resolve, expiry, deletion, and exceptional-read authorization.
+Every substantive lifecycle mutation uses the same immutable assessment and
+approval protocol. Commit re-resolves scope, active target/head, EPG/SDL, policy,
+classification, rights, contradiction, expiry, and operation digest. There is no
+direct mutation shortcut. `propose_expiry` is read-only; each committed expiry is
+an assessed operation.
 
 Public operations reject missing/unregistered scope, cross-scope references,
 classification overflow, invalid IDs, stale heads, unresolved evidence, or
@@ -78,10 +77,12 @@ an idempotent no-op; same ID plus different digest fails.
 
 ```text
 python tools/rpm.py init --repository PATH --namespace ID
-python tools/rpm.py register-project --repository PATH --scope-file FILE
+python tools/rpm.py register-project --repository PATH --scope-file FILE --approval FILE
+python tools/rpm.py assess-operation --repository PATH --scope-file FILE --operation FILE --out FILE
+python tools/rpm.py commit-operation --repository PATH --scope-file FILE --assessment FILE --approval FILE
 python tools/rpm.py verify --repository PATH --scope-file FILE --json-out FILE
-python tools/rpm.py expire --repository PATH --scope-file FILE --as-of TIME [--commit]
-python tools/rpm.py export --repository PATH --scope-file FILE --selection FILE --out DIR
+python tools/rpm.py expire --repository PATH --scope-file FILE --as-of TIME [--commit --approval FILE]
+python tools/rpm.py export --repository PATH --scope-file FILE --selection FILE --approval FILE --out DIR
 python tools/rpm.py inspect-import --repository PATH --bundle DIR --destination FILE --out FILE
 python tools/rpm.py commit-import --repository PATH --inspection FILE --approval FILE
 python tools/rpm.py rebuild-projection --repository PATH --scope-file FILE --verify-only
@@ -140,12 +141,16 @@ def admission_eligibility(pair: CitationPair,
 Requirements:
 
 - output order matches input order and decisions are batch-size invariant;
+- classified labels are exactly `directly_supports`, `partially_supports`,
+  `context_only`, `contradicts`, or `not_supported`; laundering and invalid-input
+  failures are core-owned rule rejections, not model labels;
 - probabilities are finite, within `[0, 1]`, and sum to one within declared
   tolerance;
 - model, calibration, dataset, ontology, label-order, and input hashes verify;
 - unavailable/corrupt/mismatched artifacts, nonfinite logits, malformed labels,
   OOD inputs, or unsupported ontology versions abstain and block admission;
 - `support_level` is null on abstention;
+- `support_level` is also null on deterministic rule rejection and error;
 - only core policy can set Evidence Matrix verification state.
 
 Training/evaluation CLI:
@@ -225,10 +230,13 @@ never omitted.
 Certification CLI:
 
 ```text
-python tools/certify_prov_roundtrip.py --epg FILE --profile FILE \
+python tools/certify_prov_roundtrip.py (--epg FILE | --corpus-manifest FILE) --profile FILE \
   --formats prov-json prov-n prov-o-trig --oracle-manifest FILE \
   --limits FILE --artifact-dir DIR --certificate-out FILE
 ```
+
+`--epg` certifies one document; `--corpus-manifest` certifies every checksummed
+case and emits an aggregate certificate. Exactly one input mode is required.
 
 Exit status is nonzero for `failed`, `not_run`, invalid, unsupported, or
 resource-limit results. The independent oracle is mandatory for a release
@@ -262,6 +270,16 @@ Supported selectors:
 
 Every selector binds exact asset digest and dimensions. Coordinate conversion is
 deterministic; invalid, out-of-bounds, ambiguous, or oversized selectors fail.
+Transform/crop/resize operations require both `analyse` and the applicable
+`transform` or `create_derivative` permission. Rights restrictions inherit to
+derivatives unless a separately evidenced grant permits the action.
+
+Accessibility conformance requires structured decorative/functional/evidentiary
+purpose, short alternative, conditional long description, region labels,
+text-only fallback, origin, human-review state, asset digest, and derivative
+invalidation. A stale or machine-only record does not satisfy the 1.0 release
+completeness gate. Direct inspection is represented only by a provenance-bound
+object-inspection activity with actor, time, object, conditions, and scope.
 
 ### Capability promotion contract
 
@@ -277,9 +295,15 @@ def commit_promotion(assessment: PromotionAssessment,
 
 Promotion remains default-off until exact-head evidence proves all blocking
 rights, provenance, region, cross-modal, critique, accessibility, deterministic,
-and regression gates plus >= 0.08 absolute improvement over pack-only. Any
-artifact/head mismatch disables promotion. Rollback preserves evidence and
-returns to pack-only.
+and regression gates plus >= 0.08 absolute improvement over pack-only and a
+paired lower 95% confidence bound above zero. Baseline and candidate must have
+identical case/corpus, provider/model, non-agent configuration, prompt, seed, and
+predetermined draw digests; only specialist routing may differ. Successful live
+provider evidence is mandatory, so `NOT_RUN` disables promotion. Any artifact or
+head mismatch disables promotion. Enabled decisions activate versioned agent
+contracts, least-privilege tool permissions, role-separated orchestrator routes,
+and an executable pack-only fallback. Rollback preserves evidence and returns to
+pack-only.
 
 ## 8. Evaluation adapter contract
 

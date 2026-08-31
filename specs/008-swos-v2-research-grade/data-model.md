@@ -36,6 +36,19 @@ resolved approved `memory_write` decision, policy ID/version/digest, rights and
 classification result, contradiction result, creation/expiry, and deterministic
 denial reasons. It is immutable and single-use.
 
+The assessed operation is a discriminated union covering registration,
+retirement, write, confirm, correction, supersession, contradiction, expiry,
+deletion, and exceptional-read authorization. Every durable transition binds the
+operation digest, active target/head, evidence, policy, `as_of`, and expiry and is
+re-resolved at commit; there is no lifecycle mutation bypass.
+
+### RPMPolicyRelease
+
+Fields: policy ID/version/digest, effective/deprecated timestamps, relationship
+to frozen v1 `memory-write.policy.json`, operation decision tables,
+classification/rights ceilings, required EPG/SDL/approval bindings, assessment
+TTL, exceptional-read rules, migration guidance, and approval evidence.
+
 ### HumanApproval
 
 Fields: approval ID, asserted approver, role, timestamp, assessment/candidate
@@ -183,6 +196,11 @@ probability, abstention reason, threshold, calibration/model/dataset/ontology
 identities and digests, canonical input digest, runtime/backend versions,
 deterministic precheck results, timestamps, and EPG activity.
 
+The support label is exactly one of `directly_supports`, `partially_supports`,
+`context_only`, `contradicts`, or `not_supported`. It is null for abstention,
+rule rejection, and error. Laundering or invalid citation is recorded in the
+deterministic disposition/reason fields, not represented as a trained class.
+
 Only `classified + directly_supports + all deterministic checks passed` is
 eligible for core verification. Eligibility is not itself admission; the
 finalizer remains authoritative.
@@ -207,7 +225,9 @@ confidence. Unknown or inferred values cannot satisfy mandatory strata.
 Fields: requirement ID, research question/work type, discipline/ontology digest,
 applicable dimensions, required strata, minimum family count, concentration and
 unknownness limits, counter-position requirement, declaration timestamp, and
-approval. It is frozen before retrieval begins.
+approval. Every material dimension has approved maximum HHI/share, minimum
+effective-number/balance, coverage and unknown-rate thresholds or an
+ontology-linked `not_applicable` rationale. It is frozen before retrieval begins.
 
 ### DiversityDimensionReport
 
@@ -220,7 +240,8 @@ governing worst-case result, threshold, status, and explanations.
 
 Fields: report ID, input/source-family/evidence-matrix digests, requirement and
 ontology digests, per-dimension reports, duplicate/unknown exclusions, verified
-counter-positions, legacy display summary, overall status (`pass`,
+counter-positions, frozen non-gating v1 provider scalar, versioned v2 geometric
+composite and formula inputs, overall status (`pass`,
 `review_required`, `fail`), exceptions, limitations, and EPG/SDL references.
 
 ### DiversityException
@@ -279,13 +300,33 @@ identity assertions are distinct from visual observations.
 Fields: asset ID, object ID, role (`surrogate`, `documentary`, `technical`,
 `installation`, `detail`, `diagram`, `generated`), MIME/size/dimensions, byte
 SHA-256, acquisition URI, IIIF manifest/canvas/annotation references, view and
-capture conditions, colour profile, direct-inspection status, mediation limits,
-transformations/derivatives, parent digest, content-credential state,
-accessibility text/status, and purpose-specific rights.
+capture conditions, colour profile, inspection-activity references, mediation
+limits, transformations/derivatives, parent digest, content-credential state,
+structured accessibility record, and purpose-specific rights.
 
-Rights actions: `view`, `analyse`, `quote`, `cache`, `export`, `redistribute`.
+Rights actions: `view`, `analyse`, `transform`, `create_derivative`, `quote`,
+`cache`, `export`, `redistribute`.
 Each has `allowed`, `denied`, or `unknown`, evidence, jurisdiction/scope, and
-expiry. Unknown is never treated as allowed.
+expiry. Unknown is never treated as allowed. Analysis does not imply transform or
+derivative permission. A derivative inherits every applicable restriction from
+its parents unless a separately provenance-bound grant permits the action.
+
+### ObjectInspectionActivity
+
+Fields: inspection ID, object ID, actor/role, timestamp, location, access method,
+conditions, instruments, observed scope, limitations, notes/evidence digest, and
+EPG/SDL provenance. Assets and interpretations may reference the activity; they
+must not copy its direct-inspection claim onto unrelated analysts or runs.
+
+### AccessibilityRecord
+
+Fields: asset/digest, purpose (`decorative`, `functional`, `evidentiary`), short
+alternative, long description when required, region labels, non-image/text-only
+fallback, authoring origin (`human`, `machine_assisted`), reviewer/status,
+language, created/reviewed timestamps, and invalidation reason. A changed asset,
+crop, colour transform, or semantically material derivative invalidates the
+record until human re-review. Completeness counts valid reviewed records and
+fallbacks over all in-scope non-decorative assets requiring them.
 
 ### RegionSelector
 
@@ -329,9 +370,12 @@ and EPG links. `partial` and `insufficient` never become silent success.
 ### CapabilityPromotionDecision
 
 Fields: capability/pack/agent, stage, default-enabled flag, exact source SHA,
-contract and evaluation digests, baseline/candidate metrics, absolute improvement,
-safety regressions, human approval, effective/expiry dates, rollback trigger, and
-SDL/EPG evidence. Invalid or expired evidence means `disabled`.
+contract and evaluation digests, paired case IDs, identical non-agent artifact
+digests, provider/model/config/prompt/seed/draw identities, baseline/candidate
+paired metrics, absolute improvement, paired confidence interval, safety
+regressions, mandatory live-result identity, human approval, effective/expiry
+dates, rollback trigger, and SDL/EPG evidence. Invalid, unmatched, `NOT_RUN`, or
+expired evidence means `disabled`.
 
 ## 7. Release audit entities
 

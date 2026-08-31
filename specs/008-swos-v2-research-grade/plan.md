@@ -57,10 +57,10 @@ classification ceilings never weaken; exact-head evidence and independent review
 required
 
 **Scale/Scope**: 2 namespaces, 4 programmes, 10 projects/programme and 100k-item
-RPM benchmark; nine discipline profiles; >=2,000 adjudicated citation pairs at
-release floor (6,000 target, 1,500 locked-test target); ten reviewed diversity
-packets/discipline target; 1k/10k/100k PROV statement benchmarks; >=60 objects
-and the multimodal corpus/gates defined in research.md
+RPM benchmark; nine discipline profiles; >=6,000 adjudicated citation pairs at
+release floor with >=1,500 locked-test pairs; at least ten locked reviewed
+diversity packets per discipline; 1k/10k/100k PROV statement benchmarks; >=60
+distinct objects/works, >=96 renditions, and the multimodal gates in research.md
 
 ## Constitution Check
 
@@ -117,6 +117,7 @@ swos_runtime/
 ├── prov_validation.py
 ├── media.py
 ├── image_analysis.py
+├── image_analysis_openai.py
 ├── models.py
 ├── broker.py
 ├── orchestrator.py
@@ -135,15 +136,19 @@ schemas/research-grade/
 ├── prov-roundtrip-report.schema.json
 ├── object-record.schema.json
 ├── media-asset.schema.json
+├── object-inspection.schema.json
+├── accessibility-record.schema.json
 ├── visual-observation.schema.json
 ├── cross-modal-support.schema.json
 ├── image-analysis-result.schema.json
+├── specialist-agent.schema.json
 ├── capability-promotion.schema.json
 └── research-grade-audit-pack.schema.json
 
 contracts/capability-contract/capabilities-v2.json
 contracts/stage-instruction/stage-instructions-v2.json
 governance/policies/
+├── research-programme-memory-v2.policy.json
 ├── rpm-exchange.policy.json
 ├── source-diversity.policy.json
 ├── media-rights.policy.json
@@ -164,6 +169,9 @@ benchmark/
 ├── source-diversity/
 └── provenance/
 models/citation-support/<version>/
+agents/research-grade/
+├── art-history.agent.json
+└── art-criticism.agent.json
 evals/fixtures/
 ├── provenance/
 ├── source-diversity/
@@ -252,8 +260,10 @@ credential access in ordinary CI.
 2. Build the SQLite repository with migrations, scoped hash chains, foreign keys,
    atomic event/projection transactions, preflight, bounded locking, integrity
    verification, and deterministic rebuild.
-3. Build registration and staged evidence-bound write service. Resolve EPG nodes
-   and exact approved SDL `memory_write` decisions; revalidate at commit.
+3. Build the authoritative v2 RPM policy plus registration and staged
+   evidence-bound operation service. Route every project binding, write,
+   lifecycle, deletion, expiry, and exceptional-read authorization through one
+   assessed/approved commit protocol; resolve EPG/SDL and revalidate at commit.
 4. Build classification/expiry-aware governed reads and EPG read receipts.
 5. Build correction, supersession, contradiction, confirmation, expiry, deletion,
    and review-mode lifecycle semantics.
@@ -273,7 +283,9 @@ logical-namespace limitations.
 
 1. Define the core SKOS/OWL vocabulary, SHACL shapes, JSON-LD context, manifest,
    compatibility/deprecation policy, and deterministic compiler.
-2. Map the nine supported disciplines exactly once, explicitly retain
+2. Author the required ADR, reversible migration and one-minor-release
+   deprecation-warning path, then map
+   the nine supported disciplines exactly once, explicitly retain
    `enterprise_reporting` only in frozen v1 compatibility, reject it in the v2
    scholarly profile, and create one versioned ontology module per supported pack.
 3. Validate required labels, identifiers, methods, evidence types, proof standards,
@@ -297,8 +309,9 @@ blocking fixtures detected.
 
 1. Add pair, annotation, dataset, model, calibration, decision, and evaluation
    schemas plus provider-neutral protocols and deterministic fake backend.
-2. Write annotation guidelines and build licensed/source-provenanced, group-split,
-   double-annotated/adjudicated datasets with agreement reports and locked tests.
+2. Write annotation guidelines and execute the governed corpus-production process
+   to create, double-annotate, adjudicate, approve, checksum, and freeze the
+   licensed/source-provenanced group-split train/calibration/locked/OOD datasets.
 3. Train candidates using frozen configurations; select without locked-test use.
 4. Fit temperature scaling on calibration only; freeze selective thresholds and
    bind model/dataset/ontology/label order.
@@ -315,8 +328,9 @@ blocking fixtures detected.
 2. Canonicalize source families across URLs, editions, mirrors, preprint/published
    variants, and retrieval channels.
 3. Compute per-dimension source-count and claim-exposure concentration, effective
-   number, balance, required coverage, and unknownness; gate on worst case and
-   enforce the legacy composite >= 0.50 without allowing it to mask a failed dimension.
+   number, balance, required coverage, and unknownness; gate on worst case. Keep
+   the frozen v1 provider scalar non-gating and enforce a separately versioned v2
+   geometric composite >= 0.50 without allowing it to mask a failed dimension.
 4. Implement family-count gates, counter-position requirement, research expansion,
    explicit narrow-corpus exception, and final limitation propagation.
 5. Replace provider-count metric and heuristic fixtures with production-bound
@@ -352,20 +366,26 @@ overclaim.
 
 ## Phase 6: US5 — Justified Multimodal and Image/Object Analysis
 
-1. Add object, media asset, purpose-rights, selector, observation, interpretation,
-   cross-modal, provider result, promotion, and corpus schemas/policies.
+1. Add object, media asset, inspection activity, structured accessibility,
+   purpose-rights, selector, observation, interpretation, cross-modal, specialist
+   agent, provider result, promotion, and corpus schemas/policies.
 2. Implement ingest validation, object/asset distinction, digest/derivative
    lineage, IIIF 3 parsing, selector normalization, accessibility, and export
    redaction.
-3. Implement bounded provider-neutral 2D image analysis with deterministic fake
-   and explicit complete/partial/insufficient/denied/error behavior.
+3. Implement bounded provider-neutral 2D image analysis with deterministic fake,
+   one real opt-in OpenAI adapter, and explicit
+   complete/partial/insufficient/denied/error behavior.
 4. Implement observation-versus-interpretation separation, weakest-leg cross-modal
    support, multi-view limitation, attribution/originality guardrails, and EPG.
 5. Integrate art-history then art-criticism critique in staged pack-assisted mode.
-6. Build rights-cleared corpus, region/cross-modal/discipline/adversarial cases,
-   annotation guidelines, adjudication, accessibility, and stability evaluation.
-7. Implement default-off promotion assessment/commit/rollback and prove >=0.08
-   improvement plus all safety/regression gates before any agent enablement.
+6. Build the governed `DATA-LICENCE.md`, at least 60 distinct objects/works and 96
+   renditions, region/cross-modal/discipline/adversarial cases, annotation
+   guidelines, adjudication, accessibility, and stability evaluation.
+7. Implement versioned specialist-agent contracts, least-privilege tools,
+   role-separated routes, and executable pack fallback; then implement default-off
+   paired promotion assessment/commit/rollback and prove >=0.08 improvement, a
+   lower 95% confidence bound above zero, successful live evidence, and all
+   safety/regression gates before enablement.
 
 **Exit gate**: zero unsafe rights/hash/lineage/attribution passes; selector,
 grounding, cross-modal, accessibility, critique, agreement, determinism, and
@@ -471,7 +491,12 @@ The implementation PR must:
 4. list exact test/workflow commands and immutable evidence links;
 5. name all no-merge/no-production gates and limitations;
 6. freeze a release-candidate head before final external review;
-7. obtain independent review of that exact head, resolve every thread, and rerun
+7. satisfy repository role quorums on that exact head: ADR plus two maintainers
+   and a deprecation plan for schema changes; one maintainer plus one discipline
+   steward for packs/ontologies; two maintainers plus the evaluation owner for
+   fixtures; one maintainer plus the portability owner for the real provider
+   adapter; and one maintainer plus the evaluation owner for reviewer criteria;
+   record approvals as immutable evidence, resolve every thread, and rerun
    affected evidence after any change;
 8. merge only after green exact-head CI and explicit owner approval.
 

@@ -51,10 +51,13 @@ foreign keys, explicit transactions, bounded lock waits, a schema-version table,
 and a hash chain per namespace/programme. WAL is permitted only after local
 filesystem preflight. There is no unscoped list or search API.
 
-Writes follow `propose -> assess -> approve -> commit`. Assessment binds the
-canonical candidate, exact EPG and SDL heads, resolved node/decision identifiers,
-policy digest, scope, classification, contradiction result, and expiry. Commit
-re-resolves every binding to prevent time-of-check/time-of-use substitution.
+Every substantive operation—including project registration/retirement, write,
+confirm, correction, supersession, contradiction open/resolve, expiry, deletion,
+and exceptional-read authorization—follows `propose -> assess -> approve ->
+commit`. Assessment binds the canonical operation, exact EPG and SDL heads,
+resolved node/decision identifiers, policy digest, scope, classification,
+contradiction result, active target/head, `as_of`, and expiry. Commit re-resolves
+every binding to prevent time-of-check/time-of-use substitution.
 
 Reads are classification-filtered, expiry-aware at an injected `as_of` time,
 and provenance-producing. Normal reads exclude expired, deleted, contradicted,
@@ -65,6 +68,12 @@ Portable exchange is a bounded bundle containing a manifest, events, permitted
 payloads, provenance, decisions, checksums, and limitations. Import is two-phase:
 `inspect_import` performs no durable write and returns a deterministic diff;
 `commit_import` requires that exact inspection digest and human approval.
+
+`governance/policies/research-programme-memory-v2.policy.json` is authoritative
+for v2 binding, write, read, lifecycle, deletion, and assessment decisions. It
+names its relationship to frozen `memory-write.policy.json`, carries version and
+digest, and is included in every assessment. Exchange-specific archive rules
+remain in `rpm-exchange.policy.json` and cannot weaken the RPM policy.
 
 ### Rationale
 
@@ -166,9 +175,13 @@ human-readable scholarly reasoning.
 
 ### Decision
 
-Implement a six-class cross-encoder pair classifier using the frozen support
-vocabulary: `directly_supports`, `partially_supports`, `context_only`,
-`contradicts`, `citation_laundering_risk`, and `invalid_citation`.
+Implement a five-class cross-encoder pair classifier using the normative semantic
+support vocabulary: `directly_supports`, `partially_supports`, `context_only`,
+`contradicts`, and `not_supported`. Invalid/unavailable inputs, deterministic
+citation-laundering failures, uncertainty, and out-of-distribution cases are
+core-owned `rule_rejected` or `abstained` dispositions, not trained semantic
+labels. This prevents data-quality and policy failures from being laundered into
+model predictions.
 
 The bounded, provenance-addressed input is an atomic claim, exact quoted passage,
 bounded surrounding context, applicable discipline/method IRIs, and source-role
@@ -207,19 +220,22 @@ evaluates the real artifact.
 
 ### Threshold decision
 
-Release gates are macro-F1 >= 0.85; contradiction recall >= 0.95; other
-safety-critical class recall >= 0.90; ECE <= 0.05; raw direct-support precision
+Release gates are macro-F1 >= 0.85; contradiction recall >= 0.95;
+`not_supported` recall >= 0.90; ECE <= 0.05; raw direct-support precision
 >= 0.95 with its lower 95% confidence bound >= 0.98; unsupported auto-admission
 upper 95% confidence bound <= 0.01; selective error <= 0.02; overall selective
 coverage >= 0.70; no discipline macro-F1 below 0.75; and OOD or
 unsupported-version abstention >= 0.95. No discipline direct-support precision
-may be below 0.95. These gates intentionally satisfy both SC-004 and the stronger
+may be below 0.95. Deterministic laundering/invalid-citation blocker fixtures
+must be rejected at 100%. These gates intentionally satisfy both SC-004 and the stronger
 confidence-bound safety target. If no threshold meets safety and coverage, model
 release is blocked rather than relaxing safety.
 
-The production corpus target is at least 6,000 reviewed pairs with a locked test
-of at least 1,500 and 300 adversarial non-direct examples. The feature spec's
-2,000-pair minimum is the earliest admissible release floor, not the target.
+The production release floor is at least 6,000 reviewed pairs with a locked test
+of at least 1,500 and 300 adversarial non-direct examples, plus the per-label and
+per-discipline split minima in SC-003. Corpus construction, human annotation,
+adjudication, and immutable split freezing are release tasks, not documentation
+targets or examples.
 
 ### Alternatives rejected
 
@@ -260,13 +276,30 @@ required method/source-type roles represented. Three or four families require
 review; fewer than three block. Argumentative, position, and synthesis work
 requires a verified counter-position or limitation.
 
-The legacy composite remains as a compatibility/dashboard measure and its
-existing >= 0.50 gate is enforced, but it never decides release alone or
+For every other material dimension, the approved pre-retrieval requirement must
+state maximum HHI/share, minimum effective number/balance, required strata,
+coverage, and unknown-rate thresholds, or an ontology-linked `not_applicable`
+rationale. A missing threshold or applicability decision blocks the plan. This
+allows discipline/question-specific policy without inventing universal language,
+geography, date, method, access-mode, or stance quotas after seeing results.
+
+The frozen v1 provider-count `source_diversity_index` remains readable only for
+v1 compatibility and never gates Research Grade. The v2
+`research_grade_composite` preserves the >= 0.50 numerical gate but is a
+versioned geometric mean of applicable per-dimension normalized balances, capped
+by the minimum required-strata coverage and metadata completeness. It never
 overrides a failed dimension. A narrow-corpus exception requires evidence, an SDL
 decision, scope, affected dimension, expiry, and a visible final limitation; it
 does not convert a failure into an unqualified pass.
 
 ### Rationale
+
+The governed held-out benchmark contains at least ten locked, human-reviewed
+packets per supported discipline plus separate tuning packets. It must detect
+100% of single-family, single-owner, provider-only fake-diversity, duplicate, and
+missing-required-strata cases; achieve >= 0.90 recall on reviewer-identified
+material gaps; and have <= 0.10 false-block rate on adequate or justified
+narrow-corpus packets. Every metric is invariant to ordering/provider renaming.
 
 Variety, balance, concentration, unknownness, and claim exposure are distinct
 properties. Exposing each prevents token citations, duplicate editions, mirrors,
@@ -336,9 +369,9 @@ Model the physical object, media asset, visual observation, and cross-modal
 support as separate entities. A media asset is a view/capture/rendition of an
 object, not the object itself. It records content digest, role (surrogate,
 documentary, technical, installation, detail, diagram, or generated), view and
-capture conditions, dimensions/resolution, colour metadata, direct-inspection
-status, transformations, rights, derivative lineage, content-credential state,
-and accessibility metadata.
+capture conditions, dimensions/resolution, colour metadata, references to
+separate physical-inspection activities, transformations, rights, derivative
+lineage, content-credential state, and structured accessibility metadata.
 
 Visual observations are bounded to exact immutable assets and selectors. Support
 IIIF pixel/percentage regions and W3C Web Annotation SVG selectors; normalize to
@@ -347,13 +380,19 @@ selectors. Cross-modal support separately records the observation-to-claim,
 claim-to-source, and asset-to-object legs and takes the weakest required leg.
 
 The provider interface returns `complete`, `partial`, `insufficient`, `denied`,
-or `error`. Machine observations, art-historical interpretation, attribution,
+or `error`. The release includes a deterministic fake for ordinary CI and one
+real opt-in OpenAI image-input adapter behind the same contract; its exact model,
+request configuration, SDK/runtime, and responses are digest-bound in live
+evaluation evidence. Machine observations, art-historical interpretation, attribution,
 originality, identity, and confidence are separate fields. No interpretation can
 be verified without observations, object/media identity, rights, and provenance.
 Missing views or resolution causes a scoped limitation or fail-closed outcome.
 
-Rights are purpose-specific: view, analyse, quote, cache, export, and
-redistribute. Open access does not imply every permission. Exports omit barred
+Rights are purpose-specific: view, analyse, transform, create derivative, quote,
+cache, export, and redistribute. Analysis never implies transform/derivative
+permission. Derivatives inherit the most restrictive applicable parent condition
+unless a separate provenance-bound grant permits more. Open access does not
+imply every permission. Exports omit barred
 media while retaining redacted evidence and limitations. Generated or materially
 transformed assets are explicitly labelled.
 
@@ -362,19 +401,38 @@ candidate. Use the W3C Web Annotation Data Model for selectors. External object
 vocabularies may align conservatively to CIDOC CRM/Linked Art but SWOS keeps a
 minimal governed runtime profile.
 
+Accessibility is structured as decorative/functional/evidentiary purpose, short
+alternative, conditional long description, labelled regions, non-image fallback,
+origin, human-review status, language, exact asset digest, and validity. Any
+pixel or semantic derivative invalidates inherited accessibility text until
+re-reviewed. Completeness is valid reviewed records and fallbacks divided by all
+in-scope non-decorative assets requiring them; the release gate is 1.0.
+
+Direct physical inspection is an actor/time/object/conditions/provenance activity
+referenced by assets or interpretations, never a reusable asset property.
+
 Promotion is staged and default-off: contract -> bounded 2D tool gate ->
 art-history assisted pack -> art-history agent -> multi-view breadth ->
 art-criticism assisted pack -> art-criticism agent. Promotion requires a signed
 decision binding exact evaluation evidence and a measured absolute improvement
-of at least 0.08 over pack-only, with no safety regression. Failure rolls back to
-pack-only while preserving evidence and reopening review.
+of at least 0.08 over pack-only, with the lower 95% confidence bound on the paired
+improvement above zero and no safety regression. Baseline and candidate use the
+same corpus/case IDs, provider/model, non-agent configuration, prompts, seeds,
+and predetermined repeated draws; only specialist routing differs. Successful
+exact-head live provider evidence is mandatory; `NOT_RUN` leaves promotion
+disabled. Enabled promotion activates versioned art-history/art-criticism agent
+contracts, least-privilege tool permissions, role-separated orchestrator routes,
+and an executable pack-only fallback. Failure rolls back to pack-only while
+preserving evidence and reopening review.
 
 ### Evaluation decision
 
-The governed corpus contains at least 64 rights-cleared assets, 80 atomic
-region-grounding claims across at least 20 assets, 120 cross-modal pairs, 48
-discipline tasks across at least 24 works, and 96 adversarial cases. The feature
-spec's 60-object minimum remains the hard release floor.
+The governed corpus contains `DATA-LICENCE.md` plus per-asset source/right URIs,
+byte digest, permitted actions, attribution, and required statement. It contains
+at least 60 distinct rights-cleared objects/works and 96 rights-cleared
+renditions, 80 atomic region-grounding claims across at least 20 assets, 120
+cross-modal pairs, 48 discipline tasks across at least 24 works, and 96
+adversarial cases.
 
 Release gates include zero unsafe rights/hash/lineage passes; 100% valid selector
 binding; byte-identical deterministic output across three runs; cross-modal
