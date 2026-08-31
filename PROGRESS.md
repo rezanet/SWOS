@@ -11,9 +11,11 @@ quality measurements, not claims about completion of the larger SWOS roadmap.
 The v1.1 reference-runtime implementation path is merged through PRs #41,
 #45, #46, #47, #48, #49, #50, #51 and #52. PR #52 replaced mandatory signing
 with the exact-SHA release record and closed the release-gate integrity finding.
-The implementation path is not the same as a completed v1.1 release: the final
-main-head public-proof reproduction, release record, SBOM/provenance bundle and
-human acceptance still have to be generated and accepted together.
+The final offline source-release evidence is accepted for target SHA
+`ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`: public proof is `APPROVED`,
+independent reproduction is `pass`, candidate verification is `allow`, and the
+record is approved by `rezanet` / Reza Negarestani. This acceptance does not
+claim live compatibility, package distribution or signing.
 
 ## Verified M1 history
 
@@ -46,8 +48,8 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
   distinction between implementation/evidence and final ledger heads)
 - PR #41 landed the reference-runtime foundation for v1.1. PRs #45 through #52
   now provide the reconciled runtime, retrieval/citation, governed-store,
-  evaluation, public-proof and exact-SHA release-record path; final v1.1
-  demonstration and certification remain open
+  evaluation, public-proof and exact-SHA release-record path; the offline
+  source-release evidence is now accepted for the target main SHA below
 
 ### Local evidence
 
@@ -111,7 +113,8 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
 The historical G-Prose95 gate is closed. The v1.1 reference-runtime
 implementation path is now merged through PR #52 under the authoritative
 [`docs/roadmap.md`](docs/roadmap.md); this file does not claim that v1.1 is
-complete until the final exact-head release evidence is accepted.
+complete beyond the accepted offline source-release profile; live compatibility
+and package distribution remain unclaimed.
 
 Live Luna/OpenAI verifier, dogfood and benchmark results remain stochastic
 evidence and are not substitutes for deterministic merge gates.
@@ -133,14 +136,14 @@ evidence and are not substitutes for deterministic merge gates.
 |---|---|---|---|
 | 0 | Repository Discovery and Baseline | **COMPLETE** | `BASELINE_REPORT.md`; repo/issues/PRs/architecture/CI inspected |
 | 1 | Environment, CI and Quality Baseline | **COMPLETE** | PR #37 merged as `15919f373bbee50fb05b87ed5be8980c66f734d6`; reproducible lock, Ruff, >=80% executable coverage floor, critical-module floors, pip-audit, Bandit, CodeQL, required checks/ruleset, existing governance and eight-plane gates preserved |
-| 2 | Core Reference Implementation / roadmap v1.1 | **IMPLEMENTED — RELEASE PENDING** | PR #41 and PRs #45-#52 merged the reference runtime, retrieval/citation, governed stores, evaluation, public proof and exact-SHA release-record path; final demonstration and certification remain open |
+| 2 | Core Reference Implementation / roadmap v1.1 | **CERTIFIED — OFFLINE SOURCE RELEASE** | PR #41 and PRs #45-#52 merged the reference runtime and evidence path; exact main-head proof, reproduction and release record are accepted for the offline source-release profile |
 | 3 | Host/User Interaction Layer | NOT STARTED | Complete specified host adapters/operator UX only when the reference runtime exists; no fictional browser frontend unless requirements introduce one |
 | 4 | Feature Completion and Semantic Hardening | **IN PROGRESS** | SWOS Prose M1 and G-Prose95 landed; remaining open semantic issues include #4, #5, #6, #7, #12, #13, #14, #16 and verifier-stability issue #32 |
 | 5 | Security Hardening | **IN PROGRESS** | Engineering substrate now includes SCA/SAST/CodeQL and repository protections; runtime egress, store integrity, memory poisoning, malformed-tool and production-surface controls remain future work |
 | 6 | Performance, Cost and Scalability | **IN PROGRESS** | G-Prose95 records provider calls, tokens, latency and fail-closed cost availability; retrieval/reranking and state-store performance baselines, provenance-growth, throughput and concurrency measurements remain future work |
 | 7 | Testing and Quality Gates | **IN PROGRESS** | SWOS Prose executable coverage is above the 80% floor with higher critical-module floors; eight evaluation planes, benchmark contracts, SCA/SAST and deterministic Prose tests are enforced. Whole-system/SUT, mutation and broader runtime coverage remain future work |
 | 8 | Documentation, Distribution and Deployment | **IN PROGRESS** | Portable SWOS Prose skill, CLI, package metadata, development docs and governed benchmark documentation exist; reference-runtime operator/deployment docs remain part of the v1.1 programme |
-| 9 | Final Integration and Release | **RELEASE EVIDENCE PENDING** | v1.1 implementation is merged; final main-head proof, release record, release notes and any verified tag remain future gates |
+| 9 | Final Integration and Release | **OFFLINE SOURCE RELEASE ACCEPTED** | v1.1 offline source-release evidence is accepted; live compatibility, package signing, release notes and any verified tag remain separate future gates |
 
 ## Current Repository Release State
 
@@ -148,7 +151,7 @@ evidence and are not substitutes for deterministic merge gates.
 
 - `VERSION`: **1.0.0** — Specification Lock.
 - Contracts/schemas/governance/evaluation/portability foundation: released.
-- v1.1 Reference Implementation: PRs #41 and #45-#52 merge the reference-runtime capability path. It is implemented and deterministically tested; final public-proof demonstration, exact-head release-record evidence and certification remain open.
+- v1.1 Reference Implementation: PRs #41 and #45-#52 merge the reference-runtime capability path. It is implemented and deterministically tested; the offline source-release evidence is accepted for target SHA `ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`.
 - v2 Research Grade: future roadmap.
 - v3 Product Grade: future roadmap.
 
@@ -173,8 +176,9 @@ earlier one:
 - **certified** — an authorized reviewer accepted the exact evidence for the
   stated profile.
 
-PR #41 is implemented and tested at its merged head for its covered runtime
-surface. Its complete v1.1 demonstration and certification remain open.
+PR #41 and the dependent PRs #45-#52 are implemented and tested at their
+merged heads. The v1.1 reference-runtime offline source-release evidence is
+certified for target SHA `ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`.
 
 ## Completed Delivery Gates Since Baseline
 
@@ -237,7 +241,7 @@ PR **#40 — G-Prose95: Complete SWOS Prose full-engine surface** is **MERGED**.
 - Ruff, pip-audit, Bandit, CodeQL, schema, skills, governance and all eight evaluation planes passed in the governed PR evidence;
 - all 44 PR review threads were resolved;
 - final additional Codex bot review was unavailable because the external Codex review quota was exhausted; independent ChatGPT review found no remaining P0/P1/P2 blocker before merge;
-- no release/tag, v1.1 implementation or unrelated platform work was included.
+- no release/tag or v1.1 implementation was included in that G-Prose95 PR; the current v1.1 path is recorded below.
 
 ### v1.1 Reference-runtime implementation path
 
@@ -249,10 +253,11 @@ PR **#40 — G-Prose95: Complete SWOS Prose full-engine surface** is **MERGED**.
 - [x] PRs #49-#51 — public proof, packaged execution and citation-fingerprint binding.
 - [x] PR #52 — simple exact-SHA release record and release-gate integrity validation.
 
-The implementation path and deterministic CI are merged. v1.1 remains open
-until one final main-head candidate is independently reproduced and its exact
-release record, source/citation hashes, SBOM, provenance and known limitations
-are accepted.
+The implementation path and deterministic CI are merged. One final main-head
+candidate was independently reproduced and its exact release record,
+source/citation hashes, SBOM, provenance and known limitations were accepted
+for the offline source-release profile. Live compatibility and package
+distribution are not claimed.
 
 ## Open Work Inventory
 
@@ -277,7 +282,7 @@ These issues remain explicit hardening work. G-Prose95 does not silently close t
 - [x] #37 Engineering Substrate and CI Quality Baseline — merged
 - [x] #40 G-Prose95 full-engine surface — merged
 
-### v1.1 Reference Implementation — implementation merged; certification open
+### v1.1 Reference Implementation — offline source release certified
 
 PR #41 and the dependent PRs #45-#52 are merged. The planned v1.1 reference
 runtime capabilities are implemented and covered by the repository's
@@ -293,10 +298,10 @@ deterministic checks:
 - [x] End-to-end SWOS CLI
 - [x] Eight-plane harness bound to a real system under test
 
-The remaining v1.1 work is release certification, not an assertion that the
-implementation is complete: reproduce the public proof from the final `main`
-head, generate the one exact-SHA release record and accept the resulting
-evidence bundle. Do not call v1.1 complete before that gate passes.
+The v1.1 offline source-release certification is complete for target SHA
+`ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`. The broader roadmap remains open:
+live compatibility, package distribution, future signing and v2 Research Grade
+work are separate claims and gates.
 
 ### v2 Research Grade
 
@@ -348,12 +353,13 @@ evidence bundle. Do not call v1.1 complete before that gate passes.
 
 Milestone 0 and the Engineering Substrate/CI baseline are complete. SWOS Prose
 has reached the governed G-Prose95 full-engine development surface, and the
-v1.1 reference-runtime implementation path is merged through PR #52. The final
-v1.1 release-evidence gate remains open.
+v1.1 reference-runtime offline source-release gate is accepted for target SHA
+`ca5bd726b73a5b1e69fc147956df036d0ac7ce5c`.
 
-**Next major implementation goal:** complete the final exact-main-head v1.1
-proof and release record. Only after that evidence is accepted should SWOS
-begin the v2.0 Research Grade track; do not skip the v1.1 certification gate.
+**Next major implementation goal:** define and implement the v2.0 Research
+Grade track under a new Spec Kit feature. Do not infer live compatibility,
+package distribution or Product Grade scope from this offline source-release
+acceptance.
 
 ## Project Completion Estimate
 
