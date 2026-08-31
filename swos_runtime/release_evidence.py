@@ -1,4 +1,4 @@
-"""Exact-commit release evidence assembly and external signature verification."""
+"""Exact-commit release evidence assembly and verification."""
 
 from __future__ import annotations
 
@@ -15,11 +15,11 @@ from pathlib import Path
 from typing import Any
 
 from .public_proof import verify_public_proof
-from .release_approval import verify_release
+from .release_record import verify_release_record
 
-SIGNING_NAMESPACE = "swos-release"
 CHECKSUM_FILE = "SHA256SUMS"
-SIGNATURE_FILE = "SHA256SUMS.sig"
+RECORD_FILE = "release-record.json"
+GATE_FILE = "release-record-gate.json"
 
 
 class ReleaseEvidenceError(RuntimeError):
@@ -130,7 +130,7 @@ def generate_sbom(repo_root: str | Path) -> dict[str, Any]:
 
 
 def _payload_files(candidate: Path) -> list[Path]:
-    excluded = {CHECKSUM_FILE, SIGNATURE_FILE, "release-gate.json"}
+    excluded = {CHECKSUM_FILE, GATE_FILE}
     return sorted(
         path for path in candidate.rglob("*") if path.is_file() and path.name not in excluded
     )
@@ -154,13 +154,13 @@ def verify_checksums(candidate: str | Path) -> list[str]:
     entries: dict[str, str] = {}
     errors: list[str] = []
     for line in sums.read_text(encoding="utf-8").splitlines():
-        match = re.fullmatch(r"([0-9a-f]{64})  ([^\\]+)", line)
+        match = re.fullmatch(r"([0-9a-f]{64})  (.+)", line)
         if not match:
             errors.append("checksum inventory contains a malformed line")
             continue
         digest, relative = match.groups()
         path = Path(relative)
-        if path.is_absolute() or ".." in path.parts or relative in entries:
+        if path.is_absolute() or ".." in path.parts or "\\" in relative or relative in entries:
             errors.append(f"checksum inventory path is unsafe or duplicated: {relative}")
             continue
         entries[relative] = digest
@@ -174,28 +174,13 @@ def verify_checksums(candidate: str | Path) -> list[str]:
     return errors
 
 
-def _copy_release_approval(source: Path, target: Path) -> None:
-    target.mkdir()
-    required = (
-        "evaluation-result.json",
-        "approval-pack.json",
-        "release-decision-ledger.json",
-        "release-decision-bindings.json",
-    )
-    for name in required:
-        path = source / name
-        if not path.is_file():
-            raise ReleaseEvidenceError(f"release approval artifact is missing: {name}")
-        shutil.copy2(path, target / name)
-
-
 def build_release_candidate(
     *,
     repo_root: str | Path,
     selected_sha: str,
     proof_dir: str | Path,
     reproduction_path: str | Path,
-    release_approval_dir: str | Path,
+    release_record_path: str | Path,
     out_dir: str | Path,
     built_at: str,
 ) -> dict[str, Any]:
@@ -203,6 +188,7 @@ def build_release_candidate(
         datetime.fromisoformat(built_at.replace("Z", "+00:00"))
     except (TypeError, ValueError) as exc:
         raise ReleaseEvidenceError("built_at must be an ISO 8601 timestamp") from exc
+
     exact_sha = assert_exact_clean_head(repo_root, selected_sha)
     proof = Path(proof_dir)
     proof_errors = verify_public_proof(proof)
@@ -211,11 +197,14 @@ def build_release_candidate(
     reproduction = _json(Path(reproduction_path))
     if reproduction.get("decision") != "pass" or reproduction.get("reasons"):
         raise ReleaseEvidenceError("independent public proof reproduction did not pass")
-    approval_gate = verify_release(proof / "run", release_approval_dir)
-    if approval_gate.get("decision") != "allow":
-        raise ReleaseEvidenceError(
-            "human release approval did not pass: " + "; ".join(approval_gate["reasons"])
-        )
+    record_errors = verify_release_record(
+        release_record_path,
+        selected_sha=exact_sha,
+        proof_dir=proof,
+        reproduction_path=reproduction_path,
+    )
+    if record_errors:
+        raise ReleaseEvidenceError("release record did not pass: " + "; ".join(record_errors))
 
     output = Path(out_dir)
     if output.exists():
@@ -224,8 +213,15 @@ def build_release_candidate(
     public = output / "public-proof"
     shutil.copytree(proof, public, ignore=shutil.ignore_patterns("approval"))
     shutil.copy2(Path(reproduction_path), public / "reproduction-report.json")
-    _copy_release_approval(Path(release_approval_dir), output / "approval")
-    _write_json(output / "release-approval-gate.json", approval_gate)
+    shutil.copy2(Path(release_record_path), output / RECORD_FILE)
+    record_gate = {
+        "gate_version": "swos.release-record-gate.v1",
+        "decision": "allow",
+        "selected_sha": exact_sha,
+        "release_record": RECORD_FILE,
+        "reasons": [],
+    }
+    _write_json(output / GATE_FILE, record_gate)
     _write_json(output / "sbom.cdx.json", generate_sbom(repo_root))
 
     inputs = {
@@ -233,6 +229,7 @@ def build_release_candidate(
         "requirements-dev.lock": file_digest(Path(repo_root) / "requirements-dev.lock"),
         "proof-result.json": file_digest(proof / "proof-result.json"),
         "reproduction-report.json": file_digest(Path(reproduction_path)),
+        RECORD_FILE: file_digest(Path(release_record_path)),
     }
     provenance = {
         "provenance_version": "swos.build-provenance.v1",
@@ -267,10 +264,18 @@ def build_release_candidate(
             {"profile": "portability_release", "status": "not_claimed", "evidence": []},
             {"profile": "live_compatible_release", "status": "not_claimed", "evidence": []},
         ],
-        "release_recommendation": "eligible_for_external_signature",
+        "release_record": RECORD_FILE,
+        "release_recommendation": "ready_for_public_release",
     }
     _write_json(output / "conformance-report.json", conformance)
-    limitations = """# Known Limitations\n\n- Public source evidence is a bounded, hash-pinned snapshot; upstream freshness requires a separate manual refresh check.\n- The deterministic provider demonstrates governance and reproducibility, not empirical language-model quality.\n- Reviewer execution records truthful limited independence; they do not establish organizational independence.\n- Portability release and live-compatible release profiles are not claimed by this candidate.\n- This candidate is a demonstration until a trusted external signature and explicit human approval verify together.\n"""
+    limitations = """# Known Limitations
+
+- Public source evidence is a bounded, hash-pinned snapshot; upstream freshness requires a separate manual refresh check.
+- The deterministic provider demonstrates governance and reproducibility, not empirical language-model quality.
+- Reviewer execution records truthful limited independence; they do not establish organizational independence.
+- Portability release and live-compatible release profiles are not claimed by this candidate.
+- Detached package signing is not required for this source release; it remains an optional future enhancement if SWOS distributes packages or gains multiple maintainers.
+"""
     (output / "KNOWN-LIMITATIONS.md").write_text(limitations, encoding="utf-8", newline="\n")
     required = [
         "public-proof/proof-result.json",
@@ -279,11 +284,8 @@ def build_release_candidate(
         "public-proof/run/run-manifest.json",
         "public-proof/run/integrity-chain.jsonl",
         "public-proof/reproduction-report.json",
-        "approval/evaluation-result.json",
-        "approval/approval-pack.json",
-        "approval/release-decision-ledger.json",
-        "approval/release-decision-bindings.json",
-        "release-approval-gate.json",
+        RECORD_FILE,
+        GATE_FILE,
         "sbom.cdx.json",
         "build-provenance.json",
         "conformance-report.json",
@@ -292,62 +294,28 @@ def build_release_candidate(
     manifest = {
         "candidate_version": "swos.release-candidate.v1",
         "selected_sha": exact_sha,
-        "state": "awaiting_external_openssh_signature",
-        "signing_namespace": SIGNING_NAMESPACE,
+        "state": "ready_for_public_release",
+        "release_record": RECORD_FILE,
         "required_artifacts": required,
         "checksum_file": CHECKSUM_FILE,
-        "signature_file": SIGNATURE_FILE,
     }
     _write_json(output / "candidate-manifest.json", manifest)
     write_checksums(output)
     return manifest
 
 
-def verify_ssh_signature(
-    candidate: str | Path, allowed_signers: str | Path, principal: str
-) -> list[str]:
-    root = Path(candidate)
-    if not principal.strip():
-        return ["release signing principal is missing"]
-    sums = root / CHECKSUM_FILE
-    signature = root / SIGNATURE_FILE
-    allowed = Path(allowed_signers)
-    if not signature.is_file() or not allowed.is_file() or not sums.is_file():
-        return ["signature, checksum inventory, or allowed-signers policy is missing"]
-    result = subprocess.run(
-        [
-            "ssh-keygen",
-            "-Y",
-            "verify",
-            "-f",
-            str(allowed),
-            "-I",
-            principal,
-            "-n",
-            SIGNING_NAMESPACE,
-            "-s",
-            str(signature),
-        ],
-        input=sums.read_bytes(),
-        check=False,
-        capture_output=True,
-    )
-    return [] if result.returncode == 0 else ["trusted OpenSSH release signature does not verify"]
+def verify_release_candidate(*, candidate_dir: str | Path) -> dict[str, Any]:
+    """Verify a candidate without provider credentials or signing machinery."""
 
-
-def verify_release_candidate(
-    *,
-    candidate_dir: str | Path,
-    allowed_signers: str | Path,
-    principal: str,
-) -> dict[str, Any]:
     root = Path(candidate_dir)
     reasons = verify_checksums(root)
+    manifest: dict[str, Any] = {}
     try:
         manifest = _json(root / "candidate-manifest.json")
         provenance = _json(root / "build-provenance.json")
         conformance = _json(root / "conformance-report.json")
         sbom = _json(root / "sbom.cdx.json")
+        record_gate = _json(root / GATE_FILE)
         public = root / "public-proof"
         reasons.extend(f"public proof: {reason}" for reason in verify_public_proof(public))
         proof_result = _json(public / "proof-result.json")
@@ -359,17 +327,46 @@ def verify_release_candidate(
             or reproduction.get("reproduced_fingerprint") != proof_result.get("proof_fingerprint")
         ):
             reasons.append("independent public proof reproduction does not verify")
-        approval = verify_release(public / "run", root / "approval")
-        if approval.get("decision") != "allow":
-            reasons.extend(f"approval: {reason}" for reason in approval.get("reasons", []))
+
         selected = manifest.get("selected_sha")
+        reasons.extend(
+            f"release record: {reason}"
+            for reason in verify_release_record(
+                root / RECORD_FILE,
+                selected_sha=selected or "",
+                proof_dir=public,
+                reproduction_path=public / "reproduction-report.json",
+            )
+        )
         if selected != provenance.get("selected_sha") or selected != conformance.get(
             "selected_sha"
         ):
             reasons.append("candidate selected SHA bindings do not agree")
-        if manifest.get("state") != "awaiting_external_openssh_signature":
+        if selected != record_gate.get("selected_sha"):
+            reasons.append("release record gate selected SHA does not verify")
+        if record_gate.get("decision") != "allow":
+            reasons.append("release record gate does not allow the candidate")
+        if manifest.get("state") != "ready_for_public_release":
             reasons.append("candidate state is invalid")
+        if manifest.get("release_record") != RECORD_FILE:
+            reasons.append("candidate release record binding is invalid")
         required = set(manifest.get("required_artifacts", []))
+        expected_required = {
+            "public-proof/proof-result.json",
+            "public-proof/project.json",
+            "public-proof/evaluation-result.json",
+            "public-proof/run/run-manifest.json",
+            "public-proof/run/integrity-chain.jsonl",
+            "public-proof/reproduction-report.json",
+            RECORD_FILE,
+            GATE_FILE,
+            "sbom.cdx.json",
+            "build-provenance.json",
+            "conformance-report.json",
+            "KNOWN-LIMITATIONS.md",
+        }
+        if required != expected_required:
+            reasons.append("candidate required artifact set is invalid")
         if not required or any(not (root / path).is_file() for path in required):
             reasons.append("candidate required artifact set is incomplete")
         profiles = {item.get("profile"): item for item in conformance.get("profiles", [])}
@@ -381,17 +378,22 @@ def verify_release_candidate(
                 reasons.append(f"unsupported conformance profile was overclaimed: {profile}")
         if sbom.get("bomFormat") != "CycloneDX" or not sbom.get("components"):
             reasons.append("CycloneDX SBOM is missing or empty")
-        if not (root / "KNOWN-LIMITATIONS.md").read_text(encoding="utf-8").strip():
+        limitations = root / "KNOWN-LIMITATIONS.md"
+        if not limitations.is_file() or not limitations.read_text(encoding="utf-8").strip():
             reasons.append("known-limitations statement is empty")
     except (ReleaseEvidenceError, OSError, TypeError) as exc:
         reasons.append(str(exc))
-        manifest = {}
-    reasons.extend(verify_ssh_signature(root, allowed_signers, principal))
+
+    record: dict[str, Any] = {}
+    try:
+        record = _json(root / RECORD_FILE)
+    except ReleaseEvidenceError:
+        pass
+    approved_by = record.get("approved_by", {}) if isinstance(record, dict) else {}
     return {
         "gate_version": "swos.release-candidate-verifier.v1",
         "decision": "deny" if reasons else "allow",
         "selected_sha": manifest.get("selected_sha"),
-        "signing_namespace": SIGNING_NAMESPACE,
-        "principal": principal,
-        "reasons": reasons,
+        "approved_by": approved_by.get("id") if isinstance(approved_by, dict) else None,
+        "reasons": sorted(set(reasons)),
     }

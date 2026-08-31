@@ -23,6 +23,11 @@ canonical in [`VISION.md`](VISION.md); the implementation sequence is in the
 The version tracks remain distinct: Core/specification `1.0.0`, reference
 runtime `v1.1`, and Research Grade `v2.0`.
 
+For a source release, the exact commit, deterministic test/proof results,
+source hashes, concise SBOM/provenance and known limitations are accompanied by
+one short maintainer release record. Package signing is a future optional
+enhancement if SWOS later distributes packages or gains multiple maintainers.
+
 ---
 
 ## SWOS Prose G-Prose95 (development)
@@ -231,7 +236,8 @@ make eval              # all eight evaluation planes
 ls examples/worked-example/   # a complete output bundle with audit pack
 ```
 
-`make ci` is exactly what CI runs. A release is blocked unless it passes.
+`make ci` is exactly what CI runs. A source release also requires an exact-SHA
+release record; live compatibility is never inferred from deterministic CI.
 
 ---
 

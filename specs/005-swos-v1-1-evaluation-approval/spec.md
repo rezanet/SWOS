@@ -1,5 +1,10 @@
 # Feature Specification: SWOS v1.1 Evaluation and Human Approval
 
+> **Historical scope note:** This feature's runtime evaluation and scholarly
+> human-judgement controls remain part of SWOS. Its release-specific approval
+> pack and multi-step release authority are superseded by
+> `specs/007-simple-release-record/`.
+
 **Feature Branch**: `codex/swos-v1.1-evaluation-approval`
 
 **Created**: 2026-08-30

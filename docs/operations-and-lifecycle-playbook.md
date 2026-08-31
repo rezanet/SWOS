@@ -10,9 +10,9 @@
 - [ ] `CHANGELOG.md` updated, including **known gaps**
 - [ ] Schema versions unchanged, or a migration shipped and an ADR merged
 - [ ] Adapter capability matrices reviewed against any new capability
-- [ ] Release notes signed
+- [ ] Exact-SHA release record created with maintainer approval, date and rationale
 - [ ] Provenance bundle for the release itself created and frozen
-- [ ] Governance-owner approval recorded as an SDL `release` entry
+- [ ] Concise SBOM/provenance record, source/citation hashes and known limitations retained
 - [ ] Backout plan documented and tested
 
 ## Rollback

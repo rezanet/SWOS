@@ -1,5 +1,9 @@
 # Quickstart: Public Proof and Release
 
+> **Superseded:** Follow `specs/007-simple-release-record/quickstart.md` for
+> current release verification. The public-proof execution steps below remain
+> historical reference.
+
 ## Deterministic tests
 
 ```powershell

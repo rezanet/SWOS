@@ -1,5 +1,9 @@
 # Tasks: SWOS v1.1 Public Proof and Release
 
+> **Historical record:** This task list records the earlier implementation;
+> the current source-release contract is the single release record in feature
+> `007`.
+
 ## Phase 1: Setup
 
 - [x] T001 Register feature documents and public-proof authorities in `docs/document-manifest.json`.

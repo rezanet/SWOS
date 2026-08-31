@@ -44,7 +44,8 @@ class PublicProofTests(unittest.TestCase):
                 )
             )
             self.assertEqual(verify_public_proof(output), [])
-            self.assertFalse((output / "approval" / "release-decision-ledger.json").exists())
+            self.assertFalse((output / "approval").exists())
+            self.assertEqual(result["release_status"], "awaiting_exact_sha_release_record")
             expected = json.loads(EXPECTED.read_text(encoding="utf-8"))
             self.assertEqual(result["proof_fingerprint"], expected["proof_fingerprint"])
             self.assertEqual(

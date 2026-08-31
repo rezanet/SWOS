@@ -1,5 +1,10 @@
 # Feature Specification: SWOS v1.1 Public Proof and Release
 
+> **Superseded release contract:** This historical specification records the
+> original public-proof implementation. Its release-approval and signing
+> requirements are replaced by `specs/007-simple-release-record/`; use feature
+> `007` for the current source-release contract.
+
 **Feature Branch**: `codex/swos-v1.1-public-proof-release`
 **Created**: 2026-08-30
 **Status**: Draft

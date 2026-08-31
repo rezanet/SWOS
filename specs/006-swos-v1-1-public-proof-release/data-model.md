@@ -1,5 +1,8 @@
 # Data Model: SWOS v1.1 Public Proof and Release
 
+> **Superseded:** The current release data model is in
+> `specs/007-simple-release-record/data-model.md`; this file is historical.
+
 ## PublicProofProject
 
 - `project_version`, `project_id`, `topic`, `requested_length`

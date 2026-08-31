@@ -11,7 +11,6 @@ from typing import Any
 from .evaluation import PLANES, EvaluationSubject, build_evaluation_result, canonical_digest
 from .models import ResearchRequest, SourceRecord
 from .orchestrator import AutonomousSWOS
-from .release_approval import prepare_approval_pack
 
 
 class PublicProofError(RuntimeError):
@@ -416,15 +415,6 @@ def run_public_proof(project_path: str | Path, out_dir: str | Path) -> dict[str,
     _write_json(evaluation_path, evaluation)
     if evaluation["release_decision"]["decision"] != "release":
         raise PublicProofError("public proof evaluation did not recommend release")
-    prepare_approval_pack(
-        run_dir,
-        evaluation_path,
-        output / "approval",
-        author={"actor_type": "orchestrator", "actor_id": "swos-public-proof-provider"},
-        contract_owner={"actor_type": "agent", "actor_id": "swos-contract-authority"},
-        evaluation_owner={"actor_type": "agent", "actor_id": "swos-evaluation-authority"},
-        created_at="2026-08-30T00:00:00+00:00",
-    )
     normalized = _normalized_proof(subject, evaluation, project)
     result = {
         "proof_version": "swos.public-proof.v1",
@@ -434,7 +424,7 @@ def run_public_proof(project_path: str | Path, out_dir: str | Path) -> dict[str,
         "run_manifest_sha256": subject.manifest_sha256,
         "proof_fingerprint": canonical_digest(normalized),
         "normalized_proof": normalized,
-        "release_status": "awaiting_separate_human_approval_and_signature",
+        "release_status": "awaiting_exact_sha_release_record",
     }
     _write_json(output / "proof-result.json", result)
     shutil.copy2(project_path, output / "project.json")
@@ -456,7 +446,7 @@ def verify_public_proof(path: str | Path) -> list[str]:
             errors.append("public proof normalized content does not verify")
         if evaluation.get("release_decision", {}).get("decision") != "release":
             errors.append("public proof evaluation is not releasable")
-        if result.get("release_status") != "awaiting_separate_human_approval_and_signature":
+        if result.get("release_status") != "awaiting_exact_sha_release_record":
             errors.append("public proof overstates its release authority")
     except (PublicProofError, OSError, json.JSONDecodeError, KeyError, TypeError) as exc:
         errors.append(str(exc))

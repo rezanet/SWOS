@@ -1,5 +1,8 @@
 # Research: SWOS v1.1 Public Proof and Release
 
+> **Historical decision:** The release-signing design below is superseded by
+> the simpler source-release record in `specs/007-simple-release-record/`.
+
 ## R1 — Public corpus
 
 Use three official NIST AI RMF resources: the AI RMF 1.0 publication record, the

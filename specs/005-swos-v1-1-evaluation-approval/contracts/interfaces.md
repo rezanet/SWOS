@@ -1,5 +1,9 @@
 # Interface Contracts: Evaluation and Human Approval
 
+> **Historical scope note:** These evaluation contracts remain a record of the
+> completed feature. Do not use the former release approval commands; current
+> source releases use `specs/007-simple-release-record/contracts/interfaces.md`.
+
 ## Runtime-bound evaluation
 
 ```text
@@ -15,56 +19,11 @@ Contract:
 - exit `0` only when all selected gates pass, otherwise non-zero with no release claim;
 - contract-only mode remains available but is labelled fixture conformance.
 
-## Approval-pack preparation
+## Current source-release boundary
 
-```text
-python -m swos_runtime.cli prepare-approval \
-  --run-dir <finalized-run> \
-  --evaluation <evaluation-result.json> \
-  --author <actor.json> \
-  --contract-owner <actor.json> \
-  --evaluation-owner <actor.json> \
-  --output <release-evidence-dir>
-```
-
-Contract:
-
-- fails unless the subject and all eight planes pass prerequisites;
-- writes a digest-protected pack with risk/evidence sections before manuscript;
-- does not create or imply human approval.
-
-## Human decision recording
-
-```text
-python -m swos_runtime.cli record-approval \
-  --release-dir <release-evidence-dir> \
-  --decision <human-decision-input.json>
-```
-
-Required decision input:
-
-- `decision`: `approve` or `reject`;
-- `approver`: actor object with `actor_type: human` and stable `actor_id`;
-- `rationale`: non-empty text;
-- `alternatives_considered`: at least approval and rejection;
-- `reviewed_evidence`: exact run-manifest, evaluation and approval-pack digests;
-- `policy_basis`: `swos.release-gate`;
-- `timestamp`: ISO 8601 date-time.
-
-Contract: writes a frozen-schema-compatible SDL decision document. Automation
-may invoke the command with a human-supplied file but may not synthesize the
-human identity or decision.
-
-## Standalone release verification
-
-```text
-python tools/validate_release.py \
-  --run-dir <finalized-run> --release-dir <release-evidence-dir>
-```
-
-Contract:
-
-- exit `0` only for an exact, passing evaluation, intact pack, eligible human
-  approval and all separation-of-duties checks;
-- exit non-zero for rejection, missing evidence, mismatch, alteration or unknown;
-- emits a machine-readable gate result without modifying the subject.
+The former multi-file release approval interface is retained only in the
+historical implementation record and is no longer a runtime command. Current
+source releases use the single exact-SHA record documented in
+`specs/007-simple-release-record/contracts/interfaces.md`. The runtime
+evaluation and scholarly decision evidence described above remain in force;
+release signing and identity-policy machinery is not required.

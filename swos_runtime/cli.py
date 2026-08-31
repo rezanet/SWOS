@@ -4,18 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 
 from .adapter_factory import build_openai_api_broker, build_replay_broker
 from .finalizer import finalize_work_order_run
 from .models import ResearchRequest
 from .orchestrator import AutonomousSWOS
-from .release_approval import (
-    ReleaseApprovalError,
-    prepare_approval_pack,
-    record_release_decision,
-)
 from .work_orders import WorkOrderError, WorkOrderRun
 
 
@@ -101,25 +95,6 @@ def main() -> int:
     finalise.add_argument("--output", type=Path, required=True)
     finalise.add_argument("--json", action="store_true", dest="as_json")
 
-    prepare = sub.add_parser(
-        "prepare-approval", help="Prepare risk-first evidence for a separate human approver"
-    )
-    prepare.add_argument("--run-dir", type=Path, required=True)
-    prepare.add_argument("--evaluation", type=Path, required=True)
-    prepare.add_argument("--author", type=Path, required=True)
-    prepare.add_argument("--contract-owner", type=Path, required=True)
-    prepare.add_argument("--evaluation-owner", type=Path, required=True)
-    prepare.add_argument("--output", type=Path, required=True)
-    prepare.add_argument("--created-at", default=None)
-    prepare.add_argument("--json", action="store_true", dest="as_json")
-
-    approval = sub.add_parser(
-        "record-approval", help="Record a human-supplied release approval or rejection"
-    )
-    approval.add_argument("--release-dir", type=Path, required=True)
-    approval.add_argument("--decision", type=Path, required=True)
-    approval.add_argument("--json", action="store_true", dest="as_json")
-
     args = parser.parse_args()
 
     try:
@@ -175,27 +150,6 @@ def main() -> int:
             _print(outcome.to_dict(), args.as_json)
             return 0 if outcome.status == "APPROVED" else 1
 
-        if args.command == "prepare-approval":
-            pack = prepare_approval_pack(
-                args.run_dir,
-                args.evaluation,
-                args.output,
-                author=json.loads(args.author.read_text(encoding="utf-8")),
-                contract_owner=json.loads(args.contract_owner.read_text(encoding="utf-8")),
-                evaluation_owner=json.loads(args.evaluation_owner.read_text(encoding="utf-8")),
-                created_at=args.created_at or datetime.now(timezone.utc).isoformat(),
-            )
-            _print(pack, args.as_json)
-            return 0
-
-        if args.command == "record-approval":
-            ledger = record_release_decision(
-                args.release_dir,
-                json.loads(args.decision.read_text(encoding="utf-8")),
-            )
-            _print(ledger, args.as_json)
-            return 0
-
         if args.command == "research-write":
             request = ResearchRequest(
                 topic=args.topic,
@@ -220,7 +174,7 @@ def main() -> int:
                 for reason in outcome.blocking_reasons:
                     print(f"- {reason}")
             return 0 if outcome.status == "APPROVED" else 1
-    except (WorkOrderError, ReleaseApprovalError, ValueError, json.JSONDecodeError) as exc:
+    except (WorkOrderError, ValueError, json.JSONDecodeError) as exc:
         if getattr(args, "as_json", False):
             print(json.dumps({"error": str(exc)}, indent=2))
         else:

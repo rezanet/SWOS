@@ -1,5 +1,8 @@
 # Implementation Plan: SWOS v1.1 Evaluation and Human Approval
 
+> **Historical scope note:** Runtime evaluation remains relevant. The former
+> release approval-pack/decision implementation is superseded by feature `007`.
+
 **Branch**: `codex/swos-v1.1-evaluation-approval` | **Date**: 2026-08-30 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `specs/005-swos-v1-1-evaluation-approval/spec.md`

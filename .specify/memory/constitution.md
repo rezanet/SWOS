@@ -36,8 +36,10 @@ citation, review, governance and audit obligations may not.
 ### V. Human approval
 
 Human responsibility for final scholarly judgement and release is mandatory.
-Automation may prepare evidence and recommendations, but it MUST NOT be
-described as autonomous publication or be the sole approver of a release.
+For a source release, one explicit maintainer-owned release record is the
+approval authority. Automation may prepare evidence and recommendations, but
+it MUST NOT be described as autonomous publication or be the sole approver of a
+release.
 
 ### VI. Separation of duties
 
@@ -76,7 +78,13 @@ artifacts under `specs/`.
   provider credentials and paid calls belong only to explicit live workflows.
 - Live compatibility claims MUST record the selected exact SHA, fail closed on
   missing credentials/provider failure/missing evidence, and remain outside
-  ordinary branch-protection requirements.
+  ordinary branch-protection requirements. They are never implied by a source
+  release record.
+- Source releases MUST retain exact-SHA evidence, deterministic tests,
+  public-proof reproduction, source/citation hashes, concise SBOM/provenance
+  and known limitations. A single release record MUST contain the exact SHA,
+  test/proof results, date, approval identity and rationale. Detached signing
+  is optional until SWOS distributes packages or gains multiple maintainers.
 - Documentation authority, status, version and supersession MUST be recorded in
   `docs/document-manifest.json` and pass its schema and semantic validator.
 - Unrelated dirty work and historical records MUST be preserved. History MUST
@@ -90,4 +98,4 @@ in the accompanying plan, updated validation evidence, and reciprocal manifest
 metadata. Existing contracts and release evidence remain historical records;
 they are not retroactively rewritten.
 
-**Version**: 1.0.0 | **Ratified**: 2026-08-29 | **Last Amended**: 2026-08-29
+**Version**: 1.1.0 | **Ratified**: 2026-08-29 | **Last Amended**: 2026-08-31

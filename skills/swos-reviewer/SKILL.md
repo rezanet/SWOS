@@ -34,7 +34,7 @@ Full criteria: `references/reviewer-packs/`.
 ```
 draft -> citation audit -> argument audit -> method audit -> discipline audit
       -> hostile review -> revision -> final unsupported-claim scan
-      -> human approval pack
+      -> maintainer release record
 ```
 
 **Iteration cap: 3.** On the fourth pass, escalate to a human. Unlimited
