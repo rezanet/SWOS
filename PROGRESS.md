@@ -3,6 +3,18 @@
 This ledger records repository-grounded state and exact evidence. Percentages are
 quality measurements, not claims about completion of the larger SWOS roadmap.
 
+## Current exact-head reconciliation
+
+**Last reconciled:** 2026-08-31
+**Reference main SHA:** `df87cf2a6a21bfd9e3e10be541624ad95908b40b`
+
+The v1.1 reference-runtime implementation path is merged through PRs #41,
+#45, #46, #47, #48, #49, #50, #51 and #52. PR #52 replaced mandatory signing
+with the exact-SHA release record and closed the release-gate integrity finding.
+The implementation path is not the same as a completed v1.1 release: the final
+main-head public-proof reproduction, release record, SBOM/provenance bundle and
+human acceptance still have to be generated and accepted together.
+
 ## Verified M1 history
 
 - PR #36, **M1: Self-Healing Engine (Repair Loop)**, was squash-merged from
@@ -32,8 +44,10 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
   `ff1ec102c7f128d4e10bfde7b823627680b6fea0` (ledger-only evidence corrections),
   and final PR head `240045b145a8ac8b8bb6809931b417a7923bc912` (documentation-only
   distinction between implementation/evidence and final ledger heads)
-- PR #41 landed the reference-runtime foundation for v1.1; cross-encoder
-  reranking and the remaining Phase 1 capabilities are not yet complete
+- PR #41 landed the reference-runtime foundation for v1.1. PRs #45 through #52
+  now provide the reconciled runtime, retrieval/citation, governed-store,
+  evaluation, public-proof and exact-SHA release-record path; final v1.1
+  demonstration and certification remain open
 
 ### Local evidence
 
@@ -94,10 +108,10 @@ PR #37: [G2: Engineering Substrate and CI Quality Baseline](https://github.com/r
   squash deviation; the signed follow-up is a process guard, not a retroactive
   history repair, and `main` is not rewritten.
 
-The historical G-Prose95 gate is closed. The v1.1 reference-runtime programme
-may now proceed from the exact PR #41 main head under the authoritative
+The historical G-Prose95 gate is closed. The v1.1 reference-runtime
+implementation path is now merged through PR #52 under the authoritative
 [`docs/roadmap.md`](docs/roadmap.md); this file does not claim that v1.1 is
-complete.
+complete until the final exact-head release evidence is accepted.
 
 Live Luna/OpenAI verifier, dogfood and benchmark results remain stochastic
 evidence and are not substitutes for deterministic merge gates.
@@ -108,8 +122,8 @@ evidence and are not substitutes for deterministic merge gates.
 **Baseline report:** [`BASELINE_REPORT.md`](BASELINE_REPORT.md)
 **Historical programme branch:** `programme/swos-100-completion-baseline`
 **Current programme branch:** `main`
-**Last reconciled:** 2026-08-23
-**Current reconciled main SHA:** `e79dbd3185703defa6bdba7fe2511ce3f260c9a8`
+**Last reconciled:** 2026-08-31
+**Current reconciled main SHA:** `df87cf2a6a21bfd9e3e10be541624ad95908b40b`
 
 > This file tracks progress against SWOS as defined by its contracts, issues, source and authoritative roadmap. Percentages are planning estimates, not quality scores or release claims.
 
@@ -119,14 +133,14 @@ evidence and are not substitutes for deterministic merge gates.
 |---|---|---|---|
 | 0 | Repository Discovery and Baseline | **COMPLETE** | `BASELINE_REPORT.md`; repo/issues/PRs/architecture/CI inspected |
 | 1 | Environment, CI and Quality Baseline | **COMPLETE** | PR #37 merged as `15919f373bbee50fb05b87ed5be8980c66f734d6`; reproducible lock, Ruff, >=80% executable coverage floor, critical-module floors, pip-audit, Bandit, CodeQL, required checks/ruleset, existing governance and eight-plane gates preserved |
-| 2 | Core Reference Implementation / roadmap v1.1 | **FOUNDATION LANDED** | PR #41 merged the reference runtime, capability contracts, adapters and portability substrate; cross-encoder reranking and the remaining Phase 1 slices remain open |
+| 2 | Core Reference Implementation / roadmap v1.1 | **IMPLEMENTED — RELEASE PENDING** | PR #41 and PRs #45-#52 merged the reference runtime, retrieval/citation, governed stores, evaluation, public proof and exact-SHA release-record path; final demonstration and certification remain open |
 | 3 | Host/User Interaction Layer | NOT STARTED | Complete specified host adapters/operator UX only when the reference runtime exists; no fictional browser frontend unless requirements introduce one |
 | 4 | Feature Completion and Semantic Hardening | **IN PROGRESS** | SWOS Prose M1 and G-Prose95 landed; remaining open semantic issues include #4, #5, #6, #7, #12, #13, #14, #16 and verifier-stability issue #32 |
 | 5 | Security Hardening | **IN PROGRESS** | Engineering substrate now includes SCA/SAST/CodeQL and repository protections; runtime egress, store integrity, memory poisoning, malformed-tool and production-surface controls remain future work |
-| 6 | Performance, Cost and Scalability | **IN PROGRESS** | G-Prose95 records provider calls, tokens, latency and fail-closed cost availability; retrieval/reranking, state-store, provenance-growth, throughput and concurrency performance remain unimplemented |
+| 6 | Performance, Cost and Scalability | **IN PROGRESS** | G-Prose95 records provider calls, tokens, latency and fail-closed cost availability; retrieval/reranking and state-store performance baselines, provenance-growth, throughput and concurrency measurements remain future work |
 | 7 | Testing and Quality Gates | **IN PROGRESS** | SWOS Prose executable coverage is above the 80% floor with higher critical-module floors; eight evaluation planes, benchmark contracts, SCA/SAST and deterministic Prose tests are enforced. Whole-system/SUT, mutation and broader runtime coverage remain future work |
 | 8 | Documentation, Distribution and Deployment | **IN PROGRESS** | Portable SWOS Prose skill, CLI, package metadata, development docs and governed benchmark documentation exist; reference-runtime operator/deployment docs remain part of the v1.1 programme |
-| 9 | Final Integration and Release | NOT STARTED | No v1.1/v2/v3 final release; exact final scope, SDL approval, release notes and verified tag remain future gates |
+| 9 | Final Integration and Release | **RELEASE EVIDENCE PENDING** | v1.1 implementation is merged; final main-head proof, release record, release notes and any verified tag remain future gates |
 
 ## Current Repository Release State
 
@@ -134,7 +148,7 @@ evidence and are not substitutes for deterministic merge gates.
 
 - `VERSION`: **1.0.0** — Specification Lock.
 - Contracts/schemas/governance/evaluation/portability foundation: released.
-- v1.1 Reference Implementation: PR #41 provides the reference-runtime foundation; the complete v1.1 programme is not yet implemented, demonstrated or certified.
+- v1.1 Reference Implementation: PRs #41 and #45-#52 merge the reference-runtime capability path. It is implemented and deterministically tested; final public-proof demonstration, exact-head release-record evidence and certification remain open.
 - v2 Research Grade: future roadmap.
 - v3 Product Grade: future roadmap.
 
@@ -225,6 +239,21 @@ PR **#40 — G-Prose95: Complete SWOS Prose full-engine surface** is **MERGED**.
 - final additional Codex bot review was unavailable because the external Codex review quota was exhausted; independent ChatGPT review found no remaining P0/P1/P2 blocker before merge;
 - no release/tag, v1.1 implementation or unrelated platform work was included.
 
+### v1.1 Reference-runtime implementation path
+
+- [x] PR #41 — reference research-writing runtime foundation.
+- [x] PR #45 — capability reconciliation against the merged runtime.
+- [x] PR #46 — retrieval and citation assurance.
+- [x] PR #47 — governed scholarly stores and audit pack.
+- [x] PR #48 — evaluation planes and human approval boundary.
+- [x] PRs #49-#51 — public proof, packaged execution and citation-fingerprint binding.
+- [x] PR #52 — simple exact-SHA release record and release-gate integrity validation.
+
+The implementation path and deterministic CI are merged. v1.1 remains open
+until one final main-head candidate is independently reproduced and its exact
+release record, source/citation hashes, SBOM, provenance and known limitations
+are accepted.
+
 ## Open Work Inventory
 
 ### Open semantic / Prose issues
@@ -248,23 +277,26 @@ These issues remain explicit hardening work. G-Prose95 does not silently close t
 - [x] #37 Engineering Substrate and CI Quality Baseline — merged
 - [x] #40 G-Prose95 full-engine surface — merged
 
-### v1.1 Reference Implementation — remaining Phase 1 work
+### v1.1 Reference Implementation — implementation merged; certification open
 
-PR #41 — **Autonomous SWOS: reference research-writing runtime** — is merged at
-`156e2b7faa70f9affce2ed93d7dc3cb6e19b938e`. It supplies the reference-runtime
-foundation, capability contracts, adapters and portability substrate. The
-following items remain open and must be reconciled against that exact head before
-new implementation begins:
+PR #41 and the dependent PRs #45-#52 are merged. The planned v1.1 reference
+runtime capabilities are implemented and covered by the repository's
+deterministic checks:
 
-- [ ] **Cross-encoder reranker reference implementation — first**
-- [ ] Reference orchestrator
-- [ ] Scholarly state store
-- [ ] EPG store with hash chaining
-- [ ] SDL store with hash chaining
-- [ ] RPM store with governed writes / hash chaining
-- [ ] Open scholarly-index corpus adapters
-- [ ] End-to-end SWOS CLI
-- [ ] Eight-plane harness bound to a real system under test
+- [x] **Cross-encoder reranker reference implementation**
+- [x] Reference orchestrator
+- [x] Scholarly state store
+- [x] EPG store with hash chaining
+- [x] SDL store with hash chaining
+- [x] RPM store with governed writes / hash chaining
+- [x] Open scholarly-index corpus adapters
+- [x] End-to-end SWOS CLI
+- [x] Eight-plane harness bound to a real system under test
+
+The remaining v1.1 work is release certification, not an assertion that the
+implementation is complete: reproduce the public proof from the final `main`
+head, generate the one exact-SHA release record and accept the resulting
+evidence bundle. Do not call v1.1 complete before that gate passes.
 
 ### v2 Research Grade
 
@@ -314,9 +346,14 @@ new implementation begins:
 
 ## Programme Gate
 
-Milestone 0 and the Engineering Substrate/CI baseline are complete. SWOS Prose has reached the governed G-Prose95 full-engine development surface and is no longer the principal implementation dependency.
+Milestone 0 and the Engineering Substrate/CI baseline are complete. SWOS Prose
+has reached the governed G-Prose95 full-engine development surface, and the
+v1.1 reference-runtime implementation path is merged through PR #52. The final
+v1.1 release-evidence gate remains open.
 
-**Next major implementation goal:** roadmap v1.1 retrieval, beginning with the cross-encoder reranker reference implementation. Do not skip directly to the orchestrator or v2/v3 product work before the retrieval/reranking reference path is implemented and evaluated.
+**Next major implementation goal:** complete the final exact-main-head v1.1
+proof and release record. Only after that evidence is accepted should SWOS
+begin the v2.0 Research Grade track; do not skip the v1.1 certification gate.
 
 ## Project Completion Estimate
 
