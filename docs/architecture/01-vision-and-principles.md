@@ -18,7 +18,7 @@ boundaries.
 | Arguments as structures | Argument Graph stores claims, warrants, objections, rebuttals and rival readings. |
 | Provenance as justification | EPG, SDL and RPM preserve source, transformation, decision and correction lineage. |
 | Continuous governance | Lifecycle gates, policy checks, approvals and audit packs span the whole run. |
-| Human responsibility | Release requires a human approval record and separated review roles. |
+| Human responsibility | Release requires one explicit maintainer-owned record; scholarly review roles remain visible. |
 | Host independence | Contracts and schemas sit below replaceable hosts, models, retrievers and adapters. |
 | Minimal reference runtime | The initial implementation proves a local, reproducible file-backed path before breadth. |
 

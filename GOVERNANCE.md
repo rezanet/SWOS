@@ -41,10 +41,12 @@ error in as ground truth.
 
 ## Release process
 
-See `docs/operations-and-lifecycle-playbook.md`. A release requires a green
-`make validate`, a green `make eval` with no plane regressed, a signed release
-note, a provenance bundle for the release itself, and governance-owner approval
-recorded as an SDL entry of type `release`.
+See `docs/operations-and-lifecycle-playbook.md`. A source release requires a
+green `make validate`, a green `make eval` with no plane regressed, an exact-SHA
+release record, a concise SBOM/provenance record, retained source/citation
+hashes, and known limitations. The record contains the maintainer approval and
+rationale. Package signing is optional until SWOS distributes packages or gains
+multiple maintainers.
 
 ## Retirement
 

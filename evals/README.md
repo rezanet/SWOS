@@ -21,10 +21,10 @@ evidence, not a human release approval or a live-provider compatibility claim.
 Contract mode without `--system` validates fixture shape only and cannot claim
 runtime coverage.
 
-Passing all planes is an automated release recommendation. Release authority
-remains denied until a separate eligible human reviews the risk-first approval
-pack and records an exact, rationale-bearing decision under
-`swos.release-gate`.
+Passing all planes is an automated release recommendation. A source release
+still needs one maintainer-owned exact-SHA release record containing the
+approval, date and rationale. The record is checked against the proof and
+source hashes; it is not inferred from the automated recommendation.
 
 ## Eight planes
 

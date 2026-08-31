@@ -136,13 +136,14 @@ audit pack without hidden state.
 
 ### 4. Evaluation and human approval
 
-**Status:** completed in Spec Kit feature `005` and merged through PR #48.
+**Status:** completed in Spec Kit feature `005` and merged through PR #48;
+release-specific authority is now recorded by feature `007`.
 
 **Depends on:** governed stores and audit pack.
 
 **Outputs:** all eight evaluation planes bound to the real runtime, complete
-provenance, zero unresolved blockers, separated review evidence and a human
-approval record.
+provenance, zero unresolved blockers, review evidence and a human-owned
+approval record for any release.
 
 **Gate:** no plane is contract-only when the runtime path is claimed, and no
 automated component can approve its own output.
@@ -152,18 +153,18 @@ approved by the responsible human reviewer.
 
 ### 5. Public proof and release
 
-**Status:** implementation in Spec Kit feature `006`; deterministic public proof
-and release-evidence tooling are implemented. A real owner approval and trusted
-external signature remain release-authority gates, not ordinary PR checks.
+**Status:** the public proof and evidence path from Spec Kit feature `006` is
+implemented; its release-approval/signing design is superseded by Spec Kit
+feature `007`, which supplies the simple release record.
 
 **Depends on:** evaluation and human approval.
 
 **Outputs:** one independently reproducible public-source project, audit pack,
-SBOM, build provenance, signed checksums, conformance report and known-
-limitations statement.
+one exact-SHA release record, SHA-256 checksums, concise SBOM, build
+provenance, conformance report and known-limitations statement.
 
-**Gate:** exact selected SHA, complete evidence and release approval are present;
-live provider evidence is never an ordinary merge prerequisite.
+**Gate:** exact selected SHA, complete evidence and one valid release record are
+present; live provider evidence is never an ordinary merge prerequisite.
 
 **Done when:** an independent reviewer can rerun the public proof and reach the
 same governed outcome or see a recorded, bounded failure.
@@ -198,7 +199,8 @@ provider credentials or call paid providers. Portability runs in
 
 Runs explicitly when a release candidate needs complete local evidence without a
 provider. It validates the frozen contracts, all required artefacts, provenance,
-audit pack and deterministic portability definitions. It cannot claim live
+audit pack and deterministic portability definitions. It requires the one
+exact-SHA release record for candidate assembly, but cannot claim live
 compatibility.
 
 ### Live-compatible release profile
@@ -206,7 +208,17 @@ compatibility.
 Runs only through `workflow_dispatch` against a user-selected exact SHA. It
 requires credentials, records the resolved SHA, fails closed on absent credits,
 provider errors or missing evidence, and uploads the evidence as a non-required
-artifact. A compatibility claim is valid only for the profile that passed.
+artifact. A compatibility claim is valid only for the profile that passed and
+is never implied by the source-release record.
+
+### Source release record
+
+The source-release record is deliberately small: exact selected SHA, approval
+identity, date, rationale, deterministic/offline test results, proof
+fingerprint and proof/project/reproduction/source hashes. It is the current
+release authority for this sole-maintainer public repository. Detached package
+signing is an optional future enhancement if SWOS distributes packages or gains
+multiple maintainers.
 
 ## Spec Kit rule
 

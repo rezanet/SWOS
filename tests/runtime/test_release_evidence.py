@@ -7,13 +7,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from swos_runtime.evaluation import canonical_digest
 from swos_runtime.public_proof import (
     reproduce_public_proof,
     run_public_proof,
     verify_public_proof,
 )
-from swos_runtime.release_approval import record_release_decision
 from swos_runtime.release_evidence import (
     ReleaseEvidenceError,
     build_release_candidate,
@@ -22,10 +20,14 @@ from swos_runtime.release_evidence import (
     verify_release_candidate,
     write_checksums,
 )
+from swos_runtime.release_record import (
+    ReleaseRecordError,
+    create_release_record,
+    verify_release_record,
+)
 
 PROJECT = Path("examples/public-proof/project.json")
 TIME = "2026-08-30T00:00:00+00:00"
-PRINCIPAL = "swos-release-test@example.invalid"
 
 
 def _run(*args: str, cwd: Path | None = None) -> str:
@@ -49,62 +51,41 @@ class ReleaseEvidenceTests(unittest.TestCase):
         _run("git", "commit", "-m", "test release input", cwd=repo)
         return repo, _run("git", "rev-parse", "HEAD", cwd=repo)
 
-    def _proof_and_approval(self, root: Path) -> tuple[Path, Path]:
+    def _proof_and_record(self, root: Path, sha: str) -> tuple[Path, Path, Path]:
         proof = root / "proof"
         run_public_proof(PROJECT, proof)
         report = reproduce_public_proof(PROJECT, proof, root / "independent")
         reproduction = root / "reproduction.json"
         reproduction.write_text(json.dumps(report), encoding="utf-8")
-        pack = json.loads((proof / "approval" / "approval-pack.json").read_text(encoding="utf-8"))
-        decision = {
-            "decision": "approve",
-            "approver": {"actor_type": "human", "actor_id": "release-approver-test"},
-            "rationale": "The exact deterministic evidence passes this test release gate.",
-            "alternatives_considered": ["approve", "reject"],
-            "reviewed_evidence": {
-                **pack["bindings"],
-                "approval_pack_sha256": canonical_digest(pack),
-            },
-            "policy_basis": "swos.release-gate",
-            "timestamp": TIME,
-        }
-        record_release_decision(proof / "approval", decision)
-        return proof, reproduction
+        record = root / "release-record.json"
+        create_release_record(
+            selected_sha=sha,
+            proof_dir=proof,
+            reproduction_path=reproduction,
+            approved_by_id="release-owner-test",
+            approved_by_name="SWOS Test Owner",
+            approved_at=TIME,
+            rationale="The exact deterministic proof and independent reproduction pass.",
+            output_path=record,
+        )
+        return proof, reproduction, record
 
     def _candidate(self, root: Path) -> tuple[Path, Path, str]:
         repo, sha = self._source_repo(root)
-        proof, reproduction = self._proof_and_approval(root)
+        proof, reproduction, record = self._proof_and_record(root, sha)
         candidate = root / "candidate"
         build_release_candidate(
             repo_root=repo,
             selected_sha=sha,
             proof_dir=proof,
             reproduction_path=reproduction,
-            release_approval_dir=proof / "approval",
+            release_record_path=record,
             out_dir=candidate,
             built_at=TIME,
         )
         return candidate, proof, sha
 
-    def _sign(self, root: Path, candidate: Path, namespace: str = "swos-release") -> Path:
-        key = root / "release-key"
-        _run("ssh-keygen", "-q", "-t", "ed25519", "-N", "", "-f", str(key))
-        _run(
-            "ssh-keygen",
-            "-Y",
-            "sign",
-            "-f",
-            str(key),
-            "-n",
-            namespace,
-            str(candidate / "SHA256SUMS"),
-        )
-        public = (root / "release-key.pub").read_text(encoding="utf-8").strip()
-        allowed = root / "allowed_signers"
-        allowed.write_text(f"{PRINCIPAL} {public}\n", encoding="utf-8")
-        return allowed
-
-    def test_candidate_contains_exact_sbom_provenance_conformance_and_checksums(self):
+    def test_candidate_contains_exact_record_sbom_provenance_and_checksums(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             candidate, _, sha = self._candidate(root)
@@ -114,10 +95,16 @@ class ReleaseEvidenceTests(unittest.TestCase):
             sbom = json.loads((candidate / "sbom.cdx.json").read_text(encoding="utf-8"))
 
             self.assertEqual(manifest["selected_sha"], sha)
+            self.assertEqual(manifest["state"], "ready_for_public_release")
+            self.assertTrue((candidate / "release-record.json").is_file())
+            self.assertIn("release-record-gate.json", (candidate / "SHA256SUMS").read_text())
+            self.assertFalse((candidate / "approval").exists())
+            self.assertFalse((candidate / "SHA256SUMS.sig").exists())
             self.assertEqual(sbom["bomFormat"], "CycloneDX")
             self.assertTrue(sbom["components"])
             self.assertEqual(verify_checksums(candidate), [])
             self.assertEqual(verify_public_proof(candidate / "public-proof"), [])
+            self.assertEqual(verify_release_candidate(candidate_dir=candidate)["decision"], "allow")
             self.assertIn(
                 "live_compatible_release", (candidate / "conformance-report.json").read_text()
             )
@@ -127,7 +114,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             repo, sha = self._source_repo(root)
-            proof, reproduction = self._proof_and_approval(root)
+            proof, reproduction, record = self._proof_and_record(root, sha)
             (repo / "dirty.txt").write_text("dirty", encoding="utf-8")
             with self.assertRaises(ReleaseEvidenceError):
                 build_release_candidate(
@@ -135,7 +122,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
                     selected_sha=sha,
                     proof_dir=proof,
                     reproduction_path=reproduction,
-                    release_approval_dir=proof / "approval",
+                    release_record_path=record,
                     out_dir=root / "candidate",
                     built_at=TIME,
                 )
@@ -145,78 +132,77 @@ class ReleaseEvidenceTests(unittest.TestCase):
                     selected_sha="0" * 40,
                     proof_dir=proof,
                     reproduction_path=reproduction,
-                    release_approval_dir=proof / "approval",
+                    release_record_path=record,
                     out_dir=root / "candidate-2",
                     built_at=TIME,
                 )
 
-    def test_tamper_or_incomplete_checksum_inventory_fails(self):
+    def test_missing_or_mismatched_record_fails_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            repo, sha = self._source_repo(root)
+            proof, reproduction, record = self._proof_and_record(root, sha)
+            missing = verify_release_record(
+                root / "missing.json",
+                selected_sha=sha,
+                proof_dir=proof,
+                reproduction_path=reproduction,
+            )
+            self.assertTrue(missing)
+
+            stored = json.loads(record.read_text(encoding="utf-8"))
+            stored["selected_sha"] = "0" * 40
+            record.write_text(json.dumps(stored), encoding="utf-8")
+            with self.assertRaises(ReleaseEvidenceError):
+                build_release_candidate(
+                    repo_root=repo,
+                    selected_sha=sha,
+                    proof_dir=proof,
+                    reproduction_path=reproduction,
+                    release_record_path=record,
+                    out_dir=root / "candidate",
+                    built_at=TIME,
+                )
+
+    def test_tampered_candidate_or_record_fails_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             candidate, _, _ = self._candidate(Path(tmp))
             (candidate / "KNOWN-LIMITATIONS.md").write_text("tampered", encoding="utf-8")
-            self.assertTrue(verify_checksums(candidate))
+            self.assertTrue(verify_release_candidate(candidate_dir=candidate)["reasons"])
 
-    def test_trusted_signature_and_exact_human_approval_allow_release(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            candidate, _, _ = self._candidate(root)
-            allowed = self._sign(root, candidate)
-            result = verify_release_candidate(
-                candidate_dir=candidate,
-                allowed_signers=allowed,
-                principal=PRINCIPAL,
-            )
-            self.assertEqual(result["decision"], "allow", result["reasons"])
-
-    def test_resigned_semantically_tampered_proof_still_denies_release(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            candidate, _, _ = self._candidate(root)
-            result_path = candidate / "public-proof" / "proof-result.json"
-            result = json.loads(result_path.read_text(encoding="utf-8"))
-            result["normalized_proof"]["status"] = "tampered"
-            result_path.write_text(json.dumps(result), encoding="utf-8")
             write_checksums(candidate)
-            allowed = self._sign(root, candidate)
+            stored = json.loads((candidate / "release-record.json").read_text(encoding="utf-8"))
+            stored["proof"]["fingerprint"] = "0" * 64
+            (candidate / "release-record.json").write_text(json.dumps(stored), encoding="utf-8")
+            write_checksums(candidate)
+            result = verify_release_candidate(candidate_dir=candidate)
+            self.assertEqual(result["decision"], "deny")
+            self.assertTrue(any("release record" in reason for reason in result["reasons"]))
 
-            gate = verify_release_candidate(
-                candidate_dir=candidate,
-                allowed_signers=allowed,
-                principal=PRINCIPAL,
-            )
-            self.assertEqual(gate["decision"], "deny")
-            self.assertTrue(any("public proof" in reason for reason in gate["reasons"]))
-
-    def test_missing_wrong_principal_and_wrong_namespace_signatures_deny(self):
+    def test_release_record_gate_schema_and_binding_fail_closed(self):
+        cases = {
+            "gate_version": "wrong.version",
+            "release_record": "other-record.json",
+            "reasons": ["blocked"],
+        }
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            candidate, _, _ = self._candidate(root)
-            allowed = self._sign(root, candidate)
-            missing = verify_release_candidate(
-                candidate_dir=candidate,
-                allowed_signers=allowed,
-                principal="wrong@example.invalid",
-            )
-            self.assertEqual(missing["decision"], "deny")
+            for field, value in cases.items():
+                with self.subTest(field=field):
+                    case_root = root / field
+                    case_root.mkdir()
+                    candidate, _, _ = self._candidate(case_root)
+                    gate_path = candidate / "release-record-gate.json"
+                    gate = json.loads(gate_path.read_text(encoding="utf-8"))
+                    gate[field] = value
+                    gate_path.write_text(json.dumps(gate), encoding="utf-8")
+                    write_checksums(candidate)
 
-            (candidate / "SHA256SUMS.sig").unlink()
-            key = root / "release-key"
-            _run(
-                "ssh-keygen",
-                "-Y",
-                "sign",
-                "-f",
-                str(key),
-                "-n",
-                "wrong-namespace",
-                str(candidate / "SHA256SUMS"),
-            )
-            wrong_namespace = verify_release_candidate(
-                candidate_dir=candidate,
-                allowed_signers=allowed,
-                principal=PRINCIPAL,
-            )
-            self.assertEqual(wrong_namespace["decision"], "deny")
+                    result = verify_release_candidate(candidate_dir=candidate)
+                    self.assertEqual(result["decision"], "deny")
+                    self.assertTrue(
+                        any("release record gate" in reason for reason in result["reasons"])
+                    )
 
     def test_sbom_rejects_unlocked_dependency_authority(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -225,6 +211,35 @@ class ReleaseEvidenceTests(unittest.TestCase):
             (root / "requirements-dev.lock").write_text("jsonschema>=4\n", encoding="utf-8")
             with self.assertRaises(ReleaseEvidenceError):
                 generate_sbom(root)
+
+    def test_record_rejects_unknown_fields_and_bad_source_hashes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            repo, sha = self._source_repo(root)
+            proof, reproduction, record = self._proof_and_record(root, sha)
+            stored = json.loads(record.read_text(encoding="utf-8"))
+            stored["unexpected"] = True
+            stored["evidence"]["source_sha256"]["src-nist-ai-rmf-core"] = "0" * 64
+            record.write_text(json.dumps(stored), encoding="utf-8")
+            errors = verify_release_record(
+                record,
+                selected_sha=sha,
+                proof_dir=proof,
+                reproduction_path=reproduction,
+            )
+            self.assertTrue(any("unsupported fields" in error for error in errors))
+            self.assertTrue(any("source hashes" in error for error in errors))
+            with self.assertRaises(ReleaseRecordError):
+                create_release_record(
+                    selected_sha=sha,
+                    proof_dir=proof,
+                    reproduction_path=reproduction,
+                    approved_by_id="release-owner-test",
+                    approved_by_name="SWOS Test Owner",
+                    approved_at=TIME,
+                    rationale="duplicate output must fail",
+                    output_path=record,
+                )
 
 
 if __name__ == "__main__":

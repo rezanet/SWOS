@@ -20,13 +20,30 @@ The second command executes an independent run and compares normalized governed
 content. Runtime identifiers remain unique and are never normalized away in the
 underlying audit packs.
 
-Release candidate assembly additionally requires a clean exact Git head and a
-real feature-005 human approval directory. SWOS writes `SHA256SUMS` but never
-receives a private key. The release authority signs externally:
+Release candidate assembly additionally requires a clean exact Git head and
+one short maintainer-owned release record. Create it from the passing proof and
+reproduction:
 
 ```powershell
-ssh-keygen -Y sign -f <private-key> -n swos-release <candidate>/SHA256SUMS
+python tools/create_release_record.py --selected-sha <40-hex-sha> `
+  --proof <proof-a> --reproduction <reproduction-report.json> `
+  --approved-by-id <maintainer-id> --approved-by-name <maintainer-name> `
+  --approved-at <ISO-8601> --rationale <short-rationale> `
+  --out <release-record.json>
+python tools/build_release_candidate.py --selected-sha <40-hex-sha> `
+  --proof <proof-a> --reproduction <reproduction-report.json> `
+  --release-record <release-record.json> --out <candidate> `
+  --built-at <ISO-8601>
 ```
 
-Independent verification requires an explicit allowed-signers file and principal.
-Without exact approval and a trusted signature, the release gate remains denied.
+Independent verification is local and credential-free:
+
+```powershell
+python tools/verify_release_candidate.py --candidate <candidate>
+```
+
+The candidate verifies exact-commit binding, deterministic test and proof
+results, independent reproduction, source/citation hashes, SHA-256 checksums,
+SBOM, provenance, conformance and known limitations. A detached signature is
+not required; it is a future optional enhancement if SWOS distributes packages
+or gains multiple maintainers.

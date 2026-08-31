@@ -1,5 +1,9 @@
 # Implementation Plan: SWOS v1.1 Public Proof and Release
 
+> **Historical record:** The release-approval and signing design recorded here
+> is superseded by `specs/007-simple-release-record/`. The public-proof and
+> evidence implementation remains useful history.
+
 **Branch**: `codex/swos-v1.1-public-proof-release` | **Date**: 2026-08-30
 **Spec**: [spec.md](spec.md)
 

@@ -1,5 +1,9 @@
 # Quickstart: Validate Evaluation and Human Approval
 
+> **Historical scope note:** Use feature `007` for source-release approval and
+> candidate verification. The evaluation steps below remain valid for runtime
+> assurance and scholarly decision controls.
+
 ## Prerequisites
 
 - Python environment installed from the locked development requirements.
@@ -24,15 +28,12 @@ python -m unittest tests.runtime.test_evaluation
 Expected: missing run, altered manifest/store/artifact, omitted/duplicate plane,
 and fixture-only runtime claims fail.
 
-## 3. Exercise approval ordering and human authority
+## 3. Current source-release boundary
 
-```powershell
-python -m unittest tests.runtime.test_release_approval
-```
-
-Expected: the pack orders risks before manuscript; exact digests verify; only a
-separate human with rationale and policy evidence can open the gate; rejection,
-self-approval, automation and replay remain denied.
+The former approval-pack and release-decision tests are historical. For the
+current source-release record and candidate verifier, follow
+`specs/007-simple-release-record/quickstart.md`. Runtime evaluation still
+requires complete provenance, passing planes and truthful human judgement.
 
 ## 4. Run all deterministic gates
 

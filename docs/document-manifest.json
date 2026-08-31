@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0.0",
-  "generated_at": "2026-08-29",
+  "generated_at": "2026-08-31",
   "corpus": {
     "include_roots": [
       ".",
@@ -31,8 +31,10 @@
       "tests",
       "dogfood",
       "acceptance/portability/evidence",
-      "benchmark/artifacts/raw-evidence-v0.2",
-      ".specify/templates",
+    "benchmark/artifacts/raw-evidence-v0.2",
+    "G1-M1-SELF-HEALING-ENGINE-FINAL-BUILDER-REPORT.md",
+    "M1-SELF-HEALING-ENGINE-BUILDER-REPORT.md",
+    ".specify/templates",
       ".specify/scripts",
       ".specify/integrations"
     ]
@@ -2557,12 +2559,12 @@
       "title": "Specification Quality Checklist: SWOS v1.1 Public Proof and Release",
       "owner": "SWOS Maintainers",
       "authority": "informative",
-      "status": "active",
+      "status": "superseded",
       "version_scheme": "living",
       "version": "current",
       "canonical_for": ["document-specs-006-public-proof-release-checklist"],
       "supersedes": [],
-      "superseded_by": []
+      "superseded_by": ["specs-007-simple-release-record-checklist"]
     },
     {
       "id": "specs-006-public-proof-release-contracts",
@@ -2570,12 +2572,12 @@
       "title": "Interface Contracts: Public Proof and Release",
       "owner": "SWOS Maintainers",
       "authority": "informative",
-      "status": "active",
+      "status": "superseded",
       "version_scheme": "living",
       "version": "current",
       "canonical_for": ["document-specs-006-public-proof-release-contracts"],
       "supersedes": [],
-      "superseded_by": []
+      "superseded_by": ["specs-007-simple-release-record-contracts"]
     },
     {
       "id": "specs-006-public-proof-release-data-model",
@@ -2583,12 +2585,12 @@
       "title": "Data Model: SWOS v1.1 Public Proof and Release",
       "owner": "SWOS Maintainers",
       "authority": "informative",
-      "status": "active",
+      "status": "superseded",
       "version_scheme": "living",
       "version": "current",
       "canonical_for": ["document-specs-006-public-proof-release-data-model"],
       "supersedes": [],
-      "superseded_by": []
+      "superseded_by": ["specs-007-simple-release-record-data-model"]
     },
     {
       "id": "specs-006-public-proof-release-plan",
@@ -2596,12 +2598,12 @@
       "title": "Implementation Plan: SWOS v1.1 Public Proof and Release",
       "owner": "SWOS Maintainers",
       "authority": "informative",
-      "status": "active",
+      "status": "superseded",
       "version_scheme": "living",
       "version": "current",
       "canonical_for": ["document-specs-006-public-proof-release-plan"],
       "supersedes": [],
-      "superseded_by": []
+      "superseded_by": ["specs-007-simple-release-record-plan"]
     },
     {
       "id": "specs-006-public-proof-release-quickstart",
@@ -2609,12 +2611,12 @@
       "title": "Quickstart: Validate Public Proof and Release Evidence",
       "owner": "SWOS Maintainers",
       "authority": "informative",
-      "status": "active",
+      "status": "superseded",
       "version_scheme": "living",
       "version": "current",
       "canonical_for": ["document-specs-006-public-proof-release-quickstart"],
       "supersedes": [],
-      "superseded_by": []
+      "superseded_by": ["specs-007-simple-release-record-quickstart"]
     },
     {
       "id": "specs-006-public-proof-release-research",
@@ -2622,12 +2624,12 @@
       "title": "Research: SWOS v1.1 Public Proof and Release",
       "owner": "SWOS Maintainers",
       "authority": "informative",
-      "status": "active",
+      "status": "superseded",
       "version_scheme": "living",
       "version": "current",
       "canonical_for": ["document-specs-006-public-proof-release-research"],
       "supersedes": [],
-      "superseded_by": []
+      "superseded_by": ["specs-007-simple-release-record-research"]
     },
     {
       "id": "specs-006-public-proof-release-spec",
@@ -2635,12 +2637,12 @@
       "title": "Feature Specification: SWOS v1.1 Public Proof and Release",
       "owner": "SWOS Maintainers",
       "authority": "informative",
-      "status": "active",
+      "status": "superseded",
       "version_scheme": "living",
       "version": "current",
       "canonical_for": ["document-specs-006-public-proof-release-spec"],
       "supersedes": [],
-      "superseded_by": []
+      "superseded_by": ["specs-007-simple-release-record-spec"]
     },
     {
       "id": "specs-006-public-proof-release-tasks",
@@ -2648,11 +2650,115 @@
       "title": "Tasks: SWOS v1.1 Public Proof and Release",
       "owner": "SWOS Maintainers",
       "authority": "informative",
-      "status": "active",
+      "status": "superseded",
       "version_scheme": "living",
       "version": "current",
       "canonical_for": ["document-specs-006-public-proof-release-tasks"],
       "supersedes": [],
+      "superseded_by": ["specs-007-simple-release-record-tasks"]
+    },
+    {
+      "id": "specs-007-simple-release-record-checklist",
+      "path": "specs/007-simple-release-record/checklists/requirements.md",
+      "title": "Specification Quality Checklist: SWOS v1.1 Simple Release Record",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-007-simple-release-record-checklist"],
+      "supersedes": ["specs-006-public-proof-release-checklist"],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-007-simple-release-record-contracts",
+      "path": "specs/007-simple-release-record/contracts/interfaces.md",
+      "title": "Interface Contracts: SWOS v1.1 Simple Release Record",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-007-simple-release-record-contracts"],
+      "supersedes": ["specs-006-public-proof-release-contracts"],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-007-simple-release-record-data-model",
+      "path": "specs/007-simple-release-record/data-model.md",
+      "title": "Data Model: SWOS v1.1 Simple Release Record",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-007-simple-release-record-data-model"],
+      "supersedes": ["specs-006-public-proof-release-data-model"],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-007-simple-release-record-plan",
+      "path": "specs/007-simple-release-record/plan.md",
+      "title": "Implementation Plan: SWOS v1.1 Simple Release Record",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-007-simple-release-record-plan"],
+      "supersedes": ["specs-006-public-proof-release-plan"],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-007-simple-release-record-quickstart",
+      "path": "specs/007-simple-release-record/quickstart.md",
+      "title": "Quickstart: SWOS v1.1 Simple Release Record",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-007-simple-release-record-quickstart"],
+      "supersedes": ["specs-006-public-proof-release-quickstart"],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-007-simple-release-record-research",
+      "path": "specs/007-simple-release-record/research.md",
+      "title": "Research: SWOS v1.1 Simple Release Record",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-007-simple-release-record-research"],
+      "supersedes": ["specs-006-public-proof-release-research"],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-007-simple-release-record-spec",
+      "path": "specs/007-simple-release-record/spec.md",
+      "title": "Feature Specification: SWOS v1.1 Simple Release Record",
+      "owner": "SWOS Maintainers",
+      "authority": "normative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-007-simple-release-record-spec"],
+      "supersedes": ["specs-006-public-proof-release-spec"],
+      "superseded_by": []
+    },
+    {
+      "id": "specs-007-simple-release-record-tasks",
+      "path": "specs/007-simple-release-record/tasks.md",
+      "title": "Tasks: SWOS v1.1 Simple Release Record",
+      "owner": "SWOS Maintainers",
+      "authority": "informative",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-007-simple-release-record-tasks"],
+      "supersedes": ["specs-006-public-proof-release-tasks"],
       "superseded_by": []
     }
   ]

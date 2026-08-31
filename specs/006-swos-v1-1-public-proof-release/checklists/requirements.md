@@ -1,5 +1,8 @@
 # Specification Quality Checklist: SWOS v1.1 Public Proof and Release
 
+> **Historical record:** The current source-release requirements are defined by
+> `specs/007-simple-release-record/`; this checklist is retained for history.
+
 **Purpose**: Validate specification completeness and quality before planning
 **Created**: 2026-08-30
 **Feature**: [spec.md](../spec.md)

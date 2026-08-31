@@ -1,5 +1,8 @@
 # Interfaces: SWOS v1.1 Public Proof and Release
 
+> **Superseded:** Use `specs/007-simple-release-record/contracts/interfaces.md`
+> for current release commands. This file retains the prior interface history.
+
 ## Execute public proof
 
 ```powershell

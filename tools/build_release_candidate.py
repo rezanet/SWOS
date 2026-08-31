@@ -1,4 +1,4 @@
-"""Assemble exact-commit SWOS release evidence without a private signing key."""
+"""Assemble exact-commit SWOS release evidence from one release record."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ def main() -> int:
     parser.add_argument("--selected-sha", required=True)
     parser.add_argument("--proof", type=Path, required=True)
     parser.add_argument("--reproduction", type=Path, required=True)
-    parser.add_argument("--release-approval", type=Path, required=True)
+    parser.add_argument("--release-record", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--built-at", required=True)
     args = parser.parse_args()
@@ -25,7 +25,7 @@ def main() -> int:
             selected_sha=args.selected_sha,
             proof_dir=args.proof,
             reproduction_path=args.reproduction,
-            release_approval_dir=args.release_approval,
+            release_record_path=args.release_record,
             out_dir=args.out,
             built_at=args.built_at,
         )
