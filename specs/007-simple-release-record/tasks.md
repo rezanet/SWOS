@@ -31,6 +31,12 @@
 - [x] T015 [US3] Mark superseded release-approval specifications and record feature metadata in `docs/document-manifest.json`.
 - [x] T016 [US3] Run Spec Kit, schema, manifest, workflow, runtime and exact-head candidate validation from `specs/007-simple-release-record/quickstart.md`.
 
+## Phase 6: Reviewer remediation
+
+- [x] T017 [US2] Bind `release-record-gate.json` to `SHA256SUMS`, validate its
+  exact schema and values, and add checksum-rewritten tamper tests in
+  `swos_runtime/release_evidence.py` and `tests/runtime/test_release_evidence.py`.
+
 ## Dependencies
 
 - T001-T004 establish the current release contract.
@@ -38,6 +44,7 @@
 - T008-T010 bind the record to the candidate while retaining useful evidence.
 - T011-T013 prove deterministic behavior and manual-only workflow boundaries.
 - T014-T016 reconcile documentation and verify the exact implementation head.
+- T017 hardens the machine-readable gate against checksum-rewritten tampering.
 
 ## Definition of done
 

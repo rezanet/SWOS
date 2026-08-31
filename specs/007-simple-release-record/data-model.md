@@ -57,9 +57,11 @@ principal or allowed-signers field.
 }
 ```
 
-The gate is generated only after the record and evidence validate. Candidate
-checksums exclude the gate itself to avoid coupling the gate's diagnostic
-output to its own inventory; all other candidate payload files are covered.
+The gate is generated only after the record and evidence validate. The gate is
+covered by `SHA256SUMS`, and candidate verification also requires the exact
+fields and values shown above, including an empty `reasons` list. This prevents
+rewriting the checksum inventory from turning a changed gate into an accepted
+candidate.
 
 ## Evidence retained
 

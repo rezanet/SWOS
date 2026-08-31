@@ -20,6 +20,15 @@ from .release_record import verify_release_record
 CHECKSUM_FILE = "SHA256SUMS"
 RECORD_FILE = "release-record.json"
 GATE_FILE = "release-record-gate.json"
+GATE_VERSION = "swos.release-record-gate.v1"
+GATE_FIELDS = {
+    "gate_version",
+    "decision",
+    "selected_sha",
+    "release_record",
+    "reasons",
+}
+COMMIT_SHA_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 
 
 class ReleaseEvidenceError(RuntimeError):
@@ -130,10 +139,33 @@ def generate_sbom(repo_root: str | Path) -> dict[str, Any]:
 
 
 def _payload_files(candidate: Path) -> list[Path]:
-    excluded = {CHECKSUM_FILE, GATE_FILE}
+    excluded = {CHECKSUM_FILE}
     return sorted(
         path for path in candidate.rglob("*") if path.is_file() and path.name not in excluded
     )
+
+
+def _verify_release_record_gate(gate: Any, *, selected_sha: Any) -> list[str]:
+    if not isinstance(gate, dict):
+        return ["release record gate must be an object"]
+    if set(gate) != GATE_FIELDS:
+        return ["release record gate has unexpected or missing fields"]
+
+    errors: list[str] = []
+    if gate["gate_version"] != GATE_VERSION:
+        errors.append("release record gate version is invalid")
+    if gate["decision"] != "allow":
+        errors.append("release record gate decision is not allow")
+    gate_sha = gate["selected_sha"]
+    if not isinstance(gate_sha, str) or not COMMIT_SHA_PATTERN.fullmatch(gate_sha):
+        errors.append("release record gate selected SHA is invalid")
+    elif gate_sha != selected_sha:
+        errors.append("release record gate selected SHA does not verify")
+    if gate["release_record"] != RECORD_FILE:
+        errors.append("release record gate release-record binding is invalid")
+    if gate["reasons"] != []:
+        errors.append("release record gate reasons must be empty")
+    return errors
 
 
 def write_checksums(candidate: str | Path) -> Path:
@@ -215,7 +247,7 @@ def build_release_candidate(
     shutil.copy2(Path(reproduction_path), public / "reproduction-report.json")
     shutil.copy2(Path(release_record_path), output / RECORD_FILE)
     record_gate = {
-        "gate_version": "swos.release-record-gate.v1",
+        "gate_version": GATE_VERSION,
         "decision": "allow",
         "selected_sha": exact_sha,
         "release_record": RECORD_FILE,
@@ -329,6 +361,7 @@ def verify_release_candidate(*, candidate_dir: str | Path) -> dict[str, Any]:
             reasons.append("independent public proof reproduction does not verify")
 
         selected = manifest.get("selected_sha")
+        reasons.extend(_verify_release_record_gate(record_gate, selected_sha=selected))
         reasons.extend(
             f"release record: {reason}"
             for reason in verify_release_record(
@@ -342,10 +375,6 @@ def verify_release_candidate(*, candidate_dir: str | Path) -> dict[str, Any]:
             "selected_sha"
         ):
             reasons.append("candidate selected SHA bindings do not agree")
-        if selected != record_gate.get("selected_sha"):
-            reasons.append("release record gate selected SHA does not verify")
-        if record_gate.get("decision") != "allow":
-            reasons.append("release record gate does not allow the candidate")
         if manifest.get("state") != "ready_for_public_release":
             reasons.append("candidate state is invalid")
         if manifest.get("release_record") != RECORD_FILE:

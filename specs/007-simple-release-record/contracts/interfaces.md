@@ -29,6 +29,11 @@ independent reproduction and a record whose SHA, proof fingerprint, file
 hashes and source snapshot hashes match. It writes the record, release-record
 gate, checksums, SBOM, build provenance, conformance report and limitations.
 
+The release-record gate is included in `SHA256SUMS` and is independently
+validated as the exact five-field object documented in the data model. Its
+decision is `allow`, its selected SHA matches the candidate, its record binding
+is `release-record.json`, and its reasons list is empty.
+
 ## Verify a candidate
 
 ```powershell

@@ -27,7 +27,8 @@ consistent with the SWOS constitution.
 - [x] FR-006 public proof does not create the former approval machinery.
 - [x] FR-007 candidate artifact set retains the useful release evidence.
 - [x] FR-008 unsigned candidate verification succeeds.
-- [x] FR-009 altered or missing bindings fail closed.
+- [x] FR-009 altered or missing record, gate or other bindings fail closed,
+  including after the checksum inventory is rewritten.
 - [x] FR-010 conformance profile claims remain bounded.
 - [x] FR-011 ordinary workflows remain credential-free and public proof is manual.
 - [x] FR-012 optional future signing is documented without being required.

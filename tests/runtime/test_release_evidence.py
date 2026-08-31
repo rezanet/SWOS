@@ -97,6 +97,7 @@ class ReleaseEvidenceTests(unittest.TestCase):
             self.assertEqual(manifest["selected_sha"], sha)
             self.assertEqual(manifest["state"], "ready_for_public_release")
             self.assertTrue((candidate / "release-record.json").is_file())
+            self.assertIn("release-record-gate.json", (candidate / "SHA256SUMS").read_text())
             self.assertFalse((candidate / "approval").exists())
             self.assertFalse((candidate / "SHA256SUMS.sig").exists())
             self.assertEqual(sbom["bomFormat"], "CycloneDX")
@@ -177,6 +178,31 @@ class ReleaseEvidenceTests(unittest.TestCase):
             result = verify_release_candidate(candidate_dir=candidate)
             self.assertEqual(result["decision"], "deny")
             self.assertTrue(any("release record" in reason for reason in result["reasons"]))
+
+    def test_release_record_gate_schema_and_binding_fail_closed(self):
+        cases = {
+            "gate_version": "wrong.version",
+            "release_record": "other-record.json",
+            "reasons": ["blocked"],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for field, value in cases.items():
+                with self.subTest(field=field):
+                    case_root = root / field
+                    case_root.mkdir()
+                    candidate, _, _ = self._candidate(case_root)
+                    gate_path = candidate / "release-record-gate.json"
+                    gate = json.loads(gate_path.read_text(encoding="utf-8"))
+                    gate[field] = value
+                    gate_path.write_text(json.dumps(gate), encoding="utf-8")
+                    write_checksums(candidate)
+
+                    result = verify_release_candidate(candidate_dir=candidate)
+                    self.assertEqual(result["decision"], "deny")
+                    self.assertTrue(
+                        any("release record gate" in reason for reason in result["reasons"])
+                    )
 
     def test_sbom_rejects_unlocked_dependency_authority(self):
         with tempfile.TemporaryDirectory() as tmp:

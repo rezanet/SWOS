@@ -152,8 +152,9 @@ either artifact.
 - **FR-008**: Candidate verification MUST allow a valid candidate without
   `SHA256SUMS.sig`, an allowed-signers file or a signing principal.
 - **FR-009**: Candidate verification MUST fail closed for changed or missing
-  record, proof, reproduction, source hash, provenance, checksum or exact-SHA
-  evidence.
+  record, proof, reproduction, source hash, provenance, checksum, release-record
+  gate or exact-SHA evidence. The gate MUST have the exact documented schema,
+  match the candidate SHA, bind `release-record.json`, and contain no reasons.
 - **FR-010**: Conformance MUST distinguish deterministic and offline public
   release evidence from unclaimed portability and live-compatible profiles.
 - **FR-011**: Ordinary pull requests MUST remain credential-free and MUST NOT
