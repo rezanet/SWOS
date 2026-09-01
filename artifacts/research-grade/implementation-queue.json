@@ -10,22 +10,23 @@
     "url": "https://github.com/rezanet/SWOS/pull/55"
   },
   "implementation": {
-    "pull_request": 57,
-    "branch": "codex/swos-v2-research-grade",
-    "head_sha": "0a746c7ee94f47ab1ca580600385aec8a5e7fe0a",
+    "pull_request": 58,
+    "branch": "codex/swos-v2-t070-floor-gate",
+    "head_sha": "4ba8d8daebdd99f848510cc716882ef0ca859096",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
-    "url": "https://github.com/rezanet/SWOS/pull/57",
+    "url": "https://github.com/rezanet/SWOS/pull/58",
     "last_reconciled_task": "T070",
-    "last_action": "Executed the next frozen task T070 against the current checkout; the bounded citation workflow failed closed with NOT_RUN because the licensed corpus, double annotations, adjudication, and independent approval are absent. T070 remains pending.",
+    "last_action": "Repaired T070's citation generator to enforce every frozen release-floor dimension and report required/observed gaps; the licensed corpus and independent human records remain absent, so T070 remains pending.",
     "last_action_evidence": [
-      "focused review regression suite: 33 tests pass",
-      "python -m unittest discover -s tests/runtime -p 'test_*.py': 217 passed",
+      "focused citation dataset suite: 7 tests pass",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py': 220 passed",
       "python -m unittest discover -s tests/prose -p 'test_*.py': 240 passed, 11 expected live-provider skips",
       "ruff check and format validation for repaired surfaces: pass",
       "v1 compatibility manifest: 118 recorded file digests match current files and c4ec2945 baseline",
       "python tools/build_citation_dataset.py: exit 2, status not_run, zero output files, source manifest has zero sources",
-      "task freeze audit at 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: 118 marker-only changes, zero non-marker differences"
+      "task freeze audit at 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: 118 marker-only changes, zero non-marker differences",
+      "T070 floor regression: all seven frozen minima are checked and under-floor reports remain blocked"
     ]
   },
   "summary": {
@@ -231,8 +232,8 @@
     },
     {
       "id": "implementation-hosted-ci",
-      "status": "pass",
-      "evidence": "Required workflows passed at exact frozen artifact head 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: SWOS Prose Benchmark 33570127862, SWOS Portability Gate 33570127737, Research Grade compatibility 33570127760, SWOS CI 33570127761, SWOS CodeQL 33570127816, and SWOS Engineering Quality 33570127790."
+      "status": "pending",
+      "evidence": "Re-run required workflows at PR #58 head after the queue metadata commit."
     },
     {
       "id": "portability-definitions",
