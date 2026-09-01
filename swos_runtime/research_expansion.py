@@ -51,4 +51,3 @@ def expansion_plan(report: Mapping[str, Any], *, topic: str, max_queries: int = 
         requires_review=str(report.get("status") in {"fail", "review_required"}) or bool(required),
         limitations=("Expansion is bounded and must be re-measured after retrieval.",),
     )
-
