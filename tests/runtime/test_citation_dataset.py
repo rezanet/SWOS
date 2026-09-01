@@ -10,6 +10,8 @@ from swos_runtime.citation_dataset import (
     grouped_split,
     krippendorff_alpha_nominal,
     validate_pair_record,
+    validate_pair_source_binding,
+    validate_source_licence_manifest,
 )
 
 
@@ -52,6 +54,54 @@ class CitationDatasetTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertFalse(check_group_leakage(first))
         self.assertGreaterEqual(krippendorff_alpha_nominal(rows), 0.99)
+
+    def test_source_licence_manifest_binds_permitted_use_and_approval(self) -> None:
+        manifest = {
+            "schema_version": "2.0.0",
+            "status": "frozen",
+            "sources": [
+                {
+                    "source_id": "source-1",
+                    "uri": "https://example.org/source",
+                    "digest": "b" * 64,
+                    "licence": "CC-BY-4.0",
+                    "attribution": "Example archive",
+                    "allowed_use": ["train", "calibration", "locked_test", "ood", "temporal"],
+                    "approval": {"status": "approved", "reviewer_id": "reviewer-1"},
+                }
+            ],
+        }
+        bound = validate_source_licence_manifest(manifest)
+        self.assertEqual(bound["source-1"]["digest"], "b" * 64)
+
+        pair = self._pair("bound")
+        pair.update({"source_id": "source-1", "source_digest": "b" * 64})
+        validate_pair_source_binding(pair, bound)
+        pair["source_uri"] = "https://example.org/other"
+        with self.assertRaises(DatasetValidationError):
+            validate_pair_source_binding(pair, bound)
+
+        missing_attribution = {
+            **manifest,
+            "sources": [{**manifest["sources"][0], "attribution": ""}],
+        }
+        with self.assertRaises(DatasetValidationError):
+            validate_source_licence_manifest(missing_attribution)
+
+        unknown_use = {
+            **manifest,
+            "sources": [{**manifest["sources"][0], "allowed_use": ["publish"]}],
+        }
+        with self.assertRaises(DatasetValidationError):
+            validate_source_licence_manifest(unknown_use)
+
+    def test_not_run_source_manifest_is_explicitly_empty(self) -> None:
+        self.assertEqual(
+            validate_source_licence_manifest(
+                {"schema_version": "2.0.0", "status": "not_run", "sources": []}
+            ),
+            {},
+        )
 
 
 if __name__ == "__main__":

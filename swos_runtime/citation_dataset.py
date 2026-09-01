@@ -15,6 +15,106 @@ class DatasetValidationError(ValueError):
     pass
 
 
+_DATASET_USES = frozenset({"train", "calibration", "locked_test", "ood", "temporal"})
+
+
+def validate_source_licence_manifest(
+    manifest: Mapping[str, Any],
+) -> dict[str, dict[str, Any]]:
+    """Validate and index the immutable source/right records for a corpus."""
+
+    if not isinstance(manifest, Mapping) or manifest.get("schema_version") != "2.0.0":
+        raise DatasetValidationError("source licence manifest has an unsupported schema")
+    status = str(manifest.get("status") or "")
+    sources = manifest.get("sources")
+    if not isinstance(sources, Sequence) or isinstance(sources, (str, bytes)):
+        raise DatasetValidationError("source licence manifest sources must be a list")
+    if status == "not_run":
+        if sources:
+            raise DatasetValidationError("not_run source licence manifest cannot contain sources")
+        return {}
+    if status not in {"ready", "frozen"} or not sources:
+        raise DatasetValidationError("source licence manifest is not ready for corpus admission")
+
+    indexed: dict[str, dict[str, Any]] = {}
+    for source in sources:
+        if not isinstance(source, Mapping):
+            raise DatasetValidationError("source licence record must be an object")
+        source_id = str(source.get("source_id") or "").strip()
+        uri = str(source.get("uri") or "").strip()
+        digest = str(source.get("digest") or "").strip().lower()
+        licence = str(source.get("licence") or "").strip()
+        attribution = str(source.get("attribution") or "").strip()
+        if not source_id or not uri or not licence or not attribution:
+            raise DatasetValidationError("source licence record lacks identity or attribution")
+        if source_id in indexed:
+            raise DatasetValidationError(f"duplicate source licence ID: {source_id}")
+        if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+            raise DatasetValidationError(f"source {source_id} digest is not SHA-256")
+        if licence.lower() in {"unknown", "denied", "proprietary", "none", "unlicensed"}:
+            raise DatasetValidationError(f"source {source_id} licence is not admissible")
+        allowed_use = source.get("allowed_use")
+        if (
+            not isinstance(allowed_use, Sequence)
+            or isinstance(allowed_use, (str, bytes))
+            or not allowed_use
+            or not all(str(use) in _DATASET_USES for use in allowed_use)
+        ):
+            raise DatasetValidationError(f"source {source_id} has invalid permitted uses")
+        approval = source.get("approval")
+        if (
+            not isinstance(approval, Mapping)
+            or approval.get("status") != "approved"
+            or not str(approval.get("reviewer_id") or "").strip()
+        ):
+            raise DatasetValidationError(f"source {source_id} lacks independent approval")
+        indexed[source_id] = dict(source)
+        indexed[source_id]["digest"] = digest
+    return indexed
+
+
+def validate_pair_source_binding(
+    row: Mapping[str, Any], sources: Mapping[str, Mapping[str, Any]]
+) -> None:
+    """Require each pair's URI, digest, and licence to match one source record."""
+
+    source_id = str(row.get("source_id") or "").strip()
+    source = sources.get(source_id) if source_id else None
+    if source is None:
+        matches = [
+            candidate
+            for candidate in sources.values()
+            if (
+                str(candidate.get("uri") or "").strip() == str(row.get("source_uri") or "").strip()
+                and str(candidate.get("digest") or "").lower()
+                == str(row.get("source_digest") or "").lower()
+                and str(candidate.get("licence") or "").strip()
+                == str(row.get("licence") or "").strip()
+            )
+        ]
+        if len(matches) != 1:
+            raise DatasetValidationError(
+                f"pair {row.get('pair_id', '<unknown>')} has no unique source licence binding"
+            )
+        source = matches[0]
+    if (
+        str(source.get("uri") or "").strip() != str(row.get("source_uri") or "").strip()
+        or str(source.get("digest") or "").lower() != str(row.get("source_digest") or "").lower()
+        or str(source.get("licence") or "").strip() != str(row.get("licence") or "").strip()
+    ):
+        raise DatasetValidationError(
+            f"pair {row.get('pair_id', '<unknown>')} source binding mismatches"
+        )
+    requested_use = row.get("allowed_use")
+    if requested_use is not None:
+        if isinstance(requested_use, str) or not isinstance(requested_use, Sequence):
+            raise DatasetValidationError("pair permitted uses must be a list")
+        if not set(map(str, requested_use)).issubset(set(map(str, source["allowed_use"]))):
+            raise DatasetValidationError(
+                f"pair {row.get('pair_id', '<unknown>')} exceeds source permitted uses"
+            )
+
+
 def validate_pair_record(row: Mapping[str, Any]) -> None:
     required = (
         "pair_id",

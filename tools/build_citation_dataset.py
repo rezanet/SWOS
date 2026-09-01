@@ -16,6 +16,8 @@ from swos_runtime.citation_dataset import (  # noqa: E402
     DatasetValidationError,
     dataset_manifest,
     grouped_split,
+    validate_pair_source_binding,
+    validate_source_licence_manifest,
 )
 from swos_runtime.models import canonical_digest  # noqa: E402
 
@@ -49,6 +51,25 @@ def _read_rows(manifest: dict[str, Any], manifest_path: Path) -> list[dict[str, 
     raise DatasetBuildBlocked("no licensed pair source was provided; acquisition is NOT_RUN")
 
 
+def _read_source_licence_manifest(
+    manifest: dict[str, Any], manifest_path: Path
+) -> dict[str, dict[str, Any]]:
+    reference = str(manifest.get("source_licence_manifest") or "").strip()
+    if not reference:
+        raise DatasetBuildBlocked("source licence manifest is required; acquisition is NOT_RUN")
+    path = (manifest_path.parent / reference).resolve()
+    if not path.is_file():
+        raise DatasetBuildBlocked(f"source licence manifest is missing: {path}")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise DatasetBuildBlocked(f"source licence manifest is unreadable: {path}") from exc
+    try:
+        return validate_source_licence_manifest(payload)
+    except DatasetValidationError as exc:
+        raise DatasetBuildBlocked(f"source licence manifest is invalid: {exc}") from exc
+
+
 def build_dataset(
     manifest_path: Path | str, output_dir: Path | str, *, seed: int = 0
 ) -> dict[str, Any]:
@@ -57,7 +78,10 @@ def build_dataset(
     if output_dir.exists() and any(output_dir.iterdir()):
         raise DatasetBuildBlocked(f"immutable dataset output already exists: {output_dir}")
     source_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    source_licences = _read_source_licence_manifest(source_manifest, manifest_path)
     rows = _read_rows(source_manifest, manifest_path)
+    for row in rows:
+        validate_pair_source_binding(row, source_licences)
     splits = grouped_split(rows, seed=seed)
     report = dataset_manifest(
         splits,
