@@ -45,8 +45,8 @@ pinned containers/artifacts and authorized providers
 discipline packs, evaluation corpus, benchmarks, and release evidence
 
 **Performance Goals**: local programme lookup over 10k active items p95 <= 250 ms
-on the recorded reference runner; inspected 10k-item import <= 60 seconds;
-packaged 100-pair citation batch p95 <= 5 seconds; 10k-statement PROV
+on the recorded reference runner; packaged 100-pair citation batch p95 <= 5
+seconds; 10k-statement PROV
 certification <= 60 seconds with bounded memory; deterministic outputs across
 repeated runs; zero semantic loss for certified PROV corpus
 
