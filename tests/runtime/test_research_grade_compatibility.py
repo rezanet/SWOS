@@ -20,7 +20,7 @@ class ResearchGradeCompatibilityTests(unittest.TestCase):
             for entry in group["files"]:
                 path = ROOT / entry["path"]
                 self.assertTrue(path.is_file(), entry["path"])
-                digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                digest = hashlib.sha256(self._canonical_bytes(path)).hexdigest()
                 self.assertEqual(entry["sha256"], digest, entry["path"])
         for relative, expected_id in baseline["baseline"]["v1_schema_ids"].items():
             document = json.loads((ROOT / relative).read_text(encoding="utf-8"))
@@ -64,7 +64,12 @@ class ResearchGradeCompatibilityTests(unittest.TestCase):
 
     @staticmethod
     def _digest(path: Path) -> str:
-        return hashlib.sha256(path.read_bytes()).hexdigest()
+        return hashlib.sha256(ResearchGradeCompatibilityTests._canonical_bytes(path)).hexdigest()
+
+    @staticmethod
+    def _canonical_bytes(path: Path) -> bytes:
+        """Hash repository-canonical text bytes across Windows and POSIX checkouts."""
+        return path.read_bytes().replace(b"\r\n", b"\n")
 
     @staticmethod
     def _manifest_digest(relative: str) -> str:
