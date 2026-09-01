@@ -481,7 +481,7 @@ limitations. Prose-only performance claims do not satisfy a gate.
 | FR-001, FR-002, FR-003, FR-004, FR-005 | Phase 2; data model §1; contracts §2 | `research_memory.py`, `programme_store.py`, `rpm_exchange.py`; scoped lifecycle/closure/exchange/receiving-scope suites and safety-mutation report |
 | FR-006, FR-007, FR-008, FR-009, FR-010 | Phase 3; research R2; data model §2 | ontology sources/shapes/compiler/manifest; pack and isomorphism reports |
 | FR-011, FR-012 | Phase 3; research R3; contracts §3 | `discipline_critique.py`; nine-pack reviewed fixture report |
-| FR-013, FR-014, FR-015, FR-016, FR-017 | Phase 4 citation workstream; research R4; contracts §4 | classifier/calibration/dataset/model manifests; exact pair IDs, claims, spans, digests, locked predictions, and metrics |
+| FR-013, FR-014, FR-015, FR-016, FR-017 | Phase 4 citation workstream; research R4; contracts §4 | classifier/calibration/dataset/model manifests; exact pair IDs, claims, spans, digests, per-decision code/config/execution provenance, locked predictions, and metrics |
 | FR-018, FR-019, FR-020, FR-021 | Phase 4 diversity workstream; research R5; contracts §5 | `source_diversity.py`, policy/benchmark; expansion and exception evidence |
 | FR-022, FR-023, FR-024, FR-025, FR-026 | Phase 5; research R6; contracts §6 | EPG v2/interchange/validation/certifier; oracle/corpus certificates |
 | FR-027, FR-028, FR-029, FR-030, FR-031, FR-032, FR-033 | Phase 6; research R7; data model §6; contracts §7 | media/image modules covering all eight rights actions, promotion policies, and corpus/adjudication report proving 60/96/80-across-20/120/48-across-24/96 minima |

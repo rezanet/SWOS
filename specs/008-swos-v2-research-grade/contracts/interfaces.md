@@ -153,6 +153,9 @@ Requirements:
   `atomic_claim`, and exact `evidence_span`, with independent claim/span
   digests; core policy compares these fields to the supplied `CitationPair` and
   rejects any mismatch as a deterministic rule failure;
+- every decision records the exact execution code SHA, configuration digest,
+  execution ID/provenance, and timestamp that produced it, including
+  abstentions, rule rejections, and errors;
 - classified labels are exactly `directly_supports`, `partially_supports`,
   `context_only`, `contradicts`, or `not_supported`; laundering and invalid-input
   failures are core-owned rule rejections, not model labels;

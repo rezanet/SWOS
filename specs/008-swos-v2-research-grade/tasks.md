@@ -122,7 +122,7 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 
 ### US3 tests first
 
-- [ ] T058 [P] [US3] Add classifier schema, exact pair identity/claim/span preservation, probability, ordering, batching, digest, label-order, OOD, corrupt-artifact, and abstention tests in `tests/runtime/test_citation_classifier.py`
+- [ ] T058 [P] [US3] Add classifier schema, exact pair identity/claim/span preservation, per-decision code/config/execution provenance, probability, ordering, batching, digest, label-order, OOD, corrupt-artifact, and abstention tests in `tests/runtime/test_citation_classifier.py`
 - [ ] T059 [P] [US3] Add calibration fit isolation, ECE, threshold, immutable binding, confidence-bound, and coverage tests in `tests/runtime/test_citation_calibration.py`
 - [ ] T060 [P] [US3] Add tests proving exact pair identity/claim/span and digest mismatches are rejected, and only deterministic-precheck plus direct/non-abstained classifier output is admission-eligible in `tests/runtime/test_citation_admission.py`
 - [ ] T061 [P] [US3] Add source-family identity, ordering, duplicate edition/mirror/preprint/provider invariance, unknownness, HHI/effective-number, exposure, and exception tests in `tests/runtime/test_source_diversity.py`
@@ -131,8 +131,8 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 
 ### US3 citation implementation
 
-- [ ] T064 [P] [US3] Add citation pair/decision schemas with immutable pair ID, exact claim/span, and claim/span digests, plus model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
-- [ ] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, exact pair identity/claim/span and digest emission, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
+- [ ] T064 [P] [US3] Add citation pair/decision schemas with immutable pair ID, exact claim/span, claim/span digests, per-decision code/config/execution provenance, plus model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
+- [ ] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, exact pair identity/claim/span and digest emission, per-decision code/config/execution provenance, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
 - [ ] T066 [US3] Implement temperature scaling, selective thresholds, metric confidence intervals, and immutable binding in `swos_runtime/citation_calibration.py`
 - [ ] T067 [US3] Preserve deterministic prechecks and integrate trained decisions behind `CapabilityBroker.citation_support_audit` in `swos_runtime/broker.py`
 - [ ] T068 [US3] Restrict final verification to core eligibility and store immutable classifier evidence/overrides in `swos_runtime/finalizer.py`
@@ -140,7 +140,7 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 - [ ] T070 [US3] Implement and execute the bounded corpus workflow to acquire permitted pairs, double-annotate, adjudicate, approve, leakage-check, checksum, and freeze actual train/calibration/locked/OOD splits and `DATA-LICENCE.md` in `benchmark/citation-support/manifest.json` using `tools/build_citation_dataset.py`
 - [ ] T071 [US3] Implement immutable training and model-card/artifact-manifest generation in `tools/train_citation_classifier.py`
 - [ ] T072 [US3] Implement calibration-only fitting and artifact generation in `tools/calibrate_citation_classifier.py`
-- [ ] T073 [US3] Implement locked evaluation with raw predictions retaining exact pair identity/claim/span provenance, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`
+- [ ] T073 [US3] Implement locked evaluation with raw predictions retaining exact pair identity/claim/span and per-decision code/config/execution provenance, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`
 - [ ] T074 [US3] Add pinned release-model workflow and immutable outputs in `.github/workflows/citation-model-evaluation.yml`
 
 ### US3 diversity implementation

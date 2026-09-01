@@ -192,6 +192,12 @@ bounded surrounding context, applicable discipline/method IRIs, and source-role
 IRI. Publisher prestige, provider identity, citation count, and admission result
 are excluded as predictive features.
 
+Every `CitationSupportDecision`, including abstention, rule rejection, and error,
+records the exact execution code SHA, configuration digest, execution
+identifier/provenance, and timestamp alongside its immutable pair and artifact
+bindings. Aggregate input digests and candidate positions do not replace this
+per-decision provenance.
+
 The safety cascade is:
 
 1. deterministic source existence, quote containment, metadata, retraction,
