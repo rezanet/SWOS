@@ -41,13 +41,14 @@ class ResearchMemoryService(Protocol):
 ```
 
 `RPMOperation` is a versioned discriminated union for project registration or
-retirement, write, confirm, status change, correction, supersession,
-contradiction open/resolve, expiry, deletion, and exceptional-read authorization.
-Every substantive lifecycle mutation uses the same immutable assessment and
-approval protocol. Commit re-resolves scope, active target/head, EPG/SDL, policy,
-classification, rights, contradiction, expiry, and operation digest. There is no
-direct mutation shortcut. `propose_expiry` is read-only; each committed expiry is
-an assessed operation.
+retirement, programme closure, write, confirm, status change, correction,
+supersession, contradiction open/resolve, expiry, deletion, and exceptional-read
+authorization. Every substantive lifecycle mutation uses the same immutable
+assessment and approval protocol. Programme closure is terminal for new writes
+and normal reads but preserves historical records and release bindings. Commit
+re-resolves scope, active target/head, EPG/SDL, policy, classification, rights,
+contradiction, expiry, and operation digest. There is no direct mutation shortcut.
+`propose_expiry` is read-only; each committed expiry is an assessed operation.
 
 Public operations reject missing/unregistered scope, cross-scope references,
 classification overflow, invalid IDs, stale heads, unresolved evidence, or
@@ -63,28 +64,32 @@ def export_bundle(scope: ResearchScope, selection: ExportSelection,
 def inspect_import(bundle: Path, *, destination: ResearchScope,
                    limits: BundleLimits, as_of: datetime) -> ImportInspection: ...
 
-def commit_import(inspection_id: str, inspection_digest: str,
-                  approval: HumanApproval) -> ImportReceipt: ...
+def commit_import(destination: ResearchScope, inspection_id: str,
+                  inspection_digest: str, approval: HumanApproval,
+                  *, as_of: datetime) -> ImportReceipt: ...
 ```
 
-Archive input never chooses its destination. Reject absolute paths, `..`, links,
-devices, duplicate normalized paths, excessive file/item/byte counts,
-decompression bombs, malformed JSON/NDJSON, checksum failure, chain failure,
-missing evidence, and ID/digest collisions. Same ID plus same canonical digest is
-an idempotent no-op; same ID plus different digest fails.
+Archive input never chooses its destination. The explicit receiving scope is
+bound during inspection and re-resolved during commit; a changed, unregistered,
+or closed destination fails closed. Reject absolute paths, `..`, links, devices,
+duplicate normalized paths, excessive file/item/byte counts, decompression bombs,
+malformed JSON/NDJSON, checksum failure, chain failure, missing evidence, and
+ID/digest collisions. Same ID plus same canonical digest is an idempotent no-op;
+same ID plus different digest fails.
 
 ### RPM operator CLI
 
 ```text
 python tools/rpm.py init --repository PATH --namespace ID
 python tools/rpm.py register-project --repository PATH --scope-file FILE --approval FILE
+python tools/rpm.py close-programme --repository PATH --scope-file FILE --approval FILE
 python tools/rpm.py assess-operation --repository PATH --scope-file FILE --operation FILE --out FILE
 python tools/rpm.py commit-operation --repository PATH --scope-file FILE --assessment FILE --approval FILE
 python tools/rpm.py verify --repository PATH --scope-file FILE --json-out FILE
 python tools/rpm.py expire --repository PATH --scope-file FILE --as-of TIME [--commit --approval FILE]
 python tools/rpm.py export --repository PATH --scope-file FILE --selection FILE --approval FILE --out DIR
 python tools/rpm.py inspect-import --repository PATH --bundle DIR --destination FILE --out FILE
-python tools/rpm.py commit-import --repository PATH --inspection FILE --approval FILE
+python tools/rpm.py commit-import --repository PATH --scope-file FILE --inspection FILE --approval FILE
 python tools/rpm.py rebuild-projection --repository PATH --scope-file FILE --verify-only
 ```
 
@@ -141,6 +146,16 @@ def admission_eligibility(pair: CitationPair,
 Requirements:
 
 - output order matches input order and decisions are batch-size invariant;
+- `CitationPair.exact_quote` is the canonical `evidence_span` field: its exact
+  UTF-8 bytes are copied without trimming, reflow, or other normalization, and
+  the claim/span digests are computed over those canonical bytes;
+- every decision repeats the input pair's immutable `pair_id`, exact
+  `atomic_claim`, and exact `evidence_span`, with independent claim/span
+  digests; core policy compares these fields to the supplied `CitationPair` and
+  rejects any mismatch as a deterministic rule failure;
+- every decision records the exact execution code SHA, configuration digest,
+  execution ID/provenance, and timestamp that produced it, including
+  abstentions, rule rejections, and errors;
 - classified labels are exactly `directly_supports`, `partially_supports`,
   `context_only`, `contradicts`, or `not_supported`; laundering and invalid-input
   failures are core-owned rule rejections, not model labels;

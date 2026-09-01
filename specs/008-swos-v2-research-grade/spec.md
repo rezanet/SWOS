@@ -30,21 +30,21 @@ implication. Exact command names and expected outputs are defined in `plan.md` a
 
 ## Project Structure
 
-This feature extends the current single-repository Python runtime, frozen schemas
-and policies, discipline/reviewer packs, evaluation fixtures and command-line
-tools. New source, contracts, schemas, corpora, model/ontology manifests,
-certificates, tests and documentation must live in their corresponding existing
-repository layers. No browser application, CRUD service, authentication system,
-tenant database or deployment topology is implied.
+This feature extends the current single-repository runtime, frozen schemas and
+policies, discipline/reviewer packs, evaluation fixtures and command-line tools.
+New source, contracts, schemas, corpora, model/ontology manifests, certificates,
+tests and documentation must live in their corresponding existing repository
+layers. No browser application, CRUD service, authentication system, tenant
+database or deployment topology is implied.
 
 ## Code and Document Style
 
-Implementation must follow the repository's Python 3.11+, typed fail-closed
-interfaces, deterministic JSON, Ruff formatting/linting and immutable-evidence
-conventions. Human-readable pack and policy prose remains authoritative at its
-declared boundary; machine-readable artifacts use stable identifiers, explicit
-versions, canonical serialization and content digests. Documents must distinguish
-specified, implemented, tested, demonstrated, certified and human-approved state.
+The implementation plan defines the language, tooling and repository conventions.
+At the specification boundary, human-readable pack and policy prose remains
+authoritative at its declared boundary; machine-readable artifacts use stable
+identifiers, explicit versions, canonical serialization and content digests.
+Documents must distinguish specified, implemented, tested, demonstrated,
+certified and human-approved state.
 
 ## Testing Strategy
 
@@ -489,12 +489,15 @@ associations are rejected.
   finalised SWOS run round-trip through every certified serialisation with equal
   semantic normal-form digests in two independent processors; 100% of invalid and
   lossy fixtures are rejected and no certificate survives input mutation.
-- **SC-008**: The multimodal evaluation corpus contains at least 60 distinct
-  rights-cleared objects/works and at least 96 rights-cleared renditions across at
-  least six media/material classes, three mediation
-  conditions and both art disciplines; visual-anchor precision is at least 0.95,
-  seeded invented-detail and reproduction-artefact cases have zero unsafe PASSes,
-  and over-association/false-originality detection is at least 0.95.
+ - **SC-008**: The multimodal evaluation corpus contains at least 60 distinct
+   rights-cleared objects/works and at least 96 rights-cleared renditions, at
+   least 80 atomic region-grounding claims across at least 20 assets, at least
+   120 cross-modal pairs, at least 48 discipline tasks across at least 24 works,
+   and at least 96 adversarial cases, across at least six media/material classes,
+   three mediation conditions and both art disciplines; visual-anchor precision
+   is at least 0.95, seeded invented-detail and reproduction-artefact cases have
+   zero unsafe PASSes, and over-association/false-originality detection is at
+   least 0.95.
 - **SC-009**: Agent promotion remains disabled until every multimodal blocker,
   separation-of-duties check and rollback rehearsal passes on the same exact
   candidate head; disabling the promotion restores the pack-only path without

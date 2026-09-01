@@ -37,9 +37,9 @@ then-current head; it is not a merge claim.
 - [x] T015 Add exact artifact identities to the evaluation subject in `swos_runtime/evaluation.py`
 - [x] T016 Add Research Grade audit-pack schema and example in `schemas/research-grade/research-grade-audit-pack.schema.json` and `examples/research-grade/audit-pack.json`
 - [x] T017 Implement audit-pack assembly and strict verification in `tools/assemble_research_grade_audit_pack.py`
-- [x] T018 Remove fixture-name/expected-label pass shortcuts and add production adapters in `evals/harness/run_evals.py`
+- [x] T018 Route every existing and new fixture evaluator through injected production interfaces, remove fixture-name/expected-label pass shortcuts, and add production adapters in `evals/harness/run_evals.py`
 - [x] T019 Add optional ontology, training, and PROV dependency groups with licences and hashes in `config/research-grade-dependencies.md`; update `pyproject.toml` and `requirements-dev.lock` from that manifest
-- [x] T020 Verify ordinary CI performs no model download, network request, credential read, or paid call in `tests/runtime/test_research_grade_offline.py`
+- [x] T020 Verify ordinary CI performs no model download, network request, credential read, or paid call, and add the bounded safety-mutation harness/report in `tests/runtime/test_research_grade_offline.py` and `tools/run_mutation_checks.py`
 
 **Checkpoint**: shared foundations, policies, and audit verifier are green; all existing suites remain green.
 
@@ -53,12 +53,12 @@ and prove a different scope cannot observe or influence them.
 
 ### US1 tests first
 
-- [x] T021 [P] [US1] Add schema/contract tests for scope, project binding, authoritative policy version/digest, RPM v2, lifecycle, exchange, inspection, and read receipt in `tests/runtime/test_research_memory_contracts.py`
+- [x] T021 [P] [US1] Add schema/contract tests for scope, project binding, authoritative policy version/digest, RPM v2, lifecycle, programme closure, exchange, destination binding/revalidation, inspection, and read receipt in `tests/runtime/test_research_memory_contracts.py`
 - [x] T022 [P] [US1] Add repository migration, transaction, chain, projection, corruption, and rebuild tests in `tests/runtime/test_programme_store.py`
 - [x] T023 [P] [US1] Add missing/unregistered/cross-namespace/cross-programme/project-visibility isolation tests in `tests/runtime/test_research_memory_isolation.py`
-- [x] T024 [P] [US1] Add EPG/SDL resolution, operation-hash approval, stale-policy, expired-assessment, restricted-data, and commit-time TOCTOU tests for every binding/write/correct/supersede/contradiction/expiry/delete/exception transition in `tests/runtime/test_research_memory_writes.py`
-- [x] T025 [P] [US1] Add correction, supersession, contradiction, confirmation, exact-expiry, project retirement/unbinding, exceptional-read, and deletion tests in `tests/runtime/test_research_memory_lifecycle.py`
-- [x] T026 [P] [US1] Add idempotence, collision, mapping, checksum, redaction, zip-slip, link, duplicate-path, and decompression-limit tests in `tests/runtime/test_rpm_exchange.py`
+- [x] T024 [P] [US1] Add EPG/SDL resolution, operation-hash approval, stale-policy, expired-assessment, restricted-data, unauthorised-mutation, and commit-time TOCTOU tests for every binding/write/correct/supersede/contradiction/expiry/delete/close/exception transition in `tests/runtime/test_research_memory_writes.py`
+- [x] T025 [P] [US1] Add correction, supersession, contradiction, confirmation, exact-expiry, project retirement/unbinding, programme closure with historical-record/release preservation, exceptional-read, and deletion tests in `tests/runtime/test_research_memory_lifecycle.py`
+- [x] T026 [P] [US1] Add idempotence, collision, receiving-scope mismatch/revalidation, mapping, checksum, redaction, zip-slip, link, duplicate-path, and decompression-limit tests in `tests/runtime/test_rpm_exchange.py`
 - [x] T027 [P] [US1] Add 8-process/2,000-write, lock-timeout, crash-injection, and all-or-nothing tests in `tests/runtime/test_programme_store_concurrency.py`
 
 ### US1 implementation
@@ -67,16 +67,16 @@ and prove a different scope cannot observe or influence them.
 - [x] T029 [P] [US1] Add project-scope, RPM operation/policy, lifecycle, exchange, and receipt schemas in `schemas/research-grade/project-scope.schema.json`, `schemas/research-grade/rpm-policy.schema.json`, `schemas/research-grade/rpm-2.0.schema.json`, and `schemas/research-grade/rpm-exchange.schema.json`
 - [x] T030 [US1] Implement SQLite initialization, migrations, preflight, per-programme chain, transactions, integrity checks, and projection rebuild in `swos_runtime/programme_store.py`
 - [x] T031 [US1] Implement explicit project registration and visibility enforcement in `swos_runtime/research_memory.py`
-- [x] T032 [US1] Implement one propose/assess/approve/commit service for project binding, write, correction, supersession, contradiction, expiry, deletion, and exceptional-read operations with exact EPG, SDL, policy, target-head, `as_of`, classification, rights, and expiry revalidation in `swos_runtime/research_memory.py`
+- [x] T032 [US1] Implement one propose/assess/approve/commit service for project binding, programme closure, write, correction, supersession, contradiction, expiry, deletion, and exceptional-read operations with exact EPG, SDL, policy, target-head, `as_of`, classification, rights, and expiry revalidation in `swos_runtime/research_memory.py`
 - [x] T033 [US1] Implement classification/expiry-aware governed queries and EPG read receipts in `swos_runtime/research_memory.py`
-- [x] T034 [US1] Implement immutable confirmation, correction, supersession, contradiction, expiry, project retirement/unbinding, and logical-deletion transitions exclusively through the assessed operation service in `swos_runtime/research_memory.py`
-- [x] T035 [US1] Implement bounded export, inspect-import, atomic commit, redaction, origin preservation, and deterministic diff in `swos_runtime/rpm_exchange.py`
+- [x] T034 [US1] Implement immutable confirmation, correction, supersession, contradiction, expiry, programme closure, project retirement/unbinding, and logical-deletion transitions exclusively through the assessed operation service in `swos_runtime/research_memory.py`
+- [x] T035 [US1] Implement bounded export, destination-bound inspect-import and atomic commit with commit-time receiving-scope revalidation, redaction, origin preservation, and deterministic diff in `swos_runtime/rpm_exchange.py`
 - [x] T036 [US1] Add v1 `GovernedJsonStore` compatibility import/export adapters without changing v1 behavior in `swos_runtime/stores.py`
 - [x] T037 [US1] Replace the hard-coded empty RPM snapshot with scoped service integration in `swos_runtime/finalizer.py`
 - [x] T038 [US1] Bind work-order RPM reads/writes/exchange to exact run and EPG evidence in `swos_runtime/work_orders.py`
-- [x] T039 [US1] Implement dry-run-first init/register/assess-operation/commit-operation/verify/expire/export/inspect-import/commit-import/rebuild commands with explicit `--approval` inputs wherever required in `tools/rpm.py`
-- [x] T040 [US1] Add deterministic three-project snapshot/delta/duplicate/fork/collision/contradiction/expiry/correction/retirement/replay fixtures in `evals/fixtures/research-memory/`
-- [x] T041 [US1] Add 100k-item benchmark generator/runner and recorded runner schema in `benchmark/rpm/manifest.json` and `tools/run_rpm_benchmark.py`
+- [x] T039 [US1] Implement dry-run-first init/register/close-programme/assess-operation/commit-operation/verify/expire/export/inspect-import/commit-import/rebuild commands with explicit `--approval` inputs wherever required in `tools/rpm.py`
+- [x] T040 [US1] Add deterministic three-project snapshot/delta/duplicate/fork/collision/contradiction/expiry/correction/retirement/programme-closure/receiving-scope-mismatch/replay fixtures in `evals/fixtures/research-memory/`
+- [x] T041 [US1] Add the SC-012 10k-active-item benchmark generator/runner with a recorded reference-runner schema and p95 <= 250 ms acceptance in `benchmark/rpm/manifest.json` and `tools/run_rpm_benchmark.py`
 - [x] T042 [US1] Document logical namespace, SQLite filesystem, logical deletion, backup, and recovery limitations in `docs/architecture/research-grade-memory.md`
 
 **Checkpoint**: SC-001 and RPM safety/benchmark gates pass; no public unscoped API exists.
@@ -106,7 +106,7 @@ for every pack with disagreement preserved.
 - [x] T052 [US2] Bind research plan, Evidence Matrix rows, and evaluation subject to discipline/method/criterion IRIs and ontology digests in `swos_runtime/orchestrator.py`, `swos_runtime/finalizer.py`, and `swos_runtime/evaluation.py`
 - [x] T053 [US2] Implement criterion-level discipline critique and disagreement-preserving aggregation in `swos_runtime/discipline_critique.py`
 - [x] T054 [US2] Wire critique through broker, finalizer, EPG, and SDL without allowing provider-owned admission in `swos_runtime/broker.py` and `swos_runtime/finalizer.py`
-- [x] T055 [P] [US2] Create reviewed fixtures and adjudication records for all supported packs, including art criticism, in `evals/fixtures/discipline-critique/`
+- [x] T055 [P] [US2] Create reviewed fixtures and adjudication records for all supported packs, including art criticism, in `evals/fixtures/discipline-critique/`, with at least one acceptance fixture per pack also published under `evals/fixtures/golden/`
 - [x] T056 [US2] Add ontology and critique production-path scoring to `swos_runtime/evaluation.py` and `evals/metrics.md`
 - [x] T057 [US2] Document compatibility, external mappings, deprecation, and pack-authoring rules in `discipline-packs/README.md`
 
@@ -122,17 +122,17 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 
 ### US3 tests first
 
-- [x] T058 [P] [US3] Add classifier schema, probability, ordering, batching, digest, label-order, OOD, corrupt-artifact, and abstention tests in `tests/runtime/test_citation_classifier.py`
+- [x] T058 [P] [US3] Add classifier schema, exact pair identity/claim/span preservation, per-decision code/config/execution provenance, probability, ordering, batching, digest, label-order, OOD, corrupt-artifact, and abstention tests in `tests/runtime/test_citation_classifier.py`
 - [x] T059 [P] [US3] Add calibration fit isolation, ECE, threshold, immutable binding, confidence-bound, and coverage tests in `tests/runtime/test_citation_calibration.py`
-- [x] T060 [P] [US3] Add tests proving only deterministic-precheck plus direct/non-abstained classifier output is admission-eligible in `tests/runtime/test_citation_admission.py`
+- [x] T060 [P] [US3] Add tests proving exact pair identity/claim/span and digest mismatches are rejected, and only deterministic-precheck plus direct/non-abstained classifier output is admission-eligible in `tests/runtime/test_citation_admission.py`
 - [x] T061 [P] [US3] Add source-family identity, ordering, duplicate edition/mirror/preprint/provider invariance, unknownness, HHI/effective-number, exposure, and exception tests in `tests/runtime/test_source_diversity.py`
 - [x] T062 [P] [US3] Add bounded research-expansion, required-strata, counter-position, and final-limitation integration tests in `tests/runtime/test_research_expansion.py`
 - [x] T063 [P] [US3] Add leakage, licence, manifest, group-split, agreement, locked-test isolation, and model-card tests in `tests/runtime/test_citation_dataset.py`
 
 ### US3 citation implementation
 
-- [x] T064 [P] [US3] Add citation pair/decision and model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
-- [x] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
+- [x] T064 [P] [US3] Add citation pair/decision schemas with immutable pair ID, exact claim/span, claim/span digests, per-decision code/config/execution provenance, plus model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
+- [x] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, exact pair identity/claim/span and digest emission, per-decision code/config/execution provenance, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
 - [x] T066 [US3] Implement temperature scaling, selective thresholds, metric confidence intervals, and immutable binding in `swos_runtime/citation_calibration.py`
 - [x] T067 [US3] Preserve deterministic prechecks and integrate trained decisions behind `CapabilityBroker.citation_support_audit` in `swos_runtime/broker.py`
 - [x] T068 [US3] Restrict final verification to core eligibility and store immutable classifier evidence/overrides in `swos_runtime/finalizer.py`
@@ -140,18 +140,18 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 - [ ] T070 [US3] Implement and execute the bounded corpus workflow to acquire permitted pairs, double-annotate, adjudicate, approve, leakage-check, checksum, and freeze actual train/calibration/locked/OOD splits and `DATA-LICENCE.md` in `benchmark/citation-support/manifest.json` using `tools/build_citation_dataset.py`
 - [x] T071 [US3] Implement immutable training and model-card/artifact-manifest generation in `tools/train_citation_classifier.py`
 - [x] T072 [US3] Implement calibration-only fitting and artifact generation in `tools/calibrate_citation_classifier.py`
-- [ ] T073 [US3] Implement locked evaluation, raw predictions, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`
+- [ ] T073 [US3] Implement locked evaluation with raw predictions retaining exact pair identity/claim/span and per-decision code/config/execution provenance, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`
 - [x] T074 [US3] Add pinned release-model workflow and immutable outputs in `.github/workflows/citation-model-evaluation.yml`
 
 ### US3 diversity implementation
 
-- [x] T075 [P] [US3] Add research-plan v2 diversity requirements and report schemas in `schemas/research-grade/research-plan-2.0.schema.json` and `schemas/research-grade/source-diversity-report.schema.json`
+- [x] T075 [P] [US3] Add research-plan v2 diversity requirements and report schemas, requiring applicable dimensions, required strata, thresholds, and an ontology-linked `not_applicable` rationale before retrieval, in `schemas/research-grade/research-plan-2.0.schema.json` and `schemas/research-grade/source-diversity-report.schema.json`
 - [x] T076 [US3] Implement canonical source-family identity and venue/owner/region/language/period/method/source-type/access-mode/stance metadata evidence states in `swos_runtime/source_diversity.py`
 - [x] T077 [US3] Implement per-dimension source-count/exposure metrics, worst-case gates, separately versioned v2 geometric composite threshold 0.50, non-gating frozen v1 provider scalar, family-count statuses, counter-position checks, and exceptions in `swos_runtime/source_diversity.py`
 - [x] T078 [US3] Replace provider-count diversity and propagate expansion/review/limitations through `swos_runtime/orchestrator.py` and `swos_runtime/finalizer.py`
 - [ ] T079 [P] [US3] Create separate tuning packets plus at least ten locked human-reviewed balanced/concentrated/sparse/narrow/multilingual/historical/method-monoculture/duplicate/fake-diversity packets per discipline in `evals/fixtures/source-diversity/`
-- [ ] T080 [US3] Implement production-path diversity benchmark and confidence-bound report proving 100% seeded fake/missing-strata detection, material-gap recall >=0.90, adequate/narrow false-block <=0.10, and ordering/provider invariance in `tools/run_source_diversity_benchmark.py`
-- [x] T081 [US3] Replace citation/diversity fixture heuristics with production result scoring in `swos_runtime/evaluation.py` and update `evals/metrics.md`
+- [ ] T080 [US3] Implement production-path diversity benchmark and confidence-bound report proving 100% seeded fake/missing-strata detection, material-gap recall >=0.90, adequate/narrow false-block <=0.10, and ordering/provider invariance, with numerators, denominators, and intervals bound to the pre-retrieval requirements, in `tools/run_source_diversity_benchmark.py`
+- [x] T081 [US3] Replace citation/diversity fixture heuristics with production result scoring in `swos_runtime/evaluation.py`, ensure every fixture evaluator invokes the production path, and update `evals/metrics.md`
 - [x] T082 [US3] Publish model/dataset/diversity limitations and prohibited uses in `models/citation-support/<version>/model-card.md` and `docs/architecture/research-grade-citation.md`
 
 **Checkpoint**: SC-003–SC-005 pass; no provider or human-edited prediction bypasses core policy.
@@ -181,7 +181,7 @@ adversarial loss/invalid/resource-limit case fails.
 - [x] T092 [US4] Implement conversion matrix, per-leg artifacts, assertion comparison, stable second pass, and certificate generation in `tools/certify_prov_roundtrip.py`
 - [ ] T093 [P] [US4] Add permitted checksummed valid/invalid/large/adversarial fixtures and manifest in `evals/fixtures/provenance/`
 - [ ] T094 [US4] Pin ProvToolbox identity/licence/digest in `benchmark/provenance/oracle-manifest.json` and run that exact independent oracle in `.github/workflows/prov-certification.yml`
-- [ ] T095 [US4] Add explicit parser/canonicalization CPU-memory-time bounds in `benchmark/provenance/resource-limits.json` plus 1k/10k/100k and hostile blank-node performance/resource corpus in `benchmark/provenance/manifest.json`
+- [ ] T095 [US4] Add explicit parser/canonicalization CPU-memory-time bounds in `benchmark/provenance/resource-limits.json` plus 1k/10k and hostile blank-node performance/resource corpora in `benchmark/provenance/manifest.json`
 - [x] T096 [US4] Integrate certified EPG v2 exports into RPM exchange, finalization, and work-order host bundles in `swos_runtime/rpm_exchange.py`, `swos_runtime/finalizer.py`, and `swos_runtime/work_orders.py`
 - [x] T097 [US4] Add certificate/oracle/limitation artifacts to evaluation subject and audit pack in `swos_runtime/evaluation.py` and `tools/assemble_research_grade_audit_pack.py`
 - [x] T098 [US4] Document the accurate PROV-DM/PROV-N/PROV-O and PROV-JSON Member Submission claim in `docs/architecture/research-grade-provenance.md`
@@ -200,23 +200,23 @@ without exact matching evidence.
 
 ### US5 tests first
 
-- [x] T099 [P] [US5] Add object/media/inspection, separate analyse/transform/create-derivative rights, conservative inheritance, lineage/content-credential, and structured accessibility/invalidation tests in `tests/runtime/test_media.py`
+- [x] T099 [P] [US5] Add object/media/inspection, separate `view`, `analyse`, `transform`, `create_derivative`, `quote`, `cache`, `export`, and `redistribute` rights, conservative inheritance, lineage/content-credential, and structured accessibility/invalidation tests in `tests/runtime/test_media.py`
 - [x] T100 [P] [US5] Add IIIF pixel/percent and bounded SVG normalization, digest, dimension, ambiguity, and out-of-bounds tests in `tests/runtime/test_region_selectors.py`
-- [x] T101 [P] [US5] Add complete/partial/insufficient/denied/error, resource, deterministic fake, and real OpenAI adapter conformance tests in `tests/runtime/test_image_analysis.py`
+- [x] T101 [P] [US5] Add complete/partial/insufficient/denied/error, resource, deterministic fake, real OpenAI adapter, and provider/model/host substitution conformance tests in `tests/runtime/test_image_analysis.py`
 - [x] T102 [P] [US5] Add observation/interpretation separation, weakest-leg cross-modal support, false-attribution/originality, and multi-view limitation tests in `tests/runtime/test_cross_modal_support.py`
 - [x] T103 [P] [US5] Add default-off, exact-head/artifact mismatch, improvement, safety regression, expiry, approval, and rollback tests in `tests/runtime/test_capability_promotion.py`
 
 ### US5 implementation
 
 - [x] T104 [P] [US5] Add object, media, inspection, accessibility, observation, cross-modal, analysis-result, specialist-agent, and promotion schemas in `schemas/research-grade/object-record.schema.json`, `schemas/research-grade/media-asset.schema.json`, `schemas/research-grade/object-inspection.schema.json`, `schemas/research-grade/accessibility-record.schema.json`, `schemas/research-grade/visual-observation.schema.json`, `schemas/research-grade/cross-modal-support.schema.json`, `schemas/research-grade/image-analysis-result.schema.json`, `schemas/research-grade/specialist-agent.schema.json`, and `schemas/research-grade/capability-promotion.schema.json`
-- [x] T105 [US5] Implement object/media/inspection separation, byte identity, capture/rendition/derivative lineage, separate analyse/transform/create-derivative rights with restrictive inheritance, IIIF 3 ingest, structured accessibility invalidation, and export redaction in `swos_runtime/media.py`
+- [x] T105 [US5] Implement object/media/inspection separation, byte identity, capture/rendition/derivative lineage, separate `view`, `analyse`, `transform`, `create_derivative`, `quote`, `cache`, `export`, and `redistribute` rights with restrictive inheritance, IIIF 3 ingest, structured accessibility invalidation, and export redaction in `swos_runtime/media.py`
 - [x] T106 [US5] Implement digest-bound IIIF pixel/percent and bounded SVG selector normalization in `swos_runtime/media.py`
 - [x] T107 [US5] Implement provider-neutral bounded 2D analysis protocol and deterministic fake with explicit statuses in `swos_runtime/image_analysis.py`
 - [x] T108 [US5] Implement observation/interpretation separation, cross-modal weakest-leg policy, multi-view limits, and attribution/originality guardrails in `swos_runtime/image_analysis.py`
 - [x] T109 [US5] Integrate image analysis through broker/work orders/orchestrator/finalizer/EPG without provider-owned verification in `swos_runtime/broker.py`, `swos_runtime/work_orders.py`, `swos_runtime/orchestrator.py`, and `swos_runtime/finalizer.py`
 - [x] T110 [US5] Integrate staged art-history then art-criticism pack-assisted critique with ontology criteria in `swos_runtime/discipline_critique.py`
-- [ ] T111 [P] [US5] Build at least 60 distinct objects/works and 96 rights-cleared renditions plus region/cross-modal/discipline/accessibility/adversarial manifests, per-asset source/right URI/digest/allowed-use/attribution statements, guidelines, and mandatory `DATA-LICENCE.md` in `evals/fixtures/multimodal/`
-- [x] T112 [US5] Implement raw case, agreement, region, cross-modal, false-originality, over-association, valid-reviewed-accessibility completeness numerator/denominator, stability, object/rendition minima, and regression metrics in `tools/run_multimodal_evals.py`
+- [ ] T111 [P] [US5] Build at least 60 distinct objects/works and 96 rights-cleared renditions, at least 80 atomic region-grounding claims across at least 20 assets, 120 cross-modal pairs, 48 discipline tasks across at least 24 works, and 96 adversarial cases, spanning at least six media/material classes, three mediation conditions, and both art disciplines, plus accessibility manifests, per-asset source/right URI/digest/allowed-use/attribution statements, guidelines, and mandatory `DATA-LICENCE.md` in `evals/fixtures/multimodal/`
+- [x] T112 [US5] Implement raw case, agreement, region, cross-modal, false-originality, over-association, valid-reviewed-accessibility completeness numerator/denominator, Wilson two-sided 95% confidence intervals, stability, and regression metrics in `tools/run_multimodal_evals.py`, with gates enforcing all R7 corpus minima: 60 objects/works, 96 renditions, 80 region-grounding claims across 20 assets, 120 cross-modal pairs, 48 discipline tasks across 24 works, and 96 adversarial cases
 - [x] T113 [US5] Implement and register one real opt-in OpenAI image-input provider adapter and v2 capability declaration with bounded requests, purpose-rights enforcement, exact model/config/response evidence, and contract status mapping in `swos_runtime/image_analysis_openai.py` and `contracts/capability-contract/capabilities-v2.json`
 - [x] T114 [US5] Create versioned art-history and art-criticism specialist-agent definitions, least-privilege image/object tool permissions, role-separated orchestrator routes, and executable pack-only fallback in `agents/research-grade/art-history.agent.json`, `agents/research-grade/art-criticism.agent.json`, and `swos_runtime/orchestrator.py`
 - [x] T115 [US5] Add optional live exact-head provider workflow with `NOT_RUN` semantics and immutable outputs in `.github/workflows/multimodal-evaluation.yml`
@@ -233,7 +233,7 @@ without exact matching evidence.
 - [x] T119 [P] Add cross-story classification/rights/ontology/evidence identity preservation tests in `tests/runtime/test_research_grade_integrity.py`
 - [x] T120 Run all existing v1.1/runtime/prose/eight-plane tests and record exact-head commands/results in `artifacts/research-grade/regression-report.json`
 - [x] T121 Run ontology, RPM, classifier, diversity, critique, PROV, and multimodal locked evaluations and record immutable indexes in `artifacts/research-grade/evaluation-index.json`
-- [x] T122 Run Ruff, schema/contract, coverage, security, portability, offline, deterministic-stability, and manifest checks and record results in `artifacts/research-grade/quality-report.json`
+- [x] T122 Run Ruff, schema/contract, coverage, security, `tools/check_portability_acceptance.py --definitions-only`, offline, deterministic-stability, bounded safety mutation checks, `tools/lint_skills.py`, and manifest checks and record results in `artifacts/research-grade/quality-report.json`
 - [x] T123 Run reference RPM, packaged 100-pair citation, and PROV performance corpora and record runner fingerprints/raw measurements in `artifacts/research-grade/benchmark-index.json`
 - [x] T124 Assemble and independently verify the pre-freeze in-repository FR/SC evidence manifest and limitations in `artifacts/research-grade/audit-pack.json`; reserve hosted CI/review/approval fields for externally finalized evidence
 - [x] T125 Update version, architecture, security, evaluation, roadmap, progress, and release documentation in `README.md`, `SECURITY.md`, `PROGRESS.md`, `docs/architecture/`, and `evals/metrics.md`

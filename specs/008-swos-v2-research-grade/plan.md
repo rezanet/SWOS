@@ -44,11 +44,11 @@ pinned containers/artifacts and authorized providers
 **Project Type**: Python library/CLI with schemas, contracts, governance policies,
 discipline packs, evaluation corpus, benchmarks, and release evidence
 
-**Performance Goals**: common indexed RPM query p95 <= 250 ms at 100k items on
-the recorded reference runner; feature-spec lookup goal over 10k items; inspected
-10k-item import <= 60 seconds; packaged 100-pair citation batch p95 <= 5 seconds;
-10k-statement PROV certification <= 60 seconds with bounded memory; deterministic
-outputs across repeated runs; zero semantic loss for certified PROV corpus
+**Performance Goals**: local programme lookup over 10k active items p95 <= 250 ms
+on the recorded reference runner; packaged 100-pair citation batch p95 <= 5
+seconds; 10k-statement PROV
+certification <= 60 seconds with bounded memory; deterministic outputs across
+repeated runs; zero semantic loss for certified PROV corpus
 
 **Constraints**: fail closed; all public RPM calls scoped; no authenticated-tenancy
 claim; no ordinary-CI network/model download/secret/paid call; bounded archive,
@@ -56,11 +56,13 @@ RDF, selector, model, and provider resources; core owns verification; rights and
 classification ceilings never weaken; exact-head evidence and independent review
 required
 
-**Scale/Scope**: 2 namespaces, 4 programmes, 10 projects/programme and 100k-item
-RPM benchmark; nine discipline profiles; >=6,000 adjudicated citation pairs at
+**Scale/Scope**: 2 namespaces, 4 programmes, 10 projects/programme and a
+10k-active-item RPM acceptance benchmark; nine discipline profiles; >=6,000 adjudicated citation pairs at
 release floor with >=1,500 locked-test pairs; at least ten locked reviewed
-diversity packets per discipline; 1k/10k/100k PROV statement benchmarks; >=60
-distinct objects/works, >=96 renditions, and the multimodal gates in research.md
+diversity packets per discipline; 1k/10k PROV statement benchmarks; >=60
+distinct objects/works, >=96 renditions, >=80 region-grounding claims across
+>=20 assets, >=120 cross-modal pairs, >=48 discipline tasks across >=24 works,
+>=96 adversarial cases, and the remaining multimodal gates in research.md
 
 ## Constitution Check
 
@@ -71,7 +73,7 @@ distinct objects/works, >=96 renditions, and the multimodal gates in research.md
 | Core policy owns scholarly verification | Classifier, retriever, image provider, and discipline critic return evidence/diagnostics; deterministic core admits or blocks | PASS |
 | Fail closed under uncertainty | Missing scope, evidence, rights, ontology, model, calibration, PROV oracle, or selector yields denial/abstention/NOT_RUN, never fabricated pass | PASS |
 | Preserve v1 contracts | New v2 schemas/contracts plus explicit dispatcher and compatibility suite; no in-place `$id` redefinition | PASS |
-| Provider/host neutrality | Protocols and immutable manifests isolate SQLite, model, RDF, PROV, and image-provider choices | PASS |
+| Provider/host neutrality | Protocols, deterministic substitution fixtures, the frozen portability matrix, and immutable manifests isolate SQLite, model, RDF, PROV, and image-provider choices | PASS |
 | Human authority remains explicit | RPM commits, exceptions, overrides, promotion, and release require separate approval/SDL evidence | PASS |
 | Evidence is reproducible | Canonical hashes, exact source SHA, tool/model/oracle/corpus identities, raw predictions, and immutable audit pack | PASS |
 | Evaluation exercises production | Fixture-name heuristics removed; all feature evaluators call public production paths | PASS |
@@ -174,12 +176,14 @@ agents/research-grade/
 ├── art-history.agent.json
 └── art-criticism.agent.json
 evals/fixtures/
+├── golden/
 ├── provenance/
 ├── source-diversity/
 ├── discipline-critique/
 └── multimodal/
 tools/
 ├── rpm.py
+├── run_mutation_checks.py
 ├── compile_discipline_ontologies.py
 ├── build_citation_dataset.py
 ├── train_citation_classifier.py
@@ -263,22 +267,28 @@ credential access in ordinary CI.
    verification, and deterministic rebuild.
 3. Build the authoritative v2 RPM policy plus registration and staged
    evidence-bound operation service. Route every project binding, write,
-   lifecycle, deletion, expiry, and exceptional-read authorization through one
-   assessed/approved commit protocol; resolve EPG/SDL and revalidate at commit.
+   programme closure, lifecycle, deletion, expiry, and exceptional-read
+   authorization through one assessed/approved commit protocol; resolve EPG/SDL
+   and revalidate at commit.
 4. Build classification/expiry-aware governed reads and EPG read receipts.
 5. Build correction, supersession, contradiction, confirmation, expiry, deletion,
-   and review-mode lifecycle semantics.
-6. Build safe export, inspect, commit, redaction, collision, idempotence, path, and
-   resource-limit behavior.
+   programme closure, and review-mode lifecycle semantics; closure preserves
+   historical records and release bindings while blocking new writes and normal
+   reads.
+6. Build safe export, inspect, and destination-bound commit, redaction, collision,
+   idempotence, path, and resource-limit behavior; re-resolve the receiving scope
+   at commit.
 7. Connect finalizer/work-order run snapshots to real scoped RPM, while preserving
    v1.1 compatibility.
 8. Add operator CLI, benchmark corpus, concurrency/crash/tamper/security tests,
-   and immutable benchmark report.
+   bounded safety-mutation checks, and immutable benchmark/report artifacts.
 
 **Exit gate**: three-project exchange suite; isolation and TOCTOU adversarial suite;
-2,000 concurrent writes with no loss/duplication; crash all-or-nothing; projection
-rebuild equivalence; hostile import rejection; documented logical-deletion and
-logical-namespace limitations.
+programme-closure preservation; 2,000 concurrent writes with no loss/duplication;
+crash all-or-nothing; projection rebuild equivalence; hostile import and
+destination-mismatch rejection;
+bounded safety-mutation report with no surviving safety mutant; documented
+logical-deletion and logical-namespace limitations.
 
 ## Phase 3: US2 — Formal Ontologies and Discipline Critique
 
@@ -380,8 +390,11 @@ overclaim.
    support, multi-view limitation, attribution/originality guardrails, and EPG.
 5. Integrate art-history then art-criticism critique in staged pack-assisted mode.
 6. Build the governed `DATA-LICENCE.md`, at least 60 distinct objects/works and 96
-   renditions, region/cross-modal/discipline/adversarial cases, annotation
-   guidelines, adjudication, accessibility, and stability evaluation.
+   renditions, at least 80 region-grounding claims across 20 assets, 120
+   cross-modal pairs, 48 discipline tasks across 24 works, and 96 adversarial
+   cases across the required six media/material classes, three mediation
+   conditions, and both art disciplines, with annotation guidelines,
+   adjudication, accessibility, and stability evaluation.
 7. Implement versioned specialist-agent contracts, least-privilege tools,
    role-separated routes, and executable pack fallback; then implement default-off
    paired promotion assessment/commit/rollback and prove >=0.08 improvement, a
@@ -430,6 +443,8 @@ that path. Tests that merely validate expected fixture labels are prohibited.
 - schema/contract/example and version-dispatch tests;
 - unit/property tests for canonicalization, metrics, selectors, state machines;
 - repository transaction, concurrency, crash, corruption, and migration tests;
+- bounded mutation testing of safety-critical policy, assessment and commit
+  guards, with a machine-readable report and no surviving safety mutant;
 - cross-module integration from planning through finalization/export;
 - adversarial poisoning, traversal, collision, leakage, rights, OOD, malformed
   model/RDF/media, resource-exhaustion, and semantic-loss tests;
@@ -463,13 +478,13 @@ limitations. Prose-only performance claims do not satisfy a gate.
 
 | Requirements | Design location | Primary implementation/evidence |
 |---|---|---|
-| FR-001, FR-002, FR-003, FR-004, FR-005 | Phase 2; data model §1; contracts §2 | `research_memory.py`, `programme_store.py`, `rpm_exchange.py`; scoped lifecycle/exchange suites |
+| FR-001, FR-002, FR-003, FR-004, FR-005 | Phase 2; data model §1; contracts §2 | `research_memory.py`, `programme_store.py`, `rpm_exchange.py`; scoped lifecycle/closure/exchange/receiving-scope suites and safety-mutation report |
 | FR-006, FR-007, FR-008, FR-009, FR-010 | Phase 3; research R2; data model §2 | ontology sources/shapes/compiler/manifest; pack and isomorphism reports |
 | FR-011, FR-012 | Phase 3; research R3; contracts §3 | `discipline_critique.py`; nine-pack reviewed fixture report |
-| FR-013, FR-014, FR-015, FR-016, FR-017 | Phase 4 citation workstream; research R4; contracts §4 | classifier/calibration/dataset/model manifests; locked predictions and metrics |
+| FR-013, FR-014, FR-015, FR-016, FR-017 | Phase 4 citation workstream; research R4; contracts §4 | classifier/calibration/dataset/model manifests; exact pair IDs, claims, spans, digests, per-decision code/config/execution provenance, locked predictions, and metrics |
 | FR-018, FR-019, FR-020, FR-021 | Phase 4 diversity workstream; research R5; contracts §5 | `source_diversity.py`, policy/benchmark; expansion and exception evidence |
 | FR-022, FR-023, FR-024, FR-025, FR-026 | Phase 5; research R6; contracts §6 | EPG v2/interchange/validation/certifier; oracle/corpus certificates |
-| FR-027, FR-028, FR-029, FR-030, FR-031, FR-032, FR-033 | Phase 6; research R7; data model §6; contracts §7 | media/image modules, rights/promotion policies, corpus/adjudication report |
+| FR-027, FR-028, FR-029, FR-030, FR-031, FR-032, FR-033 | Phase 6; research R7; data model §6; contracts §7 | media/image modules covering all eight rights actions, promotion policies, and corpus/adjudication report proving 60/96/80-across-20/120/48-across-24/96 minima |
 | FR-034–FR-035 | Phases 1–7; Testing Strategy | test-first task ordering; full exact-head eight-plane report |
 | FR-036 | Phase 1 compatibility shell | frozen artifact digest and v1.1 behavior regression report |
 | FR-037 | Phases 2–7 audit bindings | EPG/SDL, model, rights, review, and audit-pack manifests |

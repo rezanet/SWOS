@@ -1,7 +1,11 @@
 # Research: SWOS v2.0 Research Grade
 
 **Feature**: `008-swos-v2-research-grade`
-**Baseline inspected**: `df87cf2a6a21bfd9e3e10be541624ad95908b40b`
+**Baseline inspected**: `8d440296b4a9df708f1140a04bae1ae24f74fee3`
+**v1.1 source-release boundary**: accepted offline source release
+`b10c4351e4b3cdb6c180fb95251c9b84b9b919b5`; the planning baseline above is a
+subsequent documentation/reconciliation head and does not claim live
+compatibility, package distribution, deployment or signing.
 **Status**: Decisions complete; no unresolved clarification markers
 
 ## 1. Scope and baseline
@@ -188,6 +192,12 @@ bounded surrounding context, applicable discipline/method IRIs, and source-role
 IRI. Publisher prestige, provider identity, citation count, and admission result
 are excluded as predictive features.
 
+Every `CitationSupportDecision`, including abstention, rule rejection, and error,
+records the exact execution code SHA, configuration digest, execution
+identifier/provenance, and timestamp alongside its immutable pair and artifact
+bindings. Aggregate input digests and candidate positions do not replace this
+per-decision provenance.
+
 The safety cascade is:
 
 1. deterministic source existence, quote containment, metadata, retraction,
@@ -230,6 +240,17 @@ may be below 0.95. Deterministic laundering/invalid-citation blocker fixtures
 must be rejected at 100%. These gates intentionally satisfy both SC-004 and the stronger
 confidence-bound safety target. If no threshold meets safety and coverage, model
 release is blocked rather than relaxing safety.
+
+For machine-testable reporting, let `N` be the number of valid locked-test
+items, let `A` be the items for which the calibrated policy emits a non-abstain
+decision, and let `W` be the incorrect decisions in `A`. Selective coverage is
+`A / N`, and selective error is `W / A`; an empty `A` is a failed coverage gate,
+not a zero-error result. Every locked-test item, including abstention and
+blocker cases, remains in `N`. Class, discipline and blocker rates use the same
+explicit item set named by their report section. Unless a contract states
+otherwise, reported 95% confidence bounds use the two-sided Wilson score
+interval over the stated numerator and denominator, with no pooling across
+disciplines or blocker classes.
 
 The production release floor is at least 6,000 reviewed pairs with a locked test
 of at least 1,500 and 300 adversarial non-direct examples, plus the per-label and

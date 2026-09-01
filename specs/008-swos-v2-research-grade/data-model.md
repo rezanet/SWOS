@@ -37,10 +37,13 @@ classification result, contradiction result, creation/expiry, and deterministic
 denial reasons. It is immutable and single-use.
 
 The assessed operation is a discriminated union covering registration,
-retirement, write, confirm, correction, supersession, contradiction, expiry,
-deletion, and exceptional-read authorization. Every durable transition binds the
-operation digest, active target/head, evidence, policy, `as_of`, and expiry and is
-re-resolved at commit; there is no lifecycle mutation bypass.
+retirement, programme closure, write, confirm, correction, supersession,
+contradiction, expiry, deletion, and exceptional-read authorization. Programme
+closure is an assessed terminal transition that preserves all historical records,
+release bindings and provenance while rejecting new writes and normal reads for
+the closed programme. Every durable transition binds the operation digest,
+active target/head, evidence, policy, `as_of`, and expiry and is re-resolved at
+commit; there is no lifecycle mutation bypass.
 
 ### RPMPolicyRelease
 
@@ -63,8 +66,8 @@ bindings, actor/approval evidence, event timestamp, canonicalization profile,
 and reason.
 
 Event types: `write`, `confirm`, `status_change`, `correct`, `supersede`,
-`contradiction_opened`, `contradiction_resolved`, `expire`, `delete`, and
-`import`.
+`contradiction_opened`, `contradiction_resolved`, `expire`, `delete`, `close`,
+and `import`.
 
 ### MemoryProjection
 
@@ -93,10 +96,13 @@ and digests, rights exclusions, export approval, and export EPG activity.
 
 ### ImportInspection
 
-Fields: inspection ID/digest, source bundle digest, externally supplied destination
-mapping, limits, schema/checksum/chain/PROV/SDL/rights/classification results,
-collision results, deterministic diff, warnings, created/expiry timestamps, and
-commit eligibility. Commit is atomic and requires an approval over this digest.
+Fields: inspection ID/digest, source bundle digest, exact receiving
+`destination_scope`, externally supplied destination mapping, limits,
+schema/checksum/chain/PROV/SDL/rights/classification results, collision results,
+deterministic diff, warnings, created/expiry timestamps, and commit eligibility.
+Commit accepts the destination scope explicitly, re-resolves that registered and
+non-closed receiver and the inspection digest at commit time, and is atomic only
+when they match; it requires an approval over this digest and destination.
 
 ### RPM state transitions
 
@@ -157,10 +163,13 @@ override a mandatory criterion or replace the per-discipline record.
 
 ### CitationPair
 
-Fields: pair ID, atomic claim, exact quote, bounded context, source/work/passage
-IDs and digests, selectors/locators, discipline/method/source-role IRIs, rights
-and licence disposition, transformations, annotation provenance, split group,
-and canonical input digest.
+Fields: pair ID, atomic claim, exact quote (the canonical `evidence_span`),
+bounded context, source/work/passage IDs and digests, selectors/locators,
+discipline/method/source-role IRIs, rights and licence disposition,
+transformations, annotation provenance, split group, and canonical input digest.
+The canonical `atomic_claim` and `evidence_span` are exact UTF-8 input values;
+no trimming, reflow, or other normalization is permitted when their digests are
+computed or when a decision is emitted.
 
 ### CitationAnnotation
 
@@ -190,11 +199,16 @@ only for its bound model and label order.
 
 ### CitationSupportDecision
 
-Fields: candidate index, status (`classified`, `abstained`, `rule_rejected`,
-`error`), support label or null, ordered class probabilities, predicted
-probability, abstention reason, threshold, calibration/model/dataset/ontology
-identities and digests, canonical input digest, runtime/backend versions,
-deterministic precheck results, timestamps, and EPG activity.
+Fields: candidate index, immutable `pair_id`, exact `atomic_claim` and exact
+`evidence_span` copied from the input pair, independent claim/span digests,
+status (`classified`, `abstained`, `rule_rejected`, `error`), support label or
+null, ordered class probabilities, predicted probability, abstention reason,
+threshold, calibration/model/dataset/ontology identities and digests, canonical
+input digest, runtime/backend versions, deterministic precheck results,
+execution code SHA, configuration digest, execution ID/provenance, timestamps,
+and EPG activity. The exact pair bytes and their digests remain resolvable from
+the immutable audit pack; a candidate index or aggregate input digest alone is
+not sufficient provenance.
 
 The support label is exactly one of `directly_supports`, `partially_supports`,
 `context_only`, `contradicts`, or `not_supported`. It is null for abstention,
