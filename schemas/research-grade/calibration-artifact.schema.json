@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/calibration-artifact.schema.json",
+  "title": "SWOS citation-support calibration artifact",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "calibration_id",
+    "model_digest",
+    "dataset_manifest_digest",
+    "ontology_digest",
+    "label_order",
+    "temperature",
+    "thresholds",
+    "calibration_split_digest",
+    "locked_test_used",
+    "verified"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "status": {"enum": ["frozen", "not_run", "blocked"]},
+    "calibration_id": {"type": "string", "minLength": 1},
+    "model_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "dataset_manifest_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "ontology_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "label_order": {"const": ["directly_supports", "partially_supports", "context_only", "contradicts", "not_supported"]},
+    "temperature": {"type": "number", "exclusiveMinimum": 0},
+    "thresholds": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0, "maximum": 1}},
+    "ece": {"type": "number", "minimum": 0, "maximum": 1},
+    "calibration_split_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "locked_test_used": {"const": false},
+    "verified": {"type": "boolean"},
+    "calibration_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "model_manifest_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

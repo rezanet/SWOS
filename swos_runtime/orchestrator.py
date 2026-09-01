@@ -14,9 +14,17 @@ from typing import Any, Callable
 
 from .broker import CapabilityBroker, CapabilityBrokerError
 from .capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
+from .discipline_ontology import DisciplineOntologyRegistry, bind_research_plan
 from .finalizer import finalize_work_order_run
 from .governance import detect_prompt_injection, exact_quote_supported
 from .models import ResearchRequest, RunOutcome, SourceRecord
+from .research_expansion import expansion_plan
+from .source_diversity import (
+    DiversityRequirement,
+    FamilyIdentityPolicy,
+    canonicalize_source_families,
+    measure_source_diversity,
+)
 from .work_orders import WorkOrderError, WorkOrderRun
 
 RUNTIME_VERSION = "0.2.0"
@@ -35,6 +43,46 @@ REVIEW_RESEARCH_CATEGORIES = {
     "over_association",
     "genre_mismatch",
 }
+
+SPECIALIST_ROUTE_DEFINITIONS = {
+    "art_history": {
+        "agent_id": "swos.specialist.art-history",
+        "agent_path": "agents/research-grade/art-history.agent.json",
+        "stage": "art_history",
+        "requires_prior_stage": None,
+    },
+    "art_criticism": {
+        "agent_id": "swos.specialist.art-criticism",
+        "agent_path": "agents/research-grade/art-criticism.agent.json",
+        "stage": "art_criticism",
+        "requires_prior_stage": "art_history",
+    },
+}
+
+
+def specialist_route(discipline: str, *, promoted: bool = False) -> dict[str, Any]:
+    """Return the only permitted specialist route or its pack fallback."""
+
+    key = str(discipline).lower()
+    try:
+        definition = SPECIALIST_ROUTE_DEFINITIONS[key]
+    except KeyError as exc:
+        raise ValueError(f"unsupported specialist discipline: {discipline}") from exc
+    return {
+        "discipline": key,
+        "stage": definition["stage"],
+        "agent_id": definition["agent_id"],
+        "agent_path": definition["agent_path"],
+        "mode": "specialist" if promoted else "pack_only",
+        "fallback": "pack_only",
+        "fallback_operation": "DisciplineCritic.staged_multimodal_critique",
+        "permissions": ["view", "analyse"],
+        "provider_owned_verification": False,
+        "requires_prior_stage": definition["requires_prior_stage"],
+    }
+
+
+route_specialist = specialist_route
 
 
 def _legal_topic(topic: str) -> bool:
@@ -214,6 +262,8 @@ class AutonomousSWOS:
         stage_provider: Any | None = None,
         retriever: Any | None = None,
         prose_transform: Callable[[str, ResearchRequest], tuple[str, dict[str, Any]]] | None = None,
+        ontology_registry: DisciplineOntologyRegistry | None = None,
+        image_provider: Any | None = None,
     ) -> None:
         if broker is None:
             if stage_provider is None or retriever is None:
@@ -229,8 +279,10 @@ class AutonomousSWOS:
                 model_host="injected-host",
                 execution_mode="injected",
                 adapter_manifest=adapter_manifest,
+                image_provider=image_provider,
             )
         self.broker = broker
+        self.ontology_registry = ontology_registry
         self.adapter_manifest = dict(
             adapter_manifest or broker.adapter_manifest or _injected_manifest(broker)
         )
@@ -248,6 +300,15 @@ class AutonomousSWOS:
 
     def _submit(self, run: WorkOrderRun, payload: dict[str, Any], stage: str) -> None:
         result = dict(payload)
+        if stage == "research_planning" and self.ontology_registry is not None:
+            discipline = result.get("discipline") or run.state.get("request", {}).get("discipline")
+            if discipline:
+                result = bind_research_plan(
+                    result,
+                    self.ontology_registry.profile(str(discipline)),
+                )
+        if stage == "research_planning" and isinstance(result.get("diversity_requirement"), dict):
+            run.bind_diversity_requirement(DiversityRequirement(**result["diversity_requirement"]))
         result["provenance"] = self._provenance(stage)
         run.submit(result)
 
@@ -274,6 +335,14 @@ class AutonomousSWOS:
             )
         queries.append(f"{topic} counterexamples exceptions limitations evidence")
         return queries
+
+    @staticmethod
+    def diversity_expansion_queries(
+        topic: str, report: dict[str, Any], *, max_queries: int = 8
+    ) -> list[str]:
+        """Turn a pre-declared diversity report into bounded corrective retrieval."""
+
+        return list(expansion_plan(report, topic=topic, max_queries=max_queries).queries)
 
     def _replace_retrieval_state(
         self,
@@ -381,6 +450,69 @@ class AutonomousSWOS:
         argument["provenance"] = previous_argument.get("provenance")
         run.replace_latest_submission("argument_construction", argument)
 
+    @staticmethod
+    def _measure_diversity(run: WorkOrderRun) -> Any | None:
+        requirement_data = run.state.get("diversity_requirement")
+        if not isinstance(requirement_data, dict):
+            return None
+        requirement = DiversityRequirement(**requirement_data)
+        sources = _sources(run._latest("source_retrieval") or {})
+        audit = run._latest("citation_support_audit") or {}
+        direct_indices = {
+            int(item["index"])
+            for item in audit.get("audits", [])
+            if isinstance(item, dict)
+            and isinstance(item.get("index"), int)
+            and item.get("support_level") == "directly_supports"
+            and isinstance(item.get("eligibility"), dict)
+            and item["eligibility"].get("eligible") is True
+        }
+        claims = [
+            claim
+            for index, claim in enumerate(
+                (run._latest("evidence_extraction") or {}).get("claims", [])
+            )
+            if index in direct_indices and isinstance(claim, dict)
+        ]
+        report = measure_source_diversity(
+            families=canonicalize_source_families(sources, FamilyIdentityPolicy()),
+            admitted_claims=claims,
+            requirements=requirement,
+        )
+        run.record_diversity_report(report)
+        return report
+
+    def image_analysis(self, run: WorkOrderRun, request: Any) -> Any:
+        """Record optional multimodal evidence while preserving text fallback."""
+
+        result = self.broker.image_analysis(request)
+        run.record_image_analysis(result)
+        return result
+
+    def staged_multimodal_critique(
+        self,
+        run: WorkOrderRun,
+        *,
+        research_plan: dict[str, Any],
+        evidence_matrix: dict[str, Any],
+        draft: dict[str, Any],
+        observations: Any = (),
+        interpretations: Any = (),
+        textual_evidence: Any = (),
+    ) -> Any:
+        """Execute the pack-only staged critique route and persist its evidence."""
+
+        result = self.broker.staged_multimodal_critique(
+            research_plan=research_plan,
+            evidence_matrix=evidence_matrix,
+            draft=draft,
+            observations=observations,
+            interpretations=interpretations,
+            textual_evidence=textual_evidence,
+        )
+        run.record_multimodal_critique(result)
+        return result
+
     def _fulfil(self, run: WorkOrderRun) -> None:
         order = run.work_order()
         if order is None:
@@ -459,6 +591,12 @@ class AutonomousSWOS:
             candidates = (run._latest("evidence_extraction") or {}).get("claims", [])
             source_map = {source.source_id: source for source in _ranked_sources(run)}
             self._submit(run, self.broker.citation_support_audit(candidates, source_map), stage)
+            report = self._measure_diversity(run)
+            if report is not None and report.status in {"fail", "review_required"}:
+                run.state["diversity_expansion_queries"] = self.diversity_expansion_queries(
+                    str(request["topic"]), report.to_dict()
+                )
+                run._save()
             return
 
         if stage == "argument_construction":

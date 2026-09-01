@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/object-inspection.schema.json",
+  "title": "SWOS object inspection activity",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["inspection_id", "object_id", "actor_id", "timestamp", "observed_scope"],
+  "properties": {"inspection_id": {"type": "string"}, "object_id": {"type": "string"}, "actor_id": {"type": "string"}, "role": {"type": "string"}, "timestamp": {"type": "string", "format": "date-time"}, "location": {"type": ["string", "null"]}, "access_method": {"type": ["string", "null"]}, "conditions": {"type": "object"}, "instruments": {"type": "array", "items": {"type": "string"}}, "observed_scope": {"type": "string"}, "limitations": {"type": "array", "items": {"type": "string"}}, "notes_digest": {"type": ["string", "null"]}, "epg_activity_id": {"type": ["string", "null"]}, "sdl_decision_id": {"type": ["string", "null"]}}
+}

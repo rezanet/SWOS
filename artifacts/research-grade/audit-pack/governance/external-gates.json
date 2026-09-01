@@ -1,0 +1,49 @@
+{
+  "gates": [
+    {
+      "disposition": "not finalized in repository evidence",
+      "gate": "hosted_ci",
+      "identities": [],
+      "status": "reserved_external"
+    },
+    {
+      "disposition": "not finalized in repository evidence",
+      "gate": "maintainer_approvals",
+      "identities": [],
+      "status": "reserved_external"
+    },
+    {
+      "disposition": "not finalized in repository evidence",
+      "gate": "discipline_steward_approval",
+      "identities": [],
+      "status": "reserved_external"
+    },
+    {
+      "disposition": "not finalized in repository evidence",
+      "gate": "fixture_owner_approval",
+      "identities": [],
+      "status": "reserved_external"
+    },
+    {
+      "disposition": "not finalized in repository evidence",
+      "gate": "independent_review",
+      "identities": [],
+      "status": "reserved_external"
+    },
+    {
+      "disposition": "not finalized in repository evidence",
+      "gate": "external_immutable_audit_pack",
+      "identities": [],
+      "status": "reserved_external"
+    },
+    {
+      "disposition": "not finalized in repository evidence",
+      "gate": "owner_merge_approval",
+      "identities": [],
+      "status": "reserved_external"
+    }
+  ],
+  "instruction": "Populate only from immutable external PR/workflow artifacts; do not fabricate identities here.",
+  "schema_version": "1.0.0",
+  "source_sha": "a8fe58198184e7affa3fe327757f71e4ad10022b"
+}

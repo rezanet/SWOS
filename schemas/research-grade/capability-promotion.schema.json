@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/capability-promotion.schema.json",
+  "title": "SWOS capability promotion decision",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "enabled", "capability", "pack", "stage", "assessment_digest", "approval", "rollback_trigger"],
+  "properties": {"status": {"enum": ["enabled", "disabled", "rolled_back"]}, "enabled": {"type": "boolean"}, "capability": {"type": "string"}, "pack": {"type": "string"}, "stage": {"type": "string"}, "assessment_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "approval": {"type": "object"}, "rollback_trigger": {"type": "string"}, "effective_at": {"type": ["string", "null"]}, "expires_at": {"type": ["string", "null"]}}
+}

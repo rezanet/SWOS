@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/accessibility-record.schema.json",
+  "title": "SWOS structured accessibility record",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["asset_digest", "purpose", "short_alternative", "origin", "review_status", "language", "valid"],
+  "properties": {
+    "asset_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "purpose": {"enum": ["decorative", "functional", "evidentiary"]},
+    "short_alternative": {"type": "string"},
+    "long_description": {"type": ["string", "null"]},
+    "region_labels": {"type": "array", "items": {"type": "object"}},
+    "text_fallback": {"type": ["string", "null"]},
+    "origin": {"enum": ["human", "machine_assisted"]},
+    "review_status": {"type": "string"},
+    "reviewer_id": {"type": ["string", "null"]},
+    "language": {"type": "string"},
+    "invalidation_reason": {"type": ["string", "null"]},
+    "created_at": {"type": "string"},
+    "reviewed_at": {"type": ["string", "null"]},
+    "valid": {"type": "boolean"}
+  }
+}

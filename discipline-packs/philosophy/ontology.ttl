@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/philosophy> a swos:Discipline ; skos:prefLabel "philosophy" .
+<https://swos.example.org/discipline/philosophy> swos:usesMethod <https://swos.example.org/method/argument-reconstruction> .
+<https://swos.example.org/discipline/philosophy> swos:requiresCriterion <https://swos.example.org/criterion/philosophy/reconstruction> .
+<https://swos.example.org/discipline/philosophy> swos:requiresCriterion <https://swos.example.org/criterion/philosophy/validity> .
+<https://swos.example.org/discipline/philosophy> swos:requiresCriterion <https://swos.example.org/criterion/philosophy/premises> .
+<https://swos.example.org/discipline/philosophy> swos:requiresCriterion <https://swos.example.org/criterion/philosophy/objection> .
+<https://swos.example.org/discipline/philosophy> swos:requiresCriterion <https://swos.example.org/criterion/philosophy/precision> .
+<https://swos.example.org/criterion/philosophy/reconstruction> a swos:Criterion ; skos:prefLabel "argument reconstruction" .
+<https://swos.example.org/criterion/philosophy/validity> a swos:Criterion ; skos:prefLabel "validity and soundness" .
+<https://swos.example.org/criterion/philosophy/premises> a swos:Criterion ; skos:prefLabel "hidden premises" .
+<https://swos.example.org/criterion/philosophy/objection> a swos:Criterion ; skos:prefLabel "objection handling" .
+<https://swos.example.org/criterion/philosophy/precision> a swos:Criterion ; skos:prefLabel "conceptual precision" .

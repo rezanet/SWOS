@@ -1,0 +1,48 @@
+{
+  "artifact": "swos.research-grade.compatibility-baseline",
+  "schema_version": "2.0.0",
+  "recorded_on": "2026-09-01",
+  "repository": "rezanet/SWOS",
+  "implementation_branch": "codex/swos-v2-research-grade",
+  "base_sha": "c4ec2945d5279809f2b16ce62ce52586586f1ed0",
+  "worktree_diff_sha256": "6c486391ada298e027f89692bb4ea40beeaa5f8dc8c8a4dbc242f1efece23fed",
+  "frozen_v1_manifest": {
+    "path": "tests/fixtures/research-grade/v1-compatibility-manifest.json",
+    "sha256": "0299aad53c16eb7c8d2072072ebcc7ec637091c440ffef6f4b666003efd08d5d"
+  },
+  "v1_contract_bytes": [
+    {
+      "path": "contracts/capability-contract/capabilities-v1.json",
+      "sha256": "c45826e33af74e8b23d5692355ae4a49972cdce7f2cb80ebd68ee16c44d8d913"
+    },
+    {
+      "path": "contracts/stage-instruction/stage-instructions-v1.json",
+      "sha256": "29bf929adfbb37c86213fc4d7c7718b08b96d4a38804371286f7cfb4fd6f6c2e"
+    }
+  ],
+  "checks": [
+    {
+      "command": "python tools/validate_schemas.py --strict",
+      "status": "pass",
+      "result": "31 artefacts validated; frozen v1 contracts preserved"
+    },
+    {
+      "command": "python tools/validate_contract_examples.py",
+      "status": "pass",
+      "result": "Research Grade schemas and executable examples validated"
+    },
+    {
+      "command": "python -m unittest tests.runtime.test_research_grade_compatibility tests.runtime.test_research_grade_schemas tests.runtime.test_research_grade_ci",
+      "status": "pass",
+      "tests": 9
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass"
+    }
+  ],
+  "limitations": [
+    "This is a pre-commit compatibility baseline, not a release or promotion decision.",
+    "Hosted CI, human review, live provider evidence, and final exact-head verification remain pending."
+  ]
+}

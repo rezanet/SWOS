@@ -21,6 +21,27 @@ attack surfaces.
 | Exfiltration through tool calls | Agent sends sensitive content to an external connector | Data classification plus egress allow-list in the tool registry; restricted classes are tool-limited |
 | Autonomy drift | Agent exceeds its declared decision scope | Every agent contract declares `decisions_allowed` and `escalation_conditions`; violations are governance incidents |
 
+## Research Grade v2 controls
+
+The v2 surface is additive and fail-closed. Media analysis separates object,
+asset, selector, observation and interpretation identities; all eight purpose-
+specific rights actions are checked before analysis, transformation, export or
+redistribution. Generated derivatives retain parent digests and invalidate
+stale accessibility and content-credential assertions.
+
+Citation support, source diversity, ontology critique and PROV artifacts are
+advisory inputs until SWOS core validates their exact identities. Provider
+adapters are opt-in and manual-dispatch-only; ordinary CI does not read
+provider credentials, download models, call paid services or invoke an
+independent oracle. Missing corpora, credentials, oracle packages or human
+decisions produce `NOT_RUN`/blocked evidence and never a pass.
+
+Release-only direct dependency hashes are recorded in
+`requirements-research-grade.lock` and `config/research-grade-dependencies.md`;
+the ordinary developer lock remains the compatibility/audit surface. Secrets
+must remain in the host secret store and must not appear in reports, fixtures,
+logs, commits or audit packs.
+
 ## Script execution policy
 
 Skills in this repository ship **no executable scripts by default**. Where a host
@@ -56,4 +77,5 @@ Any new script in `skills/` must be added to this table in the same pull request
 | Version | Supported |
 |---|---|
 | 1.0.x | Yes |
+| 2.0.x | Candidate only; not released |
 | < 1.0 | No |

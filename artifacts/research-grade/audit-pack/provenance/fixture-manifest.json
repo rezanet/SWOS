@@ -1,0 +1,8 @@
+{
+  "schema_version": "2.0.0",
+  "status": "not_run",
+  "reason": "Checksummed PROV corpus is not supplied in this offline checkout.",
+  "required_categories": ["valid", "invalid", "large", "adversarial", "hostile_blank_node"],
+  "cases": [],
+  "checksum_algorithm": "sha256"
+}

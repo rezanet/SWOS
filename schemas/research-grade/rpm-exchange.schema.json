@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/rpm-exchange.schema.json",
+  "title": "SWOS Research Programme Memory exchange bundle",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "bundle_version", "origin_scope", "files", "source_head", "classification_ceiling", "canonicalization", "approval"],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "bundle_version": {"const": "2.0.0"},
+    "origin_scope": {"$ref": "#/$defs/scope"},
+    "files": {"type": "array", "items": {"$ref": "#/$defs/file"}},
+    "source_head": {"type": "string", "minLength": 1},
+    "classification_ceiling": {"enum": ["public", "internal", "confidential"]},
+    "canonicalization": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "approval": {"type": "object", "required": ["approval_id", "digest"], "properties": {"approval_id": {"type": "string"}, "digest": {"type": "string"}}},
+    "counts": {"type": "object"},
+    "rights_exclusions": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "scope": {
+      "type": "object",
+      "required": ["repository_namespace_id", "programme_id", "project_id"],
+      "properties": {
+        "repository_namespace_id": {"type": "string", "minLength": 1},
+        "programme_id": {"type": "string", "minLength": 1},
+        "project_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "file": {
+      "type": "object",
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^(?!/)(?!.*\\.\\.).+$"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/research-grade-audit-pack.schema.json",
+  "title": "SWOS Research Grade exact-head audit pack",
+  "description": "Content-addressed evidence required to review a Research Grade candidate.",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["artifact", "schema_version", "code_sha", "artifact_count", "artifacts"],
+  "properties": {
+    "artifact": {"const": "swos.research-grade.audit-pack"},
+    "schema_version": {"const": "2.0.0"},
+    "code_sha": {"type": "string", "pattern": "^[0-9a-fA-F]{40}$"},
+    "artifact_count": {"type": "integer", "minimum": 0},
+    "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "status": {"type": "string", "enum": ["pre_release", "verified", "blocked"]},
+    "gates": {"type": "array", "items": {"type": "object"}}
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.).+$"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"}
+      }
+    }
+  }
+}

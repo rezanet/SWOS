@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/rpm-2.0.schema.json",
+  "title": "SWOS Research Programme Memory operation and result",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "operation_id", "operation_type", "scope", "payload", "evidence"],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "operation_id": {"type": "string", "minLength": 1},
+    "operation_type": {"enum": ["register_project", "retire_project", "unbind_project", "close_programme", "write", "confirm", "correct", "supersede", "contradiction_opened", "contradiction_resolved", "expire", "delete", "exceptional_read", "import"]},
+    "scope": {"$ref": "#/$defs/scope"},
+    "payload": {"type": "object"},
+    "target_item_id": {"type": ["string", "null"]},
+    "expected_head": {"type": ["string", "null"]},
+    "evidence": {"$ref": "#/$defs/evidence"},
+    "requested_at": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_namespace_id", "programme_id", "project_id"],
+      "properties": {
+        "repository_namespace_id": {"type": "string", "minLength": 1},
+        "programme_id": {"type": "string", "minLength": 1},
+        "project_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["epg_digest", "sdl_digest", "sdl_decision_id"],
+      "properties": {
+        "epg_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "epg_node_ids": {"type": "array", "items": {"type": "string"}},
+        "sdl_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "sdl_decision_id": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": "2.0.0",
+  "manifest_id": "swos-multimodal-evaluation-corpus-v2",
+  "status": "not_run",
+  "reason": "No checksummed rights-cleared and human-reviewed multimodal corpus is supplied in this checkout.",
+  "checksum_algorithm": "sha256",
+  "licence_boundary": "DATA-LICENCE.md",
+  "required_counts": {
+    "objects": 60,
+    "renditions": 96,
+    "region_grounding_claims": 80,
+    "region_assets": 20,
+    "cross_modal_pairs": 120,
+    "discipline_tasks": 48,
+    "discipline_works": 24,
+    "adversarial_cases": 96
+  },
+  "required_strata": {
+    "media_material_classes": 6,
+    "mediation_conditions": 3,
+    "disciplines": ["art_history", "art_criticism"]
+  },
+  "asset_record_required": [
+    "object_id",
+    "asset_id",
+    "source_uri",
+    "rights_uri",
+    "byte_digest",
+    "allowed_actions",
+    "attribution_statement",
+    "required_licence_statement"
+  ],
+  "observed_counts": {
+    "objects": 0,
+    "renditions": 0,
+    "region_grounding_claims": 0,
+    "region_assets": 0,
+    "cross_modal_pairs": 0,
+    "discipline_tasks": 0,
+    "discipline_works": 0,
+    "adversarial_cases": 0
+  },
+  "cases": [],
+  "asset_records": [],
+  "review": {
+    "status": "not_run",
+    "human_adjudication": "required",
+    "independent_provider_review": "required",
+    "exact_head_binding": "required"
+  }
+}

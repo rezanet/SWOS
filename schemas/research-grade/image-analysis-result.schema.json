@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/image-analysis-result.schema.json",
+  "title": "SWOS image analysis result",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "request_digest", "provider", "model", "config_digest", "response_digest", "runtime", "observations", "interpretations", "limitations"],
+  "properties": {"status": {"enum": ["complete", "partial", "insufficient", "denied", "error"]}, "contract_status": {"type": "string"}, "request_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "provider": {"type": "string"}, "model": {"type": "string"}, "config_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "response_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "runtime": {"type": "object"}, "observations": {"type": "array", "items": {"type": "object"}}, "interpretations": {"type": "array", "items": {"type": "object"}}, "unresolved_questions": {"type": "array", "items": {"type": "string"}}, "limitations": {"type": "array", "items": {"type": "string"}}, "rights_outcomes": {"type": "object"}, "elapsed_seconds": {"type": "number", "minimum": 0}, "resource_use": {"type": "object"}, "epg_links": {"type": "array", "items": {"type": "string"}}, "created_at": {"type": "string"}}
+}

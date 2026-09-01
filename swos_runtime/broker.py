@@ -40,6 +40,9 @@ class CapabilityBroker:
         model_host: str = "unknown-host",
         execution_mode: str = "injected",
         adapter_manifest: dict[str, Any] | None = None,
+        discipline_critic: Any | None = None,
+        citation_classifier: Any | None = None,
+        image_provider: Any | None = None,
     ) -> None:
         self.stage_binding = stage_binding
         self.retrieval_binding = retrieval_binding
@@ -49,6 +52,11 @@ class CapabilityBroker:
         self.adapter = str(self.adapter_manifest.get("adapter") or adapter)
         self.model_host = str(self.adapter_manifest.get("model_host") or model_host)
         self.execution_mode = str(self.adapter_manifest.get("execution_mode") or execution_mode)
+        self.discipline_critic = discipline_critic
+        # Optional Research Grade classifier.  The broker never treats its
+        # prediction as authority; the final core gate still owns admission.
+        self.citation_classifier = citation_classifier
+        self.image_provider = image_provider
         self.events: list[dict[str, Any]] = []
 
     @property
@@ -200,7 +208,106 @@ class CapabilityBroker:
         self, candidates: list[dict[str, Any]], sources: dict[str, Any]
     ) -> dict[str, Any]:
         result = self.stage_binding.audit_evidence(candidates, sources)
+        if self.citation_classifier is not None:
+            from .citation_classifier import (
+                CitationPair,
+                admission_eligibility,
+                deterministic_precheck,
+            )
+
+            pairs = []
+            source_values = []
+            for index, candidate in enumerate(candidates):
+                candidate = dict(candidate or {})
+                source_id = str(candidate.get("source_id") or "")
+                quote = str(
+                    candidate.get("exact_quote")
+                    or candidate.get("evidence_span", {}).get("quoted_text")
+                    or ""
+                )
+                pairs.append(
+                    CitationPair(
+                        pair_id=str(candidate.get("pair_id") or f"candidate-{index}"),
+                        claim=str(candidate.get("claim") or candidate.get("claim_text") or ""),
+                        passage=quote,
+                        exact_quote=quote,
+                        context=str(candidate.get("context") or ""),
+                        source_id=source_id,
+                        discipline_iri=str(candidate.get("discipline_iri") or ""),
+                        method_iri=str(candidate.get("method_iri") or ""),
+                        source_role_iri=str(candidate.get("source_role_iri") or ""),
+                        source_digest=str(candidate.get("source_digest") or ""),
+                    )
+                )
+                source_values.append(sources.get(source_id))
+            decisions = self.citation_classifier.classify(pairs)
+            generated = []
+            for index, (pair, source, decision) in enumerate(zip(pairs, source_values, decisions)):
+                checks = deterministic_precheck(pair, source)
+                eligibility = admission_eligibility(pair, checks, decision)
+                generated.append(
+                    {
+                        "index": index,
+                        "support_level": decision.support_level or "invalid_citation",
+                        "reason": eligibility.reason,
+                        "classifier_decision": decision.to_dict(),
+                        "deterministic_checks": checks.to_dict(),
+                        "eligibility": eligibility.to_dict(),
+                    }
+                )
+            result = {
+                **dict(result or {}),
+                "audits": generated,
+                "classifier_evidence": [item["classifier_decision"] for item in generated],
+            }
         self._event("citation_support_audit")
+        return result
+
+    def image_analysis(self, request: Any) -> Any:
+        """Run bounded multimodal analysis behind the v2 capability contract."""
+
+        from .image_analysis import ImageAnalysisResult
+
+        if self.image_provider is None:
+            result = ImageAnalysisResult(
+                "error",
+                request.request_digest,
+                "unconfigured",
+                "unreported",
+                "0" * 64,
+                limitations=("NOT_RUN: no image provider is configured",),
+                contract_status="not_run",
+            )
+        else:
+            result = self.image_provider.analyze(request)
+        if not isinstance(result, ImageAnalysisResult):
+            result = ImageAnalysisResult(
+                "error",
+                request.request_digest,
+                "invalid-provider",
+                "unreported",
+                "0" * 64,
+                limitations=("provider returned a non-conforming image analysis result",),
+                contract_status="error",
+            )
+        self.events.append(
+            {
+                "capability": "multimodal_analysis",
+                "contract": "swos.multimodal-analysis.v2",
+                "contract_set": "swos.capabilities.v2",
+                "executed": result.contract_status == "executed",
+                "contract_status": result.contract_status,
+                "provider": result.provider,
+                "model": result.model,
+                "config_digest": result.config_digest,
+                "response_digest": result.response_digest,
+                "runtime": dict(result.runtime),
+                "rights_outcomes": dict(result.rights_outcomes),
+                "request_digest": result.request_digest,
+                "result_status": result.status,
+                "authority": "advisory_observation_evidence; SWOS core owns verification",
+            }
+        )
         return result
 
     def argument_construction(
@@ -289,4 +396,74 @@ class CapabilityBroker:
         if not isinstance(result, dict):
             raise CapabilityBrokerError("semantic_verification must return an object")
         self._event("semantic_verification")
+        return result
+
+    def discipline_critique(
+        self,
+        *,
+        discipline: Any,
+        research_plan: dict[str, Any],
+        evidence_matrix: dict[str, Any],
+        draft: dict[str, Any],
+        critic: Any | None = None,
+    ) -> Any:
+        """Run a SWOS-owned critic; a provider cannot supply the admission verdict."""
+
+        selected = critic or self.discipline_critic
+        if selected is None or not hasattr(selected, "critique"):
+            raise CapabilityBrokerError("a governed discipline critic is required")
+        result = selected.critique(
+            discipline=discipline,
+            research_plan=research_plan,
+            evidence_matrix=evidence_matrix,
+            draft=draft,
+        )
+        self.events.append(
+            {
+                "capability": "discipline_critique",
+                "contract": "swos.discipline-critique.v2",
+                "contract_passed": True,
+                "executed": True,
+                "provider_owned_admission": False,
+                "mandatory_failures": list(getattr(result, "mandatory_failures", [])),
+                "review_state": getattr(result, "review_state", "machine_proposed"),
+            }
+        )
+        return result
+
+    def staged_multimodal_critique(
+        self,
+        *,
+        research_plan: dict[str, Any],
+        evidence_matrix: dict[str, Any],
+        draft: dict[str, Any],
+        observations: Any = (),
+        interpretations: Any = (),
+        textual_evidence: Any = (),
+        critic: Any | None = None,
+    ) -> Any:
+        """Run the fixed art-history then art-criticism pack route."""
+
+        selected = critic or self.discipline_critic
+        if selected is None or not hasattr(selected, "staged_multimodal_critique"):
+            raise CapabilityBrokerError("a governed staged multimodal critic is required")
+        result = selected.staged_multimodal_critique(
+            research_plan=research_plan,
+            evidence_matrix=evidence_matrix,
+            draft=draft,
+            observations=observations,
+            interpretations=interpretations,
+            textual_evidence=textual_evidence,
+        )
+        self.events.append(
+            {
+                "capability": "multimodal_discipline_critique",
+                "contract": "swos.discipline-critique.v2",
+                "contract_passed": True,
+                "executed": True,
+                "stage_order": list(getattr(result, "stage_order", ())),
+                "pack_only_fallback": bool(getattr(result, "pack_only_fallback", True)),
+                "provider_owned_admission": False,
+            }
+        )
         return result

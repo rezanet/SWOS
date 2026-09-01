@@ -1,0 +1,72 @@
+name: Research Grade multimodal evaluation
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: "Exact candidate commit to evaluate"
+        required: true
+        type: string
+      manifest:
+        description: "Repository-relative locked multimodal manifest"
+        required: true
+        default: "evals/fixtures/multimodal/manifest.json"
+        type: string
+      live:
+        description: "Enable the opt-in OpenAI image-input provider"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  multimodal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 0
+
+      - name: Verify exact head binding
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "${{ inputs.source_sha }}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install deterministic runtime
+        run: python -m pip install --disable-pip-version-check --no-input -e .
+
+      - name: Run locked multimodal evaluator
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set +e
+          if [ "${{ inputs.live }}" = "true" ]; then
+            python tools/run_multimodal_evals.py --manifest "${{ inputs.manifest }}" --artifact-dir artifacts/research-grade/multimodal --provider openai --live --repetitions 3
+          else
+            python tools/run_multimodal_evals.py --manifest "${{ inputs.manifest }}" --artifact-dir artifacts/research-grade/multimodal --provider fake --repetitions 3
+          fi
+          code=$?
+          if [ "$code" -eq 2 ]; then
+            echo "Multimodal capability or locked corpus is NOT_RUN; promotion remains disabled."
+            exit 0
+          fi
+          exit "$code"
+
+      - name: Upload immutable evaluation outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-grade-multimodal-${{ inputs.source_sha }}
+          path: artifacts/research-grade/multimodal
+          if-no-files-found: warn

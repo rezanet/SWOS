@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/psychology> a swos:Discipline ; skos:prefLabel "psychology" .
+<https://swos.example.org/discipline/psychology> swos:usesMethod <https://swos.example.org/method/causal-inference> .
+<https://swos.example.org/discipline/psychology> swos:requiresCriterion <https://swos.example.org/criterion/psychology/measurement> .
+<https://swos.example.org/discipline/psychology> swos:requiresCriterion <https://swos.example.org/criterion/psychology/sampling> .
+<https://swos.example.org/discipline/psychology> swos:requiresCriterion <https://swos.example.org/criterion/psychology/statistics> .
+<https://swos.example.org/discipline/psychology> swos:requiresCriterion <https://swos.example.org/criterion/psychology/causal-claim-licensing> .
+<https://swos.example.org/discipline/psychology> swos:requiresCriterion <https://swos.example.org/criterion/psychology/replication> .
+<https://swos.example.org/criterion/psychology/measurement> a swos:Criterion ; skos:prefLabel "construct and measurement validity" .
+<https://swos.example.org/criterion/psychology/sampling> a swos:Criterion ; skos:prefLabel "sampling and generalisation" .
+<https://swos.example.org/criterion/psychology/statistics> a swos:Criterion ; skos:prefLabel "statistical interpretation" .
+<https://swos.example.org/criterion/psychology/causal-claim-licensing> a swos:Criterion ; skos:prefLabel "causal-claim licensing" .
+<https://swos.example.org/criterion/psychology/replication> a swos:Criterion ; skos:prefLabel "replication awareness" .

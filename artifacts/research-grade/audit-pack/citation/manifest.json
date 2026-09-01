@@ -1,0 +1,41 @@
+{
+  "schema_version": "2.0.0",
+  "status": "not_run",
+  "release_status": "blocked_below_release_floor",
+  "reason": "Licensed source acquisition, double annotation, adjudication, and independent approval are not available in this offline checkout.",
+  "supported_disciplines": [
+    "art_history",
+    "art_criticism",
+    "engineering",
+    "humanities",
+    "interdisciplinary",
+    "materials_science",
+    "philosophy",
+    "psychology",
+    "technical_writing"
+  ],
+  "required_floors": {
+    "total_pairs": 6000,
+    "per_label": 600,
+    "per_discipline": 300,
+    "locked_test": 1500,
+    "locked_per_label": 150,
+    "locked_per_discipline": 75,
+    "locked_adversarial_non_direct": 300
+  },
+  "observed_counts": {
+    "total_pairs": 0,
+    "train": 0,
+    "calibration": 0,
+    "locked_test": 0,
+    "ood": 0,
+    "temporal": 0,
+    "adversarial": 0
+  },
+  "splits": {},
+  "annotators": [],
+  "adjudication": {"status": "not_run", "agreement": null},
+  "leakage_check": {"status": "not_run"},
+  "source_licence_manifest": "SOURCE-LICENCE-MANIFEST.json",
+  "data_licence": "DATA-LICENCE.md"
+}

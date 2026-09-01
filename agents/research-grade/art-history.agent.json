@@ -1,0 +1,35 @@
+{
+  "$schema": "https://swos.example.org/schemas/research-grade/specialist-agent.schema.json",
+  "schema_version": "2.0.0",
+  "agent_id": "swos.specialist.art-history",
+  "version": "2.0.0",
+  "display_name": "SWOS Art History Specialist",
+  "discipline": "art_history",
+  "pack_id": "swos-discipline-art-history",
+  "default_enabled": false,
+  "enabled": false,
+  "advertised": false,
+  "route_stage": "art_history",
+  "role_separation": {
+    "orchestrator_route": "art_history_only",
+    "provider_cannot_verify": true,
+    "human_approval_required": true
+  },
+  "permissions": ["view", "analyse"],
+  "tools": [
+    {"tool": "media.inspect", "actions": ["view", "analyse"]},
+    {"tool": "pack.critique", "actions": ["propose"]}
+  ],
+  "denied_permissions": ["transform", "create_derivative", "quote", "cache", "export", "redistribute", "memory_write", "claim_verify"],
+  "fallback": {
+    "mode": "pack_only",
+    "operation": "DisciplineCritic.staged_multimodal_critique",
+    "preserves_observations": true
+  },
+  "promotion": {
+    "capability": "image_analysis",
+    "minimum_improvement": 0.08,
+    "lower_95_ci_above_zero": true,
+    "default": "disabled"
+  }
+}

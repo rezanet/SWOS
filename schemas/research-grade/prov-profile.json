@@ -1,0 +1,11 @@
+{
+  "schema_version": "2.0.0",
+  "profile_id": "swos.prov-dm-round-trip.v2",
+  "status": "executable",
+  "claim": "SWOS PROV-DM/PROV-N/PROV-O round-trip profile with PROV-JSON Member Submission",
+  "formats": ["prov-json", "prov-n", "prov-o-trig"],
+  "namespace_policy": "absolute_iri_only",
+  "canonicalization": ["JCS-RFC8785", "RDFC-1.0", "PROV-N-semantic-normal-form"],
+  "constraints": {"prov_constraints": "required", "shacl": "required_for_rdf", "extension_preservation": "required", "typed_literal_preservation": "required"},
+  "oracle": {"required_for_release": true, "implementation": "ProvToolbox", "status": "not_run"}
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/object-record.schema.json",
+  "title": "SWOS object record",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["object_id", "object_type", "label"],
+  "properties": {"object_id": {"type": "string", "minLength": 1}, "object_type": {"type": "string"}, "label": {"type": "string"}, "creator": {"type": ["string", "null"]}, "date_or_period": {"type": ["string", "null"]}, "culture": {"type": ["string", "null"]}, "materials": {"type": "array", "items": {"type": "string"}}, "dimensions": {"type": "object"}, "collection": {"type": ["string", "null"]}, "current_location": {"type": ["string", "null"]}, "identifiers": {"type": "object"}, "identity_confidence": {"type": "string"}, "source_rights": {"type": "object"}, "provenance": {"type": "object"}, "competing_attributions": {"type": "array", "items": {"type": "string"}}}
+}

@@ -1,0 +1,21 @@
+{
+  "policy_id": "swos.research-grade-promotion",
+  "version": "2.0.0",
+  "gate_type": "research_grade_promotion",
+  "trigger": {"on": ["before_specialist_agent_promotion", "before_capability_enablement"]},
+  "default_effect": "deny",
+  "escalation": "research_grade_review_panel",
+  "nist_ai_rmf": ["GOVERN 1.3", "MEASURE 2.8", "MANAGE 4.1"],
+  "thresholds": {
+    "minimum_improvement": 0.08,
+    "lower_confidence_bound_minimum": 0.0,
+    "specialist_default": "off",
+    "unknown_or_not_run_effect": "deny"
+  },
+  "rules": [
+    {"id": "paired-evaluation", "when": {"evaluation": {"paired_cases": true, "predetermined_draws": true, "baseline_and_candidate_bound": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Promotion requires paired, reproducible baseline and candidate evaluation."}},
+    {"id": "quality-improvement", "when": {"metrics": {"improvement_at_least": 0.08, "lower_95_ci_greater_than": 0}}, "effect": "continue", "else": {"effect": "deny", "reason": "Promotion requires the frozen improvement and positive confidence-bound thresholds."}},
+    {"id": "live-and-human-evidence", "when": {"evidence": {"live_exact_head": true, "human_quorum": true, "role_separation": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Live exact-head evidence and the required human review quorum are mandatory."}},
+    {"id": "rollback-required", "when": {"rollback": {"tested": true, "pack_only_fallback": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Promotion is not valid without tested rollback to pack-only operation."}}
+  ]
+}

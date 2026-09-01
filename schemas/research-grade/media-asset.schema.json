@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/media-asset.schema.json",
+  "title": "SWOS media asset",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["asset_id", "object_id", "role", "mime_type", "byte_size", "width", "height", "byte_digest", "acquisition_uri", "rights"],
+  "properties": {
+    "asset_id": {"type": "string", "minLength": 1},
+    "object_id": {"type": "string", "minLength": 1},
+    "role": {"enum": ["surrogate", "documentary", "technical", "installation", "detail", "diagram", "generated"]},
+    "mime_type": {"type": "string", "minLength": 1},
+    "byte_size": {"type": "integer", "minimum": 0},
+    "width": {"type": "integer", "exclusiveMinimum": 0},
+    "height": {"type": "integer", "exclusiveMinimum": 0},
+    "byte_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "acquisition_uri": {"type": "string", "format": "uri"},
+    "source_uri": {"type": ["string", "null"]},
+    "iiif_manifest_id": {"type": ["string", "null"]},
+    "canvas_id": {"type": ["string", "null"]},
+    "rights": {
+      "type": "object",
+      "required": ["view", "analyse", "transform", "create_derivative", "quote", "cache", "export", "redistribute"],
+      "properties": {
+        "view": {"$ref": "#/$defs/right"},
+        "analyse": {"$ref": "#/$defs/right"},
+        "transform": {"$ref": "#/$defs/right"},
+        "create_derivative": {"$ref": "#/$defs/right"},
+        "quote": {"$ref": "#/$defs/right"},
+        "cache": {"$ref": "#/$defs/right"},
+        "export": {"$ref": "#/$defs/right"},
+        "redistribute": {"$ref": "#/$defs/right"}
+      },
+      "additionalProperties": true
+    },
+    "view_conditions": {"type": "object"},
+    "capture_conditions": {"type": "object"},
+    "colour_profile": {"type": ["string", "null"]},
+    "inspection_activity_ids": {"type": "array", "items": {"type": "string"}},
+    "transformations": {"type": "array", "items": {"type": "object"}},
+    "parent_asset_ids": {"type": "array", "items": {"type": "string"}},
+    "parent_digests": {"type": "array", "items": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "content_credentials": {"type": "object"},
+    "accessibility": {"type": ["object", "null"]},
+    "provenance": {"type": "object"},
+    "generated": {"type": "boolean"}
+  },
+  "$defs": {
+    "right": {"type": "object", "required": ["status"], "properties": {"status": {"enum": ["allowed", "denied", "unknown"]}, "grant_id": {"type": "string"}, "evidence": {}}, "additionalProperties": true}
+  }
+}

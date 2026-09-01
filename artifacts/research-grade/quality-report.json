@@ -1,0 +1,276 @@
+{
+  "base_sha": "8d440296b4a9df708f1140a04bae1ae24f74fee3",
+  "commands": [
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m ruff check .",
+      "duration_seconds": 0.083,
+      "name": "ruff",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "All checks passed!\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/validate_schemas.py --strict",
+      "duration_seconds": 0.238,
+      "name": "schemas",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "C:\\GitHub\\SWOS-v2-research-grade-impl\\tools\\validate_schemas.py:166: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(base_uri=schema[\"$id\"], referrer=schema, store=store)\n",
+      "stdout": "OK    58 artefact(s) validated. Contracts frozen at v1.0.0.\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/validate_contract_examples.py",
+      "duration_seconds": 0.175,
+      "name": "contract_examples",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "C:\\GitHub\\SWOS-v2-research-grade-impl\\tools\\validate_contract_examples.py:58: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(\n",
+      "stdout": "OK    Research Grade schemas/examples validated (C:\\GitHub\\SWOS-v2-research-grade-impl\\schemas\\research-grade)\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/check_spec_kit_artifacts.py",
+      "duration_seconds": 0.085,
+      "name": "spec_kit_consistency",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "Spec Kit artifact consistency check passed: specs/001-swos-v1-1-programme-foundation, specs/002-swos-v1-1-runtime-reconciliation, specs/003-swos-v1-1-retrieval-citation-assurance, specs/004-swos-v1-1-governed-stores, specs/005-swos-v1-1-evaluation-approval, specs/006-swos-v1-1-public-proof-release, specs/007-simple-release-record, specs/008-swos-v2-research-grade\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/check_governance.py",
+      "duration_seconds": 0.048,
+      "name": "governance",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "OK    8 governance artefact(s) validated. All six mechanised controls present.\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/check_vendor_leakage.py",
+      "duration_seconds": 0.117,
+      "name": "vendor_leakage",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "SWOS VENDOR LEAKAGE GATE: PASS (58 authority files checked)\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/check_workflow_profiles.py",
+      "duration_seconds": 0.074,
+      "name": "workflow_profiles",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "Workflow profile inspection passed: ordinary PR/push profiles are deterministic and live profiles are dispatch-only\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/check_portability_acceptance.py --definitions-only",
+      "duration_seconds": 0.092,
+      "name": "portability_definitions",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "SWOS PORTABILITY ACCEPTANCE: PASS (DEFINITIONS)\ngate_status={\"G-HOST\":false,\"G-PORT\":false}\npending_evidence=api_provider_changed,claude_code_subscription,codex_chatgpt_subscription,model_changed_same_provider,openai_api,replay_host_bundle\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/validate_document_manifest.py",
+      "duration_seconds": 0.211,
+      "name": "document_manifest",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "Document manifest valid: 206 corpus documents; 3 research inputs\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/check_host_independence.py",
+      "duration_seconds": 0.068,
+      "name": "host_independence",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "Host Independence Rule: core is vendor-neutral; instructions and review assurance are SWOS-owned.\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/check_dco.py origin/main HEAD",
+      "duration_seconds": 0.08,
+      "name": "dco",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "DCO range: origin/main..HEAD (17 commit(s))\nOK    every selected commit carries a valid Signed-off-by trailer.\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m unittest tests.runtime.test_research_grade_offline",
+      "duration_seconds": 0.146,
+      "name": "offline_contract",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.068s\n\nOK\n",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m unittest tests.runtime.test_research_grade_foundations tests.runtime.test_research_grade_evaluation tests.runtime.test_multimodal_evals tests.runtime.test_research_grade_coverage",
+      "duration_seconds": 0.379,
+      "name": "deterministic_stability",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "................\n----------------------------------------------------------------------\nRan 16 tests in 0.137s\n\nOK\n",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m unittest tests.test_document_manifest",
+      "duration_seconds": 0.735,
+      "name": "document_manifest_tests",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.596s\n\nOK\n",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m pip_audit --requirement requirements-dev.lock --strict",
+      "duration_seconds": 19.198,
+      "name": "pip_audit",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "No known vulnerabilities found\n",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m bandit -r swos_prose swos_runtime benchmark tools evals -lll -ii",
+      "duration_seconds": 1.679,
+      "name": "bandit",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "[main]\tINFO\tprofile include tests: None\n[main]\tINFO\tprofile exclude tests: None\n[main]\tINFO\tcli include tests: None\n[main]\tINFO\tcli exclude tests: None\n[main]\tINFO\trunning on Python 3.14.6\n",
+      "stdout": "Working... ---------------------------------------- 100% 0:00:01\nRun started:2026-09-01 16:02:54.708196+00:00\n\nTest results:\n\tNo issues identified.\n\nCode scanned:\n\tTotal lines of code: 25394\n\tTotal lines skipped (#nosec): 0\n\tTotal potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0\n\nRun metrics:\n\tTotal issues (by severity):\n\t\tUndefined: 0\n\t\tLow: 16\n\t\tMedium: 2\n\t\tHigh: 0\n\tTotal issues (by confidence):\n\t\tUndefined: 0\n\t\tLow: 0\n\t\tMedium: 6\n\t\tHigh: 12\nFiles skipped (0):\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m coverage erase",
+      "duration_seconds": 0.125,
+      "name": "coverage_erase",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m coverage run --branch --source=swos_prose,swos_runtime -m unittest discover -s tests/prose -p test_*.py",
+      "duration_seconds": 0.595,
+      "name": "coverage_prose",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "....................................................................................................................................................sssssssssss.................................................................................\n----------------------------------------------------------------------\nRan 240 tests in 0.253s\n\nOK (skipped=11)\n",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m coverage run --append --branch --source=swos_prose,swos_runtime -m unittest discover -s tests/runtime -p test_*.py",
+      "duration_seconds": 25.703,
+      "name": "coverage_runtime",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "C:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\schema_validation.py:47: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(base_uri=schema[\"$id\"], referrer=schema, store=store)\nC:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\schema_validation.py:57: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(\n.........................................C:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\evaluation.py:543: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(base_uri=schema[\"$id\"], referrer=schema, store=store)\n....................................................................................................................................................................\n----------------------------------------------------------------------\nRan 205 tests in 24.935s\n\nOK\n",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m coverage json -o artifacts/research-grade/coverage.json",
+      "duration_seconds": 0.943,
+      "name": "coverage_json",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "Wrote JSON report to artifacts/research-grade/coverage.json\n",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m coverage report --fail-under=80",
+      "duration_seconds": 0.736,
+      "name": "coverage_report",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "Name                                        Stmts   Miss Branch BrPart  Cover   Missing\n---------------------------------------------------------------------------------------\nswos_prose\\__init__.py                          5      0      0      0   100%\nswos_prose\\anchors.py                         142     20     58      7    84%   135-136, 141, 172->171, 195, 197, 199-201, 207-218\nswos_prose\\cli.py                             169     62     50      8    60%   29, 37-38, 59-68, 72-86, 93, 96-98, 119, 155-157, 162, 191-193, 199-237, 328, 331-334, 338\nswos_prose\\context.py                         211     14     86     11    92%   86-88, 101, 134->127, 145-146, 148-149, 154->142, 156, 182-183, 270, 306->exit, 366, 372\nswos_prose\\cost.py                             33      4     10      2    86%   24-25, 27, 57\nswos_prose\\diagnostics.py                     104      7     50      7    91%   126, 128, 181, 183, 185, 199, 203\nswos_prose\\dogfood.py                          74      7     34      5    87%   25, 27, 42, 65-67, 133\nswos_prose\\models.py                          114      0      0      0   100%\nswos_prose\\modes.py                            22      1      4      0    96%   127\nswos_prose\\pipeline.py                        109      7     52      7    91%   115, 117, 119, 139, 271, 317, 329\nswos_prose\\providers\\__init__.py                4      0      0      0   100%\nswos_prose\\providers\\base.py                  133     16     36     12    82%   74, 98, 116, 143, 151, 163, 167, 169, 175, 187-188, 220, 225, 251-253\nswos_prose\\providers\\mock.py                   19      2      6      2    84%   24, 27\nswos_prose\\providers\\openai_responses.py       69     17     14      5    69%   317-323, 365-366, 370, 374-375, 390->392, 415-419, 424, 426\nswos_prose\\providers\\openai_rewrite.py         78     17     20      9    73%   103-109, 125, 128, 157-158, 161, 164-165, 168, 176->178, 217-218, 221, 229->231, 242\nswos_prose\\providers\\rewrite_base.py           10      0      0      0   100%\nswos_prose\\providers\\rewrite_mock.py           14      1      2      1    88%   15\nswos_prose\\repair.py                          348     48    156     36    82%   148-150, 158, 177, 190, 225, 236->238, 239-240, 254, 267, 273-277, 279, 285, 298->307, 326, 348, 353, 355, 373, 395, 397, 400, 405, 455, 476, 520, 536-537, 587, 592, 652, 672, 674, 692, 701-711, 726-738, 742-753, 810\nswos_prose\\rewrite.py                         112      6     26      4    93%   178, 182, 184, 254-255, 286\nswos_prose\\verify\\__init__.py                   4      0      0      0   100%\nswos_prose\\verify\\causal_scope.py              60      0     22      1    99%   89->95\nswos_prose\\verify\\classify.py                  12      0      6      0   100%\nswos_prose\\verify\\coverage.py                  65     10     40      5    80%   71-72, 92->110, 137, 144->142, 153-169\nswos_prose\\verify\\deterministic.py            104      1     36      1    99%   256\nswos_prose\\verify\\negation_equivalence.py       3      0      0      0   100%\nswos_prose\\verify\\propositions.py             329     23    182     22    91%   268, 317, 362, 390, 464->472, 512, 565, 571, 596, 603, 612-613, 631-632, 677, 689, 709, 727, 745, 754, 763, 797, 810, 850\nswos_runtime\\__init__.py                        4      0      0      0   100%\nswos_runtime\\adapter_factory.py                55     40      2      0    26%   28, 32-35, 40-79, 84-110, 115-170\nswos_runtime\\broker.py                        166     55     32      6    62%   69, 73, 92-94, 161, 179-182, 197->199, 212-254, 261-303, 363-367, 371, 387-391, 404-424, 439-461\nswos_runtime\\capabilities.py                   49      7      8      3    82%   40, 63-64, 71, 76, 90, 127\nswos_runtime\\citation_calibration.py          142     18     46     13    82%   21-23, 30, 34, 37, 50, 67, 99->exit, 105, 129, 132, 192-207, 246, 248, 257\nswos_runtime\\citation_classifier.py           283     38     84     24    83%   45, 47, 48->exit, 104-119, 123, 125, 127-129, 131, 134, 166-182, 186, 188, 192, 194, 196, 198, 201, 306, 382-383, 389-390, 409, 419, 436, 441, 492, 494, 495->497, 497->499, 499->501, 528\nswos_runtime\\citation_dataset.py               85     16     42     10    75%   22, 26, 30, 33, 36, 51, 76, 87->85, 90, 100, 110-116\nswos_runtime\\cli.py                           109     53     30      3    42%   19-23, 110-184, 188\nswos_runtime\\discipline_critique.py           273     24     78      9    87%   24-26, 204, 225, 247-258, 277-279, 408, 432->434, 439, 441-442, 488->496, 538\nswos_runtime\\discipline_ontology.py           287     71    108     26    72%   67, 136, 169, 175, 179, 192, 199, 212-213, 220->222, 222->224, 226, 247-248, 250->245, 275-276, 285, 288, 293, 296, 298, 302, 306, 309, 330, 358, 365-366, 369-375, 383, 390, 393, 402-405, 421-425, 431-439, 445-461\nswos_runtime\\evaluation.py                    218     27     86     18    83%   75-93, 137-138, 173, 198, 208, 210, 220, 224, 228, 289, 296, 300, 302, 317->321, 327->329, 333->339, 343->348, 368->372, 381, 449, 536-537\nswos_runtime\\finalizer.py                     570    110    226     63    76%   134-135, 147-152, 178->177, 192, 214-215, 218-219, 251, 253, 255, 284-285, 294-295, 297-300, 334-337, 340-348, 362-363, 378, 381, 459, 465, 473, 488, 492->486, 502-503, 536, 540, 543, 546, 550, 564, 567, 585, 660, 680, 764, 777->775, 797->799, 802, 805->803, 815, 818, 836-853, 876, 989, 1062, 1138-1149, 1154, 1160-1162, 1165-1167, 1179, 1203, 1215, 1250, 1252, 1258, 1260, 1266, 1273, 1296, 1303-1318, 1396, 1416, 1419-1467, 1483-1484, 1489-1490, 1561-1562\nswos_runtime\\governance.py                     62      2     12      2    95%   34, 134\nswos_runtime\\host_bundle.py                   146     50     48     13    59%   28, 30, 33-36, 53, 124, 133, 163-167, 172-176, 184-188, 201, 216, 230, 234-242, 252-260, 271, 282, 286, 291-292\nswos_runtime\\image_analysis.py                354     25     96     13    90%   25-27, 51->exit, 73, 182, 217, 287, 316-317, 363, 365, 469, 474-477, 480-481, 505, 507, 511, 513, 521, 522->526, 524-525\nswos_runtime\\image_analysis_openai.py           4      0      0      0   100%\nswos_runtime\\instructions.py                   27      4      8      4    77%   25, 27, 34, 37\nswos_runtime\\llm.py                           103     38     14      1    63%   43-45, 185-227, 238-294, 305-337, 352-401, 417-429, 440-519, 565, 583-591\nswos_runtime\\media.py                         335     27     98      8    91%   37-41, 55-61, 266, 366, 455, 472, 477, 480-481, 488-489, 493, 498-499, 502, 509-510\nswos_runtime\\models.py                        192     13     46      6    91%   58, 82, 108-109, 153, 155, 182, 226, 228, 264-265, 286, 302\nswos_runtime\\orchestrator.py                  334     40    102     23    85%   69-70, 95, 180, 182->178, 200, 202->212, 206->204, 209-210, 241, 268->284, 270, 304-306, 311, 328->332, 343, 378, 456-477, 482-484, 499-508, 513, 550->581, 590-593, 648-656, 685, 717, 726->731, 769-775\nswos_runtime\\programme_store.py               304     43     64     19    82%   50, 56, 58, 60, 66, 142, 170, 179-182, 242, 251-252, 335->340, 424-427, 479-481, 496, 506, 524-526, 547-549, 552-555, 565, 589, 591, 615-617, 628, 644, 651, 660\nswos_runtime\\prov_interop.py                  168      7     80     10    93%   43, 53, 96->98, 99, 106, 115->114, 118, 134, 188->187, 238\nswos_runtime\\prov_model.py                    110     12     48     12    85%   59, 77, 80, 100, 146, 148, 152, 165, 168, 173, 175, 177\nswos_runtime\\prov_validation.py               148     12     50      8    89%   94, 132, 167, 170-171, 175, 185-186, 189, 191, 194, 257\nswos_runtime\\public_proof.py                  162     23     46     17    81%   23-24, 41, 45, 47, 51, 54, 56, 62, 66, 68, 255-256, 392, 404, 417, 444, 448, 450-452, 467, 471\nswos_runtime\\release_evidence.py              218     36     82     26    79%   41-42, 62, 69, 82, 91, 150, 152, 158, 161, 163, 185, 191-192, 196-197, 201, 221-222, 228, 231, 243, 361, 377, 379, 381, 398, 400, 404, 407, 409, 412-414, 419-420\nswos_runtime\\release_record.py                168     46     80     32    69%   31-32, 37, 40-41, 48, 52, 56, 58, 60, 74, 90, 95, 100, 105, 109, 111, 114, 116, 120, 124, 132-133, 136-137, 141, 144, 147, 153, 155, 159-161, 163, 170, 174, 183, 191, 193, 196-198, 210, 253, 255, 285\nswos_runtime\\reranking.py                      47      8     16      2    84%   27-33, 48, 58-59\nswos_runtime\\research_expansion.py             37     21     14      0    31%   23-24, 28-46\nswos_runtime\\research_memory.py               565     68    134     43    84%   32, 38, 46, 50, 58, 94, 98, 118, 120, 122, 164, 166, 202, 209, 211, 242, 279, 379, 381, 431, 435, 459, 495-500, 544, 560, 581-583, 629, 648, 662-663, 665, 695-696, 702, 710, 712, 718, 721, 724, 753, 757, 759, 772, 775, 778, 782, 787, 796, 912-913, 915-916, 918, 920, 926-927, 951-959\nswos_runtime\\retrieval.py                     246     17     94     11    92%   48, 76-84, 112->111, 147, 242-244, 302->300, 359->357, 411-413, 444-448, 453, 469, 477, 480, 488->496\nswos_runtime\\rpm_exchange.py                  289     60    120     38    73%   36, 48, 50, 52, 54, 67, 91, 116, 133, 136, 139, 172, 182, 191-192, 220, 260, 278-280, 287, 298, 314, 317, 322-337, 341, 343, 345, 366, 373, 376, 378, 380, 387, 395, 422, 424, 433, 435, 439, 441, 453, 455, 457, 483, 487\nswos_runtime\\schema_validation.py              38      4     10      2    88%   24-25, 43-44, 62->69\nswos_runtime\\source_diversity.py              321     39    106     24    83%   34-39, 91, 101, 123, 125, 169, 215, 218, 244-248, 270->272, 281, 284-286, 289, 300->307, 305, 308, 310, 316->318, 318->320, 330, 362, 365-368, 369->371, 379, 383-384, 401->399, 449->452, 463->465, 478, 482, 488->490, 511-512\nswos_runtime\\stores.py                        263     49    120     35    78%   47, 50-51, 65, 72-73, 80-81, 84, 113, 115, 117, 119, 124, 128, 131, 140, 142-143, 145, 148, 150, 152, 159->162, 269, 272, 274, 279, 284, 303, 312, 337, 340, 342, 377, 415, 418-419, 426-429, 441, 463-464, 472-473, 476-478\nswos_runtime\\work_orders.py                   473     88    218     58    77%   68, 70, 74, 85, 91, 100, 103, 114, 140, 177, 242->238, 322, 374, 377, 382, 425, 429, 432, 435, 441, 445, 450, 452, 463, 468, 471, 474, 476, 481, 485, 488, 495, 499, 501, 507, 512, 526, 528, 533, 545, 549, 552, 554, 567-570, 585, 614, 636, 641, 643, 652-665, 673, 675->677, 689, 700-710, 737, 812, 823-839, 844-852, 858, 864-866, 867->869, 892\n---------------------------------------------------------------------------------------\nTOTAL                                        9702   1454   3338    727    81%\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/check_coverage.py --coverage-json artifacts/research-grade/coverage.json",
+      "duration_seconds": 0.082,
+      "name": "coverage_policy",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "Executable Python scope: swos_prose (81.46%)\nRequired total floor: 80.00%\nCritical module floors:\n  swos_prose/repair.py: 82.14% (required 80.00%)\n  swos_prose/pipeline.py: 91.30% (required 85.00%)\n  swos_prose/verify/causal_scope.py: 98.78% (required 90.00%)\n  swos_prose/verify/deterministic.py: 98.57% (required 90.00%)\n  swos_prose/verify/propositions.py: 91.19% (required 85.00%)\nCoverage policy: PASS\n",
+      "timed_out": false
+    },
+    {
+      "command": "git diff --check",
+      "duration_seconds": 0.038,
+      "name": "patch_format",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "",
+      "timed_out": false
+    }
+  ],
+  "coverage": {
+    "path": "artifacts/research-grade/coverage.json",
+    "totals": {
+      "covered_branches": 2375,
+      "covered_lines": 8248,
+      "excluded_lines": 39,
+      "missing_branches": 963,
+      "missing_lines": 1454,
+      "num_branches": 3338,
+      "num_partial_branches": 727,
+      "num_statements": 9702,
+      "percent_branches_covered": 71.15038945476333,
+      "percent_branches_covered_display": "71",
+      "percent_covered": 81.46472392638037,
+      "percent_covered_display": "81",
+      "percent_statements_covered": 85.01339929911359,
+      "percent_statements_covered_display": "85"
+    }
+  },
+  "environment": {
+    "executable": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "model_registry_token_configured": false,
+    "openai_api_key_configured": false,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6"
+  },
+  "interpretation": {
+    "limitations": [
+      "Portability definitions do not prove host execution; release-only corpus/model/oracle/human gates remain externally governed."
+    ],
+    "not_run": [
+      "No provider-backed, independent-oracle, cross-host, or human-review evidence is inferred by this local report."
+    ],
+    "pass": [
+      "Deterministic lint, schema/contract, Spec Kit, governance, vendor-leakage, workflow-profile, portability definitions, manifest, host-independence, DCO, offline, stability, SAST, dependency audit, and branch-aware coverage passed."
+    ]
+  },
+  "overall_status": "PASS",
+  "report": "SWOS v2.0 Research Grade quality",
+  "schema_version": "1.0.0",
+  "source_sha": "a8fe58198184e7affa3fe327757f71e4ad10022b"
+}

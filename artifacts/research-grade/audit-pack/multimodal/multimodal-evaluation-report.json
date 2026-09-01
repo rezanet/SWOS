@@ -1,0 +1,26 @@
+{
+  "blocking_metrics": [
+    "locked_multimodal_corpus"
+  ],
+  "gate_result": "NOT_RUN",
+  "limitations": [
+    "No checksummed rights-cleared and human-reviewed multimodal corpus is supplied in this checkout."
+  ],
+  "manifest_digest": "68bfb0290a183a467c9ed67ece181bf8dfe649c020fbae16e873c3cd6d0aa851",
+  "metrics": {
+    "stability": {
+      "denominator": 0,
+      "metric": "stability",
+      "numerator": 0,
+      "passed": false,
+      "status": "not_run",
+      "threshold": 1.0,
+      "value": null
+    }
+  },
+  "raw_case_results": [],
+  "reason": "No checksummed rights-cleared and human-reviewed multimodal corpus is supplied in this checkout.",
+  "schema_version": "2.0.0",
+  "source_sha": "a8fe58198184e7affa3fe327757f71e4ad10022b",
+  "status": "NOT_RUN"
+}

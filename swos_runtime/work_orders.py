@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import uuid
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -146,6 +147,7 @@ class WorkOrderRun:
         request: dict[str, Any],
         adapter_manifest: dict[str, Any],
         root: str | Path,
+        ontology_binding: dict[str, Any] | None = None,
     ) -> "WorkOrderRun":
         request = _validate_request(request)
         for capability in [*BASE_STAGE_SEQUENCE, "revision"]:
@@ -164,9 +166,15 @@ class WorkOrderRun:
             "review_iteration": 0,
             "revision_count": 0,
             "research_expansions": [],
+            "diversity_requirement": None,
+            "epg_v2_export": None,
+            "image_analysis_result": None,
+            "multimodal_critique": None,
             "submissions": [],
             "history": [],
         }
+        if ontology_binding is not None:
+            state["ontology_binding"] = dict(ontology_binding)
         _write_json(run_dir / "request.json", request)
         _write_json(run_dir / "adapter-capabilities.json", adapter_manifest)
         _write_json(run_dir / "run-state.json", state)
@@ -638,6 +646,91 @@ class WorkOrderRun:
         self._save()
         self._persist_work_order()
 
+    def record_diversity_report(self, report: Any) -> None:
+        """Persist the production source-diversity measurement and digest."""
+
+        payload = report.to_dict() if hasattr(report, "to_dict") else dict(report or {})
+        if not payload.get("report_id") or not payload.get("requirement_id"):
+            raise WorkOrderError("diversity report identity is incomplete")
+        self.state["diversity_report"] = payload
+        self.state.setdefault("history", []).append(
+            {
+                "event": "diversity_measured",
+                "report_id": payload["report_id"],
+                "status": payload.get("status"),
+                "family_digest": payload.get("family_digest"),
+            }
+        )
+        self._save()
+        self._persist_work_order()
+
+    def bind_epg_v2(self, document: Any, fingerprint: Any, certificate: Any | None = None) -> None:
+        """Bind a provenance v2 export and its immutable fingerprint to the host run."""
+
+        payload = document.to_dict() if hasattr(document, "to_dict") else dict(document or {})
+        fingerprint_payload = (
+            fingerprint.to_dict() if hasattr(fingerprint, "to_dict") else dict(fingerprint or {})
+        )
+        if payload.get("schema_version") != "2.0.0" or not fingerprint_payload.get(
+            "semantic_digest"
+        ):
+            raise WorkOrderError("EPG v2 export requires a versioned document and fingerprint")
+        record = {"document": payload, "fingerprint": fingerprint_payload}
+        if certificate is not None:
+            record["certificate"] = (
+                certificate.to_dict() if hasattr(certificate, "to_dict") else dict(certificate)
+            )
+        self.state["epg_v2_export"] = record
+        self.state.setdefault("history", []).append(
+            {
+                "event": "epg_v2_bound",
+                "semantic_digest": fingerprint_payload["semantic_digest"],
+                "certificate_status": (record.get("certificate") or {}).get(
+                    "status", "unavailable"
+                ),
+            }
+        )
+        self._save()
+        self._persist_work_order()
+
+    def record_image_analysis(self, result: Any) -> None:
+        """Attach multimodal result evidence without granting verification."""
+
+        payload = result.to_dict() if hasattr(result, "to_dict") else dict(result or {})
+        if payload.get("status") not in {"complete", "partial", "insufficient", "denied", "error"}:
+            raise WorkOrderError("image analysis result has an invalid status")
+        self.state["image_analysis_result"] = payload
+        self.state.setdefault("history", []).append(
+            {
+                "event": "image_analysis_recorded",
+                "status": payload["status"],
+                "request_digest": payload.get("request_digest"),
+            }
+        )
+        self._save()
+        self._persist_work_order()
+
+    def record_multimodal_critique(self, result: Any) -> None:
+        """Persist staged pack critique without turning it into verification."""
+
+        payload = result.to_dict() if hasattr(result, "to_dict") else dict(result or {})
+        if tuple(payload.get("stage_order") or ()) != ("art_history", "art_criticism"):
+            raise WorkOrderError(
+                "multimodal critique must use the fixed art-history/art-criticism order"
+            )
+        if payload.get("pack_only_fallback") is not True:
+            raise WorkOrderError("multimodal critique must retain the pack-only fallback")
+        self.state["multimodal_critique"] = payload
+        self.state.setdefault("history", []).append(
+            {
+                "event": "multimodal_critique_recorded",
+                "stage_order": list(payload["stage_order"]),
+                "review_state": payload.get("review_state", "machine_proposed"),
+            }
+        )
+        self._save()
+        self._persist_work_order()
+
     def status(self) -> dict[str, Any]:
         return {
             "protocol_version": PROTOCOL_VERSION,
@@ -723,8 +816,154 @@ class WorkOrderRun:
                 "review_iteration": self.state.get("review_iteration", 0),
                 "revision_count": self.state.get("revision_count", 0),
                 "research_expansions": list(self.state.get("research_expansions", [])),
+                "diversity_requirement": self.state.get("diversity_requirement"),
+                "diversity_report": self.state.get("diversity_report"),
+                "epg_v2_export": self.state.get("epg_v2_export"),
+                "image_analysis_result": self.state.get("image_analysis_result"),
+                "multimodal_critique": self.state.get("multimodal_critique"),
             },
         }
         path = Path(output_path) if output_path else self.run_dir / "host-bundle.json"
         _write_json(path, bundle)
         return path
+
+    def bind_rpm(self, service: Any, scope: Any) -> None:
+        """Bind one explicit RPM service/scope to this work-order run."""
+
+        if service is None or scope is None:
+            raise WorkOrderError("RPM binding requires a service and explicit scope")
+        self.rpm_service = service
+        self.rpm_scope = scope
+        self.state.setdefault("history", []).append(
+            {"event": "rpm_bound", "scope": scope.to_dict(), "run_id": self.state["run_id"]}
+        )
+        self._save()
+
+    def bind_ontology(self, profile: Any) -> None:
+        """Persist the exact v2 ontology identity used by this run."""
+
+        required = (
+            "discipline",
+            "discipline_iri",
+            "ontology_digest",
+            "required_criteria",
+            "methods",
+        )
+        if any(not hasattr(profile, name) for name in required):
+            raise WorkOrderError("ontology binding requires a complete discipline profile")
+        self.state["ontology_binding"] = {
+            "ontology_version": "2.0.0",
+            "discipline": str(profile.discipline),
+            "discipline_iri": str(profile.discipline_iri),
+            "pack_id": str(profile.pack_id),
+            "pack_version": str(profile.pack_version),
+            "ontology_digest": str(profile.ontology_digest),
+            "method_iris": [str(item.get("iri")) for item in profile.methods],
+            "criterion_iris": [str(item.get("iri")) for item in profile.required_criteria],
+        }
+        self.state.setdefault("history", []).append(
+            {"event": "ontology_bound", "binding": dict(self.state["ontology_binding"])}
+        )
+        self._save()
+
+    def bind_diversity_requirement(self, requirement: Any) -> None:
+        """Persist the pre-retrieval, ontology-bound diversity contract."""
+
+        payload = (
+            requirement.to_dict() if hasattr(requirement, "to_dict") else dict(requirement or {})
+        )
+        required = (
+            "requirement_id",
+            "dimensions",
+            "min_family_count",
+            "max_hhi",
+            "max_share",
+            "min_composite",
+            "max_unknown_rate",
+        )
+        if any(key not in payload for key in required) or not payload.get(
+            "declared_before_retrieval", True
+        ):
+            raise WorkOrderError("diversity binding requires a complete pre-retrieval requirement")
+        self.state["diversity_requirement"] = payload
+        self.state.setdefault("history", []).append(
+            {"event": "diversity_requirement_bound", "requirement": dict(payload)}
+        )
+        self._save()
+
+    def _require_rpm(self) -> tuple[Any, Any]:
+        service = getattr(self, "rpm_service", None)
+        scope = getattr(self, "rpm_scope", None)
+        if service is None or scope is None:
+            raise WorkOrderError("this work-order has no explicit RPM binding")
+        return service, scope
+
+    def rpm_read(
+        self, query: Any | None = None, policy: Any | None = None, *, as_of: Any | None = None
+    ) -> Any:
+        service, scope = self._require_rpm()
+        if query is None:
+            from .research_memory import MemoryQuery
+
+            query = MemoryQuery()
+        if policy is None:
+            policy = service.normal_read_policy()
+        result = service.query(scope, query, policy, as_of=as_of)
+        receipt = replace(
+            result.receipt,
+            run_id=str(self.state["run_id"]),
+            work_id=str(self.state.get("work_id") or self.state["run_id"]),
+        )
+        result = replace(result, receipt=receipt)
+        self.state.setdefault("history", []).append(
+            {
+                "event": "rpm_read",
+                "run_id": self.state["run_id"],
+                "scope": scope.to_dict(),
+                "receipt_id": receipt.receipt_id,
+                "query_digest": receipt.query_digest,
+                "epg_node_ids": list(receipt.epg_node_ids),
+            }
+        )
+        self._save()
+        return result
+
+    def rpm_write(
+        self, operation: Any, *, approval: Any | None = None, as_of: Any | None = None
+    ) -> Any:
+        service, scope = self._require_rpm()
+        if operation.scope != scope:
+            raise WorkOrderError("RPM operation scope does not match work-order binding")
+        assessment = service.assess_operation(scope, operation, as_of=as_of)
+        approval = approval or _rpm_approval_for_run(assessment, self.state)
+        result = service.commit_operation(
+            scope,
+            assessment_id=assessment.assessment_id,
+            approval=approval,
+            as_of=as_of,
+        )
+        self.state.setdefault("history", []).append(
+            {
+                "event": "rpm_write",
+                "run_id": self.state["run_id"],
+                "scope": scope.to_dict(),
+                "operation_id": result.operation_id,
+                "event_id": result.event_id,
+                "event_digest": result.event_digest,
+                "assessment_digest": assessment.digest,
+                "epg_digest": assessment.epg_digest,
+                "sdl_digest": assessment.sdl_digest,
+            }
+        )
+        self._save()
+        return result
+
+
+def _rpm_approval_for_run(assessment: Any, state: dict[str, Any]) -> Any:
+    from .research_memory import HumanApproval
+
+    return HumanApproval.for_assessment(
+        assessment,
+        approver=str(state.get("run_id", "work-order")),
+        role="memory_owner",
+    )

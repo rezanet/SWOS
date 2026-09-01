@@ -1,0 +1,260 @@
+{
+  "queue_schema": "swos.v2.research-grade.implementation-queue.v1",
+  "generated_at": "2026-09-02",
+  "status": "active",
+  "planning": {
+    "pull_request": 55,
+    "merged_sha": "11490869b52f146569bcd19cc17cef134012c81b",
+    "reviewed_head": "b8f18e261d3baa8e11749d2ad663ba8bd06e04b1",
+    "base_sha": "8d440296b4a9df708f1140a04bae1ae24f74fee3",
+    "url": "https://github.com/rezanet/SWOS/pull/55"
+  },
+  "implementation": {
+    "pull_request": 57,
+    "branch": "codex/swos-v2-research-grade",
+    "head_sha": "0a746c7ee94f47ab1ca580600385aec8a5e7fe0a",
+    "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
+    "progress_source": "PROGRESS.md",
+    "url": "https://github.com/rezanet/SWOS/pull/57",
+    "last_reconciled_task": "T070",
+    "last_action": "Executed the next frozen task T070 against the current checkout; the bounded citation workflow failed closed with NOT_RUN because the licensed corpus, double annotations, adjudication, and independent approval are absent. T070 remains pending.",
+    "last_action_evidence": [
+      "focused review regression suite: 33 tests pass",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py': 217 passed",
+      "python -m unittest discover -s tests/prose -p 'test_*.py': 240 passed, 11 expected live-provider skips",
+      "ruff check and format validation for repaired surfaces: pass",
+      "v1 compatibility manifest: 118 recorded file digests match current files and c4ec2945 baseline",
+      "python tools/build_citation_dataset.py: exit 2, status not_run, zero output files, source manifest has zero sources",
+      "task freeze audit at 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: 118 marker-only changes, zero non-marker differences"
+    ]
+  },
+  "summary": {
+    "total_tasks": 129,
+    "completed_tasks": 118,
+    "pending_tasks": 11,
+    "next_task": "T070",
+    "open_tasks": [
+      "T070",
+      "T073",
+      "T079",
+      "T080",
+      "T093",
+      "T094",
+      "T095",
+      "T111",
+      "T127",
+      "T128",
+      "T129"
+    ]
+  },
+  "blockers": [
+    {
+      "task_id": "T070",
+      "status": "open",
+      "kind": "external-evidence",
+      "reason": "The offline checkout has no licensed pair source, double annotations, adjudication, or independent approval; the builder must remain NOT_RUN and fail closed."
+    },
+    {
+      "task_id": "T079",
+      "status": "open",
+      "kind": "human-review",
+      "reason": "The required per-discipline diversity packets must be human reviewed before release evidence can be recorded."
+    },
+    {
+      "task_id": "T111",
+      "status": "open",
+      "kind": "rights-and-human-review",
+      "reason": "The full multimodal corpus requires rights-cleared source records and human-reviewed fixtures at the frozen R7 minima."
+    },
+    {
+      "task_id": "T127-T129",
+      "status": "open",
+      "kind": "external-governance",
+      "reason": "Exact-head portability evidence, independent oracle output, named approvals, and owner merge approval are not present."
+    }
+  ],
+  "workstreams": [
+    {
+      "id": "US3-citation",
+      "priority": "P1",
+      "tasks": ["T070", "T073"],
+      "depends_on": ["T064", "T065", "T066", "T067", "T068", "T069"],
+      "next_task": "T070"
+    },
+    {
+      "id": "US3-diversity",
+      "priority": "P1",
+      "tasks": ["T079", "T080"],
+      "depends_on": ["T075", "T076", "T077", "T078"],
+      "next_task": "T079"
+    },
+    {
+      "id": "US4-provenance",
+      "priority": "P1",
+      "tasks": ["T093", "T094", "T095"],
+      "depends_on": ["T087", "T088", "T089", "T090", "T091", "T092"],
+      "next_task": "T093"
+    },
+    {
+      "id": "US5-multimodal",
+      "priority": "P2",
+      "tasks": ["T111"],
+      "depends_on": ["T104", "T105", "T106", "T107", "T108", "T109", "T110"],
+      "next_task": "T111"
+    },
+    {
+      "id": "release-candidate",
+      "priority": "P1",
+      "tasks": ["T127", "T128", "T129"],
+      "depends_on": ["T070", "T073", "T079", "T080", "T093", "T094", "T095", "T111", "T126"],
+      "next_task": "T127"
+    }
+  ],
+  "queue": [
+    {
+      "position": 1,
+      "task_id": "T070",
+      "status": "pending",
+      "workstream": "US3-citation",
+      "depends_on": ["T069"],
+      "artifact": "benchmark/citation-support/manifest.json",
+      "tool": "tools/build_citation_dataset.py",
+      "test_first": true
+    },
+    {
+      "position": 2,
+      "task_id": "T073",
+      "status": "pending",
+      "workstream": "US3-citation",
+      "depends_on": ["T070", "T071", "T072"],
+      "artifact": "artifacts/research-grade/citation-evaluation-report.json",
+      "tool": "tools/evaluate_citation_classifier.py",
+      "test_first": true
+    },
+    {
+      "position": 3,
+      "task_id": "T079",
+      "status": "pending",
+      "workstream": "US3-diversity",
+      "depends_on": ["T075", "T076", "T077", "T078"],
+      "artifact": "evals/fixtures/source-diversity/",
+      "test_first": true
+    },
+    {
+      "position": 4,
+      "task_id": "T080",
+      "status": "pending",
+      "workstream": "US3-diversity",
+      "depends_on": ["T079"],
+      "artifact": "artifacts/research-grade/source-diversity-benchmark.json",
+      "tool": "tools/run_source_diversity_benchmark.py",
+      "test_first": true
+    },
+    {
+      "position": 5,
+      "task_id": "T093",
+      "status": "pending",
+      "workstream": "US4-provenance",
+      "depends_on": ["T087", "T088", "T089", "T090", "T091", "T092"],
+      "artifact": "evals/fixtures/provenance/",
+      "test_first": true
+    },
+    {
+      "position": 6,
+      "task_id": "T094",
+      "status": "pending",
+      "workstream": "US4-provenance",
+      "depends_on": ["T093"],
+      "artifact": "benchmark/provenance/oracle-manifest.json",
+      "workflow": ".github/workflows/prov-certification.yml",
+      "test_first": true
+    },
+    {
+      "position": 7,
+      "task_id": "T095",
+      "status": "pending",
+      "workstream": "US4-provenance",
+      "depends_on": ["T092", "T093"],
+      "artifact": "benchmark/provenance/resource-limits.json",
+      "test_first": true
+    },
+    {
+      "position": 8,
+      "task_id": "T111",
+      "status": "pending",
+      "workstream": "US5-multimodal",
+      "depends_on": ["T104", "T105", "T106", "T107", "T108", "T109", "T110"],
+      "artifact": "evals/fixtures/multimodal/",
+      "test_first": true
+    },
+    {
+      "position": 9,
+      "task_id": "T127",
+      "status": "pending",
+      "workstream": "release-candidate",
+      "depends_on": ["T001-T126"],
+      "artifact": "external PR/workflow review and approval records",
+      "release_gate": true,
+      "test_first": false
+    },
+    {
+      "position": 10,
+      "task_id": "T128",
+      "status": "pending",
+      "workstream": "release-candidate",
+      "depends_on": ["T126", "T127"],
+      "artifact": "external immutable audit pack",
+      "release_gate": true,
+      "test_first": false
+    },
+    {
+      "position": 11,
+      "task_id": "T129",
+      "status": "pending",
+      "workstream": "release-candidate",
+      "depends_on": ["T128"],
+      "artifact": "external owner merge approval",
+      "release_gate": true,
+      "test_first": false
+    }
+  ],
+  "gates": [
+    {
+      "id": "planning-merge",
+      "status": "pass",
+      "evidence": "PR #55 merged as 11490869b52f146569bcd19cc17cef134012c81b"
+    },
+    {
+      "id": "post-merge-main-ci",
+      "status": "historical-deviation",
+      "evidence": "SWOS CI run 33565116220 on 11490869b52f146569bcd19cc17cef134012c81b failed only DCO sign-off because the squash-generated planning commit has no standalone Signed-off-by; CodeQL and Engineering Quality passed."
+    },
+    {
+      "id": "implementation-hosted-ci",
+      "status": "pass",
+      "evidence": "Required workflows passed at exact frozen artifact head 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: SWOS Prose Benchmark 33570127862, SWOS Portability Gate 33570127737, Research Grade compatibility 33570127760, SWOS CI 33570127761, SWOS CodeQL 33570127816, and SWOS Engineering Quality 33570127790."
+    },
+    {
+      "id": "portability-definitions",
+      "status": "pass",
+      "evidence": "tools/check_portability_acceptance.py --definitions-only"
+    },
+    {
+      "id": "portability-release-evidence",
+      "status": "pending",
+      "evidence": "Six-case --release evidence is required before T127"
+    },
+    {
+      "id": "human-review-and-exact-head",
+      "status": "pending",
+      "evidence": "T127-T129"
+    }
+  ],
+  "update_protocol": {
+    "ordering": "Execute queue entries in position order unless a dependency is explicitly satisfied by exact evidence.",
+    "test_first": "For each implementation task, add or run the failing focused contract test before implementation, then record the passing focused test and exact artifact.",
+    "marker_rule": "Change a task marker to [x] only after its exact-path artifact and focused tests pass at the current head.",
+    "head_rule": "After each durable milestone, update this queue head_sha, rerun applicable gates, commit with sign-off, and push the implementation branch.",
+    "release_rule": "Never infer T127-T129 from local deterministic evidence; retain NOT_RUN, approval, portability, and production boundaries explicitly."
+  }
+}

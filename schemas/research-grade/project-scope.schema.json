@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/project-scope.schema.json",
+  "title": "SWOS Research Scope and Project Binding",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository_namespace_id", "programme_id", "project_id", "binding"],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "repository_namespace_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "programme_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "project_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "binding": {"$ref": "#/$defs/binding"}
+  },
+  "$defs": {
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding_id", "label", "manifest_digest", "status", "visibility_permissions"],
+      "properties": {
+        "binding_id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "manifest_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "status": {"enum": ["active", "retired"]},
+        "visibility_permissions": {"type": "object", "additionalProperties": {"type": "boolean"}}
+      }
+    }
+  }
+}

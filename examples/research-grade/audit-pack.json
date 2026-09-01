@@ -1,0 +1,9 @@
+{
+  "artifact": "swos.research-grade.audit-pack",
+  "schema_version": "2.0.0",
+  "code_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "artifact_count": 0,
+  "artifacts": [],
+  "status": "pre_release",
+  "gates": []
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "2.0.0",
+  "cases": [
+    {"scenario": "snapshot", "operation": "export", "scope": "project-a", "sequence": 1},
+    {"scenario": "delta", "operation": "export", "scope": "project-a", "sequence": 2},
+    {"scenario": "duplicate", "operation": "import", "scope": "project-b", "same_digest": true},
+    {"scenario": "fork", "operation": "import", "scope": "project-b", "same_id": true, "same_digest": false},
+    {"scenario": "collision", "operation": "import", "scope": "project-b", "same_id": true, "same_digest": false},
+    {"scenario": "contradiction", "operation": "contradiction_opened", "scope": "project-a", "requires_review": true},
+    {"scenario": "expiry", "operation": "expire", "scope": "project-a", "as_of": "2026-09-01T00:00:00Z"},
+    {"scenario": "correction", "operation": "correct", "scope": "project-a", "preserves_prior": true},
+    {"scenario": "retirement", "operation": "retire_project", "scope": "project-c", "preserves_history": true},
+    {"scenario": "replay", "operation": "import", "scope": "project-c", "idempotent": true}
+  ]
+}

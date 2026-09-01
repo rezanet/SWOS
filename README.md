@@ -23,6 +23,27 @@ canonical in [`VISION.md`](VISION.md); the implementation sequence is in the
 The version tracks remain distinct: Core/specification `1.0.0`, reference
 runtime `v1.1`, and Research Grade `v2.0`.
 
+### Research Grade v2.0 implementation candidate
+
+The parallel `2.0.0` Research Grade contract is implemented on the feature
+candidate branch, with cross-project RPM, nine discipline profiles, citation
+support and source-diversity controls, EPG/PROV interchange, and bounded
+object/media analysis. The candidate is deterministic and provider-neutral in
+ordinary CI; specialist agents remain default-off and pack-only until their
+promotion evidence is independently approved.
+
+The pre-freeze evidence is recorded in the [regression report](artifacts/research-grade/regression-report.json),
+[evaluation index](artifacts/research-grade/evaluation-index.json),
+[quality report](artifacts/research-grade/quality-report.json), and
+[benchmark index](artifacts/research-grade/benchmark-index.json). These reports
+are evidence for the recorded candidate SHA, not a v2 release claim. The
+locked citation corpus/model, reviewed diversity corpus, independent PROV
+oracle, multimodal corpus/provider evidence, hosted review, and owner approval
+remain release gates; every unavailable plane is recorded as `NOT_RUN`.
+
+Research Grade v2 does not claim W3C certification, live provider compatibility,
+capability promotion, merge, or deployment.
+
 For a source release, the exact commit, deterministic test/proof results,
 source hashes, concise SBOM/provenance and known limitations are accompanied by
 one short maintainer release record. Package signing is a future optional

@@ -1,0 +1,15 @@
+{
+  "artifact": "swos.research-memory.fixtures",
+  "schema_version": "2.0.0",
+  "fixture_version": "2026-09-01",
+  "projects": [
+    {"repository_namespace_id": "fixture-north", "programme_id": "programme-research", "project_id": "project-a"},
+    {"repository_namespace_id": "fixture-north", "programme_id": "programme-research", "project_id": "project-b"},
+    {"repository_namespace_id": "fixture-north", "programme_id": "programme-research", "project_id": "project-c"}
+  ],
+  "scenarios": ["snapshot", "delta", "duplicate", "fork", "collision", "contradiction", "expiry", "correction", "retirement", "replay"],
+  "case_file": "scenarios.json",
+  "rights": "synthetic metadata only; no external source text or restricted payloads",
+  "determinism": "canonical JSON and fixed identifiers; no fixture-name outcome shortcut",
+  "status": "offline_fixture_only"
+}

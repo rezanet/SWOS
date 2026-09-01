@@ -1,0 +1,84 @@
+{
+  "limitations": [
+    {
+      "gate": "citation corpus/model/calibration",
+      "id": "T070",
+      "reason": "The reviewed >=6000-pair corpus, frozen model and calibration are absent.",
+      "required": "Licensed, double-annotated, adjudicated corpus; frozen artifact; locked evaluation.",
+      "status": "NOT_RUN"
+    },
+    {
+      "gate": "packaged citation evaluation",
+      "id": "T073",
+      "reason": "The packaged 100-pair split and verified inference artifact are absent.",
+      "required": "Immutable 100-pair report with exact model/calibration/data identities.",
+      "status": "NOT_RUN"
+    },
+    {
+      "gate": "classifier locked evaluation",
+      "id": "T079",
+      "reason": "No locked held-out classifier corpus or production model is available.",
+      "required": "All classifier thresholds, slices and safety cases on the locked corpus.",
+      "status": "NOT_RUN"
+    },
+    {
+      "gate": "classifier human/adversarial approval",
+      "id": "T080",
+      "reason": "Human-reviewed adversarial/fixture approval is absent.",
+      "required": "Named adjudicator and evaluation-owner approval.",
+      "status": "NOT_RUN"
+    },
+    {
+      "gate": "PROV conformance corpus",
+      "id": "T093",
+      "reason": "The complete corpus manifest has zero cases.",
+      "required": "Complete exact-input corpus across all advertised formats.",
+      "status": "NOT_RUN"
+    },
+    {
+      "gate": "independent PROV oracle",
+      "id": "T094",
+      "reason": "The pinned independent ProvToolbox artifact is unavailable.",
+      "required": "Independent oracle output and version/license/digest identity.",
+      "status": "NOT_RUN"
+    },
+    {
+      "gate": "PROV performance corpus",
+      "id": "T095",
+      "reason": "No complete performance corpus is present; only local RPM reference timing was measured.",
+      "required": "Bounded PROV corpus performance report and runner fingerprint.",
+      "status": "NOT_RUN"
+    },
+    {
+      "gate": "multimodal reviewed evaluation",
+      "id": "T111",
+      "reason": "The manifest declares required counts but contains no reviewed cases/assets.",
+      "required": "Rights-cleared reviewed corpus, adversarial cases, provider evidence and adjudication.",
+      "status": "NOT_RUN"
+    },
+    {
+      "gate": "hosted CI/review/approvals",
+      "id": "T127",
+      "reason": "This pack reserves hosted CI, maintainer, steward, fixture-owner and independent-review identities for the external PR/workflow record.",
+      "required": "Exact-head hosted checks, named approvals, resolved threads and independent review.",
+      "status": "RESERVED_EXTERNAL"
+    },
+    {
+      "gate": "external immutable audit pack",
+      "id": "T128",
+      "reason": "Only the committed pre-freeze pack is assembled locally.",
+      "required": "Independent external pack combining the committed manifest and exact-head PR/workflow records.",
+      "status": "RESERVED_EXTERNAL"
+    },
+    {
+      "gate": "owner merge approval",
+      "id": "T129",
+      "reason": "No owner merge approval is requested or inferred by this implementation.",
+      "required": "Explicit external owner decision; no post-review commit.",
+      "status": "RESERVED_EXTERNAL"
+    }
+  ],
+  "policy": "NOT_RUN or blocked evidence is a release blocker, not a pass.",
+  "schema_version": "1.0.0",
+  "source_sha": "a8fe58198184e7affa3fe327757f71e4ad10022b"
+}

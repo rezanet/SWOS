@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+<https://swos.example.org/ontology/discipline/2.0.0> a owl:Ontology .
+swos:Discipline a owl:Class ; skos:prefLabel "discipline" .
+swos:Method a owl:Class ; skos:prefLabel "method family" .
+swos:EvidenceType a owl:Class ; skos:prefLabel "evidence type" .
+swos:Criterion a owl:Class ; skos:prefLabel "critique criterion" .
+swos:FailureMode a owl:Class ; skos:prefLabel "failure mode" .
+swos:usesMethod a owl:ObjectProperty ; skos:prefLabel "uses method" .
+swos:acceptsEvidenceType a owl:ObjectProperty ; skos:prefLabel "accepts evidence type" .
+swos:requiresCriterion a owl:ObjectProperty ; skos:prefLabel "requires criterion" .
+swos:guardsAgainstFailureMode a owl:ObjectProperty ; skos:prefLabel "guards against failure" .
+swos:hasRubricWeight a owl:DatatypeProperty ; skos:prefLabel "has rubric weight" .

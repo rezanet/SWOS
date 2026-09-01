@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/model-artifact.schema.json",
+  "title": "SWOS verified citation model artifact",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "model_id", "model_digest", "label_order", "dataset_manifest_digest", "verified"],
+  "properties": {"schema_version": {"const": "2.0.0"}, "status": {"type": "string"}, "reason": {"type": "string"}, "model_id": {"type": "string"}, "model_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "label_order": {"const": ["directly_supports", "partially_supports", "context_only", "contradicts", "not_supported"]}, "version": {"type": "string"}, "artifact_path": {"type": "string"}, "config_digest": {"type": "string"}, "dataset_manifest_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "ontology_version": {"const": "2.0.0"}, "ontology_digest": {"type": "string"}, "verified": {"type": "boolean"}, "runtime": {"type": "object"}}
+}

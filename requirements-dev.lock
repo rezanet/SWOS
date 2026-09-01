@@ -53,3 +53,11 @@ typing-inspection==0.4.4
 typing_extensions==4.16.0
 urllib3==2.7.0
 wheel==0.48.0
+
+# Research Grade packages remain pinned for dependency-reference compatibility;
+# release-only artifact hashes are recorded in requirements-research-grade.lock
+# and config/research-grade-dependencies.md.
+rdflib==7.6.0
+pyshacl==0.40.1
+prov==3.1.0
+sentence-transformers==6.0.1

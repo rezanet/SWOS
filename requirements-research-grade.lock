@@ -1,0 +1,7 @@
+# Research Grade release-only direct dependencies.
+# Artifact hashes and licences are governed by config/research-grade-dependencies.md.
+# Resolve and record transitive hashes in the dedicated release environment.
+rdflib==7.6.0 --hash=sha256:30c0a3ebf4c0e09215f066be7246794b6492e054e782d7ac2a34c9f70a15e0dd
+pyshacl==0.40.1 --hash=sha256:27dd58c8ddfa103303b4a8c40b2c666332ffc912dbcd3137f7adc7b7bc5e6bda
+prov==3.1.0 --hash=sha256:c70f2785e353bc3366f4711d7a5488380249026498fcf6274c71f783f2773545
+sentence-transformers==6.0.1 --hash=sha256:b8888d72c707ba33c63aa30845850702dd5acadf1dd0d051436380bcebe4fd0f

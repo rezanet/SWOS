@@ -1,0 +1,157 @@
+{
+  "base_sha": "8d440296b4a9df708f1140a04bae1ae24f74fee3",
+  "benchmarks": [
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/run_rpm_benchmark.py --repository C:\\Users\\RezaN\\AppData\\Local\\Temp\\swos-rpm-100k-c9pt1bkf\\rpm.sqlite --items 100000 --out artifacts/research-grade/rpm-reference-100000.json",
+      "duration_seconds": 797.869,
+      "name": "rpm-100000-reference",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\"chain_errors\": [], \"chain_head\": \"7815b2e17369dffc48ce72f6ec37ef428bfe24372fc8b2e15a06a504fbffe35f\", \"environment\": {\"os\": \"Windows-11-10.0.26200-SP0\", \"python\": \"3.14.6\", \"sqlite\": \"2.0.0\"}, \"item_count\": 100000, \"limitations\": [\"Local SQLite measurement only; not a hosted throughput claim.\"], \"lookup_p95_ms\": 3.01208000164479, \"schema_version\": \"2.0.0\", \"status\": \"measured\", \"write_seconds\": 771.3342822999984}\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/evaluate_citation_classifier.py --model-manifest models/citation-support/current/manifest.json --calibration models/citation-support/current/calibration.json --locked-test benchmark/citation-support/splits/locked-test-100.jsonl --predictions-out artifacts/research-grade/citation-100-predictions.jsonl --report-out artifacts/research-grade/citation-100-report.json",
+      "duration_seconds": 0.104,
+      "name": "citation-100-pair-packaged-evaluation",
+      "returncode": 2,
+      "status": "NOT_RUN",
+      "stderr": "",
+      "stdout": "{\"status\": \"not_run\", \"reason\": \"[Errno 2] No such file or directory: 'models\\\\\\\\citation-support\\\\\\\\current\\\\\\\\manifest.json'\"}\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/certify_prov_roundtrip.py --corpus-manifest benchmark/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir artifacts/research-grade/prov-performance --certificate-out artifacts/research-grade/prov-performance-certificate.json",
+      "duration_seconds": 0.118,
+      "name": "prov-performance-corpus",
+      "returncode": 2,
+      "status": "NOT_RUN",
+      "stderr": "",
+      "stdout": "{\"certificate\": \"artifacts\\\\research-grade\\\\prov-performance-certificate.json\", \"status\": \"not_run\"}\n",
+      "timed_out": false
+    }
+  ],
+  "interpretation": [
+    "The 100000-item RPM measurement is local reference evidence only and does not prove hosted performance.",
+    "Citation and PROV performance rows are NOT_RUN; no synthetic metrics or pass is claimed."
+  ],
+  "report": "SWOS v2.0 Research Grade benchmark index",
+  "reports": [
+    {
+      "path": "artifacts/research-grade/rpm-reference-100000.json",
+      "payload": {
+        "chain_errors": [],
+        "chain_head": "7815b2e17369dffc48ce72f6ec37ef428bfe24372fc8b2e15a06a504fbffe35f",
+        "environment": {
+          "os": "Windows-11-10.0.26200-SP0",
+          "python": "3.14.6",
+          "sqlite": "2.0.0"
+        },
+        "item_count": 100000,
+        "limitations": [
+          "Local SQLite measurement only; not a hosted throughput claim."
+        ],
+        "lookup_p95_ms": 3.01208000164479,
+        "schema_version": "2.0.0",
+        "status": "measured",
+        "write_seconds": 771.3342822999984
+      },
+      "sha256": "c3354c0e6047a3394cd730468060fbc5f23ac586dff98e7717d26bdc70d6712c"
+    },
+    {
+      "path": "artifacts/research-grade/prov-performance-certificate.json",
+      "payload": {
+        "certificate_version": "2.0.0",
+        "input_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "legs": [],
+        "limitations": [
+          "The corpus or independent oracle is not release-complete."
+        ],
+        "limits": {
+          "max_bytes": 5000000,
+          "max_depth": 64,
+          "max_literal_length": 1000000,
+          "max_statements": 100000,
+          "timeout_seconds": 60.0
+        },
+        "oracle": {
+          "artifact_sha256": null,
+          "artifact_uri": null,
+          "implementation": "ProvToolbox",
+          "licence": null,
+          "reason": "The independently approved ProvToolbox artifact is not installed or pinned in this checkout.",
+          "schema_version": "2.0.0",
+          "status": "not_run",
+          "version": null
+        },
+        "paths": [
+          "prov-json",
+          "prov-n",
+          "prov-o-trig"
+        ],
+        "profile": "swos.prov-dm-round-trip.v2",
+        "profile_manifest": {
+          "canonicalization": [
+            "JCS-RFC8785",
+            "RDFC-1.0",
+            "PROV-N-semantic-normal-form"
+          ],
+          "claim": "SWOS PROV-DM/PROV-N/PROV-O round-trip profile with PROV-JSON Member Submission",
+          "constraints": {
+            "extension_preservation": "required",
+            "prov_constraints": "required",
+            "shacl": "required_for_rdf",
+            "typed_literal_preservation": "required"
+          },
+          "formats": [
+            "prov-json",
+            "prov-n",
+            "prov-o-trig"
+          ],
+          "namespace_policy": "absolute_iri_only",
+          "oracle": {
+            "implementation": "ProvToolbox",
+            "required_for_release": true,
+            "status": "not_run"
+          },
+          "profile_id": "swos.prov-dm-round-trip.v2",
+          "schema_version": "2.0.0",
+          "status": "executable"
+        },
+        "source_sha": "0000000000000000000000000000000000000000000000000000000000000000",
+        "status": "not_run"
+      },
+      "sha256": "aab9a468d1897446cd3ec87edad1a67b6c2a53ff638e0392e47632643fba1ebb"
+    }
+  ],
+  "runner_fingerprint": {
+    "executable": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "packages": {
+      "coverage": "7.15.4",
+      "jsonschema": "4.26.0",
+      "pip-audit": "2.10.1",
+      "ruff": "0.16.4",
+      "swos": null
+    },
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6"
+  },
+  "schema_version": "1.0.0",
+  "source_sha": "a8fe58198184e7affa3fe327757f71e4ad10022b",
+  "status": "PASS_WITH_NOT_RUN_RELEASE_CORPORA",
+  "thresholds": {
+    "citation_100_pair": {
+      "status": "NOT_RUN because the packaged model/calibration/split is absent",
+      "target": "packaged 100-pair evaluation must be complete and exact-head bound"
+    },
+    "prov_performance": {
+      "status": "NOT_RUN because the performance corpus/oracle is absent",
+      "target": "complete corpus, format matrix, independent oracle, and resource-limit evidence"
+    },
+    "rpm_lookup_p95_ms": {
+      "scope": "reference local SQLite measurement; production threshold is governed by benchmark/rpm/manifest.json",
+      "target": 250
+    }
+  }
+}

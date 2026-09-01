@@ -313,6 +313,36 @@ class GovernedJsonStore:
         return record
 
 
+def export_v1_store_to_rpm(store: GovernedJsonStore, scope: Any) -> dict[str, Any]:
+    """Expose a v1 store through a read-only, explicitly marked v2 adapter."""
+
+    records = store.records()
+    return {
+        "schema_version": "2.0.0",
+        "source_store_version": "1.0.0",
+        "source_store_contract": STORE_VERSION,
+        "mode": "compatibility",
+        "scope": scope.to_dict(),
+        "store_name": store.store_name,
+        "artifact_type": store.artifact_type,
+        "records": records,
+        "source_digest": _digest(records),
+    }
+
+
+def import_rpm_to_v1_store(bundle: dict[str, Any]) -> list[dict[str, Any]]:
+    """Read the compatibility projection without mutating a v1 store."""
+
+    if not isinstance(bundle, dict) or bundle.get("mode") != "compatibility":
+        raise StoreError("only explicitly marked v1 compatibility bundles are accepted")
+    records = bundle.get("records")
+    if not isinstance(records, list):
+        raise StoreError("compatibility bundle records must be a list")
+    if bundle.get("source_digest") != _digest(records):
+        raise StoreError("compatibility bundle digest mismatch")
+    return records
+
+
 class ResearchProgrammeMemoryStore(GovernedJsonStore):
     """RPM item store enforcing the frozen durable-write governance rule."""
 

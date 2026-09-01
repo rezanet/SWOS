@@ -1,0 +1,15 @@
+{
+  "schema_version": "2.0.0",
+  "limits": {
+    "max_bytes": 5000000,
+    "max_statements": 100000,
+    "max_literal_length": 1000000,
+    "max_depth": 64,
+    "timeout_seconds": 60.0
+  },
+  "release_performance_targets": {
+    "p95_seconds": 60.0,
+    "corpora": [1000, 10000, 100000]
+  },
+  "hostile_blank_node_policy": "bounded_and_fail_closed"
+}
