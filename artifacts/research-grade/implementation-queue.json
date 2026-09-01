@@ -12,17 +12,18 @@
   "implementation": {
     "pull_request": 57,
     "branch": "codex/swos-v2-research-grade",
-    "head_sha": "7f278949822c5b67bd6899bd663d79bd9a57e123",
+    "head_sha": "8d95c35a2c93d87f944b8c187b171c3be1e3c79d",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/57",
     "last_reconciled_task": "T070",
-    "last_action": "Added approved dataset-level source-licence validation, exact pair-to-source binding, source-manifest digest reporting, and explicit offline NOT_RUN behavior; T070 remains pending until the licensed corpus and independent human records exist.",
+    "last_action": "Repaired exact-head review findings across RPM import snapshots, diversity gates, closure enforcement, multimodal input/promotion binding, orchestrator eligibility, and PROV oracle/route certification; T070 remains pending until the licensed corpus and independent human records exist.",
     "last_action_evidence": [
-      "tests/runtime/test_citation_dataset.py: 4 focused tests pass",
-      "python tools/build_citation_dataset.py --manifest benchmark/citation-support/manifest.json --out-dir TEMP: exit 2, status not_run, no output created",
-      "python -m unittest discover -s tests/runtime -p 'test_*.py': 207 passed",
-      "python -m ruff check and python -m ruff format --check: pass"
+      "focused review regression suite: 33 tests pass",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py': 217 passed",
+      "python -m unittest discover -s tests/prose -p 'test_*.py': 240 passed, 11 expected live-provider skips",
+      "ruff check and format validation for repaired surfaces: pass",
+      "v1 compatibility manifest: 118 recorded file digests match current files and c4ec2945 baseline"
     ]
   },
   "summary": {
