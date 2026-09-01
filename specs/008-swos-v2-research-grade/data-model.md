@@ -96,10 +96,13 @@ and digests, rights exclusions, export approval, and export EPG activity.
 
 ### ImportInspection
 
-Fields: inspection ID/digest, source bundle digest, externally supplied destination
-mapping, limits, schema/checksum/chain/PROV/SDL/rights/classification results,
-collision results, deterministic diff, warnings, created/expiry timestamps, and
-commit eligibility. Commit is atomic and requires an approval over this digest.
+Fields: inspection ID/digest, source bundle digest, exact receiving
+`destination_scope`, externally supplied destination mapping, limits,
+schema/checksum/chain/PROV/SDL/rights/classification results, collision results,
+deterministic diff, warnings, created/expiry timestamps, and commit eligibility.
+Commit accepts the destination scope explicitly, re-resolves that registered and
+non-closed receiver and the inspection digest at commit time, and is atomic only
+when they match; it requires an approval over this digest and destination.
 
 ### RPM state transitions
 

@@ -64,15 +64,18 @@ def export_bundle(scope: ResearchScope, selection: ExportSelection,
 def inspect_import(bundle: Path, *, destination: ResearchScope,
                    limits: BundleLimits, as_of: datetime) -> ImportInspection: ...
 
-def commit_import(inspection_id: str, inspection_digest: str,
-                  approval: HumanApproval) -> ImportReceipt: ...
+def commit_import(destination: ResearchScope, inspection_id: str,
+                  inspection_digest: str, approval: HumanApproval,
+                  *, as_of: datetime) -> ImportReceipt: ...
 ```
 
-Archive input never chooses its destination. Reject absolute paths, `..`, links,
-devices, duplicate normalized paths, excessive file/item/byte counts,
-decompression bombs, malformed JSON/NDJSON, checksum failure, chain failure,
-missing evidence, and ID/digest collisions. Same ID plus same canonical digest is
-an idempotent no-op; same ID plus different digest fails.
+Archive input never chooses its destination. The explicit receiving scope is
+bound during inspection and re-resolved during commit; a changed, unregistered,
+or closed destination fails closed. Reject absolute paths, `..`, links, devices,
+duplicate normalized paths, excessive file/item/byte counts, decompression bombs,
+malformed JSON/NDJSON, checksum failure, chain failure, missing evidence, and
+ID/digest collisions. Same ID plus same canonical digest is an idempotent no-op;
+same ID plus different digest fails.
 
 ### RPM operator CLI
 
@@ -86,7 +89,7 @@ python tools/rpm.py verify --repository PATH --scope-file FILE --json-out FILE
 python tools/rpm.py expire --repository PATH --scope-file FILE --as-of TIME [--commit --approval FILE]
 python tools/rpm.py export --repository PATH --scope-file FILE --selection FILE --approval FILE --out DIR
 python tools/rpm.py inspect-import --repository PATH --bundle DIR --destination FILE --out FILE
-python tools/rpm.py commit-import --repository PATH --inspection FILE --approval FILE
+python tools/rpm.py commit-import --repository PATH --scope-file FILE --inspection FILE --approval FILE
 python tools/rpm.py rebuild-projection --repository PATH --scope-file FILE --verify-only
 ```
 

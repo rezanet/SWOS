@@ -273,8 +273,9 @@ credential access in ordinary CI.
    programme closure, and review-mode lifecycle semantics; closure preserves
    historical records and release bindings while blocking new writes and normal
    reads.
-6. Build safe export, inspect, commit, redaction, collision, idempotence, path, and
-   resource-limit behavior.
+6. Build safe export, inspect, and destination-bound commit, redaction, collision,
+   idempotence, path, and resource-limit behavior; re-resolve the receiving scope
+   at commit.
 7. Connect finalizer/work-order run snapshots to real scoped RPM, while preserving
    v1.1 compatibility.
 8. Add operator CLI, benchmark corpus, concurrency/crash/tamper/security tests,
@@ -282,7 +283,8 @@ credential access in ordinary CI.
 
 **Exit gate**: three-project exchange suite; isolation and TOCTOU adversarial suite;
 programme-closure preservation; 2,000 concurrent writes with no loss/duplication;
-crash all-or-nothing; projection rebuild equivalence; hostile import rejection;
+crash all-or-nothing; projection rebuild equivalence; hostile import and
+destination-mismatch rejection;
 bounded safety-mutation report with no surviving safety mutant; documented
 logical-deletion and logical-namespace limitations.
 
@@ -471,7 +473,7 @@ limitations. Prose-only performance claims do not satisfy a gate.
 
 | Requirements | Design location | Primary implementation/evidence |
 |---|---|---|
-| FR-001, FR-002, FR-003, FR-004, FR-005 | Phase 2; data model §1; contracts §2 | `research_memory.py`, `programme_store.py`, `rpm_exchange.py`; scoped lifecycle/closure/exchange suites and safety-mutation report |
+| FR-001, FR-002, FR-003, FR-004, FR-005 | Phase 2; data model §1; contracts §2 | `research_memory.py`, `programme_store.py`, `rpm_exchange.py`; scoped lifecycle/closure/exchange/receiving-scope suites and safety-mutation report |
 | FR-006, FR-007, FR-008, FR-009, FR-010 | Phase 3; research R2; data model §2 | ontology sources/shapes/compiler/manifest; pack and isomorphism reports |
 | FR-011, FR-012 | Phase 3; research R3; contracts §3 | `discipline_critique.py`; nine-pack reviewed fixture report |
 | FR-013, FR-014, FR-015, FR-016, FR-017 | Phase 4 citation workstream; research R4; contracts §4 | classifier/calibration/dataset/model manifests; locked predictions and metrics |

@@ -53,12 +53,12 @@ and prove a different scope cannot observe or influence them.
 
 ### US1 tests first
 
-- [ ] T021 [P] [US1] Add schema/contract tests for scope, project binding, authoritative policy version/digest, RPM v2, lifecycle, programme closure, exchange, inspection, and read receipt in `tests/runtime/test_research_memory_contracts.py`
+- [ ] T021 [P] [US1] Add schema/contract tests for scope, project binding, authoritative policy version/digest, RPM v2, lifecycle, programme closure, exchange, destination binding/revalidation, inspection, and read receipt in `tests/runtime/test_research_memory_contracts.py`
 - [ ] T022 [P] [US1] Add repository migration, transaction, chain, projection, corruption, and rebuild tests in `tests/runtime/test_programme_store.py`
 - [ ] T023 [P] [US1] Add missing/unregistered/cross-namespace/cross-programme/project-visibility isolation tests in `tests/runtime/test_research_memory_isolation.py`
 - [ ] T024 [P] [US1] Add EPG/SDL resolution, operation-hash approval, stale-policy, expired-assessment, restricted-data, unauthorised-mutation, and commit-time TOCTOU tests for every binding/write/correct/supersede/contradiction/expiry/delete/close/exception transition in `tests/runtime/test_research_memory_writes.py`
 - [ ] T025 [P] [US1] Add correction, supersession, contradiction, confirmation, exact-expiry, project retirement/unbinding, programme closure with historical-record/release preservation, exceptional-read, and deletion tests in `tests/runtime/test_research_memory_lifecycle.py`
-- [ ] T026 [P] [US1] Add idempotence, collision, mapping, checksum, redaction, zip-slip, link, duplicate-path, and decompression-limit tests in `tests/runtime/test_rpm_exchange.py`
+- [ ] T026 [P] [US1] Add idempotence, collision, receiving-scope mismatch/revalidation, mapping, checksum, redaction, zip-slip, link, duplicate-path, and decompression-limit tests in `tests/runtime/test_rpm_exchange.py`
 - [ ] T027 [P] [US1] Add 8-process/2,000-write, lock-timeout, crash-injection, and all-or-nothing tests in `tests/runtime/test_programme_store_concurrency.py`
 
 ### US1 implementation
@@ -70,12 +70,12 @@ and prove a different scope cannot observe or influence them.
 - [ ] T032 [US1] Implement one propose/assess/approve/commit service for project binding, programme closure, write, correction, supersession, contradiction, expiry, deletion, and exceptional-read operations with exact EPG, SDL, policy, target-head, `as_of`, classification, rights, and expiry revalidation in `swos_runtime/research_memory.py`
 - [ ] T033 [US1] Implement classification/expiry-aware governed queries and EPG read receipts in `swos_runtime/research_memory.py`
 - [ ] T034 [US1] Implement immutable confirmation, correction, supersession, contradiction, expiry, programme closure, project retirement/unbinding, and logical-deletion transitions exclusively through the assessed operation service in `swos_runtime/research_memory.py`
-- [ ] T035 [US1] Implement bounded export, inspect-import, atomic commit, redaction, origin preservation, and deterministic diff in `swos_runtime/rpm_exchange.py`
+- [ ] T035 [US1] Implement bounded export, destination-bound inspect-import and atomic commit with commit-time receiving-scope revalidation, redaction, origin preservation, and deterministic diff in `swos_runtime/rpm_exchange.py`
 - [ ] T036 [US1] Add v1 `GovernedJsonStore` compatibility import/export adapters without changing v1 behavior in `swos_runtime/stores.py`
 - [ ] T037 [US1] Replace the hard-coded empty RPM snapshot with scoped service integration in `swos_runtime/finalizer.py`
 - [ ] T038 [US1] Bind work-order RPM reads/writes/exchange to exact run and EPG evidence in `swos_runtime/work_orders.py`
 - [ ] T039 [US1] Implement dry-run-first init/register/close-programme/assess-operation/commit-operation/verify/expire/export/inspect-import/commit-import/rebuild commands with explicit `--approval` inputs wherever required in `tools/rpm.py`
-- [ ] T040 [US1] Add deterministic three-project snapshot/delta/duplicate/fork/collision/contradiction/expiry/correction/retirement/programme-closure/replay fixtures in `evals/fixtures/research-memory/`
+- [ ] T040 [US1] Add deterministic three-project snapshot/delta/duplicate/fork/collision/contradiction/expiry/correction/retirement/programme-closure/receiving-scope-mismatch/replay fixtures in `evals/fixtures/research-memory/`
 - [ ] T041 [US1] Add the SC-012 10k-active-item benchmark generator/runner with a recorded reference-runner schema and p95 <= 250 ms acceptance in `benchmark/rpm/manifest.json` and `tools/run_rpm_benchmark.py`
 - [ ] T042 [US1] Document logical namespace, SQLite filesystem, logical deletion, backup, and recovery limitations in `docs/architecture/research-grade-memory.md`
 
