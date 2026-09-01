@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
+import sys
+import types
 import unittest
+from unittest.mock import patch
 
 from swos_runtime.image_analysis import (
     DeterministicFakeImageProvider,
@@ -79,6 +83,41 @@ class ImageAnalysisTests(unittest.TestCase):
         result = DeterministicFakeImageProvider().analyze(bounded)
         self.assertEqual("partial", result.status)
         self.assertLessEqual(len(result.observations), 1)
+
+    def test_live_provider_rejects_unverified_acquisition_uri(self) -> None:
+        result = OpenAIImageAnalysisProvider(api_key="secret", enabled=True).analyze(
+            self._request()
+        )
+        self.assertEqual("error", result.status)
+        self.assertIn("asset_content_digest_unverified", " ".join(result.limitations))
+
+    def test_live_provider_sends_only_digest_verified_captured_content(self) -> None:
+        payload = b"verified-image-bytes"
+        asset = self._request().assets[0]
+        asset = type(asset)(
+            **{
+                **asset.to_dict(),
+                "byte_size": len(payload),
+                "byte_digest": hashlib.sha256(payload).hexdigest(),
+            }
+        )
+        request = self._request(assets=(asset,), captured_bytes={"a": payload})
+        calls = []
+        client = types.SimpleNamespace(
+            responses=types.SimpleNamespace(
+                create=lambda **kwargs: (
+                    calls.append(kwargs) or types.SimpleNamespace(output_text="Visible")
+                )
+            )
+        )
+        fake_module = types.ModuleType("openai")
+        fake_module.OpenAI = lambda api_key: client
+        with patch.dict(sys.modules, {"openai": fake_module}):
+            result = OpenAIImageAnalysisProvider(api_key="secret", enabled=True).analyze(request)
+        self.assertEqual("complete", result.status)
+        image_url = calls[0]["input"][0]["content"][1]["image_url"]
+        self.assertTrue(image_url.startswith("data:image/jpeg;base64,"))
+        self.assertNotIn(asset.acquisition_uri, image_url)
 
 
 if __name__ == "__main__":

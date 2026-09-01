@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import hashlib
 import os
 from dataclasses import dataclass, field
@@ -46,6 +47,7 @@ class ImageAnalysisRequest:
     )
     provider_policy: Mapping[str, Any] = field(default_factory=dict)
     request_digest: str = ""
+    captured_bytes: Mapping[str, bytes] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "assets", tuple(self.assets))
@@ -54,6 +56,12 @@ class ImageAnalysisRequest:
         object.__setattr__(self, "ontology_binding", dict(self.ontology_binding))
         object.__setattr__(self, "resource_limits", dict(self.resource_limits))
         object.__setattr__(self, "provider_policy", dict(self.provider_policy))
+        captured = {}
+        for asset_id, value in self.captured_bytes.items():
+            if not isinstance(value, (bytes, bytearray)):
+                raise ValueError("captured image content must be bytes")
+            captured[str(asset_id)] = bytes(value)
+        object.__setattr__(self, "captured_bytes", captured)
         if not self.request_digest:
             object.__setattr__(self, "request_digest", canonical_digest(self._unsigned_dict()))
 
@@ -75,6 +83,10 @@ class ImageAnalysisRequest:
             "ontology_binding": dict(self.ontology_binding),
             "resource_limits": dict(self.resource_limits),
             "provider_policy": dict(self.provider_policy),
+            "captured_asset_digests": {
+                asset_id: hashlib.sha256(value).hexdigest()
+                for asset_id, value in sorted(self.captured_bytes.items())
+            },
         }
 
     def to_dict(self) -> dict[str, Any]:
@@ -523,6 +535,38 @@ class OpenAIImageAnalysisProvider:
                 contract_status="denied",
             )
         try:
+            verified_assets = []
+            for asset in assets:
+                content = request.captured_bytes.get(asset.asset_id)
+                if content is None:
+                    raise ValueError(
+                        f"asset_content_digest_unverified:{asset.asset_id}:captured content is required"
+                    )
+                if hashlib.sha256(content).hexdigest() != asset.byte_digest:
+                    raise ValueError(
+                        f"asset_content_digest_unverified:{asset.asset_id}:digest mismatch"
+                    )
+                if len(content) != asset.byte_size:
+                    raise ValueError(
+                        f"asset_content_digest_unverified:{asset.asset_id}:byte size mismatch"
+                    )
+                encoded = base64.b64encode(content).decode("ascii")
+                verified_assets.append((asset, f"data:{asset.mime_type};base64,{encoded}"))
+        except ValueError as exc:
+            return ImageAnalysisResult(
+                "error",
+                request.request_digest,
+                "openai",
+                self.model,
+                config_digest,
+                limitations=(str(exc),),
+                runtime={
+                    "adapter": "swos_runtime.image_analysis_openai",
+                    "input_binding": "digest_verified_captured_bytes_required",
+                },
+                contract_status="error",
+            )
+        try:
             from openai import OpenAI
 
             try:
@@ -539,8 +583,8 @@ class OpenAIImageAnalysisProvider:
                     "text": "Describe only bounded visible observations. Do not infer identity, attribution, originality, or provenance.",
                 }
             ]
-            for asset in assets:
-                content.append({"type": "input_image", "image_url": asset.acquisition_uri})
+            for _, image_url in verified_assets:
+                content.append({"type": "input_image", "image_url": image_url})
             response = client.responses.create(
                 model=self.model,
                 input=[{"role": "user", "content": content}],
@@ -554,6 +598,10 @@ class OpenAIImageAnalysisProvider:
                 "request_config": {
                     "model": self.model,
                     "max_seconds": request.resource_limits.get("max_seconds", 60),
+                },
+                "input_binding": "digest_verified_captured_bytes",
+                "captured_asset_digests": {
+                    asset.asset_id: asset.byte_digest for asset, _ in verified_assets
                 },
             }
             if not text:
@@ -588,7 +636,7 @@ class OpenAIImageAnalysisProvider:
                     },
                     uncertainty=("provider_observation_requires_review",),
                 )
-                for index, asset in enumerate(assets, 1)
+                for index, (asset, _) in enumerate(verified_assets, 1)
             )[:maximum_observations]
             limitations = ("observation_limit_reached",) if len(observations) < len(assets) else ()
             return ImageAnalysisResult(
@@ -897,6 +945,9 @@ def commit_promotion(assessment: PromotionAssessment, approval: Any) -> Capabili
     reasons = [] if assessment.eligible else list(assessment.reasons)
     if approval_data.get("disposition") != "approved" or not approval_data.get("approver_id"):
         reasons.append("approval_missing")
+    assessment_digest = canonical_digest(assessment.to_dict())
+    if approval_data.get("assessment_digest") != assessment_digest:
+        reasons.append("approval_assessment_mismatch")
     if reasons:
         return CapabilityPromotionDecision(
             "disabled",
@@ -904,7 +955,7 @@ def commit_promotion(assessment: PromotionAssessment, approval: Any) -> Capabili
             assessment.capability,
             assessment.pack,
             assessment.stage,
-            canonical_digest(assessment.to_dict()),
+            assessment_digest,
             approval_data,
             "rollback_on_safety_or_evidence_regression",
         )
@@ -914,7 +965,7 @@ def commit_promotion(assessment: PromotionAssessment, approval: Any) -> Capabili
         assessment.capability,
         assessment.pack,
         assessment.stage,
-        canonical_digest(assessment.to_dict()),
+        assessment_digest,
         approval_data,
         "rollback_on_safety_or_evidence_regression",
         effective_at=utc_timestamp(),

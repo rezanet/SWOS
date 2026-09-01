@@ -101,6 +101,20 @@ class ResearchMemoryLifecycleTests(unittest.TestCase):
         self._commit(RPMOperation.close_programme(self.scope))
         self.assertTrue(self.service.store.has_programme_history(self.scope))
 
+    def test_programme_closure_blocks_later_reads_and_assessments(self) -> None:
+        self._commit(RPMOperation.close_programme(self.scope))
+        with self.assertRaises(Exception):
+            self.service.query(
+                self.scope,
+                MemoryQuery(),
+                self.service.governance_read_policy(),
+            )
+        with self.assertRaises(Exception):
+            self.service.assess_operation(
+                self.scope,
+                RPMOperation.write(self.scope, self._candidate("after-close")),
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

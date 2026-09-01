@@ -282,6 +282,7 @@ def main(argv: list[str] | None = None) -> int:
                 commit_eligible=bool(data["commit_eligible"]),
                 diff=dict(data["diff"]),
                 checks=dict(data["checks"]),
+                events=tuple(data.get("events", [])),
                 warnings=tuple(data.get("warnings", [])),
             )
             exchange = RPMExchange(service)

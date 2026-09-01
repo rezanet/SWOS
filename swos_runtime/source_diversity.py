@@ -125,6 +125,8 @@ class DiversityRequirement:
         )
         if not self.requirement_id or not self.dimensions:
             raise ValueError("diversity requirement needs an id and at least one dimension")
+        if not isinstance(self.min_family_count, int) or self.min_family_count <= 0:
+            raise ValueError("minimum family count must be a positive integer")
         if (
             not 0 < self.min_composite <= 1
             or not 0 <= self.max_hhi <= 1
@@ -425,9 +427,12 @@ def _valid_exception(exception: Mapping[str, Any] | None) -> bool:
         return False
     try:
         date = str(exception["expires_at"]).replace("Z", "+00:00")
-        return datetime.fromisoformat(date).replace(tzinfo=timezone.utc) > datetime.now(
-            timezone.utc
-        )
+        parsed = datetime.fromisoformat(date)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        else:
+            parsed = parsed.astimezone(timezone.utc)
+        return parsed > datetime.now(timezone.utc)
     except ValueError:
         return False
 
@@ -568,9 +573,10 @@ def measure_source_diversity(
             )
         )
         corrective.append("counter position contradictory evidence source")
+    minimum_family_count = requirements.min_family_count
     if len(selected) < 3:
         raw_status = "fail"
-    elif len(selected) < 5:
+    elif len(selected) < minimum_family_count:
         raw_status = "review_required"
     elif raw_failures or composite < requirements.min_composite:
         raw_status = "fail"
@@ -585,9 +591,9 @@ def measure_source_diversity(
         )
         if raw_status == "fail":
             status = "review_required"
-    if len(selected) < 5:
+    if len(selected) < minimum_family_count:
         limitations.append(
-            f"Only {len(selected)} distinct canonical source families were admitted; provider count is not diversity."
+            f"Only {len(selected)} distinct canonical source families were admitted; the configured minimum is {minimum_family_count}; provider count is not diversity."
         )
     if any(item.unknown_count for item in dimensions.values()):
         limitations.append("Unknown or inferred metadata does not count as coverage.")

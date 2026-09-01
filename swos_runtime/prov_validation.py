@@ -304,45 +304,106 @@ def certify_round_trip(
             }
         )
     if set(formats) >= {"prov-json", "prov-n", "prov-o-trig"}:
-        current = original
-        for format_name in ("prov-json", "prov-n", "prov-o-trig", "prov-json"):
-            current = parse_prov(serialize_prov(current, format_name), format_name, limits)
-        paths.extend(
+
+        def cross_format_leg(path: str, route: Sequence[str]) -> dict[str, Any]:
+            current = original
+            parse_statuses: list[str] = []
+            error = ""
+            for format_name in route:
+                try:
+                    current = parse_prov(serialize_prov(current, format_name), format_name, limits)
+                    parse_statuses.append(
+                        validate_prov(current, profile=original.profile, limits=limits).status
+                    )
+                except Exception as exc:  # a failed route can never certify the input
+                    error = f"{type(exc).__name__}: {exc}"
+                    parse_statuses.append("error")
+                    break
+            semantic_equivalent = (
+                not error and current.semantic_normal_form() == original.semantic_normal_form()
+            )
+            assertions_preserved = (
+                not error
+                and len(original.extensions) == len(current.extensions)
+                and len(original.bundles) == len(current.bundles)
+            )
+            return {
+                "path": path,
+                "route": list(route),
+                "parse_status": "valid"
+                if parse_statuses and all(item == "valid" for item in parse_statuses)
+                else "invalid",
+                "parse_statuses": parse_statuses,
+                "semantic_equivalent": semantic_equivalent,
+                "assertions_preserved": assertions_preserved,
+                "stable_second_round": semantic_equivalent and assertions_preserved,
+                **({"error": error} if error else {}),
+            }
+
+        cross_routes = (
             (
                 "PROV-JSON -> PROV-N -> PROV-O/TriG -> PROV-JSON",
+                ("prov-json", "prov-n", "prov-o-trig", "prov-json"),
+            ),
+            (
                 "PROV-O/TriG -> PROV-JSON -> PROV-N -> PROV-O/TriG",
-            )
+                ("prov-o-trig", "prov-json", "prov-n", "prov-o-trig"),
+            ),
         )
-        legs.append(
-            {
-                "path": paths[-2],
-                "semantic_equivalent": current.semantic_normal_form()
-                == original.semantic_normal_form(),
-                "assertions_preserved": True,
-                "stable_second_round": True,
-            }
-        )
-        legs.append(
-            {
-                "path": paths[-1],
-                "semantic_equivalent": True,
-                "assertions_preserved": True,
-                "stable_second_round": True,
-            }
-        )
+        for path, route in cross_routes:
+            paths.append(path)
+            legs.append(cross_format_leg(path, route))
     oracle_payload = dict(
         oracle or {"status": "not_run", "reason": "no independent oracle supplied"}
     )
     oracle_status = str(oracle_payload.get("status") or "not_run").lower()
+    processor = oracle_payload.get("processor")
+    processor = processor if isinstance(processor, Mapping) else {}
+    oracle_input = oracle_payload.get("input_digest")
+    if not oracle_input and isinstance(oracle_payload.get("source_fingerprint"), Mapping):
+        oracle_input = oracle_payload["source_fingerprint"].get("semantic_digest")
+    oracle_profile = oracle_payload.get("profile") or oracle_payload.get("profile_id")
+    oracle_formats = oracle_payload.get("formats")
+    implementation = (
+        oracle_payload.get("implementation")
+        or processor.get("implementation")
+        or processor.get("name")
+    )
+    version = oracle_payload.get("version") or processor.get("version")
+    processor_digest = (
+        oracle_payload.get("artifact_sha256")
+        or oracle_payload.get("artifact_digest")
+        or oracle_payload.get("oracle_digest")
+        or processor.get("artifact_sha256")
+        or processor.get("digest")
+    )
+    oracle_bound = (
+        oracle_input == source_fingerprint.semantic_digest
+        and oracle_profile == original.profile
+        and isinstance(oracle_formats, Sequence)
+        and not isinstance(oracle_formats, (str, bytes))
+        and tuple(str(item) for item in oracle_formats) == tuple(formats)
+        and bool(str(implementation or "").strip())
+        and bool(str(version or "").strip())
+        and isinstance(processor_digest, str)
+        and len(processor_digest) == 64
+        and all(character in "0123456789abcdef" for character in processor_digest)
+    )
     all_internal = all(
         item.get("semantic_equivalent")
         and item.get("assertions_preserved")
         and item.get("stable_second_round")
+        and item.get("parse_status") == "valid"
         for item in legs
     )
     if oracle_status in {"failed", "invalid", "error"}:
         status = "failed"
-    elif oracle_status in {"pass", "passed", "valid", "accepted"} and all_internal and legs:
+    elif (
+        oracle_status in {"pass", "passed", "valid", "accepted"}
+        and oracle_bound
+        and all_internal
+        and legs
+    ):
         status = "certified"
     else:
         status = "not_run"
@@ -351,6 +412,10 @@ def certify_round_trip(
         if status == "certified"
         else ("Independent oracle acceptance is mandatory for a release certificate.",)
     )
+    if oracle_status in {"pass", "passed", "valid", "accepted"} and not oracle_bound:
+        limitations = limitations + (
+            "Independent oracle acceptance is not bound to this exact input, profile, format matrix, and processor identity.",
+        )
     return ProvRoundTripCertificate(
         status=status,
         profile=original.profile,

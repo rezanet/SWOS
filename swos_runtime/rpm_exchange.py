@@ -86,8 +86,18 @@ class ImportInspection:
     commit_eligible: bool
     diff: dict[str, Any]
     checks: dict[str, str]
+    events: tuple[Mapping[str, Any], ...] = ()
     warnings: tuple[str, ...] = ()
     schema_version: str = "2.0.0"
+
+    def __post_init__(self) -> None:
+        # Copy the inspected payload at the boundary so later origin-store
+        # mutations cannot change the set committed for this inspection.
+        object.__setattr__(
+            self,
+            "events",
+            tuple(json.loads(canonical_json(dict(event))) for event in self.events),
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -99,6 +109,7 @@ class ImportInspection:
             "commit_eligible": self.commit_eligible,
             "diff": self.diff,
             "checks": self.checks,
+            "events": [dict(event) for event in self.events],
             "warnings": list(self.warnings),
             "schema_version": self.schema_version,
         }
@@ -453,6 +464,7 @@ class RPMExchange:
             commit_eligible=not chain_errors and not collision_ids and checks["schema"] == "pass",
             diff=diff,
             checks=checks,
+            events=tuple(events),
             warnings=tuple(chain_errors),
         )
         self._inspections[inspection.inspection_id] = inspection
@@ -493,13 +505,16 @@ class RPMExchange:
             raise ExchangeError("import inspection is not eligible")
         if approval.disposition != "approved":
             raise ExchangeError("import approval is not approved")
+        if approval.assessment_digest != inspection.inspection_digest:
+            raise ExchangeError("import approval is not bound to inspection digest")
+        if inspection.diff.get("events") != len(inspection.events):
+            raise ExchangeError("import inspection does not retain its event snapshot")
         if inspection_id in self._committed:
             return ImportReceipt(
                 "noop", inspection_id, inspection.origin_scope, inspection.destination_scope
             )
         imported: list[str] = []
-        events = self.service.store.events(inspection.origin_scope)
-        for event in events:
+        for event in inspection.events:
             operation_id = f"import:{inspection_id}:{event['event_id']}"
             self.service.store.append_event(
                 inspection.destination_scope,

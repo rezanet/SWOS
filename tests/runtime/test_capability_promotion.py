@@ -5,6 +5,7 @@ from __future__ import annotations
 import unittest
 
 from swos_runtime.image_analysis import assess_promotion, commit_promotion
+from swos_runtime.models import canonical_digest
 
 
 class CapabilityPromotionTests(unittest.TestCase):
@@ -52,7 +53,12 @@ class CapabilityPromotionTests(unittest.TestCase):
         )
         self.assertEqual("disabled", assessment.status)
         decision = commit_promotion(
-            assessment, {"disposition": "approved", "approver_id": "human-1"}
+            assessment,
+            {
+                "disposition": "approved",
+                "approver_id": "human-1",
+                "assessment_digest": canonical_digest(assessment.to_dict()),
+            },
         )
         self.assertEqual("disabled", decision.status)
 
@@ -69,7 +75,12 @@ class CapabilityPromotionTests(unittest.TestCase):
         )
         self.assertTrue(assessment.eligible)
         decision = commit_promotion(
-            assessment, {"disposition": "approved", "approver_id": "human-1"}
+            assessment,
+            {
+                "disposition": "approved",
+                "approver_id": "human-1",
+                "assessment_digest": canonical_digest(assessment.to_dict()),
+            },
         )
         self.assertTrue(decision.enabled)
         rolled_back = __import__(
@@ -77,6 +88,22 @@ class CapabilityPromotionTests(unittest.TestCase):
         ).rollback_promotion(decision, reason="safety regression")
         self.assertEqual("rolled_back", rolled_back.status)
         self.assertFalse(rolled_back.enabled)
+
+    def test_promotion_approval_must_bind_exact_assessment_digest(self) -> None:
+        assessment = assess_promotion(
+            capability="image_analysis",
+            pack="art_history",
+            stage="art_history_agent",
+            baseline=self._evidence(metric=0.70),
+            candidate=self._evidence(metric=0.80, lower_95_ci=0.01),
+            policy={"minimum_improvement": 0.08, "lower_confidence_bound_minimum": 0.0},
+        )
+        unbound = commit_promotion(
+            assessment,
+            {"disposition": "approved", "approver_id": "human-1"},
+        )
+        self.assertFalse(unbound.enabled)
+        self.assertEqual("disabled", unbound.status)
 
     def test_expired_or_unbound_artifact_evidence_stays_disabled(self) -> None:
         expired = self._evidence(metric=0.80, lower_95_ci=0.01, expired=True)

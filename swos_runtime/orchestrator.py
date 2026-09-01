@@ -464,6 +464,8 @@ class AutonomousSWOS:
             if isinstance(item, dict)
             and isinstance(item.get("index"), int)
             and item.get("support_level") == "directly_supports"
+            and isinstance(item.get("eligibility"), dict)
+            and item["eligibility"].get("eligible") is True
         }
         claims = [
             claim

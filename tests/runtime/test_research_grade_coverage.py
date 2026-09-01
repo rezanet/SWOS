@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import math
 import sys
 import types
@@ -45,6 +46,7 @@ from swos_runtime.media import (
     redact_asset_for_export,
     validate_media_asset,
 )
+from swos_runtime.models import canonical_digest
 from swos_runtime.prov_interop import (
     epg_v1_to_v2,
     epg_v2_to_v1,
@@ -324,6 +326,7 @@ class ResearchGradeCoverageTests(unittest.TestCase):
                 "disposition": "approved",
                 "approver_id": "owner",
                 "expires_at": "2099-01-01T00:00:00+00:00",
+                "assessment_digest": canonical_digest(assessment.to_dict()),
             },
         )
         self.assertTrue(enabled.enabled)
@@ -345,7 +348,16 @@ class ResearchGradeCoverageTests(unittest.TestCase):
         self.assertFalse(blocked.eligible)
 
     def test_openai_adapter_is_bounded_and_fail_closed_with_injected_client(self) -> None:
-        request = self._request()
+        payload = b"1234567890"
+        request = self._request(
+            assets=(
+                self._asset(
+                    byte_size=len(payload),
+                    byte_digest=hashlib.sha256(payload).hexdigest(),
+                ),
+            ),
+            captured_bytes={"asset-1": payload},
+        )
         client = types.SimpleNamespace(
             responses=types.SimpleNamespace(
                 create=lambda **kwargs: types.SimpleNamespace(output_text="A visible line")

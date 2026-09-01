@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+from datetime import datetime, timedelta, timezone
 
 from swos_runtime.source_diversity import (
     DIMENSIONS,
@@ -92,6 +93,42 @@ class SourceDiversityTests(unittest.TestCase):
         self.assertEqual("fail", report.raw_status)
         self.assertTrue(report.limitations)
         self.assertEqual("dec-1", report.exception["sdl_decision_id"])
+
+    def test_configured_minimum_family_count_controls_overall_gate(self) -> None:
+        sources = [source(index) for index in range(1, 6)]
+        report = measure_source_diversity(
+            families=canonicalize_source_families(sources, FamilyIdentityPolicy()),
+            admitted_claims=[{"source_id": item["source_id"]} for item in sources],
+            requirements=DiversityRequirement(
+                requirement_id="req-custom-minimum",
+                dimensions=("publisher",),
+                min_family_count=10,
+            ),
+        )
+        self.assertEqual("review_required", report.raw_status)
+        self.assertIn("10", " ".join(report.limitations))
+
+    def test_exception_expiry_preserves_aware_timestamp_instant(self) -> None:
+        expired = datetime.now(timezone.utc) - timedelta(minutes=1)
+        local_expiry = expired.astimezone(timezone(timedelta(hours=14))).isoformat()
+        report = measure_source_diversity(
+            families=canonicalize_source_families(
+                [source(1), source(1, provider="other")], FamilyIdentityPolicy()
+            ),
+            admitted_claims=[{"source_id": "s-1"}],
+            requirements=DiversityRequirement(
+                requirement_id="req-expiry",
+                dimensions=("publisher",),
+                min_family_count=5,
+            ),
+            exception={
+                "sdl_decision_id": "expired-dec",
+                "rationale": "field is narrow",
+                "scope": "question",
+                "expires_at": local_expiry,
+            },
+        )
+        self.assertEqual({}, report.exception)
 
 
 if __name__ == "__main__":

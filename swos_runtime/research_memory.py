@@ -647,7 +647,10 @@ class ResearchMemoryService:
         *,
         allow_registration: bool = False,
         allow_retired: bool = False,
+        allow_closed: bool = False,
     ) -> Any:
+        if self.store.programme_status(scope) == "closed" and not allow_closed:
+            raise SWOSRuntimeError(ErrorCode.POLICY_DENIED, "programme is closed")
         binding = self.store.get_binding(scope)
         if binding is None and not allow_registration:
             raise SWOSRuntimeError(ErrorCode.SCOPE_DENIED, "scope is not registered")
@@ -697,6 +700,7 @@ class ResearchMemoryService:
             scope,
             allow_registration=allow_registration,
             allow_retired=operation_obj.operation_type == "close_programme",
+            allow_closed=operation_obj.operation_type == "close_programme",
         )
         denial_reasons: list[str] = []
         candidate_digest: str | None = None
@@ -845,6 +849,7 @@ class ResearchMemoryService:
             scope,
             allow_registration=operation.operation_type == "register_project",
             allow_retired=operation.operation_type == "close_programme",
+            allow_closed=operation.operation_type == "close_programme",
         )
         if operation.operation_type in {"write", "correct", "supersede"}:
             candidate = _candidate_from_payload(operation.payload["candidate"])
