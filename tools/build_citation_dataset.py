@@ -5,6 +5,8 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import Counter
+from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from swos_runtime.citation_classifier import LABELS  # noqa: E402
 from swos_runtime.citation_dataset import (  # noqa: E402
     DatasetValidationError,
     dataset_manifest,
@@ -21,14 +24,96 @@ from swos_runtime.citation_dataset import (  # noqa: E402
 )
 from swos_runtime.models import canonical_digest  # noqa: E402
 
-MIN_TOTAL = 6000
-MIN_PER_LABEL = 600
-MIN_PER_DISCIPLINE = 300
-MIN_LOCKED = 1500
+RELEASE_FLOORS: dict[str, int] = {
+    "total_pairs": 6000,
+    "per_label": 600,
+    "per_discipline": 300,
+    "locked_test": 1500,
+    "locked_per_label": 150,
+    "locked_per_discipline": 75,
+    "locked_adversarial_non_direct": 300,
+}
+
+SUPPORTED_DISCIPLINES = (
+    "art_history",
+    "art_criticism",
+    "engineering",
+    "humanities",
+    "interdisciplinary",
+    "materials_science",
+    "philosophy",
+    "psychology",
+    "technical_writing",
+)
 
 
 class DatasetBuildBlocked(RuntimeError):
     pass
+
+
+def _row_label(row: Mapping[str, Any]) -> str:
+    adjudication = row.get("adjudication")
+    adjudicated_label = adjudication.get("label") if isinstance(adjudication, Mapping) else None
+    return str(row.get("label") or adjudicated_label or "")
+
+
+def release_floor_gaps(
+    rows: Sequence[Mapping[str, Any]],
+    splits: Mapping[str, Sequence[Mapping[str, Any]]],
+    *,
+    supported_disciplines: Sequence[str],
+    floors: Mapping[str, int] | None = None,
+) -> list[dict[str, int | str]]:
+    """Return every unmet frozen citation-corpus release floor."""
+
+    required = dict(floors or RELEASE_FLOORS)
+    missing = sorted(set(RELEASE_FLOORS) - set(required))
+    if missing:
+        raise DatasetValidationError("release floor is missing " + ", ".join(missing))
+    if any(not isinstance(value, int) or value < 0 for value in required.values()):
+        raise DatasetValidationError("release floor values must be non-negative integers")
+
+    all_rows = list(rows)
+    locked_rows = list(splits.get("locked_test", ()))
+    labels = Counter(_row_label(row) for row in all_rows)
+    locked_labels = Counter(_row_label(row) for row in locked_rows)
+    disciplines = Counter(str(row.get("discipline") or "") for row in all_rows)
+    locked_disciplines = Counter(str(row.get("discipline") or "") for row in locked_rows)
+    gaps: list[dict[str, int | str]] = []
+
+    def require(metric: str, observed: int, floor_key: str) -> None:
+        minimum = required[floor_key]
+        if observed < minimum:
+            gaps.append({"metric": metric, "required": minimum, "observed": observed})
+
+    require("total_pairs", len(all_rows), "total_pairs")
+    for label in LABELS:
+        require(f"label:{label}", labels[label], "per_label")
+    for discipline in supported_disciplines:
+        require(
+            f"discipline:{discipline}",
+            disciplines[str(discipline)],
+            "per_discipline",
+        )
+    require("locked_test", len(locked_rows), "locked_test")
+    for label in LABELS:
+        require(f"locked_label:{label}", locked_labels[label], "locked_per_label")
+    for discipline in supported_disciplines:
+        require(
+            f"locked_discipline:{discipline}",
+            locked_disciplines[str(discipline)],
+            "locked_per_discipline",
+        )
+    adversarial_non_direct = sum(
+        row.get("adversarial") is True and _row_label(row) != "directly_supports"
+        for row in locked_rows
+    )
+    require(
+        "locked_adversarial_non_direct",
+        adversarial_non_direct,
+        "locked_adversarial_non_direct",
+    )
+    return gaps
 
 
 def _read_rows(manifest: dict[str, Any], manifest_path: Path) -> list[dict[str, Any]]:
@@ -78,6 +163,22 @@ def build_dataset(
     if output_dir.exists() and any(output_dir.iterdir()):
         raise DatasetBuildBlocked(f"immutable dataset output already exists: {output_dir}")
     source_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not isinstance(source_manifest, Mapping):
+        raise DatasetBuildBlocked("citation manifest must be an object")
+    declared_floors = source_manifest.get("required_floors")
+    if declared_floors != RELEASE_FLOORS:
+        raise DatasetBuildBlocked(
+            "citation manifest release floors do not match the frozen contract"
+        )
+    declared_disciplines = source_manifest.get("supported_disciplines")
+    if (
+        not isinstance(declared_disciplines, Sequence)
+        or isinstance(declared_disciplines, (str, bytes))
+        or set(map(str, declared_disciplines)) != set(SUPPORTED_DISCIPLINES)
+    ):
+        raise DatasetBuildBlocked(
+            "citation manifest disciplines do not match the frozen v2 profiles"
+        )
     source_licence_manifest, source_licences = _read_source_licence_manifest(
         source_manifest, manifest_path
     )
@@ -105,17 +206,23 @@ def build_dataset(
         for discipline in sorted({str(row.get("discipline")) for row in rows})
     }
     report["release_floor"] = {
-        "total": MIN_TOTAL,
-        "per_label": MIN_PER_LABEL,
-        "per_discipline": MIN_PER_DISCIPLINE,
-        "locked_test": MIN_LOCKED,
+        "total": RELEASE_FLOORS["total_pairs"],
+        "per_label": RELEASE_FLOORS["per_label"],
+        "per_discipline": RELEASE_FLOORS["per_discipline"],
+        "locked_test": RELEASE_FLOORS["locked_test"],
+        "locked_per_label": RELEASE_FLOORS["locked_per_label"],
+        "locked_per_discipline": RELEASE_FLOORS["locked_per_discipline"],
+        "locked_adversarial_non_direct": RELEASE_FLOORS["locked_adversarial_non_direct"],
     }
     report["source_licence_manifest_digest"] = canonical_digest(source_licence_manifest)
     report["counts"] = {"total": len(rows), "per_label": counts, "per_discipline": disciplines}
+    report["release_floor_gaps"] = release_floor_gaps(
+        rows,
+        splits,
+        supported_disciplines=SUPPORTED_DISCIPLINES,
+    )
     report["status"] = (
-        "frozen"
-        if len(rows) >= MIN_TOTAL and len(splits.get("locked_test", [])) >= MIN_LOCKED
-        else "blocked_below_release_floor"
+        "frozen" if not report["release_floor_gaps"] else "blocked_below_release_floor"
     )
     output_dir.mkdir(parents=True, exist_ok=False)
     for name, values in splits.items():
