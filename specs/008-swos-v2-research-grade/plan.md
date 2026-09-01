@@ -181,6 +181,7 @@ evals/fixtures/
 └── multimodal/
 tools/
 ├── rpm.py
+├── run_mutation_checks.py
 ├── compile_discipline_ontologies.py
 ├── build_citation_dataset.py
 ├── train_citation_classifier.py
@@ -264,22 +265,26 @@ credential access in ordinary CI.
    verification, and deterministic rebuild.
 3. Build the authoritative v2 RPM policy plus registration and staged
    evidence-bound operation service. Route every project binding, write,
-   lifecycle, deletion, expiry, and exceptional-read authorization through one
-   assessed/approved commit protocol; resolve EPG/SDL and revalidate at commit.
+   programme closure, lifecycle, deletion, expiry, and exceptional-read
+   authorization through one assessed/approved commit protocol; resolve EPG/SDL
+   and revalidate at commit.
 4. Build classification/expiry-aware governed reads and EPG read receipts.
 5. Build correction, supersession, contradiction, confirmation, expiry, deletion,
-   and review-mode lifecycle semantics.
+   programme closure, and review-mode lifecycle semantics; closure preserves
+   historical records and release bindings while blocking new writes and normal
+   reads.
 6. Build safe export, inspect, commit, redaction, collision, idempotence, path, and
    resource-limit behavior.
 7. Connect finalizer/work-order run snapshots to real scoped RPM, while preserving
    v1.1 compatibility.
 8. Add operator CLI, benchmark corpus, concurrency/crash/tamper/security tests,
-   and immutable benchmark report.
+   bounded safety-mutation checks, and immutable benchmark/report artifacts.
 
 **Exit gate**: three-project exchange suite; isolation and TOCTOU adversarial suite;
-2,000 concurrent writes with no loss/duplication; crash all-or-nothing; projection
-rebuild equivalence; hostile import rejection; documented logical-deletion and
-logical-namespace limitations.
+programme-closure preservation; 2,000 concurrent writes with no loss/duplication;
+crash all-or-nothing; projection rebuild equivalence; hostile import rejection;
+bounded safety-mutation report with no surviving safety mutant; documented
+logical-deletion and logical-namespace limitations.
 
 ## Phase 3: US2 — Formal Ontologies and Discipline Critique
 
@@ -431,6 +436,8 @@ that path. Tests that merely validate expected fixture labels are prohibited.
 - schema/contract/example and version-dispatch tests;
 - unit/property tests for canonicalization, metrics, selectors, state machines;
 - repository transaction, concurrency, crash, corruption, and migration tests;
+- bounded mutation testing of safety-critical policy, assessment and commit
+  guards, with a machine-readable report and no surviving safety mutant;
 - cross-module integration from planning through finalization/export;
 - adversarial poisoning, traversal, collision, leakage, rights, OOD, malformed
   model/RDF/media, resource-exhaustion, and semantic-loss tests;
@@ -464,7 +471,7 @@ limitations. Prose-only performance claims do not satisfy a gate.
 
 | Requirements | Design location | Primary implementation/evidence |
 |---|---|---|
-| FR-001, FR-002, FR-003, FR-004, FR-005 | Phase 2; data model §1; contracts §2 | `research_memory.py`, `programme_store.py`, `rpm_exchange.py`; scoped lifecycle/exchange suites |
+| FR-001, FR-002, FR-003, FR-004, FR-005 | Phase 2; data model §1; contracts §2 | `research_memory.py`, `programme_store.py`, `rpm_exchange.py`; scoped lifecycle/closure/exchange suites and safety-mutation report |
 | FR-006, FR-007, FR-008, FR-009, FR-010 | Phase 3; research R2; data model §2 | ontology sources/shapes/compiler/manifest; pack and isomorphism reports |
 | FR-011, FR-012 | Phase 3; research R3; contracts §3 | `discipline_critique.py`; nine-pack reviewed fixture report |
 | FR-013, FR-014, FR-015, FR-016, FR-017 | Phase 4 citation workstream; research R4; contracts §4 | classifier/calibration/dataset/model manifests; locked predictions and metrics |

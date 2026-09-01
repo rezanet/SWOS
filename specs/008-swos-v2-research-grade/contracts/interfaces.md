@@ -41,13 +41,14 @@ class ResearchMemoryService(Protocol):
 ```
 
 `RPMOperation` is a versioned discriminated union for project registration or
-retirement, write, confirm, status change, correction, supersession,
-contradiction open/resolve, expiry, deletion, and exceptional-read authorization.
-Every substantive lifecycle mutation uses the same immutable assessment and
-approval protocol. Commit re-resolves scope, active target/head, EPG/SDL, policy,
-classification, rights, contradiction, expiry, and operation digest. There is no
-direct mutation shortcut. `propose_expiry` is read-only; each committed expiry is
-an assessed operation.
+retirement, programme closure, write, confirm, status change, correction,
+supersession, contradiction open/resolve, expiry, deletion, and exceptional-read
+authorization. Every substantive lifecycle mutation uses the same immutable
+assessment and approval protocol. Programme closure is terminal for new writes
+and normal reads but preserves historical records and release bindings. Commit
+re-resolves scope, active target/head, EPG/SDL, policy, classification, rights,
+contradiction, expiry, and operation digest. There is no direct mutation shortcut.
+`propose_expiry` is read-only; each committed expiry is an assessed operation.
 
 Public operations reject missing/unregistered scope, cross-scope references,
 classification overflow, invalid IDs, stale heads, unresolved evidence, or
@@ -78,6 +79,7 @@ an idempotent no-op; same ID plus different digest fails.
 ```text
 python tools/rpm.py init --repository PATH --namespace ID
 python tools/rpm.py register-project --repository PATH --scope-file FILE --approval FILE
+python tools/rpm.py close-programme --repository PATH --scope-file FILE --approval FILE
 python tools/rpm.py assess-operation --repository PATH --scope-file FILE --operation FILE --out FILE
 python tools/rpm.py commit-operation --repository PATH --scope-file FILE --assessment FILE --approval FILE
 python tools/rpm.py verify --repository PATH --scope-file FILE --json-out FILE

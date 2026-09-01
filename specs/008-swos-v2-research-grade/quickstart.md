@@ -91,9 +91,10 @@ python tools/run_source_diversity_benchmark.py --manifest benchmark/source-diver
 python tools/certify_prov_roundtrip.py --corpus-manifest evals/fixtures/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir artifacts/provenance --certificate-out artifacts/provenance/certificate.json
 python tools/run_rpm_benchmark.py --manifest benchmark/rpm/manifest.json
 python tools/run_multimodal_evals.py --manifest evals/fixtures/multimodal/manifest.json
-python evals/harness/run_evals.py --all --deterministic-subject --fail-on-gate
+python evals/harness/run_evals.py --all --system autonomous-swos --deterministic-subject --fail-on-gate
 python tools/check_portability_acceptance.py --definitions-only
 python tools/lint_skills.py
+python tools/run_mutation_checks.py --report artifacts/research-grade/mutation-report.json
 python tools/assemble_research_grade_audit_pack.py --verify-only
 ruff check .
 ```

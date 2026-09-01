@@ -37,10 +37,13 @@ classification result, contradiction result, creation/expiry, and deterministic
 denial reasons. It is immutable and single-use.
 
 The assessed operation is a discriminated union covering registration,
-retirement, write, confirm, correction, supersession, contradiction, expiry,
-deletion, and exceptional-read authorization. Every durable transition binds the
-operation digest, active target/head, evidence, policy, `as_of`, and expiry and is
-re-resolved at commit; there is no lifecycle mutation bypass.
+retirement, programme closure, write, confirm, correction, supersession,
+contradiction, expiry, deletion, and exceptional-read authorization. Programme
+closure is an assessed terminal transition that preserves all historical records,
+release bindings and provenance while rejecting new writes and normal reads for
+the closed programme. Every durable transition binds the operation digest,
+active target/head, evidence, policy, `as_of`, and expiry and is re-resolved at
+commit; there is no lifecycle mutation bypass.
 
 ### RPMPolicyRelease
 
@@ -63,8 +66,8 @@ bindings, actor/approval evidence, event timestamp, canonicalization profile,
 and reason.
 
 Event types: `write`, `confirm`, `status_change`, `correct`, `supersede`,
-`contradiction_opened`, `contradiction_resolved`, `expire`, `delete`, and
-`import`.
+`contradiction_opened`, `contradiction_resolved`, `expire`, `delete`, `close`,
+and `import`.
 
 ### MemoryProjection
 
