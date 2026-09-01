@@ -47,6 +47,12 @@ up-to-date `origin/main` that contains the approved feature package, unless the
 owner explicitly dispatches an isolated implementation branch from the reviewed
 planning head.
 
+Within the planning corpus, the builder may change only task execution status
+markers from `[ ]` to `[x]`, and only after the task's implementation and evidence
+are real. Task wording, identifiers, ordering, scope, requirements, thresholds,
+contracts, decisions, and gates remain frozen. Any other planning change requires
+a separate reviewed amendment before implementation depends on it.
+
 ## Required startup audit
 
 Work from the live repository under `C:\GitHub\SWOS`, not a historical checkout.
