@@ -12,12 +12,12 @@
   "implementation": {
     "pull_request": 57,
     "branch": "codex/swos-v2-research-grade",
-    "head_sha": "3e032bba84d56af17d92acf3c9de85ca33be93f6",
+    "head_sha": "7f278949822c5b67bd6899bd663d79bd9a57e123",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/57",
     "last_reconciled_task": "T070",
-    "last_action": "Added source-licence manifest validation and pair-to-source binding with explicit offline NOT_RUN behavior; T070 remains pending until the licensed corpus and independent human records exist.",
+    "last_action": "Added approved dataset-level source-licence validation, exact pair-to-source binding, source-manifest digest reporting, and explicit offline NOT_RUN behavior; T070 remains pending until the licensed corpus and independent human records exist.",
     "last_action_evidence": [
       "tests/runtime/test_citation_dataset.py: 4 focused tests pass",
       "python tools/build_citation_dataset.py --manifest benchmark/citation-support/manifest.json --out-dir TEMP: exit 2, status not_run, no output created",
