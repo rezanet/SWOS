@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "report": "SWOS v2.0 Research Grade regression",
   "status": "PASS",
-  "source_sha": "a873b7652e27b05f8cf4819b5f05aec2c291f567",
+  "source_sha": "76f6fb7e9473b2a2d04c06b044dba4f5673e60ae",
   "base_sha": "8d440296b4a9df708f1140a04bae1ae24f74fee3",
   "commands": [
     {
@@ -11,7 +11,7 @@
       "status": "PASS",
       "returncode": 0,
       "timed_out": false,
-      "duration_seconds": 0.122,
+      "duration_seconds": 0.12,
       "stdout": "",
       "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.008s\n\nOK\n"
     },
@@ -21,9 +21,9 @@
       "status": "PASS",
       "returncode": 0,
       "timed_out": false,
-      "duration_seconds": 30.634,
+      "duration_seconds": 30.487,
       "stdout": "",
-      "stderr": "C:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\schema_validation.py:47: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(base_uri=schema[\"$id\"], referrer=schema, store=store)\nC:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\schema_validation.py:57: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(\n.........................................C:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\evaluation.py:543: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(base_uri=schema[\"$id\"], referrer=schema, store=store)\n....................................................................................................................................................................\n----------------------------------------------------------------------\nRan 205 tests in 29.952s\n\nOK\n"
+      "stderr": "C:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\schema_validation.py:47: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(base_uri=schema[\"$id\"], referrer=schema, store=store)\nC:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\schema_validation.py:57: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(\n.........................................C:\\GitHub\\SWOS-v2-research-grade-impl\\swos_runtime\\evaluation.py:543: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.\n  resolver = jsonschema.RefResolver(base_uri=schema[\"$id\"], referrer=schema, store=store)\n....................................................................................................................................................................\n----------------------------------------------------------------------\nRan 205 tests in 29.764s\n\nOK\n"
     },
     {
       "name": "prose-tests",
@@ -31,9 +31,9 @@
       "status": "PASS",
       "returncode": 0,
       "timed_out": false,
-      "duration_seconds": 0.463,
+      "duration_seconds": 0.399,
       "stdout": "",
-      "stderr": "....................................................................................................................................................sssssssssss.................................................................................\n----------------------------------------------------------------------\nRan 240 tests in 0.253s\n\nOK (skipped=11)\n"
+      "stderr": "....................................................................................................................................................sssssssssss.................................................................................\n----------------------------------------------------------------------\nRan 240 tests in 0.211s\n\nOK (skipped=11)\n"
     },
     {
       "name": "eight-plane-evaluation-harness",
@@ -41,7 +41,7 @@
       "status": "PASS",
       "returncode": 0,
       "timed_out": false,
-      "duration_seconds": 0.087,
+      "duration_seconds": 0.106,
       "stdout": "SWOS evaluation harness 1.1.0\n------------------------------------------------------\n  retrieval             PASS   fixtures: 2\n  grounding             PASS   fixtures: 2\n  citation              PASS   fixtures: 2\n  scholarly             PASS   fixtures: 3\n  governance            PASS   fixtures: 2\n  regression            PASS   fixtures: 1\n  memory_contamination  PASS   fixtures: 1\n  adversarial           PASS   fixtures: 3\n------------------------------------------------------\n  release recommendation: RELEASE\n  mode            : CONTRACT MODE\n",
       "stderr": ""
     }
