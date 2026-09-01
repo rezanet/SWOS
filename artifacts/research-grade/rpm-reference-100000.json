@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "status": "measured",
+  "item_count": 100000,
+  "write_seconds": 771.3342822999984,
+  "lookup_p95_ms": 3.01208000164479,
+  "chain_head": "7815b2e17369dffc48ce72f6ec37ef428bfe24372fc8b2e15a06a504fbffe35f",
+  "chain_errors": [],
+  "environment": {
+    "python": "3.14.6",
+    "os": "Windows-11-10.0.26200-SP0",
+    "sqlite": "2.0.0"
+  },
+  "limitations": [
+    "Local SQLite measurement only; not a hosted throughput claim."
+  ]
+}

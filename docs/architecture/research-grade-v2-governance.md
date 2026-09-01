@@ -16,3 +16,20 @@ The other v2 policies are likewise additive: exchange safety, source-family
 diversity, distinct media rights, and Research Grade promotion gates default
 to denial or escalation. Policy evaluation is owned by SWOS core; provider,
 fixture and specialist-agent outputs cannot self-approve a release.
+
+## Candidate and release boundary
+
+The v2 implementation candidate is evaluated in two layers. The local layer is
+credential-free and may exercise deterministic fakes, schemas, policies,
+contracts, provenance conversion, fail-closed rights and exact-head report
+generation. The release layer requires the immutable reviewed corpora, frozen
+model/calibration identity, independent PROV processor, cross-host evidence,
+human adjudication and named maintainer/discipline/evaluation approvals.
+
+Every report carries the selected source SHA and input identities. A missing
+provider, oracle, corpus, credential or approval is `NOT_RUN`/blocked; it never
+becomes a successful metric through an empty denominator. Specialist art
+history and art criticism agents therefore remain disabled and advertise the
+pack-only fallback until the promotion contract is satisfied. No v2 candidate
+is W3C-certified, live-compatible, merged or deployed by the local evidence
+path alone.

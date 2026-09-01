@@ -1,0 +1,61 @@
+{
+  "certificate_version": "2.0.0",
+  "input_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "legs": [],
+  "limitations": [
+    "The corpus or independent oracle is not release-complete."
+  ],
+  "limits": {
+    "max_bytes": 5000000,
+    "max_depth": 64,
+    "max_literal_length": 1000000,
+    "max_statements": 100000,
+    "timeout_seconds": 60.0
+  },
+  "oracle": {
+    "artifact_sha256": null,
+    "artifact_uri": null,
+    "implementation": "ProvToolbox",
+    "licence": null,
+    "reason": "The independently approved ProvToolbox artifact is not installed or pinned in this checkout.",
+    "schema_version": "2.0.0",
+    "status": "not_run",
+    "version": null
+  },
+  "paths": [
+    "prov-json",
+    "prov-n",
+    "prov-o-trig"
+  ],
+  "profile": "swos.prov-dm-round-trip.v2",
+  "profile_manifest": {
+    "canonicalization": [
+      "JCS-RFC8785",
+      "RDFC-1.0",
+      "PROV-N-semantic-normal-form"
+    ],
+    "claim": "SWOS PROV-DM/PROV-N/PROV-O round-trip profile with PROV-JSON Member Submission",
+    "constraints": {
+      "extension_preservation": "required",
+      "prov_constraints": "required",
+      "shacl": "required_for_rdf",
+      "typed_literal_preservation": "required"
+    },
+    "formats": [
+      "prov-json",
+      "prov-n",
+      "prov-o-trig"
+    ],
+    "namespace_policy": "absolute_iri_only",
+    "oracle": {
+      "implementation": "ProvToolbox",
+      "required_for_release": true,
+      "status": "not_run"
+    },
+    "profile_id": "swos.prov-dm-round-trip.v2",
+    "schema_version": "2.0.0",
+    "status": "executable"
+  },
+  "source_sha": "0000000000000000000000000000000000000000000000000000000000000000",
+  "status": "not_run"
+}

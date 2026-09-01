@@ -1,0 +1,13 @@
+{
+  "schema_version": "2.0.0",
+  "status": "not_run",
+  "reason": "The checksummed 1k/10k/100k and hostile blank-node performance corpus is not supplied.",
+  "corpora": [
+    {"name": "1k", "statements": 1000, "status": "not_run"},
+    {"name": "10k", "statements": 10000, "status": "not_run"},
+    {"name": "100k", "statements": 100000, "status": "not_run"},
+    {"name": "hostile_blank_nodes", "statements": null, "status": "not_run"}
+  ],
+  "resource_limits": "resource-limits.json",
+  "raw_measurements": []
+}

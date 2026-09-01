@@ -1,0 +1,105 @@
+{
+  "artifact_identities": {
+    "artifacts/multimodal/multimodal-evaluation-report.json": "0e551853f1adeab4a52c523ab8cbeddbfe88a53fc8c8e5512194821d92db7be0",
+    "artifacts/ontology/compile-report.json": "d28939ea138bcbae2b4b85e78d324b53b84739551b6ac5168e331a7617b26df6",
+    "artifacts/provenance/certificate.json": "aab9a468d1897446cd3ec87edad1a67b6c2a53ff638e0392e47632643fba1ebb",
+    "benchmark/citation-support/manifest.json": "56c1397c91bc50c6f07026f8fe6ed80a488a085cc624694806a1fc6133b7031f",
+    "benchmark/provenance/manifest.json": "9e6ac31f40f9a982ea1ef62f4206513170212ca40735d00b6ee8c3db77a6216c",
+    "benchmark/provenance/oracle-manifest.json": "05fdd71b009654dc82c95ecf35970aa39892a4a929eef744a4c2fc6e1555c338",
+    "benchmark/provenance/resource-limits.json": "ffe1055f874de022acafc24a7bdb6a90552c8ddaa44ad5bb4fe0f7d2b950a73f",
+    "benchmark/source-diversity/manifest.json": "053a585d1171e93caa7baa6a1b369633b068ec856c83b247b5a65b5ec9a72fc1",
+    "discipline-packs/manifest-v2.json": "375e3004b1a6e2bf77a8f7b0b73822d1e2e5847acb7e392d37d9e06a13681a77",
+    "evals/fixtures/multimodal/manifest.json": "2afbaa408a7598813297d68d8f1c5cd8807196acabb1f2f07c0749df27cdf7cd",
+    "evals/fixtures/provenance/manifest.json": "1175f61ab63f59f2fdecde6cda793db8d48e545ab5f31eaaf2b16488c1fb1240",
+    "evals/fixtures/source-diversity/manifest.json": "57a36fc94e3dd021c3a0c9c7dac69a9db4e5a9f4eb975ddfdce2e16f3540d3a5"
+  },
+  "base_sha": "8d440296b4a9df708f1140a04bae1ae24f74fee3",
+  "notes": [
+    "No external model, paid provider, or human-reviewed fixture is synthesized by this index.",
+    "Artifact identities are SHA-256 values captured at the exact source head above."
+  ],
+  "planes": [
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/compile_discipline_ontologies.py --manifest discipline-packs/manifest-v2.json --shapes discipline-packs/ontology/swos-discipline-shapes.ttl --out discipline-packs/compiled/v2 --report artifacts/ontology/compile-report.json",
+      "duration_seconds": 0.115,
+      "plane": "ontology",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\"compiled_digest\":\"5c538b2699610b3e5c783bc7027a92bacbf55757686629581f6fd3fa0e09dee5\",\"compiler\":\"swos-discipline-compiler/2.0.0\",\"context_digest\":\"a5e412e05f190bbcb7e5746ae89a9d1b16e6848e9496e1ee27d8dcbd5a13949a\",\"manifest\":\"discipline-packs\\\\manifest-v2.json\",\"packs\":[\"art_criticism\",\"art_history\",\"engineering\",\"humanities\",\"interdisciplinary\",\"materials_science\",\"philosophy\",\"psychology\",\"technical_writing\"],\"schema_version\":\"2.0.0\",\"shape_digest\":\"c7718b99206ae69439e7e17cd1919c6e1b9e4bb19f8bdb9f710bf80b994c17b5\",\"source_digest\":\"375e3004b1a6e2bf77a8f7b0b73822d1e2e5847acb7e392d37d9e06a13681a77\",\"tool_digest\":\"4b9ba21bc292e4b6b8403f9a0a2f86633d1c08206acd4f595af61caed3f320f6\"}\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/evaluate_citation_classifier.py --model-manifest models/citation-support/current/manifest.json --calibration models/citation-support/current/calibration.json --locked-test benchmark/citation-support/splits/locked-test.jsonl --predictions-out artifacts/citation-support/predictions.jsonl --report-out artifacts/citation-support/report.json",
+      "duration_seconds": 0.095,
+      "plane": "citation_classifier_locked_evaluation",
+      "returncode": 2,
+      "status": "NOT_RUN",
+      "stderr": "",
+      "stdout": "{\"status\": \"not_run\", \"reason\": \"[Errno 2] No such file or directory: 'models\\\\\\\\citation-support\\\\\\\\current\\\\\\\\manifest.json'\"}\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/run_source_diversity_benchmark.py --manifest benchmark/source-diversity/manifest.json",
+      "duration_seconds": 0.12,
+      "plane": "source_diversity",
+      "returncode": 2,
+      "status": "NOT_RUN",
+      "stderr": "",
+      "stdout": "{\"gate_result\": \"not_run\", \"locked_reviewed_packet_count\": 0, \"metrics\": {\"adequate_or_narrow_false_block_rate\": null, \"fake_and_missing_strata_detection\": null, \"material_gap_recall\": null, \"material_gap_recall_lower_95\": null, \"material_gap_recall_upper_95\": null, \"ordering_provider_invariance\": true}, \"packet_count\": 0, \"production_path\": \"swos_runtime.source_diversity.measure_source_diversity\", \"reason\": \"locked human-reviewed packets are unavailable or incomplete\", \"results\": [], \"schema_version\": \"2.0.0\", \"status\": \"not_run\"}\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/run_rpm_benchmark.py --manifest benchmark/rpm/manifest.json",
+      "duration_seconds": 0.156,
+      "plane": "rpm_reference_entrypoint",
+      "returncode": 2,
+      "status": "NOT_RUN",
+      "stderr": "",
+      "stdout": "{\"manifest\": \"benchmark\\\\rpm\\\\manifest.json\", \"reason\": \"The target item count is a benchmark configuration, not a performance claim.\", \"schema_version\": \"2.0.0\", \"status\": \"not_run\"}\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/run_multimodal_evals.py --manifest evals/fixtures/multimodal/manifest.json",
+      "duration_seconds": 0.157,
+      "plane": "multimodal_locked_evaluation",
+      "returncode": 2,
+      "status": "NOT_RUN",
+      "stderr": "",
+      "stdout": "",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe tools/certify_prov_roundtrip.py --corpus-manifest evals/fixtures/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir C:\\Users\\RezaN\\AppData\\Local\\Temp\\swos-prov-evaluation-s2a3vyhe --certificate-out C:\\Users\\RezaN\\AppData\\Local\\Temp\\swos-prov-evaluation-s2a3vyhe\\certificate.json",
+      "duration_seconds": 0.114,
+      "plane": "prov_roundtrip",
+      "returncode": 2,
+      "status": "NOT_RUN",
+      "stderr": "",
+      "stdout": "{\"certificate\": \"C:\\\\Users\\\\RezaN\\\\AppData\\\\Local\\\\Temp\\\\swos-prov-evaluation-s2a3vyhe\\\\certificate.json\", \"status\": \"not_run\"}\n",
+      "timed_out": false
+    },
+    {
+      "command": "C:\\Users\\RezaN\\AppData\\Local\\Programs\\Python\\Python314\\python.exe -m unittest tests.runtime.test_discipline_ontology tests.runtime.test_discipline_ontology_compiler tests.runtime.test_discipline_critique tests.runtime.test_discipline_critique_fixtures tests.runtime.test_rpm_cli tests.runtime.test_rpm_exchange tests.runtime.test_citation_admission tests.runtime.test_citation_assurance tests.runtime.test_citation_calibration tests.runtime.test_citation_classifier tests.runtime.test_citation_dataset tests.runtime.test_source_diversity tests.runtime.test_prov_certification tests.runtime.test_prov_interop tests.runtime.test_prov_validation tests.runtime.test_multimodal_orchestration tests.runtime.test_multimodal_evals",
+      "duration_seconds": 1.213,
+      "plane": "deterministic_story_evaluation_tests",
+      "returncode": 0,
+      "status": "PASS",
+      "stderr": "..........................................\n----------------------------------------------------------------------\nRan 42 tests in 0.968s\n\nOK\n",
+      "stdout": "",
+      "timed_out": false
+    }
+  ],
+  "release_gate_interpretation": {
+    "citation_classifier": "NOT_RUN unless licensed corpus, frozen model, frozen calibration, and locked split are present",
+    "multimodal": "NOT_RUN unless the locked reviewed corpus and provider capability are present",
+    "ontology": "deterministic compilation is locally evaluated",
+    "prov_roundtrip": "NOT_RUN unless the complete corpus and independent oracle are present",
+    "rpm": "NOT_RUN from the manifest-only entrypoint; the reference measurement is recorded separately in benchmark-index.json",
+    "source_diversity": "NOT_RUN unless the locked reviewed corpus is present"
+  },
+  "report": "SWOS v2.0 Research Grade evaluation index",
+  "schema_version": "1.0.0",
+  "source_sha": "a8fe58198184e7affa3fe327757f71e4ad10022b",
+  "status": "PASS_WITH_NOT_RUN_RELEASE_PLANES"
+}

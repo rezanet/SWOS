@@ -38,6 +38,24 @@ Each stage earns the next; breadth is not evidence of correctness.
 These are separate promises. Runtime work must not silently revise the Core
 specification, and a Research Grade experiment is not a Core guarantee.
 
+### Research Grade v2.0 candidate status
+
+Spec Kit feature `008-swos-v2-research-grade` is the governed implementation
+track for the Research Grade promise. Its pre-freeze implementation head is
+recorded by the candidate evidence reports; deterministic runtime/prose,
+schema, contract, governance, security, coverage and eight-plane checks are
+locally reproducible. The candidate adds the cross-project RPM, nine-discipline
+ontology and critique binding, five-label citation-support boundary,
+source-family diversity, EPG/PROV v2 interchange, rights-aware object/media
+analysis, and default-off multimodal/provider adapters.
+
+The track is not a release merely because these interfaces and tests exist.
+The frozen reviewed classifier corpus/model/calibration, diversity and
+multimodal fixture corpora, independent PROV oracle, cross-host portability,
+hosted exact-head CI/review, named approvals and owner merge decision remain
+separate promotion and release gates. Missing evidence is recorded as
+`NOT_RUN` or blocked and cannot be converted into a pass by documentation.
+
 ## Foundation slice — programme control plane
 
 The foundation slice establishes the documents, validation and workflow controls

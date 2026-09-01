@@ -231,13 +231,13 @@ without exact matching evidence.
 
 - [x] T118 [P] Add end-to-end three-project research-to-memory-to-critique-to-finalization-to-PROV-to-public-proof test in `tests/runtime/test_research_grade_end_to_end.py`
 - [x] T119 [P] Add cross-story classification/rights/ontology/evidence identity preservation tests in `tests/runtime/test_research_grade_integrity.py`
-- [ ] T120 Run all existing v1.1/runtime/prose/eight-plane tests and record exact-head commands/results in `artifacts/research-grade/regression-report.json`
-- [ ] T121 Run ontology, RPM, classifier, diversity, critique, PROV, and multimodal locked evaluations and record immutable indexes in `artifacts/research-grade/evaluation-index.json`
-- [ ] T122 Run Ruff, schema/contract, coverage, security, portability, offline, deterministic-stability, and manifest checks and record results in `artifacts/research-grade/quality-report.json`
-- [ ] T123 Run reference RPM, packaged 100-pair citation, and PROV performance corpora and record runner fingerprints/raw measurements in `artifacts/research-grade/benchmark-index.json`
-- [ ] T124 Assemble and independently verify the pre-freeze in-repository FR/SC evidence manifest and limitations in `artifacts/research-grade/audit-pack.json`; reserve hosted CI/review/approval fields for externally finalized evidence
-- [ ] T125 Update version, architecture, security, evaluation, roadmap, progress, and release documentation in `README.md`, `SECURITY.md`, `PROGRESS.md`, `docs/architecture/`, and `evals/metrics.md`
-- [ ] T126 Commit all in-repository implementation/evidence, freeze the candidate SHA, push one cohesive implementation PR, and attach the pre-freeze audit manifest in the PR description
+- [x] T120 Run all existing v1.1/runtime/prose/eight-plane tests and record exact-head commands/results in `artifacts/research-grade/regression-report.json`
+- [x] T121 Run ontology, RPM, classifier, diversity, critique, PROV, and multimodal locked evaluations and record immutable indexes in `artifacts/research-grade/evaluation-index.json`
+- [x] T122 Run Ruff, schema/contract, coverage, security, portability, offline, deterministic-stability, and manifest checks and record results in `artifacts/research-grade/quality-report.json`
+- [x] T123 Run reference RPM, packaged 100-pair citation, and PROV performance corpora and record runner fingerprints/raw measurements in `artifacts/research-grade/benchmark-index.json`
+- [x] T124 Assemble and independently verify the pre-freeze in-repository FR/SC evidence manifest and limitations in `artifacts/research-grade/audit-pack.json`; reserve hosted CI/review/approval fields for externally finalized evidence
+- [x] T125 Update version, architecture, security, evaluation, roadmap, progress, and release documentation in `README.md`, `SECURITY.md`, `PROGRESS.md`, `docs/architecture/`, and `evals/metrics.md`
+- [x] T126 Commit all in-repository implementation/evidence, freeze the candidate SHA, push one cohesive implementation PR, and attach the pre-freeze audit manifest in the PR description
 - [ ] T127 Obtain ADR-plus-two-maintainer schema approval, maintainer-plus-discipline-steward ontology approval, two-maintainer-plus-evaluation-owner fixture approval, maintainer-plus-portability-owner provider-adapter approval, reviewer-criteria approval, green hosted CI, and independent review on the frozen head; resolve every thread and store identities/dispositions only as immutable external PR/workflow artifacts
 - [ ] T128 Finalize and independently verify an external immutable audit pack combining the committed pre-freeze manifest with exact-head CI/review/approval records; if review changes repository content, repeat T126-T128 for the new head without committing post-freeze records to the branch
 - [ ] T129 Obtain explicit owner merge approval as an external PR decision while retaining named no-production/no-merge gates; do not create a commit after final exact-head review

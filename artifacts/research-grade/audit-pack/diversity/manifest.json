@@ -1,0 +1,31 @@
+{
+  "schema_version": "2.0.0",
+  "status": "not_run",
+  "review_status": "locked_human_review_required",
+  "reason": "The required nine-discipline locked human-reviewed packet set is not present in this offline checkout.",
+  "required_packets_per_discipline": 10,
+  "supported_disciplines": [
+    "art_history",
+    "art_criticism",
+    "engineering",
+    "humanities",
+    "interdisciplinary",
+    "materials_science",
+    "philosophy",
+    "psychology",
+    "technical_writing"
+  ],
+  "packet_categories": [
+    "balanced",
+    "concentrated",
+    "sparse",
+    "narrow",
+    "multilingual",
+    "historical",
+    "method_monoculture",
+    "duplicate",
+    "fake_diversity",
+    "missing_strata"
+  ],
+  "packets": []
+}

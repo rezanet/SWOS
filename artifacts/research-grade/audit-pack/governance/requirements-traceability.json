@@ -1,0 +1,473 @@
+{
+  "interpretation": "Statuses distinguish local implementation/tests from release certification; blocked or pending items are not treated as satisfied.",
+  "requirements": [
+    {
+      "evidence": [
+        "swos_runtime/research_memory.py",
+        "tests/runtime/test_research_grade_foundations.py"
+      ],
+      "id": "FR-001",
+      "source_anchor": "spec.md#FR-001",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/research_memory.py",
+        "tests/runtime/test_research_grade_foundations.py"
+      ],
+      "id": "FR-002",
+      "source_anchor": "spec.md#FR-002",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/rpm_exchange.py",
+        "tests/runtime/test_rpm_exchange.py"
+      ],
+      "id": "FR-003",
+      "source_anchor": "spec.md#FR-003",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/programme_store.py",
+        "tests/runtime/test_rpm_exchange.py"
+      ],
+      "id": "FR-004",
+      "source_anchor": "spec.md#FR-004",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/research_memory.py",
+        "tests/runtime/test_research_grade_foundations.py"
+      ],
+      "id": "FR-005",
+      "source_anchor": "spec.md#FR-005",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "discipline-packs/manifest-v2.json",
+        "swos_runtime/discipline_ontology.py"
+      ],
+      "id": "FR-006",
+      "source_anchor": "spec.md#FR-006",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "tools/compile_discipline_ontologies.py",
+        "tests/runtime/test_discipline_ontology_compiler.py"
+      ],
+      "id": "FR-007",
+      "source_anchor": "spec.md#FR-007",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/discipline_critique.py",
+        "tests/runtime/test_discipline_critique_fixtures.py"
+      ],
+      "id": "FR-008",
+      "source_anchor": "spec.md#FR-008",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/discipline_ontology.py",
+        "tests/runtime/test_discipline_ontology.py"
+      ],
+      "id": "FR-009",
+      "source_anchor": "spec.md#FR-009",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/discipline_ontology.py",
+        "tests/runtime/test_discipline_ontology.py"
+      ],
+      "id": "FR-010",
+      "source_anchor": "spec.md#FR-010",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/discipline_critique.py",
+        "tests/runtime/test_discipline_critique.py"
+      ],
+      "id": "FR-011",
+      "source_anchor": "spec.md#FR-011",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/discipline_critique.py",
+        "tests/runtime/test_discipline_critique.py"
+      ],
+      "id": "FR-012",
+      "source_anchor": "spec.md#FR-012",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/citation_classifier.py",
+        "tests/runtime/test_citation_admission.py"
+      ],
+      "id": "FR-013",
+      "source_anchor": "spec.md#FR-013",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/citation_classifier.py",
+        "tests/runtime/test_citation_classifier.py"
+      ],
+      "id": "FR-014",
+      "source_anchor": "spec.md#FR-014",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/citation_classifier.py",
+        "tests/runtime/test_citation_classifier.py"
+      ],
+      "id": "FR-015",
+      "source_anchor": "spec.md#FR-015",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/citation_classifier.py",
+        "tests/runtime/test_citation_admission.py"
+      ],
+      "id": "FR-016",
+      "source_anchor": "spec.md#FR-016",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/citation_dataset.py",
+        "benchmark/citation-support/manifest.json"
+      ],
+      "id": "FR-017",
+      "source_anchor": "spec.md#FR-017",
+      "status": "implemented_unverified"
+    },
+    {
+      "evidence": [
+        "swos_runtime/source_diversity.py",
+        "benchmark/source-diversity/manifest.json"
+      ],
+      "id": "FR-018",
+      "source_anchor": "spec.md#FR-018",
+      "status": "implemented_unmeasured"
+    },
+    {
+      "evidence": [
+        "swos_runtime/source_diversity.py",
+        "tests/runtime/test_source_diversity.py"
+      ],
+      "id": "FR-019",
+      "source_anchor": "spec.md#FR-019",
+      "status": "implemented_unmeasured"
+    },
+    {
+      "evidence": [
+        "swos_runtime/source_diversity.py",
+        "tests/runtime/test_source_diversity.py"
+      ],
+      "id": "FR-020",
+      "source_anchor": "spec.md#FR-020",
+      "status": "implemented_unmeasured"
+    },
+    {
+      "evidence": [
+        "swos_runtime/source_diversity.py",
+        "swos_runtime/research_expansion.py"
+      ],
+      "id": "FR-021",
+      "source_anchor": "spec.md#FR-021",
+      "status": "implemented_unmeasured"
+    },
+    {
+      "evidence": [
+        "swos_runtime/prov_interop.py",
+        "tests/runtime/test_prov_interop.py"
+      ],
+      "id": "FR-022",
+      "source_anchor": "spec.md#FR-022",
+      "status": "implemented_tested_independent_pending"
+    },
+    {
+      "evidence": [
+        "swos_runtime/prov_validation.py",
+        "tests/runtime/test_prov_validation.py"
+      ],
+      "id": "FR-023",
+      "source_anchor": "spec.md#FR-023",
+      "status": "implemented_tested_independent_pending"
+    },
+    {
+      "evidence": [
+        "schemas/provenance-graph/swos-prov.ttl",
+        "schemas/provenance-graph/swos-prov.shacl.ttl"
+      ],
+      "id": "FR-024",
+      "source_anchor": "spec.md#FR-024",
+      "status": "implemented_independent_pending"
+    },
+    {
+      "evidence": [
+        "swos_runtime/prov_validation.py",
+        "tools/certify_prov_roundtrip.py"
+      ],
+      "id": "FR-025",
+      "source_anchor": "spec.md#FR-025",
+      "status": "implemented_independent_pending"
+    },
+    {
+      "evidence": [
+        "swos_runtime/prov_validation.py",
+        "tests/runtime/test_prov_validation.py"
+      ],
+      "id": "FR-026",
+      "source_anchor": "spec.md#FR-026",
+      "status": "implemented_tested_independent_pending"
+    },
+    {
+      "evidence": [
+        "swos_runtime/media.py",
+        "tests/runtime/test_media.py"
+      ],
+      "id": "FR-027",
+      "source_anchor": "spec.md#FR-027",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/image_analysis.py",
+        "tests/runtime/test_image_analysis.py"
+      ],
+      "id": "FR-028",
+      "source_anchor": "spec.md#FR-028",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/image_analysis.py",
+        "tests/runtime/test_image_analysis.py"
+      ],
+      "id": "FR-029",
+      "source_anchor": "spec.md#FR-029",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/media.py",
+        "tests/runtime/test_media.py"
+      ],
+      "id": "FR-030",
+      "source_anchor": "spec.md#FR-030",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/media.py",
+        "tests/runtime/test_region_selectors.py"
+      ],
+      "id": "FR-031",
+      "source_anchor": "spec.md#FR-031",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/image_analysis.py",
+        "tests/runtime/test_multimodal_orchestration.py"
+      ],
+      "id": "FR-032",
+      "source_anchor": "spec.md#FR-032",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "agents/research-grade/art-history.agent.json",
+        "agents/research-grade/art-criticism.agent.json",
+        "swos_runtime/image_analysis.py"
+      ],
+      "id": "FR-033",
+      "source_anchor": "spec.md#FR-033",
+      "status": "implemented_promotion_pending"
+    },
+    {
+      "evidence": [
+        "tests/runtime",
+        "tests/prose"
+      ],
+      "id": "FR-034",
+      "source_anchor": "spec.md#FR-034",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "artifacts/research-grade/regression-report.json",
+        "evals/harness/run_evals.py"
+      ],
+      "id": "FR-035",
+      "source_anchor": "spec.md#FR-035",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "tests/runtime/test_research_grade_compatibility.py",
+        "tests/runtime/test_research_grade_schemas.py"
+      ],
+      "id": "FR-036",
+      "source_anchor": "spec.md#FR-036",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "swos_runtime/finalizer.py",
+        "swos_runtime/prov_validation.py"
+      ],
+      "id": "FR-037",
+      "source_anchor": "spec.md#FR-037",
+      "status": "implemented_external_review_pending"
+    },
+    {
+      "evidence": [
+        "tools/assemble_research_grade_audit_pack.py",
+        "artifacts/research-grade/audit-pack.json"
+      ],
+      "id": "FR-038",
+      "source_anchor": "spec.md#FR-038",
+      "status": "implemented_external_review_pending"
+    },
+    {
+      "evidence": [
+        "swos_runtime/image_analysis.py",
+        "swos_runtime/orchestrator.py"
+      ],
+      "id": "FR-039",
+      "source_anchor": "spec.md#FR-039",
+      "status": "implemented_tested"
+    },
+    {
+      "evidence": [
+        "specs/008-swos-v2-research-grade/spec.md",
+        "docs/roadmap.md"
+      ],
+      "id": "FR-040",
+      "source_anchor": "spec.md#FR-040",
+      "status": "explicit_non_goal"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "source_sha": "a8fe58198184e7affa3fe327757f71e4ad10022b",
+  "spec": "specs/008-swos-v2-research-grade/spec.md",
+  "success_criteria": [
+    {
+      "evidence": [
+        "tests/runtime/test_rpm_exchange.py",
+        "tests/runtime/test_research_grade_end_to_end.py"
+      ],
+      "id": "SC-001",
+      "source_anchor": "spec.md#SC-001",
+      "status": "locally_passed"
+    },
+    {
+      "evidence": [
+        "artifacts/ontology/compile-report.json",
+        "discipline-packs/manifest-v2.json"
+      ],
+      "id": "SC-002",
+      "source_anchor": "spec.md#SC-002",
+      "status": "locally_passed"
+    },
+    {
+      "evidence": [
+        "benchmark/citation-support/manifest.json"
+      ],
+      "id": "SC-003",
+      "source_anchor": "spec.md#SC-003",
+      "status": "blocked_not_run"
+    },
+    {
+      "evidence": [
+        "benchmark/citation-support/manifest.json"
+      ],
+      "id": "SC-004",
+      "source_anchor": "spec.md#SC-004",
+      "status": "blocked_not_run"
+    },
+    {
+      "evidence": [
+        "benchmark/source-diversity/manifest.json"
+      ],
+      "id": "SC-005",
+      "source_anchor": "spec.md#SC-005",
+      "status": "blocked_not_run"
+    },
+    {
+      "evidence": [
+        "tests/runtime/test_discipline_critique_fixtures.py"
+      ],
+      "id": "SC-006",
+      "source_anchor": "spec.md#SC-006",
+      "status": "locally_passed"
+    },
+    {
+      "evidence": [
+        "benchmark/provenance/manifest.json",
+        "benchmark/provenance/oracle-manifest.json"
+      ],
+      "id": "SC-007",
+      "source_anchor": "spec.md#SC-007",
+      "status": "blocked_not_run"
+    },
+    {
+      "evidence": [
+        "evals/fixtures/multimodal/manifest.json"
+      ],
+      "id": "SC-008",
+      "source_anchor": "spec.md#SC-008",
+      "status": "blocked_not_run"
+    },
+    {
+      "evidence": [
+        "tests/runtime/test_capability_promotion.py",
+        "agents/research-grade/art-history.agent.json",
+        "agents/research-grade/art-criticism.agent.json"
+      ],
+      "id": "SC-009",
+      "source_anchor": "spec.md#SC-009",
+      "status": "locally_passed_disabled"
+    },
+    {
+      "evidence": [
+        "artifacts/research-grade/quality-report.json",
+        "artifacts/research-grade/regression-report.json"
+      ],
+      "id": "SC-010",
+      "source_anchor": "spec.md#SC-010",
+      "status": "locally_passed_hosted_pending"
+    },
+    {
+      "evidence": [
+        "artifacts/research-grade/audit-pack.json"
+      ],
+      "id": "SC-011",
+      "source_anchor": "spec.md#SC-011",
+      "status": "pre_freeze_pack_verified_external_pending"
+    },
+    {
+      "evidence": [
+        "artifacts/research-grade/rpm-reference-100000.json"
+      ],
+      "id": "SC-012",
+      "source_anchor": "spec.md#SC-012",
+      "status": "locally_measured"
+    }
+  ]
+}

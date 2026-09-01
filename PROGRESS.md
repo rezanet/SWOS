@@ -3,6 +3,28 @@
 This ledger records repository-grounded state and exact evidence. Percentages are
 quality measurements, not claims about completion of the larger SWOS roadmap.
 
+## Research Grade v2.0 implementation candidate — pre-freeze reconciliation
+
+**Reconciled:** 2026-09-01
+**Pre-freeze implementation head:** `a8fe58198184e7affa3fe327757f71e4ad10022b`
+**Planning head:** `c4ec2945d5279809f2b16ce62ce52586586f1ed0`
+
+The feature implementation covers the parallel v2 contracts for cross-project
+RPM, discipline ontology/critique, citation support and diversity, EPG/PROV,
+rights-aware object/media analysis, multimodal evaluation and exact-head audit
+assembly. At the pre-freeze head, runtime tests pass 205/205, prose tests pass
+240/240 with 11 expected live skips, the eight-plane contract harness passes,
+branch-aware coverage is 81.46%, and the local quality/security matrix is
+green. The measurements are recorded in the Research Grade evidence reports,
+with SHA identities bound to that head.
+
+This is an implementation candidate, not a certified v2 release. The locked
+6,000-pair citation corpus/model/calibration, reviewed diversity and
+multimodal corpora, independent PROV oracle, cross-host execution, hosted CI
+review, maintainer approvals and owner merge decision remain explicit gates.
+Unavailable release planes are `NOT_RUN`; no promotion, merge or deployment is
+inferred from local deterministic evidence.
+
 ## Current exact-head reconciliation
 
 **Last reconciled:** 2026-08-31

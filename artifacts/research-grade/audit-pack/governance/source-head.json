@@ -1,0 +1,66 @@
+{
+  "base_sha": "8d440296b4a9df708f1140a04bae1ae24f74fee3",
+  "feature_artifacts": [
+    {
+      "bytes": 12990,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/builder-prompt.md",
+      "sha256": "e1f06b7b92b758d42f1efaf5f6b538b96fa8f8a37b84f0f0110c54b302ccbb31"
+    },
+    {
+      "bytes": 33471,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/spec.md",
+      "sha256": "3429e4e86a66ff74b865eed16473c3500d736bb7ab2e805a3ab4089f1b3ad8ad"
+    },
+    {
+      "bytes": 26815,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/research.md",
+      "sha256": "27a6bda43dcb7be2c23a105c26fc0aea6efd3ca92d0aeeeebd9a685745ae504e"
+    },
+    {
+      "bytes": 18376,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/data-model.md",
+      "sha256": "723212060a5f8ba5756d1bf72552d224f0a50a4c775ac65403b6e8b5322d4a7c"
+    },
+    {
+      "bytes": 16011,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/contracts/interfaces.md",
+      "sha256": "95189334a65d89c776818bbb5a9c93474e3dab7fd411b794c4f113c901b6fe6a"
+    },
+    {
+      "bytes": 29331,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/plan.md",
+      "sha256": "fb720465f338c105e597ec16c376f4e6b114997c4c7f793b07c5ad726fd02528"
+    },
+    {
+      "bytes": 8022,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/quickstart.md",
+      "sha256": "58cf341ab550bbe342c8a7c16b282caa6f8eea279604daa640eeb6e9987cfb7b"
+    },
+    {
+      "bytes": 3861,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/checklists/requirements.md",
+      "sha256": "740ff6927a02d32f9df14420c2c6221c71756cb488a68c1f91b29209844d5779"
+    },
+    {
+      "bytes": 31219,
+      "exists": true,
+      "path": "specs/008-swos-v2-research-grade/tasks.md",
+      "sha256": "03ec99ea679ed7ea9c85bf73de9eef0d266f2b57071f22e46c7c2abb1064a070"
+    }
+  ],
+  "missing_copies": [
+    "discipline-packs/compiled/v2/compile-manifest.json",
+    "governance/policies/research-grade-v2-governance.md"
+  ],
+  "planning_sha": "c4ec2945d5279809f2b16ce62ce52586586f1ed0",
+  "pre_freeze_implementation_sha": "a8fe58198184e7affa3fe327757f71e4ad10022b",
+  "schema_version": "1.0.0"
+}
