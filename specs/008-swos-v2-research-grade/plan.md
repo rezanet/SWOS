@@ -60,7 +60,9 @@ required
 10k-active-item RPM acceptance benchmark; nine discipline profiles; >=6,000 adjudicated citation pairs at
 release floor with >=1,500 locked-test pairs; at least ten locked reviewed
 diversity packets per discipline; 1k/10k PROV statement benchmarks; >=60
-distinct objects/works, >=96 renditions, and the multimodal gates in research.md
+distinct objects/works, >=96 renditions, >=80 region-grounding claims across
+>=20 assets, >=120 cross-modal pairs, >=48 discipline tasks across >=24 works,
+>=96 adversarial cases, and the remaining multimodal gates in research.md
 
 ## Constitution Check
 
@@ -388,8 +390,11 @@ overclaim.
    support, multi-view limitation, attribution/originality guardrails, and EPG.
 5. Integrate art-history then art-criticism critique in staged pack-assisted mode.
 6. Build the governed `DATA-LICENCE.md`, at least 60 distinct objects/works and 96
-   renditions, region/cross-modal/discipline/adversarial cases, annotation
-   guidelines, adjudication, accessibility, and stability evaluation.
+   renditions, at least 80 region-grounding claims across 20 assets, 120
+   cross-modal pairs, 48 discipline tasks across 24 works, and 96 adversarial
+   cases across the required six media/material classes, three mediation
+   conditions, and both art disciplines, with annotation guidelines,
+   adjudication, accessibility, and stability evaluation.
 7. Implement versioned specialist-agent contracts, least-privilege tools,
    role-separated routes, and executable pack fallback; then implement default-off
    paired promotion assessment/commit/rollback and prove >=0.08 improvement, a
@@ -476,10 +481,10 @@ limitations. Prose-only performance claims do not satisfy a gate.
 | FR-001, FR-002, FR-003, FR-004, FR-005 | Phase 2; data model §1; contracts §2 | `research_memory.py`, `programme_store.py`, `rpm_exchange.py`; scoped lifecycle/closure/exchange/receiving-scope suites and safety-mutation report |
 | FR-006, FR-007, FR-008, FR-009, FR-010 | Phase 3; research R2; data model §2 | ontology sources/shapes/compiler/manifest; pack and isomorphism reports |
 | FR-011, FR-012 | Phase 3; research R3; contracts §3 | `discipline_critique.py`; nine-pack reviewed fixture report |
-| FR-013, FR-014, FR-015, FR-016, FR-017 | Phase 4 citation workstream; research R4; contracts §4 | classifier/calibration/dataset/model manifests; locked predictions and metrics |
+| FR-013, FR-014, FR-015, FR-016, FR-017 | Phase 4 citation workstream; research R4; contracts §4 | classifier/calibration/dataset/model manifests; exact pair IDs, claims, spans, digests, locked predictions, and metrics |
 | FR-018, FR-019, FR-020, FR-021 | Phase 4 diversity workstream; research R5; contracts §5 | `source_diversity.py`, policy/benchmark; expansion and exception evidence |
 | FR-022, FR-023, FR-024, FR-025, FR-026 | Phase 5; research R6; contracts §6 | EPG v2/interchange/validation/certifier; oracle/corpus certificates |
-| FR-027, FR-028, FR-029, FR-030, FR-031, FR-032, FR-033 | Phase 6; research R7; data model §6; contracts §7 | media/image modules, rights/promotion policies, corpus/adjudication report |
+| FR-027, FR-028, FR-029, FR-030, FR-031, FR-032, FR-033 | Phase 6; research R7; data model §6; contracts §7 | media/image modules covering all eight rights actions, promotion policies, and corpus/adjudication report proving 60/96/80-across-20/120/48-across-24/96 minima |
 | FR-034–FR-035 | Phases 1–7; Testing Strategy | test-first task ordering; full exact-head eight-plane report |
 | FR-036 | Phase 1 compatibility shell | frozen artifact digest and v1.1 behavior regression report |
 | FR-037 | Phases 2–7 audit bindings | EPG/SDL, model, rights, review, and audit-pack manifests |

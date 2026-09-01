@@ -122,17 +122,17 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 
 ### US3 tests first
 
-- [ ] T058 [P] [US3] Add classifier schema, probability, ordering, batching, digest, label-order, OOD, corrupt-artifact, and abstention tests in `tests/runtime/test_citation_classifier.py`
+- [ ] T058 [P] [US3] Add classifier schema, exact pair identity/claim/span preservation, probability, ordering, batching, digest, label-order, OOD, corrupt-artifact, and abstention tests in `tests/runtime/test_citation_classifier.py`
 - [ ] T059 [P] [US3] Add calibration fit isolation, ECE, threshold, immutable binding, confidence-bound, and coverage tests in `tests/runtime/test_citation_calibration.py`
-- [ ] T060 [P] [US3] Add tests proving only deterministic-precheck plus direct/non-abstained classifier output is admission-eligible in `tests/runtime/test_citation_admission.py`
+- [ ] T060 [P] [US3] Add tests proving exact pair identity/claim/span and digest mismatches are rejected, and only deterministic-precheck plus direct/non-abstained classifier output is admission-eligible in `tests/runtime/test_citation_admission.py`
 - [ ] T061 [P] [US3] Add source-family identity, ordering, duplicate edition/mirror/preprint/provider invariance, unknownness, HHI/effective-number, exposure, and exception tests in `tests/runtime/test_source_diversity.py`
 - [ ] T062 [P] [US3] Add bounded research-expansion, required-strata, counter-position, and final-limitation integration tests in `tests/runtime/test_research_expansion.py`
 - [ ] T063 [P] [US3] Add leakage, licence, manifest, group-split, agreement, locked-test isolation, and model-card tests in `tests/runtime/test_citation_dataset.py`
 
 ### US3 citation implementation
 
-- [ ] T064 [P] [US3] Add citation pair/decision and model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
-- [ ] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
+- [ ] T064 [P] [US3] Add citation pair/decision schemas with immutable pair ID, exact claim/span, and claim/span digests, plus model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
+- [ ] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, exact pair identity/claim/span and digest emission, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
 - [ ] T066 [US3] Implement temperature scaling, selective thresholds, metric confidence intervals, and immutable binding in `swos_runtime/citation_calibration.py`
 - [ ] T067 [US3] Preserve deterministic prechecks and integrate trained decisions behind `CapabilityBroker.citation_support_audit` in `swos_runtime/broker.py`
 - [ ] T068 [US3] Restrict final verification to core eligibility and store immutable classifier evidence/overrides in `swos_runtime/finalizer.py`
@@ -140,7 +140,7 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 - [ ] T070 [US3] Implement and execute the bounded corpus workflow to acquire permitted pairs, double-annotate, adjudicate, approve, leakage-check, checksum, and freeze actual train/calibration/locked/OOD splits and `DATA-LICENCE.md` in `benchmark/citation-support/manifest.json` using `tools/build_citation_dataset.py`
 - [ ] T071 [US3] Implement immutable training and model-card/artifact-manifest generation in `tools/train_citation_classifier.py`
 - [ ] T072 [US3] Implement calibration-only fitting and artifact generation in `tools/calibrate_citation_classifier.py`
-- [ ] T073 [US3] Implement locked evaluation, raw predictions, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`
+- [ ] T073 [US3] Implement locked evaluation with raw predictions retaining exact pair identity/claim/span provenance, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`
 - [ ] T074 [US3] Add pinned release-model workflow and immutable outputs in `.github/workflows/citation-model-evaluation.yml`
 
 ### US3 diversity implementation
@@ -200,7 +200,7 @@ without exact matching evidence.
 
 ### US5 tests first
 
-- [ ] T099 [P] [US5] Add object/media/inspection, separate analyse/transform/create-derivative rights, conservative inheritance, lineage/content-credential, and structured accessibility/invalidation tests in `tests/runtime/test_media.py`
+- [ ] T099 [P] [US5] Add object/media/inspection, separate `view`, `analyse`, `transform`, `create_derivative`, `quote`, `cache`, `export`, and `redistribute` rights, conservative inheritance, lineage/content-credential, and structured accessibility/invalidation tests in `tests/runtime/test_media.py`
 - [ ] T100 [P] [US5] Add IIIF pixel/percent and bounded SVG normalization, digest, dimension, ambiguity, and out-of-bounds tests in `tests/runtime/test_region_selectors.py`
 - [ ] T101 [P] [US5] Add complete/partial/insufficient/denied/error, resource, deterministic fake, real OpenAI adapter, and provider/model/host substitution conformance tests in `tests/runtime/test_image_analysis.py`
 - [ ] T102 [P] [US5] Add observation/interpretation separation, weakest-leg cross-modal support, false-attribution/originality, and multi-view limitation tests in `tests/runtime/test_cross_modal_support.py`
@@ -209,14 +209,14 @@ without exact matching evidence.
 ### US5 implementation
 
 - [ ] T104 [P] [US5] Add object, media, inspection, accessibility, observation, cross-modal, analysis-result, specialist-agent, and promotion schemas in `schemas/research-grade/object-record.schema.json`, `schemas/research-grade/media-asset.schema.json`, `schemas/research-grade/object-inspection.schema.json`, `schemas/research-grade/accessibility-record.schema.json`, `schemas/research-grade/visual-observation.schema.json`, `schemas/research-grade/cross-modal-support.schema.json`, `schemas/research-grade/image-analysis-result.schema.json`, `schemas/research-grade/specialist-agent.schema.json`, and `schemas/research-grade/capability-promotion.schema.json`
-- [ ] T105 [US5] Implement object/media/inspection separation, byte identity, capture/rendition/derivative lineage, separate analyse/transform/create-derivative rights with restrictive inheritance, IIIF 3 ingest, structured accessibility invalidation, and export redaction in `swos_runtime/media.py`
+- [ ] T105 [US5] Implement object/media/inspection separation, byte identity, capture/rendition/derivative lineage, separate `view`, `analyse`, `transform`, `create_derivative`, `quote`, `cache`, `export`, and `redistribute` rights with restrictive inheritance, IIIF 3 ingest, structured accessibility invalidation, and export redaction in `swos_runtime/media.py`
 - [ ] T106 [US5] Implement digest-bound IIIF pixel/percent and bounded SVG selector normalization in `swos_runtime/media.py`
 - [ ] T107 [US5] Implement provider-neutral bounded 2D analysis protocol and deterministic fake with explicit statuses in `swos_runtime/image_analysis.py`
 - [ ] T108 [US5] Implement observation/interpretation separation, cross-modal weakest-leg policy, multi-view limits, and attribution/originality guardrails in `swos_runtime/image_analysis.py`
 - [ ] T109 [US5] Integrate image analysis through broker/work orders/orchestrator/finalizer/EPG without provider-owned verification in `swos_runtime/broker.py`, `swos_runtime/work_orders.py`, `swos_runtime/orchestrator.py`, and `swos_runtime/finalizer.py`
 - [ ] T110 [US5] Integrate staged art-history then art-criticism pack-assisted critique with ontology criteria in `swos_runtime/discipline_critique.py`
-- [ ] T111 [P] [US5] Build at least 60 distinct objects/works and 96 rights-cleared renditions across at least six media/material classes, three mediation conditions, and both art disciplines, plus region/cross-modal/discipline/accessibility/adversarial manifests, per-asset source/right URI/digest/allowed-use/attribution statements, guidelines, and mandatory `DATA-LICENCE.md` in `evals/fixtures/multimodal/`
-- [ ] T112 [US5] Implement raw case, agreement, region, cross-modal, false-originality, over-association, valid-reviewed-accessibility completeness numerator/denominator, Wilson two-sided 95% confidence intervals, stability, object/rendition minima, and regression metrics in `tools/run_multimodal_evals.py`
+- [ ] T111 [P] [US5] Build at least 60 distinct objects/works and 96 rights-cleared renditions, at least 80 atomic region-grounding claims across at least 20 assets, 120 cross-modal pairs, 48 discipline tasks across at least 24 works, and 96 adversarial cases, spanning at least six media/material classes, three mediation conditions, and both art disciplines, plus accessibility manifests, per-asset source/right URI/digest/allowed-use/attribution statements, guidelines, and mandatory `DATA-LICENCE.md` in `evals/fixtures/multimodal/`
+- [ ] T112 [US5] Implement raw case, agreement, region, cross-modal, false-originality, over-association, valid-reviewed-accessibility completeness numerator/denominator, Wilson two-sided 95% confidence intervals, stability, and regression metrics in `tools/run_multimodal_evals.py`, with gates enforcing all R7 corpus minima: 60 objects/works, 96 renditions, 80 region-grounding claims across 20 assets, 120 cross-modal pairs, 48 discipline tasks across 24 works, and 96 adversarial cases
 - [ ] T113 [US5] Implement and register one real opt-in OpenAI image-input provider adapter and v2 capability declaration with bounded requests, purpose-rights enforcement, exact model/config/response evidence, and contract status mapping in `swos_runtime/image_analysis_openai.py` and `contracts/capability-contract/capabilities-v2.json`
 - [ ] T114 [US5] Create versioned art-history and art-criticism specialist-agent definitions, least-privilege image/object tool permissions, role-separated orchestrator routes, and executable pack-only fallback in `agents/research-grade/art-history.agent.json`, `agents/research-grade/art-criticism.agent.json`, and `swos_runtime/orchestrator.py`
 - [ ] T115 [US5] Add optional live exact-head provider workflow with `NOT_RUN` semantics and immutable outputs in `.github/workflows/multimodal-evaluation.yml`

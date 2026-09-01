@@ -146,6 +146,10 @@ def admission_eligibility(pair: CitationPair,
 Requirements:
 
 - output order matches input order and decisions are batch-size invariant;
+- every decision repeats the input pair's immutable `pair_id`, exact
+  `atomic_claim`, and exact `evidence_span`, with independent claim/span
+  digests; core policy compares these fields to the supplied `CitationPair` and
+  rejects any mismatch as a deterministic rule failure;
 - classified labels are exactly `directly_supports`, `partially_supports`,
   `context_only`, `contradicts`, or `not_supported`; laundering and invalid-input
   failures are core-owned rule rejections, not model labels;

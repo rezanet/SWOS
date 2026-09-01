@@ -196,11 +196,15 @@ only for its bound model and label order.
 
 ### CitationSupportDecision
 
-Fields: candidate index, status (`classified`, `abstained`, `rule_rejected`,
-`error`), support label or null, ordered class probabilities, predicted
-probability, abstention reason, threshold, calibration/model/dataset/ontology
-identities and digests, canonical input digest, runtime/backend versions,
-deterministic precheck results, timestamps, and EPG activity.
+Fields: candidate index, immutable `pair_id`, exact `atomic_claim` and exact
+`evidence_span` copied from the input pair, independent claim/span digests,
+status (`classified`, `abstained`, `rule_rejected`, `error`), support label or
+null, ordered class probabilities, predicted probability, abstention reason,
+threshold, calibration/model/dataset/ontology identities and digests, canonical
+input digest, runtime/backend versions, deterministic precheck results,
+timestamps, and EPG activity. The exact pair bytes and their digests remain
+resolvable from the immutable audit pack; a candidate index or aggregate input
+digest alone is not sufficient provenance.
 
 The support label is exactly one of `directly_supports`, `partially_supports`,
 `context_only`, `contradicts`, or `not_supported`. It is null for abstention,
