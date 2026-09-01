@@ -190,6 +190,13 @@ class CitationDatasetTests(unittest.TestCase):
             "schema_version": "2.0.0",
             "required_floors": floors,
             "supported_disciplines": ["engineering"],
+            "split_proportions": {
+                "train": 0.2,
+                "calibration": 0.2,
+                "locked_test": 0.2,
+                "temporal": 0.2,
+                "ood": 0.2,
+            },
             "source_licence_manifest": "licence.json",
             "pairs": [row],
         }
@@ -224,6 +231,68 @@ class CitationDatasetTests(unittest.TestCase):
             manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
             with self.assertRaises(citation_builder.DatasetBuildBlocked):
                 citation_builder.build_dataset(manifest_path, root / "output")
+
+    def test_build_dataset_freezes_all_declared_split_partitions(self) -> None:
+        floors = {
+            "total_pairs": 1,
+            "per_label": 0,
+            "per_discipline": 0,
+            "locked_test": 0,
+            "locked_per_label": 0,
+            "locked_per_discipline": 0,
+            "locked_adversarial_non_direct": 0,
+        }
+        proportions = {
+            "train": 0.2,
+            "calibration": 0.2,
+            "locked_test": 0.2,
+            "temporal": 0.2,
+            "ood": 0.2,
+        }
+        source_licence = {
+            "schema_version": "2.0.0",
+            "status": "frozen",
+            "approval": {"status": "approved", "reviewer_id": "dataset-reviewer"},
+            "sources": [
+                {
+                    "source_id": "source-1",
+                    "uri": "https://example.org/source",
+                    "digest": "b" * 64,
+                    "licence": "CC-BY-4.0",
+                    "attribution": "Example archive",
+                    "allowed_use": list(proportions),
+                    "approval": {"status": "approved", "reviewer_id": "reviewer"},
+                }
+            ],
+        }
+        rows = []
+        for index in range(5):
+            row = self._pair(f"partition-{index}", f"g-{index}")
+            row.update({"source_id": "source-1", "source_digest": "b" * 64})
+            rows.append(row)
+        manifest = {
+            "schema_version": "2.0.0",
+            "required_floors": floors,
+            "supported_disciplines": ["engineering"],
+            "split_proportions": proportions,
+            "source_licence_manifest": "licence.json",
+            "pairs": rows,
+        }
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest_path = root / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            (root / "licence.json").write_text(json.dumps(source_licence), encoding="utf-8")
+            with (
+                patch.object(citation_builder, "RELEASE_FLOORS", floors),
+                patch.object(citation_builder, "SUPPORTED_DISCIPLINES", ("engineering",)),
+            ):
+                report = citation_builder.build_dataset(manifest_path, root / "output", seed=0)
+
+        self.assertEqual(set(report["splits"]), set(proportions))
+        self.assertGreater(report["splits"]["temporal"]["count"], 0)
+        self.assertGreater(report["splits"]["ood"]["count"], 0)
 
 
 if __name__ == "__main__":

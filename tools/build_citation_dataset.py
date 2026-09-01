@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from collections import Counter
 from collections.abc import Mapping, Sequence
@@ -45,6 +46,8 @@ SUPPORTED_DISCIPLINES = (
     "psychology",
     "technical_writing",
 )
+
+SPLIT_NAMES = ("train", "calibration", "locked_test", "temporal", "ood")
 
 
 class DatasetBuildBlocked(RuntimeError):
@@ -136,6 +139,23 @@ def _read_rows(manifest: dict[str, Any], manifest_path: Path) -> list[dict[str, 
     raise DatasetBuildBlocked("no licensed pair source was provided; acquisition is NOT_RUN")
 
 
+def _read_split_proportions(manifest: Mapping[str, Any]) -> dict[str, float]:
+    raw = manifest.get("split_proportions")
+    if not isinstance(raw, Mapping) or set(raw) != set(SPLIT_NAMES):
+        raise DatasetBuildBlocked(
+            "citation manifest must declare train, calibration, locked_test, temporal, and ood split proportions"
+        )
+    try:
+        proportions = {name: float(raw[name]) for name in SPLIT_NAMES}
+    except (TypeError, ValueError, KeyError) as exc:
+        raise DatasetBuildBlocked("citation manifest split proportions must be numeric") from exc
+    if any(not math.isfinite(value) or value <= 0 for value in proportions.values()):
+        raise DatasetBuildBlocked("citation manifest split proportions must be finite and positive")
+    if not math.isclose(sum(proportions.values()), 1.0, rel_tol=0.0, abs_tol=1e-9):
+        raise DatasetBuildBlocked("citation manifest split proportions must sum to one")
+    return proportions
+
+
 def _read_source_licence_manifest(
     manifest: dict[str, Any], manifest_path: Path
 ) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
@@ -185,7 +205,8 @@ def build_dataset(
     rows = _read_rows(source_manifest, manifest_path)
     for row in rows:
         validate_pair_source_binding(row, source_licences)
-    splits = grouped_split(rows, seed=seed)
+    split_proportions = _read_split_proportions(source_manifest)
+    splits = grouped_split(rows, seed=seed, proportions=split_proportions)
     report = dataset_manifest(
         splits,
         source_manifest_digest=canonical_digest(source_manifest),
@@ -215,6 +236,7 @@ def build_dataset(
         "locked_adversarial_non_direct": RELEASE_FLOORS["locked_adversarial_non_direct"],
     }
     report["source_licence_manifest_digest"] = canonical_digest(source_licence_manifest)
+    report["split_proportions"] = split_proportions
     report["counts"] = {"total": len(rows), "per_label": counts, "per_discipline": disciplines}
     report["release_floor_gaps"] = release_floor_gaps(
         rows,
