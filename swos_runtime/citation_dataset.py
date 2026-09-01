@@ -35,6 +35,13 @@ def validate_source_licence_manifest(
         return {}
     if status not in {"ready", "frozen"} or not sources:
         raise DatasetValidationError("source licence manifest is not ready for corpus admission")
+    approval = manifest.get("approval")
+    if (
+        not isinstance(approval, Mapping)
+        or approval.get("status") != "approved"
+        or not str(approval.get("reviewer_id") or "").strip()
+    ):
+        raise DatasetValidationError("source licence manifest lacks independent dataset approval")
 
     indexed: dict[str, dict[str, Any]] = {}
     for source in sources:

@@ -59,6 +59,7 @@ class CitationDatasetTests(unittest.TestCase):
         manifest = {
             "schema_version": "2.0.0",
             "status": "frozen",
+            "approval": {"status": "approved", "reviewer_id": "dataset-reviewer-1"},
             "sources": [
                 {
                     "source_id": "source-1",
@@ -94,6 +95,10 @@ class CitationDatasetTests(unittest.TestCase):
         }
         with self.assertRaises(DatasetValidationError):
             validate_source_licence_manifest(unknown_use)
+
+        missing_approval = {**manifest, "approval": {"status": "pending"}}
+        with self.assertRaises(DatasetValidationError):
+            validate_source_licence_manifest(missing_approval)
 
     def test_not_run_source_manifest_is_explicitly_empty(self) -> None:
         self.assertEqual(

@@ -53,7 +53,7 @@ def _read_rows(manifest: dict[str, Any], manifest_path: Path) -> list[dict[str, 
 
 def _read_source_licence_manifest(
     manifest: dict[str, Any], manifest_path: Path
-) -> dict[str, dict[str, Any]]:
+) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
     reference = str(manifest.get("source_licence_manifest") or "").strip()
     if not reference:
         raise DatasetBuildBlocked("source licence manifest is required; acquisition is NOT_RUN")
@@ -65,7 +65,7 @@ def _read_source_licence_manifest(
     except (OSError, json.JSONDecodeError) as exc:
         raise DatasetBuildBlocked(f"source licence manifest is unreadable: {path}") from exc
     try:
-        return validate_source_licence_manifest(payload)
+        return payload, validate_source_licence_manifest(payload)
     except DatasetValidationError as exc:
         raise DatasetBuildBlocked(f"source licence manifest is invalid: {exc}") from exc
 
@@ -78,7 +78,9 @@ def build_dataset(
     if output_dir.exists() and any(output_dir.iterdir()):
         raise DatasetBuildBlocked(f"immutable dataset output already exists: {output_dir}")
     source_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    source_licences = _read_source_licence_manifest(source_manifest, manifest_path)
+    source_licence_manifest, source_licences = _read_source_licence_manifest(
+        source_manifest, manifest_path
+    )
     rows = _read_rows(source_manifest, manifest_path)
     for row in rows:
         validate_pair_source_binding(row, source_licences)
@@ -108,6 +110,7 @@ def build_dataset(
         "per_discipline": MIN_PER_DISCIPLINE,
         "locked_test": MIN_LOCKED,
     }
+    report["source_licence_manifest_digest"] = canonical_digest(source_licence_manifest)
     report["counts"] = {"total": len(rows), "per_label": counts, "per_discipline": disciplines}
     report["status"] = (
         "frozen"
