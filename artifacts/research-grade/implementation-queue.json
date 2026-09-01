@@ -12,7 +12,7 @@
   "implementation": {
     "pull_request": 57,
     "branch": "codex/swos-v2-research-grade",
-    "head_sha": "b75f5b22c44b15b8fbbb3dcb77249f3d17c19b33",
+    "head_sha": "3e032bba84d56af17d92acf3c9de85ca33be93f6",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/57",
@@ -220,6 +220,11 @@
       "id": "planning-merge",
       "status": "pass",
       "evidence": "PR #55 merged as 11490869b52f146569bcd19cc17cef134012c81b"
+    },
+    {
+      "id": "post-merge-main-ci",
+      "status": "historical-deviation",
+      "evidence": "SWOS CI run 33565116220 on 11490869b52f146569bcd19cc17cef134012c81b failed only DCO sign-off because the squash-generated planning commit has no standalone Signed-off-by; CodeQL and Engineering Quality passed."
     },
     {
       "id": "implementation-hosted-ci",
