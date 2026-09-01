@@ -229,8 +229,8 @@
     },
     {
       "id": "implementation-hosted-ci",
-      "status": "pending",
-      "evidence": "Re-run at implementation head after queue commit"
+      "status": "pass",
+      "evidence": "Required workflows passed at implementation head 311c498e1b2074916b10e3ac69579246e417b36f: SWOS Prose Benchmark 33568668411, SWOS Portability Gate 33568668835, Research Grade compatibility 33568668366, SWOS CI 33568668535, SWOS CodeQL 33568668414, and SWOS Engineering Quality 33568668772."
     },
     {
       "id": "portability-definitions",
