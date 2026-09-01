@@ -26,7 +26,8 @@
       "v1 compatibility manifest: 118 recorded file digests match current files and c4ec2945 baseline",
       "python tools/build_citation_dataset.py: exit 2, status not_run, zero output files, source manifest has zero sources",
       "task freeze audit at 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: 118 marker-only changes, zero non-marker differences",
-      "T070 floor regression: all seven frozen minima are checked and under-floor reports remain blocked"
+      "T070 floor regression: all seven frozen minima are checked and under-floor reports remain blocked",
+      "PR #58 exact-head hosted checks at 874497136fe61d8bb1da37eb8f1aee255a796e99: six required workflows pass"
     ]
   },
   "summary": {
@@ -232,8 +233,8 @@
     },
     {
       "id": "implementation-hosted-ci",
-      "status": "pending",
-      "evidence": "Re-run required workflows at PR #58 head after the queue metadata commit."
+      "status": "pass",
+      "evidence": "Six required workflows passed at PR #58 head 874497136fe61d8bb1da37eb8f1aee255a796e99: SWOS CI 33572447577, SWOS CodeQL 33572447576, Research Grade compatibility 33572447582, SWOS Prose Benchmark 33572447618, SWOS Portability Gate 33572447587, and SWOS Engineering Quality 33572447571."
     },
     {
       "id": "portability-definitions",
