@@ -1,0 +1,51 @@
+name: Research Grade citation model evaluation
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_manifest:
+        description: "Repository-relative verified model manifest"
+        required: true
+        default: "artifacts/research-grade/citation-model/model-manifest.json"
+      calibration:
+        description: "Repository-relative verified calibration artifact"
+        required: true
+        default: "artifacts/research-grade/citation-model/calibration.json"
+      locked_test:
+        description: "Repository-relative locked-test JSONL"
+        required: true
+        default: "benchmark/citation-support/locked_test.jsonl"
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deterministic runtime
+        run: python -m pip install --disable-pip-version-check --no-input -e .
+      - name: Require the exact verified release inputs
+        env:
+          MODEL_MANIFEST: ${{ inputs.model_manifest }}
+          CALIBRATION: ${{ inputs.calibration }}
+          LOCKED_TEST: ${{ inputs.locked_test }}
+        run: |
+          test -f "$MODEL_MANIFEST"
+          test -f "$CALIBRATION"
+          test -f "$LOCKED_TEST"
+      - name: Evaluate the locked test without model downloads
+        run: |
+          python tools/evaluate_citation_classifier.py \
+            --model-manifest "${{ inputs.model_manifest }}" \
+            --calibration "${{ inputs.calibration }}" \
+            --locked-test "${{ inputs.locked_test }}" \
+            --predictions-out artifacts/research-grade/citation-model/locked-predictions.jsonl \
+            --report-out artifacts/research-grade/citation-model/locked-evaluation.json

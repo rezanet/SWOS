@@ -335,6 +335,17 @@ def _evidence_matrix(
                 {"index": index, "candidate": candidate, "reason": "exact quote not found"}
             )
             continue
+        classifier_eligibility = audit_item.get("eligibility")
+        if isinstance(classifier_eligibility, dict) and classifier_eligibility.get("eligible") is not True:
+            rejected.append(
+                {
+                    "index": index,
+                    "candidate": candidate,
+                    "reason": "Research Grade classifier/core eligibility did not pass",
+                    "audit": audit_item,
+                }
+            )
+            continue
         if support != "directly_supports":
             rejected.append(
                 {
@@ -935,6 +946,31 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             "work_order_run_id": run.state["run_id"],
         },
     )
+    citation_audit_submission = run._latest("citation_support_audit") or {}
+    classifier_evidence = citation_audit_submission.get("classifier_evidence")
+    if isinstance(classifier_evidence, list):
+        # Predictions are immutable evidence.  They are retained even when a
+        # deterministic core check rejects the corresponding candidate.
+        _write_json(
+            output / "citation-support-decisions.json",
+            {
+                "schema_version": "2.0.0",
+                "status": "recorded",
+                "decisions": classifier_evidence,
+            },
+        )
+        for item in citation_audit_submission.get("audits", []):
+            if not isinstance(item, dict) or not isinstance(item.get("classifier_decision"), dict):
+                blockers.append("Classifier evidence is incomplete for a Research Grade citation audit.")
+                break
+    diversity_report = run.state.get("diversity_report")
+    if isinstance(diversity_report, dict):
+        _write_json(output / "source-diversity-report.json", diversity_report)
+        if diversity_report.get("status") != "pass":
+            blockers.append(
+                "Research Grade source diversity is "
+                f"{diversity_report.get('status', 'unreported')}; corrective expansion or an explicit scoped limitation is required."
+            )
 
     raw_rerank = run._latest("semantic_rerank") or {}
     rerank_contract_passed = bool(

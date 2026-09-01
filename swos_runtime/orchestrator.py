@@ -18,6 +18,13 @@ from .discipline_ontology import DisciplineOntologyRegistry, bind_research_plan
 from .finalizer import finalize_work_order_run
 from .governance import detect_prompt_injection, exact_quote_supported
 from .models import ResearchRequest, RunOutcome, SourceRecord
+from .research_expansion import expansion_plan
+from .source_diversity import (
+    DiversityRequirement,
+    FamilyIdentityPolicy,
+    canonicalize_source_families,
+    measure_source_diversity,
+)
 from .work_orders import WorkOrderError, WorkOrderRun
 
 RUNTIME_VERSION = "0.2.0"
@@ -258,6 +265,8 @@ class AutonomousSWOS:
                     result,
                     self.ontology_registry.profile(str(discipline)),
                 )
+        if stage == "research_planning" and isinstance(result.get("diversity_requirement"), dict):
+            run.bind_diversity_requirement(DiversityRequirement(**result["diversity_requirement"]))
         result["provenance"] = self._provenance(stage)
         run.submit(result)
 
@@ -284,6 +293,12 @@ class AutonomousSWOS:
             )
         queries.append(f"{topic} counterexamples exceptions limitations evidence")
         return queries
+
+    @staticmethod
+    def diversity_expansion_queries(topic: str, report: dict[str, Any], *, max_queries: int = 8) -> list[str]:
+        """Turn a pre-declared diversity report into bounded corrective retrieval."""
+
+        return list(expansion_plan(report, topic=topic, max_queries=max_queries).queries)
 
     def _replace_retrieval_state(
         self,
@@ -391,6 +406,34 @@ class AutonomousSWOS:
         argument["provenance"] = previous_argument.get("provenance")
         run.replace_latest_submission("argument_construction", argument)
 
+    @staticmethod
+    def _measure_diversity(run: WorkOrderRun) -> Any | None:
+        requirement_data = run.state.get("diversity_requirement")
+        if not isinstance(requirement_data, dict):
+            return None
+        requirement = DiversityRequirement(**requirement_data)
+        sources = _sources(run._latest("source_retrieval") or {})
+        audit = run._latest("citation_support_audit") or {}
+        direct_indices = {
+            int(item["index"])
+            for item in audit.get("audits", [])
+            if isinstance(item, dict)
+            and isinstance(item.get("index"), int)
+            and item.get("support_level") == "directly_supports"
+        }
+        claims = [
+            claim
+            for index, claim in enumerate((run._latest("evidence_extraction") or {}).get("claims", []))
+            if index in direct_indices and isinstance(claim, dict)
+        ]
+        report = measure_source_diversity(
+            families=canonicalize_source_families(sources, FamilyIdentityPolicy()),
+            admitted_claims=claims,
+            requirements=requirement,
+        )
+        run.record_diversity_report(report)
+        return report
+
     def _fulfil(self, run: WorkOrderRun) -> None:
         order = run.work_order()
         if order is None:
@@ -469,6 +512,12 @@ class AutonomousSWOS:
             candidates = (run._latest("evidence_extraction") or {}).get("claims", [])
             source_map = {source.source_id: source for source in _ranked_sources(run)}
             self._submit(run, self.broker.citation_support_audit(candidates, source_map), stage)
+            report = self._measure_diversity(run)
+            if report is not None and report.status in {"fail", "review_required"}:
+                run.state["diversity_expansion_queries"] = self.diversity_expansion_queries(
+                    str(request["topic"]), report.to_dict()
+                )
+                run._save()
             return
 
         if stage == "argument_construction":

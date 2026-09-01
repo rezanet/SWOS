@@ -97,3 +97,20 @@ display summary is never a universal scholarly score and cannot override a
 mandatory criterion failure. The release gate requires every selected pack to
 have a non-empty ontology digest, complete stable-IRI bindings, and zero silent
 cross-discipline standard levelling.
+
+## Research Grade citation and diversity
+
+Citation support is a five-label calibrated decision with fail-closed abstention.
+Only deterministic-precheck-passing, non-abstained `directly_supports` decisions
+are admission-eligible. Release thresholds are macro-F1 >= 0.85, contradiction
+recall >= 0.95, `not_supported` recall >= 0.90, ECE <= 0.05, selective error <=
+0.02, coverage >= 0.70, direct precision and its recorded confidence bounds, and
+100% rejection of laundering/invalid-citation blockers.
+
+The v2 diversity report scores distinct canonical source families across each
+declared dimension. It reports source-count and claim-exposure HHI, effective
+categories, normalized balance, metadata unknownness, required-strata coverage,
+counter-position status, and corrective queries. The geometric
+`research_grade_composite` must be >= 0.50 and no required dimension may fail.
+`source_diversity_index` remains a v1 provider scalar for compatibility only;
+provider count is diagnostic and never gates Research Grade.

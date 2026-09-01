@@ -122,37 +122,37 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 
 ### US3 tests first
 
-- [ ] T058 [P] [US3] Add classifier schema, probability, ordering, batching, digest, label-order, OOD, corrupt-artifact, and abstention tests in `tests/runtime/test_citation_classifier.py`
-- [ ] T059 [P] [US3] Add calibration fit isolation, ECE, threshold, immutable binding, confidence-bound, and coverage tests in `tests/runtime/test_citation_calibration.py`
-- [ ] T060 [P] [US3] Add tests proving only deterministic-precheck plus direct/non-abstained classifier output is admission-eligible in `tests/runtime/test_citation_admission.py`
-- [ ] T061 [P] [US3] Add source-family identity, ordering, duplicate edition/mirror/preprint/provider invariance, unknownness, HHI/effective-number, exposure, and exception tests in `tests/runtime/test_source_diversity.py`
-- [ ] T062 [P] [US3] Add bounded research-expansion, required-strata, counter-position, and final-limitation integration tests in `tests/runtime/test_research_expansion.py`
-- [ ] T063 [P] [US3] Add leakage, licence, manifest, group-split, agreement, locked-test isolation, and model-card tests in `tests/runtime/test_citation_dataset.py`
+- [x] T058 [P] [US3] Add classifier schema, probability, ordering, batching, digest, label-order, OOD, corrupt-artifact, and abstention tests in `tests/runtime/test_citation_classifier.py`
+- [x] T059 [P] [US3] Add calibration fit isolation, ECE, threshold, immutable binding, confidence-bound, and coverage tests in `tests/runtime/test_citation_calibration.py`
+- [x] T060 [P] [US3] Add tests proving only deterministic-precheck plus direct/non-abstained classifier output is admission-eligible in `tests/runtime/test_citation_admission.py`
+- [x] T061 [P] [US3] Add source-family identity, ordering, duplicate edition/mirror/preprint/provider invariance, unknownness, HHI/effective-number, exposure, and exception tests in `tests/runtime/test_source_diversity.py`
+- [x] T062 [P] [US3] Add bounded research-expansion, required-strata, counter-position, and final-limitation integration tests in `tests/runtime/test_research_expansion.py`
+- [x] T063 [P] [US3] Add leakage, licence, manifest, group-split, agreement, locked-test isolation, and model-card tests in `tests/runtime/test_citation_dataset.py`
 
 ### US3 citation implementation
 
-- [ ] T064 [P] [US3] Add citation pair/decision and model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
-- [ ] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
-- [ ] T066 [US3] Implement temperature scaling, selective thresholds, metric confidence intervals, and immutable binding in `swos_runtime/citation_calibration.py`
-- [ ] T067 [US3] Preserve deterministic prechecks and integrate trained decisions behind `CapabilityBroker.citation_support_audit` in `swos_runtime/broker.py`
-- [ ] T068 [US3] Restrict final verification to core eligibility and store immutable classifier evidence/overrides in `swos_runtime/finalizer.py`
-- [ ] T069 [P] [US3] Write annotation guidelines, dataset card, source/licence manifest, split policy, and adjudication protocol in `benchmark/citation-support/`
+- [x] T064 [P] [US3] Add citation pair/decision and model/calibration manifest schemas in `schemas/research-grade/citation-support-decision.schema.json` and `schemas/research-grade/model-artifact.schema.json`
+- [x] T065 [US3] Implement verified model loading, deterministic batching, five semantic support classes, OOD detection, and fail-closed abstention while keeping laundering/invalid cases as core rule rejections in `swos_runtime/citation_classifier.py`
+- [x] T066 [US3] Implement temperature scaling, selective thresholds, metric confidence intervals, and immutable binding in `swos_runtime/citation_calibration.py`
+- [x] T067 [US3] Preserve deterministic prechecks and integrate trained decisions behind `CapabilityBroker.citation_support_audit` in `swos_runtime/broker.py`
+- [x] T068 [US3] Restrict final verification to core eligibility and store immutable classifier evidence/overrides in `swos_runtime/finalizer.py`
+- [x] T069 [P] [US3] Write annotation guidelines, dataset card, source/licence manifest, split policy, and adjudication protocol in `benchmark/citation-support/`
 - [ ] T070 [US3] Implement and execute the bounded corpus workflow to acquire permitted pairs, double-annotate, adjudicate, approve, leakage-check, checksum, and freeze actual train/calibration/locked/OOD splits and `DATA-LICENCE.md` in `benchmark/citation-support/manifest.json` using `tools/build_citation_dataset.py`
-- [ ] T071 [US3] Implement immutable training and model-card/artifact-manifest generation in `tools/train_citation_classifier.py`
-- [ ] T072 [US3] Implement calibration-only fitting and artifact generation in `tools/calibrate_citation_classifier.py`
+- [x] T071 [US3] Implement immutable training and model-card/artifact-manifest generation in `tools/train_citation_classifier.py`
+- [x] T072 [US3] Implement calibration-only fitting and artifact generation in `tools/calibrate_citation_classifier.py`
 - [ ] T073 [US3] Implement locked evaluation, raw predictions, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`
-- [ ] T074 [US3] Add pinned release-model workflow and immutable outputs in `.github/workflows/citation-model-evaluation.yml`
+- [x] T074 [US3] Add pinned release-model workflow and immutable outputs in `.github/workflows/citation-model-evaluation.yml`
 
 ### US3 diversity implementation
 
-- [ ] T075 [P] [US3] Add research-plan v2 diversity requirements and report schemas in `schemas/research-grade/research-plan-2.0.schema.json` and `schemas/research-grade/source-diversity-report.schema.json`
-- [ ] T076 [US3] Implement canonical source-family identity and venue/owner/region/language/period/method/source-type/access-mode/stance metadata evidence states in `swos_runtime/source_diversity.py`
-- [ ] T077 [US3] Implement per-dimension source-count/exposure metrics, worst-case gates, separately versioned v2 geometric composite threshold 0.50, non-gating frozen v1 provider scalar, family-count statuses, counter-position checks, and exceptions in `swos_runtime/source_diversity.py`
-- [ ] T078 [US3] Replace provider-count diversity and propagate expansion/review/limitations through `swos_runtime/orchestrator.py` and `swos_runtime/finalizer.py`
+- [x] T075 [P] [US3] Add research-plan v2 diversity requirements and report schemas in `schemas/research-grade/research-plan-2.0.schema.json` and `schemas/research-grade/source-diversity-report.schema.json`
+- [x] T076 [US3] Implement canonical source-family identity and venue/owner/region/language/period/method/source-type/access-mode/stance metadata evidence states in `swos_runtime/source_diversity.py`
+- [x] T077 [US3] Implement per-dimension source-count/exposure metrics, worst-case gates, separately versioned v2 geometric composite threshold 0.50, non-gating frozen v1 provider scalar, family-count statuses, counter-position checks, and exceptions in `swos_runtime/source_diversity.py`
+- [x] T078 [US3] Replace provider-count diversity and propagate expansion/review/limitations through `swos_runtime/orchestrator.py` and `swos_runtime/finalizer.py`
 - [ ] T079 [P] [US3] Create separate tuning packets plus at least ten locked human-reviewed balanced/concentrated/sparse/narrow/multilingual/historical/method-monoculture/duplicate/fake-diversity packets per discipline in `evals/fixtures/source-diversity/`
 - [ ] T080 [US3] Implement production-path diversity benchmark and confidence-bound report proving 100% seeded fake/missing-strata detection, material-gap recall >=0.90, adequate/narrow false-block <=0.10, and ordering/provider invariance in `tools/run_source_diversity_benchmark.py`
-- [ ] T081 [US3] Replace citation/diversity fixture heuristics with production result scoring in `swos_runtime/evaluation.py` and update `evals/metrics.md`
-- [ ] T082 [US3] Publish model/dataset/diversity limitations and prohibited uses in `models/citation-support/<version>/model-card.md` and `docs/architecture/research-grade-citation.md`
+- [x] T081 [US3] Replace citation/diversity fixture heuristics with production result scoring in `swos_runtime/evaluation.py` and update `evals/metrics.md`
+- [x] T082 [US3] Publish model/dataset/diversity limitations and prohibited uses in `models/citation-support/<version>/model-card.md` and `docs/architecture/research-grade-citation.md`
 
 **Checkpoint**: SC-003–SC-005 pass; no provider or human-edited prediction bypasses core policy.
 

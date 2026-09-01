@@ -50,7 +50,17 @@ jobs:
           git diff --exit-code "origin/${{ github.base_ref }}" -- \
             contracts/capability-contract/capabilities-v1.json \
             contracts/stage-instruction/stage-instructions-v1.json \
-            schemas
+            schemas/common \
+            schemas/argument-graph \
+            schemas/decision-ledger \
+            schemas/document-manifest \
+            schemas/evaluation \
+            schemas/evidence-matrix \
+            schemas/governance \
+            schemas/memory \
+            schemas/provenance-graph \
+            schemas/reviewer \
+            schemas/state
 
       - name: Require the compatibility manifest in the candidate
         run: test -f tests/fixtures/research-grade/v1-compatibility-manifest.json

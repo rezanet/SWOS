@@ -166,6 +166,7 @@ class WorkOrderRun:
             "review_iteration": 0,
             "revision_count": 0,
             "research_expansions": [],
+            "diversity_requirement": None,
             "submissions": [],
             "history": [],
         }
@@ -642,6 +643,24 @@ class WorkOrderRun:
         self._save()
         self._persist_work_order()
 
+    def record_diversity_report(self, report: Any) -> None:
+        """Persist the production source-diversity measurement and digest."""
+
+        payload = report.to_dict() if hasattr(report, "to_dict") else dict(report or {})
+        if not payload.get("report_id") or not payload.get("requirement_id"):
+            raise WorkOrderError("diversity report identity is incomplete")
+        self.state["diversity_report"] = payload
+        self.state.setdefault("history", []).append(
+            {
+                "event": "diversity_measured",
+                "report_id": payload["report_id"],
+                "status": payload.get("status"),
+                "family_digest": payload.get("family_digest"),
+            }
+        )
+        self._save()
+        self._persist_work_order()
+
     def status(self) -> dict[str, Any]:
         return {
             "protocol_version": PROTOCOL_VERSION,
@@ -727,6 +746,8 @@ class WorkOrderRun:
                 "review_iteration": self.state.get("review_iteration", 0),
                 "revision_count": self.state.get("revision_count", 0),
                 "research_expansions": list(self.state.get("research_expansions", [])),
+                "diversity_requirement": self.state.get("diversity_requirement"),
+                "diversity_report": self.state.get("diversity_report"),
             },
         }
         path = Path(output_path) if output_path else self.run_dir / "host-bundle.json"
@@ -763,6 +784,19 @@ class WorkOrderRun:
         }
         self.state.setdefault("history", []).append(
             {"event": "ontology_bound", "binding": dict(self.state["ontology_binding"])}
+        )
+        self._save()
+
+    def bind_diversity_requirement(self, requirement: Any) -> None:
+        """Persist the pre-retrieval, ontology-bound diversity contract."""
+
+        payload = requirement.to_dict() if hasattr(requirement, "to_dict") else dict(requirement or {})
+        required = ("requirement_id", "dimensions", "min_family_count", "max_hhi", "max_share", "min_composite", "max_unknown_rate")
+        if any(key not in payload for key in required) or not payload.get("declared_before_retrieval", True):
+            raise WorkOrderError("diversity binding requires a complete pre-retrieval requirement")
+        self.state["diversity_requirement"] = payload
+        self.state.setdefault("history", []).append(
+            {"event": "diversity_requirement_bound", "requirement": dict(payload)}
         )
         self._save()
 

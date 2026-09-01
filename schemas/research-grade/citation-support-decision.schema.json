@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/citation-support-decision.schema.json",
+  "title": "SWOS citation support decision",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pair_id", "input", "status", "support_level", "probabilities", "confidence", "model_digest", "calibration_digest", "dataset_manifest_digest", "ontology_version", "ontology_digest"],
+  "properties": {
+    "schema_version": {"const": "2.0.0"}, "pair_id": {"type": "string", "minLength": 1},
+    "input": {"type": "object", "additionalProperties": false, "required": ["claim", "exact_quote", "input_digest"], "properties": {"claim": {"type": "string", "minLength": 1}, "exact_quote": {"type": "string"}, "context": {"type": "string"}, "source_id": {"type": "string"}, "input_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}},
+    "status": {"enum": ["classified", "abstained", "rule_rejected", "error"]},
+    "support_level": {"type": ["string", "null"], "enum": ["directly_supports", "partially_supports", "context_only", "contradicts", "not_supported", null]},
+    "probabilities": {"type": "object", "additionalProperties": false, "required": ["directly_supports", "partially_supports", "context_only", "contradicts", "not_supported"], "properties": {"directly_supports": {"type": "number", "minimum": 0, "maximum": 1}, "partially_supports": {"type": "number", "minimum": 0, "maximum": 1}, "context_only": {"type": "number", "minimum": 0, "maximum": 1}, "contradicts": {"type": "number", "minimum": 0, "maximum": 1}, "not_supported": {"type": "number", "minimum": 0, "maximum": 1}}},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1}, "selected_threshold": {"type": "number", "minimum": 0, "maximum": 1}, "abstention_reason": {"type": ["string", "null"]}, "uncertainty": {"type": "array", "items": {"type": "string"}},
+    "model_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "calibration_digest": {"type": "string"}, "dataset_manifest_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "ontology_version": {"const": "2.0.0"}, "ontology_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "label_order": {"const": ["directly_supports", "partially_supports", "context_only", "contradicts", "not_supported"]}, "input_digest": {"type": "string"}, "deterministic_checks": {"type": "object"}, "provenance": {"type": "object"}, "created_at": {"type": "string", "format": "date-time"}
+  }
+}

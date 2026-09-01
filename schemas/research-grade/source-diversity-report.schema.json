@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/source-diversity-report.schema.json",
+  "title": "SWOS multidimensional source diversity report",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["report_id", "requirement_id", "policy_version", "family_count", "dimensions", "research_grade_composite", "raw_status", "status", "counter_position", "limitations", "corrective_queries"],
+  "properties": {"report_id": {"type": "string"}, "requirement_id": {"type": "string"}, "policy_version": {"const": "2.0.0"}, "family_count": {"type": "integer", "minimum": 0}, "provider_count": {"type": "integer", "minimum": 0}, "dimensions": {"type": "object"}, "research_grade_composite": {"type": "number", "minimum": 0, "maximum": 1}, "raw_status": {"enum": ["pass", "review_required", "fail"]}, "status": {"enum": ["pass", "review_required", "fail"]}, "counter_position": {"type": "object"}, "exception": {"type": "object"}, "limitations": {"type": "array", "items": {"type": "string"}}, "corrective_queries": {"type": "array", "items": {"type": "string"}}, "family_digest": {"type": "string"}, "requirement_digest": {"type": "string"}, "created_at": {"type": "string", "format": "date-time"}}
+}

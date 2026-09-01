@@ -41,6 +41,7 @@ class CapabilityBroker:
         execution_mode: str = "injected",
         adapter_manifest: dict[str, Any] | None = None,
         discipline_critic: Any | None = None,
+        citation_classifier: Any | None = None,
     ) -> None:
         self.stage_binding = stage_binding
         self.retrieval_binding = retrieval_binding
@@ -51,6 +52,9 @@ class CapabilityBroker:
         self.model_host = str(self.adapter_manifest.get("model_host") or model_host)
         self.execution_mode = str(self.adapter_manifest.get("execution_mode") or execution_mode)
         self.discipline_critic = discipline_critic
+        # Optional Research Grade classifier.  The broker never treats its
+        # prediction as authority; the final core gate still owns admission.
+        self.citation_classifier = citation_classifier
         self.events: list[dict[str, Any]] = []
 
     @property
@@ -202,6 +206,50 @@ class CapabilityBroker:
         self, candidates: list[dict[str, Any]], sources: dict[str, Any]
     ) -> dict[str, Any]:
         result = self.stage_binding.audit_evidence(candidates, sources)
+        if self.citation_classifier is not None:
+            from .citation_classifier import (
+                CitationPair,
+                admission_eligibility,
+                deterministic_precheck,
+            )
+
+            pairs = []
+            source_values = []
+            for index, candidate in enumerate(candidates):
+                candidate = dict(candidate or {})
+                source_id = str(candidate.get("source_id") or "")
+                quote = str(candidate.get("exact_quote") or candidate.get("evidence_span", {}).get("quoted_text") or "")
+                pairs.append(
+                    CitationPair(
+                        pair_id=str(candidate.get("pair_id") or f"candidate-{index}"),
+                        claim=str(candidate.get("claim") or candidate.get("claim_text") or ""),
+                        passage=quote,
+                        exact_quote=quote,
+                        context=str(candidate.get("context") or ""),
+                        source_id=source_id,
+                        discipline_iri=str(candidate.get("discipline_iri") or ""),
+                        method_iri=str(candidate.get("method_iri") or ""),
+                        source_role_iri=str(candidate.get("source_role_iri") or ""),
+                        source_digest=str(candidate.get("source_digest") or ""),
+                    )
+                )
+                source_values.append(sources.get(source_id))
+            decisions = self.citation_classifier.classify(pairs)
+            generated = []
+            for index, (pair, source, decision) in enumerate(zip(pairs, source_values, decisions)):
+                checks = deterministic_precheck(pair, source)
+                eligibility = admission_eligibility(pair, checks, decision)
+                generated.append(
+                    {
+                        "index": index,
+                        "support_level": decision.support_level or "invalid_citation",
+                        "reason": eligibility.reason,
+                        "classifier_decision": decision.to_dict(),
+                        "deterministic_checks": checks.to_dict(),
+                        "eligibility": eligibility.to_dict(),
+                    }
+                )
+            result = {**dict(result or {}), "audits": generated, "classifier_evidence": [item["classifier_decision"] for item in generated]}
         self._event("citation_support_audit")
         return result
 

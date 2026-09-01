@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/research-plan-2.0.schema.json",
+  "title": "SWOS Research Grade research plan",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "discipline_iri",
+    "ontology_version",
+    "ontology_digest",
+    "diversity_requirement"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "discipline": {"type": "string"},
+    "discipline_iri": {"type": "string", "format": "uri"},
+    "ontology_version": {"const": "2.0.0"},
+    "ontology_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "method_iris": {"type": "array", "items": {"type": "string", "format": "uri"}},
+    "criterion_iris": {"type": "array", "items": {"type": "string", "format": "uri"}},
+    "diversity_requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_id",
+        "dimensions",
+        "min_family_count",
+        "max_hhi",
+        "max_share",
+        "min_composite",
+        "max_unknown_rate"
+      ],
+      "properties": {
+        "requirement_id": {"type": "string"},
+        "dimensions": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "required_strata": {"type": "object"},
+        "min_family_count": {"type": "integer", "minimum": 1},
+        "max_hhi": {"type": "number", "minimum": 0, "maximum": 1},
+        "max_share": {"type": "number", "minimum": 0, "maximum": 1},
+        "min_composite": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "max_unknown_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "counter_position_required": {"type": "boolean"},
+        "research_question": {"type": "string"},
+        "declared_before_retrieval": {"type": "boolean"}
+      }
+    }
+  }
+}

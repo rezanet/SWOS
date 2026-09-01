@@ -68,6 +68,42 @@ def score_discipline_critique(report: Any) -> dict[str, Any]:
         "provider_owned_admission": False,
     }
 
+
+def score_source_diversity(report: Any) -> dict[str, Any]:
+    """Score a production source-diversity report, never provider heuristics."""
+
+    payload = report.to_dict() if hasattr(report, "to_dict") else dict(report or {})
+    dimensions = payload.get("dimensions", {})
+    if not isinstance(dimensions, dict):
+        dimensions = {}
+    rows = []
+    for name, value in sorted(dimensions.items()):
+        if not isinstance(value, dict):
+            continue
+        rows.append(
+            {
+                "dimension": name,
+                "hhi": value.get("hhi"),
+                "max_share": value.get("max_share"),
+                "unknown_rate": value.get("unknown_rate"),
+                "required_strata_coverage": value.get("required_strata_coverage"),
+                "status": value.get("status"),
+            }
+        )
+    return {
+        "source": "production_runtime_source_diversity_report",
+        "family_count": payload.get("family_count", 0),
+        "provider_count_diagnostic_only": payload.get("provider_count", 0),
+        "research_grade_composite": payload.get("research_grade_composite", 0.0),
+        "raw_status": payload.get("raw_status", "fail"),
+        "status": payload.get("status", "fail"),
+        "counter_position": payload.get("counter_position", {}),
+        "dimensions": rows,
+        "corrective_queries": list(payload.get("corrective_queries") or []),
+        "limitations": list(payload.get("limitations") or []),
+        "provider_count_is_non_gating": True,
+    }
+
 PLANE_ARTIFACTS = {
     "retrieval": ("source-register.json", "retrieval.json", "reranking.json"),
     "grounding": ("evidence-matrix.json", "source-register.json", "provenance.json"),
