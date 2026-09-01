@@ -88,6 +88,7 @@ not violate the constitutional boundary.
 
 ```text
 specs/008-swos-v2-research-grade/
+├── builder-prompt.md
 ├── spec.md
 ├── plan.md
 ├── research.md

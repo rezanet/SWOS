@@ -2762,6 +2762,19 @@
       "superseded_by": []
     },
     {
+      "id": "specs-008-swos-v2-research-grade-builder-prompt",
+      "path": "specs/008-swos-v2-research-grade/builder-prompt.md",
+      "title": "Builder Dispatch: Implement SWOS v2.0 Research Grade",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-specs-008-swos-v2-research-grade-builder-prompt"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
       "id": "specs-008-swos-v2-research-grade-checklist",
       "path": "specs/008-swos-v2-research-grade/checklists/requirements.md",
       "title": "Specification Quality Checklist: SWOS v2.0 Research Grade",
