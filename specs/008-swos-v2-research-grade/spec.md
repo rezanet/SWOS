@@ -489,12 +489,15 @@ associations are rejected.
   finalised SWOS run round-trip through every certified serialisation with equal
   semantic normal-form digests in two independent processors; 100% of invalid and
   lossy fixtures are rejected and no certificate survives input mutation.
-- **SC-008**: The multimodal evaluation corpus contains at least 60 distinct
-  rights-cleared objects/works and at least 96 rights-cleared renditions across at
-  least six media/material classes, three mediation
-  conditions and both art disciplines; visual-anchor precision is at least 0.95,
-  seeded invented-detail and reproduction-artefact cases have zero unsafe PASSes,
-  and over-association/false-originality detection is at least 0.95.
+ - **SC-008**: The multimodal evaluation corpus contains at least 60 distinct
+   rights-cleared objects/works and at least 96 rights-cleared renditions, at
+   least 80 atomic region-grounding claims across at least 20 assets, at least
+   120 cross-modal pairs, at least 48 discipline tasks across at least 24 works,
+   and at least 96 adversarial cases, across at least six media/material classes,
+   three mediation conditions and both art disciplines; visual-anchor precision
+   is at least 0.95, seeded invented-detail and reproduction-artefact cases have
+   zero unsafe PASSes, and over-association/false-originality detection is at
+   least 0.95.
 - **SC-009**: Agent promotion remains disabled until every multimodal blocker,
   separation-of-duties check and rollback rehearsal passes on the same exact
   candidate head; disabling the promotion restores the pack-only path without

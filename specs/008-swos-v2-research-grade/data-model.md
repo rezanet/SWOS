@@ -163,10 +163,13 @@ override a mandatory criterion or replace the per-discipline record.
 
 ### CitationPair
 
-Fields: pair ID, atomic claim, exact quote, bounded context, source/work/passage
-IDs and digests, selectors/locators, discipline/method/source-role IRIs, rights
-and licence disposition, transformations, annotation provenance, split group,
-and canonical input digest.
+Fields: pair ID, atomic claim, exact quote (the canonical `evidence_span`),
+bounded context, source/work/passage IDs and digests, selectors/locators,
+discipline/method/source-role IRIs, rights and licence disposition,
+transformations, annotation provenance, split group, and canonical input digest.
+The canonical `atomic_claim` and `evidence_span` are exact UTF-8 input values;
+no trimming, reflow, or other normalization is permitted when their digests are
+computed or when a decision is emitted.
 
 ### CitationAnnotation
 

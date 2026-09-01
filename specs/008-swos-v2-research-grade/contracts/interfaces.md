@@ -146,6 +146,9 @@ def admission_eligibility(pair: CitationPair,
 Requirements:
 
 - output order matches input order and decisions are batch-size invariant;
+- `CitationPair.exact_quote` is the canonical `evidence_span` field: its exact
+  UTF-8 bytes are copied without trimming, reflow, or other normalization, and
+  the claim/span digests are computed over those canonical bytes;
 - every decision repeats the input pair's immutable `pair_id`, exact
   `atomic_claim`, and exact `evidence_span`, with independent claim/span
   digests; core policy compares these fields to the supplied `CitationPair` and
