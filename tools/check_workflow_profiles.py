@@ -16,6 +16,9 @@ PROVIDER_MARKERS = (
     "openai_api",
 )
 ORDINARY_WORKFLOW_MARKERS = ("pull_request", "push")
+SAFE_CREDENTIAL_GUARD = re.compile(
+    r"(?:test\s+-z|if\s+\[\[?\s*-z).*OPENAI_API_KEY", re.IGNORECASE
+)
 
 
 def _top_level_block(text: str, heading: str) -> str:
@@ -76,6 +79,16 @@ def _is_dispatch_only_condition(condition: str | None) -> bool:
     return bool(re.fullmatch(r"github\.event_name\s*==\s*(['\"])workflow_dispatch\1", normalized))
 
 
+def _provider_markers_in_block(block: str) -> bool:
+    """Detect provider execution markers while allowing offline credential guards."""
+
+    effective_lines = [
+        line for line in block.splitlines() if not SAFE_CREDENTIAL_GUARD.search(line)
+    ]
+    effective = "\n".join(effective_lines).lower()
+    return any(marker.lower() in effective for marker in PROVIDER_MARKERS)
+
+
 def _provider_jobs_are_dispatch_only(text: str, path: Path, errors: list[str]) -> None:
     if not any(marker.lower() in text.lower() for marker in PROVIDER_MARKERS):
         return
@@ -87,7 +100,7 @@ def _provider_jobs_are_dispatch_only(text: str, path: Path, errors: list[str]) -
         r"^  ([A-Za-z0-9_-]+):\s*$", _top_level_block(text, "jobs"), re.MULTILINE
     ):
         block = job_block(text, job_id)
-        if any(marker.lower() in block.lower() for marker in PROVIDER_MARKERS):
+        if _provider_markers_in_block(block):
             if not _is_dispatch_only_condition(_job_condition(block)):
                 errors.append(f"provider job is not manual-dispatch-only: {path}:{job_id}")
 
