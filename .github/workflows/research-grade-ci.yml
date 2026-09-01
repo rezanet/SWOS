@@ -58,7 +58,7 @@ jobs:
             schemas/evidence-matrix \
             schemas/governance \
             schemas/memory \
-            schemas/provenance-graph \
+            schemas/provenance-graph/epg.schema.json \
             schemas/reviewer \
             schemas/state
 
