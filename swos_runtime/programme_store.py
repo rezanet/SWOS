@@ -152,9 +152,7 @@ class ProgrammeStore:
         )
         connection.row_factory = sqlite3.Row
         connection.execute("PRAGMA foreign_keys = ON")
-        connection.execute(
-            f"PRAGMA busy_timeout = {int(self.lock_timeout_seconds * 1000)}"
-        )
+        connection.execute(f"PRAGMA busy_timeout = {int(self.lock_timeout_seconds * 1000)}")
         return connection
 
     @staticmethod
@@ -181,9 +179,7 @@ class ProgrammeStore:
                 raise StoreLockTimeout("bounded SQLite write lock timed out") from exc
             raise
 
-    def _chain_head_locked(
-        self, connection: sqlite3.Connection, scope: Any
-    ) -> tuple[int, str]:
+    def _chain_head_locked(self, connection: sqlite3.Connection, scope: Any) -> tuple[int, str]:
         namespace, programme, _ = self._scope_values(scope)
         row = connection.execute(
             """
@@ -355,7 +351,9 @@ class ProgrammeStore:
             data["status"] = status
             data["last_event_hash"] = event["event_hash"]
             if event_type == "contradiction_opened":
-                data.setdefault("contradiction_ids", []).append(str(payload.get("reason", "review")))
+                data.setdefault("contradiction_ids", []).append(
+                    str(payload.get("reason", "review"))
+                )
         else:
             data = {
                 "item_id": item_id,
@@ -448,13 +446,36 @@ class ProgrammeStore:
                         data.get("retired_at"),
                     ),
                 )
-                sequence, previous_hash = self._chain_head_locked(connection, type("S", (), {"repository_namespace_id": namespace, "programme_id": programme, "project_id": project})())
+                sequence, previous_hash = self._chain_head_locked(
+                    connection,
+                    type(
+                        "S",
+                        (),
+                        {
+                            "repository_namespace_id": namespace,
+                            "programme_id": programme,
+                            "project_id": project,
+                        },
+                    )(),
+                )
                 event_id = f"event-{uuid4()}"
                 document = self._event_document(
-                    type("S", (), {"repository_namespace_id": namespace, "programme_id": programme, "project_id": project})(),
+                    type(
+                        "S",
+                        (),
+                        {
+                            "repository_namespace_id": namespace,
+                            "programme_id": programme,
+                            "project_id": project,
+                        },
+                    )(),
                     "status_change",
                     f"binding:{data['binding_id']}",
-                    {"binding": dict(data), "status": "active", "item_id": f"binding:{data['binding_id']}"},
+                    {
+                        "binding": dict(data),
+                        "status": "active",
+                        "item_id": f"binding:{data['binding_id']}",
+                    },
                     sequence + 1,
                     previous_hash,
                     event_id,
@@ -468,10 +489,19 @@ class ProgrammeStore:
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
-                        event_id, namespace, programme, project, sequence + 1,
-                        previous_hash, document["event_hash"], "status_change",
-                        document["item_id"], canonical_json(document["payload"]),
-                        canonical_json(document), document["created_at"], operation_id,
+                        event_id,
+                        namespace,
+                        programme,
+                        project,
+                        sequence + 1,
+                        previous_hash,
+                        document["event_hash"],
+                        "status_change",
+                        document["item_id"],
+                        canonical_json(document["payload"]),
+                        canonical_json(document),
+                        document["created_at"],
+                        operation_id,
                     ),
                 )
                 connection.commit()
@@ -509,15 +539,49 @@ class ProgrammeStore:
                 data["retired_at"] = utc_timestamp() if status == "retired" else None
                 connection.execute(
                     "UPDATE bindings SET data_json=?, status=?, retired_at=? WHERE namespace_id=? AND programme_id=? AND project_id=?",
-                    (canonical_json(data), status, data["retired_at"], namespace, programme, project),
+                    (
+                        canonical_json(data),
+                        status,
+                        data["retired_at"],
+                        namespace,
+                        programme,
+                        project,
+                    ),
                 )
                 sequence, previous_hash = self._chain_head_locked(connection, scope)
                 event_id = f"event-{uuid4()}"
-                document = self._event_document(scope, "status_change", f"binding:{data['binding_id']}", {"status": status, "reason": reason, "item_id": f"binding:{data['binding_id']}"}, sequence + 1, previous_hash, event_id, operation_id)
+                document = self._event_document(
+                    scope,
+                    "status_change",
+                    f"binding:{data['binding_id']}",
+                    {
+                        "status": status,
+                        "reason": reason,
+                        "item_id": f"binding:{data['binding_id']}",
+                    },
+                    sequence + 1,
+                    previous_hash,
+                    event_id,
+                    operation_id,
+                )
                 document["event_hash"] = canonical_digest(document)
                 connection.execute(
                     "INSERT INTO events(event_id, namespace_id, programme_id, project_id, sequence, previous_hash, event_hash, event_type, item_id, payload_json, event_json, created_at, operation_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    (event_id, namespace, programme, project, sequence + 1, previous_hash, document["event_hash"], "status_change", document["item_id"], canonical_json(document["payload"]), canonical_json(document), document["created_at"], operation_id),
+                    (
+                        event_id,
+                        namespace,
+                        programme,
+                        project,
+                        sequence + 1,
+                        previous_hash,
+                        document["event_hash"],
+                        "status_change",
+                        document["item_id"],
+                        canonical_json(document["payload"]),
+                        canonical_json(document),
+                        document["created_at"],
+                        operation_id,
+                    ),
                 )
                 connection.commit()
                 return document
@@ -536,11 +600,34 @@ class ProgrammeStore:
                 )
                 sequence, previous_hash = self._chain_head_locked(connection, scope)
                 event_id = f"event-{uuid4()}"
-                document = self._event_document(scope, "status_change", None, {"status": "closed", "preserve_history": True}, sequence + 1, previous_hash, event_id, operation_id)
+                document = self._event_document(
+                    scope,
+                    "status_change",
+                    None,
+                    {"status": "closed", "preserve_history": True},
+                    sequence + 1,
+                    previous_hash,
+                    event_id,
+                    operation_id,
+                )
                 document["event_hash"] = canonical_digest(document)
                 connection.execute(
                     "INSERT INTO events(event_id, namespace_id, programme_id, project_id, sequence, previous_hash, event_hash, event_type, item_id, payload_json, event_json, created_at, operation_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    (event_id, namespace, programme, project, sequence + 1, previous_hash, document["event_hash"], "status_change", None, canonical_json(document["payload"]), canonical_json(document), document["created_at"], operation_id),
+                    (
+                        event_id,
+                        namespace,
+                        programme,
+                        project,
+                        sequence + 1,
+                        previous_hash,
+                        document["event_hash"],
+                        "status_change",
+                        None,
+                        canonical_json(document["payload"]),
+                        canonical_json(document),
+                        document["created_at"],
+                        operation_id,
+                    ),
                 )
                 connection.commit()
                 return document
@@ -551,13 +638,19 @@ class ProgrammeStore:
     def programme_status(self, scope: Any) -> str:
         namespace, programme, _ = self._scope_values(scope)
         with self._connect() as connection:
-            row = connection.execute("SELECT status FROM programme_state WHERE namespace_id=? AND programme_id=?", (namespace, programme)).fetchone()
+            row = connection.execute(
+                "SELECT status FROM programme_state WHERE namespace_id=? AND programme_id=?",
+                (namespace, programme),
+            ).fetchone()
         return "active" if row is None else str(row[0])
 
     def has_programme_history(self, scope: Any) -> bool:
         namespace, programme, _ = self._scope_values(scope)
         with self._connect() as connection:
-            row = connection.execute("SELECT 1 FROM events WHERE namespace_id=? AND programme_id=? LIMIT 1", (namespace, programme)).fetchone()
+            row = connection.execute(
+                "SELECT 1 FROM events WHERE namespace_id=? AND programme_id=? LIMIT 1",
+                (namespace, programme),
+            ).fetchone()
         return row is not None
 
     def get_projection(self, scope: Any, item_id: str | None) -> dict[str, Any] | None:
@@ -565,19 +658,28 @@ class ProgrammeStore:
             return None
         namespace, programme, project = self._scope_values(scope)
         with self._connect() as connection:
-            row = connection.execute("SELECT data_json FROM projections WHERE namespace_id=? AND programme_id=? AND project_id=? AND item_id=?", (namespace, programme, project, item_id)).fetchone()
+            row = connection.execute(
+                "SELECT data_json FROM projections WHERE namespace_id=? AND programme_id=? AND project_id=? AND item_id=?",
+                (namespace, programme, project, item_id),
+            ).fetchone()
         return None if row is None else json.loads(row[0])
 
     def list_projections(self, scope: Any) -> list[dict[str, Any]]:
         namespace, programme, project = self._scope_values(scope)
         with self._connect() as connection:
-            rows = connection.execute("SELECT data_json FROM projections WHERE namespace_id=? AND programme_id=? AND project_id=? ORDER BY item_id", (namespace, programme, project)).fetchall()
+            rows = connection.execute(
+                "SELECT data_json FROM projections WHERE namespace_id=? AND programme_id=? AND project_id=? ORDER BY item_id",
+                (namespace, programme, project),
+            ).fetchall()
         return [json.loads(row[0]) for row in rows]
 
     def events(self, scope: Any) -> list[dict[str, Any]]:
         namespace, programme, _ = self._scope_values(scope)
         with self._connect() as connection:
-            rows = connection.execute("SELECT event_json FROM events WHERE namespace_id=? AND programme_id=? ORDER BY sequence", (namespace, programme)).fetchall()
+            rows = connection.execute(
+                "SELECT event_json FROM events WHERE namespace_id=? AND programme_id=? ORDER BY sequence",
+                (namespace, programme),
+            ).fetchall()
         return [json.loads(row[0]) for row in rows]
 
     def verify_chain(self, scope: Any) -> list[str]:
@@ -608,7 +710,10 @@ class ProgrammeStore:
         with self._connect() as connection:
             self._begin(connection)
             try:
-                connection.execute("DELETE FROM projections WHERE namespace_id=? AND programme_id=? AND project_id=?", (namespace, programme, project))
+                connection.execute(
+                    "DELETE FROM projections WHERE namespace_id=? AND programme_id=? AND project_id=?",
+                    (namespace, programme, project),
+                )
                 for event in self.events(scope):
                     self._apply_projection_locked(connection, scope, event)
                 connection.commit()
@@ -619,11 +724,17 @@ class ProgrammeStore:
 
     def save_assessment(self, data: Mapping[str, Any]) -> None:
         with self._connect() as connection:
-            connection.execute("INSERT OR REPLACE INTO assessments(assessment_id, data_json, consumed, approval_json) VALUES (?, ?, 0, NULL)", (data["assessment_id"], canonical_json(dict(data))))
+            connection.execute(
+                "INSERT OR REPLACE INTO assessments(assessment_id, data_json, consumed, approval_json) VALUES (?, ?, 0, NULL)",
+                (data["assessment_id"], canonical_json(dict(data))),
+            )
 
     def get_assessment(self, assessment_id: str) -> dict[str, Any] | None:
         with self._connect() as connection:
-            row = connection.execute("SELECT data_json, consumed FROM assessments WHERE assessment_id=?", (assessment_id,)).fetchone()
+            row = connection.execute(
+                "SELECT data_json, consumed FROM assessments WHERE assessment_id=?",
+                (assessment_id,),
+            ).fetchone()
         if row is None:
             return None
         data = json.loads(row[0])
@@ -632,11 +743,17 @@ class ProgrammeStore:
 
     def consume_assessment(self, assessment_id: str, approval: Mapping[str, Any]) -> None:
         with self._connect() as connection:
-            connection.execute("UPDATE assessments SET consumed=1, approval_json=? WHERE assessment_id=?", (canonical_json(dict(approval)), assessment_id))
+            connection.execute(
+                "UPDATE assessments SET consumed=1, approval_json=? WHERE assessment_id=?",
+                (canonical_json(dict(approval)), assessment_id),
+            )
 
     def save_receipt(self, data: Mapping[str, Any]) -> None:
         with self._connect() as connection:
-            connection.execute("INSERT INTO receipts(receipt_id, data_json) VALUES (?, ?)", (data["receipt_id"], canonical_json(dict(data))))
+            connection.execute(
+                "INSERT INTO receipts(receipt_id, data_json) VALUES (?, ?)",
+                (data["receipt_id"], canonical_json(dict(data))),
+            )
 
     def tamper_for_test(self, scope: Any, *, sequence: int, field: str, value: str) -> None:
         namespace, programme, _ = self._scope_values(scope)

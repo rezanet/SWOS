@@ -21,7 +21,7 @@ class ResearchGradeAuditPackTests(unittest.TestCase):
         pack = root / "pack"
         source.mkdir()
         (source / "metrics.json").write_text('{"coverage": 0.8}\n', encoding="utf-8")
-        (source / "reviews.json").write_text('[]\n', encoding="utf-8")
+        (source / "reviews.json").write_text("[]\n", encoding="utf-8")
         assemble_audit_pack(source, pack, code_sha="a" * 40)
         return source, pack, holder
 

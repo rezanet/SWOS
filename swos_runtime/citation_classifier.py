@@ -122,10 +122,15 @@ class VerifiedModelArtifact:
         if not self.model_id or not self.model_digest or len(self.model_digest) != 64:
             raise CitationClassifierError("model artifact identity is incomplete")
         if tuple(self.label_order) != LABELS:
-            raise CitationClassifierError("model label order does not match the frozen five-label contract")
+            raise CitationClassifierError(
+                "model label order does not match the frozen five-label contract"
+            )
         if self.artifact_path:
             path = Path(self.artifact_path)
-            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != self.model_digest:
+            if (
+                not path.is_file()
+                or hashlib.sha256(path.read_bytes()).hexdigest() != self.model_digest
+            ):
                 raise CitationClassifierError("model artifact digest verification failed")
         if not self.verified:
             raise CitationClassifierError("model artifact has not been verified")
@@ -181,16 +186,30 @@ class VerifiedCalibration:
         artifact.verify()
         return artifact
 
-    def verify(self, *, model: VerifiedModelArtifact | None = None, ontology_version: str = SUPPORTED_ONTOLOGY_VERSION) -> None:
-        if not self.calibration_id or len(self.model_digest) != 64 or len(self.dataset_manifest_digest) != 64:
+    def verify(
+        self,
+        *,
+        model: VerifiedModelArtifact | None = None,
+        ontology_version: str = SUPPORTED_ONTOLOGY_VERSION,
+    ) -> None:
+        if (
+            not self.calibration_id
+            or len(self.model_digest) != 64
+            or len(self.dataset_manifest_digest) != 64
+        ):
             raise CitationClassifierError("calibration artifact identity is incomplete")
         if len(self.ontology_digest) != 64 or tuple(self.label_order) != LABELS:
             raise CitationClassifierError("calibration ontology or label binding is invalid")
         if ontology_version != SUPPORTED_ONTOLOGY_VERSION:
-            raise CitationClassifierError("calibration is not valid for the selected ontology version")
+            raise CitationClassifierError(
+                "calibration is not valid for the selected ontology version"
+            )
         if not math.isfinite(float(self.temperature)) or float(self.temperature) <= 0:
             raise CitationClassifierError("calibration temperature must be finite and positive")
-        if any(not math.isfinite(float(value)) or not 0 <= float(value) <= 1 for value in self.thresholds.values()):
+        if any(
+            not math.isfinite(float(value)) or not 0 <= float(value) <= 1
+            for value in self.thresholds.values()
+        ):
             raise CitationClassifierError("calibration threshold is outside [0, 1]")
         if model is not None and self.model_digest != model.model_digest:
             raise CitationClassifierError("calibration/model digest mismatch")
@@ -226,7 +245,21 @@ class DeterministicCitationChecks:
 
     @property
     def passed(self) -> bool:
-        return all((self.source_exists, self.metadata_verified, self.rights_allowed, self.quote_contained, self.provenance_valid, self.retraction_clear, self.span_valid)) and not self.rule_rejection and not self.errors
+        return (
+            all(
+                (
+                    self.source_exists,
+                    self.metadata_verified,
+                    self.rights_allowed,
+                    self.quote_contained,
+                    self.provenance_valid,
+                    self.retraction_clear,
+                    self.span_valid,
+                )
+            )
+            and not self.rule_rejection
+            and not self.errors
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -266,7 +299,11 @@ class CitationSupportDecision:
     created_at: str = field(default_factory=utc_timestamp)
 
     def __post_init__(self) -> None:
-        object.__setattr__(self, "probabilities", {label: float(self.probabilities.get(label, 0.0)) for label in LABELS})
+        object.__setattr__(
+            self,
+            "probabilities",
+            {label: float(self.probabilities.get(label, 0.0)) for label in LABELS},
+        )
         object.__setattr__(self, "label_order", tuple(self.label_order))
 
     def to_dict(self) -> dict[str, Any]:
@@ -344,7 +381,9 @@ class CitationSupportClassifier:
         self.ontology_digest = ontology_digest
         self.backend = backend
 
-    def _failed(self, pair: CitationPair, reason: str, *, status: str = "abstained") -> CitationSupportDecision:
+    def _failed(
+        self, pair: CitationPair, reason: str, *, status: str = "abstained"
+    ) -> CitationSupportDecision:
         return CitationSupportDecision(
             pair_id=pair.pair_id,
             status=status,
@@ -360,7 +399,10 @@ class CitationSupportClassifier:
             ontology_version=self.ontology_version,
             ontology_digest=self.ontology_digest,
             input_digest=pair.canonical_input_digest,
-            provenance={"execution_mode": "offline-injected", "authority": "advisory-classifier-evidence"},
+            provenance={
+                "execution_mode": "offline-injected",
+                "authority": "advisory-classifier-evidence",
+            },
         )
 
     @staticmethod
@@ -410,13 +452,19 @@ class CitationSupportClassifier:
         except CitationClassifierError as exc:
             return [self._failed(pair, str(exc)) for pair in pairs]
         raw_logits: list[Any] | None = list(logits) if logits is not None else None
-        raw_probabilities: list[Any] | None = list(probabilities) if probabilities is not None else None
+        raw_probabilities: list[Any] | None = (
+            list(probabilities) if probabilities is not None else None
+        )
         if raw_logits is None and raw_probabilities is None:
             raw_logits = self._backend_logits(pairs)
         if raw_logits is not None and len(raw_logits) != len(pairs):
-            return [self._failed(pair, "model_output_length_mismatch", status="error") for pair in pairs]
+            return [
+                self._failed(pair, "model_output_length_mismatch", status="error") for pair in pairs
+            ]
         if raw_probabilities is not None and len(raw_probabilities) != len(pairs):
-            return [self._failed(pair, "model_output_length_mismatch", status="error") for pair in pairs]
+            return [
+                self._failed(pair, "model_output_length_mismatch", status="error") for pair in pairs
+            ]
         output: list[CitationSupportDecision] = []
         for index, pair in enumerate(pairs):
             if ood is not None and index < len(ood) and ood[index]:
@@ -429,8 +477,12 @@ class CitationSupportClassifier:
                         values = [float(row[label]) for label in LABELS]
                     else:
                         values = [float(value) for value in row]
-                    if len(values) != len(LABELS) or not all(math.isfinite(value) and value >= 0 for value in values):
-                        raise CitationClassifierError("probabilities must be finite nonnegative five-label values")
+                    if len(values) != len(LABELS) or not all(
+                        math.isfinite(value) and value >= 0 for value in values
+                    ):
+                        raise CitationClassifierError(
+                            "probabilities must be finite nonnegative five-label values"
+                        )
                     total = sum(values)
                     if total <= 0:
                         raise CitationClassifierError("probabilities must have a positive sum")
@@ -442,32 +494,55 @@ class CitationSupportClassifier:
                     probs = _softmax(list(row), float(self.calibration.temperature))
                 selected = max(LABELS, key=lambda label: probs[label])
                 confidence = float(probs[selected])
-                threshold = float(self.calibration.thresholds.get(selected, 0.0 if selected != "directly_supports" else 0.95))
+                threshold = float(
+                    self.calibration.thresholds.get(
+                        selected, 0.0 if selected != "directly_supports" else 0.95
+                    )
+                )
                 if confidence < threshold:
                     output.append(
                         CitationSupportDecision(
-                            pair_id=pair.pair_id, status="abstained", support_level=None,
-                            probabilities=probs, confidence=confidence, selected_threshold=threshold,
+                            pair_id=pair.pair_id,
+                            status="abstained",
+                            support_level=None,
+                            probabilities=probs,
+                            confidence=confidence,
+                            selected_threshold=threshold,
                             input=self._input_record(pair),
-                            abstention_reason="below_selective_threshold", uncertainty=("low_confidence",),
-                            model_digest=self.model.model_digest, calibration_digest=self.calibration.calibration_digest,
+                            abstention_reason="below_selective_threshold",
+                            uncertainty=("low_confidence",),
+                            model_digest=self.model.model_digest,
+                            calibration_digest=self.calibration.calibration_digest,
                             dataset_manifest_digest=self.calibration.dataset_manifest_digest,
-                            ontology_version=self.ontology_version, ontology_digest=self.ontology_digest,
+                            ontology_version=self.ontology_version,
+                            ontology_digest=self.ontology_digest,
                             input_digest=pair.canonical_input_digest,
-                            provenance={"execution_mode": "offline-injected", "authority": "advisory-classifier-evidence"},
+                            provenance={
+                                "execution_mode": "offline-injected",
+                                "authority": "advisory-classifier-evidence",
+                            },
                         )
                     )
                 else:
                     output.append(
                         CitationSupportDecision(
-                            pair_id=pair.pair_id, status="classified", support_level=selected,
-                            probabilities=probs, confidence=confidence, selected_threshold=threshold,
+                            pair_id=pair.pair_id,
+                            status="classified",
+                            support_level=selected,
+                            probabilities=probs,
+                            confidence=confidence,
+                            selected_threshold=threshold,
                             input=self._input_record(pair),
-                            model_digest=self.model.model_digest, calibration_digest=self.calibration.calibration_digest,
+                            model_digest=self.model.model_digest,
+                            calibration_digest=self.calibration.calibration_digest,
                             dataset_manifest_digest=self.calibration.dataset_manifest_digest,
-                            ontology_version=self.ontology_version, ontology_digest=self.ontology_digest,
+                            ontology_version=self.ontology_version,
+                            ontology_digest=self.ontology_digest,
                             input_digest=pair.canonical_input_digest,
-                            provenance={"execution_mode": "offline-injected", "authority": "advisory-classifier-evidence"},
+                            provenance={
+                                "execution_mode": "offline-injected",
+                                "authority": "advisory-classifier-evidence",
+                            },
                         )
                     )
             except (TypeError, ValueError, KeyError, CitationClassifierError) as exc:
@@ -475,18 +550,37 @@ class CitationSupportClassifier:
         return output
 
 
-def deterministic_precheck(pair: CitationPair, source: Any | None = None, *, rule_rejection: str | None = None) -> DeterministicCitationChecks:
+def deterministic_precheck(
+    pair: CitationPair, source: Any | None = None, *, rule_rejection: str | None = None
+) -> DeterministicCitationChecks:
     """Perform deterministic source/quote/rights checks before model inference."""
 
-    source_data = source.to_dict(include_text=True) if hasattr(source, "to_dict") else dict(source or {})
+    source_data = (
+        source.to_dict(include_text=True) if hasattr(source, "to_dict") else dict(source or {})
+    )
     text = str(source_data.get("text") or source_data.get("passage") or "")
     quote = str(pair.exact_quote or pair.passage or "")
-    source_exists = bool(source_data) and (not pair.source_id or str(source_data.get("source_id")) == pair.source_id)
-    metadata_verified = bool(source_data.get("metadata_verified", source_data.get("metadata_status") not in (None, "unknown")))
-    rights_allowed = bool(source_data.get("redistribution_allowed", True)) and pair.rights_disposition not in {"denied", "restricted"}
+    source_exists = bool(source_data) and (
+        not pair.source_id or str(source_data.get("source_id")) == pair.source_id
+    )
+    metadata_verified = bool(
+        source_data.get(
+            "metadata_verified", source_data.get("metadata_status") not in (None, "unknown")
+        )
+    )
+    rights_allowed = bool(
+        source_data.get("redistribution_allowed", True)
+    ) and pair.rights_disposition not in {"denied", "restricted"}
     quote_contained = bool(quote and quote in text)
-    retraction_clear = str(source_data.get("retraction_status") or "not_checked") not in {"retracted", "withdrawn"}
-    span_valid = pair.span_start is None or pair.span_end is None or 0 <= pair.span_start <= pair.span_end <= len(text)
+    retraction_clear = str(source_data.get("retraction_status") or "not_checked") not in {
+        "retracted",
+        "withdrawn",
+    }
+    span_valid = (
+        pair.span_start is None
+        or pair.span_end is None
+        or 0 <= pair.span_start <= pair.span_end <= len(text)
+    )
     errors = []
     if not source_exists:
         errors.append("source_missing")
@@ -503,7 +597,9 @@ def deterministic_precheck(pair: CitationPair, source: Any | None = None, *, rul
         metadata_verified=metadata_verified,
         rights_allowed=rights_allowed,
         quote_contained=quote_contained,
-        provenance_valid=bool(pair.source_digest or source_data.get("source_id") or source_data.get("url")),
+        provenance_valid=bool(
+            pair.source_digest or source_data.get("source_id") or source_data.get("url")
+        ),
         retraction_clear=retraction_clear,
         span_valid=span_valid,
         rule_rejection=rule_rejection,
@@ -516,17 +612,37 @@ def admission_eligibility(
     deterministic_checks: DeterministicCitationChecks | Mapping[str, Any],
     decision: CitationSupportDecision,
 ) -> Eligibility:
-    checks = deterministic_checks if isinstance(deterministic_checks, DeterministicCitationChecks) else DeterministicCitationChecks(**{key: value for key, value in deterministic_checks.items() if key in DeterministicCitationChecks.__dataclass_fields__})
+    checks = (
+        deterministic_checks
+        if isinstance(deterministic_checks, DeterministicCitationChecks)
+        else DeterministicCitationChecks(
+            **{
+                key: value
+                for key, value in deterministic_checks.items()
+                if key in DeterministicCitationChecks.__dataclass_fields__
+            }
+        )
+    )
     if checks.rule_rejection or checks.errors or not checks.passed:
-        reason = checks.rule_rejection or (checks.errors[0] if checks.errors else "deterministic_precheck_failed")
+        reason = checks.rule_rejection or (
+            checks.errors[0] if checks.errors else "deterministic_precheck_failed"
+        )
         return Eligibility(False, "rule_rejected", None, reason, pair.pair_id)
     if decision.status != "classified" or decision.support_level is None:
-        return Eligibility(False, "unresolved", None, decision.abstention_reason or "classifier_not_admission_eligible", pair.pair_id)
+        return Eligibility(
+            False,
+            "unresolved",
+            None,
+            decision.abstention_reason or "classifier_not_admission_eligible",
+            pair.pair_id,
+        )
     if decision.support_level != "directly_supports":
         return Eligibility(False, "unresolved", None, "support_label_is_not_direct", pair.pair_id)
     if decision.confidence < decision.selected_threshold:
         return Eligibility(False, "unresolved", None, "confidence_below_threshold", pair.pair_id)
-    return Eligibility(True, "eligible", "directly_supports", "all_core_checks_passed", pair.pair_id)
+    return Eligibility(
+        True, "eligible", "directly_supports", "all_core_checks_passed", pair.pair_id
+    )
 
 
 run_deterministic_checks = deterministic_precheck

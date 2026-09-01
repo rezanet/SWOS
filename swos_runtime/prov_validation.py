@@ -107,27 +107,39 @@ class ProvRoundTripCertificate:
 
 
 def _json_bytes(value: Any) -> bytes:
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode(
+        "utf-8"
+    )
 
 
 def _rdf_statements(document: ProvDocument) -> list[str]:
     rows: list[str] = []
     for identifier in sorted(document.entities):
-        rows.append(f"<{identifier}> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}type> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}Entity>")
+        rows.append(
+            f"<{identifier}> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}type> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}Entity>"
+        )
     for identifier in sorted(document.activities):
-        rows.append(f"<{identifier}> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}type> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}Activity>")
+        rows.append(
+            f"<{identifier}> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}type> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}Activity>"
+        )
     for identifier in sorted(document.agents):
-        rows.append(f"<{identifier}> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}type> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}Agent>")
+        rows.append(
+            f"<{identifier}> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}type> <{document.namespaces.get('prov', 'http://www.w3.org/ns/prov#')}Agent>"
+        )
     for relation in document.relations:
         relation_type = str(relation.get("type") or "extensionRelation")
         values = [f"{key}={relation[key]!r}" for key in sorted(relation) if key != "type"]
         rows.append(f"{relation_type}|" + "|".join(values))
     for extension in document.extensions:
-        rows.append("extension|" + json.dumps(dict(extension), sort_keys=True, separators=(",", ":")))
+        rows.append(
+            "extension|" + json.dumps(dict(extension), sort_keys=True, separators=(",", ":"))
+        )
     return sorted(rows)
 
 
-def canonical_fingerprint(document: ProvDocument, limits: ResourceLimits | None = None) -> CanonicalFingerprint:
+def canonical_fingerprint(
+    document: ProvDocument, limits: ResourceLimits | None = None
+) -> CanonicalFingerprint:
     if not isinstance(document, ProvDocument):
         raise ValueError("canonical_fingerprint requires a ProvDocument")
     limits = limits or ResourceLimits()
@@ -135,7 +147,14 @@ def canonical_fingerprint(document: ProvDocument, limits: ResourceLimits | None 
     normal = document.semantic_normal_form()
     jcs = hashlib.sha256(_json_bytes(normal)).hexdigest()
     rdf = hashlib.sha256("\n".join(_rdf_statements(document)).encode("utf-8")).hexdigest()
-    provn = hashlib.sha256("\n".join(sorted(json.dumps(item, sort_keys=True, separators=(",", ":")) for item in document.relations)).encode("utf-8")).hexdigest()
+    provn = hashlib.sha256(
+        "\n".join(
+            sorted(
+                json.dumps(item, sort_keys=True, separators=(",", ":"))
+                for item in document.relations
+            )
+        ).encode("utf-8")
+    ).hexdigest()
     return CanonicalFingerprint(
         representation="swos-prov-document",
         algorithm="JCS-RFC8785+RDFC-1.0+PROV-N-normal-form",
@@ -156,24 +175,59 @@ def canonical_fingerprint(document: ProvDocument, limits: ResourceLimits | None 
 
 
 def _relation_refs(relation: Mapping[str, Any]) -> list[str]:
-    return [str(value) for key, value in relation.items() if key not in {"type", "id", "attributes", "time", "role", "label"} and isinstance(value, str)]
+    return [
+        str(value)
+        for key, value in relation.items()
+        if key not in {"type", "id", "attributes", "time", "role", "label"}
+        and isinstance(value, str)
+    ]
 
 
-def validate_prov(document: ProvDocument, profile: str = PROV_PROFILE, *, limits: ResourceLimits | None = None) -> ProvValidationReport:
+def validate_prov(
+    document: ProvDocument, profile: str = PROV_PROFILE, *, limits: ResourceLimits | None = None
+) -> ProvValidationReport:
     started = time.perf_counter()
     limits = limits or ResourceLimits()
     violations: list[str] = []
     if not isinstance(document, ProvDocument):
-        return ProvValidationReport("invalid", profile, "", {"passed": False}, {"passed": False}, {"passed": False}, ("document is not ProvDocument",))
+        return ProvValidationReport(
+            "invalid",
+            profile,
+            "",
+            {"passed": False},
+            {"passed": False},
+            {"passed": False},
+            ("document is not ProvDocument",),
+        )
     try:
         limits.check_document(document)
     except ValueError as exc:
-        return ProvValidationReport("resource_limit", profile, canonical_digest(document.to_dict()), {"passed": False}, {"passed": False}, {"passed": False}, (str(exc),), elapsed_seconds=time.perf_counter() - started, statement_count=document.statement_count())
-    for collection_name, values in (("entities", document.entities), ("activities", document.activities), ("agents", document.agents), ("bundles", document.bundles)):
+        return ProvValidationReport(
+            "resource_limit",
+            profile,
+            canonical_digest(document.to_dict()),
+            {"passed": False},
+            {"passed": False},
+            {"passed": False},
+            (str(exc),),
+            elapsed_seconds=time.perf_counter() - started,
+            statement_count=document.statement_count(),
+        )
+    for collection_name, values in (
+        ("entities", document.entities),
+        ("activities", document.activities),
+        ("agents", document.agents),
+        ("bundles", document.bundles),
+    ):
         for identifier in values:
             if not is_absolute_iri(identifier):
                 violations.append(f"{collection_name} identifier is not absolute: {identifier}")
-    known_ids = set(document.entities) | set(document.activities) | set(document.agents) | set(document.bundles)
+    known_ids = (
+        set(document.entities)
+        | set(document.activities)
+        | set(document.agents)
+        | set(document.bundles)
+    )
     for index, relation in enumerate(document.relations):
         relation_type = str(relation.get("type") or "")
         if relation_type not in KNOWN_RELATIONS:
@@ -200,7 +254,10 @@ def validate_prov(document: ProvDocument, profile: str = PROV_PROFILE, *, limits
         input_digest=input_digest,
         syntax={"passed": not violations, "absolute_namespace_policy": True},
         prov_constraints={"status": "invalid" if violations else "valid", "passed": not violations},
-        shacl={"status": "not_applicable_without_rdflib" if not violations else "not_run", "passed": not violations},
+        shacl={
+            "status": "not_applicable_without_rdflib" if not violations else "not_run",
+            "passed": not violations,
+        },
         violations=tuple(dict.fromkeys(violations)),
         elapsed_seconds=time.perf_counter() - started,
         statement_count=document.statement_count(),
@@ -225,9 +282,13 @@ def certify_round_trip(
         decoded = parse_prov(encoded, format_name, limits)
         validated = validate_prov(decoded, profile=original.profile, limits=limits)
         equivalent = decoded.semantic_normal_form() == original.semantic_normal_form()
-        roundtrip = epg_to_prov(prov_to_epg(decoded, profile=original.profile), base_iri=original.base_iri)
+        roundtrip = epg_to_prov(
+            prov_to_epg(decoded, profile=original.profile), base_iri=original.base_iri
+        )
         second = canonical_fingerprint(roundtrip, limits)
-        label = {"prov-json": "PROV-JSON", "prov-n": "PROV-N", "prov-o-trig": "PROV-O/TriG"}.get(format_name, format_name)
+        label = {"prov-json": "PROV-JSON", "prov-n": "PROV-N", "prov-o-trig": "PROV-O/TriG"}.get(
+            format_name, format_name
+        )
         paths.append(f"EPG -> {label} -> EPG")
         legs.append(
             {
@@ -235,7 +296,8 @@ def certify_round_trip(
                 "format": format_name,
                 "parse_status": validated.status,
                 "semantic_equivalent": equivalent,
-                "assertions_preserved": len(original.extensions) == len(decoded.extensions) and len(original.bundles) == len(decoded.bundles),
+                "assertions_preserved": len(original.extensions) == len(decoded.extensions)
+                and len(original.bundles) == len(decoded.bundles),
                 "input_fingerprint": source_fingerprint.to_dict(),
                 "output_fingerprint": second.to_dict(),
                 "stable_second_round": second.semantic_digest == source_fingerprint.semantic_digest,
@@ -245,19 +307,50 @@ def certify_round_trip(
         current = original
         for format_name in ("prov-json", "prov-n", "prov-o-trig", "prov-json"):
             current = parse_prov(serialize_prov(current, format_name), format_name, limits)
-        paths.extend(("PROV-JSON -> PROV-N -> PROV-O/TriG -> PROV-JSON", "PROV-O/TriG -> PROV-JSON -> PROV-N -> PROV-O/TriG"))
-        legs.append({"path": paths[-2], "semantic_equivalent": current.semantic_normal_form() == original.semantic_normal_form(), "assertions_preserved": True, "stable_second_round": True})
-        legs.append({"path": paths[-1], "semantic_equivalent": True, "assertions_preserved": True, "stable_second_round": True})
-    oracle_payload = dict(oracle or {"status": "not_run", "reason": "no independent oracle supplied"})
+        paths.extend(
+            (
+                "PROV-JSON -> PROV-N -> PROV-O/TriG -> PROV-JSON",
+                "PROV-O/TriG -> PROV-JSON -> PROV-N -> PROV-O/TriG",
+            )
+        )
+        legs.append(
+            {
+                "path": paths[-2],
+                "semantic_equivalent": current.semantic_normal_form()
+                == original.semantic_normal_form(),
+                "assertions_preserved": True,
+                "stable_second_round": True,
+            }
+        )
+        legs.append(
+            {
+                "path": paths[-1],
+                "semantic_equivalent": True,
+                "assertions_preserved": True,
+                "stable_second_round": True,
+            }
+        )
+    oracle_payload = dict(
+        oracle or {"status": "not_run", "reason": "no independent oracle supplied"}
+    )
     oracle_status = str(oracle_payload.get("status") or "not_run").lower()
-    all_internal = all(item.get("semantic_equivalent") and item.get("assertions_preserved") and item.get("stable_second_round") for item in legs)
+    all_internal = all(
+        item.get("semantic_equivalent")
+        and item.get("assertions_preserved")
+        and item.get("stable_second_round")
+        for item in legs
+    )
     if oracle_status in {"failed", "invalid", "error"}:
         status = "failed"
     elif oracle_status in {"pass", "passed", "valid", "accepted"} and all_internal and legs:
         status = "certified"
     else:
         status = "not_run"
-    limitations = () if status == "certified" else ("Independent oracle acceptance is mandatory for a release certificate.",)
+    limitations = (
+        ()
+        if status == "certified"
+        else ("Independent oracle acceptance is mandatory for a release certificate.",)
+    )
     return ProvRoundTripCertificate(
         status=status,
         profile=original.profile,

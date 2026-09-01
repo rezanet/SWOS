@@ -197,7 +197,9 @@ def parse_turtle(text: str) -> tuple[tuple[str, str, str], ...]:
             continuation = _PREDICATE_OBJECT.match(segment)
             if not continuation:
                 raise PackValidationError(f"unsupported Turtle statement: {raw.strip()}")
-            triples.append((subject, expand(continuation.group("p")), expand(continuation.group("o"))))
+            triples.append(
+                (subject, expand(continuation.group("p")), expand(continuation.group("o")))
+            )
     return tuple(sorted(triples))
 
 
@@ -224,7 +226,11 @@ def _validate_structured_pack(data: Mapping[str, Any], path: Path) -> PackValida
         for broader in concept.get("broader") or []:
             if broader not in {item.get("iri") for item in concepts if isinstance(item, Mapping)}:
                 errors.append(f"dangling broader IRI: {broader}")
-    graph = {str(item.get("iri")): set(item.get("broader") or []) for item in concepts if isinstance(item, Mapping)}
+    graph = {
+        str(item.get("iri")): set(item.get("broader") or [])
+        for item in concepts
+        if isinstance(item, Mapping)
+    }
     visiting: set[str] = set()
     visited: set[str] = set()
 
@@ -270,7 +276,9 @@ class DisciplineOntologyRegistry:
         self.compatibility: dict[str, Any] = {}
         self._profiles: dict[str, DisciplineProfile] = {}
 
-    def load(self, release_manifest: Path | str | Mapping[str, Any]) -> "DisciplineOntologyRegistry":
+    def load(
+        self, release_manifest: Path | str | Mapping[str, Any]
+    ) -> "DisciplineOntologyRegistry":
         if isinstance(release_manifest, Mapping):
             manifest = dict(release_manifest)
             root = Path.cwd()
@@ -282,7 +290,9 @@ class DisciplineOntologyRegistry:
             root = manifest_path.parent.parent
         version = str(manifest.get("version") or manifest.get("ontology_version") or "")
         if version != ONTOLOGY_VERSION:
-            raise OntologyVersionError(f"unsupported ontology version {version or '<missing>'}; no fallback is permitted")
+            raise OntologyVersionError(
+                f"unsupported ontology version {version or '<missing>'}; no fallback is permitted"
+            )
         entries = list(manifest.get("packs") or [])
         if len(entries) != len(SUPPORTED_DISCIPLINES):
             raise PackValidationError("manifest must contain exactly nine discipline packs")
@@ -322,12 +332,16 @@ class DisciplineOntologyRegistry:
                 required_criteria=tuple(dict(item) for item in entry.get("criteria") or []),
                 failure_modes=tuple(dict(item) for item in entry.get("failure_modes") or []),
                 source_roles=tuple(dict(item) for item in entry.get("source_roles") or []),
-                diversity_dimensions=tuple(dict(item) for item in entry.get("diversity_dimensions") or []),
+                diversity_dimensions=tuple(
+                    dict(item) for item in entry.get("diversity_dimensions") or []
+                ),
                 mappings=tuple(dict(item) for item in entry.get("mappings") or []),
                 deprecation=dict(entry.get("deprecation") or {}),
             )
         if seen != set(SUPPORTED_DISCIPLINES):
-            raise PackValidationError("manifest does not map all nine supported disciplines exactly once")
+            raise PackValidationError(
+                "manifest does not map all nine supported disciplines exactly once"
+            )
         release_data = dict(manifest.get("release") or {})
         self.root = root
         self.manifest = manifest
@@ -363,12 +377,16 @@ class DisciplineOntologyRegistry:
         try:
             return self._profiles[key]
         except KeyError as exc:
-            raise NoDisciplineFallbackError(f"no v2 discipline pack for {discipline_iri}; no fallback is permitted") from exc
+            raise NoDisciplineFallbackError(
+                f"no v2 discipline pack for {discipline_iri}; no fallback is permitted"
+            ) from exc
 
     def compiled_profile(self, discipline_iri: str) -> dict[str, Any]:
         profile = self.profile(discipline_iri)
         if self.root is not None:
-            entry = next(item for item in self.manifest["packs"] if item["discipline"] == profile.discipline)
+            entry = next(
+                item for item in self.manifest["packs"] if item["discipline"] == profile.discipline
+            )
             path = self.root / str(entry.get("compiled_path") or "")
             if path.is_file():
                 return json.loads(path.read_text(encoding="utf-8"))
@@ -396,8 +414,12 @@ class DisciplineOntologyRegistry:
                     path=str(path),
                     errors=tuple(dict.fromkeys(errors)),
                     graph_digest=canonical_digest(triples),
-                    concepts=sum(1 for _, predicate, _ in triples if predicate.endswith("prefLabel")),
-                    criteria=sum(1 for _, predicate, _ in triples if predicate.endswith("requiresCriterion")),
+                    concepts=sum(
+                        1 for _, predicate, _ in triples if predicate.endswith("prefLabel")
+                    ),
+                    criteria=sum(
+                        1 for _, predicate, _ in triples if predicate.endswith("requiresCriterion")
+                    ),
                 )
         except (OSError, json.JSONDecodeError, PackValidationError) as exc:
             if isinstance(exc, PackValidationError):

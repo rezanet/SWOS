@@ -17,8 +17,26 @@ from swos_runtime.media import MediaAssetRecord
 
 class ImageAnalysisTests(unittest.TestCase):
     def _request(self, **changes):
-        asset = MediaAssetRecord(asset_id="a", object_id="o", role="surrogate", mime_type="image/jpeg", byte_size=10, width=100, height=100, byte_digest="a" * 64, acquisition_uri="https://example.org/a", rights={"view": {"status": "allowed"}, "analyse": {"status": "allowed"}})
-        values = {"work_id": "w", "run_id": "r", "object_id": "o", "assets": (asset,), "target_questions": ("What is visible?",), "allowed_actions": ("analyse",)}
+        asset = MediaAssetRecord(
+            asset_id="a",
+            object_id="o",
+            role="surrogate",
+            mime_type="image/jpeg",
+            byte_size=10,
+            width=100,
+            height=100,
+            byte_digest="a" * 64,
+            acquisition_uri="https://example.org/a",
+            rights={"view": {"status": "allowed"}, "analyse": {"status": "allowed"}},
+        )
+        values = {
+            "work_id": "w",
+            "run_id": "r",
+            "object_id": "o",
+            "assets": (asset,),
+            "target_questions": ("What is visible?",),
+            "allowed_actions": ("analyse",),
+        }
         values.update(changes)
         return ImageAnalysisRequest(**values)
 
@@ -48,11 +66,16 @@ class ImageAnalysisTests(unittest.TestCase):
 
     def test_view_right_and_resource_bounds_are_enforced_by_the_fake(self) -> None:
         asset = self._request().assets[0]
-        denied_asset = type(asset)(**{**asset.to_dict(), "rights": {"analyse": {"status": "allowed"}}})
+        denied_asset = type(asset)(
+            **{**asset.to_dict(), "rights": {"analyse": {"status": "allowed"}}}
+        )
         denied = DeterministicFakeImageProvider().analyze(self._request(assets=(denied_asset,)))
         self.assertEqual("denied", denied.status)
         second = type(asset)(**{**asset.to_dict(), "asset_id": "b", "byte_digest": "b" * 64})
-        bounded = self._request(assets=(asset, second), resource_limits={"max_assets": 8, "max_observations": 1, "max_seconds": 60})
+        bounded = self._request(
+            assets=(asset, second),
+            resource_limits={"max_assets": 8, "max_observations": 1, "max_seconds": 60},
+        )
         result = DeterministicFakeImageProvider().analyze(bounded)
         self.assertEqual("partial", result.status)
         self.assertLessEqual(len(result.observations), 1)

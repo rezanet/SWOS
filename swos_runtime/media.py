@@ -24,7 +24,9 @@ RIGHTS_ACTIONS = (
     "export",
     "redistribute",
 )
-MEDIA_ROLES = frozenset({"surrogate", "documentary", "technical", "installation", "detail", "diagram", "generated"})
+MEDIA_ROLES = frozenset(
+    {"surrogate", "documentary", "technical", "installation", "detail", "diagram", "generated"}
+)
 RIGHTS_STATES = frozenset({"allowed", "denied", "unknown"})
 
 
@@ -189,7 +191,9 @@ class AccessibilityRecord:
     reviewed_at: str | None = None
 
     def __post_init__(self) -> None:
-        object.__setattr__(self, "region_labels", tuple(dict(value) for value in self.region_labels))
+        object.__setattr__(
+            self, "region_labels", tuple(dict(value) for value in self.region_labels)
+        )
 
     @property
     def valid(self) -> bool:
@@ -249,11 +253,15 @@ class MediaAssetRecord:
     generated: bool = False
 
     def __post_init__(self) -> None:
-        object.__setattr__(self, "rights", {str(key): dict(value) for key, value in self.rights.items()})
+        object.__setattr__(
+            self, "rights", {str(key): dict(value) for key, value in self.rights.items()}
+        )
         object.__setattr__(self, "view_conditions", dict(self.view_conditions))
         object.__setattr__(self, "capture_conditions", dict(self.capture_conditions))
         object.__setattr__(self, "inspection_activity_ids", tuple(self.inspection_activity_ids))
-        object.__setattr__(self, "transformations", tuple(dict(value) for value in self.transformations))
+        object.__setattr__(
+            self, "transformations", tuple(dict(value) for value in self.transformations)
+        )
         object.__setattr__(self, "parent_asset_ids", tuple(self.parent_asset_ids))
         object.__setattr__(self, "parent_digests", tuple(self.parent_digests))
         object.__setattr__(self, "content_credentials", dict(self.content_credentials))
@@ -312,10 +320,20 @@ class AssetValidation:
         return self.valid and self.action_states.get(action) == "allowed"
 
     def to_dict(self) -> dict[str, Any]:
-        return {"valid": self.valid, "errors": list(self.errors), "warnings": list(self.warnings), "action_states": dict(self.action_states)}
+        return {
+            "valid": self.valid,
+            "errors": list(self.errors),
+            "warnings": list(self.warnings),
+            "action_states": dict(self.action_states),
+        }
 
 
-def validate_media_asset(asset: MediaAssetRecord, policy: MediaRightsPolicy | None = None, *, required_actions: Sequence[str] = ()) -> AssetValidation:
+def validate_media_asset(
+    asset: MediaAssetRecord,
+    policy: MediaRightsPolicy | None = None,
+    *,
+    required_actions: Sequence[str] = (),
+) -> AssetValidation:
     policy = policy or MediaRightsPolicy()
     errors: list[str] = []
     warnings: list[str] = []
@@ -337,19 +355,35 @@ def validate_media_asset(asset: MediaAssetRecord, policy: MediaRightsPolicy | No
         warnings.append("accessibility record digest does not match asset")
     if asset.generated and asset.role != "generated":
         errors.append("generated asset must be explicitly labelled generated")
-    return AssetValidation(not errors, tuple(dict.fromkeys(errors)), tuple(dict.fromkeys(warnings)), action_states)
+    return AssetValidation(
+        not errors, tuple(dict.fromkeys(errors)), tuple(dict.fromkeys(warnings)), action_states
+    )
 
 
-def inherit_rights(parent: MediaAssetRecord, grants: Mapping[str, Mapping[str, Any]] | None = None) -> dict[str, dict[str, Any]]:
+def inherit_rights(
+    parent: MediaAssetRecord, grants: Mapping[str, Mapping[str, Any]] | None = None
+) -> dict[str, dict[str, Any]]:
     grants = grants or {}
     inherited: dict[str, dict[str, Any]] = {}
     for action in RIGHTS_ACTIONS:
         parent_grant = dict(parent.rights.get(action) or {"status": "unknown"})
         grant = dict(grants.get(action) or {})
-        if _status(parent_grant) == "denied" and not (_status(grant) == "allowed" and grant.get("evidence") and grant.get("grant_id")):
-            inherited[action] = {**parent_grant, "status": "denied", "inherited_from": parent.asset_id}
-        elif _status(parent_grant) != "allowed" and not (_status(grant) == "allowed" and grant.get("evidence") and grant.get("grant_id")):
-            inherited[action] = {**parent_grant, "status": "unknown", "inherited_from": parent.asset_id}
+        if _status(parent_grant) == "denied" and not (
+            _status(grant) == "allowed" and grant.get("evidence") and grant.get("grant_id")
+        ):
+            inherited[action] = {
+                **parent_grant,
+                "status": "denied",
+                "inherited_from": parent.asset_id,
+            }
+        elif _status(parent_grant) != "allowed" and not (
+            _status(grant) == "allowed" and grant.get("evidence") and grant.get("grant_id")
+        ):
+            inherited[action] = {
+                **parent_grant,
+                "status": "unknown",
+                "inherited_from": parent.asset_id,
+            }
         else:
             inherited[action] = {**parent_grant, **grant, "inherited_from": parent.asset_id}
     return inherited
@@ -357,18 +391,34 @@ def inherit_rights(parent: MediaAssetRecord, grants: Mapping[str, Mapping[str, A
 
 def _evidenced_grant_allows(grants: Mapping[str, Mapping[str, Any]], action: str) -> bool:
     grant = grants.get(action) or {}
-    return _status(grant) == "allowed" and bool(grant.get("evidence")) and bool(grant.get("grant_id"))
+    return (
+        _status(grant) == "allowed" and bool(grant.get("evidence")) and bool(grant.get("grant_id"))
+    )
 
 
-def derive_asset(parent: MediaAssetRecord, *, asset_id: str, byte_digest: str, transform: str, rights_grant: Mapping[str, Mapping[str, Any]] | None = None) -> MediaAssetRecord:
+def derive_asset(
+    parent: MediaAssetRecord,
+    *,
+    asset_id: str,
+    byte_digest: str,
+    transform: str,
+    rights_grant: Mapping[str, Mapping[str, Any]] | None = None,
+) -> MediaAssetRecord:
     rights_grant = rights_grant or {}
     if not parent.action_allowed("view") or not parent.action_allowed("analyse"):
         raise PermissionError("derivative creation requires view and analyse rights")
-    if not (parent.action_allowed("transform") or parent.action_allowed("create_derivative") or _evidenced_grant_allows(rights_grant, "transform") or _evidenced_grant_allows(rights_grant, "create_derivative")):
+    if not (
+        parent.action_allowed("transform")
+        or parent.action_allowed("create_derivative")
+        or _evidenced_grant_allows(rights_grant, "transform")
+        or _evidenced_grant_allows(rights_grant, "create_derivative")
+    ):
         raise PermissionError("derivative creation requires transform or create_derivative rights")
     accessibility = parent.accessibility
     if accessibility:
-        accessibility = replace(accessibility, invalidation_reason="invalidated_derivative", review_status="stale")
+        accessibility = replace(
+            accessibility, invalidation_reason="invalidated_derivative", review_status="stale"
+        )
     content_credentials = dict(parent.content_credentials)
     if content_credentials:
         content_credentials = {
@@ -391,7 +441,10 @@ def derive_asset(parent: MediaAssetRecord, *, asset_id: str, byte_digest: str, t
         source_uri=parent.source_uri,
         parent_asset_ids=(parent.asset_id,),
         parent_digests=(parent.byte_digest,),
-        transformations=(*parent.transformations, {"operation": transform, "parent_digest": parent.byte_digest}),
+        transformations=(
+            *parent.transformations,
+            {"operation": transform, "parent_digest": parent.byte_digest},
+        ),
         content_credentials=content_credentials,
         accessibility=accessibility,
         provenance={"derived_from": parent.asset_id, "parent_digest": parent.byte_digest},
@@ -425,7 +478,18 @@ class RegionSelector:
 
     def __post_init__(self) -> None:
         if not self.selector_digest:
-            object.__setattr__(self, "selector_digest", canonical_digest({"type": self.selector_type, "original": self.original, "asset_digest": self.asset_digest, "normalized": self.normalized}))
+            object.__setattr__(
+                self,
+                "selector_digest",
+                canonical_digest(
+                    {
+                        "type": self.selector_type,
+                        "original": self.original,
+                        "asset_digest": self.asset_digest,
+                        "normalized": self.normalized,
+                    }
+                ),
+            )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -441,17 +505,30 @@ class RegionSelector:
 
 
 def _selector_text(original: str | Mapping[str, Any]) -> str:
-    return json.dumps(dict(original), sort_keys=True, separators=(",", ":")) if isinstance(original, Mapping) else str(original).strip()
+    return (
+        json.dumps(dict(original), sort_keys=True, separators=(",", ":"))
+        if isinstance(original, Mapping)
+        else str(original).strip()
+    )
 
 
-def _bounded_geometry(values: Sequence[float], width: int, height: int) -> tuple[int, int, int, int]:
+def _bounded_geometry(
+    values: Sequence[float], width: int, height: int
+) -> tuple[int, int, int, int]:
     if len(values) != 4 or not all(math.isfinite(float(value)) for value in values):
         raise ValueError("selector geometry requires four finite values")
     x, y, w, h = (float(value) for value in values)
     if min(x, y, w, h) < 0 or w <= 0 or h <= 0 or x + w > width or y + h > height:
         raise ValueError("selector geometry is out of bounds")
     normalized = (int(round(x)), int(round(y)), int(round(w)), int(round(h)))
-    if normalized[2] <= 0 or normalized[3] <= 0 or normalized[0] < 0 or normalized[1] < 0 or normalized[0] + normalized[2] > width or normalized[1] + normalized[3] > height:
+    if (
+        normalized[2] <= 0
+        or normalized[3] <= 0
+        or normalized[0] < 0
+        or normalized[1] < 0
+        or normalized[0] + normalized[2] > width
+        or normalized[1] + normalized[3] > height
+    ):
         raise ValueError("selector geometry rounds outside asset bounds")
     return normalized
 
@@ -487,7 +564,16 @@ def normalize_selector(selector: RegionSelector, asset: MediaAssetRecord) -> Reg
             x, y, w, h = (float(item.strip()) for item in text[4:].split(","))
         except ValueError as exc:
             raise ValueError("invalid IIIF percentage selector") from exc
-        normalized = _bounded_geometry((asset.width * x / 100, asset.height * y / 100, asset.width * w / 100, asset.height * h / 100), asset.width, asset.height)
+        normalized = _bounded_geometry(
+            (
+                asset.width * x / 100,
+                asset.height * y / 100,
+                asset.width * w / 100,
+                asset.height * h / 100,
+            ),
+            asset.width,
+            asset.height,
+        )
     elif selector_type == "svg":
         if original_mapping:
             text = str(original_mapping.get("value") or original_mapping.get("svg") or "")
@@ -511,10 +597,31 @@ def normalize_selector(selector: RegionSelector, asset: MediaAssetRecord) -> Reg
         normalized = _bounded_geometry(values, asset.width, asset.height)
     else:
         raise ValueError(f"unsupported selector type: {selector.selector_type}")
-    return replace(selector, asset_width=asset.width, asset_height=asset.height, normalized=normalized, validation_status="valid", selector_digest=canonical_digest({"type": selector.selector_type, "original": selector.original, "asset_digest": asset.byte_digest, "dimensions": [asset.width, asset.height], "normalized": normalized}))
+    return replace(
+        selector,
+        asset_width=asset.width,
+        asset_height=asset.height,
+        normalized=normalized,
+        validation_status="valid",
+        selector_digest=canonical_digest(
+            {
+                "type": selector.selector_type,
+                "original": selector.original,
+                "asset_digest": asset.byte_digest,
+                "dimensions": [asset.width, asset.height],
+                "normalized": normalized,
+            }
+        ),
+    )
 
 
-def ingest_iiif3(manifest: Mapping[str, Any], *, object_id: str, rights: Mapping[str, Mapping[str, Any]], source_uri: str) -> tuple[MediaAssetRecord, ...]:
+def ingest_iiif3(
+    manifest: Mapping[str, Any],
+    *,
+    object_id: str,
+    rights: Mapping[str, Mapping[str, Any]],
+    source_uri: str,
+) -> tuple[MediaAssetRecord, ...]:
     """Ingest IIIF Presentation 3 canvases as separate, digest-bound assets."""
 
     if manifest.get("type") not in {"Manifest", "Collection"}:
@@ -530,5 +637,21 @@ def ingest_iiif3(manifest: Mapping[str, Any], *, object_id: str, rights: Mapping
         canvas_id = str(canvas.get("id") or f"{source_uri}#canvas-{index}")
         asset_id = "asset-" + hashlib.sha256(canvas_id.encode("utf-8")).hexdigest()[:24]
         digest = str(canvas.get("byte_digest") or "")
-        assets.append(MediaAssetRecord(asset_id=asset_id, object_id=object_id, role="surrogate", mime_type=str(canvas.get("mime_type") or "image/jpeg"), byte_size=int(canvas.get("byte_size") or 0), width=width, height=height, byte_digest=digest, acquisition_uri=str(canvas.get("service_id") or canvas_id), source_uri=source_uri, iiif_manifest_id=str(manifest.get("id") or source_uri), canvas_id=canvas_id, rights=rights))
+        assets.append(
+            MediaAssetRecord(
+                asset_id=asset_id,
+                object_id=object_id,
+                role="surrogate",
+                mime_type=str(canvas.get("mime_type") or "image/jpeg"),
+                byte_size=int(canvas.get("byte_size") or 0),
+                width=width,
+                height=height,
+                byte_digest=digest,
+                acquisition_uri=str(canvas.get("service_id") or canvas_id),
+                source_uri=source_uri,
+                iiif_manifest_id=str(manifest.get("id") or source_uri),
+                canvas_id=canvas_id,
+                rights=rights,
+            )
+        )
     return tuple(assets)

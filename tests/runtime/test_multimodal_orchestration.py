@@ -16,7 +16,9 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class MultimodalOrchestrationTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.registry = DisciplineOntologyRegistry().load(ROOT / "discipline-packs" / "manifest-v2.json")
+        self.registry = DisciplineOntologyRegistry().load(
+            ROOT / "discipline-packs" / "manifest-v2.json"
+        )
         self.observation = VisualObservation(
             observation_id="observation-1",
             object_id="object-1",
@@ -53,7 +55,10 @@ class MultimodalOrchestrationTests(unittest.TestCase):
             origin="machine",
         )
         result = DisciplineCritic(self.registry).staged_multimodal_critique(
-            research_plan={}, evidence_matrix={"rows": []}, draft={"claims": []}, observations=[invalid]
+            research_plan={},
+            evidence_matrix={"rows": []},
+            draft={"claims": []},
+            observations=[invalid],
         )
         self.assertTrue(result.limitations)
         self.assertTrue(result.art_history.mandatory_failures)
@@ -63,7 +68,11 @@ class MultimodalOrchestrationTests(unittest.TestCase):
         self.assertEqual("pack_only", specialist_route("art_criticism", promoted=False)["mode"])
         self.assertEqual("pack_only", specialist_route("art_history", promoted=True)["fallback"])
         for name in ("art-history", "art-criticism"):
-            payload = json.loads((ROOT / "agents" / "research-grade" / f"{name}.agent.json").read_text(encoding="utf-8"))
+            payload = json.loads(
+                (ROOT / "agents" / "research-grade" / f"{name}.agent.json").read_text(
+                    encoding="utf-8"
+                )
+            )
             self.assertFalse(payload["enabled"])
             self.assertEqual("2.0.0", payload["version"])
             self.assertNotIn("export", payload["permissions"])

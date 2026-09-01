@@ -55,8 +55,12 @@ class ResearchGradeCompatibilityTests(unittest.TestCase):
         self.assertEqual("swos.stage-instructions.v2", stage["instruction_set"])
         self.assertEqual("research-grade", capability["profile"])
         self.assertEqual("research-grade", stage["profile"])
-        self.assertTrue(all(item["contract"].endswith(".v2") for item in capability["capabilities"].values()))
-        self.assertTrue(all(item["instruction_id"].endswith(".v2") for item in stage["instructions"].values()))
+        self.assertTrue(
+            all(item["contract"].endswith(".v2") for item in capability["capabilities"].values())
+        )
+        self.assertTrue(
+            all(item["instruction_id"].endswith(".v2") for item in stage["instructions"].values())
+        )
         self.assertIn("programme_memory", capability["capabilities"])
         self.assertIn("research_grade_verification", capability["capabilities"])
         self.assertIn("programme_memory", stage["instructions"])

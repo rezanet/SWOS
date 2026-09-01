@@ -36,7 +36,10 @@ def score_ontology_profile(profile: Any) -> dict[str, Any]:
     criteria = list(getattr(profile, "required_criteria", []) or [])
     methods = list(getattr(profile, "methods", []) or [])
     evidence_types = list(getattr(profile, "evidence_types", []) or [])
-    complete = all(isinstance(item, dict) and item.get("iri") for item in [*criteria, *methods, *evidence_types])
+    complete = all(
+        isinstance(item, dict) and item.get("iri")
+        for item in [*criteria, *methods, *evidence_types]
+    )
     return {
         "discipline": getattr(profile, "discipline", None),
         "ontology_digest": getattr(profile, "ontology_digest", None),
@@ -63,8 +66,13 @@ def score_discipline_critique(report: Any) -> dict[str, Any]:
         "mandatory_criteria": len(mandatory),
         "mandatory_failures": len(mandatory_failures),
         "blocking_preserved": bool(mandatory_failures) == bool(getattr(report, "blocking", False)),
-        "evidence_link_rate": sum(bool(getattr(item, "evidence_refs", [])) for item in findings) / len(findings) if findings else 1.0,
-        "machine_proposed_findings": sum(getattr(item, "review_state", "") == "machine_proposed" for item in findings),
+        "evidence_link_rate": sum(bool(getattr(item, "evidence_refs", [])) for item in findings)
+        / len(findings)
+        if findings
+        else 1.0,
+        "machine_proposed_findings": sum(
+            getattr(item, "review_state", "") == "machine_proposed" for item in findings
+        ),
         "provider_owned_admission": False,
     }
 
@@ -103,6 +111,7 @@ def score_source_diversity(report: Any) -> dict[str, Any]:
         "limitations": list(payload.get("limitations") or []),
         "provider_count_is_non_gating": True,
     }
+
 
 PLANE_ARTIFACTS = {
     "retrieval": ("source-register.json", "retrieval.json", "reranking.json"),
@@ -242,7 +251,8 @@ class EvaluationSubject:
                 relative: file_digest(root / relative)
                 for relative in required
                 if (root / relative).is_file()
-            } | {
+            }
+            | {
                 relative: file_digest(root / relative)
                 for relative in (
                     "provenance-v2.json",
@@ -274,7 +284,8 @@ class EvaluationSubject:
             "research_grade_artifacts": {
                 key: value
                 for key, value in self.artifact_identities.items()
-                if key.startswith("provenance-v2") or key in {"citation-support-decisions.json", "source-diversity-report.json"}
+                if key.startswith("provenance-v2")
+                or key in {"citation-support-decisions.json", "source-diversity-report.json"}
                 or key in {"image-analysis-result.json", "multimodal-critique.json"}
             },
         }

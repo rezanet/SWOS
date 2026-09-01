@@ -56,18 +56,24 @@ def _result(packet: dict[str, Any]) -> dict[str, Any]:
         for index, item in enumerate(sources)
         if isinstance(item, dict)
     ]
-    ordering_invariant = report.to_dict() == measure_source_diversity(
-        families=canonicalize_source_families(reordered, FamilyIdentityPolicy()),
-        admitted_claims=[item for item in packet.get("claims", []) if isinstance(item, dict)],
-        requirements=requirement,
-        exception=packet.get("exception"),
-    ).to_dict()
-    provider_invariant = report.to_dict() == measure_source_diversity(
-        families=canonicalize_source_families(renamed, FamilyIdentityPolicy()),
-        admitted_claims=[item for item in packet.get("claims", []) if isinstance(item, dict)],
-        requirements=requirement,
-        exception=packet.get("exception"),
-    ).to_dict()
+    ordering_invariant = (
+        report.to_dict()
+        == measure_source_diversity(
+            families=canonicalize_source_families(reordered, FamilyIdentityPolicy()),
+            admitted_claims=[item for item in packet.get("claims", []) if isinstance(item, dict)],
+            requirements=requirement,
+            exception=packet.get("exception"),
+        ).to_dict()
+    )
+    provider_invariant = (
+        report.to_dict()
+        == measure_source_diversity(
+            families=canonicalize_source_families(renamed, FamilyIdentityPolicy()),
+            admitted_claims=[item for item in packet.get("claims", []) if isinstance(item, dict)],
+            requirements=requirement,
+            exception=packet.get("exception"),
+        ).to_dict()
+    )
     expected = packet.get("expected", {})
     detected = report.raw_status == "fail" or report.status == "review_required"
     return {
@@ -78,7 +84,9 @@ def _result(packet: dict[str, Any]) -> dict[str, Any]:
             "status": report.status,
             "family_count": report.family_count,
             "research_grade_composite": report.research_grade_composite,
-            "missing_strata": sorted({item for dim in report.dimensions.values() for item in dim.missing_strata}),
+            "missing_strata": sorted(
+                {item for dim in report.dimensions.values() for item in dim.missing_strata}
+            ),
             "counter_position": dict(report.counter_position),
         },
         "expected": dict(expected) if isinstance(expected, dict) else {},
@@ -97,24 +105,40 @@ def run_benchmark(fixtures: Path | str, output: Path | str | None = None) -> dic
     false_blocks = sum(
         not item["detected_material_gap"]
         for item in results
-        if item.get("expected", {}).get("adequate") or item.get("expected", {}).get("justified_narrow")
+        if item.get("expected", {}).get("adequate")
+        or item.get("expected", {}).get("justified_narrow")
     )
-    gap_lower, gap_upper = metric_confidence_interval(true_positive, len(expected_gaps)) if expected_gaps else (0.0, 0.0)
+    gap_lower, gap_upper = (
+        metric_confidence_interval(true_positive, len(expected_gaps))
+        if expected_gaps
+        else (0.0, 0.0)
+    )
     adequate_total = sum(
-        bool(item.get("expected", {}).get("adequate") or item.get("expected", {}).get("justified_narrow"))
+        bool(
+            item.get("expected", {}).get("adequate")
+            or item.get("expected", {}).get("justified_narrow")
+        )
         for item in results
     )
     false_block_rate = false_blocks / adequate_total if adequate_total else None
-    all_invariant = all(item["ordering_invariant"] and item["provider_invariant"] for item in results)
+    all_invariant = all(
+        item["ordering_invariant"] and item["provider_invariant"] for item in results
+    )
     report = {
         "schema_version": "2.0.0",
         "status": "frozen" if reviewed and len(reviewed) == len(packets) else "not_run",
-        "gate_result": "pass" if reviewed and len(reviewed) == len(packets) and all_invariant else "not_run",
-        "reason": None if reviewed and len(reviewed) == len(packets) else "locked human-reviewed packets are unavailable or incomplete",
+        "gate_result": "pass"
+        if reviewed and len(reviewed) == len(packets) and all_invariant
+        else "not_run",
+        "reason": None
+        if reviewed and len(reviewed) == len(packets)
+        else "locked human-reviewed packets are unavailable or incomplete",
         "packet_count": len(packets),
         "locked_reviewed_packet_count": len(reviewed),
         "metrics": {
-            "fake_and_missing_strata_detection": None if not results else sum(item["detected_material_gap"] for item in results) / len(results),
+            "fake_and_missing_strata_detection": None
+            if not results
+            else sum(item["detected_material_gap"] for item in results) / len(results),
             "material_gap_recall": true_positive / len(expected_gaps) if expected_gaps else None,
             "material_gap_recall_lower_95": gap_lower if expected_gaps else None,
             "material_gap_recall_upper_95": gap_upper if expected_gaps else None,

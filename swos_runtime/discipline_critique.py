@@ -231,14 +231,22 @@ def _criterion_inputs(
     research_plan: Mapping[str, Any],
     draft: Mapping[str, Any],
 ) -> tuple[list[str], list[str], str | None]:
-    claims = [str(item.get("claim_id") or item.get("id")) for item in draft.get("claims", []) if isinstance(item, Mapping)]
+    claims = [
+        str(item.get("claim_id") or item.get("id"))
+        for item in draft.get("claims", [])
+        if isinstance(item, Mapping)
+    ]
     evidence: list[str] = []
     status: str | None = None
     for row in evidence_matrix.get("rows", evidence_matrix.get("evidence", [])):
         if not isinstance(row, Mapping) or str(row.get("criterion_iri") or "") != criterion_iri:
             continue
-        evidence.extend(str(value) for value in _as_list(row.get("evidence_refs") or row.get("epg_refs")))
-        claims.extend(str(value) for value in _as_list(row.get("claim_refs") or row.get("claim_ids")))
+        evidence.extend(
+            str(value) for value in _as_list(row.get("evidence_refs") or row.get("epg_refs"))
+        )
+        claims.extend(
+            str(value) for value in _as_list(row.get("claim_refs") or row.get("claim_ids"))
+        )
         if row.get("status") is not None:
             status = str(row["status"])
     for container in (research_plan, draft):
@@ -246,8 +254,14 @@ def _criterion_inputs(
         if isinstance(criteria, Mapping) and criterion_iri in criteria:
             value = criteria[criterion_iri]
             if isinstance(value, Mapping):
-                evidence.extend(str(item) for item in _as_list(value.get("evidence_refs") or value.get("epg_refs")))
-                claims.extend(str(item) for item in _as_list(value.get("claim_refs") or value.get("claim_ids")))
+                evidence.extend(
+                    str(item)
+                    for item in _as_list(value.get("evidence_refs") or value.get("epg_refs"))
+                )
+                claims.extend(
+                    str(item)
+                    for item in _as_list(value.get("claim_refs") or value.get("claim_ids"))
+                )
                 if value.get("status") is not None:
                     status = str(value["status"])
                 if _truthy(value) and not evidence:
@@ -304,8 +318,17 @@ class DisciplineCritic:
             limitation = ""
             finding_type = "required_move"
             failure_mode = profile.failure_modes[0]["iri"] if profile.failure_modes else ""
-            if criterion.get("requires_design") and str(research_plan.get("claim_type", "")).lower() == "causal":
-                design_methods = {"randomized", "randomized_controlled", "quasi_experimental", "experiment", "causal_inference"}
+            if (
+                criterion.get("requires_design")
+                and str(research_plan.get("claim_type", "")).lower() == "causal"
+            ):
+                design_methods = {
+                    "randomized",
+                    "randomized_controlled",
+                    "quasi_experimental",
+                    "experiment",
+                    "causal_inference",
+                }
                 if not plan_methods.intersection(design_methods):
                     special_failure = True
                     finding_type = "missing_warrant"
@@ -317,7 +340,9 @@ class DisciplineCritic:
             elif explicit_status in {"pass", "supported", "valid", "true"}:
                 supported = True
             else:
-                supported = bool(evidence_refs) or bool(re.search(re.escape(label.split()[0]), draft_text))
+                supported = bool(evidence_refs) or bool(
+                    re.search(re.escape(label.split()[0]), draft_text)
+                )
             failed = special_failure or not supported
             if failed:
                 status = "fail"
@@ -325,7 +350,11 @@ class DisciplineCritic:
                     mandatory_failures.append(criterion_iri)
                 finding_id = stable_identifier(
                     "critique-finding",
-                    {"discipline": profile.discipline, "criterion": criterion_iri, "claims": claim_refs},
+                    {
+                        "discipline": profile.discipline,
+                        "criterion": criterion_iri,
+                        "claims": claim_refs,
+                    },
                 )
                 finding = CritiqueFinding(
                     finding_id=finding_id,
@@ -341,7 +370,8 @@ class DisciplineCritic:
                     claim_refs=tuple(claim_refs),
                     evidence_refs=tuple(evidence_refs),
                     observations=(f"Required move missing: {label}.",),
-                    reasoning=reasoning or f"The pack requires {label}; no linked evidence or accepted criterion result was supplied.",
+                    reasoning=reasoning
+                    or f"The pack requires {label}; no linked evidence or accepted criterion result was supplied.",
                     limitation=limitation,
                     remediation=f"Supply an evidence-linked treatment of the {label} criterion and request human review.",
                     confidence=0.95 if criterion.get("mandatory", True) else 0.75,
@@ -371,7 +401,14 @@ class DisciplineCritic:
             )
         subject_digest = canonical_digest({"plan": research_plan, "draft": draft})
         evidence_digest = canonical_digest(evidence_matrix)
-        report_id = stable_identifier("discipline-critique", {"subject": subject_digest, "evidence": evidence_digest, "discipline": profile.discipline})
+        report_id = stable_identifier(
+            "discipline-critique",
+            {
+                "subject": subject_digest,
+                "evidence": evidence_digest,
+                "discipline": profile.discipline,
+            },
+        )
         return DisciplineCritiqueReport(
             report_id=report_id,
             discipline=profile.discipline,
@@ -428,7 +465,11 @@ class DisciplineCritic:
             selector = item.get("selector")
             selector_data = _object_mapping(selector) if selector is not None else {}
             normalized = selector_data.get("normalized")
-            if not observation_id or not isinstance(normalized, (list, tuple)) or len(normalized) != 4:
+            if (
+                not observation_id
+                or not isinstance(normalized, (list, tuple))
+                or len(normalized) != 4
+            ):
                 if observation_id:
                     limitations.append(f"observation_without_reproducible_region:{observation_id}")
                 continue
@@ -444,7 +485,9 @@ class DisciplineCritic:
                     + str(item.get("interpretation_id") or item.get("id") or "unknown")
                 )
 
-        observation_refs = ["observation:" + str(item.get("observation_id") or item.get("id")) for item in anchored]
+        observation_refs = [
+            "observation:" + str(item.get("observation_id") or item.get("id")) for item in anchored
+        ]
         textual_refs = [
             "text:" + str(item.get("evidence_id") or item.get("id") or index)
             for index, item in enumerate(textual_data, 1)
@@ -489,15 +532,23 @@ class DisciplineCritic:
             criticism_rows.append(
                 {
                     "criterion_iri": "https://swos.example.org/criterion/art-criticism/description",
-                    "evidence_refs": ["critique:" + history_report.report_id, *observation_refs, *textual_refs],
+                    "evidence_refs": [
+                        "critique:" + history_report.report_id,
+                        *observation_refs,
+                        *textual_refs,
+                    ],
                     "status": "supported" if observation_refs or textual_refs else "missing",
                 }
             )
         criticism_rows.append(
             {
                 "criterion_iri": "https://swos.example.org/criterion/art-criticism/judgement",
-                "evidence_refs": ["critique:" + history_report.report_id] if history_report.report_id else [],
-                "status": "supported" if observation_refs and not history_report.blocking else "missing",
+                "evidence_refs": ["critique:" + history_report.report_id]
+                if history_report.report_id
+                else [],
+                "status": "supported"
+                if observation_refs and not history_report.blocking
+                else "missing",
             }
         )
         criticism_draft = dict(draft)
@@ -532,10 +583,18 @@ def aggregate_critiques(reports: Iterable[DisciplineCritiqueReport]) -> Aggregat
     by_criterion: dict[str, list[tuple[str, str]]] = {}
     for section in sections:
         for criterion in section.criteria:
-            by_criterion.setdefault(criterion.criterion_iri, []).append((section.discipline, criterion.status))
+            by_criterion.setdefault(criterion.criterion_iri, []).append(
+                (section.discipline, criterion.status)
+            )
     for criterion_iri, values in by_criterion.items():
         if len({status for _, status in values}) > 1:
-            disagreements.append({"criterion_iri": criterion_iri, "results": [{"discipline": d, "status": s} for d, s in values], "resolution": "unresolved"})
+            disagreements.append(
+                {
+                    "criterion_iri": criterion_iri,
+                    "results": [{"discipline": d, "status": s} for d, s in values],
+                    "resolution": "unresolved",
+                }
+            )
     failures = tuple(
         {"discipline": section.discipline, "criterion_iri": criterion}
         for section in sections
@@ -550,13 +609,17 @@ def aggregate_critiques(reports: Iterable[DisciplineCritiqueReport]) -> Aggregat
         }
         for section in sections
     }
-    report_id = stable_identifier("discipline-critique-aggregate", [section.report_id for section in sections])
+    report_id = stable_identifier(
+        "discipline-critique-aggregate", [section.report_id for section in sections]
+    )
     return AggregatedCritiqueReport(
         report_id=report_id,
         sections=sections,
         disagreements=disagreements,
         mandatory_failures=list(failures),
-        limitations=tuple(dict.fromkeys(limit for section in sections for limit in section.limitations)),
+        limitations=tuple(
+            dict.fromkeys(limit for section in sections for limit in section.limitations)
+        ),
         display_summary=summary,
     )
 

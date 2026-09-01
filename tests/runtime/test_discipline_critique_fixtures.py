@@ -19,11 +19,13 @@ class DisciplineCritiqueFixtureTests(unittest.TestCase):
         critic = DisciplineCritic(registry)
         for discipline in SUPPORTED_DISCIPLINES:
             fixture = json.loads(
-                (ROOT / "evals" / "fixtures" / "discipline-critique" / f"{discipline}.json").read_text(
-                    encoding="utf-8"
-                )
+                (
+                    ROOT / "evals" / "fixtures" / "discipline-critique" / f"{discipline}.json"
+                ).read_text(encoding="utf-8")
             )
-            self.assertEqual({"positive", "negative", "boundary", "cross_discipline"}, set(fixture["cases"]))
+            self.assertEqual(
+                {"positive", "negative", "boundary", "cross_discipline"}, set(fixture["cases"])
+            )
             self.assertTrue(fixture["review"]["adjudicated"])
             profile = registry.profile(discipline)
             for case in fixture["cases"].values():

@@ -91,7 +91,9 @@ def assemble_audit_pack(
         "artifact_count": len(entries),
         "artifacts": entries,
         "research_grade_artifacts": {
-            "provenance": [entry["path"] for entry in entries if entry["path"].startswith("provenance")],
+            "provenance": [
+                entry["path"] for entry in entries if entry["path"].startswith("provenance")
+            ],
             "citation": [entry["path"] for entry in entries if "citation" in entry["path"]],
             "diversity": [entry["path"] for entry in entries if "diversity" in entry["path"]],
             "multimodal": [
@@ -104,9 +106,7 @@ def assemble_audit_pack(
     }
     if metadata:
         manifest["metadata"] = metadata
-    (output / MANIFEST_NAME).write_text(
-        _canonical_json(manifest) + "\n", encoding="utf-8"
-    )
+    (output / MANIFEST_NAME).write_text(_canonical_json(manifest) + "\n", encoding="utf-8")
     return manifest
 
 
@@ -131,9 +131,7 @@ def verify_audit_pack(
     if not isinstance(recorded_head, str) or not recorded_head:
         raise AuditPackError("audit-pack manifest has no code head")
     if expected_code_sha is not None and recorded_head != expected_code_sha:
-        raise AuditPackError(
-            f"audit-pack head mismatch: {recorded_head} != {expected_code_sha}"
-        )
+        raise AuditPackError(f"audit-pack head mismatch: {recorded_head} != {expected_code_sha}")
     artifacts = manifest.get("artifacts")
     if not isinstance(artifacts, list):
         raise AuditPackError("audit-pack artifacts must be a list")

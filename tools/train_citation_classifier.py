@@ -17,7 +17,9 @@ from swos_runtime.citation_classifier import LABELS  # noqa: E402
 from swos_runtime.models import canonical_digest  # noqa: E402
 
 
-def train_model(config_path: Path | str, dataset_manifest_path: Path | str, output_dir: Path | str) -> dict[str, Any]:
+def train_model(
+    config_path: Path | str, dataset_manifest_path: Path | str, output_dir: Path | str
+) -> dict[str, Any]:
     output_dir = Path(output_dir)
     if output_dir.exists() and any(output_dir.iterdir()):
         raise RuntimeError(f"immutable model output already exists: {output_dir}")
@@ -28,7 +30,9 @@ def train_model(config_path: Path | str, dataset_manifest_path: Path | str, outp
         reason = "dataset manifest is not a frozen licensed/adjudicated release"
     else:
         status = "not_run"
-        reason = "real model training requires the separately approved optional training environment"
+        reason = (
+            "real model training requires the separately approved optional training environment"
+        )
     model_payload = {
         "schema_version": "2.0.0",
         "status": status,
@@ -44,8 +48,16 @@ def train_model(config_path: Path | str, dataset_manifest_path: Path | str, outp
     output_dir.mkdir(parents=True, exist_ok=False)
     artifact_path = output_dir / "model-artifact.json"
     artifact_path.write_bytes(artifact)
-    report = {**model_payload, "model_id": "swos-citation-support-v2", "artifact_path": str(artifact_path), "model_digest": __import__("hashlib").sha256(artifact).hexdigest(), "verified": False}
-    (output_dir / "model-manifest.json").write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    report = {
+        **model_payload,
+        "model_id": "swos-citation-support-v2",
+        "artifact_path": str(artifact_path),
+        "model_digest": __import__("hashlib").sha256(artifact).hexdigest(),
+        "verified": False,
+    }
+    (output_dir / "model-manifest.json").write_text(
+        json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8"
+    )
     return report
 
 

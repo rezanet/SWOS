@@ -39,10 +39,16 @@ def run_benchmark(repository: str | Path, *, item_count: int = 1000) -> dict[str
         "status": "measured",
         "item_count": item_count,
         "write_seconds": write_seconds,
-        "lookup_p95_ms": statistics.quantiles(samples, n=20)[18] if len(samples) >= 20 else max(samples),
+        "lookup_p95_ms": statistics.quantiles(samples, n=20)[18]
+        if len(samples) >= 20
+        else max(samples),
         "chain_head": store.chain_head(scope),
         "chain_errors": store.verify_chain(scope),
-        "environment": {"python": platform.python_version(), "os": platform.platform(), "sqlite": store.schema_version()},
+        "environment": {
+            "python": platform.python_version(),
+            "os": platform.platform(),
+            "sqlite": store.schema_version(),
+        },
         "limitations": ["Local SQLite measurement only; not a hosted throughput claim."],
     }
 
@@ -58,21 +64,36 @@ def main(argv: list[str] | None = None) -> int:
         try:
             manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            print(json.dumps({"status": "not_run", "reason": f"benchmark manifest unavailable: {exc}"}))
+            print(
+                json.dumps(
+                    {"status": "not_run", "reason": f"benchmark manifest unavailable: {exc}"}
+                )
+            )
             return 2
-        print(json.dumps({
-            "schema_version": "2.0.0",
-            "status": "not_run",
-            "reason": str(manifest.get("limitations", ["explicit repository is required for a benchmark run"])[0]),
-            "manifest": str(args.manifest),
-        }, sort_keys=True))
+        print(
+            json.dumps(
+                {
+                    "schema_version": "2.0.0",
+                    "status": "not_run",
+                    "reason": str(
+                        manifest.get(
+                            "limitations", ["explicit repository is required for a benchmark run"]
+                        )[0]
+                    ),
+                    "manifest": str(args.manifest),
+                },
+                sort_keys=True,
+            )
+        )
         return 2
     if args.repository is None:
         parser.error("--repository is required unless --manifest is used for a NOT_RUN check")
     item_count = args.items
     if item_count is None and args.manifest is not None:
         try:
-            item_count = int(json.loads(args.manifest.read_text(encoding="utf-8")).get("item_count", 1000))
+            item_count = int(
+                json.loads(args.manifest.read_text(encoding="utf-8")).get("item_count", 1000)
+            )
         except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
             print(f"error: benchmark manifest is invalid: {exc}", file=sys.stderr)
             return 1

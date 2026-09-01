@@ -32,10 +32,16 @@ class ResearchMemoryWriteTests(unittest.TestCase):
     def _register(self) -> None:
         operation = RPMOperation.register_project(self.scope, label="X", manifest_digest="a" * 64)
         assessment = self.service.assess_operation(self.scope, operation)
-        approval = HumanApproval.for_assessment(assessment, approver="reviewer", role="memory_owner")
-        self.service.commit_operation(self.scope, assessment_id=assessment.assessment_id, approval=approval)
+        approval = HumanApproval.for_assessment(
+            assessment, approver="reviewer", role="memory_owner"
+        )
+        self.service.commit_operation(
+            self.scope, assessment_id=assessment.assessment_id, approval=approval
+        )
 
-    def _candidate(self, *, classification=DataClassification.PUBLIC, expiry="2099-01-01T00:00:00Z") -> MemoryCandidate:
+    def _candidate(
+        self, *, classification=DataClassification.PUBLIC, expiry="2099-01-01T00:00:00Z"
+    ) -> MemoryCandidate:
         return MemoryCandidate(
             item_id="item-1",
             category="finding",
@@ -67,11 +73,15 @@ class ResearchMemoryWriteTests(unittest.TestCase):
             parent_digest=invalid.parent_digest,
             origin=invalid.origin,
         )
-        assessment = self.service.assess_operation(self.scope, RPMOperation.write(self.scope, invalid))
+        assessment = self.service.assess_operation(
+            self.scope, RPMOperation.write(self.scope, invalid)
+        )
         self.assertEqual("deny", assessment.status)
         self.assertTrue(assessment.denial_reasons)
         restricted = self._candidate(classification=DataClassification.RESTRICTED)
-        assessment = self.service.assess_operation(self.scope, RPMOperation.write(self.scope, restricted))
+        assessment = self.service.assess_operation(
+            self.scope, RPMOperation.write(self.scope, restricted)
+        )
         self.assertEqual("deny", assessment.status)
 
     def test_stale_policy_expired_assessment_and_commit_time_head_change_are_rejected(self) -> None:
@@ -82,16 +92,22 @@ class ResearchMemoryWriteTests(unittest.TestCase):
             self.service.commit_operation(
                 self.scope,
                 assessment_id=assessment.assessment_id,
-                approval=HumanApproval.for_assessment(assessment, approver="reviewer", role="memory_owner"),
+                approval=HumanApproval.for_assessment(
+                    assessment, approver="reviewer", role="memory_owner"
+                ),
             )
 
     def test_operation_hash_and_approval_digest_are_bound(self) -> None:
         operation = RPMOperation.write(self.scope, self._candidate())
         assessment = self.service.assess_operation(self.scope, operation)
-        approval = HumanApproval.for_assessment(assessment, approver="reviewer", role="memory_owner")
+        approval = HumanApproval.for_assessment(
+            assessment, approver="reviewer", role="memory_owner"
+        )
         forged = HumanApproval(**{**approval.to_dict(), "assessment_digest": "0" * 64})
         with self.assertRaises(SWOSRuntimeError):
-            self.service.commit_operation(self.scope, assessment_id=assessment.assessment_id, approval=forged)
+            self.service.commit_operation(
+                self.scope, assessment_id=assessment.assessment_id, approval=forged
+            )
 
 
 if __name__ == "__main__":

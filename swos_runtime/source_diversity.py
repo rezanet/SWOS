@@ -118,17 +118,28 @@ class DiversityRequirement:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "dimensions", tuple(self.dimensions))
-        object.__setattr__(self, "required_strata", {str(key): tuple(value) for key, value in self.required_strata.items()})
+        object.__setattr__(
+            self,
+            "required_strata",
+            {str(key): tuple(value) for key, value in self.required_strata.items()},
+        )
         if not self.requirement_id or not self.dimensions:
             raise ValueError("diversity requirement needs an id and at least one dimension")
-        if not 0 < self.min_composite <= 1 or not 0 <= self.max_hhi <= 1 or not 0 <= self.max_share <= 1 or not 0 <= self.max_unknown_rate <= 1:
+        if (
+            not 0 < self.min_composite <= 1
+            or not 0 <= self.max_hhi <= 1
+            or not 0 <= self.max_share <= 1
+            or not 0 <= self.max_unknown_rate <= 1
+        ):
             raise ValueError("diversity thresholds must be within [0, 1]")
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "requirement_id": self.requirement_id,
             "dimensions": list(self.dimensions),
-            "required_strata": {key: list(value) for key, value in sorted(self.required_strata.items())},
+            "required_strata": {
+                key: list(value) for key, value in sorted(self.required_strata.items())
+            },
             "min_family_count": self.min_family_count,
             "max_hhi": self.max_hhi,
             "max_share": self.max_share,
@@ -244,8 +255,14 @@ def _normalize_url(value: Any, strip_tracking: bool = True) -> str:
     parts = urlsplit(str(value or "").strip().lower())
     query = parse_qsl(parts.query, keep_blank_values=True)
     if strip_tracking:
-        query = [(key, val) for key, val in query if not key.startswith("utm_") and key not in {"ref", "source"}]
-    return urlunsplit((parts.scheme, parts.netloc, parts.path.rstrip("/"), urlencode(sorted(query)), ""))
+        query = [
+            (key, val)
+            for key, val in query
+            if not key.startswith("utm_") and key not in {"ref", "source"}
+        ]
+    return urlunsplit(
+        (parts.scheme, parts.netloc, parts.path.rstrip("/"), urlencode(sorted(query)), "")
+    )
 
 
 def _value(source: Mapping[str, Any], dimension: str) -> Any:
@@ -287,7 +304,11 @@ def _metadata(source: Mapping[str, Any], dimension: str, value: Any) -> dict[str
     state = str(state or ("unknown" if value in (None, "") else "observed"))
     if state not in KNOWN_METADATA_STATES:
         state = "unknown"
-    return {"value": str(value) if value not in (None, "") else None, "status": state, "provenance": str(source.get("metadata_provenance") or "declared")}
+    return {
+        "value": str(value) if value not in (None, "") else None,
+        "status": state,
+        "provenance": str(source.get("metadata_provenance") or "declared"),
+    }
 
 
 def canonicalize_source_families(sources: Sequence[Any], policy: FamilyIdentityPolicy) -> FamilySet:
@@ -300,7 +321,9 @@ def canonicalize_source_families(sources: Sequence[Any], policy: FamilyIdentityP
         for field_name in policy.identity_fields:
             value = item.get(field_name)
             if value not in (None, ""):
-                identity = _normalize_doi(value) if field_name == "doi" else str(value).strip().lower()
+                identity = (
+                    _normalize_doi(value) if field_name == "doi" else str(value).strip().lower()
+                )
                 if field_name == "title":
                     identity = re.sub(r"\W+", " ", identity).strip()
                 break
@@ -310,7 +333,17 @@ def canonicalize_source_families(sources: Sequence[Any], policy: FamilyIdentityP
             identity = _normalize_url(item.get("url"), policy.strip_url_tracking)
         key = identity or source_id
         family_id = "family-" + hashlib.sha256(key.encode("utf-8")).hexdigest()[:24]
-        group = groups.setdefault(key, {"family_id": family_id, "source_ids": [], "provider_ids": [], "metadata": {}, "titles": [], "identifiers": {}})
+        group = groups.setdefault(
+            key,
+            {
+                "family_id": family_id,
+                "source_ids": [],
+                "provider_ids": [],
+                "metadata": {},
+                "titles": [],
+                "identifiers": {},
+            },
+        )
         group["source_ids"].append(source_id)
         provider = item.get("provider")
         if provider not in (None, ""):
@@ -319,14 +352,21 @@ def canonicalize_source_families(sources: Sequence[Any], policy: FamilyIdentityP
             group["titles"].append(str(item["title"]))
         for field_name in ("doi", "isbn", "canonical_work_id", "work_id"):
             if item.get(field_name):
-                group["identifiers"][field_name] = _normalize_doi(item[field_name]) if field_name == "doi" else str(item[field_name])
+                group["identifiers"][field_name] = (
+                    _normalize_doi(item[field_name])
+                    if field_name == "doi"
+                    else str(item[field_name])
+                )
         for dimension in DIMENSIONS:
             value = _value(item, dimension)
             group["metadata"].setdefault(dimension, _metadata(item, dimension, value))
             # A verified value wins over an inferred/unknown duplicate edition.
             candidate = _metadata(item, dimension, value)
             current = group["metadata"][dimension]
-            if current.get("status") in {"unknown", "inferred"} and candidate.get("status") in {"observed", "externally_verified"}:
+            if current.get("status") in {"unknown", "inferred"} and candidate.get("status") in {
+                "observed",
+                "externally_verified",
+            }:
                 group["metadata"][dimension] = candidate
         source_to_family[source_id] = family_id
     families = tuple(
@@ -335,13 +375,19 @@ def canonicalize_source_families(sources: Sequence[Any], policy: FamilyIdentityP
             canonical_key=key,
             source_ids=tuple(sorted(set(value["source_ids"]))),
             provider_ids=tuple(sorted(set(value["provider_ids"]))),
-            metadata={dimension: dict(meta) for dimension, meta in sorted(value["metadata"].items())},
+            metadata={
+                dimension: dict(meta) for dimension, meta in sorted(value["metadata"].items())
+            },
             titles=tuple(sorted(set(value["titles"]))),
             identifiers=dict(sorted(value["identifiers"].items())),
         )
         for key, value in sorted(groups.items(), key=lambda pair: pair[1]["family_id"])
     )
-    return FamilySet(families=families, source_to_family=source_to_family, policy_digest=canonical_digest(policy.__dict__))
+    return FamilySet(
+        families=families,
+        source_to_family=source_to_family,
+        policy_digest=canonical_digest(policy.__dict__),
+    )
 
 
 def _hhi(counts: Mapping[str, float]) -> tuple[dict[str, float], float, float, float]:
@@ -379,7 +425,9 @@ def _valid_exception(exception: Mapping[str, Any] | None) -> bool:
         return False
     try:
         date = str(exception["expires_at"]).replace("Z", "+00:00")
-        return datetime.fromisoformat(date).replace(tzinfo=timezone.utc) > datetime.now(timezone.utc)
+        return datetime.fromisoformat(date).replace(tzinfo=timezone.utc) > datetime.now(
+            timezone.utc
+        )
     except ValueError:
         return False
 
@@ -392,8 +440,14 @@ def measure_source_diversity(
     policy: FamilyIdentityPolicy | None = None,
     exception: Mapping[str, Any] | None = None,
 ) -> SourceDiversityReport:
-    admitted_ids = {source_id for claim in admitted_claims for source_id in _claim_source_ids(claim)}
-    selected = [family for family in families if not admitted_ids or any(source_id in admitted_ids for source_id in family.source_ids)]
+    admitted_ids = {
+        source_id for claim in admitted_claims for source_id in _claim_source_ids(claim)
+    }
+    selected = [
+        family
+        for family in families
+        if not admitted_ids or any(source_id in admitted_ids for source_id in family.source_ids)
+    ]
     exposure: dict[str, int] = {family.family_id: 0 for family in selected}
     for claim in admitted_claims:
         for source_id in _claim_source_ids(claim):
@@ -407,7 +461,12 @@ def measure_source_diversity(
     for dimension in requirements.dimensions:
         applicable = dimension in DIMENSIONS
         values = [family.dimension(dimension) for family in selected] if applicable else []
-        known = [value for value in values if value.get("status") in {"observed", "externally_verified"} and value.get("value") not in (None, "")]
+        known = [
+            value
+            for value in values
+            if value.get("status") in {"observed", "externally_verified"}
+            and value.get("value") not in (None, "")
+        ]
         counts: dict[str, int] = {}
         for value in known:
             key = str(value["value"])
@@ -417,9 +476,13 @@ def measure_source_diversity(
         exposure_counts: dict[str, float] = {}
         for family in selected:
             metadata = family.dimension(dimension)
-            if metadata.get("status") in {"observed", "externally_verified"} and metadata.get("value") not in (None, ""):
+            if metadata.get("status") in {"observed", "externally_verified"} and metadata.get(
+                "value"
+            ) not in (None, ""):
                 key = str(metadata["value"])
-                exposure_counts[key] = exposure_counts.get(key, 0.0) + max(1, exposure.get(family.family_id, 0))
+                exposure_counts[key] = exposure_counts.get(key, 0.0) + max(
+                    1, exposure.get(family.family_id, 0)
+                )
         _, source_hhi, _, _ = _hhi(source_counts)
         _, exposure_hhi, _, _ = _hhi(exposure_counts)
         required = tuple(str(item) for item in requirements.required_strata.get(dimension, ()))
@@ -436,7 +499,10 @@ def measure_source_diversity(
             or coverage < 1.0
             or max(shares.values(), default=1.0) > requirements.max_share
             or max(source_hhi, exposure_hhi) > requirements.max_hhi
-            or (len(selected) >= requirements.min_family_count and balance < requirements.min_composite)
+            or (
+                len(selected) >= requirements.min_family_count
+                and balance < requirements.min_composite
+            )
         )
         status = "fail" if failed else "pass"
         query = ""
@@ -450,27 +516,57 @@ def measure_source_diversity(
             balances.append(balance)
             caps.append(min(completeness, coverage))
         dimensions[dimension] = DimensionReport(
-            dimension=dimension, applicable=applicable, sample_size=total,
-            known_count=len(known), unknown_count=unknown, metadata_completeness=completeness,
-            unknown_rate=unknown_rate, category_counts=counts, shares=shares,
-            max_share=max(shares.values(), default=1.0), hhi=max(source_hhi, exposure_hhi),
-            effective_categories=effective, normalized_balance=balance,
-            required_strata=required, covered_strata=covered, missing_strata=missing,
-            required_strata_coverage=coverage, source_count_hhi=source_hhi,
-            claim_exposure_hhi=exposure_hhi, status=status, corrective_query=query,
+            dimension=dimension,
+            applicable=applicable,
+            sample_size=total,
+            known_count=len(known),
+            unknown_count=unknown,
+            metadata_completeness=completeness,
+            unknown_rate=unknown_rate,
+            category_counts=counts,
+            shares=shares,
+            max_share=max(shares.values(), default=1.0),
+            hhi=max(source_hhi, exposure_hhi),
+            effective_categories=effective,
+            normalized_balance=balance,
+            required_strata=required,
+            covered_strata=covered,
+            missing_strata=missing,
+            required_strata_coverage=coverage,
+            source_count_hhi=source_hhi,
+            claim_exposure_hhi=exposure_hhi,
+            status=status,
+            corrective_query=query,
         )
-    composite = math.prod(balances) ** (1 / len(balances)) if balances and all(value >= 0 for value in balances) else 0.0
+    composite = (
+        math.prod(balances) ** (1 / len(balances))
+        if balances and all(value >= 0 for value in balances)
+        else 0.0
+    )
     if caps:
         composite = min(composite, min(caps))
     stance_values = dimensions.get("stance")
-    counter_present = bool(stance_values and any(value in {"counter", "opposing", "rival", "contradictory"} for value in stance_values.category_counts))
+    counter_present = bool(
+        stance_values
+        and any(
+            value in {"counter", "opposing", "rival", "contradictory"}
+            for value in stance_values.category_counts
+        )
+    )
     counter_position = {
         "required": requirements.counter_position_required,
-        "status": "present" if counter_present else ("missing" if requirements.counter_position_required else "not_required"),
+        "status": "present"
+        if counter_present
+        else ("missing" if requirements.counter_position_required else "not_required"),
     }
     raw_failures = [item for item in dimensions.values() if item.status == "fail"]
     if requirements.counter_position_required and not counter_present:
-        raw_failures.append(stance_values or DimensionReport("stance", True, 0, 0, 0, 0, 1, {}, {}, 1, 1, 0, 0, (), (), (), 0, 1, 1, "fail"))
+        raw_failures.append(
+            stance_values
+            or DimensionReport(
+                "stance", True, 0, 0, 0, 0, 1, {}, {}, 1, 1, 0, 0, (), (), (), 0, 1, 1, "fail"
+            )
+        )
         corrective.append("counter position contradictory evidence source")
     if len(selected) < 3:
         raw_status = "fail"
@@ -484,21 +580,40 @@ def measure_source_diversity(
     exception_payload = dict(exception or {}) if _valid_exception(exception) else {}
     status = raw_status
     if exception_payload:
-        limitations.append(f"Narrow-corpus exception {exception_payload['sdl_decision_id']} applies only to {exception_payload['scope']} until {exception_payload['expires_at']}.")
+        limitations.append(
+            f"Narrow-corpus exception {exception_payload['sdl_decision_id']} applies only to {exception_payload['scope']} until {exception_payload['expires_at']}."
+        )
         if raw_status == "fail":
             status = "review_required"
     if len(selected) < 5:
-        limitations.append(f"Only {len(selected)} distinct canonical source families were admitted; provider count is not diversity.")
+        limitations.append(
+            f"Only {len(selected)} distinct canonical source families were admitted; provider count is not diversity."
+        )
     if any(item.unknown_count for item in dimensions.values()):
         limitations.append("Unknown or inferred metadata does not count as coverage.")
-    report_id = "diversity-" + canonical_digest({"families": [family.family_id for family in selected], "requirement": requirements.to_dict()})[:24]
+    report_id = (
+        "diversity-"
+        + canonical_digest(
+            {
+                "families": [family.family_id for family in selected],
+                "requirement": requirements.to_dict(),
+            }
+        )[:24]
+    )
     providers = {provider for family in selected for provider in family.provider_ids}
     return SourceDiversityReport(
-        report_id=report_id, requirement_id=requirements.requirement_id,
-        policy_version="2.0.0", family_count=len(selected), provider_count=len(providers),
-        dimensions=dimensions, research_grade_composite=max(0.0, min(1.0, composite)),
-        raw_status=raw_status, status=status, counter_position=counter_position,
-        exception=exception_payload, limitations=tuple(dict.fromkeys(limitations)),
+        report_id=report_id,
+        requirement_id=requirements.requirement_id,
+        policy_version="2.0.0",
+        family_count=len(selected),
+        provider_count=len(providers),
+        dimensions=dimensions,
+        research_grade_composite=max(0.0, min(1.0, composite)),
+        raw_status=raw_status,
+        status=status,
+        counter_position=counter_position,
+        exception=exception_payload,
+        limitations=tuple(dict.fromkeys(limitations)),
         corrective_queries=tuple(dict.fromkeys(corrective)),
         family_digest=canonical_digest([family.to_dict() for family in selected]),
         requirement_digest=canonical_digest(requirements.to_dict()),

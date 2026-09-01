@@ -64,7 +64,9 @@ class DisciplineOntologyTests(unittest.TestCase):
     def test_v1_warning_window_is_explicit_and_migration_is_reversible(self) -> None:
         registry = DisciplineOntologyRegistry().load(MANIFEST)
         self.assertTrue(registry.compatibility["v1_warning_window"])
-        self.assertEqual("enterprise_reporting", registry.migrate_v1_discipline("enterprise_reporting"))
+        self.assertEqual(
+            "enterprise_reporting", registry.migrate_v1_discipline("enterprise_reporting")
+        )
         self.assertEqual("engineering", registry.migrate_v1_discipline("engineering"))
 
 

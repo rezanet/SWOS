@@ -28,7 +28,9 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class ResearchGradeEndToEndTests(unittest.TestCase):
     def test_three_project_research_memory_critique_finalization_prov_public_proof(self) -> None:
-        project_template = json.loads((ROOT / "examples" / "public-proof" / "project.json").read_text(encoding="utf-8"))
+        project_template = json.loads(
+            (ROOT / "examples" / "public-proof" / "project.json").read_text(encoding="utf-8")
+        )
         registry = DisciplineOntologyRegistry().load(ROOT / "discipline-packs" / "manifest-v2.json")
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -41,12 +43,21 @@ class ResearchGradeEndToEndTests(unittest.TestCase):
                 project_path.write_text(json.dumps(project, indent=2) + "\n", encoding="utf-8")
                 proof_dir = root / f"proof-{index}"
                 scope = ResearchScope("swos", "research-grade-e2e", project["project_id"])
-                memory.register_project(scope, label=project["project_id"], manifest_digest="a" * 64)
+                memory.register_project(
+                    scope, label=project["project_id"], manifest_digest="a" * 64
+                )
                 proof = run_public_proof(project_path, proof_dir)
                 subject = EvaluationSubject.load(proof_dir / "run")
                 self.assertEqual(project["project_id"], proof["project_id"])
                 self.assertTrue((proof_dir / "run" / "provenance-v2.json").is_file())
-                self.assertEqual("not_run", json.loads((proof_dir / "run" / "provenance-v2-certificate.json").read_text(encoding="utf-8"))["status"])
+                self.assertEqual(
+                    "not_run",
+                    json.loads(
+                        (proof_dir / "run" / "provenance-v2-certificate.json").read_text(
+                            encoding="utf-8"
+                        )
+                    )["status"],
+                )
 
                 observation = VisualObservation(
                     observation_id=f"observation-{index}",
@@ -55,7 +66,15 @@ class ResearchGradeEndToEndTests(unittest.TestCase):
                     asset_digest="b" * 64,
                     description="A bounded visible feature.",
                     origin="machine",
-                    selector=RegionSelector("iiif_pixel", "0,0,10,10", "b" * 64, asset_width=10, asset_height=10, normalized=(0, 0, 10, 10), validation_status="valid"),
+                    selector=RegionSelector(
+                        "iiif_pixel",
+                        "0,0,10,10",
+                        "b" * 64,
+                        asset_width=10,
+                        asset_height=10,
+                        normalized=(0, 0, 10, 10),
+                        validation_status="valid",
+                    ),
                 )
                 critique = DisciplineCritic(registry).staged_multimodal_critique(
                     research_plan={},
@@ -84,12 +103,21 @@ class ResearchGradeEndToEndTests(unittest.TestCase):
                 committed = memory.commit_operation(
                     scope,
                     assessment_id=assessment.assessment_id,
-                    approval=HumanApproval.for_assessment(assessment, approver="e2e-human", role="memory_owner"),
+                    approval=HumanApproval.for_assessment(
+                        assessment, approver="e2e-human", role="memory_owner"
+                    ),
                 )
                 self.assertEqual("committed", committed.status)
-                self.assertIn(candidate.item_id, memory.query(scope, MemoryQuery(), memory.normal_read_policy()).receipt.returned_item_ids)
+                self.assertIn(
+                    candidate.item_id,
+                    memory.query(
+                        scope, MemoryQuery(), memory.normal_read_policy()
+                    ).receipt.returned_item_ids,
+                )
                 seen_projects.add(project["project_id"])
-            self.assertEqual({"swos-e2e-project-1", "swos-e2e-project-2", "swos-e2e-project-3"}, seen_projects)
+            self.assertEqual(
+                {"swos-e2e-project-1", "swos-e2e-project-2", "swos-e2e-project-3"}, seen_projects
+            )
 
 
 if __name__ == "__main__":

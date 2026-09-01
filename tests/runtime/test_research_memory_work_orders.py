@@ -25,7 +25,9 @@ class ResearchMemoryWorkOrderTests(unittest.TestCase):
             run_dir = root / "run"
             run_dir.mkdir()
             (run_dir / "run-state.json").write_text(
-                json.dumps({"run_id": "run-1", "work_id": "work-1", "status": "ACTIVE", "history": []}),
+                json.dumps(
+                    {"run_id": "run-1", "work_id": "work-1", "status": "ACTIVE", "history": []}
+                ),
                 encoding="utf-8",
             )
             run = WorkOrderRun(run_dir)
@@ -35,9 +37,18 @@ class ResearchMemoryWorkOrderTests(unittest.TestCase):
             register = RPMOperation.register_project(scope, label="X", manifest_digest="a" * 64)
             run.rpm_write(register)
             candidate = MemoryCandidate(
-                "item-1", "finding", "ref:item-1", 0.8, "public", "owner",
-                "2099-01-01T00:00:00Z", True, ("epg:item-1",), "sdl:item-1",
-                parent_digest="b" * 64, origin="work-order",
+                "item-1",
+                "finding",
+                "ref:item-1",
+                0.8,
+                "public",
+                "owner",
+                "2099-01-01T00:00:00Z",
+                True,
+                ("epg:item-1",),
+                "sdl:item-1",
+                parent_digest="b" * 64,
+                origin="work-order",
             )
             run.rpm_write(RPMOperation.write(scope, candidate))
             result = run.rpm_read(MemoryQuery())

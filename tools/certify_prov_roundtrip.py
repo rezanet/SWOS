@@ -27,7 +27,9 @@ def _limits(path: Path) -> ResourceLimits:
     return ResourceLimits(
         max_bytes=int(payload.get("max_bytes", ResourceLimits.max_bytes)),
         max_statements=int(payload.get("max_statements", ResourceLimits.max_statements)),
-        max_literal_length=int(payload.get("max_literal_length", ResourceLimits.max_literal_length)),
+        max_literal_length=int(
+            payload.get("max_literal_length", ResourceLimits.max_literal_length)
+        ),
         max_depth=int(payload.get("max_depth", ResourceLimits.max_depth)),
         timeout_seconds=float(payload.get("timeout_seconds", ResourceLimits.timeout_seconds)),
     )
@@ -67,9 +69,17 @@ def certify(
             if not isinstance(case, dict) or not case.get("epg"):
                 continue
             case_path = (root / str(case["epg"])).resolve()
-            certificates.append(certify_round_trip(_load(case_path), formats, oracle=oracle, limits=limits).to_dict())
+            certificates.append(
+                certify_round_trip(
+                    _load(case_path), formats, oracle=oracle, limits=limits
+                ).to_dict()
+            )
         statuses = {str(item.get("status")) for item in certificates}
-        status = "certified" if certificates and statuses == {"certified"} else ("failed" if "failed" in statuses else "not_run")
+        status = (
+            "certified"
+            if certificates and statuses == {"certified"}
+            else ("failed" if "failed" in statuses else "not_run")
+        )
         report = {
             "certificate_version": "2.0.0",
             "status": status,
@@ -79,14 +89,18 @@ def certify(
             "paths": list(formats),
             "legs": certificates,
             "oracle": oracle,
-            "limitations": [] if status == "certified" else ["The corpus or independent oracle is not release-complete."],
+            "limitations": []
+            if status == "certified"
+            else ["The corpus or independent oracle is not release-complete."],
             "limits": limits.__dict__,
             "profile_manifest": profile,
         }
     if certificate_out.exists():
         raise RuntimeError(f"immutable certificate already exists: {certificate_out}")
     certificate_out.parent.mkdir(parents=True, exist_ok=True)
-    certificate_out.write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    certificate_out.write_text(
+        json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8"
+    )
     return report
 
 
@@ -116,7 +130,12 @@ def main() -> int:
     except (OSError, ValueError, KeyError, RuntimeError, json.JSONDecodeError) as exc:
         print(json.dumps({"status": "not_run", "reason": str(exc)}))
         return 2
-    print(json.dumps({"status": result.get("status"), "certificate": str(args.certificate_out)}, sort_keys=True))
+    print(
+        json.dumps(
+            {"status": result.get("status"), "certificate": str(args.certificate_out)},
+            sort_keys=True,
+        )
+    )
     return 0 if result.get("status") == "certified" else 2
 
 

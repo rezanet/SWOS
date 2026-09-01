@@ -668,15 +668,27 @@ class WorkOrderRun:
         """Bind a provenance v2 export and its immutable fingerprint to the host run."""
 
         payload = document.to_dict() if hasattr(document, "to_dict") else dict(document or {})
-        fingerprint_payload = fingerprint.to_dict() if hasattr(fingerprint, "to_dict") else dict(fingerprint or {})
-        if payload.get("schema_version") != "2.0.0" or not fingerprint_payload.get("semantic_digest"):
+        fingerprint_payload = (
+            fingerprint.to_dict() if hasattr(fingerprint, "to_dict") else dict(fingerprint or {})
+        )
+        if payload.get("schema_version") != "2.0.0" or not fingerprint_payload.get(
+            "semantic_digest"
+        ):
             raise WorkOrderError("EPG v2 export requires a versioned document and fingerprint")
         record = {"document": payload, "fingerprint": fingerprint_payload}
         if certificate is not None:
-            record["certificate"] = certificate.to_dict() if hasattr(certificate, "to_dict") else dict(certificate)
+            record["certificate"] = (
+                certificate.to_dict() if hasattr(certificate, "to_dict") else dict(certificate)
+            )
         self.state["epg_v2_export"] = record
         self.state.setdefault("history", []).append(
-            {"event": "epg_v2_bound", "semantic_digest": fingerprint_payload["semantic_digest"], "certificate_status": (record.get("certificate") or {}).get("status", "unavailable")}
+            {
+                "event": "epg_v2_bound",
+                "semantic_digest": fingerprint_payload["semantic_digest"],
+                "certificate_status": (record.get("certificate") or {}).get(
+                    "status", "unavailable"
+                ),
+            }
         )
         self._save()
         self._persist_work_order()
@@ -689,7 +701,11 @@ class WorkOrderRun:
             raise WorkOrderError("image analysis result has an invalid status")
         self.state["image_analysis_result"] = payload
         self.state.setdefault("history", []).append(
-            {"event": "image_analysis_recorded", "status": payload["status"], "request_digest": payload.get("request_digest")}
+            {
+                "event": "image_analysis_recorded",
+                "status": payload["status"],
+                "request_digest": payload.get("request_digest"),
+            }
         )
         self._save()
         self._persist_work_order()
@@ -699,12 +715,18 @@ class WorkOrderRun:
 
         payload = result.to_dict() if hasattr(result, "to_dict") else dict(result or {})
         if tuple(payload.get("stage_order") or ()) != ("art_history", "art_criticism"):
-            raise WorkOrderError("multimodal critique must use the fixed art-history/art-criticism order")
+            raise WorkOrderError(
+                "multimodal critique must use the fixed art-history/art-criticism order"
+            )
         if payload.get("pack_only_fallback") is not True:
             raise WorkOrderError("multimodal critique must retain the pack-only fallback")
         self.state["multimodal_critique"] = payload
         self.state.setdefault("history", []).append(
-            {"event": "multimodal_critique_recorded", "stage_order": list(payload["stage_order"]), "review_state": payload.get("review_state", "machine_proposed")}
+            {
+                "event": "multimodal_critique_recorded",
+                "stage_order": list(payload["stage_order"]),
+                "review_state": payload.get("review_state", "machine_proposed"),
+            }
         )
         self._save()
         self._persist_work_order()
@@ -820,7 +842,13 @@ class WorkOrderRun:
     def bind_ontology(self, profile: Any) -> None:
         """Persist the exact v2 ontology identity used by this run."""
 
-        required = ("discipline", "discipline_iri", "ontology_digest", "required_criteria", "methods")
+        required = (
+            "discipline",
+            "discipline_iri",
+            "ontology_digest",
+            "required_criteria",
+            "methods",
+        )
         if any(not hasattr(profile, name) for name in required):
             raise WorkOrderError("ontology binding requires a complete discipline profile")
         self.state["ontology_binding"] = {
@@ -841,9 +869,21 @@ class WorkOrderRun:
     def bind_diversity_requirement(self, requirement: Any) -> None:
         """Persist the pre-retrieval, ontology-bound diversity contract."""
 
-        payload = requirement.to_dict() if hasattr(requirement, "to_dict") else dict(requirement or {})
-        required = ("requirement_id", "dimensions", "min_family_count", "max_hhi", "max_share", "min_composite", "max_unknown_rate")
-        if any(key not in payload for key in required) or not payload.get("declared_before_retrieval", True):
+        payload = (
+            requirement.to_dict() if hasattr(requirement, "to_dict") else dict(requirement or {})
+        )
+        required = (
+            "requirement_id",
+            "dimensions",
+            "min_family_count",
+            "max_hhi",
+            "max_share",
+            "min_composite",
+            "max_unknown_rate",
+        )
+        if any(key not in payload for key in required) or not payload.get(
+            "declared_before_retrieval", True
+        ):
             raise WorkOrderError("diversity binding requires a complete pre-retrieval requirement")
         self.state["diversity_requirement"] = payload
         self.state.setdefault("history", []).append(
@@ -858,7 +898,9 @@ class WorkOrderRun:
             raise WorkOrderError("this work-order has no explicit RPM binding")
         return service, scope
 
-    def rpm_read(self, query: Any | None = None, policy: Any | None = None, *, as_of: Any | None = None) -> Any:
+    def rpm_read(
+        self, query: Any | None = None, policy: Any | None = None, *, as_of: Any | None = None
+    ) -> Any:
         service, scope = self._require_rpm()
         if query is None:
             from .research_memory import MemoryQuery
@@ -886,7 +928,9 @@ class WorkOrderRun:
         self._save()
         return result
 
-    def rpm_write(self, operation: Any, *, approval: Any | None = None, as_of: Any | None = None) -> Any:
+    def rpm_write(
+        self, operation: Any, *, approval: Any | None = None, as_of: Any | None = None
+    ) -> Any:
         service, scope = self._require_rpm()
         if operation.scope != scope:
             raise WorkOrderError("RPM operation scope does not match work-order binding")

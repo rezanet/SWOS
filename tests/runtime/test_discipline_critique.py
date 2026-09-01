@@ -29,7 +29,9 @@ class DisciplineCritiqueTests(unittest.TestCase):
         self.assertTrue(report.mandatory_failures)
         self.assertTrue(any(f.severity == "blocking" for f in report.findings))
         self.assertTrue(all(f.claim_refs for f in report.findings))
-        self.assertTrue(any("design" in (f.reasoning + f.limitation).lower() for f in report.findings))
+        self.assertTrue(
+            any("design" in (f.reasoning + f.limitation).lower() for f in report.findings)
+        )
 
     def test_supported_criterion_is_evidence_linked_and_machine_proposed(self) -> None:
         profile = self.registry.profile("engineering")
@@ -37,9 +39,7 @@ class DisciplineCritiqueTests(unittest.TestCase):
         report = DisciplineCritic(self.registry).critique(
             discipline=profile,
             research_plan={"methods": ["verification"]},
-            evidence_matrix={
-                "rows": [{"criterion_iri": criterion, "evidence_refs": ["epg-1"]}]
-            },
+            evidence_matrix={"rows": [{"criterion_iri": criterion, "evidence_refs": ["epg-1"]}]},
             draft={"claims": [{"claim_id": "claim-1", "text": "verified"}]},
         )
         result = next(item for item in report.criteria if item.criterion_iri == criterion)

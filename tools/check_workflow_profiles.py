@@ -16,9 +16,7 @@ PROVIDER_MARKERS = (
     "openai_api",
 )
 ORDINARY_WORKFLOW_MARKERS = ("pull_request", "push")
-SAFE_CREDENTIAL_GUARD = re.compile(
-    r"(?:test\s+-z|if\s+\[\[?\s*-z).*OPENAI_API_KEY", re.IGNORECASE
-)
+SAFE_CREDENTIAL_GUARD = re.compile(r"(?:test\s+-z|if\s+\[\[?\s*-z).*OPENAI_API_KEY", re.IGNORECASE)
 
 
 def _top_level_block(text: str, heading: str) -> str:

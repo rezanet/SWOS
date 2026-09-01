@@ -30,15 +30,13 @@ def _timestamp(value: datetime | str | None = None) -> str:
     if isinstance(value, datetime):
         if value.tzinfo is None:
             raise ValueError("timestamps must include a UTC offset")
-        return value.astimezone(timezone.utc).isoformat(timespec="microseconds").replace(
-            "+00:00", "Z"
+        return (
+            value.astimezone(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z")
         )
     parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if parsed.tzinfo is None:
         raise ValueError("timestamps must include a UTC offset")
-    return parsed.astimezone(timezone.utc).isoformat(timespec="microseconds").replace(
-        "+00:00", "Z"
-    )
+    return parsed.astimezone(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z")
 
 
 def _dt(value: datetime | str) -> datetime:
@@ -148,7 +146,9 @@ class ProgrammeProjectBinding:
     schema_version: str = RPM_VERSION
 
     @classmethod
-    def create(cls, scope: ResearchScope, *, label: str, manifest_digest: str) -> "ProgrammeProjectBinding":
+    def create(
+        cls, scope: ResearchScope, *, label: str, manifest_digest: str
+    ) -> "ProgrammeProjectBinding":
         return cls(
             binding_id=f"binding-{uuid4()}",
             scope=scope,
@@ -263,7 +263,9 @@ class RPMOperation:
         )
 
     @classmethod
-    def register_project(cls, scope: ResearchScope, *, label: str, manifest_digest: str) -> "RPMOperation":
+    def register_project(
+        cls, scope: ResearchScope, *, label: str, manifest_digest: str
+    ) -> "RPMOperation":
         return cls._new(
             scope,
             "register_project",
@@ -328,12 +330,18 @@ class RPMOperation:
         )
 
     @classmethod
-    def contradiction_open(cls, scope: ResearchScope, item_id: str, *, reason: str) -> "RPMOperation":
+    def contradiction_open(
+        cls, scope: ResearchScope, item_id: str, *, reason: str
+    ) -> "RPMOperation":
         return cls._new(scope, "contradiction_opened", {"reason": reason}, target_item_id=item_id)
 
     @classmethod
-    def contradiction_resolve(cls, scope: ResearchScope, item_id: str, *, resolution: str) -> "RPMOperation":
-        return cls._new(scope, "contradiction_resolved", {"resolution": resolution}, target_item_id=item_id)
+    def contradiction_resolve(
+        cls, scope: ResearchScope, item_id: str, *, resolution: str
+    ) -> "RPMOperation":
+        return cls._new(
+            scope, "contradiction_resolved", {"resolution": resolution}, target_item_id=item_id
+        )
 
     @classmethod
     def expire(cls, scope: ResearchScope, item_id: str) -> "RPMOperation":
@@ -601,7 +609,9 @@ def _candidate_from_payload(payload: Mapping[str, Any]) -> MemoryCandidate:
         rights=tuple(str(value) for value in payload.get("rights", [])),
         correction_of=payload.get("correction_of"),
         supersedes=payload.get("supersedes"),
-        contradiction_candidates=tuple(str(value) for value in payload.get("contradiction_candidates", [])),
+        contradiction_candidates=tuple(
+            str(value) for value in payload.get("contradiction_candidates", [])
+        ),
     )
 
 
@@ -612,9 +622,10 @@ class ResearchMemoryService:
         self.store = store
         self.policy_id = "swos.research-programme-memory"
         self.policy_version = RPM_VERSION
-        self.policy_digest = policy_digest or hashlib.sha256(
-            b"swos.research-programme-memory.v2.fail-closed"
-        ).hexdigest()
+        self.policy_digest = (
+            policy_digest
+            or hashlib.sha256(b"swos.research-programme-memory.v2.fail-closed").hexdigest()
+        )
         self.assessment_ttl = timedelta(minutes=5)
         self.store.initialize()
 
@@ -622,7 +633,9 @@ class ResearchMemoryService:
         return MemoryReadPolicy(DataClassification.INTERNAL)
 
     def governance_read_policy(self) -> MemoryReadPolicy:
-        return MemoryReadPolicy(DataClassification.SECRET, include_inactive=True, review_mode="governance")
+        return MemoryReadPolicy(
+            DataClassification.SECRET, include_inactive=True, review_mode="governance"
+        )
 
     def _ensure_scope(self, scope: ResearchScope) -> None:
         if not isinstance(scope, ResearchScope):
@@ -642,10 +655,14 @@ class ResearchMemoryService:
             raise SWOSRuntimeError(ErrorCode.SCOPE_DENIED, "scope is retired or unbound")
         return binding
 
-    def _operation_from_dict(self, value: RPMOperation | Mapping[str, Any], scope: ResearchScope) -> RPMOperation:
+    def _operation_from_dict(
+        self, value: RPMOperation | Mapping[str, Any], scope: ResearchScope
+    ) -> RPMOperation:
         if isinstance(value, RPMOperation):
             if value.scope != scope:
-                raise SWOSRuntimeError(ErrorCode.SCOPE_DENIED, "operation scope does not match request")
+                raise SWOSRuntimeError(
+                    ErrorCode.SCOPE_DENIED, "operation scope does not match request"
+                )
             return value
         try:
             operation_scope = ResearchScope(**value["scope"])
@@ -696,11 +713,18 @@ class ResearchMemoryService:
                 denial_reasons.append("candidate is malformed")
             else:
                 candidate_digest = candidate.digest
-                if not candidate.source_grounded or not candidate.epg_node_ids or not candidate.sdl_decision_id:
+                if (
+                    not candidate.source_grounded
+                    or not candidate.epg_node_ids
+                    or not candidate.sdl_decision_id
+                ):
                     denial_reasons.append("source grounding, EPG and SDL evidence are required")
                 if _dt(candidate.expiry) <= _dt(operation_as_of):
                     denial_reasons.append("candidate expiry is not in the future")
-                if candidate.data_classification in {DataClassification.RESTRICTED, DataClassification.SECRET}:
+                if candidate.data_classification in {
+                    DataClassification.RESTRICTED,
+                    DataClassification.SECRET,
+                }:
                     classification_result = "denied"
                     denial_reasons.append("restricted or secret candidate is denied")
                 else:
@@ -708,18 +732,33 @@ class ResearchMemoryService:
                 rights_result = "allowed" if not candidate.rights else "review"
                 if candidate.rights and "write" not in candidate.rights:
                     denial_reasons.append("candidate rights do not permit memory write")
-                if not operation_obj.evidence.get("epg_digest") or not operation_obj.evidence.get("sdl_digest"):
+                if not operation_obj.evidence.get("epg_digest") or not operation_obj.evidence.get(
+                    "sdl_digest"
+                ):
                     denial_reasons.append("operation EPG and SDL digests are required")
         if operation_obj.operation_type not in {
-            "register_project", "retire_project", "unbind_project", "close_programme",
-            "write", "confirm", "correct", "supersede", "contradiction_opened",
-            "contradiction_resolved", "expire", "delete", "exceptional_read",
+            "register_project",
+            "retire_project",
+            "unbind_project",
+            "close_programme",
+            "write",
+            "confirm",
+            "correct",
+            "supersede",
+            "contradiction_opened",
+            "contradiction_resolved",
+            "expire",
+            "delete",
+            "exceptional_read",
         }:
             denial_reasons.append("unsupported RPM operation")
         target_head = self.store.chain_head(scope)
         if operation_obj.expected_head is not None and operation_obj.expected_head != target_head:
             denial_reasons.append("operation target head is stale")
-        if operation_obj.target_item_id and operation_obj.operation_type not in {"register_project", "close_programme"}:
+        if operation_obj.target_item_id and operation_obj.operation_type not in {
+            "register_project",
+            "close_programme",
+        }:
             if self.store.get_projection(scope, operation_obj.target_item_id) is None:
                 denial_reasons.append("lifecycle target is not present in this scope")
         status = "deny" if denial_reasons else "allow"
@@ -742,7 +781,12 @@ class ResearchMemoryService:
             denial_reasons=tuple(denial_reasons),
             rights_result=rights_result,
             classification_result=classification_result,
-            contradiction_result="review_required" if operation_obj.operation_type == "write" and self.store.get_projection(scope, operation_obj.payload.get("candidate", {}).get("item_id", "")) else "not_checked",
+            contradiction_result="review_required"
+            if operation_obj.operation_type == "write"
+            and self.store.get_projection(
+                scope, operation_obj.payload.get("candidate", {}).get("item_id", "")
+            )
+            else "not_checked",
             operation=operation_obj.to_dict(),
         )
         self.store.save_assessment(assessment.to_dict())
@@ -750,13 +794,21 @@ class ResearchMemoryService:
 
     def _validate_approval(self, assessment: MemoryAssessment, approval: HumanApproval) -> None:
         if approval.disposition != "approved":
-            raise SWOSRuntimeError(ErrorCode.APPROVAL_MISMATCH, "approval disposition is not approved")
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval disposition is not approved"
+            )
         if approval.assessment_digest != assessment.digest:
-            raise SWOSRuntimeError(ErrorCode.APPROVAL_MISMATCH, "approval is not bound to assessment digest")
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval is not bound to assessment digest"
+            )
         if assessment.candidate_digest and approval.candidate_digest != assessment.candidate_digest:
-            raise SWOSRuntimeError(ErrorCode.APPROVAL_MISMATCH, "approval is not bound to candidate digest")
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval is not bound to candidate digest"
+            )
         if assessment.sdl_decision_id and approval.sdl_decision_id != assessment.sdl_decision_id:
-            raise SWOSRuntimeError(ErrorCode.APPROVAL_MISMATCH, "approval SDL decision does not match assessment")
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval SDL decision does not match assessment"
+            )
 
     def commit_operation(
         self,
@@ -772,10 +824,14 @@ class ResearchMemoryService:
             raise SWOSRuntimeError(ErrorCode.STALE_ASSESSMENT, "assessment is unknown")
         assessment = self._assessment_from_dict(stored)
         if assessment.scope != scope:
-            raise SWOSRuntimeError(ErrorCode.SCOPE_DENIED, "assessment scope does not match request")
+            raise SWOSRuntimeError(
+                ErrorCode.SCOPE_DENIED, "assessment scope does not match request"
+            )
         now = _dt(as_of or utc_timestamp())
         if assessment.consumed or now > _dt(assessment.expires_at):
-            raise SWOSRuntimeError(ErrorCode.STALE_ASSESSMENT, "assessment is expired or already consumed")
+            raise SWOSRuntimeError(
+                ErrorCode.STALE_ASSESSMENT, "assessment is expired or already consumed"
+            )
         if assessment.policy_digest != self.policy_digest:
             raise SWOSRuntimeError(ErrorCode.STALE_ASSESSMENT, "assessment policy digest is stale")
         if assessment.status != "allow":
@@ -800,11 +856,16 @@ class ResearchMemoryService:
                 label=str(operation.payload["label"]),
                 manifest_digest=str(operation.payload["manifest_digest"]),
             )
-            event = self.store.register_binding(binding.to_dict(), operation_id=operation.operation_id)
+            event = self.store.register_binding(
+                binding.to_dict(), operation_id=operation.operation_id
+            )
             projection = None
         elif operation.operation_type in {"retire_project", "unbind_project"}:
             event = self.store.transition_binding(
-                scope, "retired", operation_id=operation.operation_id, reason=operation.operation_type
+                scope,
+                "retired",
+                operation_id=operation.operation_id,
+                reason=operation.operation_type,
             )
             projection = None
         elif operation.operation_type == "close_programme":
@@ -819,7 +880,9 @@ class ResearchMemoryService:
                 event_payload,
                 operation_id=operation.operation_id,
             )
-            projection = self.store.get_projection(scope, event_payload.get("item_id", operation.target_item_id))
+            projection = self.store.get_projection(
+                scope, event_payload.get("item_id", operation.target_item_id)
+            )
         self.store.consume_assessment(assessment_id, approval.to_dict())
         return RPMResult(
             status="committed",
@@ -918,7 +981,11 @@ class ResearchMemoryService:
                 continue
             if query.category and row.get("category") != query.category:
                 continue
-            if _dt(str(row["expiry"])) <= _dt(when) and not query.include_expired and policy.review_mode == "normal":
+            if (
+                _dt(str(row["expiry"])) <= _dt(when)
+                and not query.include_expired
+                and policy.review_mode == "normal"
+            ):
                 exclusions["expired"] = exclusions.get("expired", 0) + 1
                 continue
             classification = DataClassification(row["data_classification"])
@@ -936,11 +1003,7 @@ class ResearchMemoryService:
             exclusion_counts=exclusions,
             exceptional=policy.review_mode != "normal",
             influence_flag=bool(items),
-            epg_node_ids=tuple(
-                node
-                for item in items
-                for node in item.get("epg_node_ids", [])
-            ),
+            epg_node_ids=tuple(node for item in items for node in item.get("epg_node_ids", [])),
         )
         self.store.save_receipt(receipt.to_dict())
         return MemoryQueryResult(items=items, receipt=receipt)
@@ -958,8 +1021,21 @@ class ResearchMemoryService:
         ]
         return ExpiryReport(scope=scope, as_of=when, candidates=candidates)
 
-    def register_project(self, scope: ResearchScope, *, label: str, manifest_digest: str, approval: HumanApproval | None = None) -> RPMResult:
-        operation = RPMOperation.register_project(scope, label=label, manifest_digest=manifest_digest)
+    def register_project(
+        self,
+        scope: ResearchScope,
+        *,
+        label: str,
+        manifest_digest: str,
+        approval: HumanApproval | None = None,
+    ) -> RPMResult:
+        operation = RPMOperation.register_project(
+            scope, label=label, manifest_digest=manifest_digest
+        )
         assessment = self.assess_operation(scope, operation)
-        approval = approval or HumanApproval.for_assessment(assessment, approver="operator", role="memory_owner")
-        return self.commit_operation(scope, assessment_id=assessment.assessment_id, approval=approval)
+        approval = approval or HumanApproval.for_assessment(
+            assessment, approver="operator", role="memory_owner"
+        )
+        return self.commit_operation(
+            scope, assessment_id=assessment.assessment_id, approval=approval
+        )

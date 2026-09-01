@@ -27,13 +27,17 @@ def _sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def compile_release(manifest_path: Path | str, shapes_path: Path | str, output_dir: Path | str) -> dict[str, Any]:
+def compile_release(
+    manifest_path: Path | str, shapes_path: Path | str, output_dir: Path | str
+) -> dict[str, Any]:
     manifest_path = Path(manifest_path)
     shapes_path = Path(shapes_path)
     output_dir = Path(output_dir)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if str(manifest.get("version")) != "2.0.0":
-        raise OntologyVersionError(f"unsupported ontology version {manifest.get('version', '<missing>')}")
+        raise OntologyVersionError(
+            f"unsupported ontology version {manifest.get('version', '<missing>')}"
+        )
     registry = DisciplineOntologyRegistry().load(manifest_path)
     shapes = parse_turtle(shapes_path.read_text(encoding="utf-8"))
     shape_digest = _sha256(shapes_path.read_bytes())

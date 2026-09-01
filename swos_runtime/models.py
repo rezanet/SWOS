@@ -197,9 +197,7 @@ def dispatch_version(document: dict[str, Any], expected: str | None = None) -> s
     if version not in {"1.0.0", "2.0.0"}:
         raise VersionDispatchError(f"unsupported SWOS version: {version}")
     if expected is not None and version != expected:
-        raise VersionDispatchError(
-            f"version mismatch: document is {version}, expected {expected}"
-        )
+        raise VersionDispatchError(f"version mismatch: document is {version}, expected {expected}")
     return "v1" if version == "1.0.0" else "v2"
 
 

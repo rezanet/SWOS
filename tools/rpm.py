@@ -174,18 +174,28 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "init":
             store = ProgrammeStore(args.repository)
             store.initialize()
-            result = {"status": "initialized", "repository": str(args.repository), "namespace": args.namespace, "schema_version": "2.0.0"}
+            result = {
+                "status": "initialized",
+                "repository": str(args.repository),
+                "namespace": args.namespace,
+                "schema_version": "2.0.0",
+            }
         elif args.command == "register-project":
             service = _service(args.repository)
             scope = _scope(args.scope_file)
             operation = RPMOperation.register_project(
                 scope,
                 label=args.label or _approval_data(args.approval).get("label", scope.project_id),
-                manifest_digest=args.manifest_digest or _approval_data(args.approval).get("manifest_digest", canonical_digest(scope.to_dict())),
+                manifest_digest=args.manifest_digest
+                or _approval_data(args.approval).get(
+                    "manifest_digest", canonical_digest(scope.to_dict())
+                ),
             )
             assessment = service.assess_operation(scope, operation)
             approval = _approval_for_assessment(args.approval, assessment)
-            result = service.commit_operation(scope, assessment_id=assessment.assessment_id, approval=approval).to_dict()
+            result = service.commit_operation(
+                scope, assessment_id=assessment.assessment_id, approval=approval
+            ).to_dict()
         elif args.command == "assess-operation":
             service = _service(args.repository)
             scope = _scope(args.scope_file)
@@ -201,12 +211,19 @@ def main(argv: list[str] | None = None) -> int:
                 raise ValueError("assessment is not present in the repository")
             assessment = service._assessment_from_dict(stored)
             approval = _approval_for_assessment(args.approval, assessment)
-            result = service.commit_operation(scope, assessment_id=assessment_id, approval=approval).to_dict()
+            result = service.commit_operation(
+                scope, assessment_id=assessment_id, approval=approval
+            ).to_dict()
         elif args.command == "verify":
             store = ProgrammeStore(args.repository)
             scope = _scope(args.scope_file)
             errors = store.verify_chain(scope)
-            result = {"status": "fail" if errors else "pass", "scope": scope.to_dict(), "errors": errors, "head": store.chain_head(scope)}
+            result = {
+                "status": "fail" if errors else "pass",
+                "scope": scope.to_dict(),
+                "errors": errors,
+                "head": store.chain_head(scope),
+            }
             if errors:
                 raise StoreIntegrityError("; ".join(errors))
             if args.json_out:
@@ -221,21 +238,34 @@ def main(argv: list[str] | None = None) -> int:
                     raise ValueError("--approval is required with --commit")
                 committed = []
                 for candidate in report.candidates:
-                    assessment = service.assess_operation(scope, RPMOperation.expire(scope, candidate["item_id"]), as_of=args.as_of)
+                    assessment = service.assess_operation(
+                        scope, RPMOperation.expire(scope, candidate["item_id"]), as_of=args.as_of
+                    )
                     approval = _approval_for_assessment(args.approval, assessment)
-                    committed.append(service.commit_operation(scope, assessment_id=assessment.assessment_id, approval=approval, as_of=args.as_of).to_dict())
+                    committed.append(
+                        service.commit_operation(
+                            scope,
+                            assessment_id=assessment.assessment_id,
+                            approval=approval,
+                            as_of=args.as_of,
+                        ).to_dict()
+                    )
                 result["committed"] = committed
         elif args.command == "export":
             service = _service(args.repository)
             scope = _scope(args.scope_file)
             selection = ExportSelection(**_read(args.selection))
             approval = _approval_for_exchange(args.approval)
-            result = RPMExchange(service).export_bundle(scope, selection, approval, BundleLimits(), args.out)
+            result = RPMExchange(service).export_bundle(
+                scope, selection, approval, BundleLimits(), args.out
+            )
             result = _serialize(result)
         elif args.command == "inspect-import":
             service = _service(args.repository)
             scope = _scope(args.destination)
-            inspection = RPMExchange(service).inspect_import(args.bundle, destination=scope, limits=BundleLimits())
+            inspection = RPMExchange(service).inspect_import(
+                args.bundle, destination=scope, limits=BundleLimits()
+            )
             result = _serialize(inspection)
             _write(args.out, result)
         elif args.command == "commit-import":
@@ -256,7 +286,13 @@ def main(argv: list[str] | None = None) -> int:
             )
             exchange = RPMExchange(service)
             exchange._inspections[inspection.inspection_id] = inspection
-            result = _serialize(exchange.commit_import(inspection.inspection_id, inspection.inspection_digest, _approval_for_exchange(args.approval)))
+            result = _serialize(
+                exchange.commit_import(
+                    inspection.inspection_id,
+                    inspection.inspection_digest,
+                    _approval_for_exchange(args.approval),
+                )
+            )
         else:
             store = ProgrammeStore(args.repository)
             scope = _scope(args.scope_file)

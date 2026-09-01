@@ -336,7 +336,10 @@ def _evidence_matrix(
             )
             continue
         classifier_eligibility = audit_item.get("eligibility")
-        if isinstance(classifier_eligibility, dict) and classifier_eligibility.get("eligible") is not True:
+        if (
+            isinstance(classifier_eligibility, dict)
+            and classifier_eligibility.get("eligible") is not True
+        ):
             rejected.append(
                 {
                     "index": index,
@@ -792,10 +795,15 @@ def _build_epg_v2(
         stage = str(item.get("stage") or "stage")
         activity = node_id("activity", f"{index}:{stage}")
         activities[activity] = {"type": "activity", "attributes": {"stage": {"value": stage}}}
-        relations.append({"type": "wasAssociatedWith", "activity": activity, "agent": orchestrator_id})
+        relations.append(
+            {"type": "wasAssociatedWith", "activity": activity, "agent": orchestrator_id}
+        )
     evidence_activity = node_id("activity", "evidence_extraction")
     if evidence_activity not in activities:
-        activities[evidence_activity] = {"type": "activity", "attributes": {"stage": {"value": "evidence_extraction"}}}
+        activities[evidence_activity] = {
+            "type": "activity",
+            "attributes": {"stage": {"value": "evidence_extraction"}},
+        }
     for row in evidence_matrix.get("rows", []):
         claim = claim_nodes.get(str(row.get("claim_id") or ""))
         if not claim:
@@ -804,12 +812,19 @@ def _build_epg_v2(
             source = source_nodes.get(str(citation.get("source_id") or ""))
             if source:
                 relations.append({"type": "used", "activity": evidence_activity, "entity": source})
-                relations.append({"type": "wasDerivedFrom", "generatedEntity": claim, "usedEntity": source})
+                relations.append(
+                    {"type": "wasDerivedFrom", "generatedEntity": claim, "usedEntity": source}
+                )
     image_result = run.state.get("image_analysis_result")
     if isinstance(image_result, dict):
         image_activity = node_id("activity", "image_analysis")
-        activities[image_activity] = {"type": "activity", "attributes": {"stage": {"value": "image_analysis"}}}
-        relations.append({"type": "wasAssociatedWith", "activity": image_activity, "agent": orchestrator_id})
+        activities[image_activity] = {
+            "type": "activity",
+            "attributes": {"stage": {"value": "image_analysis"}},
+        }
+        relations.append(
+            {"type": "wasAssociatedWith", "activity": image_activity, "agent": orchestrator_id}
+        )
         for observation in image_result.get("observations", []):
             if not isinstance(observation, dict):
                 continue
@@ -831,7 +846,9 @@ def _build_epg_v2(
                     "provenance": {"value": observation.get("provenance") or {}},
                 },
             }
-            relations.append({"type": "wasGeneratedBy", "entity": observation_iri, "activity": image_activity})
+            relations.append(
+                {"type": "wasGeneratedBy", "entity": observation_iri, "activity": image_activity}
+            )
         for interpretation in image_result.get("interpretations", []):
             if not isinstance(interpretation, dict):
                 continue
@@ -846,11 +863,17 @@ def _build_epg_v2(
                     "discipline_iri": {"value": str(interpretation.get("discipline_iri") or "")},
                     "criterion_iri": {"value": str(interpretation.get("criterion_iri") or "")},
                     "observation_ids": {"value": interpretation.get("observation_ids") or []},
-                    "textual_evidence_ids": {"value": interpretation.get("textual_evidence_ids") or []},
-                    "review_status": {"value": str(interpretation.get("review_status") or "machine_proposed")},
+                    "textual_evidence_ids": {
+                        "value": interpretation.get("textual_evidence_ids") or []
+                    },
+                    "review_status": {
+                        "value": str(interpretation.get("review_status") or "machine_proposed")
+                    },
                 },
             }
-            relations.append({"type": "wasGeneratedBy", "entity": interpretation_iri, "activity": image_activity})
+            relations.append(
+                {"type": "wasGeneratedBy", "entity": interpretation_iri, "activity": image_activity}
+            )
     bundle_id = base + "bundle/finalized-output"
     statements = [{"type": "entity", "id": identifier} for identifier in sorted(entities)]
     statements.extend({"type": "activity", "id": identifier} for identifier in sorted(activities))
@@ -903,7 +926,12 @@ def _build_epg_v2(
         relations=tuple(relations),
         bundles={bundle_id: {"statements": statements}},
         extensions=tuple(extensions),
-        integrity={"release_status": status, "source_digest": canonical_digest({"work_id": work_id, "entities": entities, "relations": relations})},
+        integrity={
+            "release_status": status,
+            "source_digest": canonical_digest(
+                {"work_id": work_id, "entities": entities, "relations": relations}
+            ),
+        },
     )
 
 
@@ -1145,7 +1173,9 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
         )
         for item in citation_audit_submission.get("audits", []):
             if not isinstance(item, dict) or not isinstance(item.get("classifier_decision"), dict):
-                blockers.append("Classifier evidence is incomplete for a Research Grade citation audit.")
+                blockers.append(
+                    "Classifier evidence is incomplete for a Research Grade citation audit."
+                )
                 break
     image_analysis_result = run.state.get("image_analysis_result")
     if isinstance(image_analysis_result, dict):
@@ -1313,9 +1343,14 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
                     ),
                 },
             )()
-            _write_json(output / "research-grade-evidence-matrix.json", bind_evidence_matrix(matrix, profile_like))
+            _write_json(
+                output / "research-grade-evidence-matrix.json",
+                bind_evidence_matrix(matrix, profile_like),
+            )
         except (TypeError, ValueError):
-            blockers.append("Research Grade ontology binding could not be applied to the Evidence Matrix.")
+            blockers.append(
+                "Research Grade ontology binding could not be applied to the Evidence Matrix."
+            )
     _write_json(output / "research-plan.json", plan)
     security_events = [
         {
@@ -1526,8 +1561,12 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             "api_key_used": bool(adapter.get("api_key_used", False)),
             "paid_api_calls": int(adapter.get("paid_api_calls", 0)),
         },
-        "image_analysis": image_analysis_result if isinstance(image_analysis_result, dict) else None,
-        "multimodal_critique": multimodal_critique if isinstance(multimodal_critique, dict) else None,
+        "image_analysis": image_analysis_result
+        if isinstance(image_analysis_result, dict)
+        else None,
+        "multimodal_critique": multimodal_critique
+        if isinstance(multimodal_critique, dict)
+        else None,
         "started_from_one_request": True,
         "work_order_run_id": run.state["run_id"],
         "host_bundle_role": "replay_interchange_debug_reproducibility",

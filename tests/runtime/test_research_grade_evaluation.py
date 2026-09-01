@@ -35,7 +35,9 @@ class ResearchGradeEvaluationTests(unittest.TestCase):
             artifact_identities={"run-manifest.json": "m" * 64},
         )
         self.assertEqual("m" * 64, subject.artifact_identities["run-manifest.json"])
-        self.assertEqual("m" * 64, subject.subject_versions()["artifact_identities"]["run-manifest.json"])
+        self.assertEqual(
+            "m" * 64, subject.subject_versions()["artifact_identities"]["run-manifest.json"]
+        )
 
     def test_fixture_evaluation_invokes_the_injected_production_interface(self) -> None:
         interface = _InjectedInterface()

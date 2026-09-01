@@ -39,13 +39,19 @@ def _read_rows(manifest: dict[str, Any], manifest_path: Path) -> list[dict[str, 
         if not path.is_file():
             raise DatasetBuildBlocked(f"citation pair source is missing: {path}")
         if path.suffix == ".jsonl":
-            return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+            return [
+                json.loads(line)
+                for line in path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
         payload = json.loads(path.read_text(encoding="utf-8"))
         return list(payload if isinstance(payload, list) else payload.get("pairs", []))
     raise DatasetBuildBlocked("no licensed pair source was provided; acquisition is NOT_RUN")
 
 
-def build_dataset(manifest_path: Path | str, output_dir: Path | str, *, seed: int = 0) -> dict[str, Any]:
+def build_dataset(
+    manifest_path: Path | str, output_dir: Path | str, *, seed: int = 0
+) -> dict[str, Any]:
     manifest_path = Path(manifest_path)
     output_dir = Path(output_dir)
     if output_dir.exists() and any(output_dir.iterdir()):
@@ -53,17 +59,49 @@ def build_dataset(manifest_path: Path | str, output_dir: Path | str, *, seed: in
     source_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     rows = _read_rows(source_manifest, manifest_path)
     splits = grouped_split(rows, seed=seed)
-    report = dataset_manifest(splits, source_manifest_digest=canonical_digest(source_manifest), code_digest=canonical_digest({"tool": "build_citation_dataset", "version": "2.0.0"}))
-    counts = {str(label): sum(row.get("label") == label for row in rows) for label in ("directly_supports", "partially_supports", "context_only", "contradicts", "not_supported")}
-    disciplines = {str(discipline): sum(row.get("discipline") == discipline for row in rows) for discipline in sorted({str(row.get("discipline")) for row in rows})}
-    report["release_floor"] = {"total": MIN_TOTAL, "per_label": MIN_PER_LABEL, "per_discipline": MIN_PER_DISCIPLINE, "locked_test": MIN_LOCKED}
+    report = dataset_manifest(
+        splits,
+        source_manifest_digest=canonical_digest(source_manifest),
+        code_digest=canonical_digest({"tool": "build_citation_dataset", "version": "2.0.0"}),
+    )
+    counts = {
+        str(label): sum(row.get("label") == label for row in rows)
+        for label in (
+            "directly_supports",
+            "partially_supports",
+            "context_only",
+            "contradicts",
+            "not_supported",
+        )
+    }
+    disciplines = {
+        str(discipline): sum(row.get("discipline") == discipline for row in rows)
+        for discipline in sorted({str(row.get("discipline")) for row in rows})
+    }
+    report["release_floor"] = {
+        "total": MIN_TOTAL,
+        "per_label": MIN_PER_LABEL,
+        "per_discipline": MIN_PER_DISCIPLINE,
+        "locked_test": MIN_LOCKED,
+    }
     report["counts"] = {"total": len(rows), "per_label": counts, "per_discipline": disciplines}
-    report["status"] = "frozen" if len(rows) >= MIN_TOTAL and len(splits.get("locked_test", [])) >= MIN_LOCKED else "blocked_below_release_floor"
+    report["status"] = (
+        "frozen"
+        if len(rows) >= MIN_TOTAL and len(splits.get("locked_test", [])) >= MIN_LOCKED
+        else "blocked_below_release_floor"
+    )
     output_dir.mkdir(parents=True, exist_ok=False)
     for name, values in splits.items():
-        (output_dir / f"{name}.jsonl").write_text("".join(json.dumps(value, sort_keys=True) + "\n" for value in values), encoding="utf-8")
-    (output_dir / "manifest.json").write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
-    (output_dir / "DATA-LICENCE.md").write_text("# Data licence\n\nThis manifest is valid only when every source has explicit permitted use and attribution evidence.\n", encoding="utf-8")
+        (output_dir / f"{name}.jsonl").write_text(
+            "".join(json.dumps(value, sort_keys=True) + "\n" for value in values), encoding="utf-8"
+        )
+    (output_dir / "manifest.json").write_text(
+        json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8"
+    )
+    (output_dir / "DATA-LICENCE.md").write_text(
+        "# Data licence\n\nThis manifest is valid only when every source has explicit permitted use and attribution evidence.\n",
+        encoding="utf-8",
+    )
     return report
 
 

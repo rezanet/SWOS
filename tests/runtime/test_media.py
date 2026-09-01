@@ -27,14 +27,28 @@ class MediaTests(unittest.TestCase):
             "height": 50,
             "byte_digest": "a" * 64,
             "acquisition_uri": "https://example.org/a.jpg",
-            "rights": {"view": {"status": "allowed"}, "analyse": {"status": "allowed"}, "transform": {"status": "denied"}, "create_derivative": {"status": "unknown"}, "quote": {"status": "allowed"}, "cache": {"status": "allowed"}, "export": {"status": "denied"}, "redistribute": {"status": "denied"}},
+            "rights": {
+                "view": {"status": "allowed"},
+                "analyse": {"status": "allowed"},
+                "transform": {"status": "denied"},
+                "create_derivative": {"status": "unknown"},
+                "quote": {"status": "allowed"},
+                "cache": {"status": "allowed"},
+                "export": {"status": "denied"},
+                "redistribute": {"status": "denied"},
+            },
         }
         values.update(changes)
         return MediaAssetRecord(**values)
 
     def test_object_media_and_inspection_are_distinct_and_rights_are_purpose_specific(self) -> None:
         obj = ObjectRecord(object_id="object-1", object_type="painting", label="Work")
-        inspection = ObjectInspectionActivity(inspection_id="inspection-1", object_id=obj.object_id, actor_id="person-1", observed_scope="surface")
+        inspection = ObjectInspectionActivity(
+            inspection_id="inspection-1",
+            object_id=obj.object_id,
+            actor_id="person-1",
+            observed_scope="surface",
+        )
         asset = self._asset(inspection_activity_ids=(inspection.inspection_id,))
         self.assertNotEqual(obj.object_id, asset.asset_id)
         result = validate_media_asset(asset)
@@ -46,10 +60,21 @@ class MediaTests(unittest.TestCase):
         parent = self._asset(
             rights={
                 **self._asset().rights,
-                "create_derivative": {"status": "allowed", "grant_id": "grant-1", "evidence": "rights-record-1"},
+                "create_derivative": {
+                    "status": "allowed",
+                    "grant_id": "grant-1",
+                    "evidence": "rights-record-1",
+                },
             },
             content_credentials={"status": "valid", "credential_digest": "c" * 64},
-            accessibility=AccessibilityRecord(asset_digest="a" * 64, purpose="evidentiary", short_alternative="A work", origin="human", review_status="reviewed", language="en"),
+            accessibility=AccessibilityRecord(
+                asset_digest="a" * 64,
+                purpose="evidentiary",
+                short_alternative="A work",
+                origin="human",
+                review_status="reviewed",
+                language="en",
+            ),
         )
         child = derive_asset(parent, asset_id="asset-2", byte_digest="b" * 64, transform="crop")
         self.assertFalse(child.action_allowed("transform"))

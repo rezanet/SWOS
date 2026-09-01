@@ -220,7 +220,11 @@ class CapabilityBroker:
             for index, candidate in enumerate(candidates):
                 candidate = dict(candidate or {})
                 source_id = str(candidate.get("source_id") or "")
-                quote = str(candidate.get("exact_quote") or candidate.get("evidence_span", {}).get("quoted_text") or "")
+                quote = str(
+                    candidate.get("exact_quote")
+                    or candidate.get("evidence_span", {}).get("quoted_text")
+                    or ""
+                )
                 pairs.append(
                     CitationPair(
                         pair_id=str(candidate.get("pair_id") or f"candidate-{index}"),
@@ -251,7 +255,11 @@ class CapabilityBroker:
                         "eligibility": eligibility.to_dict(),
                     }
                 )
-            result = {**dict(result or {}), "audits": generated, "classifier_evidence": [item["classifier_decision"] for item in generated]}
+            result = {
+                **dict(result or {}),
+                "audits": generated,
+                "classifier_evidence": [item["classifier_decision"] for item in generated],
+            }
         self._event("citation_support_audit")
         return result
 

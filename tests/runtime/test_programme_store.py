@@ -28,7 +28,9 @@ class ProgrammeStoreTests(unittest.TestCase):
 
     def test_append_chain_and_projection_rebuild_are_deterministic(self) -> None:
         self.store.append_event(self.scope, "write", "item-1", {"status": "active", "value": 1})
-        self.store.append_event(self.scope, "status_change", "item-1", {"status": "corrected", "value": 2})
+        self.store.append_event(
+            self.scope, "status_change", "item-1", {"status": "corrected", "value": 2}
+        )
         before = self.store.chain_head(self.scope)
         projection = self.store.rebuild_projection(self.scope)
         self.assertEqual("corrected", projection["item-1"]["status"])

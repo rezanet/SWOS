@@ -26,7 +26,12 @@ class ResearchGradeDependencyTests(unittest.TestCase):
         lock = (ROOT / "requirements-dev.lock").read_text(encoding="utf-8")
         for group in ("ontology", "training", "prov", "research-grade"):
             self.assertIn(group, pyproject)
-        for package in ("rdflib==7.6.0", "pyshacl==0.40.1", "prov==3.1.0", "sentence-transformers==6.0.1"):
+        for package in (
+            "rdflib==7.6.0",
+            "pyshacl==0.40.1",
+            "prov==3.1.0",
+            "sentence-transformers==6.0.1",
+        ):
             self.assertIn(package, lock)
 
 

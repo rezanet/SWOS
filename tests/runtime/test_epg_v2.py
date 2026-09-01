@@ -27,8 +27,16 @@ def sample_epg() -> dict:
         "activities": {"https://example.org/a1": {"type": "activity", "attributes": {}}},
         "agents": {"https://example.org/ag1": {"type": "agent", "attributes": {}}},
         "relations": [
-            {"type": "wasGeneratedBy", "entity": "https://example.org/e1", "activity": "https://example.org/a1"},
-            {"type": "wasAssociatedWith", "activity": "https://example.org/a1", "agent": "https://example.org/ag1"},
+            {
+                "type": "wasGeneratedBy",
+                "entity": "https://example.org/e1",
+                "activity": "https://example.org/a1",
+            },
+            {
+                "type": "wasAssociatedWith",
+                "activity": "https://example.org/a1",
+                "agent": "https://example.org/ag1",
+            },
         ],
         "bundles": {
             "https://example.org/b1": {
@@ -49,14 +57,19 @@ def sample_epg() -> dict:
 
 
 class EpgV2Tests(unittest.TestCase):
-    def test_epg_v2_roundtrip_preserves_qualified_relations_typed_literals_and_extensions(self) -> None:
+    def test_epg_v2_roundtrip_preserves_qualified_relations_typed_literals_and_extensions(
+        self,
+    ) -> None:
         epg = sample_epg()
         document = epg_to_prov(epg, base_iri=epg["base_iri"])
         converted = prov_to_epg(document, profile=epg["profile"])
         self.assertEqual(EPG_VERSION, converted["schema_version"])
         self.assertEqual(epg["bundles"], converted["bundles"])
         self.assertEqual(epg["extensions"], converted["extensions"])
-        self.assertEqual(epg["entities"]["https://example.org/e1"]["attributes"], converted["entities"]["https://example.org/e1"]["attributes"])
+        self.assertEqual(
+            epg["entities"]["https://example.org/e1"]["attributes"],
+            converted["entities"]["https://example.org/e1"]["attributes"],
+        )
 
     def test_absolute_namespace_policy_rejects_relative_ids(self) -> None:
         epg = sample_epg()

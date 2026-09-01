@@ -54,7 +54,12 @@ def _canonical(value: Any) -> Any:
         return {str(key): _canonical(value[key]) for key in sorted(value, key=str)}
     if isinstance(value, (list, tuple, set)):
         items = [_canonical(item) for item in value]
-        return sorted(items, key=lambda item: json.dumps(item, sort_keys=True, separators=(",", ":"), ensure_ascii=False))
+        return sorted(
+            items,
+            key=lambda item: json.dumps(
+                item, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+            ),
+        )
     if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
         raise ValueError("non-finite PROV literal is not supported")
     return value
@@ -100,11 +105,19 @@ class ProvDocument:
             raise ValueError("absolute base_iri is required")
         object.__setattr__(self, "namespaces", dict(self.namespaces))
         object.__setattr__(self, "scope", dict(self.scope))
-        object.__setattr__(self, "entities", {str(key): dict(value) for key, value in self.entities.items()})
-        object.__setattr__(self, "activities", {str(key): dict(value) for key, value in self.activities.items()})
-        object.__setattr__(self, "agents", {str(key): dict(value) for key, value in self.agents.items()})
+        object.__setattr__(
+            self, "entities", {str(key): dict(value) for key, value in self.entities.items()}
+        )
+        object.__setattr__(
+            self, "activities", {str(key): dict(value) for key, value in self.activities.items()}
+        )
+        object.__setattr__(
+            self, "agents", {str(key): dict(value) for key, value in self.agents.items()}
+        )
         object.__setattr__(self, "relations", tuple(dict(value) for value in self.relations))
-        object.__setattr__(self, "bundles", {str(key): dict(value) for key, value in self.bundles.items()})
+        object.__setattr__(
+            self, "bundles", {str(key): dict(value) for key, value in self.bundles.items()}
+        )
         object.__setattr__(self, "extensions", tuple(dict(value) for value in self.extensions))
         object.__setattr__(self, "integrity", dict(self.integrity))
 
@@ -128,9 +141,14 @@ class ProvDocument:
         return _canonical(self.to_dict())
 
     def statement_count(self) -> int:
-        return len(self.entities) + len(self.activities) + len(self.agents) + len(self.relations) + sum(
-            len(dict(bundle).get("statements", [])) for bundle in self.bundles.values()
-        ) + len(self.extensions)
+        return (
+            len(self.entities)
+            + len(self.activities)
+            + len(self.agents)
+            + len(self.relations)
+            + sum(len(dict(bundle).get("statements", [])) for bundle in self.bundles.values())
+            + len(self.extensions)
+        )
 
     def fingerprint(self) -> Any:
         from .prov_validation import canonical_fingerprint
@@ -159,14 +177,18 @@ def document_from_epg(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:
     relations = tuple(dict(item) for item in epg.get("relations", []) if isinstance(item, Mapping))
     for relation in relations:
         for key, value in relation.items():
-            if key in {"type", "attributes", "time", "role", "label", "id"} or isinstance(value, (bool, int, float, Mapping, list)):
+            if key in {"type", "attributes", "time", "role", "label", "id"} or isinstance(
+                value, (bool, int, float, Mapping, list)
+            ):
                 continue
             if isinstance(value, str) and value and not is_absolute_iri(value):
                 raise ValueError(f"relation value {value!r} is not an absolute IRI")
     bundles = dict(epg.get("bundles") or {})
     if any(not is_absolute_iri(identifier) for identifier in bundles):
         raise ValueError("bundles contain a relative identifier")
-    extensions = tuple(dict(item) for item in epg.get("extensions", []) if isinstance(item, Mapping))
+    extensions = tuple(
+        dict(item) for item in epg.get("extensions", []) if isinstance(item, Mapping)
+    )
     for item in extensions:
         for key in ("subject", "predicate"):
             if item.get(key) and not is_absolute_iri(item[key]):

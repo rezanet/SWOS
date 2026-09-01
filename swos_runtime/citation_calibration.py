@@ -23,15 +23,21 @@ def _label_index(value: Any) -> int:
     raise CalibrationBindingError(f"unknown support label {value!r}")
 
 
-def _probability_rows(probabilities: Sequence[Mapping[str, float] | Sequence[float]]) -> list[list[float]]:
+def _probability_rows(
+    probabilities: Sequence[Mapping[str, float] | Sequence[float]],
+) -> list[list[float]]:
     rows: list[list[float]] = []
     for row in probabilities:
         if isinstance(row, Mapping):
             values = [float(row.get(label, 0.0)) for label in LABELS]
         else:
             values = [float(value) for value in row]
-        if len(values) != len(LABELS) or not all(math.isfinite(value) and value >= 0 for value in values):
-            raise CalibrationBindingError("probability rows must contain five finite nonnegative values")
+        if len(values) != len(LABELS) or not all(
+            math.isfinite(value) and value >= 0 for value in values
+        ):
+            raise CalibrationBindingError(
+                "probability rows must contain five finite nonnegative values"
+            )
         total = sum(values)
         if total <= 0:
             raise CalibrationBindingError("probability row has no mass")
@@ -53,16 +59,25 @@ def expected_calibration_error(
     for bucket in range(bins):
         lower = bucket / bins
         upper = (bucket + 1) / bins
-        selected = [index for index, row in enumerate(rows) if lower <= max(row) < upper or (bucket == bins - 1 and max(row) == upper)]
+        selected = [
+            index
+            for index, row in enumerate(rows)
+            if lower <= max(row) < upper or (bucket == bins - 1 and max(row) == upper)
+        ]
         if not selected:
             continue
-        accuracy = sum(max(row) == row[_label_index(labels[index])] for index, row in ((index, rows[index]) for index in selected)) / len(selected)
+        accuracy = sum(
+            max(row) == row[_label_index(labels[index])]
+            for index, row in ((index, rows[index]) for index in selected)
+        ) / len(selected)
         confidence = sum(max(rows[index]) for index in selected) / len(selected)
         error += len(selected) / total * abs(accuracy - confidence)
     return error
 
 
-def metric_confidence_interval(successes: int, total: int, *, confidence: float = 0.95) -> tuple[float, float]:
+def metric_confidence_interval(
+    successes: int, total: int, *, confidence: float = 0.95
+) -> tuple[float, float]:
     if total <= 0 or not 0 <= successes <= total or not 0 < confidence < 1:
         raise CalibrationBindingError("invalid binomial confidence interval inputs")
     z = 1.959963984540054 if confidence == 0.95 else 1.959963984540054
@@ -97,9 +112,14 @@ class SelectiveThreshold:
         label_order: Sequence[str],
     ) -> None:
         if (model_digest, dataset_manifest_digest, ontology_digest, tuple(label_order)) != (
-            self.model_digest, self.dataset_manifest_digest, self.ontology_digest, self.label_order
+            self.model_digest,
+            self.dataset_manifest_digest,
+            self.ontology_digest,
+            self.label_order,
         ):
-            raise CalibrationBindingError("selective threshold is bound to different model/data/ontology/labels")
+            raise CalibrationBindingError(
+                "selective threshold is bound to different model/data/ontology/labels"
+            )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -128,7 +148,12 @@ def selective_threshold(
     if tuple(label_order) != LABELS or not 0 <= target_error <= 1:
         raise CalibrationBindingError("selective threshold label order or target is invalid")
     rows = _probability_rows(probabilities)
-    if len(rows) != len(labels) or not model_digest or not dataset_manifest_digest or not ontology_digest:
+    if (
+        len(rows) != len(labels)
+        or not model_digest
+        or not dataset_manifest_digest
+        or not ontology_digest
+    ):
         raise CalibrationBindingError("selective threshold binding is incomplete")
     best: tuple[float, float, float] | None = None
     for step in range(1001):
@@ -136,10 +161,15 @@ def selective_threshold(
         selected = [index for index, row in enumerate(rows) if max(row) >= threshold]
         if not selected:
             continue
-        errors = sum(max(row) != row[_label_index(labels[index])] for index, row in ((index, rows[index]) for index in selected))
+        errors = sum(
+            max(row) != row[_label_index(labels[index])]
+            for index, row in ((index, rows[index]) for index in selected)
+        )
         coverage = len(selected) / len(rows)
         error = errors / len(selected)
-        if error <= target_error and (best is None or coverage > best[1] or (coverage == best[1] and threshold < best[0])):
+        if error <= target_error and (
+            best is None or coverage > best[1] or (coverage == best[1] and threshold < best[0])
+        ):
             best = (threshold, coverage, error)
     threshold, coverage, error = best or (1.0, 0.0, 0.0)
     return SelectiveThreshold(
@@ -261,7 +291,17 @@ def fit_temperature(
             best_temperature = temperature
     probs = [_softmax(row, best_temperature) for row in logits]
     thresholds = {label: 0.95 if label == "directly_supports" else 0.0 for label in LABELS}
-    calibration_id = "cal-" + canonical_digest({"model": model_digest, "data": dataset_manifest_digest, "ontology": ontology_digest, "temperature": best_temperature})[:24]
+    calibration_id = (
+        "cal-"
+        + canonical_digest(
+            {
+                "model": model_digest,
+                "data": dataset_manifest_digest,
+                "ontology": ontology_digest,
+                "temperature": best_temperature,
+            }
+        )[:24]
+    )
     return CalibrationArtifact(
         calibration_id=calibration_id,
         model_digest=model_digest,

@@ -55,9 +55,7 @@ def validate_examples(schema_dir: Path, examples_dir: Path) -> list[str]:
             continue
         try:
             instance = _load(example)
-            resolver = jsonschema.RefResolver(
-                base_uri=schema["$id"], referrer=schema, store=store
-            )
+            resolver = jsonschema.RefResolver(base_uri=schema["$id"], referrer=schema, store=store)
             validator = jsonschema.Draft202012Validator(schema, resolver=resolver)
             for issue in validator.iter_errors(instance):
                 location = "/".join(str(part) for part in issue.path)

@@ -48,12 +48,29 @@ def epg_v1_to_v2(epg: Mapping[str, Any], *, base_iri: str) -> dict[str, Any]:
         for item in values or []:
             if not isinstance(item, Mapping):
                 continue
-            original = str(item.get("entity_id") or item.get("activity_id") or item.get("agent_id") or "")
+            original = str(
+                item.get("entity_id") or item.get("activity_id") or item.get("agent_id") or ""
+            )
             if not original:
                 continue
             current = identifier(original)
-            attrs = {key: {"value": value} for key, value in item.items() if key not in {"entity_id", "activity_id", "agent_id", "entity_type", "activity_type", "agent_kind"}}
-            attrs["swos:v1_id"] = {"value": original, "datatype": PROV_NAMESPACES["swos"] + "V1Identifier"}
+            attrs = {
+                key: {"value": value}
+                for key, value in item.items()
+                if key
+                not in {
+                    "entity_id",
+                    "activity_id",
+                    "agent_id",
+                    "entity_type",
+                    "activity_type",
+                    "agent_kind",
+                }
+            }
+            attrs["swos:v1_id"] = {
+                "value": original,
+                "datatype": PROV_NAMESPACES["swos"] + "V1Identifier",
+            }
             result[current] = {"type": node_type, "attributes": attrs}
         return result
 
@@ -83,14 +100,20 @@ def epg_v1_to_v2(epg: Mapping[str, Any], *, base_iri: str) -> dict[str, Any]:
         "relations": [],
         "bundles": {},
         "extensions": extensions,
-        "integrity": {"v1_source_digest": __import__("hashlib").sha256(json.dumps(epg, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()},
+        "integrity": {
+            "v1_source_digest": __import__("hashlib")
+            .sha256(json.dumps(epg, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+            .hexdigest()
+        },
     }
 
 
 v1_epg_to_v2 = epg_v1_to_v2
 
 
-def epg_v2_to_v1(document: ProvDocument | Mapping[str, Any], *, work_id: str | None = None) -> dict[str, Any]:
+def epg_v2_to_v1(
+    document: ProvDocument | Mapping[str, Any], *, work_id: str | None = None
+) -> dict[str, Any]:
     """Project a v2 document to the frozen v1 EPG envelope without mutating it."""
 
     if isinstance(document, Mapping):
@@ -107,15 +130,41 @@ def epg_v2_to_v1(document: ProvDocument | Mapping[str, Any], *, work_id: str | N
 
     entities = []
     for identifier, node in document.entities.items():
-        entities.append({"entity_id": original(identifier, node), "entity_type": str(node.get("v1_entity_type") or "source_work"), "label": str(node.get("label") or identifier)})
-    activities = [{"activity_id": identifier, "activity_type": str(node.get("activity_type") or "classification"), "started_at": node.get("started_at") or "1970-01-01T00:00:00+00:00"} for identifier, node in document.activities.items()]
-    agents = [{"agent_id": identifier, "agent_kind": str(node.get("agent_kind") or "tool"), "label": str(node.get("label") or identifier)} for identifier, node in document.agents.items()]
+        entities.append(
+            {
+                "entity_id": original(identifier, node),
+                "entity_type": str(node.get("v1_entity_type") or "source_work"),
+                "label": str(node.get("label") or identifier),
+            }
+        )
+    activities = [
+        {
+            "activity_id": identifier,
+            "activity_type": str(node.get("activity_type") or "classification"),
+            "started_at": node.get("started_at") or "1970-01-01T00:00:00+00:00",
+        }
+        for identifier, node in document.activities.items()
+    ]
+    agents = [
+        {
+            "agent_id": identifier,
+            "agent_kind": str(node.get("agent_kind") or "tool"),
+            "label": str(node.get("label") or identifier),
+        }
+        for identifier, node in document.agents.items()
+    ]
     relations = []
     for extension in document.extensions:
         if isinstance(extension.get("v1_relation"), Mapping):
             relations.append(dict(extension["v1_relation"]))
     for relation in document.relations:
-        relations.append({"relation_type": relation.get("type"), "subject": relation.get("subject") or relation.get("entity"), "object": relation.get("object") or relation.get("activity")})
+        relations.append(
+            {
+                "relation_type": relation.get("type"),
+                "subject": relation.get("subject") or relation.get("entity"),
+                "object": relation.get("object") or relation.get("activity"),
+            }
+        )
     return {
         "schema_version": "1.0.0",
         "work_id": work_id or str(document.scope.get("work_id") or ""),
@@ -186,7 +235,9 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
                 continue
             for relation_id, relation in values.items():
                 if isinstance(relation, Mapping):
-                    raw_relations.append({"type": relation_type, "id": relation_id, **dict(relation)})
+                    raw_relations.append(
+                        {"type": relation_type, "id": relation_id, **dict(relation)}
+                    )
     namespaces = dict(PROV_NAMESPACES)
     namespaces.update(dict(payload.get("prefix") or {}))
     return ProvDocument(
@@ -200,14 +251,18 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
         agents=dict(payload.get("agent") or {}),
         relations=tuple(dict(item) for item in raw_relations if isinstance(item, Mapping)),
         bundles=dict(payload.get("bundle") or {}),
-        extensions=tuple(dict(item) for item in swos.get("extensions", []) if isinstance(item, Mapping)),
+        extensions=tuple(
+            dict(item) for item in swos.get("extensions", []) if isinstance(item, Mapping)
+        ),
         integrity=dict(swos.get("integrity") or {}),
     )
 
 
 def _payload_marker(document: ProvDocument) -> str:
     encoded = base64.urlsafe_b64encode(
-        json.dumps(document.to_dict(), sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+        json.dumps(
+            document.to_dict(), sort_keys=True, separators=(",", ":"), ensure_ascii=False
+        ).encode("utf-8")
     ).decode("ascii")
     return encoded.rstrip("=")
 
@@ -223,7 +278,11 @@ def _quote(value: str) -> str:
 
 
 def _serialize_prov_n(document: ProvDocument) -> bytes:
-    lines = ["document", f"  prefix swos <{document.namespaces.get('swos', PROV_NAMESPACES['swos'])}>", f"  prefix prov <{document.namespaces.get('prov', PROV_NAMESPACES['prov'])}>"]
+    lines = [
+        "document",
+        f"  prefix swos <{document.namespaces.get('swos', PROV_NAMESPACES['swos'])}>",
+        f"  prefix prov <{document.namespaces.get('prov', PROV_NAMESPACES['prov'])}>",
+    ]
     for identifier in sorted(document.entities):
         lines.append(f"  entity({_quote(identifier)})")
     for identifier in sorted(document.activities):
@@ -265,7 +324,12 @@ def serialize_prov(document: ProvDocument, format: ProvFormat) -> bytes:
     if not isinstance(document, ProvDocument):
         raise ValueError("serialize_prov requires a ProvDocument")
     if format == "prov-json":
-        return (json.dumps(_json_payload(document), sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode("utf-8")
+        return (
+            json.dumps(
+                _json_payload(document), sort_keys=True, separators=(",", ":"), ensure_ascii=False
+            )
+            + "\n"
+        ).encode("utf-8")
     if format == "prov-n":
         return _serialize_prov_n(document)
     return _serialize_trig(document)
@@ -279,7 +343,9 @@ def _parse_marker(data: bytes, marker: str) -> ProvDocument:
     return _decode_marker(match.group(1).decode("ascii"))
 
 
-def parse_prov(data: bytes, format: ProvFormat, limits: ResourceLimits | None = None) -> ProvDocument:
+def parse_prov(
+    data: bytes, format: ProvFormat, limits: ResourceLimits | None = None
+) -> ProvDocument:
     _assert_format(format)
     limits = limits or ResourceLimits()
     if not isinstance(data, (bytes, bytearray)):

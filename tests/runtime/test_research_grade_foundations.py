@@ -71,7 +71,9 @@ class ResearchGradeFoundationTests(unittest.TestCase):
             ResourceLimits(max_bytes=0)
 
     def test_typed_errors_expose_stable_code_and_details(self) -> None:
-        error = SWOSRuntimeError(ErrorCode.SCOPE_REQUIRED, "scope required", details={"field": "scope"})
+        error = SWOSRuntimeError(
+            ErrorCode.SCOPE_REQUIRED, "scope required", details={"field": "scope"}
+        )
         self.assertEqual("scope_required", error.code)
         self.assertEqual({"field": "scope"}, error.details)
         self.assertEqual("unknown_version", ErrorCode.UNKNOWN_VERSION.value)

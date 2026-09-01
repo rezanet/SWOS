@@ -16,10 +16,20 @@ from swos_runtime.citation_dataset import (
 class CitationDatasetTests(unittest.TestCase):
     def _pair(self, pair_id: str, group: str = "g-1") -> dict:
         return {
-            "pair_id": pair_id, "claim": "claim", "exact_quote": "quote", "context": "context",
-            "label": "directly_supports", "discipline": "engineering", "source_uri": "https://example.org/source",
-            "source_digest": "a" * 64, "licence": "CC-BY-4.0", "group_id": group,
-            "annotations": [{"annotator_id": "a", "label": "directly_supports"}, {"annotator_id": "b", "label": "directly_supports"}],
+            "pair_id": pair_id,
+            "claim": "claim",
+            "exact_quote": "quote",
+            "context": "context",
+            "label": "directly_supports",
+            "discipline": "engineering",
+            "source_uri": "https://example.org/source",
+            "source_digest": "a" * 64,
+            "licence": "CC-BY-4.0",
+            "group_id": group,
+            "annotations": [
+                {"annotator_id": "a", "label": "directly_supports"},
+                {"annotator_id": "b", "label": "directly_supports"},
+            ],
             "adjudication": {"status": "adjudicated", "label": "directly_supports"},
         }
 

@@ -36,6 +36,7 @@ class ResearchMemoryContractTests(unittest.TestCase):
             document = json.loads((schema_dir / name).read_text(encoding="utf-8"))
             self.assertIn("2.0.0", document["$id"])
             self.assertEqual("2.0.0", document["x-swos-version"])
+
     def test_scope_is_explicit_and_serializable(self) -> None:
         scope = ResearchScope("namespace-a", "programme-a", "project-a")
         self.assertEqual(
@@ -49,7 +50,9 @@ class ResearchMemoryContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             ResearchScope("", "programme-a", "project-a")
 
-    def test_versioned_binding_candidate_operation_and_read_policy_have_required_fields(self) -> None:
+    def test_versioned_binding_candidate_operation_and_read_policy_have_required_fields(
+        self,
+    ) -> None:
         scope = ResearchScope("n", "p", "x")
         binding = ProgrammeProjectBinding.create(scope, label="Project X", manifest_digest="a" * 64)
         candidate = MemoryCandidate(

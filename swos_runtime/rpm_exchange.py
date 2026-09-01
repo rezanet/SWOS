@@ -51,7 +51,9 @@ class ExportSelection:
         if self.start_sequence and self.end_sequence and self.start_sequence > self.end_sequence:
             raise ValueError("sequence range is inverted")
         if not isinstance(self.max_classification, DataClassification):
-            object.__setattr__(self, "max_classification", DataClassification(self.max_classification))
+            object.__setattr__(
+                self, "max_classification", DataClassification(self.max_classification)
+            )
 
 
 @dataclass(frozen=True)
@@ -195,7 +197,9 @@ class RPMExchange:
                         "redacted": True,
                     }
             exported.append(copy)
-        self._write_file(output / "events.ndjson", "".join(canonical_json(event) + "\n" for event in exported))
+        self._write_file(
+            output / "events.ndjson", "".join(canonical_json(event) + "\n" for event in exported)
+        )
         payload_dir = output / "payloads"
         provenance_dir = output / "provenance"
         decisions_dir = output / "decisions"
@@ -203,7 +207,9 @@ class RPMExchange:
             directory.mkdir()
         for event in exported:
             payload = event.get("payload", {})
-            self._write_file(payload_dir / f"{event['event_id']}.json", canonical_json(payload) + "\n")
+            self._write_file(
+                payload_dir / f"{event['event_id']}.json", canonical_json(payload) + "\n"
+            )
         self._write_file(
             provenance_dir / "export.json",
             canonical_json(
@@ -215,7 +221,9 @@ class RPMExchange:
             )
             + "\n",
         )
-        self._write_file(decisions_dir / "export-approval.json", canonical_json(approval.to_dict()) + "\n")
+        self._write_file(
+            decisions_dir / "export-approval.json", canonical_json(approval.to_dict()) + "\n"
+        )
         if epg_v2 is not None:
             self._write_certified_epg(output / "provenance", epg_v2, epg_certificate)
         self._write_file(
@@ -234,7 +242,11 @@ class RPMExchange:
             if path.is_file():
                 relative = path.relative_to(output).as_posix()
                 file_entries.append(
-                    {"path": relative, "bytes": path.stat().st_size, "sha256": _sha256_bytes(path.read_bytes())}
+                    {
+                        "path": relative,
+                        "bytes": path.stat().st_size,
+                        "sha256": _sha256_bytes(path.read_bytes()),
+                    }
                 )
         manifest = {
             "schema_version": "2.0.0",
@@ -244,7 +256,10 @@ class RPMExchange:
             "source_head": self.service.store.chain_head(scope),
             "classification_ceiling": selection.max_classification.value,
             "canonicalization": ["canonical-json-v1", "sha256"],
-            "approval": {"approval_id": approval.approval_id, "digest": canonical_digest(approval.to_dict())},
+            "approval": {
+                "approval_id": approval.approval_id,
+                "digest": canonical_digest(approval.to_dict()),
+            },
             "counts": {"events": len(exported), "redacted": len(redacted)},
             "rights_exclusions": sorted(redacted),
         }
@@ -278,17 +293,30 @@ class RPMExchange:
             from .prov_model import ProvDocument
 
             document = ProvDocument(**dict(payload or {}))
-        certificate_payload = certificate.to_dict() if hasattr(certificate, "to_dict") else dict(certificate or {})
+        certificate_payload = (
+            certificate.to_dict() if hasattr(certificate, "to_dict") else dict(certificate or {})
+        )
         if certificate_payload.get("status") != "certified":
-            raise ExchangeError("certified EPG v2 export requires an independent certified certificate")
+            raise ExchangeError(
+                "certified EPG v2 export requires an independent certified certificate"
+            )
         validation = validate_prov(document)
         fingerprint = canonical_fingerprint(document)
-        if validation.status != "valid" or certificate_payload.get("input_digest") != fingerprint.semantic_digest:
+        if (
+            validation.status != "valid"
+            or certificate_payload.get("input_digest") != fingerprint.semantic_digest
+        ):
             raise ExchangeError("EPG v2 certificate does not match a valid document fingerprint")
         directory.mkdir(parents=True, exist_ok=True)
-        (directory / "epg-v2.json").write_text(canonical_json(document.to_dict()) + "\n", encoding="utf-8")
-        (directory / "epg-v2-fingerprint.json").write_text(canonical_json(fingerprint.to_dict()) + "\n", encoding="utf-8")
-        (directory / "epg-v2-certificate.json").write_text(canonical_json(certificate_payload) + "\n", encoding="utf-8")
+        (directory / "epg-v2.json").write_text(
+            canonical_json(document.to_dict()) + "\n", encoding="utf-8"
+        )
+        (directory / "epg-v2-fingerprint.json").write_text(
+            canonical_json(fingerprint.to_dict()) + "\n", encoding="utf-8"
+        )
+        (directory / "epg-v2-certificate.json").write_text(
+            canonical_json(certificate_payload) + "\n", encoding="utf-8"
+        )
 
     def export_certified_epg(self, document: Any, certificate: Any, output_dir: str | Path) -> str:
         """Export a standalone certified EPG v2 provenance set."""
@@ -358,7 +386,11 @@ class RPMExchange:
         try:
             manifest = json.loads(files["manifest.json"].decode("utf-8"))
             checksums = json.loads(files["checksums.json"].decode("utf-8"))
-            events = [json.loads(line) for line in files["events.ndjson"].decode("utf-8").splitlines() if line.strip()]
+            events = [
+                json.loads(line)
+                for line in files["events.ndjson"].decode("utf-8").splitlines()
+                if line.strip()
+            ]
         except (UnicodeDecodeError, json.JSONDecodeError) as exc:
             raise ExchangeError("malformed bundle JSON or NDJSON") from exc
         origin_data = manifest.get("origin_scope")
@@ -366,7 +398,11 @@ class RPMExchange:
             raise ExchangeError("bundle has no origin scope")
         origin = ResearchScope(**origin_data)
         actual_bundle_digest = canonical_digest(
-            {name: _sha256_bytes(data) for name, data in sorted(files.items()) if name != "checksums.json"}
+            {
+                name: _sha256_bytes(data)
+                for name, data in sorted(files.items())
+                if name != "checksums.json"
+            }
         )
         checksum_errors: list[str] = []
         if not isinstance(checksums, dict):
@@ -408,7 +444,9 @@ class RPMExchange:
         }
         inspection = ImportInspection(
             inspection_id=f"inspection-{uuid4()}",
-            inspection_digest=canonical_digest({"manifest": manifest, "events": events, "diff": diff}),
+            inspection_digest=canonical_digest(
+                {"manifest": manifest, "events": events, "diff": diff}
+            ),
             source_bundle_digest=actual_bundle_digest,
             origin_scope=origin,
             destination_scope=destination,
@@ -456,7 +494,9 @@ class RPMExchange:
         if approval.disposition != "approved":
             raise ExchangeError("import approval is not approved")
         if inspection_id in self._committed:
-            return ImportReceipt("noop", inspection_id, inspection.origin_scope, inspection.destination_scope)
+            return ImportReceipt(
+                "noop", inspection_id, inspection.origin_scope, inspection.destination_scope
+            )
         imported: list[str] = []
         events = self.service.store.events(inspection.origin_scope)
         for event in events:
@@ -479,9 +519,36 @@ class RPMExchange:
         )
 
 
-def export_bundle(service: ResearchMemoryService, scope: ResearchScope, selection: ExportSelection, approval: HumanApproval, limits: BundleLimits, output_dir: str | Path, *, epg_v2: Any | None = None, epg_certificate: Any | None = None) -> ExportReceipt:
-    return RPMExchange(service).export_bundle(scope, selection, approval, limits, output_dir, epg_v2=epg_v2, epg_certificate=epg_certificate)
+def export_bundle(
+    service: ResearchMemoryService,
+    scope: ResearchScope,
+    selection: ExportSelection,
+    approval: HumanApproval,
+    limits: BundleLimits,
+    output_dir: str | Path,
+    *,
+    epg_v2: Any | None = None,
+    epg_certificate: Any | None = None,
+) -> ExportReceipt:
+    return RPMExchange(service).export_bundle(
+        scope,
+        selection,
+        approval,
+        limits,
+        output_dir,
+        epg_v2=epg_v2,
+        epg_certificate=epg_certificate,
+    )
 
 
-def inspect_import(service: ResearchMemoryService, bundle: str | Path, *, destination: ResearchScope, limits: BundleLimits, as_of: Any | None = None) -> ImportInspection:
-    return RPMExchange(service).inspect_import(bundle, destination=destination, limits=limits, as_of=as_of)
+def inspect_import(
+    service: ResearchMemoryService,
+    bundle: str | Path,
+    *,
+    destination: ResearchScope,
+    limits: BundleLimits,
+    as_of: Any | None = None,
+) -> ImportInspection:
+    return RPMExchange(service).inspect_import(
+        bundle, destination=destination, limits=limits, as_of=as_of
+    )

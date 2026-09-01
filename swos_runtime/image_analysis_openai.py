@@ -19,4 +19,5 @@ class OpenAIImageAnalysisProvider(_OpenAIImageAnalysisProvider):
 
     pass
 
+
 __all__ = ["OpenAIImageAnalysisProvider"]

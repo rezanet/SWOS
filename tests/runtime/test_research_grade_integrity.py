@@ -22,9 +22,25 @@ ROOT = Path(__file__).resolve().parents[2]
 class ResearchGradeIntegrityTests(unittest.TestCase):
     def test_rights_and_asset_digest_are_bound_into_image_request_and_observation(self) -> None:
         allowed = {"view": {"status": "allowed"}, "analyse": {"status": "allowed"}}
-        asset = MediaAssetRecord("asset-1", "object-1", "surrogate", "image/jpeg", 1, 10, 10, "a" * 64, "https://example.org/a", rights=allowed)
+        asset = MediaAssetRecord(
+            "asset-1",
+            "object-1",
+            "surrogate",
+            "image/jpeg",
+            1,
+            10,
+            10,
+            "a" * 64,
+            "https://example.org/a",
+            rights=allowed,
+        )
         first = ImageAnalysisRequest("work", "run", "object-1", (asset,), ("visible?",))
-        altered = MediaAssetRecord(**{**asset.to_dict(), "rights": {"view": {"status": "allowed"}, "analyse": {"status": "denied"}}})
+        altered = MediaAssetRecord(
+            **{
+                **asset.to_dict(),
+                "rights": {"view": {"status": "allowed"}, "analyse": {"status": "denied"}},
+            }
+        )
         second = ImageAnalysisRequest("work", "run", "object-1", (altered,), ("visible?",))
         self.assertNotEqual(first.request_digest, second.request_digest)
         result = DeterministicFakeImageProvider().analyze(first)
@@ -34,10 +50,40 @@ class ResearchGradeIntegrityTests(unittest.TestCase):
     def test_ontology_and_evidence_identity_survive_pack_critique_and_prov_roundtrip(self) -> None:
         registry = DisciplineOntologyRegistry().load(ROOT / "discipline-packs" / "manifest-v2.json")
         profile = registry.profile("art_history")
-        report = DisciplineCritic(registry).critique(discipline=profile, research_plan={}, evidence_matrix={"rows": [{"criterion_iri": profile.required_criteria[0]["iri"], "evidence_refs": ["epg:e1"]}]}, draft={"claims": [{"claim_id": "claim-1"}]})
+        report = DisciplineCritic(registry).critique(
+            discipline=profile,
+            research_plan={},
+            evidence_matrix={
+                "rows": [
+                    {
+                        "criterion_iri": profile.required_criteria[0]["iri"],
+                        "evidence_refs": ["epg:e1"],
+                    }
+                ]
+            },
+            draft={"claims": [{"claim_id": "claim-1"}]},
+        )
         self.assertEqual(profile.ontology_digest, report.ontology_digest)
         self.assertIn("epg:e1", report.criteria[0].evidence_refs)
-        epg = {"schema_version": "2.0.0", "profile": "swos.prov-dm-round-trip.v2", "base_iri": "https://example.org/", "namespaces": {}, "scope": {"work_id": "w"}, "entities": {"https://example.org/e1": {"type": "entity", "attributes": {"evidence_digest": {"value": "e"}}}}, "activities": {}, "agents": {}, "relations": [], "bundles": {}, "extensions": [], "integrity": {"ontology_digest": profile.ontology_digest}}
+        epg = {
+            "schema_version": "2.0.0",
+            "profile": "swos.prov-dm-round-trip.v2",
+            "base_iri": "https://example.org/",
+            "namespaces": {},
+            "scope": {"work_id": "w"},
+            "entities": {
+                "https://example.org/e1": {
+                    "type": "entity",
+                    "attributes": {"evidence_digest": {"value": "e"}},
+                }
+            },
+            "activities": {},
+            "agents": {},
+            "relations": [],
+            "bundles": {},
+            "extensions": [],
+            "integrity": {"ontology_digest": profile.ontology_digest},
+        }
         roundtripped = prov_to_epg(epg_to_prov(epg, base_iri=epg["base_iri"]))
         self.assertEqual(profile.ontology_digest, roundtripped["integrity"]["ontology_digest"])
 
@@ -73,7 +119,11 @@ class ResearchGradeIntegrityTests(unittest.TestCase):
         )
         self.assertEqual(pair.canonical_input_digest, decision.input_digest)
         self.assertNotIn("rights", decision.to_dict())
-        blocked = evaluate_cross_modal_support({"claim_id": "claim-1", "object_id": "object-1"}, [], [{"claim_id": "claim-1", "support_level": "directly_supports"}])
+        blocked = evaluate_cross_modal_support(
+            {"claim_id": "claim-1", "object_id": "object-1"},
+            [],
+            [{"claim_id": "claim-1", "support_level": "directly_supports"}],
+        )
         self.assertEqual("blocked", blocked.status)
 
 

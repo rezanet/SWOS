@@ -21,7 +21,17 @@ class ExpansionPlan:
 
     def __post_init__(self) -> None:
         if not self.plan_digest:
-            object.__setattr__(self, "plan_digest", canonical_digest({"topic": self.topic, "queries": self.queries, "dimensions": self.required_dimensions}))
+            object.__setattr__(
+                self,
+                "plan_digest",
+                canonical_digest(
+                    {
+                        "topic": self.topic,
+                        "queries": self.queries,
+                        "dimensions": self.required_dimensions,
+                    }
+                ),
+            )
 
 
 def expansion_plan(report: Mapping[str, Any], *, topic: str, max_queries: int = 8) -> ExpansionPlan:
@@ -31,7 +41,9 @@ def expansion_plan(report: Mapping[str, Any], *, topic: str, max_queries: int = 
     for dimension, raw in dimensions.items():
         if not isinstance(raw, Mapping):
             continue
-        missing = tuple(str(item) for item in raw.get("missing_strata", raw.get("required_strata_missing", [])))
+        missing = tuple(
+            str(item) for item in raw.get("missing_strata", raw.get("required_strata_missing", []))
+        )
         if missing:
             required[str(dimension)] = missing
             queries.append(f"{topic} {dimension} {' '.join(missing)} independent evidence")
@@ -42,7 +54,9 @@ def expansion_plan(report: Mapping[str, Any], *, topic: str, max_queries: int = 
         queries.append(f"{topic} counter-position contradictory evidence limitations")
     if not queries:
         queries.append(f"{topic} limitations exceptions counter-evidence")
-    bounded = tuple(dict.fromkeys(query for query in queries if query.strip()))[: max(1, int(max_queries))]
+    bounded = tuple(dict.fromkeys(query for query in queries if query.strip()))[
+        : max(1, int(max_queries))
+    ]
     return ExpansionPlan(
         topic=topic,
         queries=bounded,

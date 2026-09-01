@@ -24,7 +24,10 @@ class ProgrammeStoreConcurrencyTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as holder:
             db = str(Path(holder) / "rpm.sqlite")
             ProgrammeStore(Path(db)).initialize()
-            processes = [multiprocessing.Process(target=_append_worker, args=(db, n * 25, 25)) for n in range(8)]
+            processes = [
+                multiprocessing.Process(target=_append_worker, args=(db, n * 25, 25))
+                for n in range(8)
+            ]
             for process in processes:
                 process.start()
             for process in processes:
@@ -42,7 +45,9 @@ class ProgrammeStoreConcurrencyTests(unittest.TestCase):
             store.initialize()
             scope = ResearchScope("n", "p", "x")
             with self.assertRaises(RuntimeError):
-                store.append_event(scope, "write", "crash", {"status": "active"}, crash_after_event=True)
+                store.append_event(
+                    scope, "write", "crash", {"status": "active"}, crash_after_event=True
+                )
             self.assertEqual([], store.events(scope))
             self.assertEqual([], store.verify_chain(scope))
 

@@ -12,7 +12,9 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class ResearchGradeOfflineTests(unittest.TestCase):
-    def test_ordinary_contract_harness_runs_with_network_trap_and_sentinel_credentials(self) -> None:
+    def test_ordinary_contract_harness_runs_with_network_trap_and_sentinel_credentials(
+        self,
+    ) -> None:
         code = """
 import socket
 class Trap(socket.socket):
@@ -50,8 +52,8 @@ print('offline-ok')
         forbidden = ("--run-live", "huggingface-cli download", "openai responses", "curl https")
         for value in forbidden:
             self.assertNotIn(value, workflow.lower())
-        self.assertIn("test -z \"${OPENAI_API_KEY:-}\"", workflow)
-        self.assertIn("test -z \"${MODEL_REGISTRY_TOKEN:-}\"", workflow)
+        self.assertIn('test -z "${OPENAI_API_KEY:-}"', workflow)
+        self.assertIn('test -z "${MODEL_REGISTRY_TOKEN:-}"', workflow)
 
 
 if __name__ == "__main__":

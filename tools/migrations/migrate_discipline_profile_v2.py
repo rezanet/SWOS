@@ -51,7 +51,9 @@ def migrate_profile(profile: Mapping[str, Any], *, direction: str = "v1-to-v2") 
             "original_discipline": str(profile.get("discipline") or discipline),
             "reversible": True,
             "warning_window_minor_releases": 1,
-            "tool_digest": canonical_digest({"tool": "migrate_discipline_profile_v2", "version": "2.0.0"}),
+            "tool_digest": canonical_digest(
+                {"tool": "migrate_discipline_profile_v2", "version": "2.0.0"}
+            ),
         }
         return value
     if direction == "v2-to-v1":
@@ -75,7 +77,9 @@ def main() -> int:
     parser.add_argument("output", type=Path)
     parser.add_argument("--direction", choices=("v1-to-v2", "v2-to-v1"), default="v1-to-v2")
     args = parser.parse_args()
-    result = migrate_profile(json.loads(args.input.read_text(encoding="utf-8")), direction=args.direction)
+    result = migrate_profile(
+        json.loads(args.input.read_text(encoding="utf-8")), direction=args.direction
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     return 0

@@ -15,18 +15,39 @@ from swos_runtime.citation_calibration import fit_temperature  # noqa: E402
 from swos_runtime.models import canonical_digest  # noqa: E402
 
 
-def calibrate(model_manifest_path: Path | str, calibration_split_path: Path | str, output_path: Path | str) -> dict:
+def calibrate(
+    model_manifest_path: Path | str, calibration_split_path: Path | str, output_path: Path | str
+) -> dict:
     model = json.loads(Path(model_manifest_path).read_text(encoding="utf-8"))
-    rows = [json.loads(line) for line in Path(calibration_split_path).read_text(encoding="utf-8").splitlines() if line.strip()]
-    if any(str(row.get("split")) == "locked_test" for row in rows) or Path(calibration_split_path).name == "locked_test.jsonl":
+    rows = [
+        json.loads(line)
+        for line in Path(calibration_split_path).read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    if (
+        any(str(row.get("split")) == "locked_test" for row in rows)
+        or Path(calibration_split_path).name == "locked_test.jsonl"
+    ):
         raise RuntimeError("locked-test data is not permitted during calibration")
     if model.get("status") != "frozen" or not model.get("verified") or not rows:
-        result = {"schema_version": "2.0.0", "status": "not_run", "reason": "verified model and non-empty calibration split are required", "model_manifest_digest": canonical_digest(model)}
+        result = {
+            "schema_version": "2.0.0",
+            "status": "not_run",
+            "reason": "verified model and non-empty calibration split are required",
+            "model_manifest_digest": canonical_digest(model),
+        }
     else:
         logits = [row.get("logits") for row in rows]
         labels = [row.get("label") for row in rows]
-        if any(not isinstance(row, list) for row in logits) or any(label in (None, "") for label in labels):
-            result = {"schema_version": "2.0.0", "status": "not_run", "reason": "calibration rows must contain model logits and labels", "model_manifest_digest": canonical_digest(model)}
+        if any(not isinstance(row, list) for row in logits) or any(
+            label in (None, "") for label in labels
+        ):
+            result = {
+                "schema_version": "2.0.0",
+                "status": "not_run",
+                "reason": "calibration rows must contain model logits and labels",
+                "model_manifest_digest": canonical_digest(model),
+            }
         else:
             artifact = fit_temperature(
                 logits,

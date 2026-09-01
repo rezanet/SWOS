@@ -16,7 +16,11 @@ DETERMINISTIC_TIMESTAMP = "1970-01-01T00:00:00+00:00"
 
 
 def _asset_digest(asset: Any) -> str:
-    return str(asset.byte_digest if hasattr(asset, "byte_digest") else _mapping(asset).get("byte_digest") or "")
+    return str(
+        asset.byte_digest
+        if hasattr(asset, "byte_digest")
+        else _mapping(asset).get("byte_digest") or ""
+    )
 
 
 def _mapping(value: Any) -> dict[str, Any]:
@@ -37,7 +41,9 @@ class ImageAnalysisRequest:
     allowed_actions: tuple[str, ...] = ("analyse",)
     discipline: str = "art_history"
     ontology_binding: Mapping[str, Any] = field(default_factory=dict)
-    resource_limits: Mapping[str, Any] = field(default_factory=lambda: {"max_assets": 8, "max_observations": 64, "max_seconds": 60})
+    resource_limits: Mapping[str, Any] = field(
+        default_factory=lambda: {"max_assets": 8, "max_observations": 64, "max_seconds": 60}
+    )
     provider_policy: Mapping[str, Any] = field(default_factory=dict)
     request_digest: str = ""
 
@@ -58,7 +64,9 @@ class ImageAnalysisRequest:
             "object_id": self.object_id,
             "assets": [_asset_digest(asset) for asset in self.assets],
             "asset_rights": {
-                str(getattr(asset, "asset_id", index)): canonical_digest(getattr(asset, "rights", {}))
+                str(getattr(asset, "asset_id", index)): canonical_digest(
+                    getattr(asset, "rights", {})
+                )
                 for index, asset in enumerate(self.assets)
             },
             "target_questions": list(self.target_questions),
@@ -70,7 +78,11 @@ class ImageAnalysisRequest:
         }
 
     def to_dict(self) -> dict[str, Any]:
-        return {**self._unsigned_dict(), "asset_ids": [asset.asset_id for asset in self.assets], "request_digest": self.request_digest}
+        return {
+            **self._unsigned_dict(),
+            "asset_ids": [asset.asset_id for asset in self.assets],
+            "request_digest": self.request_digest,
+        }
 
 
 @dataclass(frozen=True)
@@ -100,7 +112,11 @@ class VisualObservation:
         object.__setattr__(self, "provenance", dict(self.provenance))
 
     def to_dict(self) -> dict[str, Any]:
-        selector = self.selector.to_dict() if hasattr(self.selector, "to_dict") else (dict(self.selector) if isinstance(self.selector, Mapping) else None)
+        selector = (
+            self.selector.to_dict()
+            if hasattr(self.selector, "to_dict")
+            else (dict(self.selector) if isinstance(self.selector, Mapping) else None)
+        )
         return {
             "observation_id": self.observation_id,
             "object_id": self.object_id,
@@ -224,15 +240,32 @@ class ImageAnalysisResult:
         object.__setattr__(self, "resource_use", dict(self.resource_use))
         object.__setattr__(self, "epg_links", tuple(self.epg_links))
         interpretation_limitations = [
-            "interpretation_without_observation_or_textual_evidence:"
-            + str(item.interpretation_id)
+            "interpretation_without_observation_or_textual_evidence:" + str(item.interpretation_id)
             for item in self.interpretations
             if not item.observation_ids and not item.textual_evidence_ids
         ]
         if interpretation_limitations:
-            object.__setattr__(self, "limitations", tuple(dict.fromkeys([*self.limitations, *interpretation_limitations])))
+            object.__setattr__(
+                self,
+                "limitations",
+                tuple(dict.fromkeys([*self.limitations, *interpretation_limitations])),
+            )
         if not self.response_digest:
-            object.__setattr__(self, "response_digest", canonical_digest({"status": self.status, "request_digest": self.request_digest, "provider": self.provider, "model": self.model, "observations": [item.to_dict() for item in self.observations], "interpretations": [item.to_dict() for item in self.interpretations], "limitations": list(self.limitations)}))
+            object.__setattr__(
+                self,
+                "response_digest",
+                canonical_digest(
+                    {
+                        "status": self.status,
+                        "request_digest": self.request_digest,
+                        "provider": self.provider,
+                        "model": self.model,
+                        "observations": [item.to_dict() for item in self.observations],
+                        "interpretations": [item.to_dict() for item in self.interpretations],
+                        "limitations": list(self.limitations),
+                    }
+                ),
+            )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -263,7 +296,13 @@ class ImageAnalysisProvider(Protocol):
 class DeterministicFakeImageProvider:
     """Offline provider used by ordinary CI; no image bytes or network calls."""
 
-    def __init__(self, *, status: str = "complete", provider: str = "deterministic-fake", model: str = "fake-2d-v1") -> None:
+    def __init__(
+        self,
+        *,
+        status: str = "complete",
+        provider: str = "deterministic-fake",
+        model: str = "fake-2d-v1",
+    ) -> None:
         if status not in ANALYSIS_STATUSES:
             raise ValueError(f"invalid fake status: {status}")
         self.status = status
@@ -273,22 +312,72 @@ class DeterministicFakeImageProvider:
     def analyze(self, request: ImageAnalysisRequest) -> ImageAnalysisResult:
         assets, request_limit = _bounded_request_assets(request)
         if self.status == "error":
-            return ImageAnalysisResult("error", request.request_digest, self.provider, self.model, canonical_digest({"model": self.model}), limitations=("deterministic_fake_error",), runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"}, created_at=DETERMINISTIC_TIMESTAMP)
+            return ImageAnalysisResult(
+                "error",
+                request.request_digest,
+                self.provider,
+                self.model,
+                canonical_digest({"model": self.model}),
+                limitations=("deterministic_fake_error",),
+                runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"},
+                created_at=DETERMINISTIC_TIMESTAMP,
+            )
         if request_limit == "no_assets":
-            return ImageAnalysisResult("insufficient", request.request_digest, self.provider, self.model, canonical_digest({"model": self.model}), limitations=("no_assets",), runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"}, created_at=DETERMINISTIC_TIMESTAMP)
+            return ImageAnalysisResult(
+                "insufficient",
+                request.request_digest,
+                self.provider,
+                self.model,
+                canonical_digest({"model": self.model}),
+                limitations=("no_assets",),
+                runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"},
+                created_at=DETERMINISTIC_TIMESTAMP,
+            )
         if request_limit == "resource_limit":
-            return ImageAnalysisResult("insufficient", request.request_digest, self.provider, self.model, canonical_digest({"model": self.model}), limitations=("resource_limit",), runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"}, created_at=DETERMINISTIC_TIMESTAMP)
+            return ImageAnalysisResult(
+                "insufficient",
+                request.request_digest,
+                self.provider,
+                self.model,
+                canonical_digest({"model": self.model}),
+                limitations=("resource_limit",),
+                runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"},
+                created_at=DETERMINISTIC_TIMESTAMP,
+            )
         if request_limit == "rights_denied":
-            return ImageAnalysisResult("denied", request.request_digest, self.provider, self.model, canonical_digest({"model": self.model}), limitations=("view_or_analyse_right_not_granted",), rights_outcomes={asset.asset_id: "denied" for asset in assets}, runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"}, created_at=DETERMINISTIC_TIMESTAMP)
+            return ImageAnalysisResult(
+                "denied",
+                request.request_digest,
+                self.provider,
+                self.model,
+                canonical_digest({"model": self.model}),
+                limitations=("view_or_analyse_right_not_granted",),
+                rights_outcomes={asset.asset_id: "denied" for asset in assets},
+                runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"},
+                created_at=DETERMINISTIC_TIMESTAMP,
+            )
         if "analyse" not in request.allowed_actions:
-            return ImageAnalysisResult("denied", request.request_digest, self.provider, self.model, canonical_digest({"model": self.model}), limitations=("analyse_right_not_granted",), rights_outcomes={asset.asset_id: "denied" for asset in assets}, runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"}, created_at=DETERMINISTIC_TIMESTAMP)
+            return ImageAnalysisResult(
+                "denied",
+                request.request_digest,
+                self.provider,
+                self.model,
+                canonical_digest({"model": self.model}),
+                limitations=("analyse_right_not_granted",),
+                rights_outcomes={asset.asset_id: "denied" for asset in assets},
+                runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"},
+                created_at=DETERMINISTIC_TIMESTAMP,
+            )
         limitations = []
         if len(assets) < len(request.assets):
             limitations.append("asset_limit_reached")
-        maximum_observations = _bounded_limit(request.resource_limits.get("max_observations", 64), default=64)
+        maximum_observations = _bounded_limit(
+            request.resource_limits.get("max_observations", 64), default=64
+        )
         observations = tuple(
             VisualObservation(
-                observation_id="observation-" + hashlib.sha256(asset.asset_id.encode()).hexdigest()[:24],
+                observation_id="observation-"
+                + hashlib.sha256(asset.asset_id.encode()).hexdigest()[:24],
                 object_id=asset.object_id,
                 asset_id=asset.asset_id,
                 asset_digest=asset.byte_digest,
@@ -297,7 +386,10 @@ class DeterministicFakeImageProvider:
                 selector=_full_asset_selector(asset),
                 provider=self.provider,
                 model=self.model,
-                provenance={"request_digest": request.request_digest, "asset_digest": asset.byte_digest},
+                provenance={
+                    "request_digest": request.request_digest,
+                    "asset_digest": asset.byte_digest,
+                },
                 uncertainty=("machine_observation_requires_review",),
             )
             for asset in assets
@@ -307,7 +399,24 @@ class DeterministicFakeImageProvider:
         status = self.status
         if limitations and status == "complete":
             status = "partial"
-        return ImageAnalysisResult(status, request.request_digest, self.provider, self.model, canonical_digest({"model": self.model}), observations=observations, limitations=tuple(limitations), rights_outcomes={asset.asset_id: "allowed" for asset in assets}, elapsed_seconds=0.0, resource_use={"assets": len(assets), "observations": len(observations), "max_seconds": request.resource_limits.get("max_seconds", 60)}, runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"}, created_at=DETERMINISTIC_TIMESTAMP)
+        return ImageAnalysisResult(
+            status,
+            request.request_digest,
+            self.provider,
+            self.model,
+            canonical_digest({"model": self.model}),
+            observations=observations,
+            limitations=tuple(limitations),
+            rights_outcomes={asset.asset_id: "allowed" for asset in assets},
+            elapsed_seconds=0.0,
+            resource_use={
+                "assets": len(assets),
+                "observations": len(observations),
+                "max_seconds": request.resource_limits.get("max_seconds", 60),
+            },
+            runtime={"implementation": "swos_runtime.image_analysis", "mode": "offline"},
+            created_at=DETERMINISTIC_TIMESTAMP,
+        )
 
 
 def _bounded_limit(value: Any, *, default: int) -> int:
@@ -318,14 +427,19 @@ def _bounded_limit(value: Any, *, default: int) -> int:
     return parsed if parsed >= 0 else -1
 
 
-def _bounded_request_assets(request: ImageAnalysisRequest) -> tuple[tuple[MediaAssetRecord, ...], str | None]:
+def _bounded_request_assets(
+    request: ImageAnalysisRequest,
+) -> tuple[tuple[MediaAssetRecord, ...], str | None]:
     if not request.assets:
         return (), "no_assets"
     maximum = _bounded_limit(request.resource_limits.get("max_assets", 8), default=8)
     if maximum < 1:
         return (), "resource_limit"
     assets = tuple(request.assets[:maximum])
-    if any(not validate_media_asset(asset, required_actions=("view", "analyse")).valid for asset in assets):
+    if any(
+        not validate_media_asset(asset, required_actions=("view", "analyse")).valid
+        for asset in assets
+    ):
         return assets, "rights_denied"
     return assets, None
 
@@ -345,26 +459,72 @@ def _full_asset_selector(asset: MediaAssetRecord) -> RegionSelector:
 class OpenAIImageAnalysisProvider:
     """Opt-in OpenAI image-input adapter behind the provider-neutral contract."""
 
-    def __init__(self, *, api_key: str | None = None, model: str = "gpt-4.1-mini", enabled: bool = False) -> None:
+    def __init__(
+        self, *, api_key: str | None = None, model: str = "gpt-4.1-mini", enabled: bool = False
+    ) -> None:
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model
         self.enabled = enabled
 
     def analyze(self, request: ImageAnalysisRequest) -> ImageAnalysisResult:
-        config_digest = canonical_digest({"provider": "openai", "model": self.model, "enabled": self.enabled})
+        config_digest = canonical_digest(
+            {"provider": "openai", "model": self.model, "enabled": self.enabled}
+        )
         if not self.enabled or not self.api_key:
-            return ImageAnalysisResult("error", request.request_digest, "openai", self.model, config_digest, limitations=("NOT_RUN: explicit live enablement and OPENAI_API_KEY are required",), runtime={"adapter": "swos_runtime.image_analysis_openai", "sdk": "openai-python"}, contract_status="not_run")
+            return ImageAnalysisResult(
+                "error",
+                request.request_digest,
+                "openai",
+                self.model,
+                config_digest,
+                limitations=("NOT_RUN: explicit live enablement and OPENAI_API_KEY are required",),
+                runtime={"adapter": "swos_runtime.image_analysis_openai", "sdk": "openai-python"},
+                contract_status="not_run",
+            )
         if "analyse" not in request.allowed_actions:
-            return ImageAnalysisResult("denied", request.request_digest, "openai", self.model, config_digest, limitations=("analyse_right_not_granted",), contract_status="denied")
+            return ImageAnalysisResult(
+                "denied",
+                request.request_digest,
+                "openai",
+                self.model,
+                config_digest,
+                limitations=("analyse_right_not_granted",),
+                contract_status="denied",
+            )
         assets, request_limit = _bounded_request_assets(request)
         if request_limit == "no_assets":
-            return ImageAnalysisResult("insufficient", request.request_digest, "openai", self.model, config_digest, limitations=("no_assets",), contract_status="executed")
+            return ImageAnalysisResult(
+                "insufficient",
+                request.request_digest,
+                "openai",
+                self.model,
+                config_digest,
+                limitations=("no_assets",),
+                contract_status="executed",
+            )
         if request_limit == "resource_limit":
-            return ImageAnalysisResult("insufficient", request.request_digest, "openai", self.model, config_digest, limitations=("resource_limit",), contract_status="denied")
+            return ImageAnalysisResult(
+                "insufficient",
+                request.request_digest,
+                "openai",
+                self.model,
+                config_digest,
+                limitations=("resource_limit",),
+                contract_status="denied",
+            )
         if request_limit == "rights_denied":
-            return ImageAnalysisResult("denied", request.request_digest, "openai", self.model, config_digest, limitations=("view_or_analyse_right_not_granted",), contract_status="denied")
+            return ImageAnalysisResult(
+                "denied",
+                request.request_digest,
+                "openai",
+                self.model,
+                config_digest,
+                limitations=("view_or_analyse_right_not_granted",),
+                contract_status="denied",
+            )
         try:
             from openai import OpenAI
+
             try:
                 from importlib.metadata import version as package_version
 
@@ -373,29 +533,104 @@ class OpenAIImageAnalysisProvider:
                 sdk_version = "unreported"
 
             client = OpenAI(api_key=self.api_key)
-            content = [{"type": "input_text", "text": "Describe only bounded visible observations. Do not infer identity, attribution, originality, or provenance."}]
+            content = [
+                {
+                    "type": "input_text",
+                    "text": "Describe only bounded visible observations. Do not infer identity, attribution, originality, or provenance.",
+                }
+            ]
             for asset in assets:
                 content.append({"type": "input_image", "image_url": asset.acquisition_uri})
-            response = client.responses.create(model=self.model, input=[{"role": "user", "content": content}], timeout=float(request.resource_limits.get("max_seconds", 60)))
+            response = client.responses.create(
+                model=self.model,
+                input=[{"role": "user", "content": content}],
+                timeout=float(request.resource_limits.get("max_seconds", 60)),
+            )
             text = str(getattr(response, "output_text", "") or "")
-            runtime = {"adapter": "swos_runtime.image_analysis_openai", "sdk": "openai-python", "sdk_version": sdk_version, "request_config": {"model": self.model, "max_seconds": request.resource_limits.get("max_seconds", 60)}}
+            runtime = {
+                "adapter": "swos_runtime.image_analysis_openai",
+                "sdk": "openai-python",
+                "sdk_version": sdk_version,
+                "request_config": {
+                    "model": self.model,
+                    "max_seconds": request.resource_limits.get("max_seconds", 60),
+                },
+            }
             if not text:
-                return ImageAnalysisResult("insufficient", request.request_digest, "openai", self.model, config_digest, limitations=("provider_returned_no_observation_text",), runtime=runtime, contract_status="executed")
-            maximum_observations = _bounded_limit(request.resource_limits.get("max_observations", 64), default=64)
-            observations = tuple(VisualObservation(observation_id=f"openai-observation-{index}", object_id=asset.object_id, asset_id=asset.asset_id, asset_digest=asset.byte_digest, description=text, origin="machine", selector=_full_asset_selector(asset), provider="openai", model=self.model, provenance={"request_digest": request.request_digest, "asset_digest": asset.byte_digest, "response_digest": canonical_digest({"output_text": text})}, uncertainty=("provider_observation_requires_review",)) for index, asset in enumerate(assets, 1))[:maximum_observations]
+                return ImageAnalysisResult(
+                    "insufficient",
+                    request.request_digest,
+                    "openai",
+                    self.model,
+                    config_digest,
+                    limitations=("provider_returned_no_observation_text",),
+                    runtime=runtime,
+                    contract_status="executed",
+                )
+            maximum_observations = _bounded_limit(
+                request.resource_limits.get("max_observations", 64), default=64
+            )
+            observations = tuple(
+                VisualObservation(
+                    observation_id=f"openai-observation-{index}",
+                    object_id=asset.object_id,
+                    asset_id=asset.asset_id,
+                    asset_digest=asset.byte_digest,
+                    description=text,
+                    origin="machine",
+                    selector=_full_asset_selector(asset),
+                    provider="openai",
+                    model=self.model,
+                    provenance={
+                        "request_digest": request.request_digest,
+                        "asset_digest": asset.byte_digest,
+                        "response_digest": canonical_digest({"output_text": text}),
+                    },
+                    uncertainty=("provider_observation_requires_review",),
+                )
+                for index, asset in enumerate(assets, 1)
+            )[:maximum_observations]
             limitations = ("observation_limit_reached",) if len(observations) < len(assets) else ()
-            return ImageAnalysisResult("partial" if limitations else "complete", request.request_digest, "openai", self.model, config_digest, observations=observations, limitations=limitations, runtime=runtime, contract_status="executed", response_digest=canonical_digest({"output_text": text}))
+            return ImageAnalysisResult(
+                "partial" if limitations else "complete",
+                request.request_digest,
+                "openai",
+                self.model,
+                config_digest,
+                observations=observations,
+                limitations=limitations,
+                runtime=runtime,
+                contract_status="executed",
+                response_digest=canonical_digest({"output_text": text}),
+            )
         except Exception as exc:  # provider failures are explicit, never silent success
-            return ImageAnalysisResult("error", request.request_digest, "openai", self.model, config_digest, limitations=(f"provider_error:{type(exc).__name__}",), runtime={"adapter": "swos_runtime.image_analysis_openai", "sdk": "openai-python"}, contract_status="error")
+            return ImageAnalysisResult(
+                "error",
+                request.request_digest,
+                "openai",
+                self.model,
+                config_digest,
+                limitations=(f"provider_error:{type(exc).__name__}",),
+                runtime={"adapter": "swos_runtime.image_analysis_openai", "sdk": "openai-python"},
+                contract_status="error",
+            )
 
 
-def evaluate_cross_modal_support(claim: Mapping[str, Any], observations: Sequence[VisualObservation], textual_evidence: Sequence[Mapping[str, Any]]) -> CrossModalSupport:
+def evaluate_cross_modal_support(
+    claim: Mapping[str, Any],
+    observations: Sequence[VisualObservation],
+    textual_evidence: Sequence[Mapping[str, Any]],
+) -> CrossModalSupport:
     claim_id = str(claim.get("claim_id") or claim.get("id") or "")
     object_id = str(claim.get("object_id") or "")
     asset_id = str(claim.get("asset_id") or "") or None
     normalized_observations = [
-        item if isinstance(item, VisualObservation) else VisualObservation(
-            observation_id=str(_mapping(item).get("observation_id") or _mapping(item).get("id") or ""),
+        item
+        if isinstance(item, VisualObservation)
+        else VisualObservation(
+            observation_id=str(
+                _mapping(item).get("observation_id") or _mapping(item).get("id") or ""
+            ),
             object_id=str(_mapping(item).get("object_id") or ""),
             asset_id=str(_mapping(item).get("asset_id") or ""),
             asset_digest=str(_mapping(item).get("asset_digest") or ""),
@@ -409,27 +644,81 @@ def evaluate_cross_modal_support(claim: Mapping[str, Any], observations: Sequenc
         )
         for item in observations
     ]
-    relevant = [item for item in normalized_observations if (not object_id or item.object_id == object_id) and (not asset_id or item.asset_id == asset_id)]
-    asset_leg = "supported" if relevant and (not asset_id or any(item.asset_id == asset_id for item in relevant)) else "blocked"
-    observation_leg = "supported" if any(claim_id in item.supports_claim_ids for item in relevant) else "blocked"
-    source_leg = "supported" if any(str(_mapping(item).get("claim_id") or "") == claim_id and str(_mapping(item).get("support_level")) == "directly_supports" for item in textual_evidence) else "blocked"
-    legs = {"asset_to_object": asset_leg, "observation_to_claim": observation_leg, "source_to_claim": source_leg}
+    relevant = [
+        item
+        for item in normalized_observations
+        if (not object_id or item.object_id == object_id)
+        and (not asset_id or item.asset_id == asset_id)
+    ]
+    asset_leg = (
+        "supported"
+        if relevant and (not asset_id or any(item.asset_id == asset_id for item in relevant))
+        else "blocked"
+    )
+    observation_leg = (
+        "supported" if any(claim_id in item.supports_claim_ids for item in relevant) else "blocked"
+    )
+    source_leg = (
+        "supported"
+        if any(
+            str(_mapping(item).get("claim_id") or "") == claim_id
+            and str(_mapping(item).get("support_level")) == "directly_supports"
+            for item in textual_evidence
+        )
+        else "blocked"
+    )
+    legs = {
+        "asset_to_object": asset_leg,
+        "observation_to_claim": observation_leg,
+        "source_to_claim": source_leg,
+    }
     limitations: list[str] = []
     claim_type = str(claim.get("claim_type") or "").lower()
     if claim_type in {"attribution", "originality", "identity"}:
         limitations.append("visual_evidence_cannot_establish_attribution_or_originality")
         if not any(item.review_status == "human_reviewed" for item in relevant):
             limitations.append("attribution_or_originality_requires_human_review")
-        if not any(str(_mapping(item).get("support_level") or "") == "directly_supports" and str(_mapping(item).get("claim_id") or "") == claim_id for item in textual_evidence):
+        if not any(
+            str(_mapping(item).get("support_level") or "") == "directly_supports"
+            and str(_mapping(item).get("claim_id") or "") == claim_id
+            for item in textual_evidence
+        ):
             limitations.append("attribution_or_originality_requires_external_evidence")
         legs["observation_to_claim"] = "blocked"
     if len({item.asset_id for item in relevant}) > 8:
         limitations.append("multi_view_limit_exceeded")
         legs["observation_to_claim"] = "limited"
     statuses = list(legs.values())
-    status = "supported" if all(value == "supported" for value in statuses) and not limitations else ("limited" if "limited" in statuses else "blocked")
-    weakest = "blocked" if "blocked" in statuses else ("limited" if "limited" in statuses else "supported")
-    return CrossModalSupport(support_id="cross-modal-" + canonical_digest({"claim": claim, "observations": [item.observation_id for item in normalized_observations]})[:24], claim_id=claim_id, asset_id=asset_id, observation_ids=tuple(item.observation_id for item in relevant), leg_status=legs, status=status, weakest_leg=weakest, limitations=tuple(dict.fromkeys(limitations)), provenance={"authority": "swos-core", "observation_origin": sorted({item.origin for item in relevant})})
+    status = (
+        "supported"
+        if all(value == "supported" for value in statuses) and not limitations
+        else ("limited" if "limited" in statuses else "blocked")
+    )
+    weakest = (
+        "blocked"
+        if "blocked" in statuses
+        else ("limited" if "limited" in statuses else "supported")
+    )
+    return CrossModalSupport(
+        support_id="cross-modal-"
+        + canonical_digest(
+            {
+                "claim": claim,
+                "observations": [item.observation_id for item in normalized_observations],
+            }
+        )[:24],
+        claim_id=claim_id,
+        asset_id=asset_id,
+        observation_ids=tuple(item.observation_id for item in relevant),
+        leg_status=legs,
+        status=status,
+        weakest_leg=weakest,
+        limitations=tuple(dict.fromkeys(limitations)),
+        provenance={
+            "authority": "swos-core",
+            "observation_origin": sorted({item.origin for item in relevant}),
+        },
+    )
 
 
 @dataclass(frozen=True)
@@ -449,7 +738,21 @@ class PromotionAssessment:
     created_at: str = field(default_factory=utc_timestamp)
 
     def to_dict(self) -> dict[str, Any]:
-        return {"capability": self.capability, "pack": self.pack, "stage": self.stage, "status": self.status, "eligible": self.eligible, "reasons": list(self.reasons), "improvement": self.improvement, "lower_confidence_bound": self.lower_confidence_bound, "source_sha": self.source_sha, "baseline_digest": self.baseline_digest, "candidate_digest": self.candidate_digest, "evidence": dict(self.evidence), "created_at": self.created_at}
+        return {
+            "capability": self.capability,
+            "pack": self.pack,
+            "stage": self.stage,
+            "status": self.status,
+            "eligible": self.eligible,
+            "reasons": list(self.reasons),
+            "improvement": self.improvement,
+            "lower_confidence_bound": self.lower_confidence_bound,
+            "source_sha": self.source_sha,
+            "baseline_digest": self.baseline_digest,
+            "candidate_digest": self.candidate_digest,
+            "evidence": dict(self.evidence),
+            "created_at": self.created_at,
+        }
 
 
 @dataclass(frozen=True)
@@ -466,7 +769,18 @@ class CapabilityPromotionDecision:
     expires_at: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {"status": self.status, "enabled": self.enabled, "capability": self.capability, "pack": self.pack, "stage": self.stage, "assessment_digest": self.assessment_digest, "approval": dict(self.approval), "rollback_trigger": self.rollback_trigger, "effective_at": self.effective_at, "expires_at": self.expires_at}
+        return {
+            "status": self.status,
+            "enabled": self.enabled,
+            "capability": self.capability,
+            "pack": self.pack,
+            "stage": self.stage,
+            "assessment_digest": self.assessment_digest,
+            "approval": dict(self.approval),
+            "rollback_trigger": self.rollback_trigger,
+            "effective_at": self.effective_at,
+            "expires_at": self.expires_at,
+        }
 
 
 def _metric(value: Any, default: float = 0.0) -> float:
@@ -481,20 +795,53 @@ def _metric(value: Any, default: float = 0.0) -> float:
         return default
 
 
-def assess_promotion(*, capability: str, pack: str, stage: str, baseline: Any, candidate: Any, policy: Mapping[str, Any] | None = None) -> PromotionAssessment:
+def assess_promotion(
+    *,
+    capability: str,
+    pack: str,
+    stage: str,
+    baseline: Any,
+    candidate: Any,
+    policy: Mapping[str, Any] | None = None,
+) -> PromotionAssessment:
     baseline_data = _mapping(baseline)
     candidate_data = _mapping(candidate)
     policy = dict(policy or {})
     minimum = float(policy.get("minimum_improvement", 0.08))
     lower_minimum = float(policy.get("lower_confidence_bound_minimum", 0.0))
-    baseline_metric = _metric(baseline_data.get("metric", baseline_data.get("score", (baseline_data.get("metrics") or {}).get("cross_modal_f1", 0.0))))
-    candidate_metric = _metric(candidate_data.get("metric", candidate_data.get("score", (candidate_data.get("metrics") or {}).get("cross_modal_f1", 0.0))))
+    baseline_metric = _metric(
+        baseline_data.get(
+            "metric",
+            baseline_data.get(
+                "score", (baseline_data.get("metrics") or {}).get("cross_modal_f1", 0.0)
+            ),
+        )
+    )
+    candidate_metric = _metric(
+        candidate_data.get(
+            "metric",
+            candidate_data.get(
+                "score", (candidate_data.get("metrics") or {}).get("cross_modal_f1", 0.0)
+            ),
+        )
+    )
     improvement = candidate_metric - baseline_metric
-    lower = _metric(candidate_data.get("lower_95_ci", candidate_data.get("lower_confidence_bound", -1.0)), -1.0)
+    lower = _metric(
+        candidate_data.get("lower_95_ci", candidate_data.get("lower_confidence_bound", -1.0)), -1.0
+    )
     reasons: list[str] = []
     if baseline_data.get("source_sha") != candidate_data.get("source_sha"):
         reasons.append("exact_head_mismatch")
-    for key in ("case_ids", "provider", "model", "config_digest", "prompt_digest", "seed", "draw_digest", "artifact_digest"):
+    for key in (
+        "case_ids",
+        "provider",
+        "model",
+        "config_digest",
+        "prompt_digest",
+        "seed",
+        "draw_digest",
+        "artifact_digest",
+    ):
         if baseline_data.get(key) != candidate_data.get(key):
             reasons.append(f"paired_evidence_mismatch:{key}")
     if improvement < minimum:
@@ -523,7 +870,26 @@ def assess_promotion(*, capability: str, pack: str, stage: str, baseline: Any, c
                 reasons.append("candidate_evidence_expired")
         except ValueError:
             reasons.append("candidate_evidence_expiry_invalid")
-    return PromotionAssessment(capability, pack, stage, "eligible" if not reasons else "disabled", not reasons, tuple(dict.fromkeys(reasons)), improvement, lower, str(candidate_data.get("source_sha") or ""), canonical_digest(baseline_data), canonical_digest(candidate_data), {"minimum_improvement": minimum, "lower_confidence_bound_minimum": lower_minimum, "baseline_metric": baseline_metric, "candidate_metric": candidate_metric, "expires_at": expires_at})
+    return PromotionAssessment(
+        capability,
+        pack,
+        stage,
+        "eligible" if not reasons else "disabled",
+        not reasons,
+        tuple(dict.fromkeys(reasons)),
+        improvement,
+        lower,
+        str(candidate_data.get("source_sha") or ""),
+        canonical_digest(baseline_data),
+        canonical_digest(candidate_data),
+        {
+            "minimum_improvement": minimum,
+            "lower_confidence_bound_minimum": lower_minimum,
+            "baseline_metric": baseline_metric,
+            "candidate_metric": candidate_metric,
+            "expires_at": expires_at,
+        },
+    )
 
 
 def commit_promotion(assessment: PromotionAssessment, approval: Any) -> CapabilityPromotionDecision:
@@ -532,9 +898,43 @@ def commit_promotion(assessment: PromotionAssessment, approval: Any) -> Capabili
     if approval_data.get("disposition") != "approved" or not approval_data.get("approver_id"):
         reasons.append("approval_missing")
     if reasons:
-        return CapabilityPromotionDecision("disabled", False, assessment.capability, assessment.pack, assessment.stage, canonical_digest(assessment.to_dict()), approval_data, "rollback_on_safety_or_evidence_regression")
-    return CapabilityPromotionDecision("enabled", True, assessment.capability, assessment.pack, assessment.stage, canonical_digest(assessment.to_dict()), approval_data, "rollback_on_safety_or_evidence_regression", effective_at=utc_timestamp(), expires_at=str(approval_data.get("expires_at") or assessment.evidence.get("expires_at") or "") or None)
+        return CapabilityPromotionDecision(
+            "disabled",
+            False,
+            assessment.capability,
+            assessment.pack,
+            assessment.stage,
+            canonical_digest(assessment.to_dict()),
+            approval_data,
+            "rollback_on_safety_or_evidence_regression",
+        )
+    return CapabilityPromotionDecision(
+        "enabled",
+        True,
+        assessment.capability,
+        assessment.pack,
+        assessment.stage,
+        canonical_digest(assessment.to_dict()),
+        approval_data,
+        "rollback_on_safety_or_evidence_regression",
+        effective_at=utc_timestamp(),
+        expires_at=str(
+            approval_data.get("expires_at") or assessment.evidence.get("expires_at") or ""
+        )
+        or None,
+    )
 
 
-def rollback_promotion(decision: CapabilityPromotionDecision, *, reason: str) -> CapabilityPromotionDecision:
-    return CapabilityPromotionDecision("rolled_back", False, decision.capability, decision.pack, decision.stage, decision.assessment_digest, {**dict(decision.approval), "rollback_reason": reason}, decision.rollback_trigger)
+def rollback_promotion(
+    decision: CapabilityPromotionDecision, *, reason: str
+) -> CapabilityPromotionDecision:
+    return CapabilityPromotionDecision(
+        "rolled_back",
+        False,
+        decision.capability,
+        decision.pack,
+        decision.stage,
+        decision.assessment_digest,
+        {**dict(decision.approval), "rollback_reason": reason},
+        decision.rollback_trigger,
+    )

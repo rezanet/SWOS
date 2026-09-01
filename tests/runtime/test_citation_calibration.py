@@ -28,7 +28,14 @@ class CitationCalibrationTests(unittest.TestCase):
         )
         self.assertGreater(artifact.temperature, 0)
         self.assertEqual(LABELS, artifact.label_order)
-        repeat = fit_temperature(logits, labels, label_order=LABELS, model_digest="m" * 64, dataset_manifest_digest="d" * 64, ontology_digest="o" * 64).to_dict()
+        repeat = fit_temperature(
+            logits,
+            labels,
+            label_order=LABELS,
+            model_digest="m" * 64,
+            dataset_manifest_digest="d" * 64,
+            ontology_digest="o" * 64,
+        ).to_dict()
         first = artifact.to_dict()
         first.pop("created_at")
         repeat.pop("created_at")
@@ -49,7 +56,12 @@ class CitationCalibrationTests(unittest.TestCase):
         )
         self.assertEqual("m" * 64, threshold.model_digest)
         with self.assertRaises(CalibrationBindingError):
-            threshold.assert_bound(model_digest="x" * 64, dataset_manifest_digest="d" * 64, ontology_digest="o" * 64, label_order=LABELS)
+            threshold.assert_bound(
+                model_digest="x" * 64,
+                dataset_manifest_digest="d" * 64,
+                ontology_digest="o" * 64,
+                label_order=LABELS,
+            )
 
 
 if __name__ == "__main__":

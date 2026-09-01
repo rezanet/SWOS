@@ -16,7 +16,15 @@ class DatasetValidationError(ValueError):
 
 
 def validate_pair_record(row: Mapping[str, Any]) -> None:
-    required = ("pair_id", "claim", "exact_quote", "source_uri", "source_digest", "licence", "group_id")
+    required = (
+        "pair_id",
+        "claim",
+        "exact_quote",
+        "source_uri",
+        "source_digest",
+        "licence",
+        "group_id",
+    )
     missing = [key for key in required if not str(row.get(key) or "").strip()]
     if missing:
         raise DatasetValidationError("pair is missing " + ", ".join(missing))
@@ -29,9 +37,15 @@ def validate_pair_record(row: Mapping[str, Any]) -> None:
     if len(str(row.get("source_digest"))) != 64:
         raise DatasetValidationError("pair source digest is not SHA-256")
     annotations = row.get("annotations")
-    if not isinstance(annotations, Sequence) or isinstance(annotations, (str, bytes)) or len(annotations) < 2:
+    if (
+        not isinstance(annotations, Sequence)
+        or isinstance(annotations, (str, bytes))
+        or len(annotations) < 2
+    ):
         raise DatasetValidationError("pair requires two independent annotations")
-    annotators = {str(item.get("annotator_id")) for item in annotations if isinstance(item, Mapping)}
+    annotators = {
+        str(item.get("annotator_id")) for item in annotations if isinstance(item, Mapping)
+    }
     if len(annotators) < 2:
         raise DatasetValidationError("pair annotations must have distinct annotators")
     if not isinstance(adjudication, Mapping) or adjudication.get("status") != "adjudicated":
@@ -53,12 +67,25 @@ def grouped_split(
     for row in rows:
         validate_pair_record(row)
         groups[str(row["group_id"])].append(dict(row))
-    ordered = sorted(groups, key=lambda group: hashlib.sha256(f"{seed}:{group}".encode()).hexdigest())
+    ordered = sorted(
+        groups, key=lambda group: hashlib.sha256(f"{seed}:{group}".encode()).hexdigest()
+    )
     result = {name: [] for name in names}
     totals = {name: 0.0 for name in names}
-    target = {name: float((proportions or {"train": 0.7, "calibration": 0.15, "locked_test": 0.15}).get(name, 0.0)) for name in names}
+    target = {
+        name: float(
+            (proportions or {"train": 0.7, "calibration": 0.15, "locked_test": 0.15}).get(name, 0.0)
+        )
+        for name in names
+    }
     for group in ordered:
-        chosen = min(names, key=lambda name: (totals[name] / target[name] if target[name] else math.inf, names.index(name)))
+        chosen = min(
+            names,
+            key=lambda name: (
+                totals[name] / target[name] if target[name] else math.inf,
+                names.index(name),
+            ),
+        )
         result[chosen].extend(groups[group])
         totals[chosen] += len(groups[group])
     for name in result:
@@ -83,12 +110,19 @@ def krippendorff_alpha_nominal(rows: Sequence[Mapping[str, Any]]) -> float:
 
     annotated = []
     for row in rows:
-        values = [str(item.get("label")) for item in row.get("annotations", []) if isinstance(item, Mapping) and item.get("label") in LABELS]
+        values = [
+            str(item.get("label"))
+            for item in row.get("annotations", [])
+            if isinstance(item, Mapping) and item.get("label") in LABELS
+        ]
         if len(values) >= 2:
             annotated.append(values)
     if not annotated:
         return 0.0
-    observed = sum(sum(value != other for index, value in enumerate(values) for other in values[index + 1:]) for values in annotated)
+    observed = sum(
+        sum(value != other for index, value in enumerate(values) for other in values[index + 1 :])
+        for values in annotated
+    )
     pairs = sum(len(values) * (len(values) - 1) / 2 for values in annotated)
     do = observed / pairs if pairs else 0.0
     all_values = [value for values in annotated for value in values]
@@ -120,9 +154,17 @@ def dataset_manifest(
         "code_digest": code_digest,
         "split_policy": "canonical group hash with fixed seed; locked_test is write-protected",
         "splits": {
-            name: {"count": len(rows), "digest": canonical_digest(list(rows)), "groups": sorted({str(row["group_id"]) for row in rows})}
+            name: {
+                "count": len(rows),
+                "digest": canonical_digest(list(rows)),
+                "groups": sorted({str(row["group_id"]) for row in rows}),
+            }
             for name, rows in sorted(splits.items())
         },
-        "agreement": {"alpha_nominal": krippendorff_alpha_nominal([row for rows in splits.values() for row in rows])},
+        "agreement": {
+            "alpha_nominal": krippendorff_alpha_nominal(
+                [row for rows in splits.values() for row in rows]
+            )
+        },
         "locked_test_isolation": True,
     }

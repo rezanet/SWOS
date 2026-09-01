@@ -337,7 +337,9 @@ class AutonomousSWOS:
         return queries
 
     @staticmethod
-    def diversity_expansion_queries(topic: str, report: dict[str, Any], *, max_queries: int = 8) -> list[str]:
+    def diversity_expansion_queries(
+        topic: str, report: dict[str, Any], *, max_queries: int = 8
+    ) -> list[str]:
         """Turn a pre-declared diversity report into bounded corrective retrieval."""
 
         return list(expansion_plan(report, topic=topic, max_queries=max_queries).queries)
@@ -465,7 +467,9 @@ class AutonomousSWOS:
         }
         claims = [
             claim
-            for index, claim in enumerate((run._latest("evidence_extraction") or {}).get("claims", []))
+            for index, claim in enumerate(
+                (run._latest("evidence_extraction") or {}).get("claims", [])
+            )
             if index in direct_indices and isinstance(claim, dict)
         ]
         report = measure_source_diversity(

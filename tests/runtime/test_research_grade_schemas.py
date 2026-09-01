@@ -31,10 +31,14 @@ class ResearchGradeSchemaTests(unittest.TestCase):
 
     def test_v2_capability_and_stage_contracts_are_self_describing(self) -> None:
         capability = json.loads(
-            (ROOT / "contracts/capability-contract/capabilities-v2.json").read_text(encoding="utf-8")
+            (ROOT / "contracts/capability-contract/capabilities-v2.json").read_text(
+                encoding="utf-8"
+            )
         )
         stage = json.loads(
-            (ROOT / "contracts/stage-instruction/stage-instructions-v2.json").read_text(encoding="utf-8")
+            (ROOT / "contracts/stage-instruction/stage-instructions-v2.json").read_text(
+                encoding="utf-8"
+            )
         )
         self.assertEqual("2.0.0", capability["version"])
         self.assertEqual("2.0.0", stage["version"])

@@ -14,7 +14,16 @@ class _FakeRPM:
 
     def query(self, scope, query, policy, *, as_of=None):
         self.called = (scope, query, policy, as_of)
-        return type("Result", (), {"items": [{"item_id": "item-1"}], "receipt": type("Receipt", (), {"to_dict": lambda self: {"receipt_id": "read-1"}})()})()
+        return type(
+            "Result",
+            (),
+            {
+                "items": [{"item_id": "item-1"}],
+                "receipt": type(
+                    "Receipt", (), {"to_dict": lambda self: {"receipt_id": "read-1"}}
+                )(),
+            },
+        )()
 
 
 class ResearchMemoryFinalizerTests(unittest.TestCase):

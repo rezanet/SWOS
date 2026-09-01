@@ -47,25 +47,38 @@ class ResearchMemoryIsolationTests(unittest.TestCase):
 
     def _commit(self, scope: ResearchScope, operation: RPMOperation) -> None:
         assessment = self.service.assess_operation(scope, operation)
-        approval = HumanApproval.for_assessment(assessment, approver="reviewer", role="memory_owner")
-        self.service.commit_operation(scope, assessment_id=assessment.assessment_id, approval=approval)
+        approval = HumanApproval.for_assessment(
+            assessment, approver="reviewer", role="memory_owner"
+        )
+        self.service.commit_operation(
+            scope, assessment_id=assessment.assessment_id, approval=approval
+        )
 
     def test_missing_or_unregistered_scope_is_denied(self) -> None:
         with self.assertRaises(Exception):
             self.service.query(self.a, MemoryQuery(), self.service.normal_read_policy())
 
     def test_namespace_and_project_cannot_observe_or_influence_each_other(self) -> None:
-        self._commit(self.a, RPMOperation.register_project(self.a, label="A", manifest_digest="a" * 64))
+        self._commit(
+            self.a, RPMOperation.register_project(self.a, label="A", manifest_digest="a" * 64)
+        )
         self._commit(self.a, RPMOperation.write(self.a, self._candidate("item-a")))
         with self.assertRaises(Exception):
             self.service.query(self.b, MemoryQuery(), self.service.normal_read_policy())
         self.assertEqual(
             ["item-a"],
-            [item["item_id"] for item in self.service.query(self.a, MemoryQuery(), self.service.normal_read_policy()).items],
+            [
+                item["item_id"]
+                for item in self.service.query(
+                    self.a, MemoryQuery(), self.service.normal_read_policy()
+                ).items
+            ],
         )
 
     def test_cross_scope_candidate_reference_is_rejected(self) -> None:
-        self._commit(self.a, RPMOperation.register_project(self.a, label="A", manifest_digest="a" * 64))
+        self._commit(
+            self.a, RPMOperation.register_project(self.a, label="A", manifest_digest="a" * 64)
+        )
         candidate = self._candidate("item-a")
         forged = RPMOperation.write(self.b, candidate)
         with self.assertRaises(Exception):
