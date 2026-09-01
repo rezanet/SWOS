@@ -30,21 +30,21 @@ implication. Exact command names and expected outputs are defined in `plan.md` a
 
 ## Project Structure
 
-This feature extends the current single-repository Python runtime, frozen schemas
-and policies, discipline/reviewer packs, evaluation fixtures and command-line
-tools. New source, contracts, schemas, corpora, model/ontology manifests,
-certificates, tests and documentation must live in their corresponding existing
-repository layers. No browser application, CRUD service, authentication system,
-tenant database or deployment topology is implied.
+This feature extends the current single-repository runtime, frozen schemas and
+policies, discipline/reviewer packs, evaluation fixtures and command-line tools.
+New source, contracts, schemas, corpora, model/ontology manifests, certificates,
+tests and documentation must live in their corresponding existing repository
+layers. No browser application, CRUD service, authentication system, tenant
+database or deployment topology is implied.
 
 ## Code and Document Style
 
-Implementation must follow the repository's Python 3.11+, typed fail-closed
-interfaces, deterministic JSON, Ruff formatting/linting and immutable-evidence
-conventions. Human-readable pack and policy prose remains authoritative at its
-declared boundary; machine-readable artifacts use stable identifiers, explicit
-versions, canonical serialization and content digests. Documents must distinguish
-specified, implemented, tested, demonstrated, certified and human-approved state.
+The implementation plan defines the language, tooling and repository conventions.
+At the specification boundary, human-readable pack and policy prose remains
+authoritative at its declared boundary; machine-readable artifacts use stable
+identifiers, explicit versions, canonical serialization and content digests.
+Documents must distinguish specified, implemented, tested, demonstrated,
+certified and human-approved state.
 
 ## Testing Strategy
 

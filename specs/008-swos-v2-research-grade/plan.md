@@ -44,11 +44,11 @@ pinned containers/artifacts and authorized providers
 **Project Type**: Python library/CLI with schemas, contracts, governance policies,
 discipline packs, evaluation corpus, benchmarks, and release evidence
 
-**Performance Goals**: common indexed RPM query p95 <= 250 ms at 100k items on
-the recorded reference runner; feature-spec lookup goal over 10k items; inspected
-10k-item import <= 60 seconds; packaged 100-pair citation batch p95 <= 5 seconds;
-10k-statement PROV certification <= 60 seconds with bounded memory; deterministic
-outputs across repeated runs; zero semantic loss for certified PROV corpus
+**Performance Goals**: local programme lookup over 10k active items p95 <= 250 ms
+on the recorded reference runner; inspected 10k-item import <= 60 seconds;
+packaged 100-pair citation batch p95 <= 5 seconds; 10k-statement PROV
+certification <= 60 seconds with bounded memory; deterministic outputs across
+repeated runs; zero semantic loss for certified PROV corpus
 
 **Constraints**: fail closed; all public RPM calls scoped; no authenticated-tenancy
 claim; no ordinary-CI network/model download/secret/paid call; bounded archive,
@@ -56,10 +56,10 @@ RDF, selector, model, and provider resources; core owns verification; rights and
 classification ceilings never weaken; exact-head evidence and independent review
 required
 
-**Scale/Scope**: 2 namespaces, 4 programmes, 10 projects/programme and 100k-item
-RPM benchmark; nine discipline profiles; >=6,000 adjudicated citation pairs at
+**Scale/Scope**: 2 namespaces, 4 programmes, 10 projects/programme and a
+10k-active-item RPM acceptance benchmark; nine discipline profiles; >=6,000 adjudicated citation pairs at
 release floor with >=1,500 locked-test pairs; at least ten locked reviewed
-diversity packets per discipline; 1k/10k/100k PROV statement benchmarks; >=60
+diversity packets per discipline; 1k/10k PROV statement benchmarks; >=60
 distinct objects/works, >=96 renditions, and the multimodal gates in research.md
 
 ## Constitution Check
@@ -71,7 +71,7 @@ distinct objects/works, >=96 renditions, and the multimodal gates in research.md
 | Core policy owns scholarly verification | Classifier, retriever, image provider, and discipline critic return evidence/diagnostics; deterministic core admits or blocks | PASS |
 | Fail closed under uncertainty | Missing scope, evidence, rights, ontology, model, calibration, PROV oracle, or selector yields denial/abstention/NOT_RUN, never fabricated pass | PASS |
 | Preserve v1 contracts | New v2 schemas/contracts plus explicit dispatcher and compatibility suite; no in-place `$id` redefinition | PASS |
-| Provider/host neutrality | Protocols and immutable manifests isolate SQLite, model, RDF, PROV, and image-provider choices | PASS |
+| Provider/host neutrality | Protocols, deterministic substitution fixtures, the frozen portability matrix, and immutable manifests isolate SQLite, model, RDF, PROV, and image-provider choices | PASS |
 | Human authority remains explicit | RPM commits, exceptions, overrides, promotion, and release require separate approval/SDL evidence | PASS |
 | Evidence is reproducible | Canonical hashes, exact source SHA, tool/model/oracle/corpus identities, raw predictions, and immutable audit pack | PASS |
 | Evaluation exercises production | Fixture-name heuristics removed; all feature evaluators call public production paths | PASS |
@@ -174,6 +174,7 @@ agents/research-grade/
 ├── art-history.agent.json
 └── art-criticism.agent.json
 evals/fixtures/
+├── golden/
 ├── provenance/
 ├── source-diversity/
 ├── discipline-critique/

@@ -91,7 +91,9 @@ python tools/run_source_diversity_benchmark.py --manifest benchmark/source-diver
 python tools/certify_prov_roundtrip.py --corpus-manifest evals/fixtures/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir artifacts/provenance --certificate-out artifacts/provenance/certificate.json
 python tools/run_rpm_benchmark.py --manifest benchmark/rpm/manifest.json
 python tools/run_multimodal_evals.py --manifest evals/fixtures/multimodal/manifest.json
-python evals/harness/run_evals.py --all-planes --fail-on-gate
+python evals/harness/run_evals.py --all --deterministic-subject --fail-on-gate
+python tools/check_portability_acceptance.py --definitions-only
+python tools/lint_skills.py
 python tools/assemble_research_grade_audit_pack.py --verify-only
 ruff check .
 ```
@@ -106,7 +108,9 @@ Run these only from the exact clean release-candidate SHA:
 
 - citation dataset verification, training, calibration, and locked evaluation;
 - independent ProvToolbox/conformance certification;
-- full 100k-item RPM and large PROV benchmarks;
+- the reference 10k-active-item RPM and 10k-statement PROV benchmarks;
+- `python tools/check_portability_acceptance.py --release`, requiring valid PASS
+  evidence for all six frozen portability cases and both host/portability gates;
 - live multimodal provider evaluation where credentials and rights permit;
 - competent human adjudication and capability-promotion review.
 
