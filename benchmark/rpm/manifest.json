@@ -1,0 +1,20 @@
+{
+  "artifact": "swos.research-grade.rpm-benchmark",
+  "schema_version": "2.0.0",
+  "runner": "tools/run_rpm_benchmark.py",
+  "item_count": 100000,
+  "item_count_kind": "target",
+  "operations": ["write", "query", "rebuild_projection", "verify_chain"],
+  "thresholds": {
+    "lookup_10000_p95_ms": 250,
+    "write_100000_completion": "record_only",
+    "lock_timeout": "explicit_failure"
+  },
+  "measurement_status": "not_run",
+  "runner_environment": {"python": "recorded_at_run", "os": "recorded_at_run", "sqlite": "recorded_at_run"},
+  "limitations": [
+    "The target item count is a benchmark configuration, not a performance claim.",
+    "The release benchmark requires a clean exact head and is not run in ordinary offline tests.",
+    "No hosted or multitenant throughput claim is made."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "policy_id": "swos.media-rights",
+  "version": "2.0.0",
+  "gate_type": "media_rights",
+  "trigger": {"on": ["before_media_access", "before_media_analysis", "before_media_output"]},
+  "default_effect": "deny",
+  "escalation": "rights_owner",
+  "nist_ai_rmf": ["GOVERN 1.1", "MAP 2.3", "MANAGE 4.1"],
+  "rights_actions": ["view", "analyse", "transform", "create_derivative", "quote", "cache", "export", "redistribute"],
+  "unknown_rights_effect": "deny",
+  "implications": {
+    "view": [],
+    "analyse": [],
+    "transform": [],
+    "create_derivative": [],
+    "quote": [],
+    "cache": [],
+    "export": [],
+    "redistribute": []
+  },
+  "rules": [
+    {"id": "purpose-specific-authorization", "when": {"request": {"action_declared": true, "purpose_declared": true, "asset_digest_bound": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Media access is authorized for a declared action and purpose only."}},
+    {"id": "no-rights-implication", "when": {"rights": {"analysis_does_not_imply_transform": true, "view_does_not_imply_export": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Rights actions remain distinct; one permission never silently grants another."}},
+    {"id": "derivative-recheck", "when": {"derivative": {"rights_revalidated": true, "human_accessibility_review_valid": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "A transformed or derived asset requires fresh rights and accessibility checks."}}
+  ]
+}

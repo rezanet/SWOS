@@ -1,0 +1,168 @@
+{
+  "contract_set": "swos.capabilities.v2",
+  "version": "2.0.0",
+  "schema_version": "2.0.0",
+  "profile": "research-grade",
+  "status": "parallel",
+  "principle": "SWOS owns the scholarly process and final verification. Models provide bounded capabilities.",
+  "compatibility": {
+    "v1_contract_set": "swos.capabilities.v1",
+    "relationship": "parallel",
+    "upgrade": "explicit_dispatch_only",
+    "downgrade": "denied"
+  },
+  "capabilities": {
+    "research_planning": {
+      "contract": "swos.research-planning.v2",
+      "input": "ResearchRequest + explicitly governed ResearchScope",
+      "output": "versioned research plan object",
+      "assurance": ["structured_output", "no_source_invention", "scope_bound"],
+      "provenance": ["adapter", "model_host", "model", "execution_mode", "profile_digest"],
+      "failure": "fail_closed"
+    },
+    "source_retrieval": {
+      "contract": "swos.source-retrieval.v2",
+      "input": "topic + governed queries + ResearchScope",
+      "output": "SourceRecord[] with source-family and rights metadata",
+      "assurance": ["source_identity", "metadata_provenance", "untrusted_content_boundary", "rights_bound"],
+      "provenance": ["adapter", "retrieval_provider", "network_mode", "licence_digest"],
+      "failure": "return_empty_and_block_release"
+    },
+    "semantic_rerank": {
+      "contract": "swos.semantic-rerank.v2",
+      "input": "query + SourceRecord[] + ResearchScope",
+      "output": "ranked SourceRecord[] + capability evidence",
+      "assurance": ["joint_query_document_scoring", "score_provenance", "counterposition_recall"],
+      "provenance": ["adapter", "model_host", "model", "execution_mode", "profile_digest"],
+      "failure": "fail_closed"
+    },
+    "evidence_extraction": {
+      "contract": "swos.evidence-extraction.v2",
+      "input": "topic + retrieved source text + exact source identity",
+      "output": "atomic candidate claims with exact quotes and span digests",
+      "assurance": ["exact_quote_required", "no_model_memory", "grounding_digest", "classification_bound"],
+      "provenance": ["adapter", "model_host", "model", "input_digest", "runtime"],
+      "failure": "fail_closed"
+    },
+    "citation_support_audit": {
+      "contract": "swos.citation-support-audit.v2",
+      "input": "exact claim/span pair + verified source metadata + ontology profile",
+      "output": "five-label support classification or abstention",
+      "assurance": ["independent_judgement_declared", "conservative_uncertainty", "exact_input_bound", "core_gate_owned_by_swos"],
+      "provenance": ["adapter", "model_host", "model", "independence", "calibration_digest", "dataset_digest"],
+      "failure": "classify_invalid_or_review"
+    },
+    "argument_construction": {
+      "contract": "swos.argument-construction.v2",
+      "input": "verified Evidence Matrix + rival theses + discipline ontology",
+      "output": "versioned Argument Graph proposal with counterpositions",
+      "assurance": ["verified_evidence_only", "objections_and_qualifiers", "discipline_criteria"],
+      "provenance": ["adapter", "model_host", "model", "ontology_digest"],
+      "failure": "fail_closed"
+    },
+    "draft_generation": {
+      "contract": "swos.draft-generation.v2",
+      "input": "ResearchRequest + verified Evidence Matrix + Argument Graph",
+      "output": "article body with valid source markers and audit references",
+      "assurance": ["verified_evidence_only", "no_invented_markers", "claim_level_provenance"],
+      "provenance": ["adapter", "model_host", "model", "epg_digest", "source_diversity_digest"],
+      "failure": "fail_closed"
+    },
+    "semantic_verification": {
+      "contract": "swos.semantic-verification.v2",
+      "input": "source text + candidate text + context + exact artifact identities",
+      "output": "PASS|REVIEW|REJECT with evidence and finalizer input",
+      "assurance": ["fail_closed", "semantic_delta_evidence", "exact_head_bound", "final_verification"],
+      "provenance": ["adapter", "model_host", "model", "execution_mode", "assurance_level", "artifact_digest"],
+      "failure": "preserve_source"
+    },
+    "hostile_review": {
+      "contract": "swos.hostile-review.v2",
+      "input": "article + evidence + argument + source register + audit pack",
+      "output": "role-based reviewer findings with exact evidence links",
+      "assurance": ["independence_declared", "bounded_review", "human_review_state", "blocking_findings"],
+      "provenance": ["adapter", "model_host", "model", "independence", "reviewer_identity", "audit_pack_digest"],
+      "failure": "review_required"
+    },
+    "revision": {
+      "contract": "swos.revision.v2",
+      "input": "article + blocking findings + verified evidence + argument + audit pack",
+      "output": "full revised article with immutable lineage",
+      "assurance": ["verified_evidence_only", "bounded_iteration", "provenance_preserved"],
+      "provenance": ["adapter", "model_host", "model", "parent_digest", "audit_pack_digest"],
+      "failure": "preserve_prior_article_and_review_required"
+    },
+    "prose_transformation": {
+      "contract": "swos.prose-transformation.v2",
+      "input": "article chunk + mode/preset + semantic context",
+      "output": "safe final text + semantic verification record",
+      "assurance": ["semantic_preservation", "source_fallback", "exact_input_bound"],
+      "provenance": ["adapter", "model_host", "model", "assurance_level", "artifact_digest"],
+      "failure": "preserve_source"
+    },
+    "programme_memory": {
+      "contract": "swos.programme-memory.v2",
+      "input": "explicit ResearchScope + proposed operation + evidence package",
+      "output": "assessed or committed event receipt and projection",
+      "assurance": ["scope_required", "two_phase_commit", "hash_chain", "no_last_writer_wins", "crash_safe"],
+      "provenance": ["repository", "event_digest", "assessment_digest", "approval_digest", "operator_identity"],
+      "failure": "fail_closed"
+    },
+    "research_grade_verification": {
+      "contract": "swos.research-grade-verification.v2",
+      "input": "exact-head artifacts + evaluation cases + policy decisions",
+      "output": "versioned audit pack and promotion decision",
+      "assurance": ["final_verification", "exact_head", "all_gates_required", "no_hidden_state", "rollback_bound"],
+      "provenance": ["code_sha", "artifact_manifest_digest", "evaluation_digest", "review_digest", "runtime"],
+      "failure": "deny_promotion"
+    },
+    "discipline_critique": {
+      "contract": "swos.discipline-critique.v2",
+      "input": "research plan + Evidence Matrix + draft + selected ontology profile",
+      "output": "criterion-level machine-proposed findings and disagreement-preserving report",
+      "assurance": ["ontology_bound", "evidence_linked", "mandatory_failure_preserved", "provider_not_authoritative"],
+      "provenance": ["ontology_digest", "subject_digest", "evidence_digest", "critic_identity"],
+      "failure": "block_or_review"
+    },
+    "ontology_validation": {
+      "contract": "swos.ontology-validation.v2",
+      "input": "RDF/SKOS/OWL/SHACL ontology release and mappings",
+      "output": "compiled deterministic profile and validation report",
+      "assurance": ["stable_iri", "deprecation_preserved", "offline_determinism", "no_silent_fallback"],
+      "provenance": ["ontology_digest", "compiler_version", "shape_digest"],
+      "failure": "reject_release"
+    },
+    "source_diversity": {
+      "contract": "swos.source-diversity.v2",
+      "input": "canonical source families + claim exposure + material dimensions",
+      "output": "dimensioned diversity report and gate decision",
+      "assurance": ["unknown_not_coverage", "claim_exposure", "counterposition_recall", "concentration_gate"],
+      "provenance": ["source_family_digest", "query_digest", "policy_digest", "exception_digest"],
+      "failure": "review_or_block"
+    },
+    "provenance_interchange": {
+      "contract": "swos.provenance-interchange.v2",
+      "input": "EPG v2 + named PROV serialization profile",
+      "output": "bidirectionally validated PROV artifact and semantic fingerprint",
+      "assurance": ["round_trip", "canonical_digest", "independent_processor", "resource_limits", "fail_closed"],
+      "provenance": ["source_digest", "output_digest", "tool_version", "profile_digest", "oracle_digest"],
+      "failure": "reject_or_mark_not_run"
+    },
+    "multimodal_analysis": {
+      "contract": "swos.multimodal-analysis.v2",
+      "input": "rights-checked media asset + purpose + selector + scope",
+      "output": "observations, interpretations, accessibility data, and status",
+      "assurance": ["purpose_rights", "observation_interpretation_separation", "selector_bound", "identity_non_claim", "abstention"],
+      "provenance": ["asset_digest", "model", "request_digest", "response_digest", "rights_digest", "runtime"],
+      "failure": "abstain_and_preserve_text_only"
+    },
+    "promotion_gating": {
+      "contract": "swos.promotion-gating.v2",
+      "input": "paired baseline/candidate evaluation + live/human evidence",
+      "output": "assess, approve, or deny decision with rollback plan",
+      "assurance": ["default_off", "paired_cases", "confidence_bound", "exact_head", "human_quorum", "rollback"],
+      "provenance": ["candidate_sha", "baseline_sha", "evaluation_digest", "draw_digest", "approval_digest"],
+      "failure": "pack_only"
+    }
+  }
+}

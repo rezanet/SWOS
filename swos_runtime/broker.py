@@ -40,6 +40,7 @@ class CapabilityBroker:
         model_host: str = "unknown-host",
         execution_mode: str = "injected",
         adapter_manifest: dict[str, Any] | None = None,
+        discipline_critic: Any | None = None,
     ) -> None:
         self.stage_binding = stage_binding
         self.retrieval_binding = retrieval_binding
@@ -49,6 +50,7 @@ class CapabilityBroker:
         self.adapter = str(self.adapter_manifest.get("adapter") or adapter)
         self.model_host = str(self.adapter_manifest.get("model_host") or model_host)
         self.execution_mode = str(self.adapter_manifest.get("execution_mode") or execution_mode)
+        self.discipline_critic = discipline_critic
         self.events: list[dict[str, Any]] = []
 
     @property
@@ -289,4 +291,37 @@ class CapabilityBroker:
         if not isinstance(result, dict):
             raise CapabilityBrokerError("semantic_verification must return an object")
         self._event("semantic_verification")
+        return result
+
+    def discipline_critique(
+        self,
+        *,
+        discipline: Any,
+        research_plan: dict[str, Any],
+        evidence_matrix: dict[str, Any],
+        draft: dict[str, Any],
+        critic: Any | None = None,
+    ) -> Any:
+        """Run a SWOS-owned critic; a provider cannot supply the admission verdict."""
+
+        selected = critic or self.discipline_critic
+        if selected is None or not hasattr(selected, "critique"):
+            raise CapabilityBrokerError("a governed discipline critic is required")
+        result = selected.critique(
+            discipline=discipline,
+            research_plan=research_plan,
+            evidence_matrix=evidence_matrix,
+            draft=draft,
+        )
+        self.events.append(
+            {
+                "capability": "discipline_critique",
+                "contract": "swos.discipline-critique.v2",
+                "contract_passed": True,
+                "executed": True,
+                "provider_owned_admission": False,
+                "mandatory_failures": list(getattr(result, "mandatory_failures", [])),
+                "review_state": getattr(result, "review_state", "machine_proposed"),
+            }
+        )
         return result

@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/art_history> a swos:Discipline ; skos:prefLabel "art history" .
+<https://swos.example.org/discipline/art_history> swos:usesMethod <https://swos.example.org/method/close-observation> .
+<https://swos.example.org/discipline/art_history> swos:requiresCriterion <https://swos.example.org/criterion/art-history/object-description> .
+<https://swos.example.org/discipline/art_history> swos:requiresCriterion <https://swos.example.org/criterion/art-history/visual-anchor> .
+<https://swos.example.org/discipline/art_history> swos:requiresCriterion <https://swos.example.org/criterion/art-history/context> .
+<https://swos.example.org/discipline/art_history> swos:requiresCriterion <https://swos.example.org/criterion/art-history/provenance> .
+<https://swos.example.org/discipline/art_history> swos:requiresCriterion <https://swos.example.org/criterion/art-history/plausibility> .
+<https://swos.example.org/criterion/art-history/object-description> a swos:Criterion ; skos:prefLabel "object description" .
+<https://swos.example.org/criterion/art-history/visual-anchor> a swos:Criterion ; skos:prefLabel "visual evidence anchoring" .
+<https://swos.example.org/criterion/art-history/context> a swos:Criterion ; skos:prefLabel "historical context" .
+<https://swos.example.org/criterion/art-history/provenance> a swos:Criterion ; skos:prefLabel "provenance rigour" .
+<https://swos.example.org/criterion/art-history/plausibility> a swos:Criterion ; skos:prefLabel "historical plausibility" .

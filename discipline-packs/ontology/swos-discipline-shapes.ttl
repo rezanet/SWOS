@@ -1,0 +1,5 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+swos:DisciplineShape a sh:NodeShape ; sh:targetClass swos:Discipline ; sh:closed "true" .
+swos:CriterionShape a sh:NodeShape ; sh:targetClass swos:Criterion ; sh:property swos:CriterionWeightProperty .
+swos:CriterionWeightProperty sh:path swos:hasRubricWeight ; sh:minCount "1" ; sh:minInclusive "0" ; sh:maxInclusive "1" .

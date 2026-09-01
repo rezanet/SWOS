@@ -1,0 +1,66 @@
+{
+  "policy_id": "swos.research-programme-memory",
+  "version": "2.0.0",
+  "gate_type": "research_programme_memory",
+  "trigger": {
+    "on": [
+      "before_memory_assessment",
+      "before_memory_commit",
+      "before_memory_import",
+      "before_programme_closure"
+    ]
+  },
+  "default_effect": "deny",
+  "escalation": "research_memory_owner",
+  "nist_ai_rmf": ["GOVERN 1.1", "GOVERN 1.3", "MEASURE 2.8", "MANAGE 4.1"],
+  "rules": [
+    {
+      "id": "explicit-scope-required",
+      "when": {"operation.scope": {"required": ["namespace", "programme", "project"]}},
+      "effect": "continue",
+      "else": {"effect": "deny", "reason": "Every RPM operation is explicitly scoped."}
+    },
+    {
+      "id": "programme-project-binding-required",
+      "when": {"operation.scope.binding_status": "active"},
+      "effect": "continue",
+      "else": {"effect": "deny", "reason": "The programme and project binding must be active."}
+    },
+    {
+      "id": "grounding-fields-required",
+      "when": {"candidate": {"required": ["source_grounding", "epg", "sdl", "owner", "confidence", "expiry", "data_classification", "origin", "parent_digest"]}},
+      "effect": "continue",
+      "else": {"effect": "deny", "reason": "Durable memory requires source grounding and accountable lifecycle metadata."}
+    },
+    {
+      "id": "human-approval-required",
+      "when": {"assessment.human_approval.status": "approved"},
+      "effect": "continue",
+      "else": {"effect": "escalate", "reason": "A substantive memory write requires a recorded human approval."}
+    },
+    {
+      "id": "restricted-content-denied",
+      "when": {"candidate.data_classification": {"in": ["restricted", "secret"]}},
+      "effect": "deny",
+      "reason": "Restricted or secret payloads are never stored in durable RPM."
+    },
+    {
+      "id": "commit-re-resolves-heads",
+      "when": {"commit": {"re_resolved": true, "bindings_and_heads_unchanged": true, "rights_and_expiry_valid": true}},
+      "effect": "continue",
+      "else": {"effect": "deny", "reason": "Commit must re-resolve bindings, heads, rights, classification and expiry."}
+    },
+    {
+      "id": "no-last-writer-wins",
+      "when": {"conflict.detected": true},
+      "effect": "escalate",
+      "reason": "Concurrent or contradictory writes create an explicit review record; no silent overwrite is allowed."
+    },
+    {
+      "id": "closure-preserves-history",
+      "when": {"programme_closure": {"preserve_events": true, "preserve_releases": true, "approved": true}},
+      "effect": "continue",
+      "else": {"effect": "deny", "reason": "Programme closure retires access while preserving history and released evidence."}
+    }
+  ]
+}

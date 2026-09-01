@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import uuid
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -146,6 +147,7 @@ class WorkOrderRun:
         request: dict[str, Any],
         adapter_manifest: dict[str, Any],
         root: str | Path,
+        ontology_binding: dict[str, Any] | None = None,
     ) -> "WorkOrderRun":
         request = _validate_request(request)
         for capability in [*BASE_STAGE_SEQUENCE, "revision"]:
@@ -167,6 +169,8 @@ class WorkOrderRun:
             "submissions": [],
             "history": [],
         }
+        if ontology_binding is not None:
+            state["ontology_binding"] = dict(ontology_binding)
         _write_json(run_dir / "request.json", request)
         _write_json(run_dir / "adapter-capabilities.json", adapter_manifest)
         _write_json(run_dir / "run-state.json", state)
@@ -728,3 +732,109 @@ class WorkOrderRun:
         path = Path(output_path) if output_path else self.run_dir / "host-bundle.json"
         _write_json(path, bundle)
         return path
+
+    def bind_rpm(self, service: Any, scope: Any) -> None:
+        """Bind one explicit RPM service/scope to this work-order run."""
+
+        if service is None or scope is None:
+            raise WorkOrderError("RPM binding requires a service and explicit scope")
+        self.rpm_service = service
+        self.rpm_scope = scope
+        self.state.setdefault("history", []).append(
+            {"event": "rpm_bound", "scope": scope.to_dict(), "run_id": self.state["run_id"]}
+        )
+        self._save()
+
+    def bind_ontology(self, profile: Any) -> None:
+        """Persist the exact v2 ontology identity used by this run."""
+
+        required = ("discipline", "discipline_iri", "ontology_digest", "required_criteria", "methods")
+        if any(not hasattr(profile, name) for name in required):
+            raise WorkOrderError("ontology binding requires a complete discipline profile")
+        self.state["ontology_binding"] = {
+            "ontology_version": "2.0.0",
+            "discipline": str(profile.discipline),
+            "discipline_iri": str(profile.discipline_iri),
+            "pack_id": str(profile.pack_id),
+            "pack_version": str(profile.pack_version),
+            "ontology_digest": str(profile.ontology_digest),
+            "method_iris": [str(item.get("iri")) for item in profile.methods],
+            "criterion_iris": [str(item.get("iri")) for item in profile.required_criteria],
+        }
+        self.state.setdefault("history", []).append(
+            {"event": "ontology_bound", "binding": dict(self.state["ontology_binding"])}
+        )
+        self._save()
+
+    def _require_rpm(self) -> tuple[Any, Any]:
+        service = getattr(self, "rpm_service", None)
+        scope = getattr(self, "rpm_scope", None)
+        if service is None or scope is None:
+            raise WorkOrderError("this work-order has no explicit RPM binding")
+        return service, scope
+
+    def rpm_read(self, query: Any | None = None, policy: Any | None = None, *, as_of: Any | None = None) -> Any:
+        service, scope = self._require_rpm()
+        if query is None:
+            from .research_memory import MemoryQuery
+
+            query = MemoryQuery()
+        if policy is None:
+            policy = service.normal_read_policy()
+        result = service.query(scope, query, policy, as_of=as_of)
+        receipt = replace(
+            result.receipt,
+            run_id=str(self.state["run_id"]),
+            work_id=str(self.state.get("work_id") or self.state["run_id"]),
+        )
+        result = replace(result, receipt=receipt)
+        self.state.setdefault("history", []).append(
+            {
+                "event": "rpm_read",
+                "run_id": self.state["run_id"],
+                "scope": scope.to_dict(),
+                "receipt_id": receipt.receipt_id,
+                "query_digest": receipt.query_digest,
+                "epg_node_ids": list(receipt.epg_node_ids),
+            }
+        )
+        self._save()
+        return result
+
+    def rpm_write(self, operation: Any, *, approval: Any | None = None, as_of: Any | None = None) -> Any:
+        service, scope = self._require_rpm()
+        if operation.scope != scope:
+            raise WorkOrderError("RPM operation scope does not match work-order binding")
+        assessment = service.assess_operation(scope, operation, as_of=as_of)
+        approval = approval or _rpm_approval_for_run(assessment, self.state)
+        result = service.commit_operation(
+            scope,
+            assessment_id=assessment.assessment_id,
+            approval=approval,
+            as_of=as_of,
+        )
+        self.state.setdefault("history", []).append(
+            {
+                "event": "rpm_write",
+                "run_id": self.state["run_id"],
+                "scope": scope.to_dict(),
+                "operation_id": result.operation_id,
+                "event_id": result.event_id,
+                "event_digest": result.event_digest,
+                "assessment_digest": assessment.digest,
+                "epg_digest": assessment.epg_digest,
+                "sdl_digest": assessment.sdl_digest,
+            }
+        )
+        self._save()
+        return result
+
+
+def _rpm_approval_for_run(assessment: Any, state: dict[str, Any]) -> Any:
+    from .research_memory import HumanApproval
+
+    return HumanApproval.for_assessment(
+        assessment,
+        approver=str(state.get("run_id", "work-order")),
+        role="memory_owner",
+    )

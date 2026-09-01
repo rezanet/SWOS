@@ -87,3 +87,13 @@ Regression without version pinning is noise.
 | `over_association_detection` | higher | 0.90 |
 | `false_originality_detection` | higher | 0.90 |
 | `red_team_pass_rate` | higher | 0.95 |
+
+## Research Grade ontology and critique
+
+The v2 path records ontology binding completeness, criterion coverage, evidence
+link rate, mandatory-failure preservation, machine-proposed versus human review
+state, and unresolved disagreement count. These are separate dimensions. A
+display summary is never a universal scholarly score and cannot override a
+mandatory criterion failure. The release gate requires every selected pack to
+have a non-empty ontology digest, complete stable-IRI bindings, and zero silent
+cross-discipline standard levelling.

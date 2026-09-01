@@ -1,0 +1,23 @@
+{
+  "policy_id": "swos.source-diversity",
+  "version": "2.0.0",
+  "gate_type": "source_diversity",
+  "trigger": {"on": ["before_evidence_matrix_admission", "before_release"]},
+  "default_effect": "escalate",
+  "escalation": "evaluation_owner",
+  "nist_ai_rmf": ["MAP 2.3", "MEASURE 2.8", "MANAGE 4.1"],
+  "thresholds": {
+    "minimum_families": 5,
+    "owner_hhi_maximum": 0.4,
+    "maximum_family_share": 0.6,
+    "unknown_metadata_maximum": 0.1,
+    "composite_minimum": 0.5,
+    "counterposition_recall_strictly_positive": true
+  },
+  "rules": [
+    {"id": "canonical-families", "when": {"source_families": {"canonicalized": true, "claim_exposure_measured": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Diversity is measured on canonical families and claim exposure, not raw URL count."}},
+    {"id": "unknown-is-not-coverage", "when": {"metadata": {"unknown_excluded_from_coverage": true, "inferred_excluded_from_coverage": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Unknown and inferred metadata cannot satisfy diversity coverage."}},
+    {"id": "counterpositions-required", "when": {"counterposition_recall": {"greater_than": 0}}, "effect": "continue", "else": {"effect": "deny", "reason": "Concealed counterposition coverage blocks release."}},
+    {"id": "bounded-exception", "when": {"exception": {"evidence": true, "sdl": true, "scope": true, "dimension": true, "expiry": true, "limitation": true}}, "effect": "escalate", "reason": "A narrow diversity exception requires explicit disclosure and expiry."}
+  ]
+}

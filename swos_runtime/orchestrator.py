@@ -14,6 +14,7 @@ from typing import Any, Callable
 
 from .broker import CapabilityBroker, CapabilityBrokerError
 from .capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
+from .discipline_ontology import DisciplineOntologyRegistry, bind_research_plan
 from .finalizer import finalize_work_order_run
 from .governance import detect_prompt_injection, exact_quote_supported
 from .models import ResearchRequest, RunOutcome, SourceRecord
@@ -214,6 +215,7 @@ class AutonomousSWOS:
         stage_provider: Any | None = None,
         retriever: Any | None = None,
         prose_transform: Callable[[str, ResearchRequest], tuple[str, dict[str, Any]]] | None = None,
+        ontology_registry: DisciplineOntologyRegistry | None = None,
     ) -> None:
         if broker is None:
             if stage_provider is None or retriever is None:
@@ -231,6 +233,7 @@ class AutonomousSWOS:
                 adapter_manifest=adapter_manifest,
             )
         self.broker = broker
+        self.ontology_registry = ontology_registry
         self.adapter_manifest = dict(
             adapter_manifest or broker.adapter_manifest or _injected_manifest(broker)
         )
@@ -248,6 +251,13 @@ class AutonomousSWOS:
 
     def _submit(self, run: WorkOrderRun, payload: dict[str, Any], stage: str) -> None:
         result = dict(payload)
+        if stage == "research_planning" and self.ontology_registry is not None:
+            discipline = result.get("discipline") or run.state.get("request", {}).get("discipline")
+            if discipline:
+                result = bind_research_plan(
+                    result,
+                    self.ontology_registry.profile(str(discipline)),
+                )
         result["provenance"] = self._provenance(stage)
         run.submit(result)
 

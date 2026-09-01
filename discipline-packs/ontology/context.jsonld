@@ -1,0 +1,9 @@
+{
+  "@context": {
+    "swos": "https://swos.example.org/ontology/discipline/",
+    "discipline": "swos:Discipline",
+    "method": "swos:Method",
+    "criterion": "swos:Criterion",
+    "requiresCriterion": {"@id": "swos:requiresCriterion", "@type": "@id"}
+  }
+}

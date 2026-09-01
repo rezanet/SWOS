@@ -1,0 +1,15 @@
+{
+  "policy_id": "swos.rpm-exchange",
+  "version": "2.0.0",
+  "gate_type": "rpm_exchange",
+  "trigger": {"on": ["before_export", "before_import_inspection", "before_import_commit"]},
+  "default_effect": "deny",
+  "escalation": "research_memory_owner",
+  "nist_ai_rmf": ["GOVERN 1.3", "MAP 2.3", "MEASURE 2.8", "MANAGE 4.1"],
+  "rules": [
+    {"id": "bounded-bundle", "when": {"bundle": {"required": ["manifest.json", "events.ndjson", "payloads", "provenance", "decisions", "checksums", "limitations"]}}, "effect": "continue", "else": {"effect": "deny", "reason": "RPM exchange has a bounded, inspectable bundle shape."}},
+    {"id": "safe-paths", "when": {"paths": {"no_absolute": true, "no_traversal": true, "no_links_devices": true, "no_duplicates": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Unsafe archive members are rejected before extraction."}},
+    {"id": "checksums-and-chain", "when": {"integrity": {"checksums_valid": true, "event_chain_valid": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Import requires valid checksums and an unbroken event chain."}},
+    {"id": "inspect-before-write", "when": {"import": {"inspected": true, "inspection_digest_recorded": true, "approval_matches": true}}, "effect": "continue", "else": {"effect": "deny", "reason": "Inspection is read-only and must precede exact-digest commit."}}
+  ]
+}

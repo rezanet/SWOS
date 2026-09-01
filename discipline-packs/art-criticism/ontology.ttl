@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/art_criticism> a swos:Discipline ; skos:prefLabel "art criticism" .
+<https://swos.example.org/discipline/art_criticism> swos:usesMethod <https://swos.example.org/method/critical-description> .
+<https://swos.example.org/discipline/art_criticism> swos:requiresCriterion <https://swos.example.org/criterion/art-criticism/description> .
+<https://swos.example.org/discipline/art_criticism> swos:requiresCriterion <https://swos.example.org/criterion/art-criticism/judgement> .
+<https://swos.example.org/discipline/art_criticism> swos:requiresCriterion <https://swos.example.org/criterion/art-criticism/frame> .
+<https://swos.example.org/discipline/art_criticism> swos:requiresCriterion <https://swos.example.org/criterion/art-criticism/reception> .
+<https://swos.example.org/discipline/art_criticism> swos:requiresCriterion <https://swos.example.org/criterion/art-criticism/positionality> .
+<https://swos.example.org/criterion/art-criticism/description> a swos:Criterion ; skos:prefLabel "sensory description" .
+<https://swos.example.org/criterion/art-criticism/judgement> a swos:Criterion ; skos:prefLabel "judgement anchored to features" .
+<https://swos.example.org/criterion/art-criticism/frame> a swos:Criterion ; skos:prefLabel "cultural framing" .
+<https://swos.example.org/criterion/art-criticism/reception> a swos:Criterion ; skos:prefLabel "reception and counter-reading" .
+<https://swos.example.org/criterion/art-criticism/positionality> a swos:Criterion ; skos:prefLabel "critical positionality" .

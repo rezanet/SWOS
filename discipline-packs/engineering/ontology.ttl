@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/engineering> a swos:Discipline ; skos:prefLabel "engineering" .
+<https://swos.example.org/discipline/engineering> swos:usesMethod <https://swos.example.org/method/tradeoff-analysis> .
+<https://swos.example.org/discipline/engineering> swos:requiresCriterion <https://swos.example.org/criterion/engineering/requirements> .
+<https://swos.example.org/discipline/engineering> swos:requiresCriterion <https://swos.example.org/criterion/engineering/assumptions> .
+<https://swos.example.org/discipline/engineering> swos:requiresCriterion <https://swos.example.org/criterion/engineering/alternatives> .
+<https://swos.example.org/discipline/engineering> swos:requiresCriterion <https://swos.example.org/criterion/engineering/failure-modes> .
+<https://swos.example.org/discipline/engineering> swos:requiresCriterion <https://swos.example.org/criterion/engineering/reversibility> .
+<https://swos.example.org/criterion/engineering/requirements> a swos:Criterion ; skos:prefLabel "requirements and constraints" .
+<https://swos.example.org/criterion/engineering/assumptions> a swos:Criterion ; skos:prefLabel "explicit assumptions" .
+<https://swos.example.org/criterion/engineering/alternatives> a swos:Criterion ; skos:prefLabel "alternatives compared" .
+<https://swos.example.org/criterion/engineering/failure-modes> a swos:Criterion ; skos:prefLabel "failure modes and mitigations" .
+<https://swos.example.org/criterion/engineering/reversibility> a swos:Criterion ; skos:prefLabel "decision reversibility" .

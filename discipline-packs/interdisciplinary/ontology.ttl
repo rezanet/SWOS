@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/interdisciplinary> a swos:Discipline ; skos:prefLabel "interdisciplinary" .
+<https://swos.example.org/discipline/interdisciplinary> swos:usesMethod <https://swos.example.org/method/boundary-translation> .
+<https://swos.example.org/discipline/interdisciplinary> swos:requiresCriterion <https://swos.example.org/criterion/interdisciplinary/standards> .
+<https://swos.example.org/discipline/interdisciplinary> swos:requiresCriterion <https://swos.example.org/criterion/interdisciplinary/terms> .
+<https://swos.example.org/discipline/interdisciplinary> swos:requiresCriterion <https://swos.example.org/criterion/interdisciplinary/transfer> .
+<https://swos.example.org/discipline/interdisciplinary> swos:requiresCriterion <https://swos.example.org/criterion/interdisciplinary/synthesis> .
+<https://swos.example.org/discipline/interdisciplinary> swos:requiresCriterion <https://swos.example.org/criterion/interdisciplinary/prior-art> .
+<https://swos.example.org/criterion/interdisciplinary/standards> a swos:Criterion ; skos:prefLabel "per-discipline standards" .
+<https://swos.example.org/criterion/interdisciplinary/terms> a swos:Criterion ; skos:prefLabel "terminology disambiguation" .
+<https://swos.example.org/criterion/interdisciplinary/transfer> a swos:Criterion ; skos:prefLabel "method transfer justification" .
+<https://swos.example.org/criterion/interdisciplinary/synthesis> a swos:Criterion ; skos:prefLabel "synthesis link" .
+<https://swos.example.org/criterion/interdisciplinary/prior-art> a swos:Criterion ; skos:prefLabel "prior-art check" .

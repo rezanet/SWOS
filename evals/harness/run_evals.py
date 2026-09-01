@@ -12,6 +12,7 @@ import sys
 import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any, Protocol
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
@@ -39,6 +40,44 @@ FIXTURE_DIRS = {
     "governance": ["governance"],
     "regression": ["regression"],
 }
+
+
+class ProductionEvaluationInterface(Protocol):
+    """Minimal adapter boundary used by Research Grade fixture evaluation."""
+
+    def evaluate(self, case: dict[str, Any]) -> dict[str, Any]:
+        """Evaluate one case without reading fixture expectations."""
+
+
+def evaluate_research_grade(
+    cases: list[dict[str, Any]], *, classifier: ProductionEvaluationInterface
+) -> dict[str, Any]:
+    """Evaluate cases through an injected production interface.
+
+    This adapter intentionally does not inspect fixture names or expected
+    labels.  The supplied interface owns classification/evaluation; the
+    harness records its returned evidence for later scoring and gating.
+    """
+
+    if classifier is None or not (
+        callable(getattr(classifier, "evaluate", None))
+        or callable(getattr(classifier, "classify", None))
+    ):
+        raise ValueError("a production evaluation interface is required")
+    if not isinstance(cases, list):
+        raise ValueError("evaluation cases must be a list")
+    evaluated = []
+    for case in cases:
+        if not isinstance(case, dict) or not case.get("case_id"):
+            raise ValueError("each evaluation case requires case_id")
+        if callable(getattr(classifier, "evaluate", None)):
+            result = classifier.evaluate(case)
+        else:
+            result = classifier.classify(case)
+        if not isinstance(result, dict):
+            raise ValueError("production evaluation interface must return an object")
+        evaluated.append(result)
+    return {"cases": evaluated, "count": len(evaluated), "interface": type(classifier).__name__}
 
 
 def load_fixtures(plane):

@@ -17,6 +17,15 @@ dependencies = [
 
 [project.optional-dependencies]
 retrieval = ["sentence-transformers>=5.0.0,<6"]
+ontology = ["rdflib==7.6.0", "pyshacl==0.40.1"]
+training = ["sentence-transformers==6.0.1"]
+prov = ["prov==3.1.0"]
+research-grade = [
+    "rdflib==7.6.0",
+    "pyshacl==0.40.1",
+    "sentence-transformers==6.0.1",
+    "prov==3.1.0",
+]
 
 [project.scripts]
 swos-prose = "swos_prose.cli:main"

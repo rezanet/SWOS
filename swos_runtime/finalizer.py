@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from .capabilities import CAPABILITY_CONTRACTS
+from .discipline_ontology import bind_evidence_matrix
 from .governance import (
     IntegrityChain,
     body_word_count,
@@ -582,6 +583,7 @@ def _build_epg(
     sources: list[SourceRecord],
     evidence_matrix: dict[str, Any],
     argument_graph: dict[str, Any],
+    ontology_binding: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     entities: list[dict[str, Any]] = []
     relations: list[dict[str, Any]] = []
@@ -663,6 +665,8 @@ def _build_epg(
         if isinstance(payload.get("judgement_evidence"), dict):
             parameters["judgement_type"] = payload["judgement_evidence"].get("judgement_type")
             parameters["judgement_authority"] = payload["judgement_evidence"].get("authority")
+        if ontology_binding:
+            parameters["ontology_binding"] = dict(ontology_binding)
         activities.append(
             {
                 "activity_id": swos_id("prov"),
@@ -713,6 +717,12 @@ def _build_sdl(
 ) -> dict[str, Any]:
     plan = run._latest("research_planning") or {}
     scope = str(plan.get("scope") or "governed scope")
+    ontology_binding = run.state.get("ontology_binding")
+    ontology_criteria = (
+        [f"ontology:{ontology_binding.get('ontology_digest')}"]
+        if isinstance(ontology_binding, dict) and ontology_binding.get("ontology_digest")
+        else []
+    )
     return {
         "schema_version": "1.0.0",
         "work_id": work_id,
@@ -731,7 +741,7 @@ def _build_sdl(
                 ],
                 "selected_option": scope,
                 "rationale": "SWOS accepted the research-planning stage and records its scope explicitly.",
-                "criteria_applied": ["swos.research-planning.v1"],
+                "criteria_applied": ["swos.research-planning.v1", *ontology_criteria],
                 "evidence_refs": [],
                 "counter_evidence_refs": [],
                 "argument_refs": [],
@@ -778,7 +788,24 @@ def _build_sdl(
     }
 
 
-def _rpm_snapshot() -> dict[str, Any]:
+def _rpm_snapshot(rpm_service: Any | None = None, scope: Any | None = None) -> dict[str, Any]:
+    if rpm_service is not None or scope is not None:
+        if rpm_service is None or scope is None:
+            raise WorkOrderError("RPM snapshot requires both service and explicit scope")
+        from .research_memory import MemoryQuery
+
+        result = rpm_service.query(
+            scope,
+            MemoryQuery(),
+            rpm_service.normal_read_policy(),
+        )
+        return {
+            "schema_version": "2.0.0",
+            "scope": scope.to_dict(),
+            "items": result.items,
+            "read_receipt": result.receipt.to_dict(),
+            "authority": "scoped_research_memory_service",
+        }
     return {
         "schema_version": "1.0.0",
         "programme_id": "work-00000000-0000-0000-0000-000000000001",
@@ -938,6 +965,15 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
     )
     blockers.extend(evidence_blockers)
     _write_json(output / "evidence-matrix.json", matrix)
+    ontology_binding = run.state.get("ontology_binding")
+    if isinstance(ontology_binding, dict) and ontology_binding.get("discipline_iri"):
+        _write_json(
+            output / "research-grade-evidence-matrix.json",
+            {
+                **matrix,
+                "ontology_binding": dict(ontology_binding),
+            },
+        )
     _write_json(output / "evidence-rejections.json", rejected)
     evidence_source_ids = {item["source_id"] for item in evidence_internal}
     if _legal_topic(str(request.get("topic") or "")) and not any(
@@ -1023,6 +1059,30 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
     _write_json(output / "references.json", references)
 
     plan = run._latest("research_planning") or {}
+    if isinstance(ontology_binding, dict) and ontology_binding.get("discipline"):
+        plan = {
+            **plan,
+            "ontology_binding": dict(ontology_binding),
+        }
+    if isinstance(ontology_binding, dict) and ontology_binding.get("discipline_iri"):
+        # The v1 Evidence Matrix remains byte-compatible; the v2-bound copy is
+        # retained as a separate artifact for the Research Grade evaluator.
+        try:
+            profile_like = type(
+                "_Profile",
+                (),
+                {
+                    "discipline": ontology_binding.get("discipline"),
+                    "discipline_iri": ontology_binding.get("discipline_iri"),
+                    "ontology_digest": ontology_binding.get("ontology_digest", ""),
+                    "required_criteria": tuple(
+                        {"iri": item} for item in ontology_binding.get("criterion_iris", [])
+                    ),
+                },
+            )()
+            _write_json(output / "research-grade-evidence-matrix.json", bind_evidence_matrix(matrix, profile_like))
+        except (TypeError, ValueError):
+            blockers.append("Research Grade ontology binding could not be applied to the Evidence Matrix.")
     _write_json(output / "research-plan.json", plan)
     security_events = [
         {
@@ -1071,6 +1131,7 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             sources=sources,
             evidence_matrix=matrix,
             argument_graph=argument_graph,
+            ontology_binding=ontology_binding if isinstance(ontology_binding, dict) else None,
         ),
     )
     _write_json(
@@ -1082,7 +1143,9 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             [row["claim_id"] for row in matrix["rows"]],
         ),
     )
-    _write_json(output / "rpm.json", _rpm_snapshot())
+    rpm_service = getattr(run, "rpm_service", None)
+    rpm_scope = getattr(run, "rpm_scope", None)
+    _write_json(output / "rpm.json", _rpm_snapshot(rpm_service, rpm_scope))
     _write_json(output / "scholarly-state.json", _scholarly_state(work_id, provisional_status, run))
 
     schema_errors = validate_frozen_run_schemas(output)
@@ -1099,6 +1162,7 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
                 sources=sources,
                 evidence_matrix=matrix,
                 argument_graph=argument_graph,
+                ontology_binding=ontology_binding if isinstance(ontology_binding, dict) else None,
             ),
         )
         _write_json(

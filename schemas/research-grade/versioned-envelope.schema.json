@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/versioned-envelope.schema.json",
+  "x-swos-version": "2.0.0",
+  "title": "SWOS Research Grade versioned envelope",
+  "description": "Common explicit version envelope for parallel Research Grade artifacts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "payload"],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "profile": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "artifact_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "payload": {
+      "type": "object"
+    }
+  }
+}

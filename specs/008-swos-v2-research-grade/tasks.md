@@ -13,15 +13,15 @@ then-current head; it is not a merge claim.
 
 **Purpose**: establish the governed base and parallel v2 namespace before behavior changes.
 
-- [ ] T001 Record frozen v1.0 schema, contract, fixture, and v1.1 behavior digests in `tests/fixtures/research-grade/v1-compatibility-manifest.json`
-- [ ] T002 [P] Add negative tests proving v1 `$id` semantics cannot be silently changed in `tests/runtime/test_research_grade_compatibility.py`
-- [ ] T003 [P] Add v2 schema identifier and version-dispatch contract tests in `tests/runtime/test_research_grade_schemas.py`
-- [ ] T004 Add explicit v1/v2 version routing with unknown-version denial in `swos_runtime/models.py`
-- [ ] T005 Create parallel Research Grade schema envelopes and implement their executable example validator in `tools/validate_contract_examples.py`; make `tools/validate_schemas.py` discover the v2 schema directory
-- [ ] T006 [P] Add `capabilities-v2.json` without editing v1 capability semantics in `contracts/capability-contract/capabilities-v2.json`
-- [ ] T007 [P] Add `stage-instructions-v2.json` without editing v1 stage semantics in `contracts/stage-instruction/stage-instructions-v2.json`
-- [ ] T008 Add byte/behavior compatibility and example validation to `.github/workflows/research-grade-ci.yml`
-- [ ] T009 Run the compatibility suite and record base results in `artifacts/research-grade/compatibility-baseline.json`
+- [x] T001 Record frozen v1.0 schema, contract, fixture, and v1.1 behavior digests in `tests/fixtures/research-grade/v1-compatibility-manifest.json`
+- [x] T002 [P] Add negative tests proving v1 `$id` semantics cannot be silently changed in `tests/runtime/test_research_grade_compatibility.py`
+- [x] T003 [P] Add v2 schema identifier and version-dispatch contract tests in `tests/runtime/test_research_grade_schemas.py`
+- [x] T004 Add explicit v1/v2 version routing with unknown-version denial in `swos_runtime/models.py`
+- [x] T005 Create parallel Research Grade schema envelopes and implement their executable example validator in `tools/validate_contract_examples.py`; make `tools/validate_schemas.py` discover the v2 schema directory
+- [x] T006 [P] Add `capabilities-v2.json` without editing v1 capability semantics in `contracts/capability-contract/capabilities-v2.json`
+- [x] T007 [P] Add `stage-instructions-v2.json` without editing v1 stage semantics in `contracts/stage-instruction/stage-instructions-v2.json`
+- [x] T008 Add byte/behavior compatibility and example validation to `.github/workflows/research-grade-ci.yml`
+- [x] T009 Run the compatibility suite and record base results in `artifacts/research-grade/compatibility-baseline.json`
 
 **Checkpoint**: existing v1.0/v1.1 behavior is green and new version dispatch fails closed.
 
@@ -29,17 +29,17 @@ then-current head; it is not a merge claim.
 
 **Purpose**: shared types, policies, resource bounds, deterministic adapters, and audit evidence that block every story.
 
-- [ ] T010 [P] Write canonical JSON, digest, identifier, timestamp, and resource-limit tests in `tests/runtime/test_research_grade_foundations.py`
-- [ ] T011 [P] Write audit-pack missing/extra/tampered/head-mismatch tests in `tests/runtime/test_research_grade_audit_pack.py`
-- [ ] T012 [P] Write tests proving fixture evaluators invoke injected production interfaces in `tests/runtime/test_research_grade_evaluation.py`
-- [ ] T013 Implement shared canonicalization, typed status/error codes, and resource-limit models in `swos_runtime/models.py`
-- [ ] T014 [P] Add authoritative v2 RPM operation, RPM exchange, source diversity, media rights, and promotion policies in `governance/policies/research-programme-memory-v2.policy.json`, `governance/policies/rpm-exchange.policy.json`, `governance/policies/source-diversity.policy.json`, `governance/policies/media-rights.policy.json`, and `governance/policies/research-grade-promotion.policy.json`; document the frozen v1 memory-policy relationship
-- [ ] T015 Add exact artifact identities to the evaluation subject in `swos_runtime/evaluation.py`
-- [ ] T016 Add Research Grade audit-pack schema and example in `schemas/research-grade/research-grade-audit-pack.schema.json` and `examples/research-grade/audit-pack.json`
-- [ ] T017 Implement audit-pack assembly and strict verification in `tools/assemble_research_grade_audit_pack.py`
-- [ ] T018 Remove fixture-name/expected-label pass shortcuts and add production adapters in `evals/harness/run_evals.py`
-- [ ] T019 Add optional ontology, training, and PROV dependency groups with licences and hashes in `config/research-grade-dependencies.md`; update `pyproject.toml` and `requirements-dev.lock` from that manifest
-- [ ] T020 Verify ordinary CI performs no model download, network request, credential read, or paid call in `tests/runtime/test_research_grade_offline.py`
+- [x] T010 [P] Write canonical JSON, digest, identifier, timestamp, and resource-limit tests in `tests/runtime/test_research_grade_foundations.py`
+- [x] T011 [P] Write audit-pack missing/extra/tampered/head-mismatch tests in `tests/runtime/test_research_grade_audit_pack.py`
+- [x] T012 [P] Write tests proving fixture evaluators invoke injected production interfaces in `tests/runtime/test_research_grade_evaluation.py`
+- [x] T013 Implement shared canonicalization, typed status/error codes, and resource-limit models in `swos_runtime/models.py`
+- [x] T014 [P] Add authoritative v2 RPM operation, RPM exchange, source diversity, media rights, and promotion policies in `governance/policies/research-programme-memory-v2.policy.json`, `governance/policies/rpm-exchange.policy.json`, `governance/policies/source-diversity.policy.json`, `governance/policies/media-rights.policy.json`, and `governance/policies/research-grade-promotion.policy.json`; document the frozen v1 memory-policy relationship
+- [x] T015 Add exact artifact identities to the evaluation subject in `swos_runtime/evaluation.py`
+- [x] T016 Add Research Grade audit-pack schema and example in `schemas/research-grade/research-grade-audit-pack.schema.json` and `examples/research-grade/audit-pack.json`
+- [x] T017 Implement audit-pack assembly and strict verification in `tools/assemble_research_grade_audit_pack.py`
+- [x] T018 Remove fixture-name/expected-label pass shortcuts and add production adapters in `evals/harness/run_evals.py`
+- [x] T019 Add optional ontology, training, and PROV dependency groups with licences and hashes in `config/research-grade-dependencies.md`; update `pyproject.toml` and `requirements-dev.lock` from that manifest
+- [x] T020 Verify ordinary CI performs no model download, network request, credential read, or paid call in `tests/runtime/test_research_grade_offline.py`
 
 **Checkpoint**: shared foundations, policies, and audit verifier are green; all existing suites remain green.
 
@@ -53,31 +53,31 @@ and prove a different scope cannot observe or influence them.
 
 ### US1 tests first
 
-- [ ] T021 [P] [US1] Add schema/contract tests for scope, project binding, authoritative policy version/digest, RPM v2, lifecycle, exchange, inspection, and read receipt in `tests/runtime/test_research_memory_contracts.py`
-- [ ] T022 [P] [US1] Add repository migration, transaction, chain, projection, corruption, and rebuild tests in `tests/runtime/test_programme_store.py`
-- [ ] T023 [P] [US1] Add missing/unregistered/cross-namespace/cross-programme/project-visibility isolation tests in `tests/runtime/test_research_memory_isolation.py`
-- [ ] T024 [P] [US1] Add EPG/SDL resolution, operation-hash approval, stale-policy, expired-assessment, restricted-data, and commit-time TOCTOU tests for every binding/write/correct/supersede/contradiction/expiry/delete/exception transition in `tests/runtime/test_research_memory_writes.py`
-- [ ] T025 [P] [US1] Add correction, supersession, contradiction, confirmation, exact-expiry, project retirement/unbinding, exceptional-read, and deletion tests in `tests/runtime/test_research_memory_lifecycle.py`
-- [ ] T026 [P] [US1] Add idempotence, collision, mapping, checksum, redaction, zip-slip, link, duplicate-path, and decompression-limit tests in `tests/runtime/test_rpm_exchange.py`
-- [ ] T027 [P] [US1] Add 8-process/2,000-write, lock-timeout, crash-injection, and all-or-nothing tests in `tests/runtime/test_programme_store_concurrency.py`
+- [x] T021 [P] [US1] Add schema/contract tests for scope, project binding, authoritative policy version/digest, RPM v2, lifecycle, exchange, inspection, and read receipt in `tests/runtime/test_research_memory_contracts.py`
+- [x] T022 [P] [US1] Add repository migration, transaction, chain, projection, corruption, and rebuild tests in `tests/runtime/test_programme_store.py`
+- [x] T023 [P] [US1] Add missing/unregistered/cross-namespace/cross-programme/project-visibility isolation tests in `tests/runtime/test_research_memory_isolation.py`
+- [x] T024 [P] [US1] Add EPG/SDL resolution, operation-hash approval, stale-policy, expired-assessment, restricted-data, and commit-time TOCTOU tests for every binding/write/correct/supersede/contradiction/expiry/delete/exception transition in `tests/runtime/test_research_memory_writes.py`
+- [x] T025 [P] [US1] Add correction, supersession, contradiction, confirmation, exact-expiry, project retirement/unbinding, exceptional-read, and deletion tests in `tests/runtime/test_research_memory_lifecycle.py`
+- [x] T026 [P] [US1] Add idempotence, collision, mapping, checksum, redaction, zip-slip, link, duplicate-path, and decompression-limit tests in `tests/runtime/test_rpm_exchange.py`
+- [x] T027 [P] [US1] Add 8-process/2,000-write, lock-timeout, crash-injection, and all-or-nothing tests in `tests/runtime/test_programme_store_concurrency.py`
 
 ### US1 implementation
 
-- [ ] T028 [P] [US1] Define `ResearchScope`, bindings, candidates, assessments, events, projections, reads, and approvals in `swos_runtime/research_memory.py`
-- [ ] T029 [P] [US1] Add project-scope, RPM operation/policy, lifecycle, exchange, and receipt schemas in `schemas/research-grade/project-scope.schema.json`, `schemas/research-grade/rpm-policy.schema.json`, `schemas/research-grade/rpm-2.0.schema.json`, and `schemas/research-grade/rpm-exchange.schema.json`
-- [ ] T030 [US1] Implement SQLite initialization, migrations, preflight, per-programme chain, transactions, integrity checks, and projection rebuild in `swos_runtime/programme_store.py`
-- [ ] T031 [US1] Implement explicit project registration and visibility enforcement in `swos_runtime/research_memory.py`
-- [ ] T032 [US1] Implement one propose/assess/approve/commit service for project binding, write, correction, supersession, contradiction, expiry, deletion, and exceptional-read operations with exact EPG, SDL, policy, target-head, `as_of`, classification, rights, and expiry revalidation in `swos_runtime/research_memory.py`
-- [ ] T033 [US1] Implement classification/expiry-aware governed queries and EPG read receipts in `swos_runtime/research_memory.py`
-- [ ] T034 [US1] Implement immutable confirmation, correction, supersession, contradiction, expiry, project retirement/unbinding, and logical-deletion transitions exclusively through the assessed operation service in `swos_runtime/research_memory.py`
-- [ ] T035 [US1] Implement bounded export, inspect-import, atomic commit, redaction, origin preservation, and deterministic diff in `swos_runtime/rpm_exchange.py`
-- [ ] T036 [US1] Add v1 `GovernedJsonStore` compatibility import/export adapters without changing v1 behavior in `swos_runtime/stores.py`
-- [ ] T037 [US1] Replace the hard-coded empty RPM snapshot with scoped service integration in `swos_runtime/finalizer.py`
-- [ ] T038 [US1] Bind work-order RPM reads/writes/exchange to exact run and EPG evidence in `swos_runtime/work_orders.py`
-- [ ] T039 [US1] Implement dry-run-first init/register/assess-operation/commit-operation/verify/expire/export/inspect-import/commit-import/rebuild commands with explicit `--approval` inputs wherever required in `tools/rpm.py`
-- [ ] T040 [US1] Add deterministic three-project snapshot/delta/duplicate/fork/collision/contradiction/expiry/correction/retirement/replay fixtures in `evals/fixtures/research-memory/`
-- [ ] T041 [US1] Add 100k-item benchmark generator/runner and recorded runner schema in `benchmark/rpm/manifest.json` and `tools/run_rpm_benchmark.py`
-- [ ] T042 [US1] Document logical namespace, SQLite filesystem, logical deletion, backup, and recovery limitations in `docs/architecture/research-grade-memory.md`
+- [x] T028 [P] [US1] Define `ResearchScope`, bindings, candidates, assessments, events, projections, reads, and approvals in `swos_runtime/research_memory.py`
+- [x] T029 [P] [US1] Add project-scope, RPM operation/policy, lifecycle, exchange, and receipt schemas in `schemas/research-grade/project-scope.schema.json`, `schemas/research-grade/rpm-policy.schema.json`, `schemas/research-grade/rpm-2.0.schema.json`, and `schemas/research-grade/rpm-exchange.schema.json`
+- [x] T030 [US1] Implement SQLite initialization, migrations, preflight, per-programme chain, transactions, integrity checks, and projection rebuild in `swos_runtime/programme_store.py`
+- [x] T031 [US1] Implement explicit project registration and visibility enforcement in `swos_runtime/research_memory.py`
+- [x] T032 [US1] Implement one propose/assess/approve/commit service for project binding, write, correction, supersession, contradiction, expiry, deletion, and exceptional-read operations with exact EPG, SDL, policy, target-head, `as_of`, classification, rights, and expiry revalidation in `swos_runtime/research_memory.py`
+- [x] T033 [US1] Implement classification/expiry-aware governed queries and EPG read receipts in `swos_runtime/research_memory.py`
+- [x] T034 [US1] Implement immutable confirmation, correction, supersession, contradiction, expiry, project retirement/unbinding, and logical-deletion transitions exclusively through the assessed operation service in `swos_runtime/research_memory.py`
+- [x] T035 [US1] Implement bounded export, inspect-import, atomic commit, redaction, origin preservation, and deterministic diff in `swos_runtime/rpm_exchange.py`
+- [x] T036 [US1] Add v1 `GovernedJsonStore` compatibility import/export adapters without changing v1 behavior in `swos_runtime/stores.py`
+- [x] T037 [US1] Replace the hard-coded empty RPM snapshot with scoped service integration in `swos_runtime/finalizer.py`
+- [x] T038 [US1] Bind work-order RPM reads/writes/exchange to exact run and EPG evidence in `swos_runtime/work_orders.py`
+- [x] T039 [US1] Implement dry-run-first init/register/assess-operation/commit-operation/verify/expire/export/inspect-import/commit-import/rebuild commands with explicit `--approval` inputs wherever required in `tools/rpm.py`
+- [x] T040 [US1] Add deterministic three-project snapshot/delta/duplicate/fork/collision/contradiction/expiry/correction/retirement/replay fixtures in `evals/fixtures/research-memory/`
+- [x] T041 [US1] Add 100k-item benchmark generator/runner and recorded runner schema in `benchmark/rpm/manifest.json` and `tools/run_rpm_benchmark.py`
+- [x] T042 [US1] Document logical namespace, SQLite filesystem, logical deletion, backup, and recovery limitations in `docs/architecture/research-grade-memory.md`
 
 **Checkpoint**: SC-001 and RPM safety/benchmark gates pass; no public unscoped API exists.
 
@@ -91,24 +91,24 @@ for every pack with disagreement preserved.
 
 ### US2 tests first
 
-- [ ] T043 [P] [US2] Add SHACL, graph-isomorphism, stable-IRI, duplicate, dangling, cycle, weight, enum/pack coverage, v1 warning-window, v2 rejection, reversible migration, and rollback tests in `tests/runtime/test_discipline_ontology.py`
-- [ ] T044 [P] [US2] Add deterministic compile, digest, unknown-version, deprecation, and no-fallback tests in `tests/runtime/test_discipline_ontology_compiler.py`
-- [ ] T045 [P] [US2] Add structured criterion, mandatory failure, disagreement, evidence-link, and aggregation tests in `tests/runtime/test_discipline_critique.py`
-- [ ] T046 [P] [US2] Add positive, negative, boundary, and cross-discipline fixture contract tests for every pack in `tests/runtime/test_discipline_critique_fixtures.py`
+- [x] T043 [P] [US2] Add SHACL, graph-isomorphism, stable-IRI, duplicate, dangling, cycle, weight, enum/pack coverage, v1 warning-window, v2 rejection, reversible migration, and rollback tests in `tests/runtime/test_discipline_ontology.py`
+- [x] T044 [P] [US2] Add deterministic compile, digest, unknown-version, deprecation, and no-fallback tests in `tests/runtime/test_discipline_ontology_compiler.py`
+- [x] T045 [P] [US2] Add structured criterion, mandatory failure, disagreement, evidence-link, and aggregation tests in `tests/runtime/test_discipline_critique.py`
+- [x] T046 [P] [US2] Add positive, negative, boundary, and cross-discipline fixture contract tests for every pack in `tests/runtime/test_discipline_critique_fixtures.py`
 
 ### US2 implementation
 
-- [ ] T047 [P] [US2] Author core SKOS/OWL vocabulary, SHACL shapes, and JSON-LD context in `discipline-packs/ontology/swos-discipline-ontology.ttl`, `discipline-packs/ontology/swos-discipline-shapes.ttl`, and `discipline-packs/ontology/context.jsonld`
-- [ ] T048 [US2] Author the narrowed-enum ADR, reversible migration, and one-minor-release deprecation-warning period in `adr/ADR-0012-research-grade-discipline-profile.md` and `tools/migrations/migrate_discipline_profile_v2.py`; map nine supported disciplines exactly once while frozen v1 retains `enterprise_reporting` and v2 rejects it without fallback in `discipline-packs/manifest-v2.json`
-- [ ] T049 [P] [US2] Author versioned method/evidence/proof/criterion/failure/source-role/diversity mappings in each `discipline-packs/<pack>/ontology.ttl`
-- [ ] T050 [US2] Implement offline registry loading, version/deprecation checks, and compiled profile lookup in `swos_runtime/discipline_ontology.py`
-- [ ] T051 [US2] Implement validated Turtle-to-JSON-LD-to-byte-stable-JSON compilation with source/shape/tool digests in `tools/compile_discipline_ontologies.py`
-- [ ] T052 [US2] Bind research plan, Evidence Matrix rows, and evaluation subject to discipline/method/criterion IRIs and ontology digests in `swos_runtime/orchestrator.py`, `swos_runtime/finalizer.py`, and `swos_runtime/evaluation.py`
-- [ ] T053 [US2] Implement criterion-level discipline critique and disagreement-preserving aggregation in `swos_runtime/discipline_critique.py`
-- [ ] T054 [US2] Wire critique through broker, finalizer, EPG, and SDL without allowing provider-owned admission in `swos_runtime/broker.py` and `swos_runtime/finalizer.py`
-- [ ] T055 [P] [US2] Create reviewed fixtures and adjudication records for all supported packs, including art criticism, in `evals/fixtures/discipline-critique/`
-- [ ] T056 [US2] Add ontology and critique production-path scoring to `swos_runtime/evaluation.py` and `evals/metrics.md`
-- [ ] T057 [US2] Document compatibility, external mappings, deprecation, and pack-authoring rules in `discipline-packs/README.md`
+- [x] T047 [P] [US2] Author core SKOS/OWL vocabulary, SHACL shapes, and JSON-LD context in `discipline-packs/ontology/swos-discipline-ontology.ttl`, `discipline-packs/ontology/swos-discipline-shapes.ttl`, and `discipline-packs/ontology/context.jsonld`
+- [x] T048 [US2] Author the narrowed-enum ADR, reversible migration, and one-minor-release deprecation-warning period in `adr/ADR-0012-research-grade-discipline-profile.md` and `tools/migrations/migrate_discipline_profile_v2.py`; map nine supported disciplines exactly once while frozen v1 retains `enterprise_reporting` and v2 rejects it without fallback in `discipline-packs/manifest-v2.json`
+- [x] T049 [P] [US2] Author versioned method/evidence/proof/criterion/failure/source-role/diversity mappings in each `discipline-packs/<pack>/ontology.ttl`
+- [x] T050 [US2] Implement offline registry loading, version/deprecation checks, and compiled profile lookup in `swos_runtime/discipline_ontology.py`
+- [x] T051 [US2] Implement validated Turtle-to-JSON-LD-to-byte-stable-JSON compilation with source/shape/tool digests in `tools/compile_discipline_ontologies.py`
+- [x] T052 [US2] Bind research plan, Evidence Matrix rows, and evaluation subject to discipline/method/criterion IRIs and ontology digests in `swos_runtime/orchestrator.py`, `swos_runtime/finalizer.py`, and `swos_runtime/evaluation.py`
+- [x] T053 [US2] Implement criterion-level discipline critique and disagreement-preserving aggregation in `swos_runtime/discipline_critique.py`
+- [x] T054 [US2] Wire critique through broker, finalizer, EPG, and SDL without allowing provider-owned admission in `swos_runtime/broker.py` and `swos_runtime/finalizer.py`
+- [x] T055 [P] [US2] Create reviewed fixtures and adjudication records for all supported packs, including art criticism, in `evals/fixtures/discipline-critique/`
+- [x] T056 [US2] Add ontology and critique production-path scoring to `swos_runtime/evaluation.py` and `evals/metrics.md`
+- [x] T057 [US2] Document compatibility, external mappings, deprecation, and pack-authoring rules in `discipline-packs/README.md`
 
 **Checkpoint**: SC-002 and SC-006 pass; missing/invalid ontology blocks before planning.
 

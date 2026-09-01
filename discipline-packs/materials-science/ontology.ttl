@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/materials_science> a swos:Discipline ; skos:prefLabel "materials science" .
+<https://swos.example.org/discipline/materials_science> swos:usesMethod <https://swos.example.org/method/structure-property-analysis> .
+<https://swos.example.org/discipline/materials_science> swos:requiresCriterion <https://swos.example.org/criterion/materials/processing> .
+<https://swos.example.org/discipline/materials_science> swos:requiresCriterion <https://swos.example.org/criterion/materials/structure> .
+<https://swos.example.org/discipline/materials_science> swos:requiresCriterion <https://swos.example.org/criterion/materials/property> .
+<https://swos.example.org/discipline/materials_science> swos:requiresCriterion <https://swos.example.org/criterion/materials/mechanism> .
+<https://swos.example.org/discipline/materials_science> swos:requiresCriterion <https://swos.example.org/criterion/materials/uncertainty> .
+<https://swos.example.org/criterion/materials/processing> a swos:Criterion ; skos:prefLabel "processing route" .
+<https://swos.example.org/criterion/materials/structure> a swos:Criterion ; skos:prefLabel "structure characterisation" .
+<https://swos.example.org/criterion/materials/property> a swos:Criterion ; skos:prefLabel "property conditions" .
+<https://swos.example.org/criterion/materials/mechanism> a swos:Criterion ; skos:prefLabel "mechanism plausibility" .
+<https://swos.example.org/criterion/materials/uncertainty> a swos:Criterion ; skos:prefLabel "uncertainty and variability" .

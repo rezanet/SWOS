@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
@@ -28,6 +28,45 @@ PLANES = (
     "memory_contamination",
     "adversarial",
 )
+
+
+def score_ontology_profile(profile: Any) -> dict[str, Any]:
+    """Score only machine-traceable ontology bindings and mappings."""
+
+    criteria = list(getattr(profile, "required_criteria", []) or [])
+    methods = list(getattr(profile, "methods", []) or [])
+    evidence_types = list(getattr(profile, "evidence_types", []) or [])
+    complete = all(isinstance(item, dict) and item.get("iri") for item in [*criteria, *methods, *evidence_types])
+    return {
+        "discipline": getattr(profile, "discipline", None),
+        "ontology_digest": getattr(profile, "ontology_digest", None),
+        "criterion_count": len(criteria),
+        "method_count": len(methods),
+        "evidence_type_count": len(evidence_types),
+        "binding_completeness": 1.0 if complete and criteria else 0.0,
+        "machine_traceable": bool(complete and getattr(profile, "ontology_digest", None)),
+    }
+
+
+def score_discipline_critique(report: Any) -> dict[str, Any]:
+    """Return multidimensional critique metrics without a universal quality score."""
+
+    criteria = list(getattr(report, "criteria", []) or [])
+    findings = list(getattr(report, "findings", []) or [])
+    mandatory = [item for item in criteria if bool(getattr(item, "mandatory", False))]
+    mandatory_failures = list(getattr(report, "mandatory_failures", []) or [])
+    linked = sum(bool(getattr(item, "evidence_refs", [])) for item in criteria)
+    return {
+        "discipline": getattr(report, "discipline", None),
+        "ontology_digest": getattr(report, "ontology_digest", None),
+        "criterion_coverage": linked / len(criteria) if criteria else 0.0,
+        "mandatory_criteria": len(mandatory),
+        "mandatory_failures": len(mandatory_failures),
+        "blocking_preserved": bool(mandatory_failures) == bool(getattr(report, "blocking", False)),
+        "evidence_link_rate": sum(bool(getattr(item, "evidence_refs", [])) for item in findings) / len(findings) if findings else 1.0,
+        "machine_proposed_findings": sum(getattr(item, "review_state", "") == "machine_proposed" for item in findings),
+        "provider_owned_admission": False,
+    }
 
 PLANE_ARTIFACTS = {
     "retrieval": ("source-register.json", "retrieval.json", "reranking.json"),
@@ -78,6 +117,7 @@ class EvaluationSubject:
     provenance: dict[str, Any]
     manifest_sha256: str
     integrity_chain_head: str
+    artifact_identities: dict[str, str] = field(default_factory=dict)
 
     @property
     def run_id(self) -> str:
@@ -86,6 +126,16 @@ class EvaluationSubject:
     @property
     def work_id(self) -> str:
         return str(self.manifest["work_id"])
+
+    @property
+    def ontology_binding(self) -> dict[str, Any]:
+        """Return the exact ontology identity recorded by the run, if v2-bound."""
+
+        for container in (self.manifest, self.control):
+            binding = container.get("ontology_binding")
+            if isinstance(binding, dict):
+                return dict(binding)
+        return {}
 
     @classmethod
     def load(cls, root: str | Path) -> "EvaluationSubject":
@@ -152,6 +202,11 @@ class EvaluationSubject:
             provenance=_load(root / "provenance.json"),
             manifest_sha256=file_digest(root / "run-manifest.json"),
             integrity_chain_head=str(chain_entries[-1]["hash"]),
+            artifact_identities={
+                relative: file_digest(root / relative)
+                for relative in required
+                if (root / relative).is_file()
+            },
         )
 
     def subject_versions(self) -> dict[str, Any]:
@@ -165,6 +220,8 @@ class EvaluationSubject:
             "subject_run_id": self.run_id,
             "manifest_sha256": self.manifest_sha256,
             "integrity_chain_head": self.integrity_chain_head,
+            "artifact_identities": dict(sorted(self.artifact_identities.items())),
+            "ontology_binding": self.ontology_binding,
         }
 
     def reviewer_separation_errors(self) -> list[str]:

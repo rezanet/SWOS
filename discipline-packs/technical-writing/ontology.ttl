@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/technical_writing> a swos:Discipline ; skos:prefLabel "technical writing" .
+<https://swos.example.org/discipline/technical_writing> swos:usesMethod <https://swos.example.org/method/decision-analysis> .
+<https://swos.example.org/discipline/technical_writing> swos:requiresCriterion <https://swos.example.org/criterion/technical-writing/decision> .
+<https://swos.example.org/discipline/technical_writing> swos:requiresCriterion <https://swos.example.org/criterion/technical-writing/constraints> .
+<https://swos.example.org/discipline/technical_writing> swos:requiresCriterion <https://swos.example.org/criterion/technical-writing/alternatives> .
+<https://swos.example.org/discipline/technical_writing> swos:requiresCriterion <https://swos.example.org/criterion/technical-writing/operations> .
+<https://swos.example.org/discipline/technical_writing> swos:requiresCriterion <https://swos.example.org/criterion/technical-writing/scope> .
+<https://swos.example.org/criterion/technical-writing/decision> a swos:Criterion ; skos:prefLabel "decision and audience" .
+<https://swos.example.org/criterion/technical-writing/constraints> a swos:Criterion ; skos:prefLabel "requirements and constraints" .
+<https://swos.example.org/criterion/technical-writing/alternatives> a swos:Criterion ; skos:prefLabel "alternatives and trade-offs" .
+<https://swos.example.org/criterion/technical-writing/operations> a swos:Criterion ; skos:prefLabel "failure modes and operations" .
+<https://swos.example.org/criterion/technical-writing/scope> a swos:Criterion ; skos:prefLabel "scope boundaries" .

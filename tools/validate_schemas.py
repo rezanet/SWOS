@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_DIR = ROOT / "schemas"
+V2_SCHEMA_DIR = SCHEMA_DIR / "research-grade"
 
 REQUIRED_SCHEMAS = [
     "common/common.schema.json",
@@ -47,6 +48,12 @@ def load_json(path):
         return json.load(fh)
 
 
+def discover_research_grade_schemas():
+    """Return independently versioned v2 schemas without changing v1 mappings."""
+
+    return sorted(V2_SCHEMA_DIR.glob("*.schema.json"))
+
+
 def main():
     strict = "--strict" in sys.argv
     errors = []
@@ -69,6 +76,21 @@ def main():
             errors.append(f"{rel}: missing $id")
         if "title" not in schema:
             errors.append(f"{rel}: missing title")
+        checked += 1
+
+    # 1b. Research Grade schemas are discovered additively and must be explicit v2.
+    for path in discover_research_grade_schemas():
+        try:
+            schema = load_json(path)
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"UNPARSEABLE V2 SCHEMA {path.relative_to(ROOT)}: {exc}")
+            continue
+        if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
+            errors.append(f"{path.relative_to(ROOT)}: must declare JSON Schema draft 2020-12")
+        if "2.0.0" not in str(schema.get("$id", "")):
+            errors.append(f"{path.relative_to(ROOT)}: v2 schema $id must contain 2.0.0")
+        if schema.get("x-swos-version") != "2.0.0":
+            errors.append(f"{path.relative_to(ROOT)}: missing x-swos-version 2.0.0")
         checked += 1
 
     # 2. Every JSON artefact in the repo parses.

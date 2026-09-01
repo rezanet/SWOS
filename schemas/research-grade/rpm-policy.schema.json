@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/rpm-policy.schema.json",
+  "title": "SWOS Research Programme Memory policy release",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["policy_id", "version", "policy_digest", "v1_relationship", "operations", "classification_ceiling", "rights_ceiling", "assessment_ttl_seconds"],
+  "properties": {
+    "policy_id": {"type": "string", "minLength": 1},
+    "version": {"const": "2.0.0"},
+    "policy_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "v1_relationship": {"enum": ["parallel"]},
+    "operations": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "classification_ceiling": {"enum": ["public", "internal", "confidential"]},
+    "rights_ceiling": {"type": "array", "items": {"type": "string"}},
+    "assessment_ttl_seconds": {"type": "integer", "minimum": 1},
+    "required_evidence": {"type": "array", "items": {"type": "string"}},
+    "migration": {"type": "object"}
+  }
+}

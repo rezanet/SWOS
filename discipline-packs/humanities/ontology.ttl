@@ -1,0 +1,14 @@
+@prefix swos: <https://swos.example.org/ontology/discipline/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+<https://swos.example.org/discipline/humanities> a swos:Discipline ; skos:prefLabel "humanities" .
+<https://swos.example.org/discipline/humanities> swos:usesMethod <https://swos.example.org/method/hermeneutic-reading> .
+<https://swos.example.org/discipline/humanities> swos:requiresCriterion <https://swos.example.org/criterion/humanities/primary-anchor> .
+<https://swos.example.org/discipline/humanities> swos:requiresCriterion <https://swos.example.org/criterion/humanities/context> .
+<https://swos.example.org/discipline/humanities> swos:requiresCriterion <https://swos.example.org/criterion/humanities/rival-reading> .
+<https://swos.example.org/discipline/humanities> swos:requiresCriterion <https://swos.example.org/criterion/humanities/archive> .
+<https://swos.example.org/discipline/humanities> swos:requiresCriterion <https://swos.example.org/criterion/humanities/frame> .
+<https://swos.example.org/criterion/humanities/primary-anchor> a swos:Criterion ; skos:prefLabel "primary-source anchoring" .
+<https://swos.example.org/criterion/humanities/context> a swos:Criterion ; skos:prefLabel "historical contextualisation" .
+<https://swos.example.org/criterion/humanities/rival-reading> a swos:Criterion ; skos:prefLabel "interpretive plurality" .
+<https://swos.example.org/criterion/humanities/archive> a swos:Criterion ; skos:prefLabel "archival limits" .
+<https://swos.example.org/criterion/humanities/frame> a swos:Criterion ; skos:prefLabel "interpretive frame" .
