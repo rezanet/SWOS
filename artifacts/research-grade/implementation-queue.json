@@ -12,10 +12,18 @@
   "implementation": {
     "pull_request": 57,
     "branch": "codex/swos-v2-research-grade",
-    "head_sha": "737bc73ee5d1497ce1f9acf049e64531f71fc49e",
+    "head_sha": "b75f5b22c44b15b8fbbb3dcb77249f3d17c19b33",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
-    "url": "https://github.com/rezanet/SWOS/pull/57"
+    "url": "https://github.com/rezanet/SWOS/pull/57",
+    "last_reconciled_task": "T070",
+    "last_action": "Added source-licence manifest validation and pair-to-source binding with explicit offline NOT_RUN behavior; T070 remains pending until the licensed corpus and independent human records exist.",
+    "last_action_evidence": [
+      "tests/runtime/test_citation_dataset.py: 4 focused tests pass",
+      "python tools/build_citation_dataset.py --manifest benchmark/citation-support/manifest.json --out-dir TEMP: exit 2, status not_run, no output created",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py': 207 passed",
+      "python -m ruff check and python -m ruff format --check: pass"
+    ]
   },
   "summary": {
     "total_tasks": 129,
@@ -36,6 +44,32 @@
       "T129"
     ]
   },
+  "blockers": [
+    {
+      "task_id": "T070",
+      "status": "open",
+      "kind": "external-evidence",
+      "reason": "The offline checkout has no licensed pair source, double annotations, adjudication, or independent approval; the builder must remain NOT_RUN and fail closed."
+    },
+    {
+      "task_id": "T079",
+      "status": "open",
+      "kind": "human-review",
+      "reason": "The required per-discipline diversity packets must be human reviewed before release evidence can be recorded."
+    },
+    {
+      "task_id": "T111",
+      "status": "open",
+      "kind": "rights-and-human-review",
+      "reason": "The full multimodal corpus requires rights-cleared source records and human-reviewed fixtures at the frozen R7 minima."
+    },
+    {
+      "task_id": "T127-T129",
+      "status": "open",
+      "kind": "external-governance",
+      "reason": "Exact-head portability evidence, independent oracle output, named approvals, and owner merge approval are not present."
+    }
+  ],
   "workstreams": [
     {
       "id": "US3-citation",
