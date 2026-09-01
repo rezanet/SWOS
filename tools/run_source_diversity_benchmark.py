@@ -9,11 +9,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
-from swos_runtime.citation_calibration import metric_confidence_interval
-from swos_runtime.source_diversity import (
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from swos_runtime.citation_calibration import metric_confidence_interval  # noqa: E402
+from swos_runtime.source_diversity import (  # noqa: E402
     DiversityRequirement,
     FamilyIdentityPolicy,
     canonicalize_source_families,
@@ -83,7 +88,7 @@ def _result(packet: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def run_benchmark(fixtures: Path | str, output: Path | str) -> dict[str, Any]:
+def run_benchmark(fixtures: Path | str, output: Path | str | None = None) -> dict[str, Any]:
     packets = _load_packets(Path(fixtures))
     reviewed = [item for item in packets if item.get("review_status") == "locked_human_reviewed"]
     results = [_result(item) for item in reviewed]
@@ -119,18 +124,19 @@ def run_benchmark(fixtures: Path | str, output: Path | str) -> dict[str, Any]:
         "results": results,
         "production_path": "swos_runtime.source_diversity.measure_source_diversity",
     }
-    target = Path(output)
-    if target.exists():
-        raise RuntimeError(f"immutable benchmark output already exists: {target}")
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    if output is not None:
+        target = Path(output)
+        if target.exists():
+            raise RuntimeError(f"immutable benchmark output already exists: {target}")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     return report
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--fixtures", type=Path, required=True)
-    parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--fixtures", "--manifest", dest="fixtures", type=Path, required=True)
+    parser.add_argument("--out", type=Path, default=None)
     args = parser.parse_args()
     try:
         report = run_benchmark(args.fixtures, args.out)

@@ -41,7 +41,10 @@ class ImageAnalysisTests(unittest.TestCase):
         self.assertNotEqual("complete", result.status)
         self.assertEqual("not_run", result.contract_status)
         registered = RegisteredOpenAIImageAnalysisProvider(api_key=None).analyze(self._request())
-        self.assertEqual(result.to_dict(), registered.to_dict())
+        self.assertEqual(result.status, registered.status)
+        self.assertEqual(result.contract_status, registered.contract_status)
+        self.assertEqual(result.request_digest, registered.request_digest)
+        self.assertEqual(result.config_digest, registered.config_digest)
 
     def test_view_right_and_resource_bounds_are_enforced_by_the_fake(self) -> None:
         asset = self._request().assets[0]

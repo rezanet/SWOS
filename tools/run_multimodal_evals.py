@@ -14,20 +14,24 @@ import hashlib
 import json
 import math
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from swos_runtime.image_analysis import (
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from swos_runtime.image_analysis import (  # noqa: E402
     DeterministicFakeImageProvider,
     ImageAnalysisRequest,
     ImageAnalysisResult,
     OpenAIImageAnalysisProvider,
     evaluate_cross_modal_support,
 )
-from swos_runtime.media import AccessibilityRecord, MediaAssetRecord
-from swos_runtime.models import canonical_digest
+from swos_runtime.media import AccessibilityRecord, MediaAssetRecord  # noqa: E402
+from swos_runtime.models import canonical_digest  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[1]
 RIGHTS_ACTIONS = (
     "view",
     "analyse",
@@ -386,7 +390,7 @@ def run_evals(manifest_path: str | Path, artifact_dir: str | Path, *, provider: 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", required=True, type=Path)
-    parser.add_argument("--artifact-dir", required=True, type=Path)
+    parser.add_argument("--artifact-dir", type=Path, default=Path("artifacts/multimodal"))
     parser.add_argument("--provider", choices=("fake", "openai"), default="fake")
     parser.add_argument("--live", action="store_true")
     parser.add_argument("--repetitions", type=int, default=3)

@@ -49,16 +49,41 @@ def run_benchmark(repository: str | Path, *, item_count: int = 1000) -> dict[str
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--repository", required=True)
-    parser.add_argument("--items", type=int, default=1000)
-    parser.add_argument("--out", required=True)
+    parser.add_argument("--repository")
+    parser.add_argument("--manifest", type=Path)
+    parser.add_argument("--items", type=int)
+    parser.add_argument("--out", type=Path)
     args = parser.parse_args(argv)
+    if args.manifest is not None and args.repository is None:
+        try:
+            manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            print(json.dumps({"status": "not_run", "reason": f"benchmark manifest unavailable: {exc}"}))
+            return 2
+        print(json.dumps({
+            "schema_version": "2.0.0",
+            "status": "not_run",
+            "reason": str(manifest.get("limitations", ["explicit repository is required for a benchmark run"])[0]),
+            "manifest": str(args.manifest),
+        }, sort_keys=True))
+        return 2
+    if args.repository is None:
+        parser.error("--repository is required unless --manifest is used for a NOT_RUN check")
+    item_count = args.items
+    if item_count is None and args.manifest is not None:
+        try:
+            item_count = int(json.loads(args.manifest.read_text(encoding="utf-8")).get("item_count", 1000))
+        except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
+            print(f"error: benchmark manifest is invalid: {exc}", file=sys.stderr)
+            return 1
+    item_count = item_count or 1000
     try:
-        result = run_benchmark(args.repository, item_count=args.items)
+        result = run_benchmark(args.repository, item_count=item_count)
     except (OSError, ValueError, RuntimeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
-    Path(args.out).write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    if args.out is not None:
+        args.out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, sort_keys=True))
     return 0
 

@@ -94,6 +94,11 @@ def assemble_audit_pack(
             "provenance": [entry["path"] for entry in entries if entry["path"].startswith("provenance")],
             "citation": [entry["path"] for entry in entries if "citation" in entry["path"]],
             "diversity": [entry["path"] for entry in entries if "diversity" in entry["path"]],
+            "multimodal": [
+                entry["path"]
+                for entry in entries
+                if "multimodal" in entry["path"] or "image-analysis" in entry["path"]
+            ],
             "oracle": [entry["path"] for entry in entries if "oracle" in entry["path"]],
         },
     }
@@ -176,10 +181,23 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--code-sha", default=None)
     parser.add_argument("--verify", default=None, metavar="PACK")
     parser.add_argument("--expected-code-sha", default=None)
+    parser.add_argument(
+        "--verify-only",
+        action="store_true",
+        help="verify the default pre-freeze pack directory",
+    )
+    parser.add_argument(
+        "--pack",
+        default="artifacts/research-grade/audit-pack",
+        help="pack directory used by --verify-only",
+    )
     args = parser.parse_args(argv)
     try:
-        if args.verify:
-            result = verify_audit_pack(args.verify, expected_code_sha=args.expected_code_sha)
+        if args.verify or args.verify_only:
+            result = verify_audit_pack(
+                args.verify or args.pack,
+                expected_code_sha=args.expected_code_sha,
+            )
         elif args.source and args.output and args.code_sha:
             result = assemble_audit_pack(args.source, args.output, code_sha=args.code_sha)
         else:
