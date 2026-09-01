@@ -140,7 +140,7 @@ duplicates/provider renaming/unknown metadata cannot improve admission.
 - [ ] T070 [US3] Implement and execute the bounded corpus workflow to acquire permitted pairs, double-annotate, adjudicate, approve, leakage-check, checksum, and freeze actual train/calibration/locked/OOD splits and `DATA-LICENCE.md` in `benchmark/citation-support/manifest.json` using `tools/build_citation_dataset.py`
 - [ ] T071 [US3] Implement immutable training and model-card/artifact-manifest generation in `tools/train_citation_classifier.py`
 - [ ] T072 [US3] Implement calibration-only fitting and artifact generation in `tools/calibrate_citation_classifier.py`
-- [ ] T073 [US3] Implement locked evaluation, raw predictions, slice metrics, confidence intervals, and gate report in `tools/evaluate_citation_classifier.py`
+- [ ] T073 [US3] Implement locked evaluation, raw predictions, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`
 - [ ] T074 [US3] Add pinned release-model workflow and immutable outputs in `.github/workflows/citation-model-evaluation.yml`
 
 ### US3 diversity implementation
@@ -173,15 +173,15 @@ adversarial loss/invalid/resource-limit case fails.
 
 ### US4 implementation
 
-- [ ] T087 [P] [US4] Add EPG v2 and round-trip certificate schemas plus SWOS PROV vocabulary/shapes in `schemas/research-grade/epg-2.0.schema.json`, `schemas/research-grade/prov-roundtrip-report.schema.json`, `schemas/provenance-graph/swos-prov.ttl`, and `schemas/provenance-graph/swos-prov.shacl.ttl`
+- [ ] T087 [P] [US4] Add EPG v2, the executable PROV profile, round-trip certificate schemas, and SWOS PROV vocabulary/shapes in `schemas/research-grade/epg-2.0.schema.json`, `schemas/research-grade/prov-profile.json`, `schemas/research-grade/prov-roundtrip-report.schema.json`, `schemas/provenance-graph/swos-prov.ttl`, and `schemas/provenance-graph/swos-prov.shacl.ttl`
 - [ ] T088 [US4] Implement canonical PROV document/bundle/qualified-relation/typed-extension model in `swos_runtime/prov_model.py`
 - [ ] T089 [US4] Implement v1 EPG compatibility mapping and lossless EPG v2 conversion in `swos_runtime/prov_interop.py`
 - [ ] T090 [US4] Implement PROV-JSON, PROV-N, and PROV-O/TriG parse/serialize with absolute namespace policy in `swos_runtime/prov_interop.py`
 - [ ] T091 [US4] Implement syntax, PROV-CONSTRAINTS, SHACL, semantic normal form, extension preservation, JCS/RDFC/PROV-N fingerprints, and limits in `swos_runtime/prov_validation.py`
 - [ ] T092 [US4] Implement conversion matrix, per-leg artifacts, assertion comparison, stable second pass, and certificate generation in `tools/certify_prov_roundtrip.py`
 - [ ] T093 [P] [US4] Add permitted checksummed valid/invalid/large/adversarial fixtures and manifest in `evals/fixtures/provenance/`
-- [ ] T094 [US4] Pin ProvToolbox identity/licence/digest and run the independent oracle in `.github/workflows/prov-certification.yml`
-- [ ] T095 [US4] Add 1k/10k/100k and hostile blank-node performance/resource corpus in `benchmark/provenance/manifest.json`
+- [ ] T094 [US4] Pin ProvToolbox identity/licence/digest in `benchmark/provenance/oracle-manifest.json` and run that exact independent oracle in `.github/workflows/prov-certification.yml`
+- [ ] T095 [US4] Add explicit parser/canonicalization CPU-memory-time bounds in `benchmark/provenance/resource-limits.json` plus 1k/10k/100k and hostile blank-node performance/resource corpus in `benchmark/provenance/manifest.json`
 - [ ] T096 [US4] Integrate certified EPG v2 exports into RPM exchange, finalization, and work-order host bundles in `swos_runtime/rpm_exchange.py`, `swos_runtime/finalizer.py`, and `swos_runtime/work_orders.py`
 - [ ] T097 [US4] Add certificate/oracle/limitation artifacts to evaluation subject and audit pack in `swos_runtime/evaluation.py` and `tools/assemble_research_grade_audit_pack.py`
 - [ ] T098 [US4] Document the accurate PROV-DM/PROV-N/PROV-O and PROV-JSON Member Submission claim in `docs/architecture/research-grade-provenance.md`
@@ -234,13 +234,13 @@ without exact matching evidence.
 - [ ] T120 Run all existing v1.1/runtime/prose/eight-plane tests and record exact-head commands/results in `artifacts/research-grade/regression-report.json`
 - [ ] T121 Run ontology, RPM, classifier, diversity, critique, PROV, and multimodal locked evaluations and record immutable indexes in `artifacts/research-grade/evaluation-index.json`
 - [ ] T122 Run Ruff, schema/contract, coverage, security, portability, offline, deterministic-stability, and manifest checks and record results in `artifacts/research-grade/quality-report.json`
-- [ ] T123 Run reference RPM/PROV performance corpora and record runner fingerprints/raw measurements in `artifacts/research-grade/benchmark-index.json`
-- [ ] T124 Assemble and independently verify every FR/SC evidence pointer and limitation in `artifacts/research-grade/audit-pack.json`
+- [ ] T123 Run reference RPM, packaged 100-pair citation, and PROV performance corpora and record runner fingerprints/raw measurements in `artifacts/research-grade/benchmark-index.json`
+- [ ] T124 Assemble and independently verify the pre-freeze in-repository FR/SC evidence manifest and limitations in `artifacts/research-grade/audit-pack.json`; reserve hosted CI/review/approval fields for externally finalized evidence
 - [ ] T125 Update version, architecture, security, evaluation, roadmap, progress, and release documentation in `README.md`, `SECURITY.md`, `PROGRESS.md`, `docs/architecture/`, and `evals/metrics.md`
-- [ ] T126 Freeze the candidate SHA, push one cohesive implementation PR, and attach the exact audit-pack/check links in the PR description
-- [ ] T127 Obtain ADR-plus-two-maintainer schema approval, maintainer-plus-discipline-steward ontology approval, two-maintainer-plus-evaluation-owner fixture approval, maintainer-plus-portability-owner provider-adapter approval, and reviewer-criteria approval on the frozen head; resolve every thread and record identities/dispositions in `artifacts/research-grade/review-evidence.json`
-- [ ] T128 Rerun all invalidated evidence after any review change, verify hosted checks are green on the final SHA, and update `artifacts/research-grade/audit-pack.json`
-- [ ] T129 Obtain explicit owner merge approval while retaining named no-production/no-merge gates in `artifacts/research-grade/release-decision.json`
+- [ ] T126 Commit all in-repository implementation/evidence, freeze the candidate SHA, push one cohesive implementation PR, and attach the pre-freeze audit manifest in the PR description
+- [ ] T127 Obtain ADR-plus-two-maintainer schema approval, maintainer-plus-discipline-steward ontology approval, two-maintainer-plus-evaluation-owner fixture approval, maintainer-plus-portability-owner provider-adapter approval, reviewer-criteria approval, green hosted CI, and independent review on the frozen head; resolve every thread and store identities/dispositions only as immutable external PR/workflow artifacts
+- [ ] T128 Finalize and independently verify an external immutable audit pack combining the committed pre-freeze manifest with exact-head CI/review/approval records; if review changes repository content, repeat T126-T128 for the new head without committing post-freeze records to the branch
+- [ ] T129 Obtain explicit owner merge approval as an external PR decision while retaining named no-production/no-merge gates; do not create a commit after final exact-head review
 
 **Final checkpoint**: SC-010–SC-012 and every FR are evidenced at the final reviewed head. Merge and deployment remain separate actions.
 

@@ -55,9 +55,11 @@ a separate reviewed amendment before implementation depends on it.
 
 ## Required startup audit
 
-Work from the live repository under `C:\GitHub\SWOS`, not a historical checkout.
-Create an isolated branch/worktree using the `codex/` branch prefix. Before any
-edit, record:
+Resolve the repository root from the active Git checkout and work from that live
+clone, not a historical copy. On the maintainer's Windows workstation the
+canonical clone is normally `C:\GitHub\SWOS`; Linux, CI, and other authorized
+clones use their actual checkout root. Create an isolated branch/worktree using
+the `codex/` branch prefix. Before any edit, record:
 
 - exact `origin/main` and implementation heads;
 - clean/dirty worktree state and ownership of any unrelated changes;
@@ -213,10 +215,13 @@ Before opening the implementation PR:
 7. open one ready-for-review PR linking this feature and all exact-head evidence.
 
 Then obtain every repository role-specific review quorum named in the plan plus a
-fresh independent review of the exact final head. Resolve every actionable
-thread. After any change, rerun invalidated evidence and request a new review.
-Stop with the PR open and reviewed. Do not merge or deploy without a separate,
-explicit owner instruction.
+fresh independent review of the exact final head. Store hosted CI, approvals,
+review records, and the final combined audit pack as immutable external PR/
+workflow artifacts bound to that head; do not commit post-freeze evidence back to
+the reviewed branch. Resolve every actionable thread. If review causes any
+repository change, create a new candidate, rerun invalidated evidence, and repeat
+the exact-head external review cycle. Stop with the PR open and reviewed. Do not
+merge or deploy without a separate, explicit owner instruction.
 
 ## Required final handoff
 

@@ -402,9 +402,14 @@ exact candidate or capability remains disabled.
    and deterministic stability suites.
 3. Verify classification, rights, evidence, and ontology identities survive RPM,
    Evidence Matrix, EPG, PROV, critique, work-order export, and public proof.
-4. Assemble the immutable audit pack and verify every FR/SC artifact pointer.
-5. Freeze the head; obtain all hosted exact-head checks and independent review;
-   resolve every actionable thread and rerun invalidated evidence.
+4. Assemble and commit the pre-freeze audit manifest with every in-repository
+   FR/SC artifact pointer.
+5. Freeze the head; obtain hosted exact-head checks, role approvals and
+   independent review; resolve every actionable thread and, if content changes,
+   create a new candidate and repeat the cycle.
+6. Finalize the combined audit pack as an immutable external PR/workflow artifact
+   bound to the reviewed head. Never commit post-freeze review evidence back to
+   that branch.
 
 **No-merge gate**: any failing/missing/NOT_RUN mandatory gate; unreviewed head;
 unresolved blocker/thread; silent v1 drift; hidden model/media/oracle dependency;
@@ -491,14 +496,17 @@ The implementation PR must:
 3. identify generated, trained, third-party, and human-reviewed artifacts;
 4. list exact test/workflow commands and immutable evidence links;
 5. name all no-merge/no-production gates and limitations;
-6. freeze a release-candidate head before final external review;
+6. commit every in-repository evidence artifact, then freeze a release-candidate
+   head before final external review;
 7. satisfy repository role quorums on that exact head: ADR plus two maintainers
    and a deprecation plan for schema changes; one maintainer plus one discipline
    steward for packs/ontologies; two maintainers plus the evaluation owner for
    fixtures; one maintainer plus the portability owner for the real provider
    adapter; and one maintainer plus the evaluation owner for reviewer criteria;
    record approvals as immutable evidence, resolve every thread, and rerun
-   affected evidence after any change;
+   affected evidence after any change; store final hosted CI, approvals, review,
+   and combined audit pack externally so recording them cannot change the
+   reviewed commit;
 8. merge only after green exact-head CI and explicit owner approval.
 
 The planning PR itself receives review before implementation starts. A bot quota,
