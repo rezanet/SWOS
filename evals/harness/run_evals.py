@@ -197,7 +197,13 @@ def _execute(args, selected, run_dir):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--all", action="store_true")
+    parser.add_argument(
+        "--all",
+        "--all-planes",
+        dest="all_planes",
+        action="store_true",
+        help="Run every registered evaluation plane",
+    )
     parser.add_argument("--planes", default="")
     parser.add_argument("--fail-on-gate", action="store_true")
     parser.add_argument("--system", default=None, help="Bound system under test adapter id")
@@ -212,7 +218,7 @@ def main():
 
     selected = (
         PLANES
-        if args.all or not args.planes
+        if args.all_planes or not args.planes
         else [p.strip() for p in args.planes.split(",") if p.strip()]
     )
     unknown = [plane for plane in selected if plane not in PLANES]
