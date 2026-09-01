@@ -25,7 +25,7 @@ from .governance import (
     exact_quote_supported,
     verify_manifest,
 )
-from .models import RunOutcome, SourceRecord, swos_id
+from .models import RunOutcome, SourceRecord, canonical_digest, swos_id
 from .schema_validation import validate_frozen_run_schemas
 from .stores import StoreError, persist_run_stores
 from .work_orders import WorkOrderError, WorkOrderRun
@@ -723,6 +723,190 @@ def _build_epg(
     }
 
 
+def _build_epg_v2(
+    *,
+    work_id: str,
+    status: str,
+    run: WorkOrderRun,
+    sources: list[SourceRecord],
+    evidence_matrix: dict[str, Any],
+    argument_graph: dict[str, Any],
+    ontology_binding: dict[str, Any] | None = None,
+) -> Any:
+    """Build a deterministic absolute-IRI EPG v2 alongside frozen v1 EPG."""
+
+    from .prov_model import PROV_NAMESPACES, PROV_PROFILE, ProvDocument
+
+    base = f"https://swos.dev/runs/{work_id}/"
+
+    def node_id(kind: str, value: str) -> str:
+        return base + kind + "/" + canonical_digest({"kind": kind, "value": value})[:32]
+
+    entities: dict[str, dict[str, Any]] = {}
+    source_nodes: dict[str, str] = {}
+    for source in sources:
+        identifier = node_id("source", source.source_id)
+        source_nodes[source.source_id] = identifier
+        entities[identifier] = {
+            "type": "entity",
+            "attributes": {
+                "source_id": {"value": source.source_id},
+                "title": {"value": source.title},
+                "url": {"value": source.url},
+                "source_digest": {"value": canonical_digest(source.to_dict(include_text=True))},
+                "metadata_verified": {"value": source.metadata_verified},
+            },
+        }
+    claim_nodes: dict[str, str] = {}
+    for row in evidence_matrix.get("rows", []):
+        claim_id = str(row.get("claim_id") or "")
+        if not claim_id:
+            continue
+        identifier = node_id("claim", claim_id)
+        claim_nodes[claim_id] = identifier
+        entities[identifier] = {
+            "type": "entity",
+            "attributes": {
+                "claim_id": {"value": claim_id},
+                "claim_text": {"value": str(row.get("claim_text") or "")},
+                "verification_status": {"value": str(row.get("verification_status") or "")},
+            },
+        }
+    for node in argument_graph.get("nodes", []):
+        argument_id = str(node.get("node_id") or "")
+        if argument_id:
+            entities[node_id("argument", argument_id)] = {
+                "type": "entity",
+                "attributes": {"statement": {"value": str(node.get("statement") or "")}},
+            }
+
+    activities: dict[str, dict[str, Any]] = {}
+    agents: dict[str, dict[str, Any]] = {}
+    orchestrator_id = base + "agent/swos-orchestrator"
+    agents[orchestrator_id] = {
+        "type": "agent",
+        "attributes": {"label": {"value": "SWOS work-order orchestrator"}},
+    }
+    relations: list[dict[str, Any]] = []
+    for index, item in enumerate(run.state.get("submissions", []), start=1):
+        stage = str(item.get("stage") or "stage")
+        activity = node_id("activity", f"{index}:{stage}")
+        activities[activity] = {"type": "activity", "attributes": {"stage": {"value": stage}}}
+        relations.append({"type": "wasAssociatedWith", "activity": activity, "agent": orchestrator_id})
+    evidence_activity = node_id("activity", "evidence_extraction")
+    if evidence_activity not in activities:
+        activities[evidence_activity] = {"type": "activity", "attributes": {"stage": {"value": "evidence_extraction"}}}
+    for row in evidence_matrix.get("rows", []):
+        claim = claim_nodes.get(str(row.get("claim_id") or ""))
+        if not claim:
+            continue
+        for citation in row.get("citations", []):
+            source = source_nodes.get(str(citation.get("source_id") or ""))
+            if source:
+                relations.append({"type": "used", "activity": evidence_activity, "entity": source})
+                relations.append({"type": "wasDerivedFrom", "generatedEntity": claim, "usedEntity": source})
+    image_result = run.state.get("image_analysis_result")
+    if isinstance(image_result, dict):
+        image_activity = node_id("activity", "image_analysis")
+        activities[image_activity] = {"type": "activity", "attributes": {"stage": {"value": "image_analysis"}}}
+        relations.append({"type": "wasAssociatedWith", "activity": image_activity, "agent": orchestrator_id})
+        for observation in image_result.get("observations", []):
+            if not isinstance(observation, dict):
+                continue
+            observation_id = str(observation.get("observation_id") or "")
+            if not observation_id:
+                continue
+            observation_iri = node_id("observation", observation_id)
+            entities[observation_iri] = {
+                "type": "entity",
+                "attributes": {
+                    "asset_id": {"value": str(observation.get("asset_id") or "")},
+                    "asset_digest": {"value": str(observation.get("asset_digest") or "")},
+                    "description": {"value": str(observation.get("description") or "")},
+                    "origin": {"value": str(observation.get("origin") or "")},
+                    "modality": {"value": str(observation.get("modality") or "image")},
+                    "provider": {"value": str(observation.get("provider") or "")},
+                    "model": {"value": str(observation.get("model") or "")},
+                    "selector": {"value": observation.get("selector")},
+                    "provenance": {"value": observation.get("provenance") or {}},
+                },
+            }
+            relations.append({"type": "wasGeneratedBy", "entity": observation_iri, "activity": image_activity})
+        for interpretation in image_result.get("interpretations", []):
+            if not isinstance(interpretation, dict):
+                continue
+            interpretation_id = str(interpretation.get("interpretation_id") or "")
+            if not interpretation_id:
+                continue
+            interpretation_iri = node_id("interpretation", interpretation_id)
+            entities[interpretation_iri] = {
+                "type": "entity",
+                "attributes": {
+                    "statement": {"value": str(interpretation.get("statement") or "")},
+                    "discipline_iri": {"value": str(interpretation.get("discipline_iri") or "")},
+                    "criterion_iri": {"value": str(interpretation.get("criterion_iri") or "")},
+                    "observation_ids": {"value": interpretation.get("observation_ids") or []},
+                    "textual_evidence_ids": {"value": interpretation.get("textual_evidence_ids") or []},
+                    "review_status": {"value": str(interpretation.get("review_status") or "machine_proposed")},
+                },
+            }
+            relations.append({"type": "wasGeneratedBy", "entity": interpretation_iri, "activity": image_activity})
+    bundle_id = base + "bundle/finalized-output"
+    statements = [{"type": "entity", "id": identifier} for identifier in sorted(entities)]
+    statements.extend({"type": "activity", "id": identifier} for identifier in sorted(activities))
+    statements.extend({"type": "agent", "id": identifier} for identifier in sorted(agents))
+    statements.extend({"type": "relation", "index": index} for index, _ in enumerate(relations))
+    extensions = [
+        {
+            "subject": base + "run",
+            "predicate": "https://swos.dev/prov#releaseStatus",
+            "object": status,
+            "object_type": "literal",
+            "datatype": PROV_NAMESPACES["xsd"] + "string",
+        },
+        {
+            "subject": base + "run",
+            "predicate": "https://swos.dev/prov#workId",
+            "object": work_id,
+            "object_type": "literal",
+            "datatype": PROV_NAMESPACES["xsd"] + "string",
+        },
+    ]
+    if ontology_binding and ontology_binding.get("discipline_iri"):
+        extensions.append(
+            {
+                "subject": base + "run",
+                "predicate": "https://swos.dev/prov#discipline",
+                "object": str(ontology_binding.get("discipline_iri") or ""),
+                "object_type": "iri",
+            }
+        )
+    if isinstance(image_result, dict):
+        extensions.append(
+            {
+                "subject": base + "run",
+                "predicate": "https://swos.dev/prov#imageAnalysisStatus",
+                "object": str(image_result.get("status") or "error"),
+                "object_type": "literal",
+                "datatype": PROV_NAMESPACES["xsd"] + "string",
+            }
+        )
+    return ProvDocument(
+        profile=PROV_PROFILE,
+        schema_version="2.0.0",
+        base_iri=base,
+        namespaces=PROV_NAMESPACES,
+        scope={"work_id": work_id},
+        entities=entities,
+        activities=activities,
+        agents=agents,
+        relations=tuple(relations),
+        bundles={bundle_id: {"statements": statements}},
+        extensions=tuple(extensions),
+        integrity={"release_status": status, "source_digest": canonical_digest({"work_id": work_id, "entities": entities, "relations": relations})},
+    )
+
+
 def _build_sdl(
     work_id: str, status: str, run: WorkOrderRun, evidence_refs: list[str]
 ) -> dict[str, Any]:
@@ -963,6 +1147,19 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             if not isinstance(item, dict) or not isinstance(item.get("classifier_decision"), dict):
                 blockers.append("Classifier evidence is incomplete for a Research Grade citation audit.")
                 break
+    image_analysis_result = run.state.get("image_analysis_result")
+    if isinstance(image_analysis_result, dict):
+        _write_json(output / "image-analysis-result.json", image_analysis_result)
+        if image_analysis_result.get("status") != "complete":
+            blockers.append(
+                "Multimodal analysis is "
+                f"{image_analysis_result.get('status', 'unreported')}; text-only fallback and limitations remain active."
+            )
+    multimodal_critique = run.state.get("multimodal_critique")
+    if isinstance(multimodal_critique, dict):
+        _write_json(output / "multimodal-critique.json", multimodal_critique)
+        if multimodal_critique.get("blocking"):
+            blockers.append("Multimodal discipline critique retains mandatory pack failures.")
     diversity_report = run.state.get("diversity_report")
     if isinstance(diversity_report, dict):
         _write_json(output / "source-diversity-report.json", diversity_report)
@@ -1170,6 +1367,36 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             ontology_binding=ontology_binding if isinstance(ontology_binding, dict) else None,
         ),
     )
+    epg_v2 = _build_epg_v2(
+        work_id=work_id,
+        status=provisional_status,
+        run=run,
+        sources=sources,
+        evidence_matrix=matrix,
+        argument_graph=argument_graph,
+        ontology_binding=ontology_binding if isinstance(ontology_binding, dict) else None,
+    )
+    from .prov_validation import canonical_fingerprint, validate_prov
+
+    epg_v2_validation = validate_prov(epg_v2)
+    _write_json(output / "provenance-v2.json", epg_v2.to_dict())
+    _write_json(output / "provenance-v2-validation.json", epg_v2_validation.to_dict())
+    _write_json(output / "provenance-v2-fingerprint.json", canonical_fingerprint(epg_v2).to_dict())
+    _write_json(
+        output / "provenance-v2-certificate.json",
+        {
+            "certificate_version": "2.0.0",
+            "status": "not_run",
+            "reason": "Independent PROV oracle evidence is required for certification.",
+            "input_digest": canonical_fingerprint(epg_v2).semantic_digest,
+            "oracle": {"status": "not_run"},
+        },
+    )
+    if epg_v2_validation.status != "valid":
+        blockers.append("EPG v2 provenance validation did not pass.")
+    else:
+        run.bind_epg_v2(epg_v2, canonical_fingerprint(epg_v2), {"status": "not_run"})
+        run.export_host_bundle(output / "host-bundle.json")
     _write_json(
         output / "decision-ledger.json",
         _build_sdl(
@@ -1206,6 +1433,38 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             _build_sdl(work_id, status, run, [row["claim_id"] for row in matrix["rows"]]),
         )
         _write_json(output / "scholarly-state.json", _scholarly_state(work_id, status, run))
+        # The v2 provenance release-status literal is part of the exact output
+        # identity. Refresh it whenever later checks change the final
+        # disposition, then rebind the host bundle to that final fingerprint.
+        epg_v2 = _build_epg_v2(
+            work_id=work_id,
+            status=status,
+            run=run,
+            sources=sources,
+            evidence_matrix=matrix,
+            argument_graph=argument_graph,
+            ontology_binding=ontology_binding if isinstance(ontology_binding, dict) else None,
+        )
+        epg_v2_validation = validate_prov(epg_v2)
+        epg_v2_fingerprint = canonical_fingerprint(epg_v2)
+        _write_json(output / "provenance-v2.json", epg_v2.to_dict())
+        _write_json(output / "provenance-v2-validation.json", epg_v2_validation.to_dict())
+        _write_json(output / "provenance-v2-fingerprint.json", epg_v2_fingerprint.to_dict())
+        _write_json(
+            output / "provenance-v2-certificate.json",
+            {
+                "certificate_version": "2.0.0",
+                "status": "not_run",
+                "reason": "Independent PROV oracle evidence is required for certification.",
+                "input_digest": epg_v2_fingerprint.semantic_digest,
+                "oracle": {"status": "not_run"},
+            },
+        )
+        if epg_v2_validation.status != "valid":
+            blockers.append("Final EPG v2 provenance validation did not pass.")
+        else:
+            run.bind_epg_v2(epg_v2, epg_v2_fingerprint, {"status": "not_run"})
+            run.export_host_bundle(output / "host-bundle.json")
 
     unresolved = list(dict.fromkeys([*list(plan.get("known_uncertainties") or []), *blockers]))
     confidence = "high" if status == "APPROVED" else ("medium" if matrix["rows"] else "low")
@@ -1267,6 +1526,8 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
             "api_key_used": bool(adapter.get("api_key_used", False)),
             "paid_api_calls": int(adapter.get("paid_api_calls", 0)),
         },
+        "image_analysis": image_analysis_result if isinstance(image_analysis_result, dict) else None,
+        "multimodal_critique": multimodal_critique if isinstance(multimodal_critique, dict) else None,
         "started_from_one_request": True,
         "work_order_run_id": run.state["run_id"],
         "host_bundle_role": "replay_interchange_debug_reproducibility",

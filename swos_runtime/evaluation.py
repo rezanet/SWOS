@@ -242,6 +242,19 @@ class EvaluationSubject:
                 relative: file_digest(root / relative)
                 for relative in required
                 if (root / relative).is_file()
+            } | {
+                relative: file_digest(root / relative)
+                for relative in (
+                    "provenance-v2.json",
+                    "provenance-v2-validation.json",
+                    "provenance-v2-fingerprint.json",
+                    "provenance-v2-certificate.json",
+                    "citation-support-decisions.json",
+                    "source-diversity-report.json",
+                    "image-analysis-result.json",
+                    "multimodal-critique.json",
+                )
+                if (root / relative).is_file()
             },
         )
 
@@ -258,6 +271,12 @@ class EvaluationSubject:
             "integrity_chain_head": self.integrity_chain_head,
             "artifact_identities": dict(sorted(self.artifact_identities.items())),
             "ontology_binding": self.ontology_binding,
+            "research_grade_artifacts": {
+                key: value
+                for key, value in self.artifact_identities.items()
+                if key.startswith("provenance-v2") or key in {"citation-support-decisions.json", "source-diversity-report.json"}
+                or key in {"image-analysis-result.json", "multimodal-critique.json"}
+            },
         }
 
     def reviewer_separation_errors(self) -> list[str]:

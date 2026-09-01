@@ -44,6 +44,46 @@ REVIEW_RESEARCH_CATEGORIES = {
     "genre_mismatch",
 }
 
+SPECIALIST_ROUTE_DEFINITIONS = {
+    "art_history": {
+        "agent_id": "swos.specialist.art-history",
+        "agent_path": "agents/research-grade/art-history.agent.json",
+        "stage": "art_history",
+        "requires_prior_stage": None,
+    },
+    "art_criticism": {
+        "agent_id": "swos.specialist.art-criticism",
+        "agent_path": "agents/research-grade/art-criticism.agent.json",
+        "stage": "art_criticism",
+        "requires_prior_stage": "art_history",
+    },
+}
+
+
+def specialist_route(discipline: str, *, promoted: bool = False) -> dict[str, Any]:
+    """Return the only permitted specialist route or its pack fallback."""
+
+    key = str(discipline).lower()
+    try:
+        definition = SPECIALIST_ROUTE_DEFINITIONS[key]
+    except KeyError as exc:
+        raise ValueError(f"unsupported specialist discipline: {discipline}") from exc
+    return {
+        "discipline": key,
+        "stage": definition["stage"],
+        "agent_id": definition["agent_id"],
+        "agent_path": definition["agent_path"],
+        "mode": "specialist" if promoted else "pack_only",
+        "fallback": "pack_only",
+        "fallback_operation": "DisciplineCritic.staged_multimodal_critique",
+        "permissions": ["view", "analyse"],
+        "provider_owned_verification": False,
+        "requires_prior_stage": definition["requires_prior_stage"],
+    }
+
+
+route_specialist = specialist_route
+
 
 def _legal_topic(topic: str) -> bool:
     lowered = topic.lower()
@@ -223,6 +263,7 @@ class AutonomousSWOS:
         retriever: Any | None = None,
         prose_transform: Callable[[str, ResearchRequest], tuple[str, dict[str, Any]]] | None = None,
         ontology_registry: DisciplineOntologyRegistry | None = None,
+        image_provider: Any | None = None,
     ) -> None:
         if broker is None:
             if stage_provider is None or retriever is None:
@@ -238,6 +279,7 @@ class AutonomousSWOS:
                 model_host="injected-host",
                 execution_mode="injected",
                 adapter_manifest=adapter_manifest,
+                image_provider=image_provider,
             )
         self.broker = broker
         self.ontology_registry = ontology_registry
@@ -433,6 +475,37 @@ class AutonomousSWOS:
         )
         run.record_diversity_report(report)
         return report
+
+    def image_analysis(self, run: WorkOrderRun, request: Any) -> Any:
+        """Record optional multimodal evidence while preserving text fallback."""
+
+        result = self.broker.image_analysis(request)
+        run.record_image_analysis(result)
+        return result
+
+    def staged_multimodal_critique(
+        self,
+        run: WorkOrderRun,
+        *,
+        research_plan: dict[str, Any],
+        evidence_matrix: dict[str, Any],
+        draft: dict[str, Any],
+        observations: Any = (),
+        interpretations: Any = (),
+        textual_evidence: Any = (),
+    ) -> Any:
+        """Execute the pack-only staged critique route and persist its evidence."""
+
+        result = self.broker.staged_multimodal_critique(
+            research_plan=research_plan,
+            evidence_matrix=evidence_matrix,
+            draft=draft,
+            observations=observations,
+            interpretations=interpretations,
+            textual_evidence=textual_evidence,
+        )
+        run.record_multimodal_critique(result)
+        return result
 
     def _fulfil(self, run: WorkOrderRun) -> None:
         order = run.work_order()

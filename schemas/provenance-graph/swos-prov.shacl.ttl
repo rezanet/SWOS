@@ -1,0 +1,7 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix swos: <https://swos.dev/prov#> .
+
+swos:EPGv2Shape a sh:NodeShape ;
+  sh:targetClass prov:Entity ;
+  sh:property [ sh:path swos:profileId ; sh:minCount 1 ] .

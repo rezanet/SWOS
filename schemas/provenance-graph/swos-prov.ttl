@@ -1,0 +1,11 @@
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix swos: <https://swos.dev/prov#> .
+
+swos:ResearchGradeEPGv2 a prov:Entity ;
+  swos:profileId "swos.prov-dm-round-trip.v2" ;
+  swos:requiresAbsoluteIri true ;
+  swos:preservesExtensions true ;
+  swos:preservesTypedLiterals true .
+
+swos:RoundTripCertificate a prov:Entity ;
+  swos:statusVocabulary "certified failed not_run" .

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/epg-2.0.schema.json",
+  "title": "SWOS Evidence Provenance Graph v2",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "base_iri", "namespaces", "scope", "entities", "activities", "agents", "relations", "bundles", "extensions", "integrity"],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "profile": {"type": "string", "minLength": 1},
+    "base_iri": {"type": "string", "format": "uri"},
+    "namespaces": {"type": "object", "additionalProperties": {"type": "string", "format": "uri"}},
+    "scope": {"type": "object"},
+    "entities": {"$ref": "#/$defs/nodes"},
+    "activities": {"$ref": "#/$defs/nodes"},
+    "agents": {"$ref": "#/$defs/nodes"},
+    "relations": {"type": "array", "items": {"type": "object", "required": ["type"], "properties": {"type": {"type": "string"}}, "additionalProperties": true}},
+    "bundles": {"type": "object", "additionalProperties": {"type": "object", "required": ["statements"], "properties": {"statements": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": true}},
+    "extensions": {"type": "array", "items": {"$ref": "#/$defs/extension"}},
+    "integrity": {"type": "object"}
+  },
+  "$defs": {
+    "nodes": {"type": "object", "additionalProperties": {"type": "object", "properties": {"type": {"type": "string"}, "attributes": {"type": "object", "additionalProperties": {"$ref": "#/$defs/typed"}}}, "additionalProperties": true}},
+    "typed": {"type": "object", "required": ["value"], "properties": {"value": {}, "datatype": {"type": "string", "format": "uri"}, "language": {"type": "string"}}, "additionalProperties": false},
+    "extension": {"type": "object", "required": ["subject", "predicate", "object", "object_type"], "properties": {"subject": {"type": "string", "format": "uri"}, "predicate": {"type": "string", "format": "uri"}, "object": {}, "object_type": {"enum": ["iri", "literal", "blank"]}, "datatype": {"type": "string", "format": "uri"}, "language": {"type": "string"}, "v1_relation": {"type": "object"}}, "additionalProperties": false}
+  }
+}

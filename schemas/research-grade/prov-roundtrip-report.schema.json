@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/prov-roundtrip-report.schema.json",
+  "title": "SWOS PROV round-trip certificate",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["certificate_version", "status", "profile", "source_sha", "input_digest", "paths", "legs", "oracle", "limitations", "limits"],
+  "properties": {
+    "certificate_version": {"const": "2.0.0"},
+    "status": {"enum": ["certified", "failed", "not_run"]},
+    "profile": {"type": "string"},
+    "source_sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "input_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "paths": {"type": "array", "items": {"type": "string"}},
+    "legs": {"type": "array", "items": {"type": "object"}},
+    "oracle": {"type": "object"},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "limits": {"type": "object"},
+    "created_at": {"type": "string"}
+  }
+}

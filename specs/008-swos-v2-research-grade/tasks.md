@@ -166,25 +166,25 @@ adversarial loss/invalid/resource-limit case fails.
 
 ### US4 tests first
 
-- [ ] T083 [P] [US4] Add EPG v2 statement/bundle/qualified-relation/typed-literal/extension schema tests in `tests/runtime/test_epg_v2.py`
-- [ ] T084 [P] [US4] Add PROV-JSON, PROV-N, and PROV-O/TriG parser/serializer losslessness tests in `tests/runtime/test_prov_interop.py`
-- [ ] T085 [P] [US4] Add constraints, SHACL, bundle, extension, semantic-equivalence, JCS, RDFC-1.0, and stable-fingerprint tests in `tests/runtime/test_prov_validation.py`
-- [ ] T086 [P] [US4] Add full matrix, second-round stability, independent-oracle, invalid-order/type/bundle/relation, and resource-limit tests in `tests/runtime/test_prov_certification.py`
+- [x] T083 [P] [US4] Add EPG v2 statement/bundle/qualified-relation/typed-literal/extension schema tests in `tests/runtime/test_epg_v2.py`
+- [x] T084 [P] [US4] Add PROV-JSON, PROV-N, and PROV-O/TriG parser/serializer losslessness tests in `tests/runtime/test_prov_interop.py`
+- [x] T085 [P] [US4] Add constraints, SHACL, bundle, extension, semantic-equivalence, JCS, RDFC-1.0, and stable-fingerprint tests in `tests/runtime/test_prov_validation.py`
+- [x] T086 [P] [US4] Add full matrix, second-round stability, independent-oracle, invalid-order/type/bundle/relation, and resource-limit tests in `tests/runtime/test_prov_certification.py`
 
 ### US4 implementation
 
-- [ ] T087 [P] [US4] Add EPG v2, the executable PROV profile, round-trip certificate schemas, and SWOS PROV vocabulary/shapes in `schemas/research-grade/epg-2.0.schema.json`, `schemas/research-grade/prov-profile.json`, `schemas/research-grade/prov-roundtrip-report.schema.json`, `schemas/provenance-graph/swos-prov.ttl`, and `schemas/provenance-graph/swos-prov.shacl.ttl`
-- [ ] T088 [US4] Implement canonical PROV document/bundle/qualified-relation/typed-extension model in `swos_runtime/prov_model.py`
-- [ ] T089 [US4] Implement v1 EPG compatibility mapping and lossless EPG v2 conversion in `swos_runtime/prov_interop.py`
-- [ ] T090 [US4] Implement PROV-JSON, PROV-N, and PROV-O/TriG parse/serialize with absolute namespace policy in `swos_runtime/prov_interop.py`
-- [ ] T091 [US4] Implement syntax, PROV-CONSTRAINTS, SHACL, semantic normal form, extension preservation, JCS/RDFC/PROV-N fingerprints, and limits in `swos_runtime/prov_validation.py`
-- [ ] T092 [US4] Implement conversion matrix, per-leg artifacts, assertion comparison, stable second pass, and certificate generation in `tools/certify_prov_roundtrip.py`
+- [x] T087 [P] [US4] Add EPG v2, the executable PROV profile, round-trip certificate schemas, and SWOS PROV vocabulary/shapes in `schemas/research-grade/epg-2.0.schema.json`, `schemas/research-grade/prov-profile.json`, `schemas/research-grade/prov-roundtrip-report.schema.json`, `schemas/provenance-graph/swos-prov.ttl`, and `schemas/provenance-graph/swos-prov.shacl.ttl`
+- [x] T088 [US4] Implement canonical PROV document/bundle/qualified-relation/typed-extension model in `swos_runtime/prov_model.py`
+- [x] T089 [US4] Implement v1 EPG compatibility mapping and lossless EPG v2 conversion in `swos_runtime/prov_interop.py`
+- [x] T090 [US4] Implement PROV-JSON, PROV-N, and PROV-O/TriG parse/serialize with absolute namespace policy in `swos_runtime/prov_interop.py`
+- [x] T091 [US4] Implement syntax, PROV-CONSTRAINTS, SHACL, semantic normal form, extension preservation, JCS/RDFC/PROV-N fingerprints, and limits in `swos_runtime/prov_validation.py`
+- [x] T092 [US4] Implement conversion matrix, per-leg artifacts, assertion comparison, stable second pass, and certificate generation in `tools/certify_prov_roundtrip.py`
 - [ ] T093 [P] [US4] Add permitted checksummed valid/invalid/large/adversarial fixtures and manifest in `evals/fixtures/provenance/`
 - [ ] T094 [US4] Pin ProvToolbox identity/licence/digest in `benchmark/provenance/oracle-manifest.json` and run that exact independent oracle in `.github/workflows/prov-certification.yml`
 - [ ] T095 [US4] Add explicit parser/canonicalization CPU-memory-time bounds in `benchmark/provenance/resource-limits.json` plus 1k/10k/100k and hostile blank-node performance/resource corpus in `benchmark/provenance/manifest.json`
-- [ ] T096 [US4] Integrate certified EPG v2 exports into RPM exchange, finalization, and work-order host bundles in `swos_runtime/rpm_exchange.py`, `swos_runtime/finalizer.py`, and `swos_runtime/work_orders.py`
-- [ ] T097 [US4] Add certificate/oracle/limitation artifacts to evaluation subject and audit pack in `swos_runtime/evaluation.py` and `tools/assemble_research_grade_audit_pack.py`
-- [ ] T098 [US4] Document the accurate PROV-DM/PROV-N/PROV-O and PROV-JSON Member Submission claim in `docs/architecture/research-grade-provenance.md`
+- [x] T096 [US4] Integrate certified EPG v2 exports into RPM exchange, finalization, and work-order host bundles in `swos_runtime/rpm_exchange.py`, `swos_runtime/finalizer.py`, and `swos_runtime/work_orders.py`
+- [x] T097 [US4] Add certificate/oracle/limitation artifacts to evaluation subject and audit pack in `swos_runtime/evaluation.py` and `tools/assemble_research_grade_audit_pack.py`
+- [x] T098 [US4] Document the accurate PROV-DM/PROV-N/PROV-O and PROV-JSON Member Submission claim in `docs/architecture/research-grade-provenance.md`
 
 **Checkpoint**: SC-007 passes with zero semantic loss and an independent exact-head oracle report.
 
@@ -200,28 +200,28 @@ without exact matching evidence.
 
 ### US5 tests first
 
-- [ ] T099 [P] [US5] Add object/media/inspection, separate analyse/transform/create-derivative rights, conservative inheritance, lineage/content-credential, and structured accessibility/invalidation tests in `tests/runtime/test_media.py`
-- [ ] T100 [P] [US5] Add IIIF pixel/percent and bounded SVG normalization, digest, dimension, ambiguity, and out-of-bounds tests in `tests/runtime/test_region_selectors.py`
-- [ ] T101 [P] [US5] Add complete/partial/insufficient/denied/error, resource, deterministic fake, and real OpenAI adapter conformance tests in `tests/runtime/test_image_analysis.py`
-- [ ] T102 [P] [US5] Add observation/interpretation separation, weakest-leg cross-modal support, false-attribution/originality, and multi-view limitation tests in `tests/runtime/test_cross_modal_support.py`
-- [ ] T103 [P] [US5] Add default-off, exact-head/artifact mismatch, improvement, safety regression, expiry, approval, and rollback tests in `tests/runtime/test_capability_promotion.py`
+- [x] T099 [P] [US5] Add object/media/inspection, separate analyse/transform/create-derivative rights, conservative inheritance, lineage/content-credential, and structured accessibility/invalidation tests in `tests/runtime/test_media.py`
+- [x] T100 [P] [US5] Add IIIF pixel/percent and bounded SVG normalization, digest, dimension, ambiguity, and out-of-bounds tests in `tests/runtime/test_region_selectors.py`
+- [x] T101 [P] [US5] Add complete/partial/insufficient/denied/error, resource, deterministic fake, and real OpenAI adapter conformance tests in `tests/runtime/test_image_analysis.py`
+- [x] T102 [P] [US5] Add observation/interpretation separation, weakest-leg cross-modal support, false-attribution/originality, and multi-view limitation tests in `tests/runtime/test_cross_modal_support.py`
+- [x] T103 [P] [US5] Add default-off, exact-head/artifact mismatch, improvement, safety regression, expiry, approval, and rollback tests in `tests/runtime/test_capability_promotion.py`
 
 ### US5 implementation
 
-- [ ] T104 [P] [US5] Add object, media, inspection, accessibility, observation, cross-modal, analysis-result, specialist-agent, and promotion schemas in `schemas/research-grade/object-record.schema.json`, `schemas/research-grade/media-asset.schema.json`, `schemas/research-grade/object-inspection.schema.json`, `schemas/research-grade/accessibility-record.schema.json`, `schemas/research-grade/visual-observation.schema.json`, `schemas/research-grade/cross-modal-support.schema.json`, `schemas/research-grade/image-analysis-result.schema.json`, `schemas/research-grade/specialist-agent.schema.json`, and `schemas/research-grade/capability-promotion.schema.json`
-- [ ] T105 [US5] Implement object/media/inspection separation, byte identity, capture/rendition/derivative lineage, separate analyse/transform/create-derivative rights with restrictive inheritance, IIIF 3 ingest, structured accessibility invalidation, and export redaction in `swos_runtime/media.py`
-- [ ] T106 [US5] Implement digest-bound IIIF pixel/percent and bounded SVG selector normalization in `swos_runtime/media.py`
-- [ ] T107 [US5] Implement provider-neutral bounded 2D analysis protocol and deterministic fake with explicit statuses in `swos_runtime/image_analysis.py`
-- [ ] T108 [US5] Implement observation/interpretation separation, cross-modal weakest-leg policy, multi-view limits, and attribution/originality guardrails in `swos_runtime/image_analysis.py`
-- [ ] T109 [US5] Integrate image analysis through broker/work orders/orchestrator/finalizer/EPG without provider-owned verification in `swos_runtime/broker.py`, `swos_runtime/work_orders.py`, `swos_runtime/orchestrator.py`, and `swos_runtime/finalizer.py`
-- [ ] T110 [US5] Integrate staged art-history then art-criticism pack-assisted critique with ontology criteria in `swos_runtime/discipline_critique.py`
+- [x] T104 [P] [US5] Add object, media, inspection, accessibility, observation, cross-modal, analysis-result, specialist-agent, and promotion schemas in `schemas/research-grade/object-record.schema.json`, `schemas/research-grade/media-asset.schema.json`, `schemas/research-grade/object-inspection.schema.json`, `schemas/research-grade/accessibility-record.schema.json`, `schemas/research-grade/visual-observation.schema.json`, `schemas/research-grade/cross-modal-support.schema.json`, `schemas/research-grade/image-analysis-result.schema.json`, `schemas/research-grade/specialist-agent.schema.json`, and `schemas/research-grade/capability-promotion.schema.json`
+- [x] T105 [US5] Implement object/media/inspection separation, byte identity, capture/rendition/derivative lineage, separate analyse/transform/create-derivative rights with restrictive inheritance, IIIF 3 ingest, structured accessibility invalidation, and export redaction in `swos_runtime/media.py`
+- [x] T106 [US5] Implement digest-bound IIIF pixel/percent and bounded SVG selector normalization in `swos_runtime/media.py`
+- [x] T107 [US5] Implement provider-neutral bounded 2D analysis protocol and deterministic fake with explicit statuses in `swos_runtime/image_analysis.py`
+- [x] T108 [US5] Implement observation/interpretation separation, cross-modal weakest-leg policy, multi-view limits, and attribution/originality guardrails in `swos_runtime/image_analysis.py`
+- [x] T109 [US5] Integrate image analysis through broker/work orders/orchestrator/finalizer/EPG without provider-owned verification in `swos_runtime/broker.py`, `swos_runtime/work_orders.py`, `swos_runtime/orchestrator.py`, and `swos_runtime/finalizer.py`
+- [x] T110 [US5] Integrate staged art-history then art-criticism pack-assisted critique with ontology criteria in `swos_runtime/discipline_critique.py`
 - [ ] T111 [P] [US5] Build at least 60 distinct objects/works and 96 rights-cleared renditions plus region/cross-modal/discipline/accessibility/adversarial manifests, per-asset source/right URI/digest/allowed-use/attribution statements, guidelines, and mandatory `DATA-LICENCE.md` in `evals/fixtures/multimodal/`
-- [ ] T112 [US5] Implement raw case, agreement, region, cross-modal, false-originality, over-association, valid-reviewed-accessibility completeness numerator/denominator, stability, object/rendition minima, and regression metrics in `tools/run_multimodal_evals.py`
-- [ ] T113 [US5] Implement and register one real opt-in OpenAI image-input provider adapter and v2 capability declaration with bounded requests, purpose-rights enforcement, exact model/config/response evidence, and contract status mapping in `swos_runtime/image_analysis_openai.py` and `contracts/capability-contract/capabilities-v2.json`
-- [ ] T114 [US5] Create versioned art-history and art-criticism specialist-agent definitions, least-privilege image/object tool permissions, role-separated orchestrator routes, and executable pack-only fallback in `agents/research-grade/art-history.agent.json`, `agents/research-grade/art-criticism.agent.json`, and `swos_runtime/orchestrator.py`
-- [ ] T115 [US5] Add optional live exact-head provider workflow with `NOT_RUN` semantics and immutable outputs in `.github/workflows/multimodal-evaluation.yml`
-- [ ] T116 [US5] Implement paired promotion assess/approve/commit/default-off/rollback with identical non-agent artifacts, predetermined draws, >=0.08 improvement, lower 95% confidence bound above zero, mandatory successful live evidence, and exact artifact binding in `swos_runtime/image_analysis.py`
-- [ ] T117 [US5] Document rights limitations, supported 2D scope, non-attribution, accessibility, provider, and promotion boundaries in `docs/architecture/research-grade-multimodal.md`
+- [x] T112 [US5] Implement raw case, agreement, region, cross-modal, false-originality, over-association, valid-reviewed-accessibility completeness numerator/denominator, stability, object/rendition minima, and regression metrics in `tools/run_multimodal_evals.py`
+- [x] T113 [US5] Implement and register one real opt-in OpenAI image-input provider adapter and v2 capability declaration with bounded requests, purpose-rights enforcement, exact model/config/response evidence, and contract status mapping in `swos_runtime/image_analysis_openai.py` and `contracts/capability-contract/capabilities-v2.json`
+- [x] T114 [US5] Create versioned art-history and art-criticism specialist-agent definitions, least-privilege image/object tool permissions, role-separated orchestrator routes, and executable pack-only fallback in `agents/research-grade/art-history.agent.json`, `agents/research-grade/art-criticism.agent.json`, and `swos_runtime/orchestrator.py`
+- [x] T115 [US5] Add optional live exact-head provider workflow with `NOT_RUN` semantics and immutable outputs in `.github/workflows/multimodal-evaluation.yml`
+- [x] T116 [US5] Implement paired promotion assess/approve/commit/default-off/rollback with identical non-agent artifacts, predetermined draws, >=0.08 improvement, lower 95% confidence bound above zero, mandatory successful live evidence, and exact artifact binding in `swos_runtime/image_analysis.py`
+- [x] T117 [US5] Document rights limitations, supported 2D scope, non-attribution, accessibility, provider, and promotion boundaries in `docs/architecture/research-grade-multimodal.md`
 
 **Checkpoint**: SC-008 and SC-009 pass or agent promotion remains disabled with a named blocker.
 
@@ -229,8 +229,8 @@ without exact matching evidence.
 
 **Purpose**: prove one complete release candidate at one immutable head.
 
-- [ ] T118 [P] Add end-to-end three-project research-to-memory-to-critique-to-finalization-to-PROV-to-public-proof test in `tests/runtime/test_research_grade_end_to_end.py`
-- [ ] T119 [P] Add cross-story classification/rights/ontology/evidence identity preservation tests in `tests/runtime/test_research_grade_integrity.py`
+- [x] T118 [P] Add end-to-end three-project research-to-memory-to-critique-to-finalization-to-PROV-to-public-proof test in `tests/runtime/test_research_grade_end_to_end.py`
+- [x] T119 [P] Add cross-story classification/rights/ontology/evidence identity preservation tests in `tests/runtime/test_research_grade_integrity.py`
 - [ ] T120 Run all existing v1.1/runtime/prose/eight-plane tests and record exact-head commands/results in `artifacts/research-grade/regression-report.json`
 - [ ] T121 Run ontology, RPM, classifier, diversity, critique, PROV, and multimodal locked evaluations and record immutable indexes in `artifacts/research-grade/evaluation-index.json`
 - [ ] T122 Run Ruff, schema/contract, coverage, security, portability, offline, deterministic-stability, and manifest checks and record results in `artifacts/research-grade/quality-report.json`

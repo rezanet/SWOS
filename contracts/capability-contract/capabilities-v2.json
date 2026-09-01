@@ -152,6 +152,10 @@
       "contract": "swos.multimodal-analysis.v2",
       "input": "rights-checked media asset + purpose + selector + scope",
       "output": "observations, interpretations, accessibility data, and status",
+      "statuses": ["complete", "partial", "insufficient", "denied", "error"],
+      "contract_status_mapping": {"executed": "provider_completed", "not_run": "NOT_RUN", "denied": "rights_or_policy_denied", "error": "provider_error"},
+      "bounded_request": {"max_assets": 8, "max_observations": 64, "max_seconds": 60, "bytes_are_not_retained_by_core": true},
+      "purpose_rights": ["view", "analyse", "transform", "create_derivative", "quote", "cache", "export", "redistribute"],
       "assurance": ["purpose_rights", "observation_interpretation_separation", "selector_bound", "identity_non_claim", "abstention"],
       "provenance": ["asset_digest", "model", "request_digest", "response_digest", "rights_digest", "runtime"],
       "failure": "abstain_and_preserve_text_only"

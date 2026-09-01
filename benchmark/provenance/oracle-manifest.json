@@ -1,0 +1,10 @@
+{
+  "schema_version": "2.0.0",
+  "status": "not_run",
+  "implementation": "ProvToolbox",
+  "version": null,
+  "licence": null,
+  "artifact_uri": null,
+  "artifact_sha256": null,
+  "reason": "The independently approved ProvToolbox artifact is not installed or pinned in this checkout."
+}

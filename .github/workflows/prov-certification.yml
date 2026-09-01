@@ -1,0 +1,39 @@
+name: Research Grade PROV certification
+
+on:
+  workflow_dispatch:
+    inputs:
+      epg:
+        description: "Repository-relative EPG v2 input"
+        required: true
+      oracle:
+        description: "Repository-relative independent oracle manifest"
+        required: true
+        default: "benchmark/provenance/oracle-manifest.json"
+
+permissions:
+  contents: read
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install runtime
+        run: python -m pip install --disable-pip-version-check --no-input -e .
+      - name: Run exact conversion matrix
+        run: |
+          python tools/certify_prov_roundtrip.py \
+            --epg "${{ inputs.epg }}" \
+            --profile schemas/research-grade/prov-profile.json \
+            --formats prov-json prov-n prov-o-trig \
+            --oracle-manifest "${{ inputs.oracle }}" \
+            --limits benchmark/provenance/resource-limits.json \
+            --artifact-dir artifacts/research-grade/provenance \
+            --certificate-out artifacts/research-grade/provenance/roundtrip-certificate.json

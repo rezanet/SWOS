@@ -90,6 +90,12 @@ def assemble_audit_pack(
         "code_sha": code_sha,
         "artifact_count": len(entries),
         "artifacts": entries,
+        "research_grade_artifacts": {
+            "provenance": [entry["path"] for entry in entries if entry["path"].startswith("provenance")],
+            "citation": [entry["path"] for entry in entries if "citation" in entry["path"]],
+            "diversity": [entry["path"] for entry in entries if "diversity" in entry["path"]],
+            "oracle": [entry["path"] for entry in entries if "oracle" in entry["path"]],
+        },
     }
     if metadata:
         manifest["metadata"] = metadata

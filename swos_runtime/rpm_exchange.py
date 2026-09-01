@@ -162,6 +162,9 @@ class RPMExchange:
         approval: HumanApproval,
         limits: BundleLimits,
         output_dir: str | Path,
+        *,
+        epg_v2: Any | None = None,
+        epg_certificate: Any | None = None,
     ) -> ExportReceipt:
         self.service._binding(scope)
         output = Path(output_dir)
@@ -213,6 +216,8 @@ class RPMExchange:
             + "\n",
         )
         self._write_file(decisions_dir / "export-approval.json", canonical_json(approval.to_dict()) + "\n")
+        if epg_v2 is not None:
+            self._write_certified_epg(output / "provenance", epg_v2, epg_certificate)
         self._write_file(
             output / "limitations.json",
             canonical_json(
@@ -261,6 +266,40 @@ class RPMExchange:
             files=tuple(sorted(checksums)),
             redacted_items=tuple(sorted(redacted)),
         )
+
+    @staticmethod
+    def _write_certified_epg(directory: Path, document: Any, certificate: Any | None) -> None:
+        """Add EPG v2 only when a matching independent certificate is certified."""
+
+        from .prov_validation import canonical_fingerprint, validate_prov
+
+        payload = document if hasattr(document, "to_dict") else document
+        if not hasattr(document, "semantic_normal_form"):
+            from .prov_model import ProvDocument
+
+            document = ProvDocument(**dict(payload or {}))
+        certificate_payload = certificate.to_dict() if hasattr(certificate, "to_dict") else dict(certificate or {})
+        if certificate_payload.get("status") != "certified":
+            raise ExchangeError("certified EPG v2 export requires an independent certified certificate")
+        validation = validate_prov(document)
+        fingerprint = canonical_fingerprint(document)
+        if validation.status != "valid" or certificate_payload.get("input_digest") != fingerprint.semantic_digest:
+            raise ExchangeError("EPG v2 certificate does not match a valid document fingerprint")
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / "epg-v2.json").write_text(canonical_json(document.to_dict()) + "\n", encoding="utf-8")
+        (directory / "epg-v2-fingerprint.json").write_text(canonical_json(fingerprint.to_dict()) + "\n", encoding="utf-8")
+        (directory / "epg-v2-certificate.json").write_text(canonical_json(certificate_payload) + "\n", encoding="utf-8")
+
+    def export_certified_epg(self, document: Any, certificate: Any, output_dir: str | Path) -> str:
+        """Export a standalone certified EPG v2 provenance set."""
+
+        output = Path(output_dir)
+        if output.exists() and any(output.iterdir()):
+            raise ExchangeError("EPG export destination is not empty")
+        self._write_certified_epg(output, document, certificate)
+        from .prov_validation import canonical_fingerprint
+
+        return canonical_fingerprint(document).semantic_digest
 
     @staticmethod
     def _write_file(path: Path, content: str) -> None:
@@ -440,8 +479,8 @@ class RPMExchange:
         )
 
 
-def export_bundle(service: ResearchMemoryService, scope: ResearchScope, selection: ExportSelection, approval: HumanApproval, limits: BundleLimits, output_dir: str | Path) -> ExportReceipt:
-    return RPMExchange(service).export_bundle(scope, selection, approval, limits, output_dir)
+def export_bundle(service: ResearchMemoryService, scope: ResearchScope, selection: ExportSelection, approval: HumanApproval, limits: BundleLimits, output_dir: str | Path, *, epg_v2: Any | None = None, epg_certificate: Any | None = None) -> ExportReceipt:
+    return RPMExchange(service).export_bundle(scope, selection, approval, limits, output_dir, epg_v2=epg_v2, epg_certificate=epg_certificate)
 
 
 def inspect_import(service: ResearchMemoryService, bundle: str | Path, *, destination: ResearchScope, limits: BundleLimits, as_of: Any | None = None) -> ImportInspection:

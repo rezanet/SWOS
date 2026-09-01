@@ -167,6 +167,9 @@ class WorkOrderRun:
             "revision_count": 0,
             "research_expansions": [],
             "diversity_requirement": None,
+            "epg_v2_export": None,
+            "image_analysis_result": None,
+            "multimodal_critique": None,
             "submissions": [],
             "history": [],
         }
@@ -661,6 +664,51 @@ class WorkOrderRun:
         self._save()
         self._persist_work_order()
 
+    def bind_epg_v2(self, document: Any, fingerprint: Any, certificate: Any | None = None) -> None:
+        """Bind a provenance v2 export and its immutable fingerprint to the host run."""
+
+        payload = document.to_dict() if hasattr(document, "to_dict") else dict(document or {})
+        fingerprint_payload = fingerprint.to_dict() if hasattr(fingerprint, "to_dict") else dict(fingerprint or {})
+        if payload.get("schema_version") != "2.0.0" or not fingerprint_payload.get("semantic_digest"):
+            raise WorkOrderError("EPG v2 export requires a versioned document and fingerprint")
+        record = {"document": payload, "fingerprint": fingerprint_payload}
+        if certificate is not None:
+            record["certificate"] = certificate.to_dict() if hasattr(certificate, "to_dict") else dict(certificate)
+        self.state["epg_v2_export"] = record
+        self.state.setdefault("history", []).append(
+            {"event": "epg_v2_bound", "semantic_digest": fingerprint_payload["semantic_digest"], "certificate_status": (record.get("certificate") or {}).get("status", "unavailable")}
+        )
+        self._save()
+        self._persist_work_order()
+
+    def record_image_analysis(self, result: Any) -> None:
+        """Attach multimodal result evidence without granting verification."""
+
+        payload = result.to_dict() if hasattr(result, "to_dict") else dict(result or {})
+        if payload.get("status") not in {"complete", "partial", "insufficient", "denied", "error"}:
+            raise WorkOrderError("image analysis result has an invalid status")
+        self.state["image_analysis_result"] = payload
+        self.state.setdefault("history", []).append(
+            {"event": "image_analysis_recorded", "status": payload["status"], "request_digest": payload.get("request_digest")}
+        )
+        self._save()
+        self._persist_work_order()
+
+    def record_multimodal_critique(self, result: Any) -> None:
+        """Persist staged pack critique without turning it into verification."""
+
+        payload = result.to_dict() if hasattr(result, "to_dict") else dict(result or {})
+        if tuple(payload.get("stage_order") or ()) != ("art_history", "art_criticism"):
+            raise WorkOrderError("multimodal critique must use the fixed art-history/art-criticism order")
+        if payload.get("pack_only_fallback") is not True:
+            raise WorkOrderError("multimodal critique must retain the pack-only fallback")
+        self.state["multimodal_critique"] = payload
+        self.state.setdefault("history", []).append(
+            {"event": "multimodal_critique_recorded", "stage_order": list(payload["stage_order"]), "review_state": payload.get("review_state", "machine_proposed")}
+        )
+        self._save()
+        self._persist_work_order()
+
     def status(self) -> dict[str, Any]:
         return {
             "protocol_version": PROTOCOL_VERSION,
@@ -748,6 +796,9 @@ class WorkOrderRun:
                 "research_expansions": list(self.state.get("research_expansions", [])),
                 "diversity_requirement": self.state.get("diversity_requirement"),
                 "diversity_report": self.state.get("diversity_report"),
+                "epg_v2_export": self.state.get("epg_v2_export"),
+                "image_analysis_result": self.state.get("image_analysis_result"),
+                "multimodal_critique": self.state.get("multimodal_critique"),
             },
         }
         path = Path(output_path) if output_path else self.run_dir / "host-bundle.json"

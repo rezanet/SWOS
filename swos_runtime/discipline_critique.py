@@ -176,6 +176,55 @@ class AggregatedCritiqueReport:
         }
 
 
+@dataclass(frozen=True)
+class StagedMultimodalCritique:
+    """Pack-only art-history then art-criticism result.
+
+    The staged result is deliberately a SWOS-owned orchestration record.  It
+    carries provider observations into both pack evaluations without allowing
+    an observation or interpretation to become a verified scholarly claim.
+    """
+
+    stage_order: tuple[str, ...]
+    art_history: DisciplineCritiqueReport
+    art_criticism: DisciplineCritiqueReport
+    aggregate: AggregatedCritiqueReport
+    observation_ids: tuple[str, ...] = ()
+    interpretation_ids: tuple[str, ...] = ()
+    limitations: tuple[str, ...] = ()
+    review_state: str = "machine_proposed"
+    pack_only_fallback: bool = True
+
+    @property
+    def sections(self) -> tuple[DisciplineCritiqueReport, ...]:
+        return (self.art_history, self.art_criticism)
+
+    @property
+    def blocking(self) -> bool:
+        return self.aggregate.blocking
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "stage_order": list(self.stage_order),
+            "art_history": self.art_history.to_dict(),
+            "art_criticism": self.art_criticism.to_dict(),
+            "aggregate": self.aggregate.to_dict(),
+            "observation_ids": list(self.observation_ids),
+            "interpretation_ids": list(self.interpretation_ids),
+            "limitations": list(self.limitations),
+            "review_state": self.review_state,
+            "pack_only_fallback": self.pack_only_fallback,
+        }
+
+
+def _object_mapping(value: Any) -> dict[str, Any]:
+    if isinstance(value, Mapping):
+        return dict(value)
+    if hasattr(value, "to_dict"):
+        return dict(value.to_dict())
+    return dict(vars(value))
+
+
 def _criterion_inputs(
     criterion_iri: str,
     evidence_matrix: Mapping[str, Any],
@@ -337,6 +386,144 @@ class DisciplineCritic:
             mandatory_failures=tuple(dict.fromkeys(mandatory_failures)),
             limitations=tuple(dict.fromkeys(limitations)),
         )
+
+    def staged_multimodal_critique(
+        self,
+        *,
+        research_plan: Mapping[str, Any],
+        evidence_matrix: Mapping[str, Any],
+        draft: Mapping[str, Any],
+        observations: Iterable[Any] = (),
+        interpretations: Iterable[Any] = (),
+        textual_evidence: Iterable[Any] = (),
+    ) -> StagedMultimodalCritique:
+        """Run the two permitted art packs in a fixed, non-agent sequence.
+
+        Only reproducibly anchored observations are added as evidence refs. An
+        interpretation is carried as a separate input and never promoted to a
+        criterion result by this helper.
+        """
+
+        if self.registry is None:
+            raise ValueError("a registry is required for staged multimodal critique")
+        history = self.registry.profile("art_history")
+        criticism = self.registry.profile("art_criticism")
+        observation_data = [_object_mapping(item) for item in observations]
+        interpretation_data = [_object_mapping(item) for item in interpretations]
+        textual_data = [_object_mapping(item) for item in textual_evidence]
+        observation_ids = tuple(
+            str(item.get("observation_id") or item.get("id") or "")
+            for item in observation_data
+            if str(item.get("observation_id") or item.get("id") or "")
+        )
+        interpretation_ids = tuple(
+            str(item.get("interpretation_id") or item.get("id") or "")
+            for item in interpretation_data
+            if str(item.get("interpretation_id") or item.get("id") or "")
+        )
+        limitations: list[str] = []
+        anchored: list[dict[str, Any]] = []
+        for item in observation_data:
+            observation_id = str(item.get("observation_id") or item.get("id") or "")
+            selector = item.get("selector")
+            selector_data = _object_mapping(selector) if selector is not None else {}
+            normalized = selector_data.get("normalized")
+            if not observation_id or not isinstance(normalized, (list, tuple)) or len(normalized) != 4:
+                if observation_id:
+                    limitations.append(f"observation_without_reproducible_region:{observation_id}")
+                continue
+            anchored.append(item)
+        if observation_data and not anchored:
+            limitations.append("no_reproducibly_anchored_observations")
+        if not observation_data:
+            limitations.append("no_visual_observations")
+        for item in interpretation_data:
+            if not item.get("observation_ids") and not item.get("textual_evidence_ids"):
+                limitations.append(
+                    "interpretation_without_observation_or_textual_evidence:"
+                    + str(item.get("interpretation_id") or item.get("id") or "unknown")
+                )
+
+        observation_refs = ["observation:" + str(item.get("observation_id") or item.get("id")) for item in anchored]
+        textual_refs = [
+            "text:" + str(item.get("evidence_id") or item.get("id") or index)
+            for index, item in enumerate(textual_data, 1)
+        ]
+
+        def augmented_matrix(extra_rows: list[dict[str, Any]]) -> dict[str, Any]:
+            value = dict(evidence_matrix)
+            rows = list(value.get("rows", value.get("evidence", [])) or [])
+            value["rows"] = rows + extra_rows
+            return value
+
+        history_rows = []
+        if observation_refs:
+            history_rows.append(
+                {
+                    "criterion_iri": "https://swos.example.org/criterion/art-history/visual-anchor",
+                    "evidence_refs": [*observation_refs, *textual_refs],
+                    "claim_refs": [
+                        str(claim_id)
+                        for item in anchored
+                        for claim_id in item.get("supports_claim_ids", item.get("claim_ids", []))
+                    ],
+                    "status": "supported",
+                }
+            )
+            history_rows.append(
+                {
+                    "criterion_iri": "https://swos.example.org/criterion/art-history/object-description",
+                    "evidence_refs": observation_refs,
+                    "status": "supported",
+                }
+            )
+        history_report = self.critique(
+            discipline=history,
+            research_plan=research_plan,
+            evidence_matrix=augmented_matrix(history_rows),
+            draft=draft,
+        )
+
+        criticism_rows = list(history_rows)
+        if history_report.report_id:
+            criticism_rows.append(
+                {
+                    "criterion_iri": "https://swos.example.org/criterion/art-criticism/description",
+                    "evidence_refs": ["critique:" + history_report.report_id, *observation_refs, *textual_refs],
+                    "status": "supported" if observation_refs or textual_refs else "missing",
+                }
+            )
+        criticism_rows.append(
+            {
+                "criterion_iri": "https://swos.example.org/criterion/art-criticism/judgement",
+                "evidence_refs": ["critique:" + history_report.report_id] if history_report.report_id else [],
+                "status": "supported" if observation_refs and not history_report.blocking else "missing",
+            }
+        )
+        criticism_draft = dict(draft)
+        criticism_draft["pack_assisted_art_history_report_id"] = history_report.report_id
+        criticism_draft["multimodal_observation_ids"] = list(observation_ids)
+        criticism_report = self.critique(
+            discipline=criticism,
+            research_plan=research_plan,
+            evidence_matrix=augmented_matrix(criticism_rows),
+            draft=criticism_draft,
+        )
+        aggregate = aggregate_critiques((history_report, criticism_report))
+        return StagedMultimodalCritique(
+            stage_order=("art_history", "art_criticism"),
+            art_history=history_report,
+            art_criticism=criticism_report,
+            aggregate=aggregate,
+            observation_ids=observation_ids,
+            interpretation_ids=interpretation_ids,
+            limitations=tuple(dict.fromkeys([*limitations, *aggregate.limitations])),
+        )
+
+    # Explicit aliases keep integrations descriptive while preserving one
+    # implementation and one fixed route.
+    multimodal_critique = staged_multimodal_critique
+    staged_critique = staged_multimodal_critique
 
 
 def aggregate_critiques(reports: Iterable[DisciplineCritiqueReport]) -> AggregatedCritiqueReport:

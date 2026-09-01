@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/2.0.0/research-grade/visual-observation.schema.json",
+  "title": "SWOS visual observation",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["observation_id", "object_id", "asset_id", "asset_digest", "description", "origin", "selector", "provider", "model", "modality", "provenance"],
+  "properties": {
+    "observation_id": {"type": "string", "minLength": 1},
+    "object_id": {"type": "string", "minLength": 1},
+    "asset_id": {"type": "string", "minLength": 1},
+    "asset_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "description": {"type": "string"},
+    "origin": {"enum": ["machine", "human", "machine_assisted"]},
+    "selector": {"type": "object", "required": ["selector_type", "asset_digest", "normalized", "selector_digest"], "properties": {"selector_type": {"type": "string"}, "original": {}, "asset_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "asset_width": {"type": ["integer", "null"]}, "asset_height": {"type": ["integer", "null"]}, "normalized": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "integer"}}, "validation_status": {"type": "string"}, "selector_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": true},
+    "supports_claim_ids": {"type": "array", "items": {"type": "string"}},
+    "provider": {"type": "string"},
+    "model": {"type": "string"},
+    "modality": {"const": "image"},
+    "confidence": {"type": ["number", "null"]},
+    "uncertainty": {"type": "array", "items": {"type": "string"}},
+    "view_limitations": {"type": "array", "items": {"type": "string"}},
+    "review_status": {"type": "string"},
+    "epg_activity_id": {"type": ["string", "null"]},
+    "provenance": {"type": "object"}
+  }
+}
