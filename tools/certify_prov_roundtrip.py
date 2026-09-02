@@ -16,8 +16,14 @@ from swos_runtime.prov_model import ResourceLimits  # noqa: E402
 from swos_runtime.prov_validation import certify_round_trip  # noqa: E402
 
 
-def _load(path: Path) -> dict[str, Any]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
+def _load(path: Path, limits: ResourceLimits | None = None) -> dict[str, Any]:
+    if limits is None:
+        raw = path.read_bytes()
+    else:
+        with path.open("rb") as stream:
+            raw = stream.read(limits.max_bytes + 1)
+        limits.check_bytes(len(raw))
+    payload = json.loads(raw.decode("utf-8"))
     if not isinstance(payload, Mapping):
         raise ValueError(f"PROV certification input must be a JSON object: {path}")
     return dict(payload)
@@ -57,20 +63,22 @@ def certify(
 ) -> dict[str, Any]:
     if (epg_path is None) == (corpus_manifest is None):
         raise ValueError("exactly one of --epg and --corpus-manifest is required")
-    profile = _load(profile_path)
-    oracle = _load(oracle_path)
     limits = _limits(limits_path)
+    profile = _load(profile_path, limits)
+    oracle = _load(oracle_path, limits)
     if tuple(formats) != tuple(dict.fromkeys(formats)):
         raise ValueError("PROV formats must not be duplicated")
     if not set(formats).issubset({"prov-json", "prov-n", "prov-o-trig"}):
         raise ValueError("unsupported PROV format in certification matrix")
     artifact_dir.mkdir(parents=True, exist_ok=True)
     if epg_path is not None:
-        certificate = certify_round_trip(_load(epg_path), formats, oracle=oracle, limits=limits)
+        certificate = certify_round_trip(
+            _load(epg_path, limits), formats, oracle=oracle, limits=limits
+        )
         report = certificate.to_dict()
         report["profile_manifest"] = profile
     else:
-        manifest = _load(corpus_manifest)
+        manifest = _load(corpus_manifest, limits)
         cases = manifest.get("cases")
         if not isinstance(cases, list):
             raise ValueError("PROV corpus manifest requires a cases list")
@@ -86,7 +94,7 @@ def certify(
                 raise ValueError(f"PROV corpus EPG does not exist: {case_path}")
             certificates.append(
                 certify_round_trip(
-                    _load(case_path), formats, oracle=oracle, limits=limits
+                    _load(case_path, limits), formats, oracle=oracle, limits=limits
                 ).to_dict()
             )
         statuses = {str(item.get("status")) for item in certificates}

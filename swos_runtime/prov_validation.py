@@ -143,18 +143,25 @@ def canonical_fingerprint(
     if not isinstance(document, ProvDocument):
         raise ValueError("canonical_fingerprint requires a ProvDocument")
     limits = limits or ResourceLimits()
-    limits.check_document(document)
-    normal = document.semantic_normal_form(max_depth=limits.max_depth)
-    jcs = hashlib.sha256(_json_bytes(normal)).hexdigest()
-    rdf = hashlib.sha256("\n".join(_rdf_statements(document)).encode("utf-8")).hexdigest()
-    provn = hashlib.sha256(
-        "\n".join(
-            sorted(
-                json.dumps(item, sort_keys=True, separators=(",", ":"))
-                for item in document.relations
-            )
-        ).encode("utf-8")
-    ).hexdigest()
+    deadline = limits.operation_deadline()
+    limits.check_document(document, deadline=deadline)
+    normal = document.semantic_normal_form(max_depth=limits.max_depth, deadline=deadline)
+    normal_bytes = _json_bytes(normal)
+    limits.check_bytes(len(normal_bytes))
+    limits.check_deadline(deadline)
+    jcs = hashlib.sha256(normal_bytes).hexdigest()
+    rdf_bytes = "\n".join(_rdf_statements(document)).encode("utf-8")
+    limits.check_bytes(len(rdf_bytes))
+    limits.check_deadline(deadline)
+    rdf = hashlib.sha256(rdf_bytes).hexdigest()
+    provn_bytes = "\n".join(
+        sorted(
+            json.dumps(item, sort_keys=True, separators=(",", ":")) for item in document.relations
+        )
+    ).encode("utf-8")
+    limits.check_bytes(len(provn_bytes))
+    limits.check_deadline(deadline)
+    provn = hashlib.sha256(provn_bytes).hexdigest()
     return CanonicalFingerprint(
         representation="swos-prov-document",
         algorithm="JCS-RFC8785+RDFC-1.0+PROV-N-normal-form",
@@ -188,6 +195,7 @@ def validate_prov(
 ) -> ProvValidationReport:
     started = time.perf_counter()
     limits = limits or ResourceLimits()
+    deadline = limits.operation_deadline()
     violations: list[str] = []
     if not isinstance(document, ProvDocument):
         return ProvValidationReport(
@@ -200,12 +208,12 @@ def validate_prov(
             ("document is not ProvDocument",),
         )
     try:
-        limits.check_document(document)
+        limits.check_document(document, deadline=deadline)
     except ValueError as exc:
         return ProvValidationReport(
             "resource_limit",
             profile,
-            canonical_digest(document.to_dict()),
+            canonical_digest({"status": "resource_limit", "profile": profile, "reason": str(exc)}),
             {"passed": False},
             {"passed": False},
             {"passed": False},
@@ -247,7 +255,23 @@ def validate_prov(
         if not isinstance(bundle.get("statements", []), list):
             violations.append(f"bundle {bundle_id} statements are not a list")
     status = "invalid" if violations else "valid"
-    input_digest = canonical_digest(document.semantic_normal_form(max_depth=limits.max_depth))
+    try:
+        limits.check_deadline(deadline)
+        input_digest = canonical_digest(
+            document.semantic_normal_form(max_depth=limits.max_depth, deadline=deadline)
+        )
+    except ValueError as exc:
+        return ProvValidationReport(
+            "resource_limit",
+            profile,
+            canonical_digest({"status": "resource_limit", "profile": profile, "reason": str(exc)}),
+            {"passed": False},
+            {"passed": False},
+            {"passed": False},
+            (str(exc),),
+            elapsed_seconds=time.perf_counter() - started,
+            statement_count=document.statement_count(),
+        )
     return ProvValidationReport(
         status=status,
         profile=profile,

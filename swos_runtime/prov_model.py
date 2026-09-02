@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import math
 import re
+import time
 from dataclasses import dataclass, field
 from typing import Any, Mapping
 from urllib.parse import urlparse
@@ -49,16 +50,53 @@ def is_absolute_iri(value: Any) -> bool:
     return bool(_IRI_RE.fullmatch(str(value or ""))) and bool(urlparse(str(value)).scheme)
 
 
-def _canonical(value: Any, *, depth: int = 0, max_depth: int = 64) -> Any:
+def _canonical(
+    value: Any,
+    *,
+    depth: int = 0,
+    max_depth: int = 64,
+    deadline: float | None = None,
+    ancestors: set[int] | None = None,
+) -> Any:
+    if deadline is not None and time.perf_counter() > deadline:
+        raise ValueError("resource_limit: PROV operation exceeds timeout_seconds")
+    if ancestors is None:
+        ancestors = set()
+    container = isinstance(value, Mapping) or isinstance(value, (list, tuple, set, frozenset))
+    if container and id(value) in ancestors:
+        raise ValueError("resource_limit: cyclic PROV value")
     if depth > max_depth:
         raise ValueError("resource_limit: PROV canonicalization depth exceeds max_depth")
     if isinstance(value, Mapping):
-        return {
-            str(key): _canonical(value[key], depth=depth + 1, max_depth=max_depth)
-            for key in sorted(value, key=str)
-        }
-    if isinstance(value, (list, tuple, set)):
-        items = [_canonical(item, depth=depth + 1, max_depth=max_depth) for item in value]
+        ancestors.add(id(value))
+        try:
+            return {
+                str(key): _canonical(
+                    value[key],
+                    depth=depth + 1,
+                    max_depth=max_depth,
+                    deadline=deadline,
+                    ancestors=ancestors,
+                )
+                for key in sorted(value, key=str)
+            }
+        finally:
+            ancestors.remove(id(value))
+    if isinstance(value, (list, tuple, set, frozenset)):
+        ancestors.add(id(value))
+        try:
+            items = [
+                _canonical(
+                    item,
+                    depth=depth + 1,
+                    max_depth=max_depth,
+                    deadline=deadline,
+                    ancestors=ancestors,
+                )
+                for item in value
+            ]
+        finally:
+            ancestors.remove(id(value))
         return sorted(
             items,
             key=lambda item: json.dumps(
@@ -68,6 +106,58 @@ def _canonical(value: Any, *, depth: int = 0, max_depth: int = 64) -> Any:
     if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
         raise ValueError("non-finite PROV literal is not supported")
     return value
+
+
+def _check_nested_limits(
+    value: Any,
+    *,
+    max_literal_length: int,
+    max_depth: int,
+    deadline: float,
+    depth: int = 0,
+    ancestors: set[int] | None = None,
+) -> None:
+    if time.perf_counter() > deadline:
+        raise ValueError("resource_limit: PROV operation exceeds timeout_seconds")
+    if ancestors is None:
+        ancestors = set()
+    container = isinstance(value, Mapping) or isinstance(value, (list, tuple, set, frozenset))
+    if container and id(value) in ancestors:
+        raise ValueError("resource_limit: cyclic PROV value")
+    if depth > max_depth:
+        raise ValueError("resource_limit: PROV canonicalization depth exceeds max_depth")
+    if isinstance(value, str):
+        if len(value) > max_literal_length:
+            raise ValueError("resource_limit: PROV literal exceeds max_literal_length")
+        return
+    if not container:
+        return
+    ancestors.add(id(value))
+    try:
+        if isinstance(value, Mapping):
+            for key, item in value.items():
+                if isinstance(key, str) and len(key) > max_literal_length:
+                    raise ValueError("resource_limit: PROV literal exceeds max_literal_length")
+                _check_nested_limits(
+                    item,
+                    max_literal_length=max_literal_length,
+                    max_depth=max_depth,
+                    deadline=deadline,
+                    depth=depth + 1,
+                    ancestors=ancestors,
+                )
+        else:
+            for item in value:
+                _check_nested_limits(
+                    item,
+                    max_literal_length=max_literal_length,
+                    max_depth=max_depth,
+                    deadline=deadline,
+                    depth=depth + 1,
+                    ancestors=ancestors,
+                )
+    finally:
+        ancestors.remove(id(value))
 
 
 @dataclass(frozen=True)
@@ -95,12 +185,25 @@ class ResourceLimits:
         if size > self.max_bytes:
             raise ValueError("resource_limit: PROV input exceeds max_bytes")
 
-    def check_document(self, document: "ProvDocument") -> None:
+    def operation_deadline(self, started_at: float | None = None) -> float:
+        return (time.perf_counter() if started_at is None else started_at) + self.timeout_seconds
+
+    def check_deadline(self, deadline: float) -> None:
+        if time.perf_counter() > deadline:
+            raise ValueError("resource_limit: PROV operation exceeds timeout_seconds")
+
+    def check_document(self, document: "ProvDocument", *, deadline: float | None = None) -> None:
+        deadline = self.operation_deadline() if deadline is None else deadline
+        self.check_deadline(deadline)
         if document.statement_count() > self.max_statements:
             raise ValueError("resource_limit: PROV statement count exceeds limit")
-        for item in document.semantic_normal_form(max_depth=self.max_depth).get("extensions", []):
-            if len(str(item.get("object", ""))) > self.max_literal_length:
-                raise ValueError("resource_limit: PROV literal exceeds max_literal_length")
+        self.check_deadline(deadline)
+        _check_nested_limits(
+            document.to_dict(),
+            max_literal_length=self.max_literal_length,
+            max_depth=self.max_depth,
+            deadline=deadline,
+        )
 
 
 @dataclass(frozen=True)
@@ -155,8 +258,10 @@ class ProvDocument:
             "integrity": dict(self.integrity),
         }
 
-    def semantic_normal_form(self, *, max_depth: int = 64) -> dict[str, Any]:
-        return _canonical(self.to_dict(), max_depth=max_depth)
+    def semantic_normal_form(
+        self, *, max_depth: int = 64, deadline: float | None = None
+    ) -> dict[str, Any]:
+        return _canonical(self.to_dict(), max_depth=max_depth, deadline=deadline)
 
     def statement_count(self) -> int:
         return (

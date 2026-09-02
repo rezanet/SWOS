@@ -66,6 +66,34 @@ class ProvInteropTests(unittest.TestCase):
         report = validate_prov(document, limits=ResourceLimits(max_depth=4))
         self.assertEqual("resource_limit", report.status)
 
+    def test_resource_limits_cover_nested_literals_and_canonical_bytes(self) -> None:
+        from swos_runtime.prov_interop import epg_to_prov
+
+        epg = sample_epg()
+        epg["scope"]["large_literal"] = "x" * 100
+        document = epg_to_prov(epg, base_iri=epg["base_iri"])
+
+        with self.assertRaisesRegex(ValueError, "max_literal_length"):
+            canonical_fingerprint(document, ResourceLimits(max_literal_length=32))
+        with self.assertRaisesRegex(ValueError, "max_bytes"):
+            canonical_fingerprint(document, ResourceLimits(max_bytes=32))
+
+    def test_resource_limits_fail_closed_for_cycles_and_deadlines(self) -> None:
+        from swos_runtime.prov_interop import epg_to_prov
+
+        epg = sample_epg()
+        epg["scope"]["cycle"] = epg["scope"]
+        document = epg_to_prov(epg, base_iri=epg["base_iri"])
+
+        with self.assertRaisesRegex(ValueError, "cyclic"):
+            canonical_fingerprint(document)
+        report = validate_prov(document)
+        self.assertEqual("resource_limit", report.status)
+
+        ordinary = epg_to_prov(sample_epg(), base_iri="https://example.org/prov/")
+        with self.assertRaisesRegex(ValueError, "timeout"):
+            canonical_fingerprint(ordinary, ResourceLimits(timeout_seconds=1e-12))
+
     def test_rpm_export_requires_matching_certified_epg(self) -> None:
         from swos_runtime.prov_interop import epg_to_prov
         from swos_runtime.rpm_exchange import ExchangeError, RPMExchange

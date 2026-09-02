@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from swos_runtime.prov_model import ResourceLimits
 from tests.runtime.test_epg_v2 import sample_epg
 from tools.certify_prov_roundtrip import _limits, _load, certify
 
@@ -66,6 +67,15 @@ class ProvCertificationToolTests(unittest.TestCase):
 
             with self.assertRaises(ValueError):
                 _load(path)
+
+    def test_json_input_size_is_checked_before_loading(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            path = directory / "payload.json"
+            path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+
+            with self.assertRaises(ValueError):
+                _load(path, ResourceLimits(max_bytes=1))
 
     def test_corpus_manifest_rejects_malformed_case(self) -> None:
         with TemporaryDirectory() as directory_name:

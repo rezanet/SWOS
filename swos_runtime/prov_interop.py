@@ -352,6 +352,7 @@ def parse_prov(
 ) -> ProvDocument:
     _assert_format(format)
     limits = limits or ResourceLimits()
+    deadline = limits.operation_deadline()
     if not isinstance(data, (bytes, bytearray)):
         raise ValueError("PROV input must be bytes")
     limits.check_bytes(len(data))
@@ -362,5 +363,6 @@ def parse_prov(
         document = _parse_marker(bytes(data), rb"swos:payload\(\"([A-Za-z0-9_-]+)\"\)")
     else:
         document = _parse_marker(bytes(data), rb"swos-payload:\s*([A-Za-z0-9_-]+)")
-    limits.check_document(document)
+    limits.check_deadline(deadline)
+    limits.check_document(document, deadline=deadline)
     return document
