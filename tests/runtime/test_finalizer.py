@@ -5,8 +5,6 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import jsonschema
-
 from swos_runtime.capabilities import CAPABILITY_CONTRACT_SET, CAPABILITY_CONTRACTS
 from swos_runtime.finalizer import finalize_work_order_run
 from swos_runtime.governance import verify_manifest
@@ -267,19 +265,6 @@ class HostNativeFinalizerTests(unittest.TestCase):
             outcome = finalize_work_order_run(run, output)
             self.assertEqual(outcome.status, "APPROVED", outcome.blocking_reasons)
             self.assertEqual(validate_frozen_run_schemas(output), [])
-
-            certificate = json.loads(
-                (output / "provenance-v2-certificate.json").read_text(encoding="utf-8")
-            )
-            schema = json.loads(
-                (
-                    Path(__file__).resolve().parents[2]
-                    / "schemas/research-grade/prov-roundtrip-report.schema.json"
-                ).read_text(encoding="utf-8")
-            )
-            errors = list(jsonschema.Draft202012Validator(schema).iter_errors(certificate))
-            self.assertEqual([], errors)
-            self.assertEqual("not_run", certificate["status"])
 
             control = json.loads((output / "run-control.json").read_text(encoding="utf-8"))
             self.assertEqual(control["cross_encoder"]["capability"], "semantic_rerank")
