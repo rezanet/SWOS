@@ -12,15 +12,16 @@
   "implementation": {
     "pull_request": 58,
     "branch": "codex/swos-v2-t070-floor-gate",
-    "head_sha": "873eb875a23ac8da818f654fee68c163de8badfd",
+    "head_sha": "6cdde58a76dbc6f5324ea54e9640a4ddf4dd003b",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/58",
     "last_reconciled_task": "T073",
-    "last_action": "Implemented T073's locked citation evaluation and preserved T070's frozen floor/split enforcement; the licensed corpus, approved model bundle, and independent human records remain absent, so T070 and T073 remain pending.",
+    "last_action": "Hardened T080's production-path diversity benchmark with frozen seeded-detection and confidence-bound gates while preserving T070 and T073 fail-closed release behavior; the licensed corpus, approved model bundle, and independent human records remain absent, so T070, T073, T079, and T080 remain pending.",
     "last_action_evidence": [
       "focused T073 evaluator suite: 5 tests pass",
-      "python -m unittest discover -s tests/runtime -p 'test_*.py': 226 passed",
+      "focused T080 diversity benchmark suite: 4 tests pass",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py': 230 passed",
       "python -m unittest discover -s tests/prose -p 'test_*.py': 240 passed, 11 expected live-provider skips",
       "Ruff format and lint checks for the workflow-scanned surfaces: pass",
       "schema validation: 58 artefacts pass; research-grade contract examples and Spec Kit consistency pass",
@@ -30,7 +31,7 @@
       "task freeze audit at 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: 118 marker-only changes, zero non-marker differences",
       "T070 floor and split regression: all seven frozen minima and all five required partitions are enforced; under-floor reports remain blocked",
       "T073 release-input execution: status not_run, gate_result not_run, and zero prediction bytes because the checked-in verified model manifest is absent",
-      "PR #58 exact-head hosted checks at 873eb875a23ac8da818f654fee68c163de8badfd: SWOS CI 33576322094, SWOS CodeQL 33576322071, Research Grade compatibility 33576322092, SWOS Prose Benchmark 33576322123, SWOS Portability Gate 33576322109, and SWOS Engineering Quality 33576322061; 20 jobs pass and 2 non-gating jobs are explicitly skipped"
+      "PR #58 exact-head hosted checks at 6cdde58a76dbc6f5324ea54e9640a4ddf4dd003b: SWOS CI 33577910579, SWOS CodeQL 33577910593, Research Grade compatibility 33577910585, SWOS Prose Benchmark 33577910667, SWOS Portability Gate 33577910633, and SWOS Engineering Quality 33577910586; 20 jobs pass and 2 non-gating jobs are explicitly skipped"
     ]
   },
   "summary": {
