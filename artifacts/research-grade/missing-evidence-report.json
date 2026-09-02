@@ -1,0 +1,183 @@
+{
+  "artifact": "swos.research-grade.missing-evidence-report",
+  "schema_version": "1.0.0",
+  "report_status": "BLOCKED_UNCERTIFIED",
+  "assessment_date": "2026-09-02",
+  "assessment_head": "1f5135969f04a104d4a99764f921d1743d22710f",
+  "task_authority": {
+    "path": "specs/008-swos-v2-research-grade/tasks.md",
+    "sha256": "166d792f3f99fca6f36f2bd754af4b1f77497c0bb00bdfea3822ea30e5b54b4b",
+    "hash_encoding": "sha256 of committed Git blob bytes at assessment_head"
+  },
+  "determinism": {
+    "ordering": "task IDs follow the frozen task order and missing-evidence entries preserve the canonical order in this report",
+    "inputs": "evidence-closure-matrix.json and the exact assessed head",
+    "no_runtime_claim": "This report records the fixed observed state; it does not convert a missing external artifact into a pass."
+  },
+  "open_task_count": 11,
+  "open_task_ids": [
+    "T070",
+    "T073",
+    "T079",
+    "T080",
+    "T093",
+    "T094",
+    "T095",
+    "T111",
+    "T127",
+    "T128",
+    "T129"
+  ],
+  "missing_evidence_by_task": [
+    {
+      "task_id": "T070",
+      "status": "NOT_RUN",
+      "blocked_downstream": ["T073", "T127", "T128", "T129"],
+      "missing": [
+        "Permitted citation-support pair source and source-level licence/right records.",
+        "At least 6000 actual pairs with all frozen per-label, per-discipline, locked-test, and adversarial floors.",
+        "Actual train, calibration, locked-test, and OOD split files with stable pair identity, claim, span, discipline, label, and source identity.",
+        "Double annotations, adjudication, annotator separation, leakage-check output, checksums, independent approval, and completed DATA-LICENCE.md."
+      ]
+    },
+    {
+      "task_id": "T073",
+      "status": "NOT_RUN_BLOCKED_BY_T070",
+      "blocked_downstream": ["T127", "T128", "T129"],
+      "missing": [
+        "Genuine T070 locked-test inputs and identity bindings.",
+        "Locked model manifest and genuine calibration artifact with code/data/configuration/execution/digest provenance.",
+        "Raw exact-identity predictions, slice metrics, confidence intervals, gate report, and packaged 100-pair latency evidence proving p95 <=5 seconds on the recorded reference runner."
+      ]
+    },
+    {
+      "task_id": "T079",
+      "status": "NOT_RUN",
+      "blocked_downstream": ["T080", "T127", "T128", "T129"],
+      "missing": [
+        "Separate tuning and locked packets for all nine supported disciplines.",
+        "At least ten locked packets per supported discipline using the frozen packet category set; do not infer ten packets per category.",
+        "Independent human review, reviewer separation, source provenance/permission, and packet-lock evidence."
+      ]
+    },
+    {
+      "task_id": "T080",
+      "status": "NOT_RUN_BLOCKED_BY_T079",
+      "blocked_downstream": ["T127", "T128", "T129"],
+      "missing": [
+        "Complete T079 packet corpus.",
+        "Production-path benchmark output over locked packets and seeded failure cases.",
+        "Nonzero digest-bound numerators, denominators, confidence intervals, and pre-retrieval bindings proving all detection, recall, false-block, ordering, and provider-invariance thresholds."
+      ]
+    },
+    {
+      "task_id": "T093",
+      "status": "NOT_RUN",
+      "blocked_downstream": ["T094", "T095", "T127", "T128", "T129"],
+      "missing": [
+        "Permitted checksummed valid, invalid, large, adversarial, and hostile blank-node fixtures.",
+        "Manifest cases with unique IDs, relative paths, lowercase SHA-256 digests, categories, expected outcomes, and permission/right provenance.",
+        "Independent approval that the corpus is permitted and exercises intended failure paths."
+      ]
+    },
+    {
+      "task_id": "T094",
+      "status": "NOT_RUN_BLOCKED_BY_T093",
+      "blocked_downstream": ["T127", "T128", "T129"],
+      "missing": [
+        "Maintainer-approved ProvToolbox version, identity, licence evidence, permitted relative artifact, and lowercase artifact SHA-256.",
+        "Placeholder-complete command containing {artifact}, {input}, {profile}, {formats}, and {output}.",
+        "Successful independent execution for every corpus case with exact input/profile/format/output bindings and immutable hosted workflow evidence."
+      ]
+    },
+    {
+      "task_id": "T095",
+      "status": "NOT_RUN_BLOCKED_BY_T093",
+      "blocked_downstream": ["T127", "T128", "T129"],
+      "missing": [
+        "Permitted 1k, 10k, required large, and hostile blank-node performance/resource corpora.",
+        "Per-corpus checksums, parser/canonicalization configuration, exact input identity, and environment provenance.",
+        "Raw CPU, memory, and wall-time measurements plus p95/confidence-bound evidence proving declared limits and fail-closed behavior."
+      ]
+    },
+    {
+      "task_id": "T111",
+      "status": "NOT_RUN",
+      "blocked_downstream": ["T127", "T128", "T129"],
+      "missing": [
+        "Rights-cleared corpus meeting all object/work, rendition, claim, pair, discipline, media/material, mediation, and adversarial minima.",
+        "Per-asset source URI, rights URI, byte digest, allowed actions, attribution, licence statement, accessibility manifests, and guidelines.",
+        "Human adjudication, independent provider review, exact-head binding, and evidence excluding copyrighted scraping or synthetic human judgments."
+      ]
+    },
+    {
+      "task_id": "T127",
+      "status": "RESERVED_EXTERNAL",
+      "blocked_downstream": ["T128", "T129"],
+      "missing": [
+        "All required schema, ontology, fixture, provider-adapter, and reviewer-criteria approval dispositions and identities in immutable external records.",
+        "Recorder-produced PASS evidence for all six portability cases, with required credential/subscription and semantic-equivalence provenance.",
+        "Green hosted CI, independent frozen-head review, and resolved external review threads."
+      ]
+    },
+    {
+      "task_id": "T128",
+      "status": "RESERVED_EXTERNAL",
+      "blocked_downstream": ["T129"],
+      "missing": [
+        "Legitimate source for the manifest-listed reports/coverage.json and a reassembled exact file set; no placeholder is acceptable.",
+        "Exact-head audit pack with all external CI, review, approval, and portability records.",
+        "Independent immutable verification, and prescribed T126-T128 repeat if review changes repository content."
+      ]
+    },
+    {
+      "task_id": "T129",
+      "status": "RESERVED_EXTERNAL",
+      "blocked_downstream": [],
+      "missing": [
+        "Completion of every preceding open gate.",
+        "Explicit owner merge approval as an external decision on the final exact-head PR.",
+        "Named no-production/no-merge controls retained until that decision and no post-review commit."
+      ]
+    }
+  ],
+  "verifier_observations": [
+    {
+      "verifier": "citation_dataset_builder",
+      "result": "NOT_RUN",
+      "missing": "Licensed pair source and frozen corpus inputs"
+    },
+    {
+      "verifier": "source_diversity_benchmark",
+      "result": "NOT_RUN",
+      "missing": "Locked packets; current packet count is zero"
+    },
+    {
+      "verifier": "provenance_certifier",
+      "result": "NOT_RUN",
+      "missing": "PROV manifest cases and independent oracle"
+    },
+    {
+      "verifier": "multimodal_evaluation",
+      "result": "NOT_RUN",
+      "missing": "Rights-cleared corpus; all observed counts are zero"
+    },
+    {
+      "verifier": "portability_acceptance_release",
+      "result": "FAIL",
+      "missing": "Six PASS evidence records; G-HOST and G-PORT are false"
+    },
+    {
+      "verifier": "audit_pack_verify_only",
+      "result": "FAIL_CLOSED",
+      "missing": "reports/coverage.json"
+    }
+  ],
+  "safe_local_preparation_complete": [
+    "Frozen task and feature authority hashes recorded.",
+    "Citation, diversity, PROV, multimodal, portability, and audit-pack paths and verification commands recorded.",
+    "Independent PROV oracle execution kit prepared without identity, licence, digest, or result fabrication.",
+    "Owner action groups and exact external evidence forms prepared.",
+    "No task completion marker or frozen acceptance criterion changed."
+  ]
+}

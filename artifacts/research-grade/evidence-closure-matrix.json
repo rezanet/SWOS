@@ -1,0 +1,724 @@
+{
+  "artifact": "swos.research-grade.evidence-closure-matrix",
+  "schema_version": "1.0.0",
+  "document_status": "PREPARATION_ONLY",
+  "release_decision": "BLOCKED_UNCERTIFIED",
+  "assessment_date": "2026-09-02",
+  "authority": {
+    "feature": "specs/008-swos-v2-research-grade",
+    "task_authority_path": "specs/008-swos-v2-research-grade/tasks.md",
+    "task_authority_sha256": "166d792f3f99fca6f36f2bd754af4b1f77497c0bb00bdfea3822ea30e5b54b4b",
+    "hash_encoding": "sha256 of committed Git blob bytes at source_head; do not hash platform-transcoded checkout text",
+    "source_head": "1f5135969f04a104d4a99764f921d1743d22710f",
+    "source_head_role": "Exact main head assessed before this closure package; the closure package does not alter frozen task wording, thresholds, ordering, contracts, or completion markers.",
+    "other_frozen_artifact_hashes": {
+      "interfaces": "3013bf643c9552bb7cffbccdbccba383829cd8491b3e82085125c95a0a7549af",
+      "plan": "ac830d5b30bc9dbd98dec26e2c005080d76dfcc59b4f42db50ffc955f66a8bc4",
+      "data_model": "929a4d9c37c873cabce3f8a9cb30e1cc6a8c8bfeaffd91aef98e11b33fde1f6d",
+      "research": "ebfa8cd976802948f003ffca2abde9245b259012e094cf3dbaaf277063beec14"
+    }
+  },
+  "interpretation": {
+    "authoritative_representation": "This JSON is the machine-readable authority for the closure assessment. The paired Markdown file is a human-readable projection and must not be used to claim a gate passed.",
+    "evidence_boundary": "Preparation records requirements and observed absence only. It is not a corpus manifest, benchmark result, approval, review, audit pack, release record, or owner decision.",
+    "fail_closed_rule": "NOT_RUN, BLOCKED, RESERVED_EXTERNAL, missing, stale, or unverified evidence is a release blocker and never a PASS.",
+    "external_record_rule": "Identities, dispositions, provider runs, corpus rights, independent oracle results, hosted checks, review decisions, and owner approval must come from immutable external PR or workflow records when the frozen task requires them.",
+    "rerun_rule": "When external evidence arrives, update only the evidence records and this assessment on the new exact head; do not change specs/008-swos-v2-research-grade/tasks.md except permitted completion markers."
+  },
+  "fail_closed_verifiers": [
+    {
+      "name": "citation_dataset_builder",
+      "command": "python tools/build_citation_dataset.py --manifest benchmark/citation-support/manifest.json --out-dir <empty-temporary-directory>",
+      "observed": "exit 2; status not_run; no licensed pair source was provided; output counts are zero",
+      "pass_signal": "The builder reports a frozen manifest with all required floors, permitted source records, split files, annotation and adjudication records, leakage results, checksums, and DATA-LICENCE.md."
+    },
+    {
+      "name": "source_diversity_benchmark",
+      "command": "python tools/run_source_diversity_benchmark.py --fixtures evals/fixtures/source-diversity/manifest.json --out <temporary-report.json>",
+      "observed": "exit 2; status not_run; packet_count 0; every supported discipline has 0 of 10 required packets; metric denominators are zero or null",
+      "pass_signal": "The production-path benchmark emits a report with all required locked packets and confidence-bound metrics meeting the frozen thresholds and invariance requirements."
+    },
+    {
+      "name": "provenance_certifier",
+      "command": "python tools/certify_prov_roundtrip.py --corpus-manifest benchmark/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir <temporary-artifact-directory> --certificate-out <temporary-certificate.json>",
+      "observed": "exit 2; status not_run; PROV corpus manifest requires a cases list",
+      "pass_signal": "The exact pinned independent oracle accepts every permitted checksummed case across the required formats and the certificate binds input, profile, formats, oracle execution, limits, and output digests."
+    },
+    {
+      "name": "multimodal_evaluation",
+      "command": "python tools/run_multimodal_evals.py --manifest evals/fixtures/multimodal/manifest.json --artifact-dir <temporary-artifact-directory> --provider fake",
+      "observed": "exit 2; status NOT_RUN; zero objects, renditions, claims, pairs, discipline tasks, and adversarial cases",
+      "pass_signal": "A rights-cleared, independently reviewed corpus is evaluated and the report binds the frozen minima, raw cases, provider/config provenance, and all required multimodal gate metrics."
+    },
+    {
+      "name": "portability_acceptance",
+      "command": "python tools/check_portability_acceptance.py --release",
+      "observed": "FAIL; all six required PASS evidence records are missing; G-HOST and G-PORT are false",
+      "pass_signal": "All six frozen cases have recorder-produced PASS evidence, hosted CI is green, and the frozen-head independent review and approval records are present."
+    },
+    {
+      "name": "audit_pack_verifier",
+      "command": "python tools/assemble_research_grade_audit_pack.py --verify-only",
+      "observed": "FAIL closed; missing audit-pack artifact reports/coverage.json",
+      "pass_signal": "The exact pre-freeze manifest and every listed artifact rehash successfully with no missing or extra files, followed by independent external verification and immutable binding to the final exact head."
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "T070",
+      "acceptance_criterion": "Implement and execute the bounded corpus workflow to acquire permitted pairs, double-annotate, adjudicate, approve, leakage-check, checksum, and freeze actual train/calibration/locked/OOD splits and `DATA-LICENCE.md` in `benchmark/citation-support/manifest.json` using `tools/build_citation_dataset.py`",
+      "current_status": "NOT_RUN",
+      "preparation_status": "READY_FOR_EXTERNAL_CORPUS_AND_REVIEW",
+      "required_artifacts": [
+        "benchmark/citation-support/manifest.json",
+        "benchmark/citation-support/SOURCE-LICENCE-MANIFEST.json",
+        "benchmark/citation-support/DATA-LICENCE.md",
+        "benchmark/citation-support/ANNOTATION-GUIDELINES.md",
+        "benchmark/citation-support/ADJUDICATION-PROTOCOL.md",
+        "benchmark/citation-support/SPLIT-POLICY.md",
+        "benchmark/citation-support/DATASET-CARD.md",
+        "actual train, calibration, locked, and OOD pair files with per-pair source and rights provenance",
+        "double-annotation, adjudication, annotator-separation, leakage-check, checksum, and approval records"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "benchmark/citation-support/manifest.json",
+          "status": "NOT_RUN",
+          "sha256": "56c1397c91bc50c6f07026f8fe6ed80a488a085cc624694806a1fc6133b7031f",
+          "observed": "schema 2.0; release blocked below release floor; counts are zero; splits, annotators, adjudication, and leakage check are empty or not_run"
+        },
+        {
+          "path": "benchmark/citation-support/SOURCE-LICENCE-MANIFEST.json",
+          "status": "NOT_RUN",
+          "sha256": "0885e23e1a1c0a22f7f74432ddfc065553e72f620b0b22bb9edc308e6f39d9c3",
+          "observed": "sources is empty; every pair still requires permitted URI, digest, attribution, and allowed-use data"
+        },
+        {
+          "path": "benchmark/citation-support/DATA-LICENCE.md",
+          "status": "NOT_RUN",
+          "sha256": "a7a272c0ae699555ec22d75e1baed13cebe34de9101dd6722c496bb152847faf",
+          "observed": "no frozen corpus; URI, digest, licence/right basis, attribution, allowed-use, and approval are required"
+        },
+        {
+          "path": "tools/build_citation_dataset.py",
+          "status": "IMPLEMENTED_NOT_EXECUTED",
+          "observed": "fail-closed builder is present and refused the empty licensed-source state"
+        }
+      ],
+      "exact_missing_evidence": [
+        "A permitted citation-support pair source and source-level licence/right records.",
+        "At least 6,000 actual pairs with at least 600 per label, 300 per discipline, 1,500 locked-test pairs, 150 locked pairs per label, 75 locked pairs per discipline, and 300 locked adversarial non-direct pairs.",
+        "Actual train, calibration, locked-test, and OOD split files with stable pair identity, claim, span, discipline, label, and source identity.",
+        "Separate double annotations, adjudication decisions, annotator separation, leakage-check output, checksums, and independent approval.",
+        "A completed DATA-LICENCE.md bound to every included source and permitted use."
+      ],
+      "can_evidence_be_generated_locally": true,
+      "live_provider_required": false,
+      "independent_external_execution_required": false,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/build_citation_dataset.py --manifest benchmark/citation-support/manifest.json --out-dir <output-directory>",
+          "expected_pass_condition": "Exit 0 and a frozen manifest plus all split, annotation, adjudication, leakage, checksum, and licence artifacts satisfy every frozen floor."
+        },
+        {
+          "kind": "workflow",
+          "command": ".github/workflows/citation-model-evaluation.yml",
+          "expected_pass_condition": "The hosted evaluation consumes the newly frozen corpus and its exact-head records are green."
+        }
+      ],
+      "expected_pass_condition": "The bounded permitted corpus is genuinely acquired, independently annotated and adjudicated, leakage-checked, checksummed, frozen, and approved; no field remains NOT_RUN or placeholder.",
+      "exact_downstream_tasks_blocked": ["T073", "T127", "T128", "T129"]
+    },
+    {
+      "task_id": "T073",
+      "acceptance_criterion": "Implement locked evaluation with raw predictions retaining exact pair identity/claim/span and per-decision code/config/execution provenance, slice metrics, confidence intervals, gate report, and reproducible packaged 100-pair citation latency measurement proving p95 <=5 seconds on the recorded reference runner in `tools/evaluate_citation_classifier.py`",
+      "current_status": "NOT_RUN_BLOCKED_BY_T070",
+      "preparation_status": "EVALUATOR_READY; LOCKED_INPUTS_ABSENT",
+      "required_artifacts": [
+        "models/citation-support/v2.0.0/model-card.md",
+        "artifacts/research-grade/citation-model/model-manifest.json",
+        "artifacts/research-grade/citation-model/calibration.json",
+        "benchmark/citation-support/locked_test.jsonl",
+        "raw predictions retaining exact pair identity, claim, and span",
+        "slice metrics, confidence intervals, gate report, and reference-runner latency package"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "models/citation-support/v2.0.0/model-card.md",
+          "status": "PRESENT_PREPARATION",
+          "observed": "model card exists but is not evidence of a trained, locked, calibrated model"
+        },
+        {
+          "path": "artifacts/research-grade/citation-model/model-manifest.json",
+          "status": "MISSING",
+          "observed": "workflow default path has no actual model manifest"
+        },
+        {
+          "path": "artifacts/research-grade/citation-model/calibration.json",
+          "status": "MISSING",
+          "observed": "workflow default path has no actual calibration artifact"
+        },
+        {
+          "path": "benchmark/citation-support/locked_test.jsonl",
+          "status": "MISSING",
+          "observed": "locked corpus is not frozen"
+        },
+        {
+          "path": "tools/evaluate_citation_classifier.py",
+          "status": "IMPLEMENTED_NOT_EXECUTED",
+          "observed": "evaluator is present; it cannot produce a valid locked report without genuine model, calibration, and locked-test inputs"
+        }
+      ],
+      "exact_missing_evidence": [
+        "T070's genuine frozen locked-test corpus and all model-input identity bindings.",
+        "A locked model manifest with code, data, configuration, execution, and digest provenance.",
+        "A genuine calibration artifact bound to the locked model and calibration data.",
+        "Raw per-decision predictions retaining exact pair identity, claim, span, and provenance.",
+        "Slice metrics, confidence intervals, gate report, and an independently reproducible 100-pair latency package proving p95 <=5 seconds on the recorded reference runner."
+      ],
+      "can_evidence_be_generated_locally": true,
+      "live_provider_required": false,
+      "independent_external_execution_required": false,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/evaluate_citation_classifier.py --model-manifest artifacts/research-grade/citation-model/model-manifest.json --calibration artifacts/research-grade/citation-model/calibration.json --locked-test benchmark/citation-support/locked_test.jsonl --predictions-out <predictions.jsonl> --report-out <report.json>",
+          "expected_pass_condition": "Exit 0 with exact-identity predictions, provenance, slice metrics, intervals, gate report, and the packaged latency result at or below the frozen p95 threshold."
+        },
+        {
+          "kind": "workflow",
+          "command": ".github/workflows/citation-model-evaluation.yml",
+          "expected_pass_condition": "Hosted locked evaluation is green on the exact evidence head."
+        }
+      ],
+      "expected_pass_condition": "The locked evaluator runs against genuine T070 inputs and produces reproducible, exact-identity, provenance-complete metrics and latency evidence meeting every frozen threshold.",
+      "exact_downstream_tasks_blocked": ["T127", "T128", "T129"]
+    },
+    {
+      "task_id": "T079",
+      "acceptance_criterion": "Create separate tuning packets plus at least ten locked human-reviewed balanced/concentrated/sparse/narrow/multilingual/historical/method-monoculture/duplicate/fake-diversity packets per discipline in `evals/fixtures/source-diversity/`",
+      "current_status": "NOT_RUN",
+      "preparation_status": "PACKET_SCHEMA_READY; INDEPENDENT REVIEW REQUIRED",
+      "required_artifacts": [
+        "evals/fixtures/source-diversity/manifest.json",
+        "evals/fixtures/source-diversity/README.md",
+        "separate tuning packets for every supported discipline",
+        "at least ten locked packets per supported discipline using the frozen packet category set; the ten-packet cardinality is not multiplied by category",
+        "source identity, provenance, permission, annotation, reviewer separation, and lock records"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "evals/fixtures/source-diversity/manifest.json",
+          "status": "NOT_RUN",
+          "sha256": "57a36fc94e3dd021c3a0c9c7dac69a9db4e5a9f4eb975ddfdce2e16f3540d3a5",
+          "observed": "schema 2.0; locked_human_review_required; packets is empty; required_packets_per_discipline is 10"
+        },
+        {
+          "path": "evals/fixtures/source-diversity/README.md",
+          "status": "PRESENT_PREPARATION",
+          "observed": "fixture workflow and review boundary are documented"
+        },
+        {
+          "path": "evals/fixtures/source-diversity/<discipline>/<category>/",
+          "status": "MISSING_LOCKED_PACKETS",
+          "observed": "no actual tuning or locked reviewed packet set is present"
+        }
+      ],
+      "exact_missing_evidence": [
+        "Separate tuning packets and locked packets for all nine supported disciplines.",
+        "At least ten locked packets per supported discipline, with the frozen balanced/concentrated/sparse/narrow/multilingual/historical/method-monoculture/duplicate/fake-diversity/missing-strata category set represented; do not infer ten packets per category.",
+        "Independent human review and lock evidence for every packet, with source provenance and any required permission/right basis.",
+        "Reviewer separation proving the builder did not self-review the locked packets."
+      ],
+      "can_evidence_be_generated_locally": true,
+      "live_provider_required": false,
+      "independent_external_execution_required": false,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/run_source_diversity_benchmark.py --fixtures evals/fixtures/source-diversity/manifest.json --out <report.json>",
+          "expected_pass_condition": "The benchmark loads every required locked packet and does not report NOT_RUN, absent strata, or missing human review."
+        },
+        {
+          "kind": "external_review",
+          "command": "Immutable external review record attached to the evidence PR/workflow for the frozen packet set",
+          "expected_pass_condition": "An independent reviewer records dispositions for every packet and the exact packet digests are bound to the reviewed head."
+        }
+      ],
+      "expected_pass_condition": "Every required discipline/category packet exists, is locked and human-reviewed independently, and is traceable to permitted source/provenance records.",
+      "exact_downstream_tasks_blocked": ["T080", "T127", "T128", "T129"]
+    },
+    {
+      "task_id": "T080",
+      "acceptance_criterion": "Implement production-path diversity benchmark and confidence-bound report proving 100% seeded fake/missing-strata detection, material-gap recall >=0.90, adequate/narrow false-block <=0.10, and ordering/provider invariance, with numerators, denominators, and intervals bound to the pre-retrieval requirements, in `tools/run_source_diversity_benchmark.py`",
+      "current_status": "NOT_RUN_BLOCKED_BY_T079",
+      "preparation_status": "BENCHMARK_READY; LOCKED_PACKETS_ABSENT",
+      "required_artifacts": [
+        "evals/fixtures/source-diversity/manifest.json with all locked packet records",
+        "tools/run_source_diversity_benchmark.py",
+        "production-path benchmark report",
+        "confidence-bound report with numerators, denominators, intervals, pre-retrieval bindings, and ordering/provider comparison"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "tools/run_source_diversity_benchmark.py",
+          "status": "IMPLEMENTED_NOT_EXECUTED",
+          "observed": "production path is wired to swos_runtime.source_diversity.measure_source_diversity"
+        },
+        {
+          "path": "evals/fixtures/source-diversity/manifest.json",
+          "status": "NOT_RUN",
+          "observed": "zero packets; nine supported disciplines each have 0 of 10 packets"
+        },
+        {
+          "path": "<temporary benchmark report>",
+          "status": "NOT_RUN",
+          "observed": "exit 2; denominators are zero or null"
+        }
+      ],
+      "exact_missing_evidence": [
+        "T079's complete independently locked packet corpus.",
+        "Production-path benchmark output over every required packet and seeded failure case.",
+        "Numerators, denominators, confidence intervals, and explicit bindings to the pre-retrieval requirement strata.",
+        "Evidence of 100% seeded fake/missing-strata detection, material-gap recall >=0.90, adequate/narrow false-block <=0.10, and ordering/provider invariance."
+      ],
+      "can_evidence_be_generated_locally": true,
+      "live_provider_required": false,
+      "independent_external_execution_required": false,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/run_source_diversity_benchmark.py --fixtures evals/fixtures/source-diversity/manifest.json --out <report.json>",
+          "expected_pass_condition": "Exit 0 and report all frozen metrics with nonzero, digest-bound denominators and confidence bounds satisfying every threshold and invariance check."
+        }
+      ],
+      "expected_pass_condition": "The production path detects all seeded fake/missing strata, meets recall and false-block bounds, and is invariant to source ordering/provider selection under the locked reviewed packet corpus.",
+      "exact_downstream_tasks_blocked": ["T127", "T128", "T129"]
+    },
+    {
+      "task_id": "T093",
+      "acceptance_criterion": "Add permitted checksummed valid/invalid/large/adversarial fixtures and manifest in `evals/fixtures/provenance/`",
+      "current_status": "NOT_RUN",
+      "preparation_status": "MANIFEST_SCHEMA_READY; PERMITTED CORPUS ABSENT",
+      "required_artifacts": [
+        "evals/fixtures/provenance/manifest.json",
+        "permitted checksummed valid, invalid, large, adversarial, and hostile_blank_node fixtures",
+        "per-fixture category, URI/right basis, byte digest, expected outcome, and approval records",
+        "evals/fixtures/provenance/README.md"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "evals/fixtures/provenance/manifest.json",
+          "status": "NOT_RUN",
+          "sha256": "1175f61ab63f59f2fdecde6cda793db8d48e545ab5f31eaaf2b16488c1fb1240",
+          "observed": "schema 2.0; cases is empty; reason says checksummed PROV corpus was not supplied"
+        },
+        {
+          "path": "evals/fixtures/provenance/README.md",
+          "status": "PRESENT_PREPARATION",
+          "observed": "fixture categories and provenance boundary are documented"
+        }
+      ],
+      "exact_missing_evidence": [
+        "A permitted, checksummed fixture corpus covering valid, invalid, large, adversarial, and hostile blank-node cases.",
+        "Manifest cases with unique IDs, relative fixture paths, lowercase SHA-256 digests, categories, expected outcomes, and permission/right provenance.",
+        "Independent approval that the corpus is permitted and that invalid/adversarial cases exercise the intended failure paths."
+      ],
+      "can_evidence_be_generated_locally": true,
+      "live_provider_required": false,
+      "independent_external_execution_required": false,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": false,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/certify_prov_roundtrip.py --corpus-manifest benchmark/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir <artifact-directory> --certificate-out <certificate.json>",
+          "expected_pass_condition": "The corpus manifest loads, all permitted fixture paths and checksums validate, and the exact independent oracle is available for the subsequent certification run."
+        }
+      ],
+      "expected_pass_condition": "All required PROV fixture categories are present, permitted, unique, checksummed, and manifest-bound with no empty cases list or NOT_RUN status.",
+      "exact_downstream_tasks_blocked": ["T094", "T095", "T127", "T128", "T129"]
+    },
+    {
+      "task_id": "T094",
+      "acceptance_criterion": "Pin ProvToolbox identity/licence/digest in `benchmark/provenance/oracle-manifest.json` and run that exact independent oracle in `.github/workflows/prov-certification.yml`",
+      "current_status": "NOT_RUN_BLOCKED_BY_T093",
+      "preparation_status": "EXECUTION_KIT_REQUIRED; ORACLE_IDENTITY_UNSET",
+      "required_artifacts": [
+        "benchmark/provenance/oracle-manifest.json",
+        "benchmark/provenance/<approved-local-oracle-artifact>",
+        "benchmark/provenance/oracle-execution-kit.md",
+        ".github/workflows/prov-certification.yml",
+        "immutable workflow execution and certificate records bound to exact input digests"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "benchmark/provenance/oracle-manifest.json",
+          "status": "NOT_RUN",
+          "sha256": "05fdd71b009654dc82c95ecf35970aa39892a4a929eef744a4c2fc6e1555c338",
+          "observed": "implementation is ProvToolbox but version, licence, artifact URI, and artifact SHA-256 are null; approved artifact is unavailable"
+        },
+        {
+          "path": ".github/workflows/prov-certification.yml",
+          "status": "PRESENT_MANUAL_WORKFLOW",
+          "observed": "workflow invokes certify_prov_roundtrip.py with the supplied EPG/corpus, profile, formats, oracle manifest, limits, and immutable output paths"
+        },
+        {
+          "path": "benchmark/provenance/oracle-execution-kit.md",
+          "status": "PRESENT_PREPARATION",
+          "observed": "the exact external handoff is defined without populating identity, digest, or execution claims"
+        }
+      ],
+      "exact_missing_evidence": [
+        "Maintainer-approved ProvToolbox version and distribution identity.",
+        "Pinned licence and licence evidence for the exact oracle artifact.",
+        "A permitted, present, relative local oracle artifact and its lowercase SHA-256 digest.",
+        "An execution command containing {artifact}, {input}, {profile}, {formats}, and {output} placeholders.",
+        "A successful independent oracle execution for every required corpus case, with exact input/profile/format/output digest bindings and immutable hosted workflow evidence."
+      ],
+      "can_evidence_be_generated_locally": false,
+      "live_provider_required": false,
+      "independent_external_execution_required": true,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "workflow",
+          "command": ".github/workflows/prov-certification.yml (workflow_dispatch)",
+          "expected_pass_condition": "The workflow runs the exact pinned independent oracle and produces a certified certificate bound to every permitted corpus case, exact profile, format matrix, and output digest."
+        },
+        {
+          "kind": "command",
+          "command": "python tools/certify_prov_roundtrip.py --corpus-manifest benchmark/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir <artifact-directory> --certificate-out <certificate.json>",
+          "expected_pass_condition": "Exit 0 with status certified and oracle executions present for every case."
+        }
+      ],
+      "expected_pass_condition": "ProvToolbox is independently pinned, licensed, checksummed, executable through the exact workflow, and its results are bound to the permitted corpus and preserved as immutable external evidence.",
+      "exact_downstream_tasks_blocked": ["T127", "T128", "T129"]
+    },
+    {
+      "task_id": "T095",
+      "acceptance_criterion": "Add explicit parser/canonicalization CPU-memory-time bounds in `benchmark/provenance/resource-limits.json` plus 1k/10k and hostile blank-node performance/resource corpora in `benchmark/provenance/manifest.json`",
+      "current_status": "NOT_RUN_BLOCKED_BY_T093",
+      "preparation_status": "LIMITS_DECLARED; PERFORMANCE_CORPORA_ABSENT",
+      "required_artifacts": [
+        "benchmark/provenance/resource-limits.json",
+        "benchmark/provenance/manifest.json",
+        "1k, 10k, and required hostile blank-node performance/resource corpora",
+        "raw CPU, memory, wall-time, parser, and canonicalization measurements",
+        "p95 resource/performance report bound to fixture and limit digests"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "benchmark/provenance/resource-limits.json",
+          "status": "PRESENT_DECLARATION_NOT_CERTIFIED",
+          "sha256": "ffe1055f874de022acafc24a7bdb6a90552c8ddaa44ad5bb4fe0f7d2b950a73f",
+          "observed": "explicit byte, statement, literal, depth, timeout, p95, corpus-size, and hostile blank-node policy fields are declared"
+        },
+        {
+          "path": "benchmark/provenance/manifest.json",
+          "status": "NOT_RUN",
+          "sha256": "9e6ac31f40f9a982ea1ef62f4206513170212ca40735d00b6ee8c3db77a6216c",
+          "observed": "required 1k/10k/100k/hostile blank-node corpora are all not_run; raw_measurements is empty"
+        }
+      ],
+      "exact_missing_evidence": [
+        "Permitted 1k and 10k corpora plus the frozen large corpus required by the current manifest, including hostile blank-node cases.",
+        "Per-corpus checksums, exact input identity, parser/canonicalization configuration, and execution environment provenance.",
+        "Raw CPU, memory, and wall-time measurements and a confidence-bound/p95 report proving all declared bounds and fail-closed behavior."
+      ],
+      "can_evidence_be_generated_locally": true,
+      "live_provider_required": false,
+      "independent_external_execution_required": true,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": false,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/certify_prov_roundtrip.py --corpus-manifest benchmark/provenance/manifest.json --profile schemas/research-grade/prov-profile.json --formats prov-json prov-n prov-o-trig --oracle-manifest benchmark/provenance/oracle-manifest.json --limits benchmark/provenance/resource-limits.json --artifact-dir <artifact-directory> --certificate-out <certificate.json>",
+          "expected_pass_condition": "The corpus and limits load, all cases are checked and oracle-bound, and the certificate includes the required performance/resource evidence."
+        },
+        {
+          "kind": "workflow",
+          "command": ".github/workflows/prov-certification.yml",
+          "expected_pass_condition": "Hosted certification is green on the exact evidence head and preserves the performance/resource certificate."
+        }
+      ],
+      "expected_pass_condition": "Declared resource bounds are exercised by the required corpora, measurements are raw and reproducible, and the bounded/fail-closed performance result is independently verified.",
+      "exact_downstream_tasks_blocked": ["T127", "T128", "T129"]
+    },
+    {
+      "task_id": "T111",
+      "acceptance_criterion": "Build at least 60 distinct objects/works and 96 rights-cleared renditions, at least 80 atomic region-grounding claims across at least 20 assets, 120 cross-modal pairs, 48 discipline tasks across at least 24 works, and 96 adversarial cases, spanning at least six media/material classes, three mediation conditions, and both art disciplines, plus accessibility manifests, per-asset source/right URI/digest/allowed-use/attribution statements, guidelines, and mandatory `DATA-LICENCE.md` in `evals/fixtures/multimodal/`",
+      "current_status": "NOT_RUN",
+      "preparation_status": "SCHEMA_AND_REVIEW_PACKAGE_READY; RIGHTS_CLEARED_CORPUS_ABSENT",
+      "required_artifacts": [
+        "evals/fixtures/multimodal/manifest.json",
+        "evals/fixtures/multimodal/DATA-LICENCE.md",
+        "evals/fixtures/multimodal/README.md",
+        "at least 60 distinct objects/works and 96 rights-cleared renditions",
+        "at least 80 atomic region-grounding claims across at least 20 assets",
+        "120 cross-modal pairs, 48 discipline tasks across at least 24 works, and 96 adversarial cases",
+        "accessibility manifests, guidelines, per-asset source/right URI/digest/allowed-use/attribution records",
+        "independent provider review, human adjudication, and exact-head corpus binding"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "evals/fixtures/multimodal/manifest.json",
+          "status": "NOT_RUN",
+          "sha256": "2afbaa408a7598813297d68d8f1c5cd8807196acabb1f2f07c0749df27cdf7cd",
+          "observed": "status not_run; objects, renditions, claims, pairs, discipline tasks, and adversarial cases are all zero; review is not_run"
+        },
+        {
+          "path": "evals/fixtures/multimodal/DATA-LICENCE.md",
+          "status": "PRESENT_PREPARATION",
+          "observed": "licence requirements are documented but no rights-cleared corpus is frozen"
+        },
+        {
+          "path": "artifacts/research-grade/audit-pack/multimodal/multimodal-evaluation-report.json",
+          "status": "NOT_RUN",
+          "observed": "report has zero raw cases and is bound to an older pre-freeze source head; it is not release evidence"
+        }
+      ],
+      "exact_missing_evidence": [
+        "Rights-cleared acquisition for the frozen object/work and rendition minima across at least six media/material classes and three mediation conditions.",
+        "All required atomic grounding claims, cross-modal pairs, discipline tasks, and adversarial cases with stable per-asset identity.",
+        "Per-asset source URI, rights URI, byte digest, allowed actions, attribution statement, and required licence statement.",
+        "Accessibility manifests, annotation guidelines, human adjudication, independent provider review, and exact-head binding.",
+        "No copyrighted scraping, synthetic human judgments, or unlicensed use."
+      ],
+      "can_evidence_be_generated_locally": false,
+      "live_provider_required": false,
+      "independent_external_execution_required": true,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/run_multimodal_evals.py --manifest evals/fixtures/multimodal/manifest.json --artifact-dir <artifact-directory> --provider <approved-provider>",
+          "expected_pass_condition": "Exit 0 with all frozen counts and strata satisfied, raw cases and per-asset rights records present, and required evaluation gates passing."
+        },
+        {
+          "kind": "external_review",
+          "command": "Immutable human/provider review records attached to the evidence PR/workflow",
+          "expected_pass_condition": "Reviewers independently approve rights, accessibility, annotations, adversarial cases, and exact asset digests."
+        }
+      ],
+      "expected_pass_condition": "The complete multimodal corpus is genuinely rights-cleared, accessible, independently reviewed, digest-bound, and evaluated against every frozen minimum and adversarial requirement.",
+      "exact_downstream_tasks_blocked": ["T127", "T128", "T129"]
+    },
+    {
+      "task_id": "T127",
+      "acceptance_criterion": "Obtain ADR-plus-two-maintainer schema approval, maintainer-plus-discipline-steward ontology approval, two-maintainer-plus-evaluation-owner fixture approval, maintainer-plus-portability-owner provider-adapter approval, reviewer-criteria approval, six-case `tools/check_portability_acceptance.py --release` PASS evidence, green hosted CI, and independent review on the frozen head; resolve every thread and store identities/dispositions only as immutable external PR/workflow artifacts",
+      "current_status": "RESERVED_EXTERNAL",
+      "preparation_status": "MATRIX_READY; EXTERNAL APPROVALS_AND_RUNS_ABSENT",
+      "required_artifacts": [
+        "ADR plus two named maintainer schema approvals",
+        "named maintainer plus discipline-steward ontology approval",
+        "two-maintainer plus evaluation-owner fixture approval",
+        "maintainer plus portability-owner provider-adapter approval",
+        "reviewer-criteria approval",
+        "acceptance/portability/evidence/openai_api.json",
+        "acceptance/portability/evidence/codex_chatgpt_subscription.json",
+        "acceptance/portability/evidence/claude_code_subscription.json",
+        "acceptance/portability/evidence/replay_host_bundle.json",
+        "acceptance/portability/evidence/api_provider_changed.json",
+        "acceptance/portability/evidence/model_changed_same_provider.json",
+        "green hosted CI, independent frozen-head review, and resolved external review threads"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "acceptance/portability/matrix-v1.json",
+          "status": "PRESENT_FROZEN_DEFINITIONS_ONLY",
+          "sha256": "f47067c9624f23ad8b99463638e658beb4d303840a1326acedc41c035fe4f1d1",
+          "observed": "six cases are defined; evidence directory contains only .gitkeep"
+        },
+        {
+          "path": "tools/check_portability_acceptance.py",
+          "status": "IMPLEMENTED_FAIL_CLOSED",
+          "observed": "--definitions-only passes; --release fails because all six PASS records and G-HOST/G-PORT are absent"
+        },
+        {
+          "path": "artifacts/research-grade/audit-pack/governance/external-gates.json",
+          "status": "RESERVED_EXTERNAL",
+          "sha256": "29fcf5826308e930ee04ae334d24bf5b962993cba579667a572fedacfd8d8a84",
+          "observed": "hosted CI, approvals, independent review, external audit pack, and owner approval identities are empty/reserved"
+        }
+      ],
+      "exact_missing_evidence": [
+        "All named approval dispositions and identities as immutable external PR/workflow records.",
+        "Six recorder-produced PASS evidence files from the canonical work order, including OpenAI API, Codex plus ChatGPT subscription, Claude Code subscription, replay host bundle, changed API provider, and changed model cases.",
+        "Credentials or subscription environments for the cases that require them; forbidden-key and zero-paid-call constraints must be demonstrated.",
+        "Green hosted CI on the frozen evidence head.",
+        "Independent review on the frozen head with every thread resolved and no post-review content change."
+      ],
+      "can_evidence_be_generated_locally": false,
+      "live_provider_required": true,
+      "independent_external_execution_required": true,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/check_portability_acceptance.py --definitions-only",
+          "expected_pass_condition": "Frozen case definitions remain valid before external runs."
+        },
+        {
+          "kind": "command",
+          "command": "python tools/check_portability_acceptance.py --release",
+          "expected_pass_condition": "Exit 0 with all six case evidence records PASS and G-HOST/G-PORT true."
+        },
+        {
+          "kind": "command",
+          "command": "python tools/validate_autonomous_run.py --canonical <run-directory> && python tools/record_portability_acceptance.py <case-id> <run-directory>",
+          "expected_pass_condition": "The canonical run validates first; the recorder then emits an immutable PASS record with run manifest, chain, request, provenance, and assertion hashes."
+        },
+        {
+          "kind": "workflow",
+          "command": "Hosted CI and external review records on the exact final head",
+          "expected_pass_condition": "Required hosted checks are green, independent review is clean, and all external threads are resolved."
+        }
+      ],
+      "expected_pass_condition": "Every named approval, six-case portability PASS record, hosted check, and independent exact-head review is present only in verifiable immutable external records and all gates pass.",
+      "exact_downstream_tasks_blocked": ["T128", "T129"]
+    },
+    {
+      "task_id": "T128",
+      "acceptance_criterion": "Finalize and independently verify an external immutable audit pack combining the committed pre-freeze manifest with exact-head CI/review/approval records; if review changes repository content, repeat T126-T128 for the new head without committing post-freeze records to the branch",
+      "current_status": "RESERVED_EXTERNAL",
+      "preparation_status": "ASSEMBLER_PRESENT; LOCAL_PACK_NOT_VERIFYING; EXTERNAL_PACK_ABSENT",
+      "required_artifacts": [
+        "committed pre-freeze audit-pack manifest",
+        "all artifacts enumerated by that manifest with exact byte sizes and SHA-256 digests",
+        "reports/coverage.json or the canonical evidence that legitimately supplies it",
+        "exact-head CI, review, approval, and portability records",
+        "external immutable audit-pack verification record",
+        "new exact-head repeat of T126-T128 if review changes repository content"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "artifacts/research-grade/audit-pack/audit-pack.json",
+          "status": "PRESENT_PRE_FREEZE_NOT_FINAL",
+          "observed": "pack manifest has 25 entries and binds an older pre-freeze code head; it is not an exact-head release pack"
+        },
+        {
+          "path": "artifacts/research-grade/audit-pack/reports/coverage.json",
+          "status": "MISSING",
+          "observed": "the local verifier reports this exact required artifact as missing; no placeholder is permitted"
+        },
+        {
+          "path": "tools/assemble_research_grade_audit_pack.py",
+          "status": "PRESENT_FAIL_CLOSED",
+          "observed": "verifier checks exact file set, sizes, digests, artifact count, and recorded code head"
+        },
+        {
+          "path": "artifacts/research-grade/audit-pack/governance/external-gates.json",
+          "status": "RESERVED_EXTERNAL",
+          "observed": "external immutable audit-pack identity and verification are absent"
+        }
+      ],
+      "exact_missing_evidence": [
+        "The legitimate source for reports/coverage.json and a reassembled manifest whose entries exactly match the resulting pack.",
+        "An exact-head pack built from the committed pre-freeze manifest and all required evidence artifacts.",
+        "Immutable hosted CI, review, named approval, and six-case portability records bound to that exact head.",
+        "Independent external verification of the pack, with no post-freeze records committed to the branch.",
+        "A repeat of T126-T128 if the independent review changes repository content."
+      ],
+      "can_evidence_be_generated_locally": true,
+      "live_provider_required": false,
+      "independent_external_execution_required": true,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": false,
+      "verification": [
+        {
+          "kind": "command",
+          "command": "python tools/assemble_research_grade_audit_pack.py --verify-only",
+          "expected_pass_condition": "Exit 0 with exact artifact set, byte sizes, digests, artifact count, and exact recorded head verified."
+        },
+        {
+          "kind": "external_verification",
+          "command": "Independent verifier consumes the immutable external audit-pack record and the committed pre-freeze manifest",
+          "expected_pass_condition": "Independent verifier confirms the exact final head and every external CI/review/approval/portability record without repository mutation."
+        }
+      ],
+      "expected_pass_condition": "The pre-freeze manifest is legitimately complete, the exact-head pack verifies, all external records are immutably bound, and independent verification passes; any review-induced head change restarts the prescribed final sequence.",
+      "exact_downstream_tasks_blocked": ["T129"]
+    },
+    {
+      "task_id": "T129",
+      "acceptance_criterion": "Obtain explicit owner merge approval as an external PR decision while retaining named no-production/no-merge gates; do not create a commit after final exact-head review",
+      "current_status": "RESERVED_EXTERNAL",
+      "preparation_status": "NOT_ELIGIBLE; ALL_PRECEDING_GATES_OPEN",
+      "required_artifacts": [
+        "final exact-head PR with all required checks green",
+        "resolved review threads and independent review disposition",
+        "completed external immutable audit pack",
+        "explicit owner merge approval as an external PR decision",
+        "named no-production/no-merge gate records",
+        "no commit after final exact-head review"
+      ],
+      "current_artifact_status": [
+        {
+          "path": "artifacts/research-grade/audit-pack/governance/external-gates.json",
+          "status": "RESERVED_EXTERNAL",
+          "observed": "owner_merge_approval is reserved and has no identity or disposition"
+        },
+        {
+          "path": "specs/008-swos-v2-research-grade/tasks.md",
+          "status": "OPEN",
+          "observed": "T129 remains an open frozen task marker; this closure package does not change it"
+        }
+      ],
+      "exact_missing_evidence": [
+        "Completion of T070, T073, T079, T080, T093, T094, T095, T111, T127, and T128.",
+        "Explicit owner merge approval recorded externally on the final exact-head PR.",
+        "Named no-production and no-merge gates retained until that decision; no post-review commit."
+      ],
+      "can_evidence_be_generated_locally": false,
+      "live_provider_required": true,
+      "independent_external_execution_required": true,
+      "licensed_rights_cleared_corpus_required": true,
+      "independent_human_review_required": true,
+      "named_maintainer_steward_approval_required": true,
+      "owner_approval_required": true,
+      "verification": [
+        {
+          "kind": "external_pr_decision",
+          "command": "Final exact-head PR review and owner decision in the hosting service",
+          "expected_pass_condition": "Owner explicitly approves merge after every preceding gate is independently evidenced; no commit is created after final review."
+        }
+      ],
+      "expected_pass_condition": "The owner makes the explicit external merge decision only after all prior gates are complete, while no-production/no-merge controls remain named and enforced.",
+      "exact_downstream_tasks_blocked": []
+    }
+  ]
+}

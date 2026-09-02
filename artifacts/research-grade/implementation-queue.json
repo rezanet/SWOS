@@ -124,6 +124,42 @@
       "release_status": "uncertified"
     },
     "current_main_sha": "1160d973e942e5436604b2e2d5f503de008f0d07",
+    "evidence_closure": {
+      "status": "preparation_only",
+      "assessed_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
+      "implementation_source_baseline_sha": "1160d973e942e5436604b2e2d5f503de008f0d07",
+      "task_authority_sha256": "166d792f3f99fca6f36f2bd754af4b1f77497c0bb00bdfea3822ea30e5b54b4b",
+      "hash_encoding": "sha256 of committed Git blob bytes at assessed_main_sha",
+      "matrix_json": "artifacts/research-grade/evidence-closure-matrix.json",
+      "matrix_markdown": "artifacts/research-grade/evidence-closure-matrix.md",
+      "missing_evidence_report": "artifacts/research-grade/missing-evidence-report.json",
+      "oracle_execution_kit": "benchmark/provenance/oracle-execution-kit.md",
+      "owner_action_pack": "OWNER-ACTION-PACK.md",
+      "open_tasks": [
+        "T070",
+        "T073",
+        "T079",
+        "T080",
+        "T093",
+        "T094",
+        "T095",
+        "T111",
+        "T127",
+        "T128",
+        "T129"
+      ],
+      "release_status": "uncertified",
+      "fail_closed_observations": [
+        "citation dataset builder: exit 2, not_run, no licensed pair source, zero outputs",
+        "source diversity benchmark: exit 2, not_run, zero packets, zero/null denominators",
+        "PROV certifier: exit 2, not_run, corpus manifest requires a cases list",
+        "multimodal evaluator: exit 2, NOT_RUN, all observed counts zero",
+        "portability release check: FAIL, six PASS records missing, G-HOST and G-PORT false",
+        "audit-pack verifier: FAIL closed, reports/coverage.json missing"
+      ],
+      "completion_marker_changes": false,
+      "next_action": "Obtain the external corpus, rights, review, approval, oracle, portability, hosted-CI, and audit-pack records listed in the matrix; rerun verifiers on the exact resulting head."
+    },
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/58",
