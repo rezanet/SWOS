@@ -163,7 +163,8 @@
       "PR #62 merged by squash as 1160d973e942e5436604b2e2d5f503de008f0d07; hosted checks SWOS CI 33623149632, Research Grade compatibility 33623149687, SWOS Prose Benchmark 33623149679, SWOS Portability Gate 33623149546, SWOS CodeQL 33623149567, and SWOS Engineering Quality 33623149570 completed successfully",
       "post-merge workflows at 1160d973e942e5436604b2e2d5f503de008f0d07: SWOS CI 33623474422, Research Grade compatibility 33623474439, SWOS CodeQL 33623474467, and SWOS Engineering Quality 33623474490 completed successfully",
       "final local validation after PR #62: runtime 302 passed; prose 240 passed with 11 expected live-provider skips; all eight contract harness planes passed in contract mode; 58 schema artifacts passed",
-      "current release remains uncertified: open tasks T070, T073, T079, T080, T093, T094, T095, T111, T127, T128, T129; portability records api_provider_changed, claude_code_subscription, codex_chatgpt_subscription, model_changed_same_provider, openai_api, and replay_host_bundle are absent; audit-pack verify is fail-closed because reports/coverage.json is missing"
+      "current release remains uncertified: open tasks T070, T073, T079, T080, T093, T094, T095, T111, T127, T128, T129; portability records api_provider_changed, claude_code_subscription, codex_chatgpt_subscription, model_changed_same_provider, openai_api, and replay_host_bundle are absent; audit-pack verify is fail-closed because reports/coverage.json is missing",
+      "documentation-only PR #63 squash merge c290a9defd38db346496ed226e2e883578816301 generated no standalone Signed-off-by trailer; post-merge SWOS CI 33624335104 failed only DCO, while compatibility 33624335200, CodeQL 33624335094, and Engineering Quality 33624335431 succeeded; history is retained without rewriting"
     ]
   },
   "summary": {

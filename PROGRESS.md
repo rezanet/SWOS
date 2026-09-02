@@ -67,6 +67,14 @@ portability records are missing, and the audit-pack verifier remains fail-closed
 because `reports/coverage.json` is absent. No release, deployment, or portability
 feature work is claimed.
 
+The documentation-only PR #63 squash merge at `c290a9defd38db346496ed226e2e883578816301`
+generated no standalone `Signed-off-by` trailer. Its post-merge SWOS CI run
+`33624335104` therefore failed only the DCO job; Research Grade compatibility
+`33624335200`, SWOS CodeQL `33624335094`, and SWOS Engineering Quality
+`33624335431` succeeded, as did every other CI job. This merge-metadata
+deviation is retained without history rewriting and is being followed by a
+signed documentation-only baseline attestation.
+
 An independent exact-head review of PR #55 head
 `b8f18e261d3baa8e11749d2ad663ba8bd06e04b1` against base
 `8d440296b4a9df708f1140a04bae1ae24f74fee3` found five P1 planning-contract
