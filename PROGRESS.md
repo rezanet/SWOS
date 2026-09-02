@@ -3,6 +3,39 @@
 This ledger records repository-grounded state and exact evidence. Percentages are
 quality measurements, not claims about completion of the larger SWOS roadmap.
 
+## Current exact-head reconciliation — 2026-09-02
+
+`main` and `origin/main` are both at `18ce33bad66bece28b02e84ab7ef8f532a45dacf`.
+The Research Grade implementation PR #58 merged as
+`9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158`; the signed-off PR #59 attestation
+then merged as the current head without changing the tree. The tested source
+candidate was `fc03d2a10db93ccc1011946abe71c3acea45e45d` and the final PR #58
+head was `7a8142c709821fee4b69344e6da0990bb4297053`.
+
+The frozen feature task authority contains 129 ordered tasks: 118 checked and
+11 open (`T070`, `T073`, `T079`, `T080`, `T093`, `T094`, `T095`, `T111`, and
+`T127`–`T129`). The only difference between the merged PR #55 planning tree
+and current `tasks.md` is permitted completion-marker changes.
+
+Current-main hosted push workflows are green: SWOS CI `33600294323`, Research
+Grade compatibility `33600294359`, SWOS CodeQL `33600294352`, and SWOS
+Engineering Quality `33600294319`. The portability definitions check passes,
+but `tools/check_portability_acceptance.py --release` fails closed because the
+six required host/provider PASS records are absent. The committed pre-freeze
+audit-pack verifier also fails closed because its manifest names missing
+`reports/coverage.json`; this is not release evidence.
+
+An independent exact-head review of PR #55 head
+`b8f18e261d3baa8e11749d2ad663ba8bd06e04b1` against base
+`8d440296b4a9df708f1140a04bae1ae24f74fee3` found five P1 planning-contract
+blockers. The frozen planning corpus was not rewritten: the unresolved issues
+are the undeclared `resolved_by_scope` disposition, the mismatch between
+non-authenticated scope claims and unauthorised-mutation rejection, the
+TriG/N-Quads profile mismatch, incomplete multimodal/promotion metric
+definitions, and unspecified diversity formulas and edge cases. Research
+Grade certification remains blocked; no portability feature or architectural
+refactor should start from this state.
+
 ## Research Grade v2.0 implementation candidate — pre-freeze reconciliation
 
 **Reconciled:** 2026-09-01
