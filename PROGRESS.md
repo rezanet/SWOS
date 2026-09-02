@@ -50,7 +50,9 @@ handoff is `benchmark/provenance/oracle-execution-kit.md`, and the grouped
 owner handoff is `OWNER-ACTION-PACK.md`.
 
 The matrix is bound to task-authority SHA-256
-`dd1a9af5627b82464f47416b449f5b8c025e46c163c6773d84767a799dce90ae` and
+`166d792f3f99fca6f36f2bd754af4b1f77497c0bb00bdfea3822ea30e5b54b4b` computed
+from the committed Git blob bytes (rather than platform-transcoded checkout
+text) and
 records exact required artifacts, current status, missing evidence, local and
 external prerequisites, commands/workflows, pass conditions, and downstream
 blocking relationships for T070, T073, T079, T080, T093, T094, T095, T111,

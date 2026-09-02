@@ -6,7 +6,8 @@
   "assessment_head": "1f5135969f04a104d4a99764f921d1743d22710f",
   "task_authority": {
     "path": "specs/008-swos-v2-research-grade/tasks.md",
-    "sha256": "dd1a9af5627b82464f47416b449f5b8c025e46c163c6773d84767a799dce90ae"
+    "sha256": "166d792f3f99fca6f36f2bd754af4b1f77497c0bb00bdfea3822ea30e5b54b4b",
+    "hash_encoding": "sha256 of committed Git blob bytes at assessment_head"
   },
   "determinism": {
     "ordering": "task IDs follow the frozen task order and missing-evidence entries preserve the canonical order in this report",
@@ -55,7 +56,7 @@
       "blocked_downstream": ["T080", "T127", "T128", "T129"],
       "missing": [
         "Separate tuning and locked packets for all nine supported disciplines.",
-        "At least ten locked packets per discipline in each of the ten required categories.",
+        "At least ten locked packets per supported discipline using the frozen packet category set; do not infer ten packets per category.",
         "Independent human review, reviewer separation, source provenance/permission, and packet-lock evidence."
       ]
     },

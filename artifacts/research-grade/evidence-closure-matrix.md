@@ -3,7 +3,7 @@
 Assessment date: 2026-09-02
 Assessed source head: `1f5135969f04a104d4a99764f921d1743d22710f`
 Frozen task authority: `specs/008-swos-v2-research-grade/tasks.md`
-Task authority SHA-256: `dd1a9af5627b82464f47416b449f5b8c025e46c163c6773d84767a799dce90ae`
+Task authority SHA-256 (committed Git blob bytes): `166d792f3f99fca6f36f2bd754af4b1f77497c0bb00bdfea3822ea30e5b54b4b`
 
 This is a preparation-only closure record. The machine-readable authority is [evidence-closure-matrix.json](evidence-closure-matrix.json); this file is its human-readable review projection. Neither file is release evidence. The 11 tasks below remain open, and no frozen task wording, threshold, ordering, contract, or completion marker was changed.
 
@@ -123,7 +123,7 @@ Run `python tools/evaluate_citation_classifier.py --model-manifest artifacts/res
 | `evals/fixtures/source-diversity/manifest.json` | `NOT_RUN`; packets empty; 10 required per discipline |
 | `evals/fixtures/source-diversity/README.md` | Present as preparation |
 | Separate tuning packets for nine supported disciplines | Missing |
-| Ten locked packets per discipline in each required category | Missing |
+| At least ten locked packets per supported discipline using the frozen packet category set; the task cardinality is not multiplied by category | Missing |
 | Source provenance/permission, reviewer separation, and lock records | Missing |
 
 Required categories are `balanced`, `concentrated`, `sparse`, `narrow`, `multilingual`, `historical`, `method_monoculture`, `duplicate`, `fake_diversity`, and `missing_strata`. Supported disciplines are `art_history`, `art_criticism`, `engineering`, `humanities`, `interdisciplinary`, `materials_science`, `philosophy`, `psychology`, and `technical_writing`.
@@ -131,7 +131,7 @@ Required categories are `balanced`, `concentrated`, `sparse`, `narrow`, `multili
 **Exact missing evidence**
 
 - Separate tuning and locked packets for every supported discipline.
-- At least ten locked packets per discipline in every required category.
+- At least ten locked packets per supported discipline using the frozen packet category set; do not infer ten packets per category.
 - Independent human review and lock evidence for every packet, with source provenance and any required permission/right basis.
 - Reviewer separation proving the builder did not self-review the locked packets.
 

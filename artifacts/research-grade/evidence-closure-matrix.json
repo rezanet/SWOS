@@ -7,14 +7,15 @@
   "authority": {
     "feature": "specs/008-swos-v2-research-grade",
     "task_authority_path": "specs/008-swos-v2-research-grade/tasks.md",
-    "task_authority_sha256": "dd1a9af5627b82464f47416b449f5b8c025e46c163c6773d84767a799dce90ae",
+    "task_authority_sha256": "166d792f3f99fca6f36f2bd754af4b1f77497c0bb00bdfea3822ea30e5b54b4b",
+    "hash_encoding": "sha256 of committed Git blob bytes at source_head; do not hash platform-transcoded checkout text",
     "source_head": "1f5135969f04a104d4a99764f921d1743d22710f",
     "source_head_role": "Exact main head assessed before this closure package; the closure package does not alter frozen task wording, thresholds, ordering, contracts, or completion markers.",
     "other_frozen_artifact_hashes": {
-      "interfaces": "d63f0c7c6578693e5da242dc14ac880af7d26da5013a2c9d1b3ac9e605158ee9",
-      "plan": "7e2767c1180718ed7416ff24f2db7486a4f8b0279d06b749bece214bd1a6350f",
-      "data_model": "47743f019a8f4780208be05ad789b9dd16fc29d54b3ea7dfe57b74137a42c7ed",
-      "research": "6bdafd0a434210cbc2668dd75e0bcd3791044f911e64a67f9d69564fdf20e4f3"
+      "interfaces": "3013bf643c9552bb7cffbccdbccba383829cd8491b3e82085125c95a0a7549af",
+      "plan": "ac830d5b30bc9dbd98dec26e2c005080d76dfcc59b4f42db50ffc955f66a8bc4",
+      "data_model": "929a4d9c37c873cabce3f8a9cb30e1cc6a8c8bfeaffd91aef98e11b33fde1f6d",
+      "research": "ebfa8cd976802948f003ffca2abde9245b259012e094cf3dbaaf277063beec14"
     }
   },
   "interpretation": {
@@ -83,19 +84,19 @@
         {
           "path": "benchmark/citation-support/manifest.json",
           "status": "NOT_RUN",
-          "sha256": "4ab0522c8157129763bcc71086f02b6a8e8c409503dfaf9fab9952ec66e102dc",
+          "sha256": "56c1397c91bc50c6f07026f8fe6ed80a488a085cc624694806a1fc6133b7031f",
           "observed": "schema 2.0; release blocked below release floor; counts are zero; splits, annotators, adjudication, and leakage check are empty or not_run"
         },
         {
           "path": "benchmark/citation-support/SOURCE-LICENCE-MANIFEST.json",
           "status": "NOT_RUN",
-          "sha256": "2e07d924f89b013f22f269d4f9b56e62e167c9124c5b66fc522347a338f0785c",
+          "sha256": "0885e23e1a1c0a22f7f74432ddfc065553e72f620b0b22bb9edc308e6f39d9c3",
           "observed": "sources is empty; every pair still requires permitted URI, digest, attribution, and allowed-use data"
         },
         {
           "path": "benchmark/citation-support/DATA-LICENCE.md",
           "status": "NOT_RUN",
-          "sha256": "e8af895ccc5577e9e8d414e01f9d98c5d50652c7c0ad1e60935402c54138f29d",
+          "sha256": "a7a272c0ae699555ec22d75e1baed13cebe34de9101dd6722c496bb152847faf",
           "observed": "no frozen corpus; URI, digest, licence/right basis, attribution, allowed-use, and approval are required"
         },
         {
@@ -211,14 +212,14 @@
         "evals/fixtures/source-diversity/manifest.json",
         "evals/fixtures/source-diversity/README.md",
         "separate tuning packets for every supported discipline",
-        "at least ten locked packets per discipline in all ten required categories",
+        "at least ten locked packets per supported discipline using the frozen packet category set; the ten-packet cardinality is not multiplied by category",
         "source identity, provenance, permission, annotation, reviewer separation, and lock records"
       ],
       "current_artifact_status": [
         {
           "path": "evals/fixtures/source-diversity/manifest.json",
           "status": "NOT_RUN",
-          "sha256": "06d2bb23d8dc1019f09c350a35621a3837d0bf976de36c6d4eb5f3bd7543275c",
+          "sha256": "57a36fc94e3dd021c3a0c9c7dac69a9db4e5a9f4eb975ddfdce2e16f3540d3a5",
           "observed": "schema 2.0; locked_human_review_required; packets is empty; required_packets_per_discipline is 10"
         },
         {
@@ -234,7 +235,7 @@
       ],
       "exact_missing_evidence": [
         "Separate tuning packets and locked packets for all nine supported disciplines.",
-        "At least ten locked packets per discipline for balanced, concentrated, sparse, narrow, multilingual, historical, method-monoculture, duplicate, fake-diversity, and missing-strata cases.",
+        "At least ten locked packets per supported discipline, with the frozen balanced/concentrated/sparse/narrow/multilingual/historical/method-monoculture/duplicate/fake-diversity/missing-strata category set represented; do not infer ten packets per category.",
         "Independent human review and lock evidence for every packet, with source provenance and any required permission/right basis.",
         "Reviewer separation proving the builder did not self-review the locked packets."
       ],
@@ -326,7 +327,7 @@
         {
           "path": "evals/fixtures/provenance/manifest.json",
           "status": "NOT_RUN",
-          "sha256": "cb3e6d43f95ed624c5b901abb9feeee924eadd0b2ed69a63f947be48583fa072",
+          "sha256": "1175f61ab63f59f2fdecde6cda793db8d48e545ab5f31eaaf2b16488c1fb1240",
           "observed": "schema 2.0; cases is empty; reason says checksummed PROV corpus was not supplied"
         },
         {
@@ -373,7 +374,7 @@
         {
           "path": "benchmark/provenance/oracle-manifest.json",
           "status": "NOT_RUN",
-          "sha256": "89331149db785d0975130ab7a53b3f696c5ce647a064e891efdb1a93657ef998",
+          "sha256": "05fdd71b009654dc82c95ecf35970aa39892a4a929eef744a4c2fc6e1555c338",
           "observed": "implementation is ProvToolbox but version, licence, artifact URI, and artifact SHA-256 are null; approved artifact is unavailable"
         },
         {
@@ -432,13 +433,13 @@
         {
           "path": "benchmark/provenance/resource-limits.json",
           "status": "PRESENT_DECLARATION_NOT_CERTIFIED",
-          "sha256": "6014633accfa47a0b29b0cb16ec8dd93aab282391ff4aa15f9f1a72c9a39888f",
+          "sha256": "ffe1055f874de022acafc24a7bdb6a90552c8ddaa44ad5bb4fe0f7d2b950a73f",
           "observed": "explicit byte, statement, literal, depth, timeout, p95, corpus-size, and hostile blank-node policy fields are declared"
         },
         {
           "path": "benchmark/provenance/manifest.json",
           "status": "NOT_RUN",
-          "sha256": "29a1f0eaa3e2889fc034e19a18c0d3b1a8fadb47e7ff7c9d5db269db3192aa20",
+          "sha256": "9e6ac31f40f9a982ea1ef62f4206513170212ca40735d00b6ee8c3db77a6216c",
           "observed": "required 1k/10k/100k/hostile blank-node corpora are all not_run; raw_measurements is empty"
         }
       ],
@@ -488,7 +489,7 @@
         {
           "path": "evals/fixtures/multimodal/manifest.json",
           "status": "NOT_RUN",
-          "sha256": "28e507edc07c33c4467a0d82025c30ac32506f7b7872d872b6f447bf2a687bfd",
+          "sha256": "2afbaa408a7598813297d68d8f1c5cd8807196acabb1f2f07c0749df27cdf7cd",
           "observed": "status not_run; objects, renditions, claims, pairs, discipline tasks, and adversarial cases are all zero; review is not_run"
         },
         {
@@ -554,7 +555,7 @@
         {
           "path": "acceptance/portability/matrix-v1.json",
           "status": "PRESENT_FROZEN_DEFINITIONS_ONLY",
-          "sha256": "24a63866f27a155b7fe30824c3b48f944ff0e1603f37b70edba71b2f32537915",
+          "sha256": "f47067c9624f23ad8b99463638e658beb4d303840a1326acedc41c035fe4f1d1",
           "observed": "six cases are defined; evidence directory contains only .gitkeep"
         },
         {
@@ -565,7 +566,7 @@
         {
           "path": "artifacts/research-grade/audit-pack/governance/external-gates.json",
           "status": "RESERVED_EXTERNAL",
-          "sha256": "07c58bcc034f7d35f2c88d74f9db38498a70a77c64207439490b6fa09ba9b2a4",
+          "sha256": "29fcf5826308e930ee04ae334d24bf5b962993cba579667a572fedacfd8d8a84",
           "observed": "hosted CI, approvals, independent review, external audit pack, and owner approval identities are empty/reserved"
         }
       ],
