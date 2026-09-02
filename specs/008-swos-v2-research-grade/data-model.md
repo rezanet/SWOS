@@ -404,8 +404,11 @@ digests, provider/model/config/prompt/seed/draw identities, baseline/candidate
 paired metrics and primary metric identifier, case-level scores/differences,
 case-ID digest, bootstrap seed/resample count/interval bounds, absolute
 improvement, safety regressions, mandatory live-result identity, human approval,
-effective/expiry dates, rollback trigger, and SDL/EPG evidence. Invalid,
-unmatched, `NOT_RUN`, or expired evidence means `disabled`.
+effective/expiry dates, rollback trigger, and SDL/EPG evidence. Promotion
+approval evidence binds asserted approver ID/role, approval time, candidate,
+assessment, scope, operation, EPG, SDL, and policy digests; it does not
+authenticate identity. Invalid, unmatched, missing, stale, future-dated,
+`NOT_RUN`, or expired evidence means `disabled`.
 
 ## 7. Release audit entities
 

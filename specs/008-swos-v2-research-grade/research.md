@@ -483,7 +483,10 @@ digest, per-case scores/differences, seed, resample count, and bounds. Zero or
 insufficient cases, non-finite values, or missing human truth are `NOT_RUN`.
 Promotion remains eligible only after the other gates, >=0.08 improvement,
 positive lower bound, live exact-head evidence, and exact PromotionAssessment
-approval binding all pass.
+approval binding all pass. The promotion approval records asserted approver ID,
+role, approval ID/time, and candidate/assessment/scope/operation/EPG/SDL/policy
+digests; it is evidence rather than authentication. Missing, mismatched, stale,
+future-dated, or expired approval evidence disables promotion.
 
 ### Evaluation decision
 

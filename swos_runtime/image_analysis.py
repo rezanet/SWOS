@@ -29,11 +29,16 @@ def _asset_digest(asset: Any) -> str:
 
 
 def _mapping(value: Any) -> dict[str, Any]:
+    if value is None:
+        return {}
     if isinstance(value, Mapping):
         return dict(value)
     if hasattr(value, "to_dict"):
         return dict(value.to_dict())
-    return dict(vars(value))
+    try:
+        return dict(vars(value))
+    except TypeError:
+        return {}
 
 
 @dataclass(frozen=True)
@@ -835,6 +840,36 @@ class CapabilityPromotionDecision:
         }
 
 
+def _promotion_scope_digest(capability: str, pack: str, stage: str) -> str:
+    return canonical_digest({"capability": capability, "pack": pack, "stage": stage})
+
+
+def _promotion_operation_digest(capability: str, pack: str, stage: str) -> str:
+    return canonical_digest(
+        {
+            "operation": "promotion_commit",
+            "capability": capability,
+            "pack": pack,
+            "stage": stage,
+        }
+    )
+
+
+def _parse_promotion_timestamp(value: Any) -> datetime | None:
+    if isinstance(value, datetime):
+        parsed = value
+    elif isinstance(value, str) and value:
+        try:
+            parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    else:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
 def _metric(value: Any, default: float = 0.0) -> float:
     if isinstance(value, Mapping):
         for key in ("value", "score", "metric"):
@@ -1236,6 +1271,8 @@ def assess_promotion(
     if evaluation_not_run and "evaluation_not_run" not in reasons:
         reasons.append("evaluation_not_run")
     evaluation_status = "not_run" if evaluation_not_run else "evaluated"
+    promotion_scope_digest = _promotion_scope_digest(capability, pack, stage)
+    promotion_operation_digest = _promotion_operation_digest(capability, pack, stage)
     return PromotionAssessment(
         capability,
         pack,
@@ -1282,6 +1319,11 @@ def assess_promotion(
             "baseline_metric": baseline_metric,
             "candidate_metric": candidate_metric,
             "expires_at": expires_at,
+            "scope_digest": promotion_scope_digest,
+            "operation_digest": promotion_operation_digest,
+            "epg_digest": candidate_data.get("epg_digest"),
+            "sdl_digest": candidate_data.get("sdl_digest"),
+            "policy_digest": canonical_digest(policy),
         },
     )
 
@@ -1289,11 +1331,53 @@ def assess_promotion(
 def commit_promotion(assessment: PromotionAssessment, approval: Any) -> CapabilityPromotionDecision:
     approval_data = _mapping(approval)
     reasons = [] if assessment.eligible else list(assessment.reasons)
-    if approval_data.get("disposition") != "approved" or not approval_data.get("approver_id"):
+    approver_id = approval_data.get("approver_id") or approval_data.get("approver")
+    approver_role = approval_data.get("approver_role") or approval_data.get("role")
+    if (
+        approval_data.get("disposition") != "approved"
+        or not approver_id
+        or not approver_role
+        or not approval_data.get("approval_id")
+    ):
         reasons.append("approval_missing")
     assessment_digest = canonical_digest(assessment.to_dict())
     if approval_data.get("assessment_digest") != assessment_digest:
         reasons.append("approval_assessment_mismatch")
+    expected_bindings = {
+        "candidate_digest": assessment.candidate_digest,
+        "scope_digest": assessment.evidence.get(
+            "scope_digest",
+            _promotion_scope_digest(assessment.capability, assessment.pack, assessment.stage),
+        ),
+        "operation_digest": assessment.evidence.get(
+            "operation_digest",
+            _promotion_operation_digest(assessment.capability, assessment.pack, assessment.stage),
+        ),
+        "epg_digest": assessment.evidence.get("epg_digest"),
+        "sdl_digest": assessment.evidence.get("sdl_digest"),
+        "policy_digest": assessment.evidence.get("policy_digest"),
+    }
+    for binding_name, expected in expected_bindings.items():
+        if not expected:
+            reasons.append(f"assessment_binding_missing:{binding_name}")
+        elif approval_data.get(binding_name) != expected:
+            reasons.append(f"approval_{binding_name}_mismatch")
+    approved_at = _parse_promotion_timestamp(approval_data.get("approved_at"))
+    assessed_at = _parse_promotion_timestamp(assessment.created_at)
+    commit_at = datetime.now(timezone.utc)
+    if approved_at is None:
+        reasons.append("approval_timestamp_missing_or_invalid")
+    else:
+        if assessed_at is not None and approved_at < assessed_at:
+            reasons.append("approval_stale")
+        if approved_at > commit_at:
+            reasons.append("approval_future")
+    if "expires_at" in approval_data:
+        expires_at = _parse_promotion_timestamp(approval_data.get("expires_at"))
+        if expires_at is None:
+            reasons.append("approval_expiry_missing_or_invalid")
+        elif expires_at <= commit_at:
+            reasons.append("approval_expired")
     if reasons:
         return CapabilityPromotionDecision(
             "disabled",

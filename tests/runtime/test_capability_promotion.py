@@ -21,6 +21,8 @@ class CapabilityPromotionTests(unittest.TestCase):
             "seed": 7,
             "draw_digest": "f" * 64,
             "evaluation_manifest_digest": "1" * 64,
+            "epg_digest": "g" * 64,
+            "sdl_digest": "h" * 64,
             "live_exact_head": True,
             "human_quorum": True,
             "role_separation": True,
@@ -39,6 +41,24 @@ class CapabilityPromotionTests(unittest.TestCase):
                 {"case_id": case_id, "metrics": {"cross_modal_f1": metric}, "human_reviewed": True}
                 for case_id in value["case_ids"]
             ]
+        return value
+
+    def _approval(self, assessment, **changes):
+        value = {
+            "approval_id": "promotion-approval",
+            "approver_id": "human-1",
+            "approver_role": "promotion_owner",
+            "approved_at": assessment.created_at,
+            "disposition": "approved",
+            "assessment_digest": canonical_digest(assessment.to_dict()),
+            "candidate_digest": assessment.candidate_digest,
+            "scope_digest": assessment.evidence["scope_digest"],
+            "operation_digest": assessment.evidence["operation_digest"],
+            "epg_digest": assessment.evidence["epg_digest"],
+            "sdl_digest": assessment.evidence["sdl_digest"],
+            "policy_digest": assessment.evidence["policy_digest"],
+        }
+        value.update(changes)
         return value
 
     def test_default_off_and_mismatched_heads_are_disabled(self) -> None:
@@ -65,11 +85,7 @@ class CapabilityPromotionTests(unittest.TestCase):
         self.assertEqual("disabled", assessment.status)
         decision = commit_promotion(
             assessment,
-            {
-                "disposition": "approved",
-                "approver_id": "human-1",
-                "assessment_digest": canonical_digest(assessment.to_dict()),
-            },
+            self._approval(assessment),
         )
         self.assertEqual("disabled", decision.status)
 
@@ -87,11 +103,7 @@ class CapabilityPromotionTests(unittest.TestCase):
         self.assertTrue(assessment.eligible)
         decision = commit_promotion(
             assessment,
-            {
-                "disposition": "approved",
-                "approver_id": "human-1",
-                "assessment_digest": canonical_digest(assessment.to_dict()),
-            },
+            self._approval(assessment),
         )
         self.assertTrue(decision.enabled)
         rolled_back = __import__(

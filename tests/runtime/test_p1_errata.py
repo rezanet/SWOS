@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from swos_runtime.image_analysis import assess_promotion
+from swos_runtime.image_analysis import assess_promotion, commit_promotion
 from swos_runtime.models import SWOSRuntimeError, canonical_digest
 from swos_runtime.programme_store import ProgrammeStore, StoreIntegrityError
 from swos_runtime.prov_interop import (
@@ -362,6 +362,8 @@ class P1PromotionErrataTests(unittest.TestCase):
             "seed": 7,
             "draw_digest": "f" * 64,
             "evaluation_manifest_digest": manifest_digest,
+            "epg_digest": "g" * 64,
+            "sdl_digest": "h" * 64,
             "live_exact_head": True,
             "human_quorum": True,
             "role_separation": True,
@@ -480,6 +482,75 @@ class P1PromotionErrataTests(unittest.TestCase):
         self.assertEqual("not_run", assessment.evidence["evaluation_status"])
         self.assertIn("evaluation_not_run", assessment.reasons)
         self.assertFalse(assessment.eligible)
+
+    def test_promotion_approval_binds_scope_operation_policy_and_evidence(self) -> None:
+        policy = {"minimum_improvement": 0.08, "lower_confidence_bound_minimum": 0.0}
+        baseline = self._evidence(
+            case_results=[
+                {"case_id": "case-1", "metrics": {"cross_modal_f1": 0.60}, "human_reviewed": True},
+                {"case_id": "case-2", "metrics": {"cross_modal_f1": 0.60}, "human_reviewed": True},
+                {"case_id": "case-3", "metrics": {"cross_modal_f1": 0.60}, "human_reviewed": True},
+            ]
+        )
+        candidate = self._evidence(
+            case_results=[
+                {"case_id": "case-1", "metrics": {"cross_modal_f1": 0.70}, "human_reviewed": True},
+                {"case_id": "case-2", "metrics": {"cross_modal_f1": 0.71}, "human_reviewed": True},
+                {"case_id": "case-3", "metrics": {"cross_modal_f1": 0.72}, "human_reviewed": True},
+            ]
+        )
+        assessment = assess_promotion(
+            capability="multimodal_analysis",
+            pack="art_history",
+            stage="art_history_agent",
+            baseline=baseline,
+            candidate=candidate,
+            policy=policy,
+        )
+        scope_digest = canonical_digest(
+            {
+                "capability": "multimodal_analysis",
+                "pack": "art_history",
+                "stage": "art_history_agent",
+            }
+        )
+        operation_digest = canonical_digest(
+            {
+                "operation": "promotion_commit",
+                "capability": "multimodal_analysis",
+                "pack": "art_history",
+                "stage": "art_history_agent",
+            }
+        )
+        approval = {
+            "approval_id": "promotion-approval-1",
+            "approver_id": "reviewer",
+            "approver_role": "promotion_owner",
+            "approved_at": assessment.created_at,
+            "disposition": "approved",
+            "assessment_digest": canonical_digest(assessment.to_dict()),
+            "candidate_digest": assessment.candidate_digest,
+            "scope_digest": scope_digest,
+            "operation_digest": operation_digest,
+            "epg_digest": "g" * 64,
+            "sdl_digest": "h" * 64,
+            "policy_digest": canonical_digest(policy),
+        }
+        self.assertTrue(commit_promotion(assessment, approval).enabled)
+        self.assertFalse(commit_promotion(assessment, None).enabled)
+        for field in (
+            "candidate_digest",
+            "scope_digest",
+            "operation_digest",
+            "epg_digest",
+            "sdl_digest",
+            "policy_digest",
+        ):
+            with self.subTest(field=field):
+                forged = {**approval, field: "0" * 64}
+                self.assertFalse(commit_promotion(assessment, forged).enabled)
+        future = {**approval, "approved_at": "2099-01-01T00:00:00Z"}
+        self.assertFalse(commit_promotion(assessment, future).enabled)
 
     def test_specialist_routing_uses_discipline_weighted_score_and_missing_truth_is_not_run(
         self,

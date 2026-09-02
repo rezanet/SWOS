@@ -366,7 +366,11 @@ differences, seed, resample count, and interval bounds. Zero/insufficient,
 non-finite, or missing human truth is `NOT_RUN`, never zero or pass. Promotion
 is eligible only when all other gates pass, improvement is at least `0.08`, the
 lower bound is above `0`, live exact-head evidence passes, and approval binds the
-exact `PromotionAssessment` digest.
+exact `PromotionAssessment` digest. A promotion approval is asserted evidence,
+not authentication: it must carry an asserted approver ID/role, approval ID and
+time, candidate/assessment/scope/operation/EPG/SDL/policy digests, and approved
+disposition. Missing, mismatched, stale, future-dated, or expired approval
+evidence disables the decision.
 
 ## 8. Evaluation adapter contract
 
