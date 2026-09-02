@@ -21,7 +21,8 @@ without immutable exact-head evaluation and human approval.
 
 ## Technical Context
 
-**Language/Version**: Python 3.11+; JSON Schema; Turtle, JSON-LD, TriG/N-Quads; Markdown
+**Language/Version**: Python 3.11+; JSON Schema; Turtle, JSON-LD, public TriG;
+internal RDFC-1.0 canonical N-Quads; Markdown
 
 **Primary Dependencies**: Python standard library and existing runtime; optional
 pinned `rdflib`/`pyshacl` for ontology build validation; existing optional

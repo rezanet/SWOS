@@ -115,6 +115,7 @@ class DiversityRequirement:
     research_question: str = ""
     ontology_digest: str = ""
     declared_before_retrieval: bool = True
+    claim_exposure_required: bool = False
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "dimensions", tuple(self.dimensions))
@@ -151,6 +152,7 @@ class DiversityRequirement:
             "research_question": self.research_question,
             "ontology_digest": self.ontology_digest,
             "declared_before_retrieval": self.declared_before_retrieval,
+            "claim_exposure_required": self.claim_exposure_required,
         }
 
 
@@ -177,6 +179,26 @@ class DimensionReport:
     claim_exposure_hhi: float
     status: str
     corrective_query: str = ""
+    source_count_category_counts: Mapping[str, int] = field(default_factory=dict)
+    source_count_shares: Mapping[str, float] = field(default_factory=dict)
+    source_count_max_share: float = 0.0
+    source_count_effective_categories: float = 0.0
+    source_count_normalized_balance: float = 0.0
+    claim_exposure_category_counts: Mapping[str, int] = field(default_factory=dict)
+    claim_exposure_shares: Mapping[str, float] = field(default_factory=dict)
+    claim_exposure_max_share: float = 0.0
+    claim_exposure_effective_categories: float = 0.0
+    claim_exposure_normalized_balance: float = 0.0
+    claim_exposure_applicable: bool = True
+    balance_dimension: float = 0.0
+
+    @property
+    def source_count_counts(self) -> Mapping[str, int]:
+        return self.source_count_category_counts
+
+    @property
+    def claim_exposure_counts(self) -> Mapping[str, int]:
+        return self.claim_exposure_category_counts
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -199,6 +221,24 @@ class DimensionReport:
             "required_strata_coverage": self.required_strata_coverage,
             "source_count_hhi": self.source_count_hhi,
             "claim_exposure_hhi": self.claim_exposure_hhi,
+            "source_count": {
+                "category_counts": dict(sorted(self.source_count_category_counts.items())),
+                "shares": dict(sorted(self.source_count_shares.items())),
+                "max_share": self.source_count_max_share,
+                "hhi": self.source_count_hhi,
+                "effective_categories": self.source_count_effective_categories,
+                "normalized_balance": self.source_count_normalized_balance,
+            },
+            "claim_exposure": {
+                "applicable": self.claim_exposure_applicable,
+                "category_counts": dict(sorted(self.claim_exposure_category_counts.items())),
+                "shares": dict(sorted(self.claim_exposure_shares.items())),
+                "max_share": self.claim_exposure_max_share,
+                "hhi": self.claim_exposure_hhi,
+                "effective_categories": self.claim_exposure_effective_categories,
+                "normalized_balance": self.claim_exposure_normalized_balance,
+            },
+            "balance_dimension": self.balance_dimension,
             "status": self.status,
             "corrective_query": self.corrective_query,
         }
@@ -437,6 +477,66 @@ def _valid_exception(exception: Mapping[str, Any] | None) -> bool:
         return False
 
 
+def _not_run_report(
+    *,
+    families: Sequence[SourceFamily],
+    requirements: DiversityRequirement,
+    reason: str,
+) -> SourceDiversityReport:
+    """Return an explicit fail-closed report when no measurable corpus exists."""
+
+    dimensions: dict[str, DimensionReport] = {}
+    for dimension in requirements.dimensions:
+        applicable = dimension in DIMENSIONS
+        required = tuple(str(item) for item in requirements.required_strata.get(dimension, ()))
+        dimensions[dimension] = DimensionReport(
+            dimension=dimension,
+            applicable=applicable,
+            sample_size=0,
+            known_count=0,
+            unknown_count=0,
+            metadata_completeness=0.0,
+            unknown_rate=1.0,
+            category_counts={},
+            shares={},
+            max_share=1.0,
+            hhi=1.0,
+            effective_categories=0.0,
+            normalized_balance=0.0,
+            required_strata=required,
+            covered_strata=(),
+            missing_strata=required,
+            required_strata_coverage=0.0 if required else 1.0,
+            source_count_hhi=1.0,
+            claim_exposure_hhi=1.0,
+            status="not_run",
+            corrective_query=reason,
+            claim_exposure_applicable=requirements.claim_exposure_required,
+        )
+    selected_ids = [family.family_id for family in families]
+    return SourceDiversityReport(
+        report_id="diversity-"
+        + canonical_digest({"families": selected_ids, "requirement": requirements.to_dict()})[:24],
+        requirement_id=requirements.requirement_id,
+        policy_version="2.0.0",
+        family_count=len(families),
+        provider_count=len({provider for family in families for provider in family.provider_ids}),
+        dimensions=dimensions,
+        research_grade_composite=0.0,
+        raw_status="not_run",
+        status="not_run",
+        counter_position={
+            "required": requirements.counter_position_required,
+            "status": "not_run",
+        },
+        exception={},
+        limitations=(reason,),
+        corrective_queries=(reason,),
+        family_digest=canonical_digest([family.to_dict() for family in families]),
+        requirement_digest=canonical_digest(requirements.to_dict()),
+    )
+
+
 def measure_source_diversity(
     *,
     families: FamilySet,
@@ -445,20 +545,44 @@ def measure_source_diversity(
     policy: FamilyIdentityPolicy | None = None,
     exception: Mapping[str, Any] | None = None,
 ) -> SourceDiversityReport:
-    admitted_ids = {
-        source_id for claim in admitted_claims for source_id in _claim_source_ids(claim)
-    }
+    claims = tuple(admitted_claims)
+    admitted_ids = {source_id for claim in claims for source_id in _claim_source_ids(claim)}
     selected = [
         family
         for family in families
         if not admitted_ids or any(source_id in admitted_ids for source_id in family.source_ids)
     ]
-    exposure: dict[str, int] = {family.family_id: 0 for family in selected}
-    for claim in admitted_claims:
+    if requirements.claim_exposure_required and not claims:
+        return _not_run_report(
+            families=selected,
+            requirements=requirements,
+            reason="claim-exposure evidence is required but no admitted claims were supplied",
+        )
+    if not selected:
+        return _not_run_report(
+            families=selected,
+            requirements=requirements,
+            reason="no admitted canonical source families are available",
+        )
+    if not any(dimension in DIMENSIONS for dimension in requirements.dimensions):
+        return _not_run_report(
+            families=selected,
+            requirements=requirements,
+            reason="no applicable diversity dimensions were declared",
+        )
+
+    # Exposure is a set of unique (claim_id, canonical_family_id) edges.  A
+    # claim citing two editions, mirrors, or providers of one work contributes
+    # one edge, not one edge per source record.
+    exposure_edges: dict[str, set[str]] = {family.family_id: set() for family in selected}
+    for index, claim in enumerate(claims):
+        claim_id = str(claim.get("claim_id") or claim.get("id") or f"claim-{index}")
         for source_id in _claim_source_ids(claim):
             family_id = families.source_to_family.get(source_id)
-            if family_id in exposure:
-                exposure[family_id] += 1
+            if family_id in exposure_edges:
+                exposure_edges[family_id].add(claim_id)
+    exposure = {family_id: len(claim_ids) for family_id, claim_ids in exposure_edges.items()}
+    exposure_applicable = bool(claims) or requirements.claim_exposure_required
     dimensions: dict[str, DimensionReport] = {}
     corrective: list[str] = []
     balances: list[float] = []
@@ -476,8 +600,8 @@ def measure_source_diversity(
         for value in known:
             key = str(value["value"])
             counts[key] = counts.get(key, 0) + 1
-        shares, hhi, effective, balance = _hhi({key: float(value) for key, value in counts.items()})
         source_counts = {key: float(value) for key, value in counts.items()}
+        source_shares, source_hhi, source_effective, source_balance = _hhi(source_counts)
         exposure_counts: dict[str, float] = {}
         for family in selected:
             metadata = family.dimension(dimension)
@@ -485,11 +609,28 @@ def measure_source_diversity(
                 "value"
             ) not in (None, ""):
                 key = str(metadata["value"])
-                exposure_counts[key] = exposure_counts.get(key, 0.0) + max(
-                    1, exposure.get(family.family_id, 0)
-                )
-        _, source_hhi, _, _ = _hhi(source_counts)
-        _, exposure_hhi, _, _ = _hhi(exposure_counts)
+                edge_count = exposure.get(family.family_id, 0)
+                if edge_count:
+                    exposure_counts[key] = exposure_counts.get(key, 0.0) + edge_count
+        if exposure_applicable:
+            exposure_shares, exposure_hhi, exposure_effective, exposure_balance = _hhi(
+                exposure_counts
+            )
+        else:
+            # With no claim corpus, exposure is not an applicable dimension;
+            # it cannot penalize a source-only measurement or improve it.
+            exposure_shares = {}
+            exposure_hhi = source_hhi
+            exposure_effective = source_effective
+            exposure_balance = source_balance
+        source_max_share = max(source_shares.values(), default=1.0)
+        exposure_max_share = max(exposure_shares.values(), default=1.0)
+        max_share = (
+            max(source_max_share, exposure_max_share) if exposure_applicable else source_max_share
+        )
+        governing_hhi = max(source_hhi, exposure_hhi) if exposure_applicable else source_hhi
+        governing_effective = min(source_effective, exposure_effective)
+        balance = min(source_balance, exposure_balance) if exposure_applicable else source_balance
         required = tuple(str(item) for item in requirements.required_strata.get(dimension, ()))
         covered = tuple(sorted(set(counts).intersection(required)))
         missing = tuple(sorted(set(required) - set(covered)))
@@ -502,8 +643,8 @@ def measure_source_diversity(
             not applicable
             or unknown_rate > requirements.max_unknown_rate
             or coverage < 1.0
-            or max(shares.values(), default=1.0) > requirements.max_share
-            or max(source_hhi, exposure_hhi) > requirements.max_hhi
+            or max_share > requirements.max_share
+            or governing_hhi > requirements.max_hhi
             or (
                 len(selected) >= requirements.min_family_count
                 and balance < requirements.min_composite
@@ -529,10 +670,10 @@ def measure_source_diversity(
             metadata_completeness=completeness,
             unknown_rate=unknown_rate,
             category_counts=counts,
-            shares=shares,
-            max_share=max(shares.values(), default=1.0),
-            hhi=max(source_hhi, exposure_hhi),
-            effective_categories=effective,
+            shares=source_shares,
+            max_share=max_share,
+            hhi=governing_hhi,
+            effective_categories=governing_effective,
             normalized_balance=balance,
             required_strata=required,
             covered_strata=covered,
@@ -542,6 +683,20 @@ def measure_source_diversity(
             claim_exposure_hhi=exposure_hhi,
             status=status,
             corrective_query=query,
+            source_count_category_counts=counts,
+            source_count_shares=source_shares,
+            source_count_max_share=source_max_share,
+            source_count_effective_categories=source_effective,
+            source_count_normalized_balance=source_balance,
+            claim_exposure_category_counts={
+                key: int(value) for key, value in exposure_counts.items()
+            },
+            claim_exposure_shares=exposure_shares,
+            claim_exposure_max_share=exposure_max_share,
+            claim_exposure_effective_categories=exposure_effective,
+            claim_exposure_normalized_balance=exposure_balance,
+            claim_exposure_applicable=exposure_applicable,
+            balance_dimension=balance,
         )
     composite = (
         math.prod(balances) ** (1 / len(balances))

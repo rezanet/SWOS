@@ -289,6 +289,23 @@ maximum share, HHI/Simpson concentration, effective number, normalized balance,
 required-strata coverage, and unknown rate. Compute both source-count and
 claim-exposure concentration and gate on the worse result.
 
+The source-count distribution has one count for each canonical family. The
+claim-exposure distribution has one count for each unique `(claim_id,
+canonical_family_id)` edge, so duplicate citations, editions, mirrors, and
+providers cannot multiply exposure. For `c_i`, compute `p_i = c_i / sum(c_i)`,
+`HHI = sum(p_i^2)`, effective number `1 / HHI`, and normalized balance
+`B = (1 - HHI) / (1 - 1/k)` for `k >= 2`; a one-category or empty distribution
+has balance `0`. The dimension balance is `min(B_source, B_exposure)` and the
+HHI/max-share gates use the worse source or exposure result. Required-strata
+coverage is known represented strata divided by required strata, with an empty
+requirement equal to `1`; completeness is known-metadata families divided by
+selected families and unknown rate is `1 - completeness`. The composite is the
+geometric mean of applicable dimension balances, capped by minimum required
+coverage and completeness. A failed dimension cannot be overridden by the
+composite. Fewer than three families fails, three or four require review, and
+five or more evaluate the frozen thresholds. Missing mandatory claim exposure,
+no families, or zero applicable dimensions is `NOT_RUN` and fails closed.
+
 The research plan declares applicable dimensions and required strata before
 retrieval using the discipline ontology. Default ordinary-work gates at five or
 more source families are owner HHI <= 0.40, owner maximum share <= 0.60,
@@ -337,8 +354,10 @@ v1 schema. Advertise the profile accurately as:
 > Submission compatibility.
 
 Do not say W3C-certified. PROV-JSON is a Member Submission, not a W3C
-Recommendation. Supported certification formats are PROV-JSON, PROV-N, and
-PROV-O as a named RDF dataset using TriG or N-Quads so bundles survive. PROV-XML
+Recommendation. Supported public certification formats are PROV-JSON, PROV-N,
+and PROV-O as a named RDF dataset using TriG so bundles survive. RDFC-1.0
+canonical N-Quads is used only as an internal canonicalization representation,
+not as a public format or matrix row. PROV-XML
 may be implemented later only after it receives the same bidirectional profile,
 oracle, constraints, and losslessness tests; it must not remain advertised based
 on an enum alone.
@@ -354,8 +373,10 @@ Certification has three layers:
 1. syntax/profile parsing and schema/SHACL validation;
 2. PROV-CONSTRAINTS validity and semantic normal-form equivalence, including
    bundle, identifier, type, language, extension, and qualified-relation checks;
-3. canonical integrity using RFC 8785/JCS for JSON, RDFC-1.0 canonical N-Quads
-   for RDF datasets, and a semantic-normal-form digest for PROV-N.
+3. canonical integrity using RFC 8785/JCS for JSON, internal RDFC-1.0
+canonical N-Quads for RDF datasets, and a semantic-normal-form digest for
+PROV-N. The internal N-Quads representation is not a public interchange
+format.
 
 The report binds input/output digests, algorithms, profile/tool/oracle versions,
 fixture hashes, assertion counts, resource limits, results, and limitations.
@@ -370,7 +391,8 @@ size, time, and memory and return `resource_limit`, never pass.
 ### Alternatives rejected
 
 - **Current EPG compatibility flag**: a declaration without executable proof.
-- **Turtle for bundles**: cannot preserve named RDF datasets; use TriG/N-Quads.
+- **Turtle for bundles**: cannot preserve named RDF datasets; use public TriG;
+  retain RDFC-1.0 N-Quads only as internal canonicalization.
 - **Self-certification by one converter**: repeats the same defect in both legs.
 - **Raw byte comparison**: prefixes, ordering, and syntax can differ while
   semantics remain equal.
@@ -445,6 +467,21 @@ disabled. Enabled promotion activates versioned art-history/art-criticism agent
 contracts, least-privilege tool permissions, role-separated orchestrator routes,
 and an executable pack-only fallback. Failure rolls back to pack-only while
 preserving evidence and reopening review.
+
+For promotion evaluation, `cross_modal_f1` is the primary metric for
+multimodal/image/multi-view cases and `discipline_weighted_score` is primary
+for specialist routing; all other blocking metrics remain independent. The
+frozen case ID is the unit of analysis. Repeated draws are aggregated within a
+case, baseline and candidate must use the same complete eligible IDs, and any
+missing result, review, draw, or pairing is `NOT_RUN` rather than a silently
+reduced denominator. The paired 95% interval uses deterministic case-level
+bootstrap resampling with exactly 10,000 resamples and a seed derived from the
+canonical evaluation-manifest digest. Record the metric ID, case count and
+digest, per-case scores/differences, seed, resample count, and bounds. Zero or
+insufficient cases, non-finite values, or missing human truth are `NOT_RUN`.
+Promotion remains eligible only after the other gates, >=0.08 improvement,
+positive lower bound, live exact-head evidence, and exact PromotionAssessment
+approval binding all pass.
 
 ### Evaluation decision
 
