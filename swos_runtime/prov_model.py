@@ -287,6 +287,8 @@ def document_from_epg(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:
         raise ValueError("EPG v2 input must be a JSON object")
     if epg.get("schema_version") != EPG_VERSION:
         raise ValueError("EPG v2 requires explicit schema_version=2.0.0")
+    if epg.get("profile") != PROV_PROFILE:
+        raise ValueError("EPG v2 requires explicit profile=swos.prov-dm-round-trip.v2")
     if not is_absolute_iri(base_iri):
         raise ValueError("EPG v2 requires an absolute base IRI")
 
@@ -347,7 +349,7 @@ def document_from_epg(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:
         if item.get("datatype") and not is_absolute_iri(item["datatype"]):
             raise ValueError("typed extension literal datatype is not absolute")
     return ProvDocument(
-        profile=str(epg.get("profile") or PROV_PROFILE),
+        profile=PROV_PROFILE,
         schema_version=EPG_VERSION,
         base_iri=base_iri,
         namespaces=namespaces,

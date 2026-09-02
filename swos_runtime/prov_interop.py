@@ -238,10 +238,14 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
         return values
 
     swos = mapping_field(payload.get("swos"), "swos")
-    base = str(swos.get("base_iri") or "")
-    if not base:
-        base = str(payload.get("base_iri") or "")
-    if not is_absolute_iri(base):
+    schema_version = swos.get("schema_version", EPG_VERSION)
+    profile = swos.get("profile", PROV_PROFILE)
+    if schema_version != EPG_VERSION:
+        raise ValueError("PROV-JSON requires schema_version=2.0.0")
+    if profile != PROV_PROFILE:
+        raise ValueError("PROV-JSON requires profile=swos.prov-dm-round-trip.v2")
+    base = swos.get("base_iri")
+    if not isinstance(base, str) or not is_absolute_iri(base):
         raise ValueError("PROV-JSON lacks an absolute base IRI")
     raw_relations = swos.get("relations")
     if raw_relations is None:
@@ -272,8 +276,8 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
     agents = node_field("agent")
     bundles = node_field("bundle")
     return ProvDocument(
-        profile=str(swos.get("profile") or PROV_PROFILE),
-        schema_version=str(swos.get("schema_version") or EPG_VERSION),
+        profile=profile,
+        schema_version=schema_version,
         base_iri=base,
         namespaces=namespaces,
         scope=mapping_field(swos.get("scope"), "swos.scope"),
@@ -344,10 +348,31 @@ def _decode_marker(marker: str) -> ProvDocument:
         return tuple(dict(item) for item in value)
 
     try:
+        required = {
+            "schema_version",
+            "profile",
+            "base_iri",
+            "namespaces",
+            "scope",
+            "entities",
+            "activities",
+            "agents",
+            "relations",
+            "bundles",
+            "extensions",
+            "integrity",
+        }
+        missing = required - set(payload)
+        if missing:
+            raise ValueError("lossless PROV payload is missing required fields")
+        if payload["schema_version"] != EPG_VERSION:
+            raise ValueError("lossless PROV requires schema_version=2.0.0")
+        if payload["profile"] != PROV_PROFILE:
+            raise ValueError("lossless PROV requires profile=swos.prov-dm-round-trip.v2")
         return ProvDocument(
-            profile=str(payload.get("profile") or PROV_PROFILE),
-            schema_version=str(payload.get("schema_version") or EPG_VERSION),
-            base_iri=payload.get("base_iri", ""),
+            profile=payload["profile"],
+            schema_version=payload["schema_version"],
+            base_iri=payload["base_iri"],
             namespaces=mapping_field("namespaces"),
             scope=mapping_field("scope"),
             entities=mapping_field("entities", node_values=True),

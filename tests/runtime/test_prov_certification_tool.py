@@ -159,13 +159,32 @@ class ProvCertificationToolTests(unittest.TestCase):
     def test_corpus_certificate_binds_manifest_and_case_digests(self) -> None:
         with TemporaryDirectory() as directory_name:
             directory = Path(directory_name)
-            case_path = directory / "case.json"
-            case_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
-            case_sha256 = hashlib.sha256(case_path.read_bytes()).hexdigest()
+            cases = []
+            for category in (
+                "valid",
+                "invalid",
+                "large",
+                "adversarial",
+                "hostile_blank_node",
+            ):
+                epg = sample_epg()
+                epg["scope"]["fixture_category"] = category
+                case_path = directory / f"{category}.json"
+                case_path.write_text(json.dumps(epg), encoding="utf-8")
+                cases.append(
+                    {
+                        "id": category,
+                        "epg": case_path.name,
+                        "sha256": hashlib.sha256(case_path.read_bytes()).hexdigest(),
+                        "category": category,
+                    }
+                )
             manifest = directory / "manifest.json"
             manifest.write_text(
                 json.dumps(
                     {
+                        "schema_version": "2.0.0",
+                        "status": "frozen",
                         "checksum_algorithm": "sha256",
                         "required_categories": [
                             "valid",
@@ -174,21 +193,7 @@ class ProvCertificationToolTests(unittest.TestCase):
                             "adversarial",
                             "hostile_blank_node",
                         ],
-                        "cases": [
-                            {
-                                "id": category,
-                                "epg": "case.json",
-                                "sha256": case_sha256,
-                                "category": category,
-                            }
-                            for category in (
-                                "valid",
-                                "invalid",
-                                "large",
-                                "adversarial",
-                                "hostile_blank_node",
-                            )
-                        ],
+                        "cases": cases,
                     }
                 ),
                 encoding="utf-8",
@@ -199,6 +204,123 @@ class ProvCertificationToolTests(unittest.TestCase):
             self.assertEqual("not_run", report["status"])
             self.assertNotEqual("0" * 64, report["source_sha"])
             self.assertNotEqual("0" * 64, report["input_digest"])
+
+    def test_corpus_manifest_rejects_reused_case_path_or_digest(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            case_path = directory / "case.json"
+            case_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+            case_sha256 = hashlib.sha256(case_path.read_bytes()).hexdigest()
+            categories = (
+                "valid",
+                "invalid",
+                "large",
+                "adversarial",
+                "hostile_blank_node",
+            )
+            manifest = directory / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "2.0.0",
+                        "status": "frozen",
+                        "checksum_algorithm": "sha256",
+                        "required_categories": list(categories),
+                        "cases": [
+                            {
+                                "id": category,
+                                "epg": "case.json",
+                                "sha256": case_sha256,
+                                "category": category,
+                            }
+                            for category in categories
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "reus|duplicate"):
+                certify(**self._certification_kwargs(directory, manifest))
+
+    def test_corpus_manifest_rejects_duplicate_payload_digests_on_distinct_paths(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            payload = json.dumps(sample_epg())
+            for name in ("case-a.json", "case-b.json"):
+                (directory / name).write_text(payload, encoding="utf-8")
+            case_sha256 = hashlib.sha256((directory / "case-a.json").read_bytes()).hexdigest()
+            manifest = directory / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "2.0.0",
+                        "status": "frozen",
+                        "checksum_algorithm": "sha256",
+                        "required_categories": [
+                            "valid",
+                            "invalid",
+                            "large",
+                            "adversarial",
+                            "hostile_blank_node",
+                        ],
+                        "cases": [
+                            {
+                                "id": "case-a",
+                                "epg": "case-a.json",
+                                "sha256": case_sha256,
+                                "category": "valid",
+                            },
+                            {
+                                "id": "case-b",
+                                "epg": "case-b.json",
+                                "sha256": case_sha256,
+                                "category": "invalid",
+                            },
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "duplicate case payload digest"):
+                certify(**self._certification_kwargs(directory, manifest))
+
+    def test_nonempty_corpus_requires_frozen_manifest_metadata(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            case_path = directory / "case.json"
+            case_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+            case_sha256 = hashlib.sha256(case_path.read_bytes()).hexdigest()
+            manifest = directory / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "2.0.0",
+                        "status": "not_run",
+                        "checksum_algorithm": "sha256",
+                        "required_categories": [
+                            "valid",
+                            "invalid",
+                            "large",
+                            "adversarial",
+                            "hostile_blank_node",
+                        ],
+                        "cases": [
+                            {
+                                "id": "sample",
+                                "epg": "case.json",
+                                "sha256": case_sha256,
+                                "category": "valid",
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "status"):
+                certify(**self._certification_kwargs(directory, manifest))
 
     def test_nonempty_corpus_requires_frozen_case_categories(self) -> None:
         with TemporaryDirectory() as directory_name:

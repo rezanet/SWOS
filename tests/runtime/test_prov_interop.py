@@ -109,6 +109,71 @@ class ProvInteropTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_prov(wire, "prov-n")
 
+    def test_prov_json_rejects_mismatched_supported_profile_metadata(self) -> None:
+        payloads = (
+            {
+                "swos": {
+                    "schema_version": "1.0.0",
+                    "profile": "swos.prov-dm-round-trip.v2",
+                    "base_iri": "https://example.org/prov/",
+                }
+            },
+            {
+                "swos": {
+                    "schema_version": "2.0.0",
+                    "profile": "unapproved-profile",
+                    "base_iri": "https://example.org/prov/",
+                }
+            },
+        )
+        for payload in payloads:
+            with self.subTest(payload=payload):
+                with self.assertRaises(ValueError):
+                    parse_prov(json.dumps(payload).encode("utf-8"), "prov-json")
+
+    def test_lossless_prov_marker_requires_complete_supported_profile_metadata(self) -> None:
+        payloads = (
+            {"base_iri": "https://example.org/prov/"},
+            {
+                "schema_version": "1.0.0",
+                "profile": "swos.prov-dm-round-trip.v2",
+                "base_iri": "https://example.org/prov/",
+                "namespaces": {},
+                "scope": {},
+                "entities": {},
+                "activities": {},
+                "agents": {},
+                "relations": [],
+                "bundles": {},
+                "extensions": [],
+                "integrity": {},
+            },
+            {
+                "schema_version": "2.0.0",
+                "profile": "unapproved-profile",
+                "base_iri": "https://example.org/prov/",
+                "namespaces": {},
+                "scope": {},
+                "entities": {},
+                "activities": {},
+                "agents": {},
+                "relations": [],
+                "bundles": {},
+                "extensions": [],
+                "integrity": {},
+            },
+        )
+        for payload in payloads:
+            marker = (
+                base64.urlsafe_b64encode(json.dumps(payload).encode("utf-8"))
+                .decode("ascii")
+                .rstrip("=")
+            )
+            wire = f'document\n  swos:payload("{marker}")\nendDocument\n'.encode("utf-8")
+            with self.subTest(payload=payload):
+                with self.assertRaises(ValueError):
+                    parse_prov(wire, "prov-n")
+
     def test_canonicalization_depth_limit_is_enforced(self) -> None:
         from swos_runtime.prov_interop import epg_to_prov
 

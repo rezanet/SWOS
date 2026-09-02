@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from swos_runtime.models import canonical_digest  # noqa: E402
-from swos_runtime.prov_model import ResourceLimits  # noqa: E402
+from swos_runtime.prov_model import EPG_VERSION, ResourceLimits  # noqa: E402
 from swos_runtime.prov_validation import certify_round_trip  # noqa: E402
 
 REQUIRED_CORPUS_CATEGORIES = frozenset(
@@ -105,9 +105,13 @@ def certify(
         cases = manifest.get("cases")
         if not isinstance(cases, list):
             raise ValueError("PROV corpus manifest requires a cases list")
+        if manifest.get("schema_version") != EPG_VERSION:
+            raise ValueError("PROV corpus manifest requires schema_version=2.0.0")
         if manifest.get("checksum_algorithm") != "sha256":
             raise ValueError("PROV corpus manifest requires checksum_algorithm=sha256")
         if cases:
+            if manifest.get("status") != "frozen":
+                raise ValueError("PROV corpus manifest status must be frozen for non-empty cases")
             required_categories = manifest.get("required_categories")
             if (
                 not isinstance(required_categories, list)
@@ -120,6 +124,8 @@ def certify(
         bindings = []
         seen_ids = set()
         seen_categories = set()
+        seen_case_paths: set[Path] = set()
+        seen_case_sha256 = set()
         root = corpus_manifest.parent.resolve()
         for index, case in enumerate(cases):
             if not isinstance(case, dict) or not isinstance(case.get("epg"), str):
@@ -139,6 +145,9 @@ def certify(
                 raise ValueError(f"PROV corpus case escapes its manifest directory: {case['epg']}")
             if not case_path.is_file():
                 raise ValueError(f"PROV corpus EPG does not exist: {case_path}")
+            if case_path in seen_case_paths:
+                raise ValueError(f"PROV corpus reuses case path: {case['epg']}")
+            seen_case_paths.add(case_path)
             expected_sha256 = case.get("sha256")
             if not isinstance(expected_sha256, str) or len(expected_sha256) != 64:
                 raise ValueError(f"PROV corpus case {index} lacks a SHA-256 checksum")
@@ -147,6 +156,9 @@ def certify(
             epg, actual_sha256 = _load_json_with_digest(case_path, limits)
             if actual_sha256 != expected_sha256:
                 raise ValueError(f"PROV corpus case checksum mismatch: {case['epg']}")
+            if actual_sha256 in seen_case_sha256:
+                raise ValueError(f"PROV corpus has duplicate case payload digest: {actual_sha256}")
+            seen_case_sha256.add(actual_sha256)
             certificate = certify_round_trip(epg, formats, oracle=oracle, limits=limits).to_dict()
             certificates.append(certificate)
             bindings.append(

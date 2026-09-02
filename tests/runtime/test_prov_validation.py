@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+from dataclasses import replace
 
 from swos_runtime.prov_interop import epg_to_prov
 from swos_runtime.prov_validation import canonical_fingerprint, validate_prov
@@ -26,6 +27,17 @@ class ProvValidationTests(unittest.TestCase):
         report = validate_prov(document, profile="swos.prov-dm-round-trip.v2")
         self.assertIn(report.status, {"invalid", "unsupported"})
         self.assertTrue(report.violations)
+
+    def test_validation_rejects_wrong_document_profile_or_schema(self) -> None:
+        document = epg_to_prov(sample_epg(), base_iri="https://example.org/prov/")
+        for field, value in (
+            ("schema_version", "1.0.0"),
+            ("profile", "unapproved-profile"),
+        ):
+            with self.subTest(field=field):
+                report = validate_prov(replace(document, **{field: value}))
+                self.assertEqual("invalid", report.status)
+                self.assertTrue(report.violations)
 
 
 if __name__ == "__main__":

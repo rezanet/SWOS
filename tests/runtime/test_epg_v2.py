@@ -85,6 +85,17 @@ class EpgV2Tests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     epg_to_prov(epg, base_iri=epg["base_iri"])
 
+    def test_epg_v2_requires_the_frozen_profile(self) -> None:
+        for profile in (None, "unapproved-profile"):
+            with self.subTest(profile=profile):
+                epg = sample_epg()
+                if profile is None:
+                    del epg["profile"]
+                else:
+                    epg["profile"] = profile
+                with self.assertRaises(ValueError):
+                    epg_to_prov(epg, base_iri=epg["base_iri"])
+
 
 if __name__ == "__main__":
     unittest.main()
