@@ -37,6 +37,23 @@ class ProvValidationTests(unittest.TestCase):
         self.assertIn(report.status, {"invalid", "unsupported"})
         self.assertTrue(report.violations)
 
+    def test_prov_constraints_require_relation_participants(self) -> None:
+        epg = sample_epg()
+        epg["relations"].append({"type": "wasGeneratedBy"})
+        document = epg_to_prov(epg, base_iri="https://example.org/prov/")
+
+        report = validate_prov(document, profile="swos.prov-dm-round-trip.v2")
+
+        self.assertEqual("invalid", report.status)
+        self.assertFalse(report.prov_constraints["passed"])
+        self.assertEqual("w3c-prov-constraints/2013", report.prov_constraints["ruleset"])
+        self.assertTrue(
+            any(
+                "wasGeneratedBy" in violation and "entity" in violation
+                for violation in report.violations
+            )
+        )
+
     def test_validation_rejects_wrong_document_profile_or_schema(self) -> None:
         document = epg_to_prov(sample_epg(), base_iri="https://example.org/prov/")
         for field, value in (

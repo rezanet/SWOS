@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from .models import canonical_digest
+from .prov_constraints import validate_constraints
 from .prov_model import (
     EPG_VERSION,
     KNOWN_RELATIONS,
@@ -320,6 +321,26 @@ def validate_prov(
     for bundle_id, bundle in document.bundles.items():
         if not isinstance(bundle.get("statements", []), list):
             violations.append(f"bundle {bundle_id} statements are not a list")
+    try:
+        constraint_report, constraint_violations = validate_constraints(document, deadline=deadline)
+    except ValueError as exc:
+        return ProvValidationReport(
+            "resource_limit",
+            profile,
+            canonical_digest({"status": "resource_limit", "profile": profile, "reason": str(exc)}),
+            {"passed": False},
+            {
+                "status": "resource_limit",
+                "passed": False,
+                "implementation": "swos-prov-constraints/2.0.0",
+                "ruleset": "w3c-prov-constraints/2013",
+            },
+            {"passed": False},
+            (str(exc),),
+            elapsed_seconds=time.perf_counter() - started,
+            statement_count=document.statement_count(),
+        )
+    violations.extend(constraint_violations)
     status = "invalid" if violations else "valid"
     try:
         limits.check_deadline(deadline)
@@ -344,7 +365,7 @@ def validate_prov(
         profile=profile,
         input_digest=input_digest,
         syntax={"passed": not violations, "absolute_namespace_policy": True},
-        prov_constraints={"status": "invalid" if violations else "valid", "passed": not violations},
+        prov_constraints=constraint_report,
         shacl=shacl,
         violations=tuple(dict.fromkeys(violations)),
         elapsed_seconds=time.perf_counter() - started,

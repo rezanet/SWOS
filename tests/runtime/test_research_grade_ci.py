@@ -7,6 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 WORKFLOW = ROOT / ".github" / "workflows" / "research-grade-ci.yml"
+PROV_WORKFLOW = ROOT / ".github" / "workflows" / "prov-certification.yml"
 REQUIRED_PR_WORKFLOWS = (
     ".github/workflows/swos-ci.yml",
     ".github/workflows/codeql.yml",
@@ -52,6 +53,12 @@ class ResearchGradeCIContractTests(unittest.TestCase):
         text = (ROOT / ".github/workflows/swos-quality.yml").read_text(encoding="utf-8")
         self.assertIn("SWOS_EXPECTED_SOURCE_SHA", text)
         self.assertIn("--expected-source-sha", text)
+
+    def test_prov_certification_installs_release_validators(self) -> None:
+        self.assertTrue(PROV_WORKFLOW.is_file())
+        text = PROV_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn(".[research-grade]", text)
+        self.assertIn("python tools/certify_prov_roundtrip.py", text)
 
 
 if __name__ == "__main__":

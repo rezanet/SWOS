@@ -378,22 +378,29 @@ class RPMExchange:
             return payload
 
         if path.is_dir():
-            candidates = list(path.rglob("*"))
-            if len(candidates) > limits.max_files * 2:
-                raise ResourceLimitError("bundle entry count exceeds limit")
-            for item in candidates:
-                if item.is_symlink() or (not item.is_file() and not item.is_dir()):
-                    raise ExchangeError(f"links and devices are not allowed: {item}")
-                if item.is_file():
+            pending = [path]
+            entry_count = 0
+            while pending:
+                directory = pending.pop()
+                for item in directory.iterdir():
+                    entry_count += 1
+                    if entry_count > limits.max_files * 2:
+                        raise ResourceLimitError("bundle entry count exceeds limit")
+                    if item.is_symlink() or (not item.is_file() and not item.is_dir()):
+                        raise ExchangeError(f"links and devices are not allowed: {item}")
+                    if item.is_dir():
+                        pending.append(item)
+                        continue
+                    if len(files) >= limits.max_files:
+                        raise ResourceLimitError("bundle file count exceeds limit")
                     name = _safe_member(item.relative_to(path).as_posix())
                     with item.open("rb") as stream:
                         files[name] = read_payload(stream, item.stat().st_size)
         elif path.is_file() and path.suffix.lower() == ".zip":
             with zipfile.ZipFile(path) as archive:
-                infos = archive.infolist()
-                if len(infos) > limits.max_files:
-                    raise ResourceLimitError("bundle file count exceeds limit")
-                for info in infos:
+                for entry_count, info in enumerate(archive.filelist, start=1):
+                    if entry_count > limits.max_files:
+                        raise ResourceLimitError("bundle file count exceeds limit")
                     if info.is_dir():
                         continue
                     name = _safe_member(info.filename)

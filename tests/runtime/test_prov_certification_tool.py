@@ -5,12 +5,15 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import sys
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from swos_runtime.prov_interop import epg_to_prov
 from swos_runtime.prov_model import ResourceLimits
+from swos_runtime.prov_validation import canonical_fingerprint
 from tests.runtime.test_epg_v2 import sample_epg
 from tools.certify_prov_roundtrip import _limits, _load, certify, main
 
@@ -125,6 +128,93 @@ class ProvCertificationToolTests(unittest.TestCase):
             )
             kwargs["oracle_path"] = oracle_path
             with self.assertRaisesRegex(ValueError, "artifact"):
+                certify(**kwargs)
+
+    def test_accepted_oracle_must_execute_a_pinned_command_and_bind_its_output(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            epg_path = directory / "epg.json"
+            epg_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+            kwargs = self._certification_kwargs(directory, directory / "unused.json")
+            kwargs["epg_path"] = epg_path
+            kwargs["corpus_manifest"] = None
+
+            artifact = directory / "provtoolbox.jar"
+            artifact.write_bytes(b"pinned independent oracle artifact")
+            artifact_sha256 = hashlib.sha256(artifact.read_bytes()).hexdigest()
+            input_digest = canonical_fingerprint(
+                epg_to_prov(sample_epg(), base_iri=sample_epg()["base_iri"]), ResourceLimits()
+            ).semantic_digest
+            runner = directory / "oracle_runner.py"
+            runner.write_text(
+                "import json, sys\n"
+                "from pathlib import Path\n"
+                "Path(sys.argv[1]).write_text(json.dumps({\n"
+                "  'status': 'pass',\n"
+                f"  'input_digest': {input_digest!r},\n"
+                "  'profile': 'swos.prov-dm-round-trip.v2',\n"
+                "  'formats': ['prov-json']\n"
+                "}), encoding='utf-8')\n",
+                encoding="utf-8",
+            )
+            oracle_path = directory / "oracle.json"
+            oracle_path.write_text(
+                json.dumps(
+                    {
+                        "status": "accepted",
+                        "implementation": "ProvToolbox",
+                        "version": "3.0.0",
+                        "licence": "Apache-2.0",
+                        "artifact_uri": artifact.name,
+                        "artifact_sha256": artifact_sha256,
+                        "command": [
+                            sys.executable,
+                            str(runner),
+                            "{output}",
+                            "{input}",
+                            "{profile}",
+                            "{formats}",
+                            "{artifact}",
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            kwargs["oracle_path"] = oracle_path
+
+            report = certify(**kwargs)
+
+            self.assertEqual("certified", report["status"])
+            self.assertEqual("passed", report["oracle"]["execution"]["status"])
+            self.assertNotIn("profile_manifest", report)
+
+    def test_accepted_oracle_without_execution_command_fails_closed(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            epg_path = directory / "epg.json"
+            epg_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+            kwargs = self._certification_kwargs(directory, directory / "unused.json")
+            kwargs["epg_path"] = epg_path
+            kwargs["corpus_manifest"] = None
+            artifact = directory / "oracle.bin"
+            artifact.write_bytes(b"pinned")
+            oracle = directory / "oracle.json"
+            oracle.write_text(
+                json.dumps(
+                    {
+                        "status": "accepted",
+                        "implementation": "ProvToolbox",
+                        "version": "3.0.0",
+                        "licence": "Apache-2.0",
+                        "artifact_uri": artifact.name,
+                        "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                    }
+                ),
+                encoding="utf-8",
+            )
+            kwargs["oracle_path"] = oracle
+
+            with self.assertRaisesRegex(ValueError, "command"):
                 certify(**kwargs)
 
     def test_corpus_manifest_rejects_malformed_case(self) -> None:
