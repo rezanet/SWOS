@@ -212,9 +212,7 @@ def validate_prov(
     if profile != PROV_PROFILE:
         violations.append(f"unsupported PROV profile: {profile}")
     if document.profile != profile:
-        violations.append(
-            f"document profile does not match requested profile: {document.profile}"
-        )
+        violations.append(f"document profile does not match requested profile: {document.profile}")
     try:
         limits.check_document(document, deadline=deadline)
     except ValueError as exc:
