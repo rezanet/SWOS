@@ -65,7 +65,7 @@
   "implementation": {
     "pull_request": 58,
     "branch": "codex/swos-v2-t070-floor-gate",
-    "head_sha": "18ce33bad66bece28b02e84ab7ef8f532a45dacf",
+    "head_sha": "c44013b05b6db67490f71a9631b2c745ed7f4111",
     "tested_source_head_sha": "fc03d2a10db93ccc1011946abe71c3acea45e45d",
     "pull_request_head_sha": "7a8142c709821fee4b69344e6da0990bb4297053",
     "merged_sha": "9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158",
@@ -74,11 +74,16 @@
       "head_sha": "dcb3378f6ed5252caeee9aec8f1dc64b591ed7cf",
       "merged_sha": "18ce33bad66bece28b02e84ab7ef8f532a45dacf"
     },
+    "ledger_reconciliation": {
+      "pull_request": 60,
+      "head_sha": "d9c0dff890ed5ce98685a87e37be89c7685dcbd4",
+      "merged_sha": "c44013b05b6db67490f71a9631b2c745ed7f4111"
+    },
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/58",
     "last_reconciled_task": "T095",
-    "last_action": "Reconciled the queue to the exact current main head after PR #58 merged as 9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158 and signed-off PR #59 merged as 18ce33bad66bece28b02e84ab7ef8f532a45dacf. The tested implementation source remains fc03d2a10db93ccc1011946abe71c3acea45e45d and the final PR head remains 7a8142c709821fee4b69344e6da0990bb4297053; the post-merge attestation changed no tree content. The implementation still hardens T070's citation corpus ingestion and generated licence evidence, complete per-pair human annotation/adjudication validation, T073's locked-test-to-dataset-manifest binding, T080's production-path diversity benchmark, and T093-T095's provenance certification boundaries while preserving fail-closed release behavior. The licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, independent human records, portability evidence, external audit pack, and owner decisions remain absent, so all eleven release tasks remain pending.",
+    "last_action": "Reconciled the queue to the exact source/evidence head c44013b05b6db67490f71a9631b2c745ed7f4111 after the status-only PR #60 merge; the prior implementation source/evidence head was 18ce33bad66bece28b02e84ab7ef8f532a45dacf. PR #58 merged as 9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158 and signed-off PR #59 merged as 18ce33bad66bece28b02e84ab7ef8f532a45dacf. The tested implementation source remains fc03d2a10db93ccc1011946abe71c3acea45e45d and the final PR head remains 7a8142c709821fee4b69344e6da0990bb4297053; the status-only ledger merges changed no executable implementation files. The licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, independent human records, portability evidence, external audit pack, and owner decisions remain absent, so all eleven release tasks remain pending.",
     "last_action_evidence": [
       "focused T070 citation dataset suite: 11 tests pass",
       "focused T073 evaluator suite: 6 tests pass",
@@ -104,10 +109,11 @@
       "T093-T095 provenance integrity regression: non-empty corpus manifests require frozen versioned metadata, unique case paths and payload digests, EPG/PROV inputs reject mismatched profiles or schema versions, and legacy minimal PROV-JSON compatibility remains intact",
       "PR #58 exact-head hosted checks at fc03d2a10db93ccc1011946abe71c3acea45e45d: SWOS CI 33597762536, SWOS CodeQL 33597762521, Research Grade compatibility 33597762535, SWOS Prose Benchmark 33597762513, SWOS Portability Gate 33597762495, and SWOS Engineering Quality 33597762527; all six workflow runs pass, including mutation and coverage steps",
       "current main exact-head reconciliation: origin/main and local main both point to 18ce33bad66bece28b02e84ab7ef8f532a45dacf; PR #58 merged as 9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158 and PR #59 merged as the signed-off attestation 18ce33bad66bece28b02e84ab7ef8f532a45dacf",
-      "current main hosted post-merge workflows: SWOS CI 33600294323, Research Grade compatibility 33600294359, SWOS CodeQL 33600294352, and SWOS Engineering Quality 33600294319; all completed successfully at the exact current head",
+      "current main hosted post-merge workflows at source/evidence head 18ce33bad66bece28b02e84ab7ef8f532a45dacf: SWOS CI 33600294323, Research Grade compatibility 33600294359, SWOS CodeQL 33600294352, and SWOS Engineering Quality 33600294319; all completed successfully",
       "current task-marker audit: 129 ordered unique tasks, 118 checked and 11 open; the only difference from the PR #55 exact planning tree is permitted [ ] to [x] task-marker changes",
       "current release portability check: python tools/check_portability_acceptance.py --release fails closed because api_provider_changed, claude_code_subscription, codex_chatgpt_subscription, model_changed_same_provider, openai_api, and replay_host_bundle lack required PASS evidence",
-      "current pre-freeze audit-pack verifier: python tools/assemble_research_grade_audit_pack.py --verify-only fails closed because the committed manifest names missing reports/coverage.json; this is not release certification evidence"
+      "current pre-freeze audit-pack verifier: python tools/assemble_research_grade_audit_pack.py --verify-only fails closed because the committed manifest names missing reports/coverage.json; this is not release certification evidence",
+      "post-merge workflows at c44013b05b6db67490f71a9631b2c745ed7f4111: Research Grade compatibility 33608680395, SWOS CI 33608680407, SWOS CodeQL 33608680430, and SWOS Engineering Quality 33608680558; all completed successfully"
     ]
   },
   "summary": {
@@ -324,7 +330,7 @@
     {
       "id": "current-main-ci",
       "status": "pass",
-      "evidence": "The four required push workflows completed successfully at 18ce33bad66bece28b02e84ab7ef8f532a45dacf: SWOS CI 33600294323, Research Grade compatibility 33600294359, SWOS CodeQL 33600294352, and SWOS Engineering Quality 33600294319."
+      "evidence": "The four required push workflows completed successfully at source/evidence head 18ce33bad66bece28b02e84ab7ef8f532a45dacf and again at ledger reconciliation head c44013b05b6db67490f71a9631b2c745ed7f4111: SWOS CI 33600294323/33608680407, Research Grade compatibility 33600294359/33608680395, SWOS CodeQL 33600294352/33608680430, and SWOS Engineering Quality 33600294319/33608680558."
     },
     {
       "id": "portability-definitions",
