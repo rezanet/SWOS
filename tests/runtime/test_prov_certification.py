@@ -7,7 +7,7 @@ from dataclasses import replace
 from unittest.mock import patch
 
 from swos_runtime.prov_interop import epg_to_prov
-from swos_runtime.prov_model import ResourceLimits
+from swos_runtime.prov_model import ProvDocument, ResourceLimits
 from swos_runtime.prov_validation import canonical_fingerprint, certify_round_trip
 from tests.runtime.test_epg_v2 import sample_epg
 
@@ -24,6 +24,25 @@ class ProvCertificationTests(unittest.TestCase):
         self.assertTrue(certificate.legs)
         self.assertIn("EPG -> PROV-JSON -> EPG", certificate.paths)
         self.assertTrue(all(item["semantic_equivalent"] for item in certificate.legs))
+
+    def test_round_trip_semantic_comparisons_receive_resource_deadlines(self) -> None:
+        observed_deadlines = []
+        original = ProvDocument.semantic_normal_form
+
+        def observe(document: ProvDocument, **kwargs):
+            observed_deadlines.append(kwargs.get("deadline"))
+            return original(document, **kwargs)
+
+        with patch.object(ProvDocument, "semantic_normal_form", observe):
+            certify_round_trip(
+                sample_epg(),
+                ("prov-json",),
+                oracle={"status": "not_run"},
+                limits=ResourceLimits(),
+            )
+
+        self.assertTrue(observed_deadlines)
+        self.assertTrue(all(deadline is not None for deadline in observed_deadlines))
 
     def test_accepted_oracle_requires_a_pinned_licence(self) -> None:
         epg = sample_epg()

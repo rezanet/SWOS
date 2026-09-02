@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import json
 import unittest
 from pathlib import Path
@@ -64,6 +65,49 @@ class ProvInteropTests(unittest.TestCase):
         }
         with self.assertRaises(ValueError):
             parse_prov(json.dumps(payload).encode("utf-8"), "prov-json")
+
+    def test_prov_json_rejects_malformed_structural_maps_and_relation_records(self) -> None:
+        payloads = (
+            {"base_iri": "https://example.org/prov/", "swos": []},
+            {"base_iri": "https://example.org/prov/", "prefix": []},
+            {
+                "base_iri": "https://example.org/prov/",
+                "entity": {"https://example.org/prov/entity": []},
+            },
+            {
+                "base_iri": "https://example.org/prov/",
+                "bundle": {"https://example.org/prov/bundle": []},
+            },
+            {
+                "base_iri": "https://example.org/prov/",
+                "wasGeneratedBy": {"https://example.org/prov/relation": None},
+            },
+            {
+                "swos": {
+                    "base_iri": "https://example.org/prov/",
+                    "scope": [],
+                }
+            },
+        )
+        for payload in payloads:
+            with self.subTest(payload=payload):
+                with self.assertRaises(ValueError):
+                    parse_prov(json.dumps(payload).encode("utf-8"), "prov-json")
+
+    def test_lossless_prov_marker_rejects_malformed_structural_maps(self) -> None:
+        marker = (
+            base64.urlsafe_b64encode(
+                json.dumps({"base_iri": "https://example.org/prov/", "entities": []}).encode(
+                    "utf-8"
+                )
+            )
+            .decode("ascii")
+            .rstrip("=")
+        )
+        wire = f'document\n  swos:payload("{marker}")\nendDocument\n'.encode("utf-8")
+
+        with self.assertRaises(ValueError):
+            parse_prov(wire, "prov-n")
 
     def test_canonicalization_depth_limit_is_enforced(self) -> None:
         from swos_runtime.prov_interop import epg_to_prov

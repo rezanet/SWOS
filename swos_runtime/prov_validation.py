@@ -305,9 +305,10 @@ def certify_round_trip(
         encoded = serialize_prov(original, format_name)
         decoded = parse_prov(encoded, format_name, limits)
         validated = validate_prov(decoded, profile=original.profile, limits=limits)
+        comparison_deadline = limits.operation_deadline()
         equivalent = decoded.semantic_normal_form(
-            max_depth=limits.max_depth
-        ) == original.semantic_normal_form(max_depth=limits.max_depth)
+            max_depth=limits.max_depth, deadline=comparison_deadline
+        ) == original.semantic_normal_form(max_depth=limits.max_depth, deadline=comparison_deadline)
         roundtrip = epg_to_prov(
             prov_to_epg(decoded, profile=original.profile), base_iri=original.base_iri
         )
@@ -345,9 +346,12 @@ def certify_round_trip(
                     error = f"{type(exc).__name__}: {exc}"
                     parse_statuses.append("error")
                     break
+            comparison_deadline = limits.operation_deadline()
             semantic_equivalent = not error and current.semantic_normal_form(
-                max_depth=limits.max_depth
-            ) == original.semantic_normal_form(max_depth=limits.max_depth)
+                max_depth=limits.max_depth, deadline=comparison_deadline
+            ) == original.semantic_normal_form(
+                max_depth=limits.max_depth, deadline=comparison_deadline
+            )
             assertions_preserved = (
                 not error
                 and len(original.extensions) == len(current.extensions)

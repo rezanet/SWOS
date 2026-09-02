@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import base64
+import binascii
 import json
 import re
 from typing import Any, Mapping
@@ -222,7 +223,21 @@ def _json_payload(document: ProvDocument) -> dict[str, Any]:
 def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
     if not isinstance(payload, Mapping):
         raise ValueError("PROV-JSON payload must be a JSON object")
-    swos = payload.get("swos") if isinstance(payload.get("swos"), Mapping) else {}
+
+    def mapping_field(value: Any, field: str) -> dict[str, Any]:
+        if value is None:
+            return {}
+        if not isinstance(value, Mapping):
+            raise ValueError(f"PROV-JSON {field} must be a JSON object")
+        return dict(value)
+
+    def node_field(field: str) -> dict[str, Any]:
+        values = mapping_field(payload.get(field), field)
+        if any(not isinstance(value, Mapping) for value in values.values()):
+            raise ValueError(f"PROV-JSON {field} entries must be JSON objects")
+        return values
+
+    swos = mapping_field(payload.get("swos"), "swos")
     base = str(swos.get("base_iri") or "")
     if not base:
         base = str(payload.get("base_iri") or "")
@@ -236,10 +251,9 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
             if relation_type in excluded or not isinstance(values, Mapping):
                 continue
             for relation_id, relation in values.items():
-                if isinstance(relation, Mapping):
-                    raw_relations.append(
-                        {"type": relation_type, "id": relation_id, **dict(relation)}
-                    )
+                if not isinstance(relation, Mapping):
+                    raise ValueError("PROV-JSON relation entries must be JSON objects")
+                raw_relations.append({"type": relation_type, "id": relation_id, **dict(relation)})
     elif not isinstance(raw_relations, list):
         raise ValueError("PROV-JSON swos.relations must be a JSON array")
     elif any(not isinstance(item, Mapping) for item in raw_relations):
@@ -252,20 +266,24 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
     if any(not isinstance(item, Mapping) for item in raw_extensions):
         raise ValueError("PROV-JSON extension entries must be JSON objects")
     namespaces = dict(PROV_NAMESPACES)
-    namespaces.update(dict(payload.get("prefix") or {}))
+    namespaces.update(mapping_field(payload.get("prefix"), "prefix"))
+    entities = node_field("entity")
+    activities = node_field("activity")
+    agents = node_field("agent")
+    bundles = node_field("bundle")
     return ProvDocument(
         profile=str(swos.get("profile") or PROV_PROFILE),
         schema_version=str(swos.get("schema_version") or EPG_VERSION),
         base_iri=base,
         namespaces=namespaces,
-        scope=dict(swos.get("scope") or {}),
-        entities=dict(payload.get("entity") or {}),
-        activities=dict(payload.get("activity") or {}),
-        agents=dict(payload.get("agent") or {}),
-        relations=tuple(dict(item) for item in raw_relations if isinstance(item, Mapping)),
-        bundles=dict(payload.get("bundle") or {}),
+        scope=mapping_field(swos.get("scope"), "swos.scope"),
+        entities=entities,
+        activities=activities,
+        agents=agents,
+        relations=tuple(dict(item) for item in raw_relations),
+        bundles=bundles,
         extensions=tuple(dict(item) for item in raw_extensions),
-        integrity=dict(swos.get("integrity") or {}),
+        integrity=mapping_field(swos.get("integrity"), "swos.integrity"),
     )
 
 
@@ -279,11 +297,69 @@ def _payload_marker(document: ProvDocument) -> str:
 
 
 def _decode_marker(marker: str) -> ProvDocument:
-    padding = "=" * (-len(marker) % 4)
-    payload = json.loads(base64.urlsafe_b64decode(marker + padding).decode("utf-8"))
+    try:
+        padding = "=" * (-len(marker) % 4)
+        payload = json.loads(base64.urlsafe_b64decode(marker + padding).decode("utf-8"))
+    except (binascii.Error, UnicodeError, ValueError, TypeError, RecursionError) as exc:
+        raise ValueError("invalid lossless PROV payload") from exc
     if not isinstance(payload, Mapping):
         raise ValueError("lossless PROV payload must be a JSON object")
-    return ProvDocument(**payload)
+    allowed = {
+        "schema_version",
+        "profile",
+        "base_iri",
+        "namespaces",
+        "scope",
+        "entities",
+        "activities",
+        "agents",
+        "relations",
+        "bundles",
+        "extensions",
+        "integrity",
+    }
+    unknown = set(payload) - allowed
+    if unknown:
+        raise ValueError("lossless PROV payload contains unknown fields")
+
+    def mapping_field(field: str, *, node_values: bool = False) -> dict[str, Any]:
+        value = payload.get(field)
+        if value is None:
+            return {}
+        if not isinstance(value, Mapping):
+            raise ValueError(f"lossless PROV {field} must be a JSON object")
+        result = dict(value)
+        if node_values and any(not isinstance(item, Mapping) for item in result.values()):
+            raise ValueError(f"lossless PROV {field} entries must be JSON objects")
+        return result
+
+    def record_field(field: str) -> tuple[dict[str, Any], ...]:
+        value = payload.get(field, [])
+        if value is None:
+            return ()
+        if not isinstance(value, (list, tuple)):
+            raise ValueError(f"lossless PROV {field} must be a JSON array")
+        if any(not isinstance(item, Mapping) for item in value):
+            raise ValueError(f"lossless PROV {field} entries must be JSON objects")
+        return tuple(dict(item) for item in value)
+
+    try:
+        return ProvDocument(
+            profile=str(payload.get("profile") or PROV_PROFILE),
+            schema_version=str(payload.get("schema_version") or EPG_VERSION),
+            base_iri=payload.get("base_iri", ""),
+            namespaces=mapping_field("namespaces"),
+            scope=mapping_field("scope"),
+            entities=mapping_field("entities", node_values=True),
+            activities=mapping_field("activities", node_values=True),
+            agents=mapping_field("agents", node_values=True),
+            relations=record_field("relations"),
+            bundles=mapping_field("bundles", node_values=True),
+            extensions=record_field("extensions"),
+            integrity=mapping_field("integrity"),
+        )
+    except (TypeError, ValueError, AttributeError, RecursionError) as exc:
+        raise ValueError("invalid lossless PROV document") from exc
 
 
 def _quote(value: str) -> str:
