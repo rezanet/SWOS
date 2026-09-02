@@ -9,11 +9,46 @@ from swos_runtime.source_diversity import DIMENSIONS
 from tools import run_source_diversity_benchmark as benchmark
 
 
-def _packet(packet_id: str) -> dict[str, str]:
+def _packet(
+    packet_id: str,
+    *,
+    discipline: str = "art_history",
+    category: str = "balanced",
+    expected: dict[str, bool] | None = None,
+) -> dict[str, object]:
     return {
         "packet_id": packet_id,
         "review_status": "locked_human_reviewed",
+        "discipline": discipline,
+        "category": category,
+        "requirement": {
+            "requirement_id": "requirement-1",
+            "dimensions": ["publisher"],
+            "min_family_count": 3,
+            "max_hhi": 1.0,
+            "max_share": 1.0,
+            "min_composite": 0.5,
+            "max_unknown_rate": 0.1,
+            "declared_before_retrieval": True,
+        },
+        "sources": [],
+        "claims": [],
+        "expected": expected
+        or {"material_gap": False, "adequate": False, "justified_narrow": False},
     }
+
+
+def _packets(specs: list[tuple[str, str]]) -> list[dict[str, object]]:
+    return [
+        _packet(
+            packet_id,
+            discipline=benchmark.SUPPORTED_DISCIPLINES[
+                index % len(benchmark.SUPPORTED_DISCIPLINES)
+            ],
+            category=category,
+        )
+        for index, (packet_id, category) in enumerate(specs)
+    ]
 
 
 def _result(
@@ -82,9 +117,46 @@ class SourceDiversityBenchmarkTests(unittest.TestCase):
         self.assertTrue(result["ordering_invariant"])
         self.assertTrue(result["provider_invariant"])
 
+    def test_production_result_rejects_malformed_claim_entries(self) -> None:
+        packet = {
+            "packet_id": "malformed-claim",
+            "category": "balanced",
+            "requirement": {
+                "requirement_id": "requirement-1",
+                "dimensions": ["publisher"],
+                "min_family_count": 3,
+                "max_hhi": 1.0,
+                "max_share": 1.0,
+                "min_composite": 0.5,
+                "max_unknown_rate": 0.1,
+            },
+            "sources": [_source(index) for index in range(3)],
+            "claims": [{"source_id": "source-0"}, "not-an-object"],
+        }
+
+        with self.assertRaises(ValueError):
+            benchmark._result(packet)
+
+    def test_benchmark_requires_frozen_discipline_coverage(self) -> None:
+        packets = [_packet("only-one-discipline")]
+        result = _result(
+            packet_id="only-one-discipline",
+            category="missing_strata",
+            material_gap=True,
+        )
+
+        with patch.object(benchmark, "_load_packets", return_value=packets):
+            with patch.object(benchmark, "_result", return_value=result):
+                report = benchmark.run_benchmark("unused.json")
+
+        self.assertEqual("not_run", report["gate_result"])
+        self.assertIn("discipline", report["reason"])
+
     def test_complete_benchmark_requires_and_reports_all_frozen_rates(self) -> None:
-        packets = [_packet(f"seeded-{index}") for index in range(100)]
-        packets += [_packet(f"adequate-{index}") for index in range(100)]
+        packets = _packets(
+            [(f"seeded-{index}", "missing_strata") for index in range(100)]
+            + [(f"adequate-{index}", "balanced") for index in range(100)]
+        )
         results = [
             _result(
                 packet_id=f"seeded-{index}",
@@ -116,8 +188,11 @@ class SourceDiversityBenchmarkTests(unittest.TestCase):
         self.assertLessEqual(metrics["adequate_or_narrow_false_block_rate_upper_95"], 0.10)
 
     def test_thresholds_use_confidence_bounds_and_seeded_denominators(self) -> None:
-        packets = [_packet(f"seeded-{index}") for index in range(10)]
-        packets += [_packet(f"gap-{index}") for index in range(10)]
+        packets = _packets(
+            [(f"seeded-{index}", "fake_diversity") for index in range(10)]
+            + [(f"gap-{index}", "balanced") for index in range(10)]
+            + [(f"coverage-{index}", "balanced") for index in range(90)]
+        )
         results = [
             _result(
                 packet_id=f"seeded-{index}",
@@ -134,6 +209,7 @@ class SourceDiversityBenchmarkTests(unittest.TestCase):
             )
             for index in range(10)
         ]
+        results += [_result(packet_id=f"coverage-{index}") for index in range(90)]
 
         with patch.object(benchmark, "_load_packets", return_value=packets):
             with patch.object(benchmark, "_result", side_effect=results):
@@ -150,7 +226,10 @@ class SourceDiversityBenchmarkTests(unittest.TestCase):
         self.assertIn("material-gap recall", report["reason"])
 
     def test_false_block_gate_uses_upper_confidence_bound(self) -> None:
-        packets = [_packet(f"adequate-{index}") for index in range(20)]
+        packets = _packets(
+            [(f"adequate-{index}", "balanced") for index in range(20)]
+            + [(f"coverage-{index}", "balanced") for index in range(90)]
+        )
         results = [
             _result(
                 packet_id=f"adequate-{index}",
@@ -160,6 +239,7 @@ class SourceDiversityBenchmarkTests(unittest.TestCase):
             )
             for index in range(20)
         ]
+        results += [_result(packet_id=f"coverage-{index}") for index in range(90)]
 
         with patch.object(benchmark, "_load_packets", return_value=packets):
             with patch.object(benchmark, "_result", side_effect=results):
