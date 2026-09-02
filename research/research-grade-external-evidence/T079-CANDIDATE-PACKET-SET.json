@@ -1,0 +1,34 @@
+{
+  "schema_version": "research-handoff.t079.packet-candidate-set.v1",
+  "status": "preparation_only",
+  "baseline_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
+  "required_locked_packets_per_discipline": 10,
+  "candidate_packets_per_discipline": 12,
+  "packet_count": 108,
+  "allocation_rule": {
+    "01": {"partition": "tuning_candidate", "stress_category": "balanced"},
+    "02": {"partition": "tuning_candidate", "stress_category": "balanced"},
+    "03": {"partition": "locked_candidate", "stress_category": "concentrated"},
+    "04": {"partition": "locked_candidate", "stress_category": "concentrated"},
+    "05": {"partition": "locked_candidate", "stress_category": "sparse"},
+    "06": {"partition": "locked_candidate", "stress_category": "narrow"},
+    "07": {"partition": "locked_candidate", "stress_category": "multilingual"},
+    "08": {"partition": "locked_candidate", "stress_category": "historical"},
+    "09": {"partition": "locked_candidate", "stress_category": "method_monoculture"},
+    "10": {"partition": "locked_candidate", "stress_category": "duplicate"},
+    "11": {"partition": "locked_candidate", "stress_category": "fake_diversity"},
+    "12": {"partition": "locked_candidate", "stress_category": "missing_strata"}
+  },
+  "disciplines": {
+    "art_history": {"packet_prefix": "DIV-ART-HISTORY", "packet_ids": ["DIV-ART-HISTORY-01","DIV-ART-HISTORY-02","DIV-ART-HISTORY-03","DIV-ART-HISTORY-04","DIV-ART-HISTORY-05","DIV-ART-HISTORY-06","DIV-ART-HISTORY-07","DIV-ART-HISTORY-08","DIV-ART-HISTORY-09","DIV-ART-HISTORY-10","DIV-ART-HISTORY-11","DIV-ART-HISTORY-12"]},
+    "art_criticism": {"packet_prefix": "DIV-ART-CRITICISM", "packet_ids": ["DIV-ART-CRITICISM-01","DIV-ART-CRITICISM-02","DIV-ART-CRITICISM-03","DIV-ART-CRITICISM-04","DIV-ART-CRITICISM-05","DIV-ART-CRITICISM-06","DIV-ART-CRITICISM-07","DIV-ART-CRITICISM-08","DIV-ART-CRITICISM-09","DIV-ART-CRITICISM-10","DIV-ART-CRITICISM-11","DIV-ART-CRITICISM-12"]},
+    "engineering": {"packet_prefix": "DIV-ENGINEERING", "packet_ids": ["DIV-ENGINEERING-01","DIV-ENGINEERING-02","DIV-ENGINEERING-03","DIV-ENGINEERING-04","DIV-ENGINEERING-05","DIV-ENGINEERING-06","DIV-ENGINEERING-07","DIV-ENGINEERING-08","DIV-ENGINEERING-09","DIV-ENGINEERING-10","DIV-ENGINEERING-11","DIV-ENGINEERING-12"]},
+    "humanities": {"packet_prefix": "DIV-HUMANITIES", "packet_ids": ["DIV-HUMANITIES-01","DIV-HUMANITIES-02","DIV-HUMANITIES-03","DIV-HUMANITIES-04","DIV-HUMANITIES-05","DIV-HUMANITIES-06","DIV-HUMANITIES-07","DIV-HUMANITIES-08","DIV-HUMANITIES-09","DIV-HUMANITIES-10","DIV-HUMANITIES-11","DIV-HUMANITIES-12"]},
+    "interdisciplinary": {"packet_prefix": "DIV-INTERDISCIPLINARY", "packet_ids": ["DIV-INTERDISCIPLINARY-01","DIV-INTERDISCIPLINARY-02","DIV-INTERDISCIPLINARY-03","DIV-INTERDISCIPLINARY-04","DIV-INTERDISCIPLINARY-05","DIV-INTERDISCIPLINARY-06","DIV-INTERDISCIPLINARY-07","DIV-INTERDISCIPLINARY-08","DIV-INTERDISCIPLINARY-09","DIV-INTERDISCIPLINARY-10","DIV-INTERDISCIPLINARY-11","DIV-INTERDISCIPLINARY-12"]},
+    "materials_science": {"packet_prefix": "DIV-MATERIALS-SCIENCE", "packet_ids": ["DIV-MATERIALS-SCIENCE-01","DIV-MATERIALS-SCIENCE-02","DIV-MATERIALS-SCIENCE-03","DIV-MATERIALS-SCIENCE-04","DIV-MATERIALS-SCIENCE-05","DIV-MATERIALS-SCIENCE-06","DIV-MATERIALS-SCIENCE-07","DIV-MATERIALS-SCIENCE-08","DIV-MATERIALS-SCIENCE-09","DIV-MATERIALS-SCIENCE-10","DIV-MATERIALS-SCIENCE-11","DIV-MATERIALS-SCIENCE-12"]},
+    "philosophy": {"packet_prefix": "DIV-PHILOSOPHY", "packet_ids": ["DIV-PHILOSOPHY-01","DIV-PHILOSOPHY-02","DIV-PHILOSOPHY-03","DIV-PHILOSOPHY-04","DIV-PHILOSOPHY-05","DIV-PHILOSOPHY-06","DIV-PHILOSOPHY-07","DIV-PHILOSOPHY-08","DIV-PHILOSOPHY-09","DIV-PHILOSOPHY-10","DIV-PHILOSOPHY-11","DIV-PHILOSOPHY-12"]},
+    "psychology": {"packet_prefix": "DIV-PSYCHOLOGY", "packet_ids": ["DIV-PSYCHOLOGY-01","DIV-PSYCHOLOGY-02","DIV-PSYCHOLOGY-03","DIV-PSYCHOLOGY-04","DIV-PSYCHOLOGY-05","DIV-PSYCHOLOGY-06","DIV-PSYCHOLOGY-07","DIV-PSYCHOLOGY-08","DIV-PSYCHOLOGY-09","DIV-PSYCHOLOGY-10","DIV-PSYCHOLOGY-11","DIV-PSYCHOLOGY-12"]},
+    "technical_writing": {"packet_prefix": "DIV-TECHNICAL-WRITING", "packet_ids": ["DIV-TECHNICAL-WRITING-01","DIV-TECHNICAL-WRITING-02","DIV-TECHNICAL-WRITING-03","DIV-TECHNICAL-WRITING-04","DIV-TECHNICAL-WRITING-05","DIV-TECHNICAL-WRITING-06","DIV-TECHNICAL-WRITING-07","DIV-TECHNICAL-WRITING-08","DIV-TECHNICAL-WRITING-09","DIV-TECHNICAL-WRITING-10","DIV-TECHNICAL-WRITING-11","DIV-TECHNICAL-WRITING-12"]}
+  },
+  "note": "IDs and construction categories only. Source data, machine predictions and human review remain absent until generated/received."
+}
