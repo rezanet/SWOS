@@ -470,8 +470,10 @@ preserving evidence and reopening review.
 
 For promotion evaluation, `cross_modal_f1` is the primary metric for
 multimodal/image/multi-view cases and `discipline_weighted_score` is primary
-for specialist routing; all other blocking metrics remain independent. The
-frozen case ID is the unit of analysis. Repeated draws are aggregated within a
+for specialist routing; all other blocking metrics remain independent. These
+primary metrics require complete case-level evidence, and scalar values or
+generic aliases cannot substitute for the named metric. The frozen case ID is
+the unit of analysis. Repeated draws are aggregated within a
 case, baseline and candidate must use the same complete eligible IDs, and any
 missing result, review, draw, or pairing is `NOT_RUN` rather than a silently
 reduced denominator. The paired 95% interval uses deterministic case-level

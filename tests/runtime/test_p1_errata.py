@@ -187,6 +187,24 @@ class P1MemoryErrataTests(unittest.TestCase):
                 ),
             )
 
+    def test_future_dated_approval_is_rejected_against_commit_time(self) -> None:
+        operation = RPMOperation.write(self.scope, self._candidate("future-approval"))
+        assessment = self.service.assess_operation(self.scope, operation)
+        approval = HumanApproval.for_assessment(
+            assessment, approver="reviewer", role="memory_owner"
+        )
+        with self.assertRaises(SWOSRuntimeError):
+            self.service.commit_operation(
+                self.scope,
+                assessment_id=assessment.assessment_id,
+                approval=HumanApproval(
+                    **{
+                        **approval.to_dict(),
+                        "approved_at": "2099-01-01T00:00:00Z",
+                    }
+                ),
+            )
+
 
 class P1ProvErrataTests(unittest.TestCase):
     def test_public_formats_exclude_internal_n_quads_canonicalization(self) -> None:
@@ -401,6 +419,67 @@ class P1PromotionErrataTests(unittest.TestCase):
             policy={"minimum_improvement": 0.08, "lower_confidence_bound_minimum": 0.0},
         )
         self.assertEqual(assessment.lower_confidence_bound, repeated.lower_confidence_bound)
+
+    def test_declared_case_ids_without_results_are_not_run(self) -> None:
+        baseline = self._evidence(metric=0.60)
+        candidate = self._evidence(metric=0.71, lower_95_ci=0.01)
+        baseline.pop("case_results")
+        candidate.pop("case_results")
+        assessment = assess_promotion(
+            capability="multimodal_analysis",
+            pack="art_history",
+            stage="art_history_agent",
+            baseline=baseline,
+            candidate=candidate,
+            policy={"minimum_improvement": 0.08, "lower_confidence_bound_minimum": 0.0},
+        )
+        self.assertEqual("not_run", assessment.evidence["evaluation_status"])
+        self.assertIn("evaluation_not_run", assessment.reasons)
+        self.assertFalse(assessment.eligible)
+
+        scalar_only_baseline = self._evidence(cross_modal_f1=0.60)
+        scalar_only_candidate = self._evidence(cross_modal_f1=0.71, lower_95_ci=0.01)
+        scalar_only_baseline.pop("case_results")
+        scalar_only_candidate.pop("case_results")
+        scalar_only_baseline.pop("case_ids")
+        scalar_only_candidate.pop("case_ids")
+        scalar_only = assess_promotion(
+            capability="multimodal_analysis",
+            pack="art_history",
+            stage="art_history_agent",
+            baseline=scalar_only_baseline,
+            candidate=scalar_only_candidate,
+            policy={"minimum_improvement": 0.08, "lower_confidence_bound_minimum": 0.0},
+        )
+        self.assertEqual("not_run", scalar_only.evidence["evaluation_status"])
+        self.assertFalse(scalar_only.eligible)
+
+    def test_named_primary_metric_does_not_accept_generic_aliases(self) -> None:
+        baseline = self._evidence(
+            case_results=[
+                {"case_id": "case-1", "score": 0.60, "human_reviewed": True},
+                {"case_id": "case-2", "score": 0.60, "human_reviewed": True},
+                {"case_id": "case-3", "score": 0.60, "human_reviewed": True},
+            ]
+        )
+        candidate = self._evidence(
+            case_results=[
+                {"case_id": "case-1", "score": 0.70, "human_reviewed": True},
+                {"case_id": "case-2", "score": 0.71, "human_reviewed": True},
+                {"case_id": "case-3", "score": 0.72, "human_reviewed": True},
+            ]
+        )
+        assessment = assess_promotion(
+            capability="multimodal_analysis",
+            pack="art_history",
+            stage="art_history_agent",
+            baseline=baseline,
+            candidate=candidate,
+            policy={"minimum_improvement": 0.08, "lower_confidence_bound_minimum": 0.0},
+        )
+        self.assertEqual("not_run", assessment.evidence["evaluation_status"])
+        self.assertIn("evaluation_not_run", assessment.reasons)
+        self.assertFalse(assessment.eligible)
 
     def test_specialist_routing_uses_discipline_weighted_score_and_missing_truth_is_not_run(
         self,

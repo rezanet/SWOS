@@ -851,6 +851,8 @@ class ResearchMemoryService:
         self,
         assessment: MemoryAssessment,
         approval: HumanApproval | None,
+        *,
+        commit_at: datetime,
     ) -> None:
         if not isinstance(approval, HumanApproval):
             raise SWOSRuntimeError(
@@ -889,6 +891,10 @@ class ResearchMemoryService:
             raise SWOSRuntimeError(
                 ErrorCode.APPROVAL_MISMATCH, "approval is stale for the assessment"
             )
+        if _dt(approval.approved_at) > commit_at:
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval is dated after the commit time"
+            )
 
     def commit_operation(
         self,
@@ -916,7 +922,7 @@ class ResearchMemoryService:
             raise SWOSRuntimeError(ErrorCode.STALE_ASSESSMENT, "assessment policy digest is stale")
         if assessment.status != "allow":
             raise SWOSRuntimeError(ErrorCode.POLICY_DENIED, "; ".join(assessment.denial_reasons))
-        self._validate_approval(assessment, approval)
+        self._validate_approval(assessment, approval, commit_at=now)
         operation = self._operation_from_dict(assessment.operation, scope)
         current_head = self.store.chain_head(scope)
         if current_head != assessment.target_head:

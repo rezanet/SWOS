@@ -352,7 +352,9 @@ pack-only.
 The primary metric is `cross_modal_f1` for multimodal, image, and multi-view
 evaluations, and `discipline_weighted_score` for specialist routing. Every other
 blocking metric is evaluated independently rather than substituted for either
-primary metric. The frozen case ID is the statistical unit: repeated draws are
+primary metric. These primary metrics require complete case-level evidence;
+scalar values or generic aliases cannot substitute for a named primary metric.
+The frozen case ID is the statistical unit: repeated draws are
 aggregated within each case before paired comparison, and baseline/candidate
 must contain the same complete eligible case IDs. A missing result, review,
 draw, or pairing mismatch makes the evaluation `NOT_RUN` and never silently

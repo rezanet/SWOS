@@ -294,9 +294,9 @@ class ResearchGradeCoverageTests(unittest.TestCase):
         )
 
         baseline = {
-            "metric": 0.5,
+            "cross_modal_f1": 0.5,
             "source_sha": "s",
-            "case_ids": ["c"],
+            "case_ids": ["c", "d"],
             "provider": "p",
             "model": "m",
             "config_digest": "c",
@@ -304,11 +304,19 @@ class ResearchGradeCoverageTests(unittest.TestCase):
             "seed": 1,
             "draw_digest": "d",
             "artifact_digest": "a",
+            "evaluation_manifest_digest": "manifest",
+            "case_results": [
+                {"case_id": "c", "metrics": {"cross_modal_f1": 0.5}, "human_reviewed": True},
+                {"case_id": "d", "metrics": {"cross_modal_f1": 0.5}, "human_reviewed": True},
+            ],
         }
         candidate = {
             **baseline,
-            "metric": 0.7,
-            "lower_95_ci": 0.2,
+            "cross_modal_f1": 0.7,
+            "case_results": [
+                {"case_id": "c", "metrics": {"cross_modal_f1": 0.7}, "human_reviewed": True},
+                {"case_id": "d", "metrics": {"cross_modal_f1": 0.7}, "human_reviewed": True},
+            ],
             "live_exact_head": True,
             "human_quorum": True,
             "role_separation": True,

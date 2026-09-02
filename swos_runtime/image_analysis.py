@@ -17,6 +17,7 @@ from .models import canonical_digest, utc_timestamp
 ANALYSIS_STATUSES = frozenset({"complete", "partial", "insufficient", "denied", "error"})
 DETERMINISTIC_TIMESTAMP = "1970-01-01T00:00:00+00:00"
 PROMOTION_BOOTSTRAP_RESAMPLES = 10_000
+CASE_LEVEL_PROMOTION_METRICS = frozenset({"cross_modal_f1", "discipline_weighted_score"})
 
 
 def _asset_digest(asset: Any) -> str:
@@ -900,14 +901,16 @@ def _promotion_metric_id(
 
 def _metric_value(value: Any, metric_id: str) -> Any:
     if isinstance(value, Mapping):
-        if metric_id != "independent" and metric_id in value:
-            return value[metric_id]
-        metrics = value.get("metrics")
-        if isinstance(metrics, Mapping):
-            if metric_id != "independent" and metric_id in metrics:
+        if metric_id != "independent":
+            if metric_id in value:
+                return value[metric_id]
+            metrics = value.get("metrics")
+            if isinstance(metrics, Mapping) and metric_id in metrics:
                 return metrics[metric_id]
-            if metric_id == "independent" and "primary" in metrics:
-                return metrics["primary"]
+            return None
+        metrics = value.get("metrics")
+        if isinstance(metrics, Mapping) and "primary" in metrics:
+            return metrics["primary"]
         for key in ("metric", "score", "value"):
             if key in value:
                 return value[key]
@@ -972,6 +975,8 @@ def _case_level_scores(
 ) -> tuple[tuple[str, ...], tuple[float, ...], tuple[str, ...], bool]:
     has_case_data = any(key in data for key in ("case_results", "case_scores", "cases", "results"))
     if not has_case_data:
+        if "case_ids" in data:
+            return (), (), ("case_results_missing",), True
         return (), (), (), False
     records = _case_records(data)
     declared_ids = _case_ids(data, records)
@@ -1078,7 +1083,8 @@ def assess_promotion(
     candidate_case_ids, candidate_case_scores, candidate_case_reasons, candidate_has_cases = (
         _case_level_scores(candidate_data, primary_metric)
     )
-    case_level = baseline_has_cases or candidate_has_cases
+    case_level_required = primary_metric in CASE_LEVEL_PROMOTION_METRICS
+    case_level = case_level_required or baseline_has_cases or candidate_has_cases
     case_id_digest = ""
     bootstrap_seed: int | None = None
     upper_confidence_bound: float | None = None
@@ -1086,6 +1092,10 @@ def assess_promotion(
     if case_level:
         if not baseline_has_cases or not candidate_has_cases:
             evaluation_not_run.append("case_level_pair_missing")
+            if not baseline_has_cases:
+                evaluation_not_run.append("case_results_missing")
+            if not candidate_has_cases:
+                evaluation_not_run.append("case_results_missing")
         evaluation_not_run.extend(baseline_case_reasons)
         evaluation_not_run.extend(candidate_case_reasons)
         if not evaluation_not_run and set(baseline_case_ids) != set(candidate_case_ids):

@@ -20,14 +20,25 @@ class CapabilityPromotionTests(unittest.TestCase):
             "prompt_digest": "e" * 64,
             "seed": 7,
             "draw_digest": "f" * 64,
+            "evaluation_manifest_digest": "1" * 64,
             "live_exact_head": True,
             "human_quorum": True,
             "role_separation": True,
             "safety_regressions": [],
             "rollback_tested": True,
             "pack_only_fallback": True,
+            "case_results": [
+                {"case_id": "c1", "metrics": {"cross_modal_f1": 0.70}, "human_reviewed": True},
+                {"case_id": "c2", "metrics": {"cross_modal_f1": 0.70}, "human_reviewed": True},
+            ],
         }
         value.update(changes)
+        if "metric" in value:
+            metric = value.pop("metric")
+            value["case_results"] = [
+                {"case_id": case_id, "metrics": {"cross_modal_f1": metric}, "human_reviewed": True}
+                for case_id in value["case_ids"]
+            ]
         return value
 
     def test_default_off_and_mismatched_heads_are_disabled(self) -> None:
@@ -48,7 +59,7 @@ class CapabilityPromotionTests(unittest.TestCase):
             pack="art_history",
             stage="art_history_agent",
             baseline=self._evidence(metric=0.70),
-            candidate=self._evidence(metric=0.80),
+            candidate=self._evidence(metric=0.80, live_exact_head=False),
             policy={"minimum_improvement": 0.08, "lower_confidence_bound_minimum": 0.0},
         )
         self.assertEqual("disabled", assessment.status)
