@@ -33,6 +33,7 @@ This folder persists external research and preparation recommendations for the f
 ## T127–T129 release closure
 
 - `T127-T129-RELEASE-CLOSURE-PLAN.md` — final exact-head approvals, immutable audit pack, and owner decision sequence.
+- `T127-T129-CURRENT-READINESS.md` — current blockers, real coverage-generation path for T128, and owner-only T129 boundary.
 - `PARALLEL-CLOSURE-RESEARCH.md` — consolidated cross-track summary.
 
 Immediate production-side T070 action remains: builder should create the source-candidate manifest/acquisition workflow, prepare 6,000 UNLABELLED candidate pairs, and stop at the genuine human annotation/adjudication boundary if reviewers are unavailable.
