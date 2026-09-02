@@ -372,6 +372,12 @@ def certify_round_trip(
         or processor.get("name")
     )
     version = oracle_payload.get("version") or processor.get("version")
+    licence = (
+        oracle_payload.get("licence")
+        or oracle_payload.get("license")
+        or processor.get("licence")
+        or processor.get("license")
+    )
     processor_digest = (
         oracle_payload.get("artifact_sha256")
         or oracle_payload.get("artifact_digest")
@@ -387,6 +393,7 @@ def certify_round_trip(
         and tuple(str(item) for item in oracle_formats) == tuple(formats)
         and bool(str(implementation or "").strip())
         and bool(str(version or "").strip())
+        and bool(str(licence or "").strip())
         and isinstance(processor_digest, str)
         and len(processor_digest) == 64
         and all(character in "0123456789abcdef" for character in processor_digest)

@@ -6,7 +6,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -16,23 +16,32 @@ from swos_runtime.prov_model import ResourceLimits  # noqa: E402
 from swos_runtime.prov_validation import certify_round_trip  # noqa: E402
 
 
-def _load(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
+def _load(path: Path) -> dict[str, Any]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, Mapping):
+        raise ValueError(f"PROV certification input must be a JSON object: {path}")
+    return dict(payload)
 
 
 def _limits(path: Path) -> ResourceLimits:
     payload = _load(path)
-    if isinstance(payload, dict) and isinstance(payload.get("limits"), dict):
-        payload = payload["limits"]
-    return ResourceLimits(
-        max_bytes=int(payload.get("max_bytes", ResourceLimits.max_bytes)),
-        max_statements=int(payload.get("max_statements", ResourceLimits.max_statements)),
-        max_literal_length=int(
-            payload.get("max_literal_length", ResourceLimits.max_literal_length)
-        ),
-        max_depth=int(payload.get("max_depth", ResourceLimits.max_depth)),
-        timeout_seconds=float(payload.get("timeout_seconds", ResourceLimits.timeout_seconds)),
-    )
+    values = payload.get("limits")
+    if not isinstance(values, Mapping):
+        raise ValueError("PROV resource-limits manifest requires an explicit limits object")
+    required = ("max_bytes", "max_statements", "max_literal_length", "max_depth", "timeout_seconds")
+    missing = [key for key in required if key not in values]
+    if missing:
+        raise ValueError("PROV resource-limits manifest is missing: " + ", ".join(missing))
+    try:
+        return ResourceLimits(
+            max_bytes=int(values["max_bytes"]),
+            max_statements=int(values["max_statements"]),
+            max_literal_length=int(values["max_literal_length"]),
+            max_depth=int(values["max_depth"]),
+            timeout_seconds=float(values["timeout_seconds"]),
+        )
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError("PROV resource-limits manifest contains invalid bounds") from exc
 
 
 def certify(
@@ -62,13 +71,19 @@ def certify(
         report["profile_manifest"] = profile
     else:
         manifest = _load(corpus_manifest)
-        cases = manifest.get("cases", []) if isinstance(manifest, dict) else []
+        cases = manifest.get("cases")
+        if not isinstance(cases, list):
+            raise ValueError("PROV corpus manifest requires a cases list")
         certificates = []
-        root = corpus_manifest.parent
-        for case in cases:
-            if not isinstance(case, dict) or not case.get("epg"):
-                continue
-            case_path = (root / str(case["epg"])).resolve()
+        root = corpus_manifest.parent.resolve()
+        for index, case in enumerate(cases):
+            if not isinstance(case, dict) or not isinstance(case.get("epg"), str):
+                raise ValueError(f"PROV corpus case {index} lacks an EPG path")
+            case_path = (root / case["epg"]).resolve()
+            if not case_path.is_relative_to(root):
+                raise ValueError(f"PROV corpus case escapes its manifest directory: {case['epg']}")
+            if not case_path.is_file():
+                raise ValueError(f"PROV corpus EPG does not exist: {case_path}")
             certificates.append(
                 certify_round_trip(
                     _load(case_path), formats, oracle=oracle, limits=limits

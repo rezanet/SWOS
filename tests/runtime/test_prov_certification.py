@@ -25,6 +25,27 @@ class ProvCertificationTests(unittest.TestCase):
         self.assertIn("EPG -> PROV-JSON -> EPG", certificate.paths)
         self.assertTrue(all(item["semantic_equivalent"] for item in certificate.legs))
 
+    def test_accepted_oracle_requires_a_pinned_licence(self) -> None:
+        epg = sample_epg()
+        fingerprint = canonical_fingerprint(
+            epg_to_prov(epg, base_iri=epg["base_iri"]), ResourceLimits()
+        )
+        oracle = {
+            "status": "accepted",
+            "implementation": "ProvToolbox",
+            "version": "3.0.0",
+            "artifact_sha256": "a" * 64,
+            "profile": epg["profile"],
+            "formats": ["prov-json"],
+            "input_digest": fingerprint.semantic_digest,
+        }
+
+        certificate = certify_round_trip(
+            epg, ("prov-json",), oracle=oracle, limits=ResourceLimits()
+        )
+
+        self.assertNotEqual("certified", certificate.status)
+
     def test_invalid_oracle_cannot_be_certified(self) -> None:
         certificate = certify_round_trip(
             sample_epg(),
@@ -43,6 +64,7 @@ class ProvCertificationTests(unittest.TestCase):
             "status": "accepted",
             "implementation": "ProvToolbox",
             "version": "3.0.0",
+            "licence": "Apache-2.0",
             "artifact_sha256": "a" * 64,
             "profile": epg["profile"],
             "formats": ["prov-json"],
@@ -68,6 +90,7 @@ class ProvCertificationTests(unittest.TestCase):
             "status": "accepted",
             "implementation": "ProvToolbox",
             "version": "3.0.0",
+            "licence": "Apache-2.0",
             "artifact_sha256": "a" * 64,
             "profile": epg["profile"],
             "formats": ["prov-json", "prov-n", "prov-o-trig"],
