@@ -12,7 +12,7 @@
   "implementation": {
     "pull_request": 58,
     "branch": "codex/swos-v2-t070-floor-gate",
-    "head_sha": "cdaf26d37d83d4bb500402933a964401622ebf8a",
+    "head_sha": "fc03d2a10db93ccc1011946abe71c3acea45e45d",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/58",
@@ -23,12 +23,12 @@
       "focused T073 evaluator suite: 6 tests pass",
       "focused T080 diversity benchmark suite: 6 tests pass",
       "focused T093-T095 provenance boundary suite: 39 tests pass",
-      "python tools/run_mutation_checks.py --report artifacts/research-grade/mutation-report.json at source 105e06157dfc85d49e2602420a954e26eb416a6d: passed, 6/6 mutants killed, zero survivors/errors",
+      "python tools/run_mutation_checks.py --report artifacts/research-grade/mutation-report.json at source fc03d2a10db93ccc1011946abe71c3acea45e45d: passed, 6/6 mutants killed, zero survivors/errors",
       "historical at 1bef2f252b5dbef10bd70375dbbce10c08ec726f: python -m unittest discover -s tests/runtime -p 'test_*.py' returned 263 passed",
-      "python -m unittest discover -s tests/runtime -p 'test_*.py' at cdaf26d37d83d4bb500402933a964401622ebf8a: 266 passed",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py' at fc03d2a10db93ccc1011946abe71c3acea45e45d: 289 passed",
       "python -m unittest discover -s tests/prose -p 'test_*.py': 240 passed, 11 expected live-provider skips",
-      "python -m unittest discover -s tests -p 'test_*.py' at cdaf26d37d83d4bb500402933a964401622ebf8a: 17 passed",
-      "coverage at cdaf26d37d83d4bb500402933a964401622ebf8a: 82% total, required 80%, critical module floors pass",
+      "python -m unittest discover -s tests -p 'test_*.py' at fc03d2a10db93ccc1011946abe71c3acea45e45d: 17 passed",
+      "coverage at fc03d2a10db93ccc1011946abe71c3acea45e45d: 82% total (10,244 statements, 1,533 missed), executable swos_prose 81.56%, required 80%, critical module floors pass",
       "Ruff format and lint checks for the workflow-scanned surfaces: pass",
       "schema validation: 58 artefacts pass; research-grade contract examples and Spec Kit consistency pass",
       "Bandit, dependency audit, governance, vendor-leakage, workflow-profile, portability-definition, and DCO checks: pass",
@@ -41,7 +41,7 @@
       "T073 locked-test binding regression: the evaluator requires a frozen sibling dataset manifest whose canonical digest matches the verified model and whose locked_test count/digest matches the supplied rows",
       "T080 integrity regression: malformed claims are rejected instead of dropped, incomplete nine-discipline coverage is not_run, and valid packet requirements are bound by canonical digest",
       "T093-T095 provenance integrity regression: non-empty corpus manifests require frozen versioned metadata, unique case paths and payload digests, EPG/PROV inputs reject mismatched profiles or schema versions, and legacy minimal PROV-JSON compatibility remains intact",
-      "PR #58 exact-head hosted checks at cdaf26d37d83d4bb500402933a964401622ebf8a: SWOS CI 33591771599, SWOS CodeQL 33591771521, Research Grade compatibility 33591771529, SWOS Prose Benchmark 33591771579, SWOS Portability Gate 33591771560, and SWOS Engineering Quality 33591771522; all six workflow runs pass, including mutation and coverage steps"
+      "PR #58 exact-head hosted checks at fc03d2a10db93ccc1011946abe71c3acea45e45d: SWOS CI 33597762536, SWOS CodeQL 33597762521, Research Grade compatibility 33597762535, SWOS Prose Benchmark 33597762513, SWOS Portability Gate 33597762495, and SWOS Engineering Quality 33597762527; all six workflow runs pass, including mutation and coverage steps"
     ]
   },
   "summary": {
@@ -248,7 +248,7 @@
     {
       "id": "implementation-hosted-ci",
       "status": "pass",
-      "evidence": "Six required workflows passed at PR #58 head cdaf26d37d83d4bb500402933a964401622ebf8a: SWOS CI 33591771599, SWOS CodeQL 33591771521, Research Grade compatibility 33591771529, SWOS Prose Benchmark 33591771579, SWOS Portability Gate 33591771560, and SWOS Engineering Quality 33591771522; Engineering Quality includes the bounded mutation and coverage steps."
+      "evidence": "Six required workflows passed at PR #58 head fc03d2a10db93ccc1011946abe71c3acea45e45d: SWOS CI 33597762536, SWOS CodeQL 33597762521, Research Grade compatibility 33597762535, SWOS Prose Benchmark 33597762513, SWOS Portability Gate 33597762495, and SWOS Engineering Quality 33597762527; Engineering Quality includes the bounded mutation and coverage steps."
     },
     {
       "id": "portability-definitions",

@@ -3,11 +3,13 @@
     {
       "probe": "tests.runtime.test_programme_store",
       "result": {
-        "duration_seconds": 0.518486,
+        "duration_seconds": 0.445545,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 0,
         "status": "passed",
-        "stderr_bytes": 97,
-        "stderr_sha256": "7d5eede57855a4a8d815e4522cfcb425409c7bbf8d1dba23426615a93eeb7d53",
+        "stderr_bytes": 101,
+        "stderr_sha256": "deba5334cec8b977606520b276a470d34bd399770f0ec80d439cafcc01556124",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -16,11 +18,13 @@
     {
       "probe": "tests.runtime.test_research_memory_writes",
       "result": {
-        "duration_seconds": 0.693907,
+        "duration_seconds": 0.529298,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 0,
         "status": "passed",
-        "stderr_bytes": 97,
-        "stderr_sha256": "f51bd92ef1ed37cbabfa580b2656236bcf173d0568ffc405fdeed3e82e88cc47",
+        "stderr_bytes": 101,
+        "stderr_sha256": "e4dc46de33dcfa5e62a2b6ae2f647fdfb8b1888f64a04a2b383854e135b733dd",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -29,11 +33,13 @@
     {
       "probe": "tests.runtime.test_rpm_exchange",
       "result": {
-        "duration_seconds": 1.582602,
+        "duration_seconds": 1.291568,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 0,
         "status": "passed",
-        "stderr_bytes": 288,
-        "stderr_sha256": "386c5da28f86274a071e4c293670cd9f606f44ca42d20045b3008ee832e83a19",
+        "stderr_bytes": 294,
+        "stderr_sha256": "82d6354e8882f1ace732c585b9f824bde3ec860540211abcde1f2f41b2c4f728",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -42,11 +48,13 @@
     {
       "probe": "tests.runtime.test_runtime",
       "result": {
-        "duration_seconds": 1.203706,
+        "duration_seconds": 0.852384,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 0,
         "status": "passed",
-        "stderr_bytes": 1322,
-        "stderr_sha256": "39e4aa3f85e7be4c68ac01d4c02d7632d881e6e6a5ca6e2263beb615aaa0d967",
+        "stderr_bytes": 1296,
+        "stderr_sha256": "d5043418e283fda528b67229b8ba148586705a3212ca50fffc1ab18002cd6a71",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -54,11 +62,13 @@
     }
   ],
   "environment": {
+    "max_probe_output_bytes": 65536,
     "os": "Windows-11-10.0.26200-SP0",
     "python": "3.14.6",
     "timeout_seconds": 60.0
   },
   "error_mutants": [],
+  "expected_source_sha": "fc03d2a10db93ccc1011946abe71c3acea45e45d",
   "harness_version": "1.0.0",
   "killed_count": 6,
   "limitations": [
@@ -72,11 +82,13 @@
       "mutant_id": "rpm-provenance-evidence-or",
       "probe": "tests.runtime.test_research_memory_writes",
       "probe_result": {
-        "duration_seconds": 0.657681,
+        "duration_seconds": 0.519525,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 1,
         "status": "failed",
-        "stderr_bytes": 908,
-        "stderr_sha256": "1ac3cf14ea81a73ddd97dc0cad261fd0c43f91419897a14ad8db98568249799b",
+        "stderr_bytes": 907,
+        "stderr_sha256": "7d56f728923c9094134022a0dae58c81e7c24fe1004b24c2a6948d861d4e2b0f",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -89,11 +101,13 @@
       "mutant_id": "rpm-approval-digest-binding",
       "probe": "tests.runtime.test_research_memory_writes",
       "probe_result": {
-        "duration_seconds": 0.720404,
+        "duration_seconds": 0.605646,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 1,
         "status": "failed",
-        "stderr_bytes": 833,
-        "stderr_sha256": "61089edf102e4a586c36dae815c4d12c88cf20b687741f0c4ddd071b5b1967c2",
+        "stderr_bytes": 829,
+        "stderr_sha256": "f2b31ff44a62c459ac1820967cd88726f68e8e148089e294b6de87b10e572af9",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -106,11 +120,13 @@
       "mutant_id": "rpm-commit-head-revalidation",
       "probe": "tests.runtime.test_research_memory_writes",
       "probe_result": {
-        "duration_seconds": 0.69246,
+        "duration_seconds": 0.569781,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 1,
         "status": "failed",
-        "stderr_bytes": 807,
-        "stderr_sha256": "1d4589861e881ffd70c251566c68d7cdf26100f913c98d68ea8922af8018cf1e",
+        "stderr_bytes": 803,
+        "stderr_sha256": "093b036f9577ad4927d9f00a1a133ebe093e76a1c8e43612e5400744b0fe2f60",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -123,11 +139,13 @@
       "mutant_id": "store-event-hash-verification",
       "probe": "tests.runtime.test_programme_store",
       "probe_result": {
-        "duration_seconds": 0.498192,
+        "duration_seconds": 0.44341,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 1,
         "status": "failed",
-        "stderr_bytes": 848,
-        "stderr_sha256": "70f1fe01fb12b5cbd2d042f11eca936ad5702ef139aa4ac55f03f9f78f1817fd",
+        "stderr_bytes": 844,
+        "stderr_sha256": "17735a21ee5342bdebf834c2e1785922010d0fa8a1ca12767c9c327c02b1b1df",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -140,11 +158,13 @@
       "mutant_id": "exchange-zip-member-safety",
       "probe": "tests.runtime.test_rpm_exchange",
       "probe_result": {
-        "duration_seconds": 1.251038,
+        "duration_seconds": 1.214821,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 1,
         "status": "failed",
-        "stderr_bytes": 861,
-        "stderr_sha256": "c6c8d3fe55b77a27a1ddd02718410bbadc6245410ecdc71ddb9690a4d8dc894b",
+        "stderr_bytes": 857,
+        "stderr_sha256": "05730c768faa7b75a937ede5242fa09308b8bdec8581ab6da6ed4018f3513c1b",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -157,11 +177,13 @@
       "mutant_id": "rpm-human-approval-gate",
       "probe": "tests.runtime.test_runtime",
       "probe_result": {
-        "duration_seconds": 1.245533,
+        "duration_seconds": 0.864094,
+        "output_limit_bytes": 65536,
+        "output_limit_exceeded": false,
         "returncode": 1,
         "status": "failed",
-        "stderr_bytes": 2195,
-        "stderr_sha256": "e96c771ffc7a6594e787bb8ddfc26e92f3d185b7ef73960557ef421fbb3fc2bc",
+        "stderr_bytes": 2169,
+        "stderr_sha256": "32764a81da83796668369729650a740da4562c0c26b3914d89875191bbceb3b9",
         "stdout_bytes": 0,
         "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "timed_out": false
@@ -171,7 +193,8 @@
     }
   ],
   "schema_version": "2.0.0",
-  "source_sha": "105e06157dfc85d49e2602420a954e26eb416a6d",
+  "source_sha": "fc03d2a10db93ccc1011946abe71c3acea45e45d",
+  "source_sha_matches_expected": true,
   "source_worktree_clean": true,
   "status": "passed",
   "surviving_mutants": [],
