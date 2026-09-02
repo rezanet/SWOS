@@ -79,11 +79,56 @@
       "head_sha": "d9c0dff890ed5ce98685a87e37be89c7685dcbd4",
       "merged_sha": "c44013b05b6db67490f71a9631b2c745ed7f4111"
     },
+    "p1_errata": {
+      "pull_request": 62,
+      "base_sha": "4b4788ccbaf76556624c7290744e4c1aaedb8fac",
+      "reviewed_head": "3387faaad49c1aa749e77374b19a83685e3f8cf7",
+      "merged_sha": "1160d973e942e5436604b2e2d5f503de008f0d07",
+      "review_status": "clean",
+      "review_method": "independent read-only exact-head review",
+      "task_markers_changed": false,
+      "changed_files": 18,
+      "hosted_checks": {
+        "swos_ci": 33623149632,
+        "research_grade_compatibility": 33623149687,
+        "swos_prose_benchmark": 33623149679,
+        "swos_portability_gate": 33623149546,
+        "swos_codeql": 33623149567,
+        "swos_engineering_quality": 33623149570
+      },
+      "post_merge_checks": {
+        "swos_ci": 33623474422,
+        "research_grade_compatibility": 33623474439,
+        "swos_codeql": 33623474467,
+        "swos_engineering_quality": 33623474490
+      },
+      "local_validation": {
+        "runtime_tests": "302 passed",
+        "prose_tests": "240 passed, 11 expected live-provider skips",
+        "contract_harness": "all eight planes passed in contract mode",
+        "schema_validation": "58 artifacts passed"
+      },
+      "open_tasks": [
+        "T070",
+        "T073",
+        "T079",
+        "T080",
+        "T093",
+        "T094",
+        "T095",
+        "T111",
+        "T127",
+        "T128",
+        "T129"
+      ],
+      "release_status": "uncertified"
+    },
+    "current_main_sha": "1160d973e942e5436604b2e2d5f503de008f0d07",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/58",
     "last_reconciled_task": "T095",
-    "last_action": "Reconciled the queue to the exact source/evidence head c44013b05b6db67490f71a9631b2c745ed7f4111 after the status-only PR #60 merge; the prior implementation source/evidence head was 18ce33bad66bece28b02e84ab7ef8f532a45dacf. PR #58 merged as 9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158 and signed-off PR #59 merged as 18ce33bad66bece28b02e84ab7ef8f532a45dacf. The tested implementation source remains fc03d2a10db93ccc1011946abe71c3acea45e45d and the final PR head remains 7a8142c709821fee4b69344e6da0990bb4297053; the status-only ledger merges changed no executable implementation files. The licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, independent human records, portability evidence, external audit pack, and owner decisions remain absent, so all eleven release tasks remain pending.",
+    "last_action": "Merged owner-authorized PR #62 after resolving the five P1 contract contradictions: exact reviewed head 3387faaad49c1aa749e77374b19a83685e3f8cf7, independent exact-head review CLEAN, and squash merge 1160d973e942e5436604b2e2d5f503de008f0d07. The queue remains active and uncertified with all eleven release tasks pending; current main is recorded above.",
     "last_action_evidence": [
       "focused T070 citation dataset suite: 11 tests pass",
       "focused T073 evaluator suite: 6 tests pass",
@@ -113,7 +158,12 @@
       "current task-marker audit: 129 ordered unique tasks, 118 checked and 11 open; the only difference from the PR #55 exact planning tree is permitted [ ] to [x] task-marker changes",
       "current release portability check: python tools/check_portability_acceptance.py --release fails closed because api_provider_changed, claude_code_subscription, codex_chatgpt_subscription, model_changed_same_provider, openai_api, and replay_host_bundle lack required PASS evidence",
       "current pre-freeze audit-pack verifier: python tools/assemble_research_grade_audit_pack.py --verify-only fails closed because the committed manifest names missing reports/coverage.json; this is not release certification evidence",
-      "post-merge workflows at c44013b05b6db67490f71a9631b2c745ed7f4111: Research Grade compatibility 33608680395, SWOS CI 33608680407, SWOS CodeQL 33608680430, and SWOS Engineering Quality 33608680558; all completed successfully"
+      "post-merge workflows at c44013b05b6db67490f71a9631b2c745ed7f4111: Research Grade compatibility 33608680395, SWOS CI 33608680407, SWOS CodeQL 33608680430, and SWOS Engineering Quality 33608680558; all completed successfully",
+      "PR #62 exact-head errata review: reviewed head 3387faaad49c1aa749e77374b19a83685e3f8cf7 against base 4b4788ccbaf76556624c7290744e4c1aaedb8fac; independent read-only review CLEAN; all three hosted review threads resolved; 18 authorized files changed; tasks.md unchanged",
+      "PR #62 merged by squash as 1160d973e942e5436604b2e2d5f503de008f0d07; hosted checks SWOS CI 33623149632, Research Grade compatibility 33623149687, SWOS Prose Benchmark 33623149679, SWOS Portability Gate 33623149546, SWOS CodeQL 33623149567, and SWOS Engineering Quality 33623149570 completed successfully",
+      "post-merge workflows at 1160d973e942e5436604b2e2d5f503de008f0d07: SWOS CI 33623474422, Research Grade compatibility 33623474439, SWOS CodeQL 33623474467, and SWOS Engineering Quality 33623474490 completed successfully",
+      "final local validation after PR #62: runtime 302 passed; prose 240 passed with 11 expected live-provider skips; all eight contract harness planes passed in contract mode; 58 schema artifacts passed",
+      "current release remains uncertified: open tasks T070, T073, T079, T080, T093, T094, T095, T111, T127, T128, T129; portability records api_provider_changed, claude_code_subscription, codex_chatgpt_subscription, model_changed_same_provider, openai_api, and replay_host_bundle are absent; audit-pack verify is fail-closed because reports/coverage.json is missing"
     ]
   },
   "summary": {
