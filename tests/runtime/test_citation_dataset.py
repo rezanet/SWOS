@@ -42,7 +42,12 @@ class CitationDatasetTests(unittest.TestCase):
                 {"annotator_id": "a", "label": "directly_supports"},
                 {"annotator_id": "b", "label": "directly_supports"},
             ],
-            "adjudication": {"status": "adjudicated", "label": "directly_supports"},
+            "adjudication": {
+                "status": "adjudicated",
+                "adjudicator_id": "c",
+                "label": "directly_supports",
+                "rationale": "Both independent annotations agree.",
+            },
         }
 
     def test_pair_requires_licence_provenance_and_two_annotations(self) -> None:
@@ -56,6 +61,27 @@ class CitationDatasetTests(unittest.TestCase):
         malformed["adjudication"] = "adjudicated"
         with self.assertRaises(DatasetValidationError):
             validate_pair_record(malformed)
+
+    def test_pair_rejects_incomplete_or_conflicting_human_records(self) -> None:
+        missing_annotation_label = self._pair("missing-annotation-label")
+        missing_annotation_label["annotations"][0].pop("label")
+        with self.assertRaises(DatasetValidationError):
+            validate_pair_record(missing_annotation_label)
+
+        missing_adjudication_record = self._pair("missing-adjudication-record")
+        missing_adjudication_record["adjudication"].pop("rationale")
+        with self.assertRaises(DatasetValidationError):
+            validate_pair_record(missing_adjudication_record)
+
+        conflicting_adjudication = self._pair("conflicting-adjudication")
+        conflicting_adjudication["adjudication"]["label"] = "context_only"
+        with self.assertRaises(DatasetValidationError):
+            validate_pair_record(conflicting_adjudication)
+
+        non_independent_adjudicator = self._pair("non-independent-adjudicator")
+        non_independent_adjudicator["adjudication"]["adjudicator_id"] = "a"
+        with self.assertRaises(DatasetValidationError):
+            validate_pair_record(non_independent_adjudicator)
 
     def test_grouped_split_is_deterministic_and_has_no_group_leakage(self) -> None:
         rows = [self._pair(f"p-{i}", f"g-{i // 2}") for i in range(12)]
