@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+import zipfile
 from dataclasses import replace
 from pathlib import Path
 
@@ -16,7 +17,7 @@ from swos_runtime.research_memory import (
     ResearchScope,
     RPMOperation,
 )
-from swos_runtime.rpm_exchange import BundleLimits, ExportSelection, RPMExchange
+from swos_runtime.rpm_exchange import BundleLimits, ExchangeError, ExportSelection, RPMExchange
 
 
 class RPMExchangeTests(unittest.TestCase):
@@ -167,6 +168,25 @@ class RPMExchangeTests(unittest.TestCase):
             exchange.inspect_import(
                 self.root / "../evil.zip", destination=self.scope, limits=BundleLimits(max_bytes=1)
             )
+
+    def test_zip_slip_and_duplicate_member_paths_are_rejected(self) -> None:
+        exchange = RPMExchange(self.service)
+        zip_path = self.root / "unsafe.zip"
+        with zipfile.ZipFile(zip_path, "w") as archive:
+            archive.writestr("../outside.txt", "blocked")
+            archive.writestr("manifest.json", "{}")
+            archive.writestr("events.ndjson", "")
+            archive.writestr("checksums.json", "{}")
+            archive.writestr("limitations.json", "{}")
+        with self.assertRaisesRegex(ExchangeError, "unsafe bundle path"):
+            exchange._read_bundle(zip_path, BundleLimits())
+
+        duplicate_path = self.root / "duplicate.zip"
+        with zipfile.ZipFile(duplicate_path, "w") as archive:
+            archive.writestr("manifest.json", "{}")
+            archive.writestr("manifest.json", "{}")
+        with self.assertRaisesRegex(ExchangeError, "duplicate bundle path"):
+            exchange._read_bundle(duplicate_path, BundleLimits())
 
 
 if __name__ == "__main__":

@@ -36,6 +36,15 @@ jobs:
         run: python tools/check_vendor_leakage.py
       - name: Validate frozen portability matrix
         run: python tools/check_portability_acceptance.py --definitions-only
+      - name: Run bounded safety mutation checks
+        run: python tools/run_mutation_checks.py --report artifacts/research-grade/mutation-report.json
+      - name: Upload mutation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swos-safety-mutation
+          path: artifacts/research-grade/mutation-report.json
+          retention-days: 14
       - name: Run deterministic Prose and autonomous-runtime tests with coverage
         run: |
           python -m coverage erase
