@@ -206,6 +206,17 @@ def validate_constraints(
                     violations.append(
                         f"bundle {bundle_id} statement {statement_index} has an unknown {statement_type}"
                     )
+            elif statement_type == "relation":
+                relation_index = statement.get("index")
+                if (
+                    isinstance(relation_index, bool)
+                    or not isinstance(relation_index, int)
+                    or relation_index < 0
+                    or relation_index >= len(document.relations)
+                ):
+                    violations.append(
+                        f"bundle {bundle_id} statement {statement_index} has an unknown relation index"
+                    )
             elif statement_type not in KNOWN_RELATIONS:
                 violations.append(
                     f"bundle {bundle_id} statement {statement_index} has an unsupported type"

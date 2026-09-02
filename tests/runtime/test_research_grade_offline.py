@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from tools.run_mutation_checks import (
     _run_probe,
@@ -70,7 +71,7 @@ class ResearchGradeOfflineTests(unittest.TestCase):
         self.assertNotIn("SENTINEL", result.stdout + result.stderr)
 
     def test_mutation_probe_environment_is_an_allowlist(self) -> None:
-        with unittest.mock.patch.dict(
+        with mock.patch.dict(
             os.environ,
             {
                 "AWS_SECRET_ACCESS_KEY": "SENTINEL_AWS_KEY",
@@ -102,11 +103,11 @@ class ResearchGradeOfflineTests(unittest.TestCase):
     def test_mutation_success_requires_clean_expected_source(self) -> None:
         mutants = [{"mutant_id": f"m-{index}", "status": "killed"} for index in range(1)]
         with (
-            unittest.mock.patch("tools.run_mutation_checks.MUTANTS", tuple()),
-            unittest.mock.patch(
+            mock.patch("tools.run_mutation_checks.MUTANTS", tuple()),
+            mock.patch(
                 "tools.run_mutation_checks._run_mutations", return_value=([], mutants)
             ),
-            unittest.mock.patch(
+            mock.patch(
                 "tools.run_mutation_checks._source_worktree_clean", return_value=False
             ),
         ):
