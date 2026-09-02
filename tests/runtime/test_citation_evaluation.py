@@ -29,6 +29,7 @@ class CitationEvaluationTests(unittest.TestCase):
                 "successes": 1,
                 "total": 1,
             }
+
         metrics = {
             "direct_support_precision": metric(0.99, lower=0.97),
             "contradiction_recall": metric(1.0),
@@ -38,9 +39,7 @@ class CitationEvaluationTests(unittest.TestCase):
             "selective_coverage": metric(1.0),
             "selective_error": metric(0.0),
             "unsupported_auto_admission": metric(0.0, upper=0.001),
-            "ood_or_unsupported_version_abstention": metric(
-                0.0, lower=0.0, upper=0.0
-            ),
+            "ood_or_unsupported_version_abstention": metric(0.0, lower=0.0, upper=0.0),
         }
         report = _gate_report(
             metrics,
@@ -104,9 +103,7 @@ class CitationEvaluationTests(unittest.TestCase):
 
             model, _ = _load_model(root / "model.json")
             with self.assertRaises(EvaluationBlocked):
-                _load_calibration(
-                    root / "calibration.json", model=model, ontology_version="2.0.0"
-                )
+                _load_calibration(root / "calibration.json", model=model, ontology_version="2.0.0")
 
     def test_malformed_verified_model_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -271,9 +268,7 @@ class CitationEvaluationTests(unittest.TestCase):
             1.0,
             report["metrics"]["ood_or_unsupported_version_abstention"]["value"],
         )
-        self.assertTrue(
-            report["gates"]["gates"]["ood_or_unsupported_version_abstention"]["pass"]
-        )
+        self.assertTrue(report["gates"]["gates"]["ood_or_unsupported_version_abstention"]["pass"])
         self.assertEqual(rows[0]["pair_id"], prediction["pair_id"])
         self.assertEqual(rows[0]["claim"], prediction["input"]["claim"])
         self.assertEqual(rows[0]["exact_quote"], prediction["input"]["exact_quote"])
@@ -288,7 +283,9 @@ class CitationEvaluationTests(unittest.TestCase):
             hashlib.sha256(rows[0]["exact_quote"].encode("utf-8")).hexdigest(),
             prediction["provenance"]["span_digest"],
         )
-        self.assertEqual("CitationSupportClassifier/offline-injected", prediction["provenance"]["backend"])
+        self.assertEqual(
+            "CitationSupportClassifier/offline-injected", prediction["provenance"]["backend"]
+        )
         self.assertTrue(prediction["provenance"]["execution_id"])
 
 

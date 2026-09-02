@@ -129,8 +129,7 @@ def _load_calibration(
             payload["calibration_split_digest"], "calibration_split_digest"
         )
         thresholds = {
-            str(label): float(value)
-            for label, value in dict(payload["thresholds"]).items()
+            str(label): float(value) for label, value in dict(payload["thresholds"]).items()
         }
     except (TypeError, ValueError, KeyError) as exc:
         raise EvaluationBlocked("calibration manifest digest fields are invalid") from exc
@@ -234,7 +233,9 @@ def _prediction_mode(rows: Sequence[Mapping[str, Any]]) -> str:
     has_logits = ["logits" in row for row in rows]
     has_probabilities = ["probabilities" in row for row in rows]
     if any(logit and probability for logit, probability in zip(has_logits, has_probabilities)):
-        raise EvaluationBlocked("each locked-test row must provide logits or probabilities, not both")
+        raise EvaluationBlocked(
+            "each locked-test row must provide logits or probabilities, not both"
+        )
     if len(set(has_logits)) != 1 or len(set(has_probabilities)) != 1:
         raise EvaluationBlocked("locked-test prediction representation must be consistent")
     if has_logits[0]:
@@ -299,12 +300,20 @@ def _f1(precision: float | None, recall: float | None) -> float:
     return 2 * precision * recall / (precision + recall)
 
 
-def _label_statistics(gold: Sequence[str], predicted: Sequence[str | None]) -> dict[str, dict[str, Any]]:
+def _label_statistics(
+    gold: Sequence[str], predicted: Sequence[str | None]
+) -> dict[str, dict[str, Any]]:
     statistics: dict[str, dict[str, Any]] = {}
     for label in LABELS:
-        true_positive = sum(actual == label and guess == label for actual, guess in zip(gold, predicted))
-        false_positive = sum(actual != label and guess == label for actual, guess in zip(gold, predicted))
-        false_negative = sum(actual == label and guess != label for actual, guess in zip(gold, predicted))
+        true_positive = sum(
+            actual == label and guess == label for actual, guess in zip(gold, predicted)
+        )
+        false_positive = sum(
+            actual != label and guess == label for actual, guess in zip(gold, predicted)
+        )
+        false_negative = sum(
+            actual == label and guess != label for actual, guess in zip(gold, predicted)
+        )
         precision = _metric(true_positive, true_positive + false_positive)
         recall = _metric(true_positive, true_positive + false_negative)
         statistics[label] = {
@@ -341,15 +350,15 @@ def _metrics(
     probabilities = [record["probabilities"] for record in records]
     ece = expected_calibration_error(probabilities, gold)
     unsupported_auto_admission = _metric(
-        sum(actual == "not_supported" and guess == "directly_supports" for actual, guess in zip(gold, predicted)),
+        sum(
+            actual == "not_supported" and guess == "directly_supports"
+            for actual, guess in zip(gold, predicted)
+        ),
         sum(actual == "not_supported" for actual in gold),
     )
-    safety_indexes = [
-        index for index, required in enumerate(abstention_required) if required
-    ]
+    safety_indexes = [index for index, required in enumerate(abstention_required) if required]
     safety_abstentions = sum(
-        records[index].get("status") == "abstained"
-        and records[index].get("support_level") is None
+        records[index].get("status") == "abstained" and records[index].get("support_level") is None
         for index in safety_indexes
     )
     metrics = {
@@ -362,9 +371,7 @@ def _metrics(
         "selective_coverage": _metric(len(selected), len(rows)),
         "selective_error": _metric(selected_errors, len(selected)),
         "unsupported_auto_admission": unsupported_auto_admission,
-        "ood_or_unsupported_version_abstention": _metric(
-            safety_abstentions, len(safety_indexes)
-        ),
+        "ood_or_unsupported_version_abstention": _metric(safety_abstentions, len(safety_indexes)),
         "per_label": label_statistics,
     }
 
@@ -445,7 +452,9 @@ def _latency(
     }
     return {
         "sample_count": LATENCY_SAMPLE_SIZE,
-        "sample_pair_digest": canonical_digest([pairs[index].pair_id for index in range(LATENCY_SAMPLE_SIZE)]),
+        "sample_pair_digest": canonical_digest(
+            [pairs[index].pair_id for index in range(LATENCY_SAMPLE_SIZE)]
+        ),
         "sample_input_digest": canonical_digest(
             [pairs[index].to_dict() for index in range(LATENCY_SAMPLE_SIZE)]
         ),
@@ -460,7 +469,9 @@ def _latency(
     }
 
 
-def _gate_report(metrics: Mapping[str, Any], slices: Mapping[str, Any], latency: Mapping[str, Any]) -> dict[str, Any]:
+def _gate_report(
+    metrics: Mapping[str, Any], slices: Mapping[str, Any], latency: Mapping[str, Any]
+) -> dict[str, Any]:
     direct = metrics["direct_support_precision"]
     contradiction = metrics["contradiction_recall"]
     not_supported = metrics["not_supported_recall"]
@@ -529,15 +540,15 @@ def _gate_report(metrics: Mapping[str, Any], slices: Mapping[str, Any], latency:
             "pass": safety["total"] == 0 or value_pass(safety, 0.95),
         },
         "discipline_macro_f1": {
-            "observed_minimum": min(
-                (item["macro_f1"] for item in discipline_values), default=None
-            ),
+            "observed_minimum": min((item["macro_f1"] for item in discipline_values), default=None),
             "required": 0.75,
             "pass": bool(discipline_values)
             and all(item["macro_f1"] >= 0.75 for item in discipline_values),
         },
         "discipline_direct_support_precision": {
-            "observed_minimum": min((item["value"] or 0.0 for item in discipline_direct), default=None),
+            "observed_minimum": min(
+                (item["value"] or 0.0 for item in discipline_direct), default=None
+            ),
             "required": 0.95,
             "pass": bool(discipline_direct)
             and all(value_pass(item, 0.95) for item in discipline_direct),
@@ -573,7 +584,9 @@ def _decorate_decision(
         or record.get("input", {}).get("input_digest") != pair.canonical_input_digest
         or record.get("input_digest") != pair.canonical_input_digest
     ):
-        raise EvaluationBlocked(f"classifier changed immutable input identity for pair {pair.pair_id}")
+        raise EvaluationBlocked(
+            f"classifier changed immutable input identity for pair {pair.pair_id}"
+        )
     record["provenance"] = {
         **dict(record.get("provenance") or {}),
         "code_sha": code_sha,
@@ -618,9 +631,7 @@ def evaluate(
         rows = _read_rows(locked_test_path)
         pairs = [_pair_from_row(row) for row in rows]
         mode = _prediction_mode(rows)
-        abstention_required = [
-            _abstention_required(row, ontology_version) for row in rows
-        ]
+        abstention_required = [_abstention_required(row, ontology_version) for row in rows]
         code_sha = _code_sha()
         locked_digest = canonical_digest(rows)
         model_manifest_digest = canonical_digest(model_payload)
@@ -635,15 +646,18 @@ def evaluate(
                 "ontology_digest": calibration.ontology_digest,
             }
         )
-        execution_id = "citation-eval-" + canonical_digest(
-            {
-                "code_sha": code_sha,
-                "config_digest": config_digest,
-                "locked_digest": locked_digest,
-                "model_manifest_digest": model_manifest_digest,
-                "calibration_manifest_digest": canonical_digest(calibration_payload),
-            }
-        )[:24]
+        execution_id = (
+            "citation-eval-"
+            + canonical_digest(
+                {
+                    "code_sha": code_sha,
+                    "config_digest": config_digest,
+                    "locked_digest": locked_digest,
+                    "model_manifest_digest": model_manifest_digest,
+                    "calibration_manifest_digest": canonical_digest(calibration_payload),
+                }
+            )[:24]
+        )
         execution_timestamp = utc_timestamp()
         classifier = CitationSupportClassifier(
             model=model,
@@ -678,9 +692,7 @@ def evaluate(
             )
             for decision, pair in zip(decisions, pairs)
         ]
-        metrics, slices = _metrics(
-            rows, records, abstention_required=abstention_required
-        )
+        metrics, slices = _metrics(rows, records, abstention_required=abstention_required)
         latency = _latency(
             classifier,
             pairs,
