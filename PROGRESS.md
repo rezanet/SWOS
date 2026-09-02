@@ -5,12 +5,13 @@ quality measurements, not claims about completion of the larger SWOS roadmap.
 
 ## Current exact-head reconciliation — 2026-09-02
 
-`main` and `origin/main` are both at `18ce33bad66bece28b02e84ab7ef8f532a45dacf`.
 The Research Grade implementation PR #58 merged as
 `9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158`; the signed-off PR #59 attestation
-then merged as the current head without changing the tree. The tested source
-candidate was `fc03d2a10db93ccc1011946abe71c3acea45e45d` and the final PR #58
-head was `7a8142c709821fee4b69344e6da0990bb4297053`.
+then merged as `18ce33bad66bece28b02e84ab7ef8f532a45dacf` without changing the
+implementation tree. The queue/progress reconciliation PR #60 was based on
+that exact source head and merged as `c44013b05b6db67490f71a9631b2c745ed7f4111`.
+The tested source candidate was `fc03d2a10db93ccc1011946abe71c3acea45e45d`
+and the final PR #58 head was `7a8142c709821fee4b69344e6da0990bb4297053`.
 
 The frozen feature task authority contains 129 ordered tasks: 118 checked and
 11 open (`T070`, `T073`, `T079`, `T080`, `T093`, `T094`, `T095`, `T111`, and
@@ -24,6 +25,11 @@ but `tools/check_portability_acceptance.py --release` fails closed because the
 six required host/provider PASS records are absent. The committed pre-freeze
 audit-pack verifier also fails closed because its manifest names missing
 `reports/coverage.json`; this is not release evidence.
+
+The post-merge workflows for the queue/progress reconciliation head
+`c44013b05b6db67490f71a9631b2c745ed7f4111` are also green: Research Grade
+compatibility `33608680395`, SWOS CI `33608680407`, SWOS CodeQL `33608680430`,
+and SWOS Engineering Quality `33608680558`.
 
 An independent exact-head review of PR #55 head
 `b8f18e261d3baa8e11749d2ad663ba8bd06e04b1` against base
