@@ -8,18 +8,46 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from swos_runtime.citation_classifier import LABELS
+from swos_runtime.citation_classifier import LABELS, VerifiedModelArtifact
 from swos_runtime.models import canonical_digest
 from tools.evaluate_citation_classifier import (
     EvaluationBlocked,
     _gate_report,
     _load_calibration,
+    _load_dataset_manifest,
     _load_model,
     evaluate,
 )
 
 
 class CitationEvaluationTests(unittest.TestCase):
+    def test_locked_test_is_bound_to_the_frozen_dataset_manifest(self) -> None:
+        rows = [{"pair_id": "pair-1", "claim": "claim", "exact_quote": "quote"}]
+        manifest = {
+            "schema_version": "2.0.0",
+            "status": "frozen",
+            "splits": {"locked_test": {"count": 1, "digest": canonical_digest(rows), "groups": []}},
+            "locked_test_isolation": True,
+        }
+        model = VerifiedModelArtifact(
+            model_id="citation-model-test",
+            model_digest="a" * 64,
+            dataset_manifest_digest=canonical_digest(manifest),
+            verified=True,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            manifest_path = Path(directory) / "manifest.json"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            _load_dataset_manifest(manifest_path, model=model, rows=rows)
+
+            with self.assertRaises(EvaluationBlocked):
+                _load_dataset_manifest(
+                    manifest_path,
+                    model=model,
+                    rows=[{"pair_id": "pair-2", "claim": "claim", "exact_quote": "quote"}],
+                )
+
     def test_direct_precision_gate_requires_confidence_bound(self) -> None:
         def metric(value: float, lower: float = 0.99, upper: float = 1.0) -> dict[str, float]:
             return {
@@ -150,7 +178,6 @@ class CitationEvaluationTests(unittest.TestCase):
             self.assertFalse(output.exists())
 
     def test_evaluation_emits_raw_decisions_metrics_and_packaged_latency(self) -> None:
-        dataset_digest = "d" * 64
         ontology_digest = "e" * 64
         model_bytes = b"verified citation model artifact"
         model_digest = hashlib.sha256(model_bytes).hexdigest()
@@ -185,6 +212,20 @@ class CitationEvaluationTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            dataset_manifest = {
+                "schema_version": "2.0.0",
+                "status": "frozen",
+                "splits": {
+                    "locked_test": {
+                        "count": len(rows),
+                        "digest": canonical_digest(rows),
+                        "groups": [],
+                    }
+                },
+                "locked_test_isolation": True,
+            }
+            dataset_digest = canonical_digest(dataset_manifest)
+            (root / "manifest.json").write_text(json.dumps(dataset_manifest), encoding="utf-8")
             (root / "model.bin").write_bytes(model_bytes)
             (root / "model.json").write_text(
                 json.dumps(

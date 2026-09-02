@@ -189,6 +189,42 @@ def _read_rows(path: Path | str) -> list[dict[str, Any]]:
     return rows
 
 
+def _load_dataset_manifest(
+    path: Path | str,
+    *,
+    model: VerifiedModelArtifact,
+    rows: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    payload = _load_json(path)
+    if not isinstance(payload, Mapping):
+        raise EvaluationBlocked("dataset manifest must be an object")
+    if payload.get("status") != "frozen":
+        raise EvaluationBlocked("dataset manifest must be a frozen release")
+    try:
+        manifest_digest = canonical_digest(payload)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise EvaluationBlocked("dataset manifest cannot be canonicalized") from exc
+    if manifest_digest != model.dataset_manifest_digest:
+        raise EvaluationBlocked("dataset manifest digest does not match the verified model")
+    if payload.get("locked_test_isolation") is not True:
+        raise EvaluationBlocked("dataset manifest must prove locked-test isolation")
+    splits = payload.get("splits")
+    locked = splits.get("locked_test") if isinstance(splits, Mapping) else None
+    if not isinstance(locked, Mapping):
+        raise EvaluationBlocked("dataset manifest lacks a locked_test split record")
+    count = locked.get("count")
+    if isinstance(count, bool) or not isinstance(count, int) or count != len(rows):
+        raise EvaluationBlocked("locked-test count does not match its dataset manifest")
+    try:
+        expected_digest = _require_sha256(locked.get("digest"), "locked_test split digest")
+        actual_digest = canonical_digest(list(rows))
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise EvaluationBlocked("locked-test rows cannot be canonicalized") from exc
+    if expected_digest != actual_digest:
+        raise EvaluationBlocked("locked-test rows do not match their dataset manifest")
+    return dict(payload)
+
+
 def _row_label(row: Mapping[str, Any]) -> str:
     label = row.get("label")
     adjudication = row.get("adjudication")
@@ -629,6 +665,9 @@ def evaluate(
             calibration_path, model=model, ontology_version=ontology_version
         )
         rows = _read_rows(locked_test_path)
+        _load_dataset_manifest(
+            Path(locked_test_path).with_name("manifest.json"), model=model, rows=rows
+        )
         pairs = [_pair_from_row(row) for row in rows]
         mode = _prediction_mode(rows)
         abstention_required = [_abstention_required(row, ontology_version) for row in rows]
