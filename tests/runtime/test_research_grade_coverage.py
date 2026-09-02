@@ -294,9 +294,9 @@ class ResearchGradeCoverageTests(unittest.TestCase):
         )
 
         baseline = {
-            "metric": 0.5,
+            "cross_modal_f1": 0.5,
             "source_sha": "s",
-            "case_ids": ["c"],
+            "case_ids": ["c", "d"],
             "provider": "p",
             "model": "m",
             "config_digest": "c",
@@ -304,11 +304,21 @@ class ResearchGradeCoverageTests(unittest.TestCase):
             "seed": 1,
             "draw_digest": "d",
             "artifact_digest": "a",
+            "evaluation_manifest_digest": "manifest",
+            "epg_digest": "g" * 64,
+            "sdl_digest": "h" * 64,
+            "case_results": [
+                {"case_id": "c", "metrics": {"cross_modal_f1": 0.5}, "human_reviewed": True},
+                {"case_id": "d", "metrics": {"cross_modal_f1": 0.5}, "human_reviewed": True},
+            ],
         }
         candidate = {
             **baseline,
-            "metric": 0.7,
-            "lower_95_ci": 0.2,
+            "cross_modal_f1": 0.7,
+            "case_results": [
+                {"case_id": "c", "metrics": {"cross_modal_f1": 0.7}, "human_reviewed": True},
+                {"case_id": "d", "metrics": {"cross_modal_f1": 0.7}, "human_reviewed": True},
+            ],
             "live_exact_head": True,
             "human_quorum": True,
             "role_separation": True,
@@ -323,10 +333,19 @@ class ResearchGradeCoverageTests(unittest.TestCase):
         enabled = commit_promotion(
             assessment,
             {
+                "approval_id": "promotion-approval",
                 "disposition": "approved",
                 "approver_id": "owner",
+                "approver_role": "promotion_owner",
+                "approved_at": assessment.created_at,
                 "expires_at": "2099-01-01T00:00:00+00:00",
                 "assessment_digest": canonical_digest(assessment.to_dict()),
+                "candidate_digest": assessment.candidate_digest,
+                "scope_digest": assessment.evidence["scope_digest"],
+                "operation_digest": assessment.evidence["operation_digest"],
+                "epg_digest": assessment.evidence["epg_digest"],
+                "sdl_digest": assessment.evidence["sdl_digest"],
+                "policy_digest": assessment.evidence["policy_digest"],
             },
         )
         self.assertTrue(enabled.enabled)

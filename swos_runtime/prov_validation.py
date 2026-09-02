@@ -32,6 +32,7 @@ class CanonicalFingerprint:
     statement_count: int
     bundle_count: int
     resource_limits: Mapping[str, Any] = field(default_factory=dict)
+    rdfc10_representation: str = "internal-n-quads"
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -44,6 +45,7 @@ class CanonicalFingerprint:
             "statement_count": self.statement_count,
             "bundle_count": self.bundle_count,
             "resource_limits": dict(self.resource_limits),
+            "rdfc10_representation": self.rdfc10_representation,
         }
 
 
@@ -180,6 +182,7 @@ def canonical_fingerprint(
             "max_depth": limits.max_depth,
             "timeout_seconds": limits.timeout_seconds,
         },
+        rdfc10_representation="internal-n-quads",
     )
 
 

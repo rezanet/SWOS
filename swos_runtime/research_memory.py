@@ -22,6 +22,19 @@ from .models import (
 )
 
 RPM_VERSION = "2.0.0"
+MEMORY_PROJECTION_STATUSES = frozenset(
+    {"active", "contradicted", "corrected", "superseded", "expired", "deleted"}
+)
+CONTRADICTION_DISPOSITIONS = frozenset(
+    {
+        "open_contradiction",
+        "under_review",
+        "resolved_by_evidence",
+        "resolved_by_scope",
+        "parked",
+        "retired",
+    }
+)
 
 
 def _timestamp(value: datetime | str | None = None) -> str:
@@ -337,10 +350,42 @@ class RPMOperation:
 
     @classmethod
     def contradiction_resolve(
-        cls, scope: ResearchScope, item_id: str, *, resolution: str
+        cls,
+        scope: ResearchScope,
+        item_id: str,
+        *,
+        disposition: str | None = None,
+        scoped_positions: Any = (),
+        resolution: str | None = None,
     ) -> "RPMOperation":
+        # ``resolution`` is retained as a compatibility input for already
+        # serialized callers.  It is never persisted as a projection status.
+        selected = disposition if disposition is not None else resolution
+        if selected == "active":
+            selected = "resolved_by_evidence"
+        if selected not in CONTRADICTION_DISPOSITIONS:
+            raise ValueError("contradiction disposition is invalid")
+        if isinstance(scoped_positions, Mapping):
+            positions = [dict(scoped_positions)]
+        else:
+            positions = [dict(position) for position in (scoped_positions or ())]
+        if selected == "resolved_by_scope":
+            if not positions:
+                raise ValueError("resolved_by_scope requires bounded scoped positions")
+            for position in positions:
+                if not str(position.get("scope") or "").strip():
+                    raise ValueError("resolved_by_scope positions require a scope")
+                assumptions = position.get("assumptions")
+                if not isinstance(assumptions, (list, tuple)) or not assumptions:
+                    raise ValueError("resolved_by_scope positions require assumptions")
         return cls._new(
-            scope, "contradiction_resolved", {"resolution": resolution}, target_item_id=item_id
+            scope,
+            "contradiction_resolved",
+            {
+                "disposition": selected,
+                "scoped_positions": positions,
+            },
+            target_item_id=item_id,
         )
 
     @classmethod
@@ -374,6 +419,8 @@ class HumanApproval:
     rationale: str
     epg_digest: str | None = None
     schema_version: str = RPM_VERSION
+    scope_digest: str | None = None
+    operation_digest: str | None = None
 
     def __post_init__(self) -> None:
         for name in ("approval_id", "approver", "role", "assessment_digest", "rationale"):
@@ -403,6 +450,8 @@ class HumanApproval:
             disposition="approved",
             rationale="approved for governed operation",
             epg_digest=assessment.epg_digest,
+            scope_digest=canonical_digest(assessment.scope.to_dict()),
+            operation_digest=assessment.operation_digest,
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -461,6 +510,7 @@ class MemoryQuery:
     statuses: tuple[str, ...] = ("active",)
     include_expired: bool = False
     schema_version: str = RPM_VERSION
+    position_scope: str | None = None
 
     def __post_init__(self) -> None:
         if self.schema_version != RPM_VERSION:
@@ -473,6 +523,7 @@ class MemoryQuery:
             "statuses": list(self.statuses),
             "include_expired": self.include_expired,
             "schema_version": self.schema_version,
+            "position_scope": self.position_scope,
         }
 
 
@@ -796,7 +847,17 @@ class ResearchMemoryService:
         self.store.save_assessment(assessment.to_dict())
         return assessment
 
-    def _validate_approval(self, assessment: MemoryAssessment, approval: HumanApproval) -> None:
+    def _validate_approval(
+        self,
+        assessment: MemoryAssessment,
+        approval: HumanApproval | None,
+        *,
+        commit_at: datetime,
+    ) -> None:
+        if not isinstance(approval, HumanApproval):
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "a valid bound approval is required"
+            )
         if approval.disposition != "approved":
             raise SWOSRuntimeError(
                 ErrorCode.APPROVAL_MISMATCH, "approval disposition is not approved"
@@ -805,13 +866,34 @@ class ResearchMemoryService:
             raise SWOSRuntimeError(
                 ErrorCode.APPROVAL_MISMATCH, "approval is not bound to assessment digest"
             )
-        if assessment.candidate_digest and approval.candidate_digest != assessment.candidate_digest:
+        if approval.candidate_digest != assessment.candidate_digest:
             raise SWOSRuntimeError(
                 ErrorCode.APPROVAL_MISMATCH, "approval is not bound to candidate digest"
             )
-        if assessment.sdl_decision_id and approval.sdl_decision_id != assessment.sdl_decision_id:
+        if approval.epg_digest != assessment.epg_digest:
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval is not bound to EPG digest"
+            )
+        if approval.sdl_decision_id != assessment.sdl_decision_id:
             raise SWOSRuntimeError(
                 ErrorCode.APPROVAL_MISMATCH, "approval SDL decision does not match assessment"
+            )
+        expected_scope_digest = canonical_digest(assessment.scope.to_dict())
+        if approval.scope_digest != expected_scope_digest:
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval is not bound to scope digest"
+            )
+        if approval.operation_digest != assessment.operation_digest:
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval is not bound to operation digest"
+            )
+        if _dt(approval.approved_at) < _dt(assessment.assessed_at):
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval is stale for the assessment"
+            )
+        if _dt(approval.approved_at) > commit_at:
+            raise SWOSRuntimeError(
+                ErrorCode.APPROVAL_MISMATCH, "approval is dated after the commit time"
             )
 
     def commit_operation(
@@ -819,7 +901,7 @@ class ResearchMemoryService:
         scope: ResearchScope,
         *,
         assessment_id: str,
-        approval: HumanApproval,
+        approval: HumanApproval | None,
         as_of: datetime | str | None = None,
     ) -> RPMResult:
         self._ensure_scope(scope)
@@ -840,7 +922,7 @@ class ResearchMemoryService:
             raise SWOSRuntimeError(ErrorCode.STALE_ASSESSMENT, "assessment policy digest is stale")
         if assessment.status != "allow":
             raise SWOSRuntimeError(ErrorCode.POLICY_DENIED, "; ".join(assessment.denial_reasons))
-        self._validate_approval(assessment, approval)
+        self._validate_approval(assessment, approval, commit_at=now)
         operation = self._operation_from_dict(assessment.operation, scope)
         current_head = self.store.chain_head(scope)
         if current_head != assessment.target_head:
@@ -916,6 +998,18 @@ class ResearchMemoryService:
                 "epg_node_ids": list(assessment.epg_node_ids),
             }
         )
+        if operation.operation_type == "contradiction_resolved":
+            payload["contradiction_resolution"] = {
+                "disposition": operation.payload.get("disposition"),
+                "scoped_positions": list(operation.payload.get("scoped_positions", [])),
+                "provenance": {
+                    "assessment_id": assessment.assessment_id,
+                    "assessment_digest": assessment.digest,
+                    "approval_id": approval.approval_id,
+                    "epg_digest": assessment.epg_digest,
+                    "sdl_digest": assessment.sdl_digest,
+                },
+            }
         if operation.operation_type in {"correct", "supersede"}:
             payload["successor_id"] = payload.get("candidate", {}).get("item_id")
         return payload
@@ -928,7 +1022,7 @@ class ResearchMemoryService:
             "correct": "corrected",
             "supersede": "superseded",
             "contradiction_opened": "contradicted",
-            "contradiction_resolved": operation.payload.get("resolution", "active"),
+            "contradiction_resolved": "active",
             "expire": "expired",
             "delete": "deleted",
         }.get(operation.operation_type, "active")
@@ -986,6 +1080,22 @@ class ResearchMemoryService:
                 continue
             if query.category and row.get("category") != query.category:
                 continue
+            contradiction_resolution = row.get("contradiction_resolution")
+            if (
+                isinstance(contradiction_resolution, Mapping)
+                and contradiction_resolution.get("disposition") == "resolved_by_scope"
+            ):
+                scoped_positions = contradiction_resolution.get("scoped_positions", ())
+                allowed_scopes = {
+                    str(position.get("scope"))
+                    for position in scoped_positions
+                    if isinstance(position, Mapping) and position.get("scope")
+                }
+                if not query.position_scope or query.position_scope not in allowed_scopes:
+                    exclusions["scoped_contradiction"] = (
+                        exclusions.get("scoped_contradiction", 0) + 1
+                    )
+                    continue
             if (
                 _dt(str(row["expiry"])) <= _dt(when)
                 and not query.include_expired

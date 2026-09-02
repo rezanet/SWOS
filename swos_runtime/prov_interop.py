@@ -19,7 +19,12 @@ from .prov_model import (
 )
 
 ProvFormat = str
-SUPPORTED_FORMATS = ("prov-json", "prov-n", "prov-o-trig")
+# These are the only public Research Grade interchange formats.  RDFC-1.0
+# canonical N-Quads is an internal representation used for fingerprinting and
+# is intentionally not a public parse/serialize option.
+PUBLIC_PROV_FORMATS = ("prov-json", "prov-n", "prov-o-trig")
+SUPPORTED_FORMATS = PUBLIC_PROV_FORMATS
+INTERNAL_CANONICAL_PROV_FORMAT = "n-quads"
 
 
 def epg_to_prov(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:

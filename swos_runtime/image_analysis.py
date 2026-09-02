@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import math
 import os
+import random
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Mapping, Protocol, Sequence
@@ -14,6 +16,8 @@ from .models import canonical_digest, utc_timestamp
 
 ANALYSIS_STATUSES = frozenset({"complete", "partial", "insufficient", "denied", "error"})
 DETERMINISTIC_TIMESTAMP = "1970-01-01T00:00:00+00:00"
+PROMOTION_BOOTSTRAP_RESAMPLES = 10_000
+CASE_LEVEL_PROMOTION_METRICS = frozenset({"cross_modal_f1", "discipline_weighted_score"})
 
 
 def _asset_digest(asset: Any) -> str:
@@ -25,11 +29,16 @@ def _asset_digest(asset: Any) -> str:
 
 
 def _mapping(value: Any) -> dict[str, Any]:
+    if value is None:
+        return {}
     if isinstance(value, Mapping):
         return dict(value)
     if hasattr(value, "to_dict"):
         return dict(value.to_dict())
-    return dict(vars(value))
+    try:
+        return dict(vars(value))
+    except TypeError:
+        return {}
 
 
 @dataclass(frozen=True)
@@ -831,6 +840,36 @@ class CapabilityPromotionDecision:
         }
 
 
+def _promotion_scope_digest(capability: str, pack: str, stage: str) -> str:
+    return canonical_digest({"capability": capability, "pack": pack, "stage": stage})
+
+
+def _promotion_operation_digest(capability: str, pack: str, stage: str) -> str:
+    return canonical_digest(
+        {
+            "operation": "promotion_commit",
+            "capability": capability,
+            "pack": pack,
+            "stage": stage,
+        }
+    )
+
+
+def _parse_promotion_timestamp(value: Any) -> datetime | None:
+    if isinstance(value, datetime):
+        parsed = value
+    elif isinstance(value, str) and value:
+        try:
+            parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    else:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
 def _metric(value: Any, default: float = 0.0) -> float:
     if isinstance(value, Mapping):
         for key in ("value", "score", "metric"):
@@ -841,6 +880,216 @@ def _metric(value: Any, default: float = 0.0) -> float:
         return float(value)
     except (TypeError, ValueError):
         return default
+
+
+def _finite_metric(value: Any) -> float | None:
+    try:
+        result = float(value)
+    except (TypeError, ValueError):
+        return None
+    return result if math.isfinite(result) else None
+
+
+def _safe_canonical_digest(value: Any) -> str:
+    """Digest invalid evidence without allowing non-finite JSON to escape."""
+
+    try:
+        return canonical_digest(value)
+    except (TypeError, ValueError, OverflowError):
+
+        def normalize(item: Any) -> Any:
+            if isinstance(item, float) and not math.isfinite(item):
+                return repr(item)
+            if isinstance(item, Mapping):
+                return {str(key): normalize(child) for key, child in item.items()}
+            if isinstance(item, Sequence) and not isinstance(item, (str, bytes, bytearray)):
+                return [normalize(child) for child in item]
+            return item
+
+        return canonical_digest(normalize(value))
+
+
+def _promotion_metric_id(
+    capability: str,
+    pack: str,
+    stage: str,
+    baseline: Mapping[str, Any],
+    candidate: Mapping[str, Any],
+    policy: Mapping[str, Any],
+) -> str:
+    description = " ".join((capability, pack, stage)).lower().replace("-", "_")
+    if "specialist" in description or "routing" in description:
+        return "discipline_weighted_score"
+    if any(token in description for token in ("multimodal", "multi_modal", "multi_view", "image")):
+        return "cross_modal_f1"
+    explicit = (
+        policy.get("primary_metric")
+        or candidate.get("primary_metric")
+        or baseline.get("primary_metric")
+        or candidate.get("metric_id")
+        or baseline.get("metric_id")
+    )
+    if explicit:
+        return str(explicit)
+    return "independent"
+
+
+def _metric_value(value: Any, metric_id: str) -> Any:
+    if isinstance(value, Mapping):
+        if metric_id != "independent":
+            if metric_id in value:
+                return value[metric_id]
+            metrics = value.get("metrics")
+            if isinstance(metrics, Mapping) and metric_id in metrics:
+                return metrics[metric_id]
+            return None
+        metrics = value.get("metrics")
+        if isinstance(metrics, Mapping) and "primary" in metrics:
+            return metrics["primary"]
+        for key in ("metric", "score", "value"):
+            if key in value:
+                return value[key]
+        return None
+    return value
+
+
+def _scalar_promotion_metric(data: Mapping[str, Any], metric_id: str) -> float | None:
+    value = _metric_value(data, metric_id)
+    return _finite_metric(_metric(value, float("nan")))
+
+
+def _case_records(data: Mapping[str, Any]) -> tuple[dict[str, Any], ...]:
+    for key in ("case_results", "case_scores", "cases", "results"):
+        if key not in data:
+            continue
+        raw = data[key]
+        records: list[dict[str, Any]] = []
+        if isinstance(raw, Mapping):
+            for case_id, value in raw.items():
+                record = dict(value) if isinstance(value, Mapping) else {"score": value}
+                record.setdefault("case_id", str(case_id))
+                records.append(record)
+        elif isinstance(raw, Sequence) and not isinstance(raw, (str, bytes, bytearray)):
+            for value in raw:
+                if isinstance(value, Mapping):
+                    records.append(dict(value))
+        return tuple(records)
+    return ()
+
+
+def _case_ids(data: Mapping[str, Any], records: Sequence[Mapping[str, Any]]) -> tuple[str, ...]:
+    declared = data.get("case_ids")
+    if declared is not None:
+        if isinstance(declared, (str, bytes, bytearray)):
+            return ()
+        return tuple(str(value) for value in declared)
+    return tuple(str(record.get("case_id") or "") for record in records)
+
+
+def _case_has_human_truth(data: Mapping[str, Any], record: Mapping[str, Any], case_id: str) -> bool:
+    for key in ("human_truth", "gold", "truth", "reference", "reviewer_score"):
+        if key in record and record[key] is not None:
+            return True
+    for key in ("human_review", "human_reviewed"):
+        if key in record:
+            return bool(record[key])
+    if str(record.get("review_status") or "").lower() in {"reviewed", "approved", "adjudicated"}:
+        return True
+    for key in ("human_truth", "human_review", "reviewed_case_ids"):
+        value = data.get(key)
+        if isinstance(value, Mapping) and case_id in value:
+            return value[case_id] is not None
+        if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+            if case_id in {str(item) for item in value}:
+                return True
+    return False
+
+
+def _case_level_scores(
+    data: Mapping[str, Any], metric_id: str
+) -> tuple[tuple[str, ...], tuple[float, ...], tuple[str, ...], bool]:
+    has_case_data = any(key in data for key in ("case_results", "case_scores", "cases", "results"))
+    if not has_case_data:
+        if "case_ids" in data:
+            return (), (), ("case_results_missing",), True
+        return (), (), (), False
+    records = _case_records(data)
+    declared_ids = _case_ids(data, records)
+    if not declared_ids or len(set(declared_ids)) != len(declared_ids):
+        return (), (), ("case_ids_missing_or_duplicate",), True
+    by_id: dict[str, Mapping[str, Any]] = {}
+    for record in records:
+        case_id = str(record.get("case_id") or "")
+        if not case_id or case_id in by_id:
+            return (), (), ("case_results_missing_or_duplicate",), True
+        by_id[case_id] = record
+    if set(by_id) != set(declared_ids):
+        return (), (), ("case_results_denominator_mismatch",), True
+    scores: list[float] = []
+    for case_id in declared_ids:
+        record = by_id[case_id]
+        if not _case_has_human_truth(data, record, case_id):
+            return (), (), (f"human_truth_missing:{case_id}",), True
+        raw_draws = record.get("draws", record.get("repeated_draws"))
+        if raw_draws is None:
+            raw_value = _metric_value(record, metric_id)
+            raw_draws = (
+                raw_value
+                if isinstance(raw_value, Sequence)
+                and not isinstance(raw_value, (str, bytes, bytearray))
+                else [raw_value]
+            )
+        if isinstance(raw_draws, (str, bytes, bytearray)) or not isinstance(raw_draws, Sequence):
+            raw_draws = [raw_draws]
+        draws = [
+            _finite_metric(_metric(_metric_value(draw, metric_id), float("nan")))
+            for draw in raw_draws
+        ]
+        if not draws or any(draw is None for draw in draws):
+            return (), (), (f"case_score_missing_or_nonfinite:{case_id}",), True
+        scores.append(sum(draw for draw in draws if draw is not None) / len(draws))
+    if len(scores) < 2:
+        return (), (), ("insufficient_case_count",), True
+    return tuple(declared_ids), tuple(scores), (), True
+
+
+def _evaluation_manifest_digest(data: Mapping[str, Any]) -> str | None:
+    for key in ("evaluation_manifest_digest", "eval_manifest_digest", "manifest_digest"):
+        value = data.get(key)
+        if value:
+            return str(value)
+    for key in ("evaluation_manifest", "eval_manifest"):
+        value = data.get(key)
+        if value is not None:
+            return canonical_digest(value)
+    return None
+
+
+def _paired_bootstrap(
+    differences: Sequence[float], manifest_digest: str
+) -> tuple[float, float, float, int]:
+    try:
+        seed = int(str(manifest_digest)[:16], 16)
+    except ValueError:
+        seed = int(canonical_digest(manifest_digest)[:16], 16)
+    randomizer = random.Random(seed)
+    count = len(differences)
+    means: list[float] = []
+    for _ in range(PROMOTION_BOOTSTRAP_RESAMPLES):
+        total = sum(differences[randomizer.randrange(count)] for _ in range(count))
+        means.append(total / count)
+    means.sort()
+    position = (len(means) - 1) * 0.025
+    lower_index = int(position)
+    upper_index = min(lower_index + 1, len(means) - 1)
+    fraction = position - lower_index
+    lower = means[lower_index] + (means[upper_index] - means[lower_index]) * fraction
+    upper_position = (len(means) - 1) * 0.975
+    upper_index = int(upper_position)
+    upper_next_index = min(upper_index + 1, len(means) - 1)
+    upper_fraction = upper_position - upper_index
+    upper = means[upper_index] + (means[upper_next_index] - means[upper_index]) * upper_fraction
+    return sum(differences) / count, lower, upper, seed
 
 
 def assess_promotion(
@@ -857,26 +1106,86 @@ def assess_promotion(
     policy = dict(policy or {})
     minimum = float(policy.get("minimum_improvement", 0.08))
     lower_minimum = float(policy.get("lower_confidence_bound_minimum", 0.0))
-    baseline_metric = _metric(
-        baseline_data.get(
-            "metric",
-            baseline_data.get(
-                "score", (baseline_data.get("metrics") or {}).get("cross_modal_f1", 0.0)
-            ),
+    primary_metric = _promotion_metric_id(
+        capability, pack, stage, baseline_data, candidate_data, policy
+    )
+    baseline_metric = _scalar_promotion_metric(baseline_data, primary_metric)
+    candidate_metric = _scalar_promotion_metric(candidate_data, primary_metric)
+    evaluation_not_run: list[str] = []
+    baseline_case_ids, baseline_case_scores, baseline_case_reasons, baseline_has_cases = (
+        _case_level_scores(baseline_data, primary_metric)
+    )
+    candidate_case_ids, candidate_case_scores, candidate_case_reasons, candidate_has_cases = (
+        _case_level_scores(candidate_data, primary_metric)
+    )
+    case_level_required = primary_metric in CASE_LEVEL_PROMOTION_METRICS
+    case_level = case_level_required or baseline_has_cases or candidate_has_cases
+    case_id_digest = ""
+    bootstrap_seed: int | None = None
+    upper_confidence_bound: float | None = None
+    case_differences: list[float] = []
+    if case_level:
+        if not baseline_has_cases or not candidate_has_cases:
+            evaluation_not_run.append("case_level_pair_missing")
+            if not baseline_has_cases:
+                evaluation_not_run.append("case_results_missing")
+            if not candidate_has_cases:
+                evaluation_not_run.append("case_results_missing")
+        evaluation_not_run.extend(baseline_case_reasons)
+        evaluation_not_run.extend(candidate_case_reasons)
+        if not evaluation_not_run and set(baseline_case_ids) != set(candidate_case_ids):
+            evaluation_not_run.append("case_results_denominator_mismatch")
+        if not baseline_data.get("draw_digest") or not candidate_data.get("draw_digest"):
+            evaluation_not_run.append("draw_digest_missing")
+        manifest_digest = _evaluation_manifest_digest(candidate_data)
+        baseline_manifest_digest = _evaluation_manifest_digest(baseline_data)
+        if manifest_digest is None or baseline_manifest_digest is None:
+            evaluation_not_run.append("evaluation_manifest_digest_missing")
+        elif manifest_digest != baseline_manifest_digest:
+            evaluation_not_run.append("paired_evidence_mismatch:evaluation_manifest_digest")
+        if not evaluation_not_run:
+            ordered_case_ids = tuple(sorted(baseline_case_ids))
+            baseline_by_id = dict(zip(baseline_case_ids, baseline_case_scores))
+            candidate_by_id = dict(zip(candidate_case_ids, candidate_case_scores))
+            baseline_case_ids = ordered_case_ids
+            candidate_case_ids = ordered_case_ids
+            baseline_case_scores = tuple(baseline_by_id[case_id] for case_id in ordered_case_ids)
+            candidate_case_scores = tuple(candidate_by_id[case_id] for case_id in ordered_case_ids)
+            case_id_digest = canonical_digest(ordered_case_ids)
+            baseline_metric = sum(baseline_case_scores) / len(baseline_case_scores)
+            candidate_metric = sum(candidate_case_scores) / len(candidate_case_scores)
+            case_differences = [
+                candidate_score - baseline_score
+                for baseline_score, candidate_score in zip(
+                    baseline_case_scores, candidate_case_scores
+                )
+            ]
+            improvement, lower, upper_confidence_bound, bootstrap_seed = _paired_bootstrap(
+                case_differences, manifest_digest or ""
+            )
+        else:
+            improvement = 0.0
+            lower = -1.0
+            baseline_metric = baseline_metric if baseline_metric is not None else 0.0
+            candidate_metric = candidate_metric if candidate_metric is not None else 0.0
+    else:
+        if baseline_metric is None or candidate_metric is None:
+            evaluation_not_run.append("primary_metric_missing_or_nonfinite")
+            baseline_metric = baseline_metric if baseline_metric is not None else 0.0
+            candidate_metric = candidate_metric if candidate_metric is not None else 0.0
+        improvement = candidate_metric - baseline_metric
+        lower = _finite_metric(
+            candidate_data.get("lower_95_ci", candidate_data.get("lower_confidence_bound", -1.0))
         )
-    )
-    candidate_metric = _metric(
-        candidate_data.get(
-            "metric",
-            candidate_data.get(
-                "score", (candidate_data.get("metrics") or {}).get("cross_modal_f1", 0.0)
-            ),
+        if lower is None:
+            evaluation_not_run.append("lower_confidence_bound_missing_or_nonfinite")
+            lower = -1.0
+        upper_confidence_bound = _finite_metric(
+            candidate_data.get("upper_95_ci", candidate_data.get("upper_confidence_bound"))
         )
-    )
-    improvement = candidate_metric - baseline_metric
-    lower = _metric(
-        candidate_data.get("lower_95_ci", candidate_data.get("lower_confidence_bound", -1.0)), -1.0
-    )
+        case_ids = _case_ids(candidate_data, ())
+        case_id_digest = canonical_digest(sorted(case_ids)) if case_ids else ""
+        manifest_digest = _evaluation_manifest_digest(candidate_data)
     reasons: list[str] = []
     if baseline_data.get("source_sha") != candidate_data.get("source_sha"):
         reasons.append("exact_head_mismatch")
@@ -890,8 +1199,21 @@ def assess_promotion(
         "draw_digest",
         "artifact_digest",
     ):
-        if baseline_data.get(key) != candidate_data.get(key):
+        if key == "case_ids" and case_level:
+            baseline_case_ids_for_pair = set(_case_ids(baseline_data, _case_records(baseline_data)))
+            candidate_case_ids_for_pair = set(
+                _case_ids(candidate_data, _case_records(candidate_data))
+            )
+            if baseline_case_ids_for_pair != candidate_case_ids_for_pair:
+                reasons.append(f"paired_evidence_mismatch:{key}")
+        elif baseline_data.get(key) != candidate_data.get(key):
             reasons.append(f"paired_evidence_mismatch:{key}")
+    for key in ("evaluation_manifest_digest", "eval_manifest_digest", "manifest_digest"):
+        if baseline_data.get(key) is not None or candidate_data.get(key) is not None:
+            if baseline_data.get(key) != candidate_data.get(key):
+                reasons.append(f"paired_evidence_mismatch:{key}")
+    if evaluation_not_run:
+        reasons.append("evaluation_not_run")
     if improvement < minimum:
         reasons.append("improvement_below_threshold")
     if lower <= lower_minimum:
@@ -918,6 +1240,39 @@ def assess_promotion(
                 reasons.append("candidate_evidence_expired")
         except ValueError:
             reasons.append("candidate_evidence_expiry_invalid")
+    blocking_metrics = candidate_data.get("blocking_metrics")
+    baseline_blocking_metrics = baseline_data.get("blocking_metrics")
+    if isinstance(blocking_metrics, Mapping) or isinstance(baseline_blocking_metrics, Mapping):
+        candidate_blocking = (
+            dict(blocking_metrics or {}) if isinstance(blocking_metrics, Mapping) else {}
+        )
+        baseline_blocking = (
+            dict(baseline_blocking_metrics or {})
+            if isinstance(baseline_blocking_metrics, Mapping)
+            else {}
+        )
+        if set(candidate_blocking) != set(baseline_blocking):
+            reasons.append("blocking_metric_set_mismatch")
+        for metric_name in set(candidate_blocking) | set(baseline_blocking):
+            if (
+                _finite_metric(candidate_blocking.get(metric_name)) is None
+                or _finite_metric(baseline_blocking.get(metric_name)) is None
+            ):
+                evaluation_not_run.append(f"blocking_metric_not_run:{metric_name}")
+        minimums = policy.get("blocking_metric_minimums", {})
+        if isinstance(minimums, Mapping):
+            for metric_name, threshold in minimums.items():
+                value = _finite_metric(candidate_blocking.get(metric_name))
+                if value is None:
+                    reasons.append(f"blocking_metric_not_run:{metric_name}")
+                elif value < float(threshold):
+                    reasons.append(f"blocking_metric_below_threshold:{metric_name}")
+    manifest_digest = _evaluation_manifest_digest(candidate_data)
+    if evaluation_not_run and "evaluation_not_run" not in reasons:
+        reasons.append("evaluation_not_run")
+    evaluation_status = "not_run" if evaluation_not_run else "evaluated"
+    promotion_scope_digest = _promotion_scope_digest(capability, pack, stage)
+    promotion_operation_digest = _promotion_operation_digest(capability, pack, stage)
     return PromotionAssessment(
         capability,
         pack,
@@ -928,14 +1283,47 @@ def assess_promotion(
         improvement,
         lower,
         str(candidate_data.get("source_sha") or ""),
-        canonical_digest(baseline_data),
-        canonical_digest(candidate_data),
+        _safe_canonical_digest(baseline_data),
+        _safe_canonical_digest(candidate_data),
         {
+            "primary_metric": primary_metric,
+            "evaluation_status": evaluation_status,
+            "case_level_evaluation": case_level,
+            "case_count": len(case_differences)
+            if case_level
+            else len(_case_ids(candidate_data, ())),
+            "case_id_digest": case_id_digest,
+            "case_differences": list(case_differences),
+            "per_case_scores": [
+                {
+                    "case_id": case_id,
+                    "baseline": baseline_score,
+                    "candidate": candidate_score,
+                    "difference": candidate_score - baseline_score,
+                }
+                for case_id, baseline_score, candidate_score in zip(
+                    baseline_case_ids, baseline_case_scores, candidate_case_scores
+                )
+            ],
+            "evaluation_manifest_digest": manifest_digest,
+            "bootstrap_resamples": PROMOTION_BOOTSTRAP_RESAMPLES if case_level else 0,
+            "bootstrap_seed": bootstrap_seed,
+            "confidence_interval": {
+                "lower": lower,
+                "upper": upper_confidence_bound,
+                "method": "paired_case_bootstrap_percentile_95",
+            },
+            "upper_confidence_bound": upper_confidence_bound,
             "minimum_improvement": minimum,
             "lower_confidence_bound_minimum": lower_minimum,
             "baseline_metric": baseline_metric,
             "candidate_metric": candidate_metric,
             "expires_at": expires_at,
+            "scope_digest": promotion_scope_digest,
+            "operation_digest": promotion_operation_digest,
+            "epg_digest": candidate_data.get("epg_digest"),
+            "sdl_digest": candidate_data.get("sdl_digest"),
+            "policy_digest": canonical_digest(policy),
         },
     )
 
@@ -943,11 +1331,53 @@ def assess_promotion(
 def commit_promotion(assessment: PromotionAssessment, approval: Any) -> CapabilityPromotionDecision:
     approval_data = _mapping(approval)
     reasons = [] if assessment.eligible else list(assessment.reasons)
-    if approval_data.get("disposition") != "approved" or not approval_data.get("approver_id"):
+    approver_id = approval_data.get("approver_id") or approval_data.get("approver")
+    approver_role = approval_data.get("approver_role") or approval_data.get("role")
+    if (
+        approval_data.get("disposition") != "approved"
+        or not approver_id
+        or not approver_role
+        or not approval_data.get("approval_id")
+    ):
         reasons.append("approval_missing")
     assessment_digest = canonical_digest(assessment.to_dict())
     if approval_data.get("assessment_digest") != assessment_digest:
         reasons.append("approval_assessment_mismatch")
+    expected_bindings = {
+        "candidate_digest": assessment.candidate_digest,
+        "scope_digest": assessment.evidence.get(
+            "scope_digest",
+            _promotion_scope_digest(assessment.capability, assessment.pack, assessment.stage),
+        ),
+        "operation_digest": assessment.evidence.get(
+            "operation_digest",
+            _promotion_operation_digest(assessment.capability, assessment.pack, assessment.stage),
+        ),
+        "epg_digest": assessment.evidence.get("epg_digest"),
+        "sdl_digest": assessment.evidence.get("sdl_digest"),
+        "policy_digest": assessment.evidence.get("policy_digest"),
+    }
+    for binding_name, expected in expected_bindings.items():
+        if not expected:
+            reasons.append(f"assessment_binding_missing:{binding_name}")
+        elif approval_data.get(binding_name) != expected:
+            reasons.append(f"approval_{binding_name}_mismatch")
+    approved_at = _parse_promotion_timestamp(approval_data.get("approved_at"))
+    assessed_at = _parse_promotion_timestamp(assessment.created_at)
+    commit_at = datetime.now(timezone.utc)
+    if approved_at is None:
+        reasons.append("approval_timestamp_missing_or_invalid")
+    else:
+        if assessed_at is not None and approved_at < assessed_at:
+            reasons.append("approval_stale")
+        if approved_at > commit_at:
+            reasons.append("approval_future")
+    if "expires_at" in approval_data:
+        expires_at = _parse_promotion_timestamp(approval_data.get("expires_at"))
+        if expires_at is None:
+            reasons.append("approval_expiry_missing_or_invalid")
+        elif expires_at <= commit_at:
+            reasons.append("approval_expired")
     if reasons:
         return CapabilityPromotionDecision(
             "disabled",

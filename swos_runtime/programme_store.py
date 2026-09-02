@@ -12,6 +12,20 @@ from uuid import uuid4
 
 from .models import canonical_digest, canonical_json, utc_timestamp
 
+MEMORY_PROJECTION_STATUSES = frozenset(
+    {"active", "contradicted", "corrected", "superseded", "expired", "deleted"}
+)
+CONTRADICTION_DISPOSITIONS = frozenset(
+    {
+        "open_contradiction",
+        "under_review",
+        "resolved_by_evidence",
+        "resolved_by_scope",
+        "parked",
+        "retired",
+    }
+)
+
 
 class StoreIntegrityError(RuntimeError):
     """Raised when the append-only event chain or projection is invalid."""
@@ -312,6 +326,31 @@ class ProgrammeStore:
         current_data = json.loads(current[0]) if current is not None else None
         event_type = str(event.get("event_type"))
         status = str(payload.get("status", "active"))
+        if event_type == "contradiction_resolved":
+            status = "active"
+        elif status not in MEMORY_PROJECTION_STATUSES:
+            raise StoreIntegrityError(f"unsupported memory projection status: {status}")
+        resolution = payload.get("contradiction_resolution")
+        if resolution is None and event_type == "contradiction_resolved":
+            disposition = payload.get("disposition", payload.get("resolution"))
+            if disposition is not None:
+                resolution = {
+                    "disposition": str(disposition),
+                    "scoped_positions": list(payload.get("scoped_positions", [])),
+                }
+        if resolution is not None:
+            if not isinstance(resolution, Mapping):
+                raise StoreIntegrityError("contradiction resolution metadata must be an object")
+            disposition = str(resolution.get("disposition") or "")
+            if disposition not in CONTRADICTION_DISPOSITIONS:
+                raise StoreIntegrityError("unsupported contradiction disposition")
+            positions = resolution.get("scoped_positions", [])
+            if not isinstance(positions, (list, tuple)) or any(
+                not isinstance(position, Mapping) for position in positions
+            ):
+                raise StoreIntegrityError("scoped contradiction positions must be objects")
+            if disposition == "resolved_by_scope" and not positions:
+                raise StoreIntegrityError("scoped contradiction resolution has no positions")
         candidate = payload.get("candidate")
         if event_type == "write" and isinstance(candidate, dict):
             data = dict(candidate)
@@ -354,6 +393,8 @@ class ProgrammeStore:
                 data.setdefault("contradiction_ids", []).append(
                     str(payload.get("reason", "review"))
                 )
+            if resolution is not None:
+                data["contradiction_resolution"] = dict(resolution)
         else:
             data = {
                 "item_id": item_id,
@@ -375,6 +416,8 @@ class ProgrammeStore:
                 "visibility": "project",
                 "origin": "lifecycle",
             }
+            if resolution is not None:
+                data["contradiction_resolution"] = dict(resolution)
         data["schema_version"] = "2.0.0"
         data["epg_node_ids"] = list(data.get("epg_node_ids", payload.get("epg_node_ids", [])))
         self._upsert_projection_locked(connection, scope, data)

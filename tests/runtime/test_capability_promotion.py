@@ -20,12 +20,43 @@ class CapabilityPromotionTests(unittest.TestCase):
             "prompt_digest": "e" * 64,
             "seed": 7,
             "draw_digest": "f" * 64,
+            "evaluation_manifest_digest": "1" * 64,
+            "epg_digest": "g" * 64,
+            "sdl_digest": "h" * 64,
             "live_exact_head": True,
             "human_quorum": True,
             "role_separation": True,
             "safety_regressions": [],
             "rollback_tested": True,
             "pack_only_fallback": True,
+            "case_results": [
+                {"case_id": "c1", "metrics": {"cross_modal_f1": 0.70}, "human_reviewed": True},
+                {"case_id": "c2", "metrics": {"cross_modal_f1": 0.70}, "human_reviewed": True},
+            ],
+        }
+        value.update(changes)
+        if "metric" in value:
+            metric = value.pop("metric")
+            value["case_results"] = [
+                {"case_id": case_id, "metrics": {"cross_modal_f1": metric}, "human_reviewed": True}
+                for case_id in value["case_ids"]
+            ]
+        return value
+
+    def _approval(self, assessment, **changes):
+        value = {
+            "approval_id": "promotion-approval",
+            "approver_id": "human-1",
+            "approver_role": "promotion_owner",
+            "approved_at": assessment.created_at,
+            "disposition": "approved",
+            "assessment_digest": canonical_digest(assessment.to_dict()),
+            "candidate_digest": assessment.candidate_digest,
+            "scope_digest": assessment.evidence["scope_digest"],
+            "operation_digest": assessment.evidence["operation_digest"],
+            "epg_digest": assessment.evidence["epg_digest"],
+            "sdl_digest": assessment.evidence["sdl_digest"],
+            "policy_digest": assessment.evidence["policy_digest"],
         }
         value.update(changes)
         return value
@@ -48,17 +79,13 @@ class CapabilityPromotionTests(unittest.TestCase):
             pack="art_history",
             stage="art_history_agent",
             baseline=self._evidence(metric=0.70),
-            candidate=self._evidence(metric=0.80),
+            candidate=self._evidence(metric=0.80, live_exact_head=False),
             policy={"minimum_improvement": 0.08, "lower_confidence_bound_minimum": 0.0},
         )
         self.assertEqual("disabled", assessment.status)
         decision = commit_promotion(
             assessment,
-            {
-                "disposition": "approved",
-                "approver_id": "human-1",
-                "assessment_digest": canonical_digest(assessment.to_dict()),
-            },
+            self._approval(assessment),
         )
         self.assertEqual("disabled", decision.status)
 
@@ -76,11 +103,7 @@ class CapabilityPromotionTests(unittest.TestCase):
         self.assertTrue(assessment.eligible)
         decision = commit_promotion(
             assessment,
-            {
-                "disposition": "approved",
-                "approver_id": "human-1",
-                "assessment_digest": canonical_digest(assessment.to_dict()),
-            },
+            self._approval(assessment),
         )
         self.assertTrue(decision.enabled)
         rolled_back = __import__(

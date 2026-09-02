@@ -49,11 +49,20 @@ and normal reads but preserves historical records and release bindings. Commit
 re-resolves scope, active target/head, EPG/SDL, policy, classification, rights,
 contradiction, expiry, and operation digest. There is no direct mutation shortcut.
 `propose_expiry` is read-only; each committed expiry is an assessed operation.
+Contradiction resolution stores a disposition (`open_contradiction`,
+`under_review`, `resolved_by_evidence`, `resolved_by_scope`, `parked`, or
+`retired`) separately from the durable projection status. `resolved_by_scope`
+retains scoped positions, assumptions, and provenance and never records the
+disposition as a global item status.
 
 Public operations reject missing/unregistered scope, cross-scope references,
 classification overflow, invalid IDs, stale heads, unresolved evidence, or
-policy denial before mutation. Write transactions atomically persist payload,
-event, projection, and audit evidence.
+policy denial before mutation. Mutations lacking required valid, bound approval
+evidence are rejected: the core verifies approval disposition, asserted
+approver/role, assessment, operation, scope, candidate, EPG, SDL, freshness,
+and policy bindings. v2 records asserted human identity as evidence; it does
+not authenticate identities or provide an authentication system. Write
+transactions atomically persist payload, event, projection, and audit evidence.
 
 ### Exchange contract
 
@@ -201,9 +210,25 @@ channel to an existing family cannot improve diversity. Unknown metadata cannot
 improve a score. Every dimension exposes source-count and claim-exposure results;
 the gate uses the worse result.
 
+Source-count distributions count each selected canonical family once. Claim
+exposure distributions count each unique `(claim_id, canonical_family_id)` edge
+once, including when one claim cites multiple editions, mirrors, or providers.
+For counts `c_i`, `p_i = c_i / sum(c_i)`, `HHI = sum(p_i^2)`, effective number is
+`1 / HHI`, and normalized balance is
+`(1 - HHI) / (1 - 1/k)` for `k >= 2`, otherwise `0`. The governing dimension
+balance is the minimum of source-count and claim-exposure balance; HHI and
+maximum-share gates use the worse of the two distributions. Required-strata
+coverage is represented known strata divided by required strata (empty
+requirements equal `1.0`), and completeness is families with known metadata
+divided by selected families. Unknown and inferred values never improve a
+metric. Missing claim exposure when the requirement declares it mandatory, no
+families, or no applicable dimensions produces `NOT_RUN` and fails closed.
+
 Status rules:
 
-- fewer than 3 families: `fail`;
+- no measurable families, mandatory claim exposure, or applicable dimensions:
+  `NOT_RUN` (fail closed);
+- fewer than 3 non-empty families: `fail`;
 - 3-4 families: `review_required`;
 - 5+ families: evaluate all declared thresholds and mandatory strata;
 - a valid narrow-corpus exception changes workflow handling but preserves raw
@@ -225,6 +250,10 @@ def certify_round_trip(epg: Mapping, formats: Sequence[ProvFormat],
                        oracle: OracleConfig,
                        limits: ResourceLimits) -> ProvRoundTripCertificate: ...
 ```
+
+`prov-o-trig` is the public PROV-O named-dataset interchange format. RDFC-1.0
+canonical N-Quads is an internal fingerprinting representation only; it is not
+an advertised public format and is not a certification-matrix row.
 
 Mandatory matrix:
 
@@ -319,6 +348,29 @@ head mismatch disables promotion. Enabled decisions activate versioned agent
 contracts, least-privilege tool permissions, role-separated orchestrator routes,
 and an executable pack-only fallback. Rollback preserves evidence and returns to
 pack-only.
+
+The primary metric is `cross_modal_f1` for multimodal, image, and multi-view
+evaluations, and `discipline_weighted_score` for specialist routing. Every other
+blocking metric is evaluated independently rather than substituted for either
+primary metric. These primary metrics require complete case-level evidence;
+scalar values or generic aliases cannot substitute for a named primary metric.
+The frozen case ID is the statistical unit: repeated draws are
+aggregated within each case before paired comparison, and baseline/candidate
+must contain the same complete eligible case IDs. A missing result, review,
+draw, or pairing mismatch makes the evaluation `NOT_RUN` and never silently
+drops a denominator case. The paired lower bound is a deterministic case-level
+bootstrap with exactly 10,000 resamples, a seed derived from the canonical
+evaluation-manifest digest, and a percentile two-sided 95% interval. Evidence
+records the metric identifier, case count and digest, per-case scores and
+differences, seed, resample count, and interval bounds. Zero/insufficient,
+non-finite, or missing human truth is `NOT_RUN`, never zero or pass. Promotion
+is eligible only when all other gates pass, improvement is at least `0.08`, the
+lower bound is above `0`, live exact-head evidence passes, and approval binds the
+exact `PromotionAssessment` digest. A promotion approval is asserted evidence,
+not authentication: it must carry an asserted approver ID/role, approval ID and
+time, candidate/assessment/scope/operation/EPG/SDL/policy digests, and approved
+disposition. Missing, mismatched, stale, future-dated, or expired approval
+evidence disables the decision.
 
 ## 8. Evaluation adapter contract
 

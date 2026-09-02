@@ -50,6 +50,8 @@ class ResearchMemoryLifecycleTests(unittest.TestCase):
         approval = HumanApproval.for_assessment(
             assessment, approver="reviewer", role="memory_owner"
         )
+        if as_of is not None:
+            approval = HumanApproval(**{**approval.to_dict(), "approved_at": str(as_of)})
         return self.service.commit_operation(
             self.scope, assessment_id=assessment.assessment_id, approval=approval, as_of=as_of
         )

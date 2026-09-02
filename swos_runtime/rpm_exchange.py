@@ -544,6 +544,8 @@ class RPMExchange:
             raise ExchangeError("inspection digest is unknown or stale")
         if not inspection.commit_eligible:
             raise ExchangeError("import inspection is not eligible")
+        if not isinstance(approval, HumanApproval):
+            raise ExchangeError("a valid import approval is required")
         if approval.disposition != "approved":
             raise ExchangeError("import approval is not approved")
         if approval.assessment_digest != inspection.inspection_digest:

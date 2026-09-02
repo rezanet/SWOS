@@ -54,9 +54,11 @@ TTL, exceptional-read rules, migration guidance, and approval evidence.
 
 ### HumanApproval
 
-Fields: approval ID, asserted approver, role, timestamp, assessment/candidate
-digests, disposition, rationale, and SDL reference. This is recorded operator
-evidence; v2 does not claim identity authentication.
+Fields: approval ID, asserted approver, role, timestamp, assessment, operation,
+scope, candidate, EPG, and SDL digests, disposition, rationale, and freshness
+bindings. This is recorded operator evidence; v2 does not claim identity
+authentication. A mutation is rejected when the required valid approval is
+missing or any binding is stale or mismatched.
 
 ### MemoryEvent
 
@@ -79,6 +81,18 @@ and provenance bindings. It is never evidence independent of its event chain.
 Statuses: `active`, `contradicted`, `corrected`, `superseded`, `expired`,
 `deleted`. Normal retrieval returns only effective `active` rows and calculates
 expiry at query time.
+
+Contradiction dispositions are separate from durable projection statuses:
+`open_contradiction`, `under_review`, `resolved_by_evidence`,
+`resolved_by_scope`, `parked`, and `retired`. A `resolved_by_scope` event keeps
+the underlying contradiction history and provenance, records assumptions and a
+bounded scope for every retained position, and may return a position to
+`active` only inside that scope. It never stores `resolved_by_scope` as
+`MemoryProjection.status` or selects a globally winning claim.
+
+Reads of a scoped resolution must provide the bounded `position_scope`; a read
+without a matching position scope excludes the item and records the exclusion
+in its receipt.
 
 ### MemoryReadReceipt
 
@@ -111,7 +125,7 @@ candidate -> assessed_denied
 candidate -> assessed_allow -> approved -> active
 active -> confirmed -> active
 active -> contradiction_opened -> contradicted
-contradicted -> contradiction_resolved -> active | superseded | resolved_by_scope
+contradicted -> contradiction_resolved(disposition) -> scoped active position(s)
 active -> corrected -> successor(active)
 active -> superseded -> successor(active)
 active -> expired
@@ -282,8 +296,9 @@ multiset. Unsupported constructs fail rather than disappear.
 ### CanonicalFingerprint
 
 Fields: representation/profile, algorithm and version, semantic normal-form
-digest, canonical-byte digest where applicable, assertion/bundle counts, and
-resource-limit configuration.
+digest, canonical-byte digest where applicable, the explicit canonical
+representation boundary (`internal-n-quads` for RDFC-1.0), assertion/bundle
+counts, and resource-limit configuration.
 
 ### ProvValidationReport
 
@@ -386,10 +401,14 @@ and EPG links. `partial` and `insufficient` never become silent success.
 Fields: capability/pack/agent, stage, default-enabled flag, exact source SHA,
 contract and evaluation digests, paired case IDs, identical non-agent artifact
 digests, provider/model/config/prompt/seed/draw identities, baseline/candidate
-paired metrics, absolute improvement, paired confidence interval, safety
-regressions, mandatory live-result identity, human approval, effective/expiry
-dates, rollback trigger, and SDL/EPG evidence. Invalid, unmatched, `NOT_RUN`, or
-expired evidence means `disabled`.
+paired metrics and primary metric identifier, case-level scores/differences,
+case-ID digest, bootstrap seed/resample count/interval bounds, absolute
+improvement, safety regressions, mandatory live-result identity, human approval,
+effective/expiry dates, rollback trigger, and SDL/EPG evidence. Promotion
+approval evidence binds asserted approver ID/role, approval time, candidate,
+assessment, scope, operation, EPG, SDL, and policy digests; it does not
+authenticate identity. Invalid, unmatched, missing, stale, future-dated,
+`NOT_RUN`, or expired evidence means `disabled`.
 
 ## 7. Release audit entities
 

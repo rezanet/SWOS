@@ -81,7 +81,7 @@ state remaining trustworthy across project boundaries.
 workspaces, approve and supersede memory in the owning project, exchange it with
 the other two projects, and prove that all projects resolve the same active
 records, contradictions, provenance, policy limits, and chain head while denied,
-expired, or unauthorised writes remain rejected.
+expired, or lacking required valid, bound approval evidence remain rejected.
 
 **Acceptance Scenarios**:
 
@@ -292,8 +292,9 @@ associations are rejected.
 - **FR-003**: Cross-project exchange MUST support deterministic snapshot and
   incremental forms, idempotent import, chain verification, classification and
   rights ceilings, and explicit source/receiver identities.
-- **FR-004**: Concurrent, contradictory, stale, expired, unauthorised, or
-  provenance-incomplete changes MUST fail closed or enter explicit review; they
+- **FR-004**: Concurrent, contradictory, stale, expired, provenance-incomplete,
+  or changes lacking required valid, bound approval evidence MUST fail closed or
+  enter explicit review; they
   MUST NOT be resolved by last-write-wins.
 - **FR-005**: Retirement, supersession, correction, project unbinding and
   programme closure MUST preserve historical records and the releases that used
@@ -462,7 +463,8 @@ associations are rejected.
 
 - **SC-001**: A three-project exchange suite completes snapshot, delta, duplicate,
   fork, contradiction, expiry, correction, retirement and replay scenarios with
-  100% active-state and record-digest agreement and zero unauthorised mutations.
+  100% active-state and record-digest agreement and zero mutations lacking
+  required valid, bound approval evidence.
 - **SC-002**: All nine discipline ontologies pass structural/semantic constraints;
   100% of normative pack statements and runtime terms have bidirectional mappings,
   and recompilation produces byte-identical runtime profiles.
