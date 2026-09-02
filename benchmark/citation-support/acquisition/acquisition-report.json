@@ -1,0 +1,123 @@
+{
+  "adversarial_pattern_policy": {
+    "A04": "some to all / quantifier scope",
+    "A05": "may to does / modality strength",
+    "A06": "association to causation",
+    "A07": "local to whole / scope inflation",
+    "A08": "signal to identity / proxy inflation",
+    "A09": "method to object / material confusion",
+    "A10": "non-detection to absence",
+    "A11": "historical to current",
+    "A12": "range inflation",
+    "A13": "citation laundering",
+    "A14": "summary stronger than passage",
+    "A15": "neighboring mechanism"
+  },
+  "candidate_pairs": 6000,
+  "candidate_pairs_by_discipline": {
+    "art_criticism": 670,
+    "art_history": 670,
+    "engineering": 670,
+    "humanities": 665,
+    "interdisciplinary": 665,
+    "materials_science": 665,
+    "philosophy": 665,
+    "psychology": 665,
+    "technical_writing": 665
+  },
+  "candidate_pairs_by_pattern": {
+    "A01": 1200,
+    "A02": 1200,
+    "A03": 1200,
+    "A04": 705,
+    "A05": 468,
+    "A06": 228,
+    "A07": 157,
+    "A08": 86,
+    "A09": 219,
+    "A10": 340,
+    "A11": 76,
+    "A12": 26,
+    "A13": 20,
+    "A14": 28,
+    "A15": 47
+  },
+  "candidate_pairs_by_pattern_basis": {
+    "fallback_pending_human_review": 184,
+    "lexical_heuristic": 2216,
+    "stratum_defined": 3600
+  },
+  "candidate_pairs_by_semantic_partition": {
+    "in_domain": 4875,
+    "ood": 210,
+    "temporal": 915
+  },
+  "candidate_pairs_by_stratum": {
+    "S1": 1200,
+    "S2": 1200,
+    "S3": 1200,
+    "S4": 1200,
+    "S5": 1200
+  },
+  "catalog_sha256": "b5bc67652df29c3e0bd5dd8ab9166d9fc1e56b91f51658b8c2469ec6815729a9",
+  "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog.json",
+  "claim_families": 1200,
+  "downloaded_sources": 0,
+  "group_leakage": [],
+  "human_annotation": {
+    "packet_file": "unlabelled-candidate-pairs.jsonl",
+    "required_independent_adjudicator": 1,
+    "required_independent_annotators_per_pair": 2,
+    "status": "READY_FOR_HUMAN_ANNOTATION"
+  },
+  "human_boundary": "READY_FOR_HUMAN_ANNOTATION",
+  "independent_approval": false,
+  "labels_present": [],
+  "licence_counts_by_reason": {
+    "admissible_pending_review": 536,
+    "rejected_content": 0,
+    "rejected_duplicate": 0,
+    "rejected_rights": 0,
+    "rejected_unresolved_licence": 0
+  },
+  "output_digests": {
+    "source_candidate_manifest_sha256": "637d75786d9cb0c9251671847233aacc048c618a38029b22eb6c449dfca0bf11",
+    "unlabelled_candidate_pairs_sha256": "a4b2cefbaf9368eee16aaa45a0773f1f17d0b809a5666a19f49b24c27c77a66d"
+  },
+  "release_status": "NOT_CERTIFIED",
+  "reused_sources": 536,
+  "schema_version": "2.0.0",
+  "scholarly_works_discovered": 536,
+  "semantic_split_policy": {
+    "ood": {
+      "criteria_id": "T070-OOD-DOMAIN-V1",
+      "definition": "catalog_declared_held_out_domain is true"
+    },
+    "temporal": {
+      "criteria_id": "T070-TEMPORAL-YEAR-V1",
+      "cutoff_year": 2015,
+      "definition": "publication_year <= 2015"
+    },
+    "version": "1.0.0"
+  },
+  "source_counts_by_state": {
+    "ADMISSIBLE_PENDING_REVIEW": 536
+  },
+  "source_families": {
+    "by_provider": {
+      "elsevier": 328,
+      "olh": 208
+    },
+    "unique_admissible": 536
+  },
+  "status": "READY_FOR_HUMAN_ANNOTATION",
+  "stratum_policy": {
+    "S1": "direct/complete candidate",
+    "S2": "partial candidate",
+    "S3": "same-topic/context candidate",
+    "S4": "contradiction candidate",
+    "S5": "hard negative candidate"
+  },
+  "target_pairs": 6000,
+  "third_party_warning_sources": 536
+}

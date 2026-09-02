@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/research-grade/citation-source-candidate-2.0.0.schema.json",
+  "title": "SWOS Research Grade citation source candidate manifest",
+  "description": "Pre-annotation source, rights, acquisition, and independent-review records. This is not the approved final source manifest.",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_type",
+    "status",
+    "generated_at",
+    "semantic_split_policy",
+    "sources"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "manifest_type": {"const": "citation_support_source_candidates"},
+    "status": {"enum": ["ACQUISITION_INCOMPLETE", "READY_FOR_HUMAN_ANNOTATION"]},
+    "generated_at": {"type": "string", "minLength": 1},
+    "catalog_uri": {"type": ["string", "null"]},
+    "catalog_sha256": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "acquisition": {"type": "object"},
+    "semantic_split_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "temporal", "ood"],
+      "properties": {
+        "version": {"const": "1.0.0"},
+        "temporal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["criteria_id", "definition", "cutoff_year"],
+          "properties": {
+            "criteria_id": {"const": "T070-TEMPORAL-YEAR-V1"},
+            "definition": {"const": "publication_year <= 2015"},
+            "cutoff_year": {"const": 2015}
+          }
+        },
+        "ood": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["criteria_id", "definition"],
+          "properties": {
+            "criteria_id": {"const": "T070-OOD-DOMAIN-V1"},
+            "definition": {"const": "catalog_declared_held_out_domain is true"}
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/source"}
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "doi",
+        "stable_uri",
+        "exact_acquired_copy_uri",
+        "canonical_source_family",
+        "title",
+        "authors",
+        "publisher",
+        "publication_date",
+        "disciplines",
+        "licence",
+        "attribution",
+        "acquired_at",
+        "sha256",
+        "allowed_uses",
+        "third_party",
+        "state",
+        "approval",
+        "rejection_reason"
+      ],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "doi": {"type": ["string", "null"]},
+        "stable_uri": {"type": "string", "minLength": 1},
+        "exact_acquired_copy_uri": {"type": ["string", "null"]},
+        "canonical_source_family": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "authors": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "publisher": {"type": "string", "minLength": 1},
+        "publication_date": {"type": "string", "minLength": 1},
+        "disciplines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "art_history",
+              "art_criticism",
+              "engineering",
+              "humanities",
+              "interdisciplinary",
+              "materials_science",
+              "philosophy",
+              "psychology",
+              "technical_writing"
+            ]
+          }
+        },
+        "licence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["spdx", "uri", "version", "article_rights_uri", "verification"],
+          "properties": {
+            "spdx": {"type": "string", "minLength": 1},
+            "uri": {"type": "string", "minLength": 1},
+            "version": {"type": "string", "minLength": 1},
+            "article_rights_uri": {"type": "string", "minLength": 1},
+            "verification": {"type": "string", "minLength": 1},
+            "evidence_uri": {"type": ["string", "null"]},
+            "verification_basis": {"type": ["string", "null"]}
+          }
+        },
+        "attribution": {"type": "string", "minLength": 1},
+        "acquired_at": {"type": "string", "minLength": 1},
+        "sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "allowed_uses": {
+          "type": "array",
+          "items": {
+            "enum": ["candidate_generation", "human_annotation", "provenance_audit"]
+          }
+        },
+        "third_party": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "warning"],
+          "properties": {
+            "status": {"enum": ["clear", "warning", "unknown"]},
+            "warning": {"type": "string", "minLength": 1}
+          }
+        },
+        "state": {
+          "enum": [
+            "CANDIDATE",
+            "ADMISSIBLE_PENDING_REVIEW",
+            "REJECTED_RIGHTS",
+            "REJECTED_CONTENT",
+            "REJECTED_DUPLICATE",
+            "REJECTED_UNRESOLVED_LICENCE"
+          ]
+        },
+        "approval": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reviewer_id"],
+          "properties": {
+            "status": {"enum": ["pending", "not_requested"]},
+            "reviewer_id": {"type": ["string", "null"]}
+          }
+        },
+        "rejection_reason": {"type": ["string", "null"]},
+        "semantic_split_default": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["partition", "criteria_id"],
+          "properties": {
+            "partition": {"enum": ["in_domain", "temporal", "ood"]},
+            "criteria_id": {"type": "string", "minLength": 1},
+            "publication_year": {"type": "integer"},
+            "cutoff_year": {"type": "integer"},
+            "catalog_declared_held_out_domain": {"type": "boolean"},
+            "domain_id": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    }
+  }
+}

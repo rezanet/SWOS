@@ -29,3 +29,7 @@ Thumbs.db
 .agents/*
 !.agents/skills/
 !.agents/skills/**
+
+# T070 acquired source bytes and resumable machine-local state stay outside Git.
+benchmark/citation-support/acquisition/sources/
+benchmark/citation-support/acquisition/.acquisition-state.json

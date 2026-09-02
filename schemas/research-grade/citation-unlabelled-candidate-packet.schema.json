@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/research-grade/citation-unlabelled-candidate-packet-2.0.0.schema.json",
+  "title": "SWOS Research Grade unlabelled citation candidate packet",
+  "description": "A pre-annotation citation pair with exact source provenance and blank independent human-review fields.",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "packet_type",
+    "packet_id",
+    "pair_id",
+    "claim_family_id",
+    "group_id",
+    "discipline",
+    "claim_origin",
+    "candidate_claim",
+    "exact_quote",
+    "context",
+    "source_id",
+    "source_uri",
+    "acquired_copy_uri",
+    "source_digest",
+    "licence",
+    "attribution",
+    "acquisition_stratum",
+    "candidate_pattern_id",
+    "pattern_basis",
+    "semantic_split",
+    "annotations",
+    "adjudication"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "packet_type": {"const": "citation_support_unlabelled_annotation"},
+    "packet_id": {"type": "string", "minLength": 1},
+    "pair_id": {"type": "string", "minLength": 1},
+    "claim_family_id": {"type": "string", "minLength": 1},
+    "group_id": {"type": "string", "minLength": 1},
+    "discipline": {
+      "enum": [
+        "art_history",
+        "art_criticism",
+        "engineering",
+        "humanities",
+        "interdisciplinary",
+        "materials_science",
+        "philosophy",
+        "psychology",
+        "technical_writing"
+      ]
+    },
+    "claim_origin": {"const": "source-authored-sentence"},
+    "candidate_claim": {"type": "string", "minLength": 1},
+    "exact_quote": {"type": "string", "minLength": 1},
+    "context": {"type": "string", "minLength": 1},
+    "source_id": {"type": "string", "minLength": 1},
+    "source_uri": {"type": "string", "minLength": 1},
+    "acquired_copy_uri": {"type": "string", "minLength": 1},
+    "source_digest": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+    "licence": {"enum": ["CC-BY-4.0", "CC0-1.0", "PUBLIC-DOMAIN"]},
+    "attribution": {"type": "string", "minLength": 1},
+    "acquisition_stratum": {
+      "enum": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ]
+    },
+    "candidate_pattern_id": {
+      "enum": ["A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14", "A15"]
+    },
+    "pattern_basis": {
+      "enum": ["stratum_defined", "lexical_heuristic", "fallback_pending_human_review"]
+    },
+    "semantic_split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partition", "criteria_id"],
+      "properties": {
+        "partition": {"enum": ["in_domain", "temporal", "ood"]},
+        "criteria_id": {"type": "string", "minLength": 1},
+        "publication_year": {"type": "integer"},
+        "cutoff_year": {"type": "integer"},
+        "catalog_declared_held_out_domain": {"type": "boolean"},
+        "domain_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "annotations": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"$ref": "#/$defs/blank_annotation"}
+    },
+    "adjudication": {"$ref": "#/$defs/blank_adjudication"}
+  },
+  "$defs": {
+    "blank_annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["annotator_id", "label", "rationale"],
+      "properties": {
+        "annotator_id": {"type": ["string", "null"]},
+        "label": {"type": ["null"]},
+        "rationale": {"type": ["string", "null"]}
+      }
+    },
+    "blank_adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "adjudicator_id", "label", "rationale"],
+      "properties": {
+        "status": {"const": "pending"},
+        "adjudicator_id": {"type": ["string", "null"]},
+        "label": {"type": ["null"]},
+        "rationale": {"type": ["string", "null"]}
+      }
+    }
+  }
+}
