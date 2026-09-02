@@ -1,0 +1,182 @@
+{
+  "baseline": [
+    {
+      "probe": "tests.runtime.test_programme_store",
+      "result": {
+        "duration_seconds": 0.518486,
+        "returncode": 0,
+        "status": "passed",
+        "stderr_bytes": 97,
+        "stderr_sha256": "7d5eede57855a4a8d815e4522cfcb425409c7bbf8d1dba23426615a93eeb7d53",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      }
+    },
+    {
+      "probe": "tests.runtime.test_research_memory_writes",
+      "result": {
+        "duration_seconds": 0.693907,
+        "returncode": 0,
+        "status": "passed",
+        "stderr_bytes": 97,
+        "stderr_sha256": "f51bd92ef1ed37cbabfa580b2656236bcf173d0568ffc405fdeed3e82e88cc47",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      }
+    },
+    {
+      "probe": "tests.runtime.test_rpm_exchange",
+      "result": {
+        "duration_seconds": 1.582602,
+        "returncode": 0,
+        "status": "passed",
+        "stderr_bytes": 288,
+        "stderr_sha256": "386c5da28f86274a071e4c293670cd9f606f44ca42d20045b3008ee832e83a19",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      }
+    },
+    {
+      "probe": "tests.runtime.test_runtime",
+      "result": {
+        "duration_seconds": 1.203706,
+        "returncode": 0,
+        "status": "passed",
+        "stderr_bytes": 1322,
+        "stderr_sha256": "39e4aa3f85e7be4c68ac01d4c02d7632d881e6e6a5ca6e2263beb615aaa0d967",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      }
+    }
+  ],
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6",
+    "timeout_seconds": 60.0
+  },
+  "error_mutants": [],
+  "harness_version": "1.0.0",
+  "killed_count": 6,
+  "limitations": [
+    "Bounded deterministic guard mutations only; this is not exhaustive mutation coverage.",
+    "Focused probes run against temporary package copies and never mutate the checkout."
+  ],
+  "mutant_count": 6,
+  "mutants": [
+    {
+      "description": "Allow a durable candidate without complete source evidence.",
+      "mutant_id": "rpm-provenance-evidence-or",
+      "probe": "tests.runtime.test_research_memory_writes",
+      "probe_result": {
+        "duration_seconds": 0.657681,
+        "returncode": 1,
+        "status": "failed",
+        "stderr_bytes": 908,
+        "stderr_sha256": "1ac3cf14ea81a73ddd97dc0cad261fd0c43f91419897a14ad8db98568249799b",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "killed",
+      "target": "swos_runtime/research_memory.py"
+    },
+    {
+      "description": "Accept an approval that is not bound to the assessed operation.",
+      "mutant_id": "rpm-approval-digest-binding",
+      "probe": "tests.runtime.test_research_memory_writes",
+      "probe_result": {
+        "duration_seconds": 0.720404,
+        "returncode": 1,
+        "status": "failed",
+        "stderr_bytes": 833,
+        "stderr_sha256": "61089edf102e4a586c36dae815c4d12c88cf20b687741f0c4ddd071b5b1967c2",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "killed",
+      "target": "swos_runtime/research_memory.py"
+    },
+    {
+      "description": "Commit an assessment after the target chain head changed.",
+      "mutant_id": "rpm-commit-head-revalidation",
+      "probe": "tests.runtime.test_research_memory_writes",
+      "probe_result": {
+        "duration_seconds": 0.69246,
+        "returncode": 1,
+        "status": "failed",
+        "stderr_bytes": 807,
+        "stderr_sha256": "1d4589861e881ffd70c251566c68d7cdf26100f913c98d68ea8922af8018cf1e",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "killed",
+      "target": "swos_runtime/research_memory.py"
+    },
+    {
+      "description": "Ignore event-hash corruption during append-only store verification.",
+      "mutant_id": "store-event-hash-verification",
+      "probe": "tests.runtime.test_programme_store",
+      "probe_result": {
+        "duration_seconds": 0.498192,
+        "returncode": 1,
+        "status": "failed",
+        "stderr_bytes": 848,
+        "stderr_sha256": "70f1fe01fb12b5cbd2d042f11eca936ad5702ef139aa4ac55f03f9f78f1817fd",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "killed",
+      "target": "swos_runtime/programme_store.py"
+    },
+    {
+      "description": "Accept a non-canonical or traversal-bearing bundle member path.",
+      "mutant_id": "exchange-zip-member-safety",
+      "probe": "tests.runtime.test_rpm_exchange",
+      "probe_result": {
+        "duration_seconds": 1.251038,
+        "returncode": 1,
+        "status": "failed",
+        "stderr_bytes": 861,
+        "stderr_sha256": "c6c8d3fe55b77a27a1ddd02718410bbadc6245410ecdc71ddb9690a4d8dc894b",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "killed",
+      "target": "swos_runtime/rpm_exchange.py"
+    },
+    {
+      "description": "Permit a durable RPM write without a human approver.",
+      "mutant_id": "rpm-human-approval-gate",
+      "probe": "tests.runtime.test_runtime",
+      "probe_result": {
+        "duration_seconds": 1.245533,
+        "returncode": 1,
+        "status": "failed",
+        "stderr_bytes": 2195,
+        "stderr_sha256": "e96c771ffc7a6594e787bb8ddfc26e92f3d185b7ef73960557ef421fbb3fc2bc",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "status": "killed",
+      "target": "swos_runtime/governance.py"
+    }
+  ],
+  "schema_version": "2.0.0",
+  "source_sha": "105e06157dfc85d49e2602420a954e26eb416a6d",
+  "source_worktree_clean": true,
+  "status": "passed",
+  "surviving_mutants": [],
+  "thresholds": {
+    "error_mutants": 0,
+    "surviving_mutants": 0
+  }
+}
