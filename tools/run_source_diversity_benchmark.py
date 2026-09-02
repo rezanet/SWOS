@@ -25,19 +25,63 @@ from swos_runtime.source_diversity import (  # noqa: E402
     measure_source_diversity,
 )
 
+SEEDED_GAP_CATEGORIES = frozenset(
+    {
+        "single-family",
+        "single_family",
+        "single-owner",
+        "single_owner",
+        "provider-only",
+        "provider_only",
+        "provider-only-fake-diversity",
+        "provider_only_fake_diversity",
+        "duplicate",
+        "fake-diversity",
+        "fake_diversity",
+        "missing-required-strata",
+        "missing_required_strata",
+        "missing-strata",
+        "missing_strata",
+    }
+)
+MATERIAL_GAP_RECALL_MIN = 0.90
+FALSE_BLOCK_RATE_MAX = 0.10
+
 
 def _load_packets(path: Path) -> list[dict[str, Any]]:
     if path.is_file():
         payload = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(payload, dict) and isinstance(payload.get("packets"), list):
-            return [item for item in payload["packets"] if isinstance(item, dict)]
-        return [payload] if isinstance(payload, dict) else []
+            packets = payload["packets"]
+            if any(not isinstance(item, dict) for item in packets):
+                raise ValueError("source-diversity packet manifest contains a non-object packet")
+            return list(packets)
+        if isinstance(payload, dict):
+            return [payload]
+        raise ValueError("source-diversity packet manifest must be a JSON object")
     packets: list[dict[str, Any]] = []
     for item in sorted(path.glob("*.json")):
         payload = json.loads(item.read_text(encoding="utf-8"))
-        if isinstance(payload, dict):
-            packets.append(payload)
+        if not isinstance(payload, dict):
+            raise ValueError(f"source-diversity packet is not a JSON object: {item}")
+        packets.append(payload)
     return packets
+
+
+def _packet_category(packet: dict[str, Any]) -> str:
+    for key in ("category", "packet_category", "case_type"):
+        value = packet.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip().lower()
+    return ""
+
+
+def _stable_report(report: Any) -> dict[str, Any]:
+    """Return report semantics without the per-invocation creation timestamp."""
+
+    payload = report.to_dict()
+    payload.pop("created_at", None)
+    return payload
 
 
 def _result(packet: dict[str, Any]) -> dict[str, Any]:
@@ -56,29 +100,28 @@ def _result(packet: dict[str, Any]) -> dict[str, Any]:
         for index, item in enumerate(sources)
         if isinstance(item, dict)
     ]
-    ordering_invariant = (
-        report.to_dict()
-        == measure_source_diversity(
+    ordering_invariant = _stable_report(report) == _stable_report(
+        measure_source_diversity(
             families=canonicalize_source_families(reordered, FamilyIdentityPolicy()),
             admitted_claims=[item for item in packet.get("claims", []) if isinstance(item, dict)],
             requirements=requirement,
             exception=packet.get("exception"),
-        ).to_dict()
+        )
     )
-    provider_invariant = (
-        report.to_dict()
-        == measure_source_diversity(
+    provider_invariant = _stable_report(report) == _stable_report(
+        measure_source_diversity(
             families=canonicalize_source_families(renamed, FamilyIdentityPolicy()),
             admitted_claims=[item for item in packet.get("claims", []) if isinstance(item, dict)],
             requirements=requirement,
             exception=packet.get("exception"),
-        ).to_dict()
+        )
     )
     expected = packet.get("expected", {})
     detected = report.raw_status == "fail" or report.status == "review_required"
     return {
         "packet_id": packet.get("packet_id"),
         "discipline": packet.get("discipline"),
+        "category": _packet_category(packet),
         "observed": {
             "raw_status": report.raw_status,
             "status": report.status,
@@ -96,10 +139,37 @@ def _result(packet: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _rate(numerator: int, denominator: int) -> dict[str, float | int | None]:
+    if denominator <= 0:
+        return {
+            "numerator": numerator,
+            "denominator": denominator,
+            "value": None,
+            "lower_95": None,
+            "upper_95": None,
+        }
+    lower, upper = metric_confidence_interval(numerator, denominator)
+    return {
+        "numerator": numerator,
+        "denominator": denominator,
+        "value": numerator / denominator,
+        "lower_95": lower,
+        "upper_95": upper,
+    }
+
+
 def run_benchmark(fixtures: Path | str, output: Path | str | None = None) -> dict[str, Any]:
     packets = _load_packets(Path(fixtures))
     reviewed = [item for item in packets if item.get("review_status") == "locked_human_reviewed"]
     results = [_result(item) for item in reviewed]
+    inputs_complete = bool(packets) and len(reviewed) == len(packets)
+    seeded_cases = [
+        item
+        for item in results
+        if item.get("category") in SEEDED_GAP_CATEGORIES
+        or item.get("expected", {}).get("seeded_fake_or_missing_strata") is True
+    ]
+    seeded_detected = sum(bool(item["detected_material_gap"]) for item in seeded_cases)
     expected_gaps = [item for item in results if bool(item.get("expected", {}).get("material_gap"))]
     true_positive = sum(item["detected_material_gap"] for item in expected_gaps)
     false_blocks = sum(
@@ -108,11 +178,6 @@ def run_benchmark(fixtures: Path | str, output: Path | str | None = None) -> dic
         if item.get("expected", {}).get("adequate")
         or item.get("expected", {}).get("justified_narrow")
     )
-    gap_lower, gap_upper = (
-        metric_confidence_interval(true_positive, len(expected_gaps))
-        if expected_gaps
-        else (0.0, 0.0)
-    )
     adequate_total = sum(
         bool(
             item.get("expected", {}).get("adequate")
@@ -120,29 +185,69 @@ def run_benchmark(fixtures: Path | str, output: Path | str | None = None) -> dic
         )
         for item in results
     )
-    false_block_rate = false_blocks / adequate_total if adequate_total else None
-    all_invariant = all(
+    seeded_rate = _rate(seeded_detected, len(seeded_cases))
+    gap_rate = _rate(true_positive, len(expected_gaps))
+    false_block_rate = _rate(false_blocks, adequate_total)
+    ordering_invariant_numerator = sum(item["ordering_invariant"] for item in results)
+    provider_invariant_numerator = sum(item["provider_invariant"] for item in results)
+    all_invariant = bool(results) and all(
         item["ordering_invariant"] and item["provider_invariant"] for item in results
     )
+    failures: list[str] = []
+    if inputs_complete:
+        if seeded_rate["denominator"] == 0:
+            failures.append("seeded fake/missing-strata denominator is zero")
+        elif seeded_rate["numerator"] != seeded_rate["denominator"]:
+            failures.append("seeded fake/missing-strata detection is below 100%")
+        if gap_rate["denominator"] == 0:
+            failures.append("material-gap recall denominator is zero")
+        elif float(gap_rate["lower_95"]) < MATERIAL_GAP_RECALL_MIN:
+            failures.append(
+                f"material-gap recall lower 95% bound is below {MATERIAL_GAP_RECALL_MIN:.2f}"
+            )
+        if false_block_rate["denominator"] == 0:
+            failures.append("adequate/narrow false-block denominator is zero")
+        elif float(false_block_rate["upper_95"]) > FALSE_BLOCK_RATE_MAX:
+            failures.append(
+                f"adequate/narrow false-block upper 95% bound is above {FALSE_BLOCK_RATE_MAX:.2f}"
+            )
+        if not all_invariant:
+            failures.append("ordering/provider invariance failed")
+    gate_pass = inputs_complete and not failures
+    gate_result = "pass" if gate_pass else ("not_run" if not inputs_complete else "fail")
     report = {
         "schema_version": "2.0.0",
-        "status": "frozen" if reviewed and len(reviewed) == len(packets) else "not_run",
-        "gate_result": "pass"
-        if reviewed and len(reviewed) == len(packets) and all_invariant
-        else "not_run",
+        "status": "frozen" if gate_pass else ("not_run" if not inputs_complete else "blocked"),
+        "gate_result": gate_result,
         "reason": None
-        if reviewed and len(reviewed) == len(packets)
-        else "locked human-reviewed packets are unavailable or incomplete",
+        if gate_pass
+        else (
+            "locked human-reviewed packets are unavailable or incomplete"
+            if not inputs_complete
+            else "; ".join(failures)
+        ),
         "packet_count": len(packets),
         "locked_reviewed_packet_count": len(reviewed),
         "metrics": {
-            "fake_and_missing_strata_detection": None
-            if not results
-            else sum(item["detected_material_gap"] for item in results) / len(results),
-            "material_gap_recall": true_positive / len(expected_gaps) if expected_gaps else None,
-            "material_gap_recall_lower_95": gap_lower if expected_gaps else None,
-            "material_gap_recall_upper_95": gap_upper if expected_gaps else None,
-            "adequate_or_narrow_false_block_rate": false_block_rate,
+            "fake_and_missing_strata_detection": seeded_rate["value"],
+            "fake_and_missing_strata_detection_numerator": seeded_rate["numerator"],
+            "fake_and_missing_strata_detection_denominator": seeded_rate["denominator"],
+            "fake_and_missing_strata_detection_lower_95": seeded_rate["lower_95"],
+            "fake_and_missing_strata_detection_upper_95": seeded_rate["upper_95"],
+            "material_gap_recall": gap_rate["value"],
+            "material_gap_recall_numerator": gap_rate["numerator"],
+            "material_gap_recall_denominator": gap_rate["denominator"],
+            "material_gap_recall_lower_95": gap_rate["lower_95"],
+            "material_gap_recall_upper_95": gap_rate["upper_95"],
+            "adequate_or_narrow_false_block_rate": false_block_rate["value"],
+            "adequate_or_narrow_false_block_rate_numerator": false_block_rate["numerator"],
+            "adequate_or_narrow_false_block_rate_denominator": false_block_rate["denominator"],
+            "adequate_or_narrow_false_block_rate_lower_95": false_block_rate["lower_95"],
+            "adequate_or_narrow_false_block_rate_upper_95": false_block_rate["upper_95"],
+            "ordering_invariance_numerator": ordering_invariant_numerator,
+            "ordering_invariance_denominator": len(results),
+            "provider_invariance_numerator": provider_invariant_numerator,
+            "provider_invariance_denominator": len(results),
             "ordering_provider_invariance": all_invariant,
         },
         "results": results,
