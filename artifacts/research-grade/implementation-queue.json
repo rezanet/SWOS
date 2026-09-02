@@ -12,30 +12,31 @@
   "implementation": {
     "pull_request": 58,
     "branch": "codex/swos-v2-t070-floor-gate",
-    "head_sha": "2b8421bd9f0aa1a6aaf4c5582700e5517e1f8752",
+    "head_sha": "5ad9d70a51d4f7211550928c06ec10b57b3f2387",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/58",
     "last_reconciled_task": "T073",
-    "last_action": "Hardened T070's citation corpus ingestion and generated licence evidence, complete per-pair human annotation/adjudication validation, T073's locked-test-to-dataset-manifest binding, T080's production-path diversity benchmark, and T093-T095's provenance certification boundaries with explicit JSON-object, bounded-file, checksummed-corpus, required-category, resource-limit, path-containment, canonical-depth, cycle, deadline, malformed-record, structural-map, lossless-marker, and licensed-oracle checks while preserving T070 and T073 fail-closed release behavior; the licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, and independent human records remain absent, so T070, T073, T079, T080, and T093-T095 remain pending.",
+    "last_action": "Hardened T070's citation corpus ingestion and generated licence evidence, complete per-pair human annotation/adjudication validation, T073's locked-test-to-dataset-manifest binding, T080's production-path diversity benchmark, and T093-T095's provenance certification boundaries with explicit JSON-object, bounded-file, checksummed-corpus, required-category, resource-limit, path-containment, canonical-depth, cycle, deadline, malformed-record, structural-map, lossless-marker, and licensed-oracle checks while preserving T070 and T073 fail-closed release behavior. The latest T080 repair now validates the frozen manifest envelope, requires unique complete locked packet coverage across all nine disciplines, rejects malformed source/claim/expected/requirement records, and exposes pre-retrieval requirement digests; the licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, and independent human records remain absent, so T070, T073, T079, T080, and T093-T095 remain pending.",
     "last_action_evidence": [
       "focused T070 citation dataset suite: 11 tests pass",
       "focused T073 evaluator suite: 6 tests pass",
-      "focused T080 diversity benchmark suite: 4 tests pass",
+      "focused T080 diversity benchmark suite: 6 tests pass",
       "focused T093-T095 provenance boundary suite: 29 tests pass",
-      "python -m unittest discover -s tests/runtime -p 'test_*.py': 254 passed",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py': 256 passed",
       "python -m unittest discover -s tests/prose -p 'test_*.py': 240 passed, 11 expected live-provider skips",
       "Ruff format and lint checks for the workflow-scanned surfaces: pass",
       "schema validation: 58 artefacts pass; research-grade contract examples and Spec Kit consistency pass",
       "Bandit, dependency audit, governance, vendor-leakage, workflow-profile, portability-definition, and DCO checks: pass",
       "v1 compatibility manifest: 118 recorded file digests match current files and c4ec2945 baseline",
       "python tools/build_citation_dataset.py: exit 2, status not_run, zero output files, source manifest has zero sources",
-      "task freeze audit at 2b8421bd9f0aa1a6aaf4c5582700e5517e1f8752: 118 marker-only changes, zero non-marker differences",
+      "task freeze audit at 5ad9d70a51d4f7211550928c06ec10b57b3f2387: 118 marker-only changes, zero non-marker differences",
       "T070 floor and split regression: all seven frozen minima and all five required partitions are enforced; under-floor reports remain blocked",
       "T070 human-record regression: incomplete annotations, invalid labels, duplicate annotators, missing adjudicator identity/rationale, adjudicator reuse, and label disagreement are rejected",
       "T073 release-input execution: status not_run, gate_result not_run, and zero prediction bytes because the checked-in verified model manifest is absent",
       "T073 locked-test binding regression: the evaluator requires a frozen sibling dataset manifest whose canonical digest matches the verified model and whose locked_test count/digest matches the supplied rows",
-      "PR #58 exact-head hosted checks at 2b8421bd9f0aa1a6aaf4c5582700e5517e1f8752: SWOS CI 33586230537, SWOS CodeQL 33586230549, Research Grade compatibility 33586230533, SWOS Prose Benchmark 33586230548, SWOS Portability Gate 33586230538, and SWOS Engineering Quality 33586230585; 20 jobs pass and 2 non-gating jobs are explicitly skipped"
+      "T080 integrity regression: malformed claims are rejected instead of dropped, incomplete nine-discipline coverage is not_run, and valid packet requirements are bound by canonical digest",
+      "PR #58 exact-head hosted checks at 5ad9d70a51d4f7211550928c06ec10b57b3f2387: SWOS CI 33587838158, SWOS CodeQL 33587838167, Research Grade compatibility 33587838150, SWOS Prose Benchmark 33587838143, SWOS Portability Gate 33587838161, and SWOS Engineering Quality 33587838142; 20 jobs pass and 2 non-gating jobs are explicitly skipped"
     ]
   },
   "summary": {
