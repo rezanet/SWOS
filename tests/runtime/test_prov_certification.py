@@ -98,6 +98,17 @@ class ProvCertificationTests(unittest.TestCase):
         certificate = certify_round_trip(
             epg, ("prov-json",), oracle=oracle, limits=ResourceLimits()
         )
+        self.assertNotEqual("certified", certificate.status)
+
+        oracle["artifact_verified"] = True
+        oracle["verification"] = {
+            "status": "verified",
+            "artifact_sha256": oracle["artifact_sha256"],
+            "execution_status": "passed",
+        }
+        certificate = certify_round_trip(
+            epg, ("prov-json",), oracle=oracle, limits=ResourceLimits()
+        )
         self.assertEqual("certified", certificate.status)
 
     def test_second_cross_format_route_is_executed_not_hard_coded(self) -> None:
@@ -136,6 +147,43 @@ class ProvCertificationTests(unittest.TestCase):
             )
         self.assertNotEqual("certified", certificate.status)
         self.assertEqual(11, calls["count"])
+
+    def test_full_matrix_requires_rdf_shacl_validation(self) -> None:
+        epg = sample_epg()
+        fingerprint = canonical_fingerprint(
+            epg_to_prov(epg, base_iri=epg["base_iri"]), ResourceLimits()
+        )
+        oracle = {
+            "status": "accepted",
+            "implementation": "ProvToolbox",
+            "version": "3.0.0",
+            "licence": "Apache-2.0",
+            "artifact_sha256": "a" * 64,
+            "artifact_verified": True,
+            "verification": {
+                "status": "verified",
+                "artifact_sha256": "a" * 64,
+                "execution_status": "passed",
+            },
+            "profile": epg["profile"],
+            "formats": ["prov-json", "prov-n", "prov-o-trig"],
+            "input_digest": fingerprint.semantic_digest,
+        }
+        certificate = certify_round_trip(
+            epg,
+            ("prov-json", "prov-n", "prov-o-trig"),
+            oracle=oracle,
+            limits=ResourceLimits(),
+        )
+        self.assertNotEqual("certified", certificate.status)
+        trig_legs = [
+            leg
+            for leg in certificate.legs
+            if isinstance(leg.get("validation"), dict)
+            and leg["validation"].get("format") == "prov-o-trig"
+        ]
+        self.assertTrue(trig_legs)
+        self.assertFalse(trig_legs[0]["validation"]["report"]["shacl"]["passed"])
 
 
 if __name__ == "__main__":

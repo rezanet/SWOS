@@ -45,6 +45,50 @@ def _load(path: Path, limits: ResourceLimits | None = None) -> dict[str, Any]:
     return _load_json_with_digest(path, limits)[0]
 
 
+def _load_oracle_manifest(path: Path, limits: ResourceLimits) -> dict[str, Any]:
+    """Load oracle evidence and verify the referenced artifact before trusting it."""
+
+    oracle = _load(path, limits)
+    status = str(oracle.get("status") or "not_run").lower()
+    if status not in {"pass", "passed", "valid", "accepted"}:
+        return oracle
+    artifact_uri = oracle.get("artifact_uri")
+    if not isinstance(artifact_uri, str) or not artifact_uri.strip():
+        raise ValueError("accepted oracle manifest requires a local artifact_uri")
+    artifact_path = Path(artifact_uri)
+    if artifact_path.is_absolute() or "://" in artifact_uri:
+        raise ValueError("accepted oracle artifact_uri must be a relative local path")
+    manifest_root = path.parent.resolve()
+    artifact_path = (manifest_root / artifact_path).resolve()
+    if not artifact_path.is_relative_to(manifest_root):
+        raise ValueError("accepted oracle artifact_uri escapes its manifest directory")
+    if not artifact_path.is_file():
+        raise ValueError("accepted oracle artifact does not exist")
+    expected_sha256 = oracle.get("artifact_sha256")
+    if (
+        not isinstance(expected_sha256, str)
+        or len(expected_sha256) != 64
+        or expected_sha256.lower() != expected_sha256
+        or any(character not in "0123456789abcdef" for character in expected_sha256)
+    ):
+        raise ValueError("accepted oracle manifest requires a lowercase artifact_sha256")
+    actual_sha256 = hashlib.sha256(_read(artifact_path, limits)).hexdigest()
+    if actual_sha256 != expected_sha256:
+        raise ValueError("accepted oracle artifact checksum mismatch")
+    execution = oracle.get("execution")
+    if not isinstance(execution, Mapping) or execution.get("status") != "passed":
+        raise ValueError("accepted oracle manifest requires passed execution evidence")
+    oracle["artifact_verified"] = True
+    oracle["verification"] = {
+        "status": "verified",
+        "method": "sha256-file",
+        "artifact_sha256": actual_sha256,
+        "execution_status": "passed",
+        "artifact_path": artifact_path.relative_to(manifest_root).as_posix(),
+    }
+    return oracle
+
+
 def _limits(path: Path) -> ResourceLimits:
     payload = _load(path)
     values = payload.get("limits")
@@ -88,7 +132,7 @@ def certify(
         raise ValueError("exactly one of --epg and --corpus-manifest is required")
     limits = _limits(limits_path)
     profile = _load(profile_path, limits)
-    oracle = _load(oracle_path, limits)
+    oracle = _load_oracle_manifest(oracle_path, limits)
     if tuple(formats) != tuple(dict.fromkeys(formats)):
         raise ValueError("PROV formats must not be duplicated")
     if not set(formats).issubset({"prov-json", "prov-n", "prov-o-trig"}):

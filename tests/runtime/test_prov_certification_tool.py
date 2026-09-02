@@ -101,6 +101,32 @@ class ProvCertificationToolTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 _load(path, ResourceLimits(max_bytes=1))
 
+    def test_accepted_oracle_requires_a_present_checksummed_artifact(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            epg_path = directory / "epg.json"
+            epg_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+            kwargs = self._certification_kwargs(directory, directory / "unused.json")
+            kwargs["epg_path"] = epg_path
+            kwargs["corpus_manifest"] = None
+            oracle_path = directory / "oracle.json"
+            oracle_path.write_text(
+                json.dumps(
+                    {
+                        "status": "accepted",
+                        "implementation": "ProvToolbox",
+                        "version": "3.0.0",
+                        "licence": "Apache-2.0",
+                        "artifact_uri": "missing-provtoolbox.bin",
+                        "artifact_sha256": "a" * 64,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            kwargs["oracle_path"] = oracle_path
+            with self.assertRaisesRegex(ValueError, "artifact"):
+                certify(**kwargs)
+
     def test_corpus_manifest_rejects_malformed_case(self) -> None:
         with TemporaryDirectory() as directory_name:
             directory = Path(directory_name)

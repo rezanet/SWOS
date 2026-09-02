@@ -19,6 +19,8 @@ class ProvValidationTests(unittest.TestCase):
         self.assertEqual(report.semantic_digest, fingerprint.semantic_digest)
         self.assertTrue(fingerprint.jcs_digest)
         self.assertTrue(fingerprint.rdfc10_digest)
+        self.assertFalse(report.shacl["passed"])
+        self.assertIn("not_applicable", report.shacl["status"])
 
     def test_invalid_relation_and_unknown_extension_are_not_silently_accepted(self) -> None:
         epg = sample_epg()

@@ -119,6 +119,25 @@ def _write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def _not_run_provenance_certificate(epg_v2: Any, fingerprint: Any) -> dict[str, Any]:
+    """Return a schema-valid certificate while independent oracle work is pending."""
+
+    return {
+        "certificate_version": "2.0.0",
+        "status": "not_run",
+        "profile": epg_v2.profile,
+        "source_sha": canonical_digest(epg_v2.to_dict()),
+        "input_digest": fingerprint.semantic_digest,
+        "paths": [],
+        "legs": [],
+        "oracle": {"status": "not_run"},
+        "limitations": [
+            "Independent PROV oracle evidence is required for certification.",
+        ],
+        "limits": dict(fingerprint.resource_limits),
+    }
+
+
 def _actor() -> dict[str, str]:
     return {
         "actor_type": "orchestrator",
@@ -1414,18 +1433,13 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
     from .prov_validation import canonical_fingerprint, validate_prov
 
     epg_v2_validation = validate_prov(epg_v2)
+    epg_v2_fingerprint = canonical_fingerprint(epg_v2)
     _write_json(output / "provenance-v2.json", epg_v2.to_dict())
     _write_json(output / "provenance-v2-validation.json", epg_v2_validation.to_dict())
-    _write_json(output / "provenance-v2-fingerprint.json", canonical_fingerprint(epg_v2).to_dict())
+    _write_json(output / "provenance-v2-fingerprint.json", epg_v2_fingerprint.to_dict())
     _write_json(
         output / "provenance-v2-certificate.json",
-        {
-            "certificate_version": "2.0.0",
-            "status": "not_run",
-            "reason": "Independent PROV oracle evidence is required for certification.",
-            "input_digest": canonical_fingerprint(epg_v2).semantic_digest,
-            "oracle": {"status": "not_run"},
-        },
+        _not_run_provenance_certificate(epg_v2, epg_v2_fingerprint),
     )
     if epg_v2_validation.status != "valid":
         blockers.append("EPG v2 provenance validation did not pass.")
@@ -1487,13 +1501,7 @@ def finalize_work_order_run(run: WorkOrderRun, output_dir: str | Path) -> RunOut
         _write_json(output / "provenance-v2-fingerprint.json", epg_v2_fingerprint.to_dict())
         _write_json(
             output / "provenance-v2-certificate.json",
-            {
-                "certificate_version": "2.0.0",
-                "status": "not_run",
-                "reason": "Independent PROV oracle evidence is required for certification.",
-                "input_digest": epg_v2_fingerprint.semantic_digest,
-                "oracle": {"status": "not_run"},
-            },
+            _not_run_provenance_certificate(epg_v2, epg_v2_fingerprint),
         )
         if epg_v2_validation.status != "valid":
             blockers.append("Final EPG v2 provenance validation did not pass.")

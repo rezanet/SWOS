@@ -285,6 +285,25 @@ EPGv2Document = ProvDocument
 def document_from_epg(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:
     if not isinstance(epg, Mapping):
         raise ValueError("EPG v2 input must be a JSON object")
+    allowed_fields = {
+        "schema_version",
+        "profile",
+        "base_iri",
+        "namespaces",
+        "scope",
+        "entities",
+        "activities",
+        "agents",
+        "relations",
+        "bundles",
+        "extensions",
+        "integrity",
+    }
+    unknown_fields = sorted(set(epg) - allowed_fields)
+    if unknown_fields:
+        raise ValueError(
+            "EPG v2 contains unknown top-level fields: " + ", ".join(map(str, unknown_fields))
+        )
     if epg.get("schema_version") != EPG_VERSION:
         raise ValueError("EPG v2 requires explicit schema_version=2.0.0")
     if epg.get("profile") != PROV_PROFILE:

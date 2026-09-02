@@ -6,6 +6,7 @@ import hashlib
 import json
 import time
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from .models import canonical_digest
@@ -190,6 +191,65 @@ def _relation_refs(relation: Mapping[str, Any]) -> list[str]:
     ]
 
 
+def _shacl_validation(
+    document: ProvDocument, *, limits: ResourceLimits, deadline: float
+) -> dict[str, Any]:
+    """Run the pinned SHACL shape when its release-only dependencies exist."""
+
+    try:
+        from pyshacl import validate as pyshacl_validate
+        from rdflib import RDF, Graph, Literal, Namespace, URIRef
+    except ImportError:
+        return {
+            "status": "not_applicable_without_rdflib_pyshacl",
+            "passed": False,
+        }
+    try:
+        limits.check_deadline(deadline)
+        prov = Namespace("http://www.w3.org/ns/prov#")
+        swos = Namespace("https://swos.dev/prov#")
+        data_graph = Graph()
+        for identifier in document.entities:
+            node = URIRef(identifier)
+            data_graph.add((node, RDF.type, prov.Entity))
+            data_graph.add((node, swos.profileId, Literal(document.profile)))
+        for identifier in document.activities:
+            data_graph.add((URIRef(identifier), RDF.type, prov.Activity))
+        for identifier in document.agents:
+            data_graph.add((URIRef(identifier), RDF.type, prov.Agent))
+        shape_path = (
+            Path(__file__).resolve().parents[1]
+            / "schemas"
+            / "provenance-graph"
+            / "swos-prov.shacl.ttl"
+        )
+        shapes_graph = Graph()
+        shapes_graph.parse(shape_path.as_posix(), format="turtle")
+        conforms, _, results_text = pyshacl_validate(
+            data_graph,
+            shacl_graph=shapes_graph,
+            inference="none",
+            abort_on_first=False,
+            allow_infos=False,
+            allow_warnings=False,
+        )
+        limits.check_deadline(deadline)
+        result_bytes = str(results_text).encode("utf-8")
+        limits.check_bytes(len(result_bytes))
+        return {
+            "status": "valid" if conforms else "invalid",
+            "passed": bool(conforms),
+            "implementation": "pyshacl",
+            "results_sha256": hashlib.sha256(result_bytes).hexdigest(),
+        }
+    except (OSError, ValueError, TypeError, RuntimeError) as exc:
+        return {
+            "status": "error",
+            "passed": False,
+            "reason": type(exc).__name__,
+        }
+
+
 def validate_prov(
     document: ProvDocument, profile: str = PROV_PROFILE, *, limits: ResourceLimits | None = None
 ) -> ProvValidationReport:
@@ -278,16 +338,14 @@ def validate_prov(
             elapsed_seconds=time.perf_counter() - started,
             statement_count=document.statement_count(),
         )
+    shacl = _shacl_validation(document, limits=limits, deadline=deadline)
     return ProvValidationReport(
         status=status,
         profile=profile,
         input_digest=input_digest,
         syntax={"passed": not violations, "absolute_namespace_policy": True},
         prov_constraints={"status": "invalid" if violations else "valid", "passed": not violations},
-        shacl={
-            "status": "not_applicable_without_rdflib" if not violations else "not_run",
-            "passed": not violations,
-        },
+        shacl=shacl,
         violations=tuple(dict.fromkeys(violations)),
         elapsed_seconds=time.perf_counter() - started,
         statement_count=document.statement_count(),
@@ -334,6 +392,7 @@ def certify_round_trip(
                 "input_fingerprint": source_fingerprint.to_dict(),
                 "output_fingerprint": second.to_dict(),
                 "stable_second_round": second.semantic_digest == source_fingerprint.semantic_digest,
+                "validation": {"format": format_name, "report": validated.to_dict()},
             }
         )
     if set(formats) >= {"prov-json", "prov-n", "prov-o-trig"}:
@@ -341,13 +400,14 @@ def certify_round_trip(
         def cross_format_leg(path: str, route: Sequence[str]) -> dict[str, Any]:
             current = original
             parse_statuses: list[str] = []
+            validations: list[dict[str, Any]] = []
             error = ""
             for format_name in route:
                 try:
                     current = parse_prov(serialize_prov(current, format_name), format_name, limits)
-                    parse_statuses.append(
-                        validate_prov(current, profile=original.profile, limits=limits).status
-                    )
+                    validation = validate_prov(current, profile=original.profile, limits=limits)
+                    parse_statuses.append(validation.status)
+                    validations.append({"format": format_name, "report": validation.to_dict()})
                 except Exception as exc:  # a failed route can never certify the input
                     error = f"{type(exc).__name__}: {exc}"
                     parse_statuses.append("error")
@@ -370,6 +430,7 @@ def certify_round_trip(
                 if parse_statuses and all(item == "valid" for item in parse_statuses)
                 else "invalid",
                 "parse_statuses": parse_statuses,
+                "validation": validations,
                 "semantic_equivalent": semantic_equivalent,
                 "assertions_preserved": assertions_preserved,
                 "stable_second_round": semantic_equivalent and assertions_preserved,
@@ -431,12 +492,42 @@ def certify_round_trip(
         and isinstance(processor_digest, str)
         and len(processor_digest) == 64
         and all(character in "0123456789abcdef" for character in processor_digest)
+        and oracle_payload.get("artifact_verified") is True
+        and isinstance(oracle_payload.get("verification"), Mapping)
+        and oracle_payload["verification"].get("status") == "verified"
+        and oracle_payload["verification"].get("artifact_sha256") == processor_digest
+        and oracle_payload["verification"].get("execution_status") == "passed"
     )
+
+    def validation_passed(leg: Mapping[str, Any]) -> bool:
+        validation = leg.get("validation")
+        reports = [validation] if isinstance(validation, Mapping) else validation or []
+        if not reports or not isinstance(reports, Sequence):
+            return False
+        for item in reports:
+            if not isinstance(item, Mapping):
+                return False
+            report = item.get("report")
+            if not isinstance(report, Mapping):
+                return False
+            if not (
+                report.get("syntax", {}).get("passed") is True
+                and report.get("prov_constraints", {}).get("passed") is True
+            ):
+                return False
+            if (
+                item.get("format") == "prov-o-trig"
+                and report.get("shacl", {}).get("passed") is not True
+            ):
+                return False
+        return True
+
     all_internal = all(
         item.get("semantic_equivalent")
         and item.get("assertions_preserved")
         and item.get("stable_second_round")
         and item.get("parse_status") == "valid"
+        and validation_passed(item)
         for item in legs
     )
     if oracle_status in {"failed", "invalid", "error"}:

@@ -39,7 +39,9 @@ jobs:
       - name: Validate frozen portability matrix
         run: python tools/check_portability_acceptance.py --definitions-only
       - name: Run bounded safety mutation checks
-        run: python tools/run_mutation_checks.py --report artifacts/research-grade/mutation-report.json
+        env:
+          SWOS_EXPECTED_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python tools/run_mutation_checks.py --report artifacts/research-grade/mutation-report.json --expected-source-sha "$SWOS_EXPECTED_SOURCE_SHA"
       - name: Upload mutation evidence
         if: always()
         uses: actions/upload-artifact@v4

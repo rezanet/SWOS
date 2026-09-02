@@ -8,6 +8,7 @@ import zipfile
 from dataclasses import replace
 from pathlib import Path
 
+from swos_runtime.models import ResourceLimitError
 from swos_runtime.programme_store import ProgrammeStore
 from swos_runtime.research_memory import (
     DataClassification,
@@ -187,6 +188,14 @@ class RPMExchangeTests(unittest.TestCase):
             archive.writestr("manifest.json", "{}")
         with self.assertRaisesRegex(ExchangeError, "duplicate bundle path"):
             exchange._read_bundle(duplicate_path, BundleLimits())
+
+    def test_import_enforces_cumulative_byte_limit_before_materializing_payload(self) -> None:
+        exchange = RPMExchange(self.service)
+        zip_path = self.root / "oversized-payload.zip"
+        with zipfile.ZipFile(zip_path, "w") as archive:
+            archive.writestr("manifest.json", "{}")
+        with self.assertRaises(ResourceLimitError):
+            exchange._read_bundle(zip_path, BundleLimits(max_bytes=1))
 
 
 if __name__ == "__main__":

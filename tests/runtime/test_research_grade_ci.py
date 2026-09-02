@@ -48,6 +48,11 @@ class ResearchGradeCIContractTests(unittest.TestCase):
                 self.assertGreater(checkout_count, 0)
                 self.assertEqual(checkout_count, text.count(EXACT_PR_HEAD_REF))
 
+    def test_mutation_evidence_is_bound_to_the_checked_out_head(self) -> None:
+        text = (ROOT / ".github/workflows/swos-quality.yml").read_text(encoding="utf-8")
+        self.assertIn("SWOS_EXPECTED_SOURCE_SHA", text)
+        self.assertIn("--expected-source-sha", text)
+
 
 if __name__ == "__main__":
     unittest.main()

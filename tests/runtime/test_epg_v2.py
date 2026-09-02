@@ -96,6 +96,12 @@ class EpgV2Tests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     epg_to_prov(epg, base_iri=epg["base_iri"])
 
+    def test_epg_v2_rejects_unknown_top_level_fields(self) -> None:
+        epg = sample_epg()
+        epg["unapproved_extension"] = {"value": "must not be dropped"}
+        with self.assertRaisesRegex(ValueError, "unknown top-level"):
+            epg_to_prov(epg, base_iri=epg["base_iri"])
+
 
 if __name__ == "__main__":
     unittest.main()
