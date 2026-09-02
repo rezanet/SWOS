@@ -9,15 +9,76 @@
     "base_sha": "8d440296b4a9df708f1140a04bae1ae24f74fee3",
     "url": "https://github.com/rezanet/SWOS/pull/55"
   },
+  "planning_review": {
+    "status": "blocked",
+    "reviewed_head": "b8f18e261d3baa8e11749d2ad663ba8bd06e04b1",
+    "base_sha": "8d440296b4a9df708f1140a04bae1ae24f74fee3",
+    "method": "independent exact-head artifact review",
+    "findings": [
+      {
+        "severity": "P1",
+        "references": [
+          "specs/008-swos-v2-research-grade/data-model.md:79",
+          "specs/008-swos-v2-research-grade/data-model.md:114"
+        ],
+        "finding": "resolved_by_scope is used in an RPM lifecycle transition but is not declared in the status set; its event disposition or durable status semantics must be made explicit."
+      },
+      {
+        "severity": "P1",
+        "references": [
+          "specs/008-swos-v2-research-grade/research.md:48",
+          "specs/008-swos-v2-research-grade/data-model.md:55",
+          "specs/008-swos-v2-research-grade/contracts/interfaces.md:53"
+        ],
+        "finding": "The plan disclaims authentication while the public contract promises rejection of unauthorised mutations; the claim boundary and verifiable approval semantics are inconsistent."
+      },
+      {
+        "severity": "P1",
+        "references": [
+          "specs/008-swos-v2-research-grade/research.md:340",
+          "specs/008-swos-v2-research-grade/contracts/interfaces.md:216",
+          "specs/008-swos-v2-research-grade/contracts/interfaces.md:235"
+        ],
+        "finding": "The research decision allows TriG or N-Quads, but the contract exposes only prov-o-trig and does not explicitly model the N-Quads profile."
+      },
+      {
+        "severity": "P1",
+        "references": [
+          "specs/008-swos-v2-research-grade/research.md:435",
+          "specs/008-swos-v2-research-grade/research.md:458",
+          "specs/008-swos-v2-research-grade/contracts/interfaces.md:311"
+        ],
+        "finding": "Promotion and multimodal gates lack a complete normative metric contract for primary metric, pairing/matching unit, CI method, denominator, and empty-case handling."
+      },
+      {
+        "severity": "P1",
+        "references": [
+          "specs/008-swos-v2-research-grade/research.md:285",
+          "specs/008-swos-v2-research-grade/research.md:309",
+          "specs/008-swos-v2-research-grade/data-model.md:248"
+        ],
+        "finding": "Diversity names normalized balances and a geometric composite without normative formulas or complete edge-case semantics."
+      }
+    ],
+    "constraint": "The frozen planning corpus may change only through task completion markers; no wording, threshold, contract, ordering, architectural-decision, or promotion-gate edits were made."
+  },
   "implementation": {
     "pull_request": 58,
     "branch": "codex/swos-v2-t070-floor-gate",
-    "head_sha": "fc03d2a10db93ccc1011946abe71c3acea45e45d",
+    "head_sha": "18ce33bad66bece28b02e84ab7ef8f532a45dacf",
+    "tested_source_head_sha": "fc03d2a10db93ccc1011946abe71c3acea45e45d",
+    "pull_request_head_sha": "7a8142c709821fee4b69344e6da0990bb4297053",
+    "merged_sha": "9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158",
+    "post_merge_attestation": {
+      "pull_request": 59,
+      "head_sha": "dcb3378f6ed5252caeee9aec8f1dc64b591ed7cf",
+      "merged_sha": "18ce33bad66bece28b02e84ab7ef8f532a45dacf"
+    },
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/58",
     "last_reconciled_task": "T095",
-    "last_action": "Hardened T070's citation corpus ingestion and generated licence evidence, complete per-pair human annotation/adjudication validation, T073's locked-test-to-dataset-manifest binding, T080's production-path diversity benchmark, and T093-T095's provenance certification boundaries with explicit JSON-object, bounded-file, checksummed-corpus, required-category, resource-limit, path-containment, canonical-depth, cycle, deadline, malformed-record, structural-map, lossless-marker, exact-profile/version, unique-case-path, duplicate-payload, and licensed-oracle checks while preserving T070 and T073 fail-closed release behavior. The latest T080 repair validates the frozen manifest envelope, requires unique complete locked packet coverage across all nine disciplines, rejects malformed source/claim/expected/requirement records, and exposes pre-retrieval requirement digests. Added the bounded T020 safety-mutation harness and exact focused regression coverage for RPM provenance/approval/head guards, append-only event hashes, and ZIP member safety. The harness runs six explicit mutations against temporary package copies, strips credential environment variables, records output digests without raw output, and fails on survivors or probe errors; the licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, and independent human records remain absent, so T070, T073, T079, T080, and T093-T095 remain pending.",
+    "last_action": "Reconciled the queue to the exact current main head after PR #58 merged as 9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158 and signed-off PR #59 merged as 18ce33bad66bece28b02e84ab7ef8f532a45dacf. The tested implementation source remains fc03d2a10db93ccc1011946abe71c3acea45e45d and the final PR head remains 7a8142c709821fee4b69344e6da0990bb4297053; the post-merge attestation changed no tree content. The implementation still hardens T070's citation corpus ingestion and generated licence evidence, complete per-pair human annotation/adjudication validation, T073's locked-test-to-dataset-manifest binding, T080's production-path diversity benchmark, and T093-T095's provenance certification boundaries while preserving fail-closed release behavior. The licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, independent human records, portability evidence, external audit pack, and owner decisions remain absent, so all eleven release tasks remain pending.",
     "last_action_evidence": [
       "focused T070 citation dataset suite: 11 tests pass",
       "focused T073 evaluator suite: 6 tests pass",
@@ -41,7 +102,12 @@
       "T073 locked-test binding regression: the evaluator requires a frozen sibling dataset manifest whose canonical digest matches the verified model and whose locked_test count/digest matches the supplied rows",
       "T080 integrity regression: malformed claims are rejected instead of dropped, incomplete nine-discipline coverage is not_run, and valid packet requirements are bound by canonical digest",
       "T093-T095 provenance integrity regression: non-empty corpus manifests require frozen versioned metadata, unique case paths and payload digests, EPG/PROV inputs reject mismatched profiles or schema versions, and legacy minimal PROV-JSON compatibility remains intact",
-      "PR #58 exact-head hosted checks at fc03d2a10db93ccc1011946abe71c3acea45e45d: SWOS CI 33597762536, SWOS CodeQL 33597762521, Research Grade compatibility 33597762535, SWOS Prose Benchmark 33597762513, SWOS Portability Gate 33597762495, and SWOS Engineering Quality 33597762527; all six workflow runs pass, including mutation and coverage steps"
+      "PR #58 exact-head hosted checks at fc03d2a10db93ccc1011946abe71c3acea45e45d: SWOS CI 33597762536, SWOS CodeQL 33597762521, Research Grade compatibility 33597762535, SWOS Prose Benchmark 33597762513, SWOS Portability Gate 33597762495, and SWOS Engineering Quality 33597762527; all six workflow runs pass, including mutation and coverage steps",
+      "current main exact-head reconciliation: origin/main and local main both point to 18ce33bad66bece28b02e84ab7ef8f532a45dacf; PR #58 merged as 9a34c4605e2f8a7e32fda5c7c2049b2ae26f0158 and PR #59 merged as the signed-off attestation 18ce33bad66bece28b02e84ab7ef8f532a45dacf",
+      "current main hosted post-merge workflows: SWOS CI 33600294323, Research Grade compatibility 33600294359, SWOS CodeQL 33600294352, and SWOS Engineering Quality 33600294319; all completed successfully at the exact current head",
+      "current task-marker audit: 129 ordered unique tasks, 118 checked and 11 open; the only difference from the PR #55 exact planning tree is permitted [ ] to [x] task-marker changes",
+      "current release portability check: python tools/check_portability_acceptance.py --release fails closed because api_provider_changed, claude_code_subscription, codex_chatgpt_subscription, model_changed_same_provider, openai_api, and replay_host_bundle lack required PASS evidence",
+      "current pre-freeze audit-pack verifier: python tools/assemble_research_grade_audit_pack.py --verify-only fails closed because the committed manifest names missing reports/coverage.json; this is not release certification evidence"
     ]
   },
   "summary": {
@@ -241,6 +307,11 @@
       "evidence": "PR #55 merged as 11490869b52f146569bcd19cc17cef134012c81b"
     },
     {
+      "id": "planning-exact-head-review",
+      "status": "blocked",
+      "evidence": "Independent exact-head review of b8f18e261d3baa8e11749d2ad663ba8bd06e04b1 against 8d440296b4a9df708f1140a04bae1ae24f74fee3 identified five P1 planning-contract blockers recorded in planning_review; the frozen planning corpus was not edited."
+    },
+    {
       "id": "post-merge-main-ci",
       "status": "historical-deviation",
       "evidence": "SWOS CI run 33565116220 on 11490869b52f146569bcd19cc17cef134012c81b failed only DCO sign-off because the squash-generated planning commit has no standalone Signed-off-by; CodeQL and Engineering Quality passed."
@@ -249,6 +320,11 @@
       "id": "implementation-hosted-ci",
       "status": "pass",
       "evidence": "Six required workflows passed at PR #58 head fc03d2a10db93ccc1011946abe71c3acea45e45d: SWOS CI 33597762536, SWOS CodeQL 33597762521, Research Grade compatibility 33597762535, SWOS Prose Benchmark 33597762513, SWOS Portability Gate 33597762495, and SWOS Engineering Quality 33597762527; Engineering Quality includes the bounded mutation and coverage steps."
+    },
+    {
+      "id": "current-main-ci",
+      "status": "pass",
+      "evidence": "The four required push workflows completed successfully at 18ce33bad66bece28b02e84ab7ef8f532a45dacf: SWOS CI 33600294323, Research Grade compatibility 33600294359, SWOS CodeQL 33600294352, and SWOS Engineering Quality 33600294319."
     },
     {
       "id": "portability-definitions",
