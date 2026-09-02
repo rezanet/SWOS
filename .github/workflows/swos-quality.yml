@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -36,6 +38,17 @@ jobs:
         run: python tools/check_vendor_leakage.py
       - name: Validate frozen portability matrix
         run: python tools/check_portability_acceptance.py --definitions-only
+      - name: Run bounded safety mutation checks
+        env:
+          SWOS_EXPECTED_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python tools/run_mutation_checks.py --report artifacts/research-grade/mutation-report.json --expected-source-sha "$SWOS_EXPECTED_SOURCE_SHA"
+      - name: Upload mutation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swos-safety-mutation
+          path: artifacts/research-grade/mutation-report.json
+          retention-days: 14
       - name: Run deterministic Prose and autonomous-runtime tests with coverage
         run: |
           python -m coverage erase
@@ -59,6 +72,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -72,6 +87,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"

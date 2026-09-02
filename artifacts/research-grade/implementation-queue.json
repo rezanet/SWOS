@@ -10,22 +10,38 @@
     "url": "https://github.com/rezanet/SWOS/pull/55"
   },
   "implementation": {
-    "pull_request": 57,
-    "branch": "codex/swos-v2-research-grade",
-    "head_sha": "0a746c7ee94f47ab1ca580600385aec8a5e7fe0a",
+    "pull_request": 58,
+    "branch": "codex/swos-v2-t070-floor-gate",
+    "head_sha": "fc03d2a10db93ccc1011946abe71c3acea45e45d",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
-    "url": "https://github.com/rezanet/SWOS/pull/57",
-    "last_reconciled_task": "T070",
-    "last_action": "Executed the next frozen task T070 against the current checkout; the bounded citation workflow failed closed with NOT_RUN because the licensed corpus, double annotations, adjudication, and independent approval are absent. T070 remains pending.",
+    "url": "https://github.com/rezanet/SWOS/pull/58",
+    "last_reconciled_task": "T095",
+    "last_action": "Hardened T070's citation corpus ingestion and generated licence evidence, complete per-pair human annotation/adjudication validation, T073's locked-test-to-dataset-manifest binding, T080's production-path diversity benchmark, and T093-T095's provenance certification boundaries with explicit JSON-object, bounded-file, checksummed-corpus, required-category, resource-limit, path-containment, canonical-depth, cycle, deadline, malformed-record, structural-map, lossless-marker, exact-profile/version, unique-case-path, duplicate-payload, and licensed-oracle checks while preserving T070 and T073 fail-closed release behavior. The latest T080 repair validates the frozen manifest envelope, requires unique complete locked packet coverage across all nine disciplines, rejects malformed source/claim/expected/requirement records, and exposes pre-retrieval requirement digests. Added the bounded T020 safety-mutation harness and exact focused regression coverage for RPM provenance/approval/head guards, append-only event hashes, and ZIP member safety. The harness runs six explicit mutations against temporary package copies, strips credential environment variables, records output digests without raw output, and fails on survivors or probe errors; the licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, and independent human records remain absent, so T070, T073, T079, T080, and T093-T095 remain pending.",
     "last_action_evidence": [
-      "focused review regression suite: 33 tests pass",
-      "python -m unittest discover -s tests/runtime -p 'test_*.py': 217 passed",
+      "focused T070 citation dataset suite: 11 tests pass",
+      "focused T073 evaluator suite: 6 tests pass",
+      "focused T080 diversity benchmark suite: 6 tests pass",
+      "focused T093-T095 provenance boundary suite: 39 tests pass",
+      "python tools/run_mutation_checks.py --report artifacts/research-grade/mutation-report.json at source fc03d2a10db93ccc1011946abe71c3acea45e45d: passed, 6/6 mutants killed, zero survivors/errors",
+      "historical at 1bef2f252b5dbef10bd70375dbbce10c08ec726f: python -m unittest discover -s tests/runtime -p 'test_*.py' returned 263 passed",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py' at fc03d2a10db93ccc1011946abe71c3acea45e45d: 289 passed",
       "python -m unittest discover -s tests/prose -p 'test_*.py': 240 passed, 11 expected live-provider skips",
-      "ruff check and format validation for repaired surfaces: pass",
+      "python -m unittest discover -s tests -p 'test_*.py' at fc03d2a10db93ccc1011946abe71c3acea45e45d: 17 passed",
+      "coverage at fc03d2a10db93ccc1011946abe71c3acea45e45d: 82% total (10,244 statements, 1,533 missed), executable swos_prose 81.56%, required 80%, critical module floors pass",
+      "Ruff format and lint checks for the workflow-scanned surfaces: pass",
+      "schema validation: 58 artefacts pass; research-grade contract examples and Spec Kit consistency pass",
+      "Bandit, dependency audit, governance, vendor-leakage, workflow-profile, portability-definition, and DCO checks: pass",
       "v1 compatibility manifest: 118 recorded file digests match current files and c4ec2945 baseline",
       "python tools/build_citation_dataset.py: exit 2, status not_run, zero output files, source manifest has zero sources",
-      "task freeze audit at 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: 118 marker-only changes, zero non-marker differences"
+      "task freeze audit at 1bef2f252b5dbef10bd70375dbbce10c08ec726f: 118 marker-only changes, zero non-marker differences",
+      "T070 floor and split regression: all seven frozen minima and all five required partitions are enforced; under-floor reports remain blocked",
+      "T070 human-record regression: incomplete annotations, invalid labels, duplicate annotators, missing adjudicator identity/rationale, adjudicator reuse, and label disagreement are rejected",
+      "T073 release-input execution: status not_run, gate_result not_run, and zero prediction bytes because the checked-in verified model manifest is absent",
+      "T073 locked-test binding regression: the evaluator requires a frozen sibling dataset manifest whose canonical digest matches the verified model and whose locked_test count/digest matches the supplied rows",
+      "T080 integrity regression: malformed claims are rejected instead of dropped, incomplete nine-discipline coverage is not_run, and valid packet requirements are bound by canonical digest",
+      "T093-T095 provenance integrity regression: non-empty corpus manifests require frozen versioned metadata, unique case paths and payload digests, EPG/PROV inputs reject mismatched profiles or schema versions, and legacy minimal PROV-JSON compatibility remains intact",
+      "PR #58 exact-head hosted checks at fc03d2a10db93ccc1011946abe71c3acea45e45d: SWOS CI 33597762536, SWOS CodeQL 33597762521, Research Grade compatibility 33597762535, SWOS Prose Benchmark 33597762513, SWOS Portability Gate 33597762495, and SWOS Engineering Quality 33597762527; all six workflow runs pass, including mutation and coverage steps"
     ]
   },
   "summary": {
@@ -232,7 +248,7 @@
     {
       "id": "implementation-hosted-ci",
       "status": "pass",
-      "evidence": "Required workflows passed at exact frozen artifact head 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: SWOS Prose Benchmark 33570127862, SWOS Portability Gate 33570127737, Research Grade compatibility 33570127760, SWOS CI 33570127761, SWOS CodeQL 33570127816, and SWOS Engineering Quality 33570127790."
+      "evidence": "Six required workflows passed at PR #58 head fc03d2a10db93ccc1011946abe71c3acea45e45d: SWOS CI 33597762536, SWOS CodeQL 33597762521, Research Grade compatibility 33597762535, SWOS Prose Benchmark 33597762513, SWOS Portability Gate 33597762495, and SWOS Engineering Quality 33597762527; Engineering Quality includes the bounded mutation and coverage steps."
     },
     {
       "id": "portability-definitions",

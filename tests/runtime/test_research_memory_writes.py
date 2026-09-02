@@ -109,6 +109,25 @@ class ResearchMemoryWriteTests(unittest.TestCase):
                 self.scope, assessment_id=assessment.assessment_id, approval=forged
             )
 
+    def test_commit_rejects_a_changed_chain_head(self) -> None:
+        operation = RPMOperation.write(self.scope, self._candidate())
+        assessment = self.service.assess_operation(self.scope, operation)
+        self.service.store.append_event(
+            self.scope,
+            "test-concurrent-event",
+            "concurrent-item",
+            {"status": "active"},
+            operation_id="test-concurrent-operation",
+        )
+        with self.assertRaises(SWOSRuntimeError):
+            self.service.commit_operation(
+                self.scope,
+                assessment_id=assessment.assessment_id,
+                approval=HumanApproval.for_assessment(
+                    assessment, approver="reviewer", role="memory_owner"
+                ),
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

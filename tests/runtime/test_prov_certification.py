@@ -7,7 +7,7 @@ from dataclasses import replace
 from unittest.mock import patch
 
 from swos_runtime.prov_interop import epg_to_prov
-from swos_runtime.prov_model import ResourceLimits
+from swos_runtime.prov_model import ProvDocument, ResourceLimits
 from swos_runtime.prov_validation import canonical_fingerprint, certify_round_trip
 from tests.runtime.test_epg_v2 import sample_epg
 
@@ -24,6 +24,46 @@ class ProvCertificationTests(unittest.TestCase):
         self.assertTrue(certificate.legs)
         self.assertIn("EPG -> PROV-JSON -> EPG", certificate.paths)
         self.assertTrue(all(item["semantic_equivalent"] for item in certificate.legs))
+
+    def test_round_trip_semantic_comparisons_receive_resource_deadlines(self) -> None:
+        observed_deadlines = []
+        original = ProvDocument.semantic_normal_form
+
+        def observe(document: ProvDocument, **kwargs):
+            observed_deadlines.append(kwargs.get("deadline"))
+            return original(document, **kwargs)
+
+        with patch.object(ProvDocument, "semantic_normal_form", observe):
+            certify_round_trip(
+                sample_epg(),
+                ("prov-json",),
+                oracle={"status": "not_run"},
+                limits=ResourceLimits(),
+            )
+
+        self.assertTrue(observed_deadlines)
+        self.assertTrue(all(deadline is not None for deadline in observed_deadlines))
+
+    def test_accepted_oracle_requires_a_pinned_licence(self) -> None:
+        epg = sample_epg()
+        fingerprint = canonical_fingerprint(
+            epg_to_prov(epg, base_iri=epg["base_iri"]), ResourceLimits()
+        )
+        oracle = {
+            "status": "accepted",
+            "implementation": "ProvToolbox",
+            "version": "3.0.0",
+            "artifact_sha256": "a" * 64,
+            "profile": epg["profile"],
+            "formats": ["prov-json"],
+            "input_digest": fingerprint.semantic_digest,
+        }
+
+        certificate = certify_round_trip(
+            epg, ("prov-json",), oracle=oracle, limits=ResourceLimits()
+        )
+
+        self.assertNotEqual("certified", certificate.status)
 
     def test_invalid_oracle_cannot_be_certified(self) -> None:
         certificate = certify_round_trip(
@@ -43,6 +83,7 @@ class ProvCertificationTests(unittest.TestCase):
             "status": "accepted",
             "implementation": "ProvToolbox",
             "version": "3.0.0",
+            "licence": "Apache-2.0",
             "artifact_sha256": "a" * 64,
             "profile": epg["profile"],
             "formats": ["prov-json"],
@@ -57,6 +98,17 @@ class ProvCertificationTests(unittest.TestCase):
         certificate = certify_round_trip(
             epg, ("prov-json",), oracle=oracle, limits=ResourceLimits()
         )
+        self.assertNotEqual("certified", certificate.status)
+
+        oracle["artifact_verified"] = True
+        oracle["verification"] = {
+            "status": "verified",
+            "artifact_sha256": oracle["artifact_sha256"],
+            "execution_status": "passed",
+        }
+        certificate = certify_round_trip(
+            epg, ("prov-json",), oracle=oracle, limits=ResourceLimits()
+        )
         self.assertEqual("certified", certificate.status)
 
     def test_second_cross_format_route_is_executed_not_hard_coded(self) -> None:
@@ -68,6 +120,7 @@ class ProvCertificationTests(unittest.TestCase):
             "status": "accepted",
             "implementation": "ProvToolbox",
             "version": "3.0.0",
+            "licence": "Apache-2.0",
             "artifact_sha256": "a" * 64,
             "profile": epg["profile"],
             "formats": ["prov-json", "prov-n", "prov-o-trig"],
@@ -94,6 +147,44 @@ class ProvCertificationTests(unittest.TestCase):
             )
         self.assertNotEqual("certified", certificate.status)
         self.assertEqual(11, calls["count"])
+
+    def test_full_matrix_requires_rdf_shacl_validation(self) -> None:
+        epg = sample_epg()
+        fingerprint = canonical_fingerprint(
+            epg_to_prov(epg, base_iri=epg["base_iri"]), ResourceLimits()
+        )
+        oracle = {
+            "status": "accepted",
+            "implementation": "ProvToolbox",
+            "version": "3.0.0",
+            "licence": "Apache-2.0",
+            "artifact_sha256": "a" * 64,
+            "artifact_verified": True,
+            "verification": {
+                "status": "verified",
+                "artifact_sha256": "a" * 64,
+                "execution_status": "passed",
+            },
+            "profile": epg["profile"],
+            "formats": ["prov-json", "prov-n", "prov-o-trig"],
+            "input_digest": fingerprint.semantic_digest,
+        }
+        with patch.dict("sys.modules", {"pyshacl": None, "rdflib": None}):
+            certificate = certify_round_trip(
+                epg,
+                ("prov-json", "prov-n", "prov-o-trig"),
+                oracle=oracle,
+                limits=ResourceLimits(),
+            )
+        self.assertNotEqual("certified", certificate.status)
+        trig_legs = [
+            leg
+            for leg in certificate.legs
+            if isinstance(leg.get("validation"), dict)
+            and leg["validation"].get("format") == "prov-o-trig"
+        ]
+        self.assertTrue(trig_legs)
+        self.assertFalse(trig_legs[0]["validation"]["report"]["shacl"]["passed"])
 
 
 if __name__ == "__main__":

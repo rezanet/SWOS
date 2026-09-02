@@ -4,9 +4,12 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+import zipfile
 from dataclasses import replace
 from pathlib import Path
+from unittest.mock import patch
 
+from swos_runtime.models import ResourceLimitError
 from swos_runtime.programme_store import ProgrammeStore
 from swos_runtime.research_memory import (
     DataClassification,
@@ -16,7 +19,7 @@ from swos_runtime.research_memory import (
     ResearchScope,
     RPMOperation,
 )
-from swos_runtime.rpm_exchange import BundleLimits, ExportSelection, RPMExchange
+from swos_runtime.rpm_exchange import BundleLimits, ExchangeError, ExportSelection, RPMExchange
 
 
 class RPMExchangeTests(unittest.TestCase):
@@ -167,6 +170,69 @@ class RPMExchangeTests(unittest.TestCase):
             exchange.inspect_import(
                 self.root / "../evil.zip", destination=self.scope, limits=BundleLimits(max_bytes=1)
             )
+
+    def test_zip_slip_and_duplicate_member_paths_are_rejected(self) -> None:
+        exchange = RPMExchange(self.service)
+        zip_path = self.root / "unsafe.zip"
+        with zipfile.ZipFile(zip_path, "w") as archive:
+            archive.writestr("../outside.txt", "blocked")
+            archive.writestr("manifest.json", "{}")
+            archive.writestr("events.ndjson", "")
+            archive.writestr("checksums.json", "{}")
+            archive.writestr("limitations.json", "{}")
+        with self.assertRaisesRegex(ExchangeError, "unsafe bundle path"):
+            exchange._read_bundle(zip_path, BundleLimits())
+
+        duplicate_path = self.root / "duplicate.zip"
+        with zipfile.ZipFile(duplicate_path, "w") as archive:
+            archive.writestr("manifest.json", "{}")
+            archive.writestr("manifest.json", "{}")
+        with self.assertRaisesRegex(ExchangeError, "duplicate bundle path"):
+            exchange._read_bundle(duplicate_path, BundleLimits())
+
+    def test_import_enforces_cumulative_byte_limit_before_materializing_payload(self) -> None:
+        exchange = RPMExchange(self.service)
+        zip_path = self.root / "oversized-payload.zip"
+        with zipfile.ZipFile(zip_path, "w") as archive:
+            archive.writestr("manifest.json", "{}")
+        with self.assertRaises(ResourceLimitError):
+            exchange._read_bundle(zip_path, BundleLimits(max_bytes=1))
+
+    def test_directory_entry_limit_is_enforced_during_iteration(self) -> None:
+        exchange = RPMExchange(self.service)
+        bundle = self.root / "directory-bundle"
+        bundle.mkdir()
+        for name in (
+            "manifest.json",
+            "events.ndjson",
+            "checksums.json",
+            "limitations.json",
+            "extra.json",
+        ):
+            (bundle / name).write_text("{}", encoding="utf-8")
+
+        with patch.object(Path, "rglob", side_effect=AssertionError("rglob materializes the tree")):
+            with self.assertRaises(ResourceLimitError):
+                exchange._read_bundle(bundle, BundleLimits(max_files=4))
+
+    def test_zip_entry_limit_does_not_copy_the_central_directory(self) -> None:
+        exchange = RPMExchange(self.service)
+        zip_path = self.root / "entry-limit.zip"
+        with zipfile.ZipFile(zip_path, "w") as archive:
+            for name in (
+                "manifest.json",
+                "events.ndjson",
+                "checksums.json",
+                "limitations.json",
+                "extra.json",
+            ):
+                archive.writestr(name, "{}")
+
+        with patch.object(
+            zipfile.ZipFile, "infolist", side_effect=AssertionError("infolist copied entries")
+        ):
+            with self.assertRaises(ResourceLimitError):
+                exchange._read_bundle(zip_path, BundleLimits(max_files=4))
 
 
 if __name__ == "__main__":

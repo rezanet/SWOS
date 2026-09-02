@@ -123,25 +123,34 @@ def validate_pair_source_binding(
 
 
 def validate_pair_record(row: Mapping[str, Any]) -> None:
+    if not isinstance(row, Mapping):
+        raise DatasetValidationError("pair record must be an object")
     required = (
         "pair_id",
         "claim",
         "exact_quote",
+        "discipline",
         "source_uri",
         "source_digest",
         "licence",
         "group_id",
     )
-    missing = [key for key in required if not str(row.get(key) or "").strip()]
+    missing = [key for key in required if not isinstance(row.get(key), str) or not row[key].strip()]
     if missing:
         raise DatasetValidationError("pair is missing " + ", ".join(missing))
     adjudication = row.get("adjudication")
-    adjudicated_label = adjudication.get("label") if isinstance(adjudication, Mapping) else None
-    if str(row.get("label") or adjudicated_label) not in LABELS:
-        raise DatasetValidationError("pair label is not one of the five support labels")
+    if not isinstance(adjudication, Mapping) or adjudication.get("status") != "adjudicated":
+        raise DatasetValidationError("pair lacks adjudication")
+    adjudicated_label = adjudication.get("label")
+    if not isinstance(adjudicated_label, str) or adjudicated_label not in LABELS:
+        raise DatasetValidationError("adjudication label is not one of the five support labels")
+    pair_label = row.get("label")
+    if pair_label is not None and pair_label != adjudicated_label:
+        raise DatasetValidationError("pair label disagrees with adjudication")
     if str(row.get("licence")).lower() in {"unknown", "denied", "proprietary", "none"}:
         raise DatasetValidationError("pair source licence is not admissible")
-    if len(str(row.get("source_digest"))) != 64:
+    source_digest = row["source_digest"].lower()
+    if len(source_digest) != 64 or any(char not in "0123456789abcdef" for char in source_digest):
         raise DatasetValidationError("pair source digest is not SHA-256")
     annotations = row.get("annotations")
     if (
@@ -150,13 +159,27 @@ def validate_pair_record(row: Mapping[str, Any]) -> None:
         or len(annotations) < 2
     ):
         raise DatasetValidationError("pair requires two independent annotations")
-    annotators = {
-        str(item.get("annotator_id")) for item in annotations if isinstance(item, Mapping)
-    }
-    if len(annotators) < 2:
+    annotators: set[str] = set()
+    for item in annotations:
+        if not isinstance(item, Mapping):
+            raise DatasetValidationError("pair annotation must be an object")
+        annotator_id = item.get("annotator_id")
+        annotation_label = item.get("label")
+        if not isinstance(annotator_id, str) or not annotator_id.strip():
+            raise DatasetValidationError("pair annotation lacks an annotator ID")
+        if not isinstance(annotation_label, str) or annotation_label not in LABELS:
+            raise DatasetValidationError("pair annotation label is not admissible")
+        annotators.add(annotator_id.strip())
+    if len(annotators) < 2 or len(annotators) != len(annotations):
         raise DatasetValidationError("pair annotations must have distinct annotators")
-    if not isinstance(adjudication, Mapping) or adjudication.get("status") != "adjudicated":
-        raise DatasetValidationError("pair lacks adjudication")
+    adjudicator_id = adjudication.get("adjudicator_id")
+    rationale = adjudication.get("rationale")
+    if not isinstance(adjudicator_id, str) or not adjudicator_id.strip():
+        raise DatasetValidationError("adjudication lacks an adjudicator ID")
+    if not isinstance(rationale, str) or not rationale.strip():
+        raise DatasetValidationError("adjudication lacks a rationale")
+    if adjudicator_id.strip() in annotators:
+        raise DatasetValidationError("adjudicator must be independent of annotators")
 
 
 def grouped_split(

@@ -6,9 +6,11 @@ import hashlib
 import json
 import time
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from .models import canonical_digest
+from .prov_constraints import validate_constraints
 from .prov_model import (
     EPG_VERSION,
     KNOWN_RELATIONS,
@@ -143,18 +145,25 @@ def canonical_fingerprint(
     if not isinstance(document, ProvDocument):
         raise ValueError("canonical_fingerprint requires a ProvDocument")
     limits = limits or ResourceLimits()
-    limits.check_document(document)
-    normal = document.semantic_normal_form()
-    jcs = hashlib.sha256(_json_bytes(normal)).hexdigest()
-    rdf = hashlib.sha256("\n".join(_rdf_statements(document)).encode("utf-8")).hexdigest()
-    provn = hashlib.sha256(
-        "\n".join(
-            sorted(
-                json.dumps(item, sort_keys=True, separators=(",", ":"))
-                for item in document.relations
-            )
-        ).encode("utf-8")
-    ).hexdigest()
+    deadline = limits.operation_deadline()
+    limits.check_document(document, deadline=deadline)
+    normal = document.semantic_normal_form(max_depth=limits.max_depth, deadline=deadline)
+    normal_bytes = _json_bytes(normal)
+    limits.check_bytes(len(normal_bytes))
+    limits.check_deadline(deadline)
+    jcs = hashlib.sha256(normal_bytes).hexdigest()
+    rdf_bytes = "\n".join(_rdf_statements(document)).encode("utf-8")
+    limits.check_bytes(len(rdf_bytes))
+    limits.check_deadline(deadline)
+    rdf = hashlib.sha256(rdf_bytes).hexdigest()
+    provn_bytes = "\n".join(
+        sorted(
+            json.dumps(item, sort_keys=True, separators=(",", ":")) for item in document.relations
+        )
+    ).encode("utf-8")
+    limits.check_bytes(len(provn_bytes))
+    limits.check_deadline(deadline)
+    provn = hashlib.sha256(provn_bytes).hexdigest()
     return CanonicalFingerprint(
         representation="swos-prov-document",
         algorithm="JCS-RFC8785+RDFC-1.0+PROV-N-normal-form",
@@ -183,11 +192,71 @@ def _relation_refs(relation: Mapping[str, Any]) -> list[str]:
     ]
 
 
+def _shacl_validation(
+    document: ProvDocument, *, limits: ResourceLimits, deadline: float
+) -> dict[str, Any]:
+    """Run the pinned SHACL shape when its release-only dependencies exist."""
+
+    try:
+        from pyshacl import validate as pyshacl_validate
+        from rdflib import RDF, Graph, Literal, Namespace, URIRef
+    except ImportError:
+        return {
+            "status": "not_applicable_without_rdflib_pyshacl",
+            "passed": False,
+        }
+    try:
+        limits.check_deadline(deadline)
+        prov = Namespace("http://www.w3.org/ns/prov#")
+        swos = Namespace("https://swos.dev/prov#")
+        data_graph = Graph()
+        for identifier in document.entities:
+            node = URIRef(identifier)
+            data_graph.add((node, RDF.type, prov.Entity))
+            data_graph.add((node, swos.profileId, Literal(document.profile)))
+        for identifier in document.activities:
+            data_graph.add((URIRef(identifier), RDF.type, prov.Activity))
+        for identifier in document.agents:
+            data_graph.add((URIRef(identifier), RDF.type, prov.Agent))
+        shape_path = (
+            Path(__file__).resolve().parents[1]
+            / "schemas"
+            / "provenance-graph"
+            / "swos-prov.shacl.ttl"
+        )
+        shapes_graph = Graph()
+        shapes_graph.parse(shape_path.as_posix(), format="turtle")
+        conforms, _, results_text = pyshacl_validate(
+            data_graph,
+            shacl_graph=shapes_graph,
+            inference="none",
+            abort_on_first=False,
+            allow_infos=False,
+            allow_warnings=False,
+        )
+        limits.check_deadline(deadline)
+        result_bytes = str(results_text).encode("utf-8")
+        limits.check_bytes(len(result_bytes))
+        return {
+            "status": "valid" if conforms else "invalid",
+            "passed": bool(conforms),
+            "implementation": "pyshacl",
+            "results_sha256": hashlib.sha256(result_bytes).hexdigest(),
+        }
+    except (OSError, ValueError, TypeError, RuntimeError) as exc:
+        return {
+            "status": "error",
+            "passed": False,
+            "reason": type(exc).__name__,
+        }
+
+
 def validate_prov(
     document: ProvDocument, profile: str = PROV_PROFILE, *, limits: ResourceLimits | None = None
 ) -> ProvValidationReport:
     started = time.perf_counter()
     limits = limits or ResourceLimits()
+    deadline = limits.operation_deadline()
     violations: list[str] = []
     if not isinstance(document, ProvDocument):
         return ProvValidationReport(
@@ -199,13 +268,19 @@ def validate_prov(
             {"passed": False},
             ("document is not ProvDocument",),
         )
+    if document.schema_version != EPG_VERSION:
+        violations.append(f"unsupported PROV schema version: {document.schema_version}")
+    if profile != PROV_PROFILE:
+        violations.append(f"unsupported PROV profile: {profile}")
+    if document.profile != profile:
+        violations.append(f"document profile does not match requested profile: {document.profile}")
     try:
-        limits.check_document(document)
+        limits.check_document(document, deadline=deadline)
     except ValueError as exc:
         return ProvValidationReport(
             "resource_limit",
             profile,
-            canonical_digest(document.to_dict()),
+            canonical_digest({"status": "resource_limit", "profile": profile, "reason": str(exc)}),
             {"passed": False},
             {"passed": False},
             {"passed": False},
@@ -246,18 +321,52 @@ def validate_prov(
     for bundle_id, bundle in document.bundles.items():
         if not isinstance(bundle.get("statements", []), list):
             violations.append(f"bundle {bundle_id} statements are not a list")
+    try:
+        constraint_report, constraint_violations = validate_constraints(document, deadline=deadline)
+    except ValueError as exc:
+        return ProvValidationReport(
+            "resource_limit",
+            profile,
+            canonical_digest({"status": "resource_limit", "profile": profile, "reason": str(exc)}),
+            {"passed": False},
+            {
+                "status": "resource_limit",
+                "passed": False,
+                "implementation": "swos-prov-constraints/2.0.0",
+                "ruleset": "w3c-prov-constraints/2013",
+            },
+            {"passed": False},
+            (str(exc),),
+            elapsed_seconds=time.perf_counter() - started,
+            statement_count=document.statement_count(),
+        )
+    violations.extend(constraint_violations)
     status = "invalid" if violations else "valid"
-    input_digest = canonical_digest(document.semantic_normal_form())
+    try:
+        limits.check_deadline(deadline)
+        input_digest = canonical_digest(
+            document.semantic_normal_form(max_depth=limits.max_depth, deadline=deadline)
+        )
+    except ValueError as exc:
+        return ProvValidationReport(
+            "resource_limit",
+            profile,
+            canonical_digest({"status": "resource_limit", "profile": profile, "reason": str(exc)}),
+            {"passed": False},
+            {"passed": False},
+            {"passed": False},
+            (str(exc),),
+            elapsed_seconds=time.perf_counter() - started,
+            statement_count=document.statement_count(),
+        )
+    shacl = _shacl_validation(document, limits=limits, deadline=deadline)
     return ProvValidationReport(
         status=status,
         profile=profile,
         input_digest=input_digest,
         syntax={"passed": not violations, "absolute_namespace_policy": True},
-        prov_constraints={"status": "invalid" if violations else "valid", "passed": not violations},
-        shacl={
-            "status": "not_applicable_without_rdflib" if not violations else "not_run",
-            "passed": not violations,
-        },
+        prov_constraints=constraint_report,
+        shacl=shacl,
         violations=tuple(dict.fromkeys(violations)),
         elapsed_seconds=time.perf_counter() - started,
         statement_count=document.statement_count(),
@@ -281,7 +390,10 @@ def certify_round_trip(
         encoded = serialize_prov(original, format_name)
         decoded = parse_prov(encoded, format_name, limits)
         validated = validate_prov(decoded, profile=original.profile, limits=limits)
-        equivalent = decoded.semantic_normal_form() == original.semantic_normal_form()
+        comparison_deadline = limits.operation_deadline()
+        equivalent = decoded.semantic_normal_form(
+            max_depth=limits.max_depth, deadline=comparison_deadline
+        ) == original.semantic_normal_form(max_depth=limits.max_depth, deadline=comparison_deadline)
         roundtrip = epg_to_prov(
             prov_to_epg(decoded, profile=original.profile), base_iri=original.base_iri
         )
@@ -301,6 +413,7 @@ def certify_round_trip(
                 "input_fingerprint": source_fingerprint.to_dict(),
                 "output_fingerprint": second.to_dict(),
                 "stable_second_round": second.semantic_digest == source_fingerprint.semantic_digest,
+                "validation": {"format": format_name, "report": validated.to_dict()},
             }
         )
     if set(formats) >= {"prov-json", "prov-n", "prov-o-trig"}:
@@ -308,19 +421,23 @@ def certify_round_trip(
         def cross_format_leg(path: str, route: Sequence[str]) -> dict[str, Any]:
             current = original
             parse_statuses: list[str] = []
+            validations: list[dict[str, Any]] = []
             error = ""
             for format_name in route:
                 try:
                     current = parse_prov(serialize_prov(current, format_name), format_name, limits)
-                    parse_statuses.append(
-                        validate_prov(current, profile=original.profile, limits=limits).status
-                    )
+                    validation = validate_prov(current, profile=original.profile, limits=limits)
+                    parse_statuses.append(validation.status)
+                    validations.append({"format": format_name, "report": validation.to_dict()})
                 except Exception as exc:  # a failed route can never certify the input
                     error = f"{type(exc).__name__}: {exc}"
                     parse_statuses.append("error")
                     break
-            semantic_equivalent = (
-                not error and current.semantic_normal_form() == original.semantic_normal_form()
+            comparison_deadline = limits.operation_deadline()
+            semantic_equivalent = not error and current.semantic_normal_form(
+                max_depth=limits.max_depth, deadline=comparison_deadline
+            ) == original.semantic_normal_form(
+                max_depth=limits.max_depth, deadline=comparison_deadline
             )
             assertions_preserved = (
                 not error
@@ -334,6 +451,7 @@ def certify_round_trip(
                 if parse_statuses and all(item == "valid" for item in parse_statuses)
                 else "invalid",
                 "parse_statuses": parse_statuses,
+                "validation": validations,
                 "semantic_equivalent": semantic_equivalent,
                 "assertions_preserved": assertions_preserved,
                 "stable_second_round": semantic_equivalent and assertions_preserved,
@@ -370,6 +488,12 @@ def certify_round_trip(
         or processor.get("name")
     )
     version = oracle_payload.get("version") or processor.get("version")
+    licence = (
+        oracle_payload.get("licence")
+        or oracle_payload.get("license")
+        or processor.get("licence")
+        or processor.get("license")
+    )
     processor_digest = (
         oracle_payload.get("artifact_sha256")
         or oracle_payload.get("artifact_digest")
@@ -385,15 +509,46 @@ def certify_round_trip(
         and tuple(str(item) for item in oracle_formats) == tuple(formats)
         and bool(str(implementation or "").strip())
         and bool(str(version or "").strip())
+        and bool(str(licence or "").strip())
         and isinstance(processor_digest, str)
         and len(processor_digest) == 64
         and all(character in "0123456789abcdef" for character in processor_digest)
+        and oracle_payload.get("artifact_verified") is True
+        and isinstance(oracle_payload.get("verification"), Mapping)
+        and oracle_payload["verification"].get("status") == "verified"
+        and oracle_payload["verification"].get("artifact_sha256") == processor_digest
+        and oracle_payload["verification"].get("execution_status") == "passed"
     )
+
+    def validation_passed(leg: Mapping[str, Any]) -> bool:
+        validation = leg.get("validation")
+        reports = [validation] if isinstance(validation, Mapping) else validation or []
+        if not reports or not isinstance(reports, Sequence):
+            return False
+        for item in reports:
+            if not isinstance(item, Mapping):
+                return False
+            report = item.get("report")
+            if not isinstance(report, Mapping):
+                return False
+            if not (
+                report.get("syntax", {}).get("passed") is True
+                and report.get("prov_constraints", {}).get("passed") is True
+            ):
+                return False
+            if (
+                item.get("format") == "prov-o-trig"
+                and report.get("shacl", {}).get("passed") is not True
+            ):
+                return False
+        return True
+
     all_internal = all(
         item.get("semantic_equivalent")
         and item.get("assertions_preserved")
         and item.get("stable_second_round")
         and item.get("parse_status") == "valid"
+        and validation_passed(item)
         for item in legs
     )
     if oracle_status in {"failed", "invalid", "error"}:

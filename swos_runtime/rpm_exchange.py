@@ -344,25 +344,63 @@ class RPMExchange:
     def _write_file(path: Path, content: str) -> None:
         path.write_text(content, encoding="utf-8", newline="\n")
 
+    @staticmethod
+    def _read_limited(stream: Any, maximum: int) -> bytes:
+        if maximum < 0:
+            raise ResourceLimitError("bundle byte limit is exhausted")
+        chunks = bytearray()
+        while len(chunks) <= maximum:
+            chunk = stream.read(min(1024 * 1024, maximum - len(chunks) + 1))
+            if not chunk:
+                return bytes(chunks)
+            chunks.extend(chunk)
+        raise ResourceLimitError("bundle exceeds byte limit before materialization")
+
     def _read_bundle(self, bundle: str | Path, limits: BundleLimits) -> dict[str, bytes]:
         path = Path(bundle)
         files: dict[str, bytes] = {}
+        total_bytes = 0
+        total_uncompressed_bytes = 0
+
+        def read_payload(stream: Any, declared_size: int | None = None) -> bytes:
+            nonlocal total_bytes, total_uncompressed_bytes
+            remaining = min(
+                limits.max_bytes - total_bytes,
+                limits.max_uncompressed_bytes - total_uncompressed_bytes,
+            )
+            if declared_size is not None and declared_size > remaining:
+                if declared_size > limits.max_uncompressed_bytes - total_uncompressed_bytes:
+                    raise ResourceLimitError("bundle exceeds uncompressed byte limit")
+                raise ResourceLimitError("bundle exceeds byte limit before materialization")
+            payload = self._read_limited(stream, remaining)
+            total_bytes += len(payload)
+            total_uncompressed_bytes += len(payload)
+            return payload
+
         if path.is_dir():
-            candidates = list(path.rglob("*"))
-            if len(candidates) > limits.max_files * 2:
-                raise ResourceLimitError("bundle entry count exceeds limit")
-            for item in candidates:
-                if item.is_symlink() or (not item.is_file() and not item.is_dir()):
-                    raise ExchangeError(f"links and devices are not allowed: {item}")
-                if item.is_file():
+            pending = [path]
+            entry_count = 0
+            while pending:
+                directory = pending.pop()
+                for item in directory.iterdir():
+                    entry_count += 1
+                    if entry_count > limits.max_files * 2:
+                        raise ResourceLimitError("bundle entry count exceeds limit")
+                    if item.is_symlink() or (not item.is_file() and not item.is_dir()):
+                        raise ExchangeError(f"links and devices are not allowed: {item}")
+                    if item.is_dir():
+                        pending.append(item)
+                        continue
+                    if len(files) >= limits.max_files:
+                        raise ResourceLimitError("bundle file count exceeds limit")
                     name = _safe_member(item.relative_to(path).as_posix())
-                    files[name] = item.read_bytes()
+                    with item.open("rb") as stream:
+                        files[name] = read_payload(stream, item.stat().st_size)
         elif path.is_file() and path.suffix.lower() == ".zip":
             with zipfile.ZipFile(path) as archive:
-                infos = archive.infolist()
-                if len(infos) > limits.max_files:
-                    raise ResourceLimitError("bundle file count exceeds limit")
-                for info in infos:
+                for entry_count, info in enumerate(archive.filelist, start=1):
+                    if entry_count > limits.max_files:
+                        raise ResourceLimitError("bundle file count exceeds limit")
                     if info.is_dir():
                         continue
                     name = _safe_member(info.filename)
@@ -373,12 +411,15 @@ class RPMExchange:
                         raise ExchangeError("zip symlink is not allowed")
                     if info.file_size > limits.max_uncompressed_bytes:
                         raise ResourceLimitError("compressed member exceeds uncompressed limit")
-                    files[name] = archive.read(info)
+                    with archive.open(info, "r") as stream:
+                        files[name] = read_payload(stream, info.file_size)
         else:
             raise ExchangeError("bundle must be a directory or zip file")
         if len(files) > limits.max_files:
             raise ResourceLimitError("bundle file count exceeds limit")
-        if sum(len(value) for value in files.values()) > limits.max_uncompressed_bytes:
+        if total_bytes > limits.max_bytes:
+            raise ResourceLimitError("bundle exceeds byte limit")
+        if total_uncompressed_bytes > limits.max_uncompressed_bytes:
             raise ResourceLimitError("bundle exceeds uncompressed byte limit")
         if not self.REQUIRED_FILES <= set(files):
             raise ExchangeError("bundle is missing required files")

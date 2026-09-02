@@ -7,6 +7,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 WORKFLOW = ROOT / ".github" / "workflows" / "research-grade-ci.yml"
+PROV_WORKFLOW = ROOT / ".github" / "workflows" / "prov-certification.yml"
+REQUIRED_PR_WORKFLOWS = (
+    ".github/workflows/swos-ci.yml",
+    ".github/workflows/codeql.yml",
+    ".github/workflows/research-grade-ci.yml",
+    ".github/workflows/swos-prose-benchmark.yml",
+    ".github/workflows/swos-portability-gate.yml",
+    ".github/workflows/swos-quality.yml",
+)
+EXACT_PR_HEAD_REF = "ref: ${{ github.event.pull_request.head.sha || github.sha }}"
 
 
 class ResearchGradeCIContractTests(unittest.TestCase):
@@ -30,6 +40,25 @@ class ResearchGradeCIContractTests(unittest.TestCase):
         self.assertNotIn("huggingface-cli download", text)
         self.assertNotIn("sentence-transformers", text)
         self.assertNotIn("pytest --run-live", text)
+
+    def test_required_pr_workflows_check_out_the_exact_pr_head(self) -> None:
+        for relative in REQUIRED_PR_WORKFLOWS:
+            with self.subTest(workflow=relative):
+                text = (ROOT / relative).read_text(encoding="utf-8")
+                checkout_count = text.count("uses: actions/checkout@v4")
+                self.assertGreater(checkout_count, 0)
+                self.assertEqual(checkout_count, text.count(EXACT_PR_HEAD_REF))
+
+    def test_mutation_evidence_is_bound_to_the_checked_out_head(self) -> None:
+        text = (ROOT / ".github/workflows/swos-quality.yml").read_text(encoding="utf-8")
+        self.assertIn("SWOS_EXPECTED_SOURCE_SHA", text)
+        self.assertIn("--expected-source-sha", text)
+
+    def test_prov_certification_installs_release_validators(self) -> None:
+        self.assertTrue(PROV_WORKFLOW.is_file())
+        text = PROV_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn(".[research-grade]", text)
+        self.assertIn("python tools/certify_prov_roundtrip.py", text)
 
 
 if __name__ == "__main__":
