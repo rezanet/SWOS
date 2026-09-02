@@ -31,6 +31,42 @@ The post-merge workflows for the queue/progress reconciliation head
 compatibility `33608680395`, SWOS CI `33608680407`, SWOS CodeQL `33608680430`,
 and SWOS Engineering Quality `33608680558`.
 
+## P1 contract errata and final implementation merge — 2026-09-02
+
+Owner-authorized PR #62 was opened from base `4b4788ccbaf76556624c7290744e4c1aaedb8fac` to
+resolve the five P1 planning contradictions without changing the frozen task
+authority. The exact reviewed head was `3387faaad49c1aa749e77374b19a83685e3f8cf7`;
+an independent read-only exact-head review returned CLEAN, and the three hosted
+review threads were resolved. The PR merged by squash as
+`1160d973e942e5436604b2e2d5f503de008f0d07`.
+
+The merged errata now make the RPM status/disposition boundary explicit; bind
+approval evidence to identity, role, operation, scope, EPG, SDL and assessment
+digests without introducing authentication; define public PROV-JSON, PROV-N and
+PROV-O/TriG with N-Quads internal-only; specify case-level promotion metrics,
+pairing, deterministic 10,000-resample bootstrap and fail-closed `NOT_RUN`; and
+define source-family/claim-exposure diversity formulas and edge cases. No
+`tasks.md` wording, ordering, thresholds, contracts, architectural decisions,
+promotion gates or completion markers were changed.
+
+All six PR #62 hosted workflow runs were green at the final head: SWOS CI
+`33623149632`, Research Grade compatibility `33623149687`, SWOS Prose Benchmark
+`33623149679`, SWOS Portability Gate `33623149546`, SWOS CodeQL `33623149567`,
+and SWOS Engineering Quality `33623149570`. The release-only host/provider gate
+was skipped as designed because its external records are absent. Post-merge
+push verification at `1160d973e942e5436604b2e2d5f503de008f0d07` was also green:
+SWOS CI `33623474422`, Research Grade compatibility `33623474439`, SWOS CodeQL
+`33623474467`, and SWOS Engineering Quality `33623474490`.
+
+Final local validation recorded 302 runtime tests passed, 240 prose tests
+passed with 11 expected live-provider skips, all eight deterministic contract
+harness planes passed in contract mode, 58 schema artifacts validated, and the
+Spec Kit/document/workflow/vendor/security checks passed. Research Grade is
+still uncertified: the 11 release tasks remain open, the six required
+portability records are missing, and the audit-pack verifier remains fail-closed
+because `reports/coverage.json` is absent. No release, deployment, or portability
+feature work is claimed.
+
 An independent exact-head review of PR #55 head
 `b8f18e261d3baa8e11749d2ad663ba8bd06e04b1` against base
 `8d440296b4a9df708f1140a04bae1ae24f74fee3` found five P1 planning-contract
