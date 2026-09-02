@@ -18,7 +18,11 @@ from swos_runtime.citation_dataset import (
     validate_pair_source_binding,
     validate_source_licence_manifest,
 )
-from tools.build_citation_dataset import release_floor_gaps
+from tools.build_citation_dataset import (
+    _read_rows,
+    _read_split_proportions,
+    release_floor_gaps,
+)
 
 
 class CitationDatasetTests(unittest.TestCase):
@@ -289,10 +293,49 @@ class CitationDatasetTests(unittest.TestCase):
                 patch.object(citation_builder, "SUPPORTED_DISCIPLINES", ("engineering",)),
             ):
                 report = citation_builder.build_dataset(manifest_path, root / "output", seed=0)
+            licence_text = (root / "output" / "DATA-LICENCE.md").read_text(encoding="utf-8")
 
         self.assertEqual(set(report["splits"]), set(proportions))
         self.assertGreater(report["splits"]["temporal"]["count"], 0)
         self.assertGreater(report["splits"]["ood"]["count"], 0)
+        self.assertIn("source-1", licence_text)
+        self.assertIn("https://example.org/source", licence_text)
+        self.assertIn("b" * 64, licence_text)
+        self.assertIn("CC-BY-4.0", licence_text)
+        self.assertIn("Example archive", licence_text)
+
+    def test_citation_ingestion_rejects_non_objects_and_path_escape(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest_path = root / "manifest.json"
+            manifest_path.write_text("{}", encoding="utf-8")
+
+            with self.assertRaises(citation_builder.DatasetBuildBlocked):
+                _read_rows({"pairs": [None]}, manifest_path)
+
+            pairs_path = root / "pairs.jsonl"
+            pairs_path.write_text("[]\n", encoding="utf-8")
+            with self.assertRaises(citation_builder.DatasetBuildBlocked):
+                _read_rows({"pairs_path": "pairs.jsonl"}, manifest_path)
+
+            outside = root.parent / "outside-pairs.json"
+            outside.write_text("[]", encoding="utf-8")
+            try:
+                with self.assertRaises(citation_builder.DatasetBuildBlocked):
+                    _read_rows({"pairs_path": "../outside-pairs.json"}, manifest_path)
+            finally:
+                outside.unlink()
+
+    def test_split_proportions_reject_coercible_non_numeric_values(self) -> None:
+        raw = {
+            "train": "0.2",
+            "calibration": 0.2,
+            "locked_test": 0.2,
+            "temporal": 0.2,
+            "ood": 0.2,
+        }
+        with self.assertRaises(citation_builder.DatasetBuildBlocked):
+            _read_split_proportions({"split_proportions": raw})
 
 
 if __name__ == "__main__":
