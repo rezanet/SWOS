@@ -104,12 +104,8 @@ class ResearchGradeOfflineTests(unittest.TestCase):
         mutants = [{"mutant_id": f"m-{index}", "status": "killed"} for index in range(1)]
         with (
             mock.patch("tools.run_mutation_checks.MUTANTS", tuple()),
-            mock.patch(
-                "tools.run_mutation_checks._run_mutations", return_value=([], mutants)
-            ),
-            mock.patch(
-                "tools.run_mutation_checks._source_worktree_clean", return_value=False
-            ),
+            mock.patch("tools.run_mutation_checks._run_mutations", return_value=([], mutants)),
+            mock.patch("tools.run_mutation_checks._source_worktree_clean", return_value=False),
         ):
             report = run_mutation_checks(expected_source_sha="a" * 40)
         self.assertEqual("failed", report["status"])

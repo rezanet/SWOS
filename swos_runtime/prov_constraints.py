@@ -126,6 +126,8 @@ def validate_constraints(
                 violations.append(f"{kind} {identifier} has incompatible type {declared_type}")
 
     relation_ids: dict[tuple[str, str], Mapping[str, Any]] = {}
+    generation_entities: set[str] = set()
+    invalidation_entities: set[str] = set()
     for index, relation in enumerate(document.relations):
         check_deadline()
         if not isinstance(relation, Mapping):
@@ -171,6 +173,18 @@ def validate_constraints(
                 violations.append(
                     f"{relation_type} participant {field} does not identify a {expected_kind}"
                 )
+        if relation_type in {"wasGeneratedBy", "qualifiedGeneration"}:
+            generated_entity = relation.get("entity")
+            if isinstance(generated_entity, str) and is_absolute_iri(generated_entity):
+                if generated_entity in generation_entities:
+                    violations.append(f"entity {generated_entity} has more than one generation")
+                generation_entities.add(generated_entity)
+        elif relation_type == "invalidated":
+            invalidated_entity = relation.get("entity")
+            if isinstance(invalidated_entity, str) and is_absolute_iri(invalidated_entity):
+                if invalidated_entity in invalidation_entities:
+                    violations.append(f"entity {invalidated_entity} has more than one invalidation")
+                invalidation_entities.add(invalidated_entity)
         if relation_type == "specializationOf" and relation.get("specificEntity") == relation.get(
             "generalEntity"
         ):

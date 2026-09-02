@@ -54,6 +54,41 @@ class ProvValidationTests(unittest.TestCase):
             )
         )
 
+    def test_prov_constraints_reject_multiple_generations_for_one_entity(self) -> None:
+        epg = sample_epg()
+        epg["relations"].append(
+            {
+                "type": "wasGeneratedBy",
+                "entity": "https://example.org/e1",
+                "activity": "https://example.org/a1",
+            }
+        )
+        document = epg_to_prov(epg, base_iri="https://example.org/prov/")
+
+        report = validate_prov(document, profile="swos.prov-dm-round-trip.v2")
+
+        self.assertEqual("invalid", report.status)
+        self.assertTrue(
+            any("more than one generation" in violation for violation in report.violations)
+        )
+
+    def test_prov_constraints_reject_multiple_invalidations_for_one_entity(self) -> None:
+        epg = sample_epg()
+        epg["relations"].extend(
+            [
+                {"type": "invalidated", "entity": "https://example.org/e1"},
+                {"type": "invalidated", "entity": "https://example.org/e1"},
+            ]
+        )
+        document = epg_to_prov(epg, base_iri="https://example.org/prov/")
+
+        report = validate_prov(document, profile="swos.prov-dm-round-trip.v2")
+
+        self.assertEqual("invalid", report.status)
+        self.assertTrue(
+            any("more than one invalidation" in violation for violation in report.violations)
+        )
+
     def test_validation_rejects_wrong_document_profile_or_schema(self) -> None:
         document = epg_to_prov(sample_epg(), base_iri="https://example.org/prov/")
         for field, value in (
