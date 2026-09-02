@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 
 from swos_runtime.prov_interop import parse_prov, serialize_prov
 from swos_runtime.prov_model import ResourceLimits
-from swos_runtime.prov_validation import canonical_fingerprint
+from swos_runtime.prov_validation import canonical_fingerprint, validate_prov
 from tests.runtime.test_epg_v2 import sample_epg
 
 
@@ -47,6 +47,24 @@ class ProvInteropTests(unittest.TestCase):
             parse_prov(
                 serialize_prov(document, "prov-json"), "prov-json", ResourceLimits(max_bytes=10)
             )
+
+    def test_non_object_prov_json_fails_closed_as_a_validation_error(self) -> None:
+        with self.assertRaises(ValueError):
+            parse_prov(b"[]", "prov-json")
+
+    def test_canonicalization_depth_limit_is_enforced(self) -> None:
+        from swos_runtime.prov_interop import epg_to_prov
+
+        epg = sample_epg()
+        nested: object = "leaf"
+        for _ in range(10):
+            nested = {"nested": nested}
+        epg["scope"] = {"nested": nested}
+        document = epg_to_prov(epg, base_iri="https://example.org/prov/")
+        with self.assertRaises(ValueError):
+            canonical_fingerprint(document, ResourceLimits(max_depth=4))
+        report = validate_prov(document, limits=ResourceLimits(max_depth=4))
+        self.assertEqual("resource_limit", report.status)
 
     def test_rpm_export_requires_matching_certified_epg(self) -> None:
         from swos_runtime.prov_interop import epg_to_prov

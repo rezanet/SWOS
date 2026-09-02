@@ -220,6 +220,8 @@ def _json_payload(document: ProvDocument) -> dict[str, Any]:
 
 
 def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
+    if not isinstance(payload, Mapping):
+        raise ValueError("PROV-JSON payload must be a JSON object")
     swos = payload.get("swos") if isinstance(payload.get("swos"), Mapping) else {}
     base = str(swos.get("base_iri") or "")
     if not base:
@@ -270,6 +272,8 @@ def _payload_marker(document: ProvDocument) -> str:
 def _decode_marker(marker: str) -> ProvDocument:
     padding = "=" * (-len(marker) % 4)
     payload = json.loads(base64.urlsafe_b64decode(marker + padding).decode("utf-8"))
+    if not isinstance(payload, Mapping):
+        raise ValueError("lossless PROV payload must be a JSON object")
     return ProvDocument(**payload)
 
 

@@ -144,7 +144,7 @@ def canonical_fingerprint(
         raise ValueError("canonical_fingerprint requires a ProvDocument")
     limits = limits or ResourceLimits()
     limits.check_document(document)
-    normal = document.semantic_normal_form()
+    normal = document.semantic_normal_form(max_depth=limits.max_depth)
     jcs = hashlib.sha256(_json_bytes(normal)).hexdigest()
     rdf = hashlib.sha256("\n".join(_rdf_statements(document)).encode("utf-8")).hexdigest()
     provn = hashlib.sha256(
@@ -247,7 +247,7 @@ def validate_prov(
         if not isinstance(bundle.get("statements", []), list):
             violations.append(f"bundle {bundle_id} statements are not a list")
     status = "invalid" if violations else "valid"
-    input_digest = canonical_digest(document.semantic_normal_form())
+    input_digest = canonical_digest(document.semantic_normal_form(max_depth=limits.max_depth))
     return ProvValidationReport(
         status=status,
         profile=profile,
@@ -281,7 +281,9 @@ def certify_round_trip(
         encoded = serialize_prov(original, format_name)
         decoded = parse_prov(encoded, format_name, limits)
         validated = validate_prov(decoded, profile=original.profile, limits=limits)
-        equivalent = decoded.semantic_normal_form() == original.semantic_normal_form()
+        equivalent = decoded.semantic_normal_form(
+            max_depth=limits.max_depth
+        ) == original.semantic_normal_form(max_depth=limits.max_depth)
         roundtrip = epg_to_prov(
             prov_to_epg(decoded, profile=original.profile), base_iri=original.base_iri
         )
@@ -319,9 +321,9 @@ def certify_round_trip(
                     error = f"{type(exc).__name__}: {exc}"
                     parse_statuses.append("error")
                     break
-            semantic_equivalent = (
-                not error and current.semantic_normal_form() == original.semantic_normal_form()
-            )
+            semantic_equivalent = not error and current.semantic_normal_form(
+                max_depth=limits.max_depth
+            ) == original.semantic_normal_form(max_depth=limits.max_depth)
             assertions_preserved = (
                 not error
                 and len(original.extensions) == len(current.extensions)

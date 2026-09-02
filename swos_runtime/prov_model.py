@@ -49,11 +49,16 @@ def is_absolute_iri(value: Any) -> bool:
     return bool(_IRI_RE.fullmatch(str(value or ""))) and bool(urlparse(str(value)).scheme)
 
 
-def _canonical(value: Any) -> Any:
+def _canonical(value: Any, *, depth: int = 0, max_depth: int = 64) -> Any:
+    if depth > max_depth:
+        raise ValueError("resource_limit: PROV canonicalization depth exceeds max_depth")
     if isinstance(value, Mapping):
-        return {str(key): _canonical(value[key]) for key in sorted(value, key=str)}
+        return {
+            str(key): _canonical(value[key], depth=depth + 1, max_depth=max_depth)
+            for key in sorted(value, key=str)
+        }
     if isinstance(value, (list, tuple, set)):
-        items = [_canonical(item) for item in value]
+        items = [_canonical(item, depth=depth + 1, max_depth=max_depth) for item in value]
         return sorted(
             items,
             key=lambda item: json.dumps(
@@ -73,6 +78,19 @@ class ResourceLimits:
     max_depth: int = 64
     timeout_seconds: float = 60.0
 
+    def __post_init__(self) -> None:
+        for name in ("max_bytes", "max_statements", "max_literal_length", "max_depth"):
+            value = getattr(self, name)
+            if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+                raise ValueError(f"{name} must be a positive integer")
+        if (
+            isinstance(self.timeout_seconds, bool)
+            or not isinstance(self.timeout_seconds, (int, float))
+            or not math.isfinite(float(self.timeout_seconds))
+            or self.timeout_seconds <= 0
+        ):
+            raise ValueError("timeout_seconds must be a positive finite number")
+
     def check_bytes(self, size: int) -> None:
         if size > self.max_bytes:
             raise ValueError("resource_limit: PROV input exceeds max_bytes")
@@ -80,7 +98,7 @@ class ResourceLimits:
     def check_document(self, document: "ProvDocument") -> None:
         if document.statement_count() > self.max_statements:
             raise ValueError("resource_limit: PROV statement count exceeds limit")
-        for item in document.semantic_normal_form().get("extensions", []):
+        for item in document.semantic_normal_form(max_depth=self.max_depth).get("extensions", []):
             if len(str(item.get("object", ""))) > self.max_literal_length:
                 raise ValueError("resource_limit: PROV literal exceeds max_literal_length")
 
@@ -137,8 +155,8 @@ class ProvDocument:
             "integrity": dict(self.integrity),
         }
 
-    def semantic_normal_form(self) -> dict[str, Any]:
-        return _canonical(self.to_dict())
+    def semantic_normal_form(self, *, max_depth: int = 64) -> dict[str, Any]:
+        return _canonical(self.to_dict(), max_depth=max_depth)
 
     def statement_count(self) -> int:
         return (
@@ -160,6 +178,8 @@ EPGv2Document = ProvDocument
 
 
 def document_from_epg(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:
+    if not isinstance(epg, Mapping):
+        raise ValueError("EPG v2 input must be a JSON object")
     if epg.get("schema_version") != EPG_VERSION:
         raise ValueError("EPG v2 requires explicit schema_version=2.0.0")
     if not is_absolute_iri(base_iri):
