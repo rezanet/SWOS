@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import unittest
 from dataclasses import replace
+from unittest.mock import patch
 
 from swos_runtime.prov_interop import epg_to_prov
 from swos_runtime.prov_validation import canonical_fingerprint, validate_prov
@@ -19,6 +20,12 @@ class ProvValidationTests(unittest.TestCase):
         self.assertEqual(report.semantic_digest, fingerprint.semantic_digest)
         self.assertTrue(fingerprint.jcs_digest)
         self.assertTrue(fingerprint.rdfc10_digest)
+        self.assertIn(report.shacl["status"], {"valid", "not_applicable_without_rdflib_pyshacl"})
+
+    def test_missing_shacl_dependencies_fail_closed(self) -> None:
+        document = epg_to_prov(sample_epg(), base_iri="https://example.org/prov/")
+        with patch.dict("sys.modules", {"pyshacl": None, "rdflib": None}):
+            report = validate_prov(document, profile="swos.prov-dm-round-trip.v2")
         self.assertFalse(report.shacl["passed"])
         self.assertIn("not_applicable", report.shacl["status"])
 

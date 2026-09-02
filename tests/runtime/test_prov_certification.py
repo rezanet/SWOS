@@ -169,12 +169,13 @@ class ProvCertificationTests(unittest.TestCase):
             "formats": ["prov-json", "prov-n", "prov-o-trig"],
             "input_digest": fingerprint.semantic_digest,
         }
-        certificate = certify_round_trip(
-            epg,
-            ("prov-json", "prov-n", "prov-o-trig"),
-            oracle=oracle,
-            limits=ResourceLimits(),
-        )
+        with patch.dict("sys.modules", {"pyshacl": None, "rdflib": None}):
+            certificate = certify_round_trip(
+                epg,
+                ("prov-json", "prov-n", "prov-o-trig"),
+                oracle=oracle,
+                limits=ResourceLimits(),
+            )
         self.assertNotEqual("certified", certificate.status)
         trig_legs = [
             leg
