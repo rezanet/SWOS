@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -51,6 +52,18 @@ class ProvInteropTests(unittest.TestCase):
     def test_non_object_prov_json_fails_closed_as_a_validation_error(self) -> None:
         with self.assertRaises(ValueError):
             parse_prov(b"[]", "prov-json")
+
+    def test_prov_json_does_not_drop_malformed_extension_entries(self) -> None:
+        payload = {
+            "swos": {
+                "schema_version": "2.0.0",
+                "profile": "swos.prov-dm-round-trip.v2",
+                "base_iri": "https://example.org/prov/",
+                "extensions": [None],
+            }
+        }
+        with self.assertRaises(ValueError):
+            parse_prov(json.dumps(payload).encode("utf-8"), "prov-json")
 
     def test_canonicalization_depth_limit_is_enforced(self) -> None:
         from swos_runtime.prov_interop import epg_to_prov

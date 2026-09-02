@@ -289,17 +289,41 @@ def document_from_epg(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:
         raise ValueError("EPG v2 requires explicit schema_version=2.0.0")
     if not is_absolute_iri(base_iri):
         raise ValueError("EPG v2 requires an absolute base IRI")
-    namespaces = {**PROV_NAMESPACES, **dict(epg.get("namespaces") or {})}
+
+    def mapping_field(field: str) -> dict[str, Any]:
+        value = epg.get(field, {})
+        if value is None:
+            return {}
+        if not isinstance(value, Mapping):
+            raise ValueError(f"EPG v2 field {field!r} must be a JSON object")
+        return dict(value)
+
+    def record_list(field: str) -> tuple[dict[str, Any], ...]:
+        value = epg.get(field, [])
+        if value is None:
+            return ()
+        if not isinstance(value, (list, tuple)):
+            raise ValueError(f"EPG v2 field {field!r} must be a JSON array")
+        records = []
+        for index, item in enumerate(value):
+            if not isinstance(item, Mapping):
+                raise ValueError(f"EPG v2 {field} entry {index} must be a JSON object")
+            records.append(dict(item))
+        return tuple(records)
+
+    namespaces = {**PROV_NAMESPACES, **mapping_field("namespaces")}
     for prefix, namespace in namespaces.items():
         if not is_absolute_iri(namespace):
             raise ValueError(f"namespace {prefix!r} is not absolute")
     node_maps = {}
     for key in ("entities", "activities", "agents"):
-        values = dict(epg.get(key) or {})
+        values = mapping_field(key)
         if any(not is_absolute_iri(identifier) for identifier in values):
             raise ValueError(f"{key} contains a relative identifier")
+        if any(not isinstance(node, Mapping) for node in values.values()):
+            raise ValueError(f"{key} entries must be JSON objects")
         node_maps[key] = values
-    relations = tuple(dict(item) for item in epg.get("relations", []) if isinstance(item, Mapping))
+    relations = record_list("relations")
     for relation in relations:
         for key, value in relation.items():
             if key in {"type", "attributes", "time", "role", "label", "id"} or isinstance(
@@ -308,12 +332,12 @@ def document_from_epg(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:
                 continue
             if isinstance(value, str) and value and not is_absolute_iri(value):
                 raise ValueError(f"relation value {value!r} is not an absolute IRI")
-    bundles = dict(epg.get("bundles") or {})
+    bundles = mapping_field("bundles")
     if any(not is_absolute_iri(identifier) for identifier in bundles):
         raise ValueError("bundles contain a relative identifier")
-    extensions = tuple(
-        dict(item) for item in epg.get("extensions", []) if isinstance(item, Mapping)
-    )
+    if any(not isinstance(bundle, Mapping) for bundle in bundles.values()):
+        raise ValueError("bundles entries must be JSON objects")
+    extensions = record_list("extensions")
     for item in extensions:
         for key in ("subject", "predicate"):
             if item.get(key) and not is_absolute_iri(item[key]):
@@ -327,12 +351,12 @@ def document_from_epg(epg: Mapping[str, Any], *, base_iri: str) -> ProvDocument:
         schema_version=EPG_VERSION,
         base_iri=base_iri,
         namespaces=namespaces,
-        scope=dict(epg.get("scope") or {}),
+        scope=mapping_field("scope"),
         entities=node_maps["entities"],
         activities=node_maps["activities"],
         agents=node_maps["agents"],
         relations=relations,
         bundles=bundles,
         extensions=extensions,
-        integrity=dict(epg.get("integrity") or {}),
+        integrity=mapping_field("integrity"),
     )

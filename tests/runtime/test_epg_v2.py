@@ -77,6 +77,14 @@ class EpgV2Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             epg_to_prov(epg, base_iri=epg["base_iri"])
 
+    def test_malformed_relation_and_extension_entries_fail_closed(self) -> None:
+        for field in ("relations", "extensions"):
+            with self.subTest(field=field):
+                epg = sample_epg()
+                epg[field] = [None]
+                with self.assertRaises(ValueError):
+                    epg_to_prov(epg, base_iri=epg["base_iri"])
+
 
 if __name__ == "__main__":
     unittest.main()

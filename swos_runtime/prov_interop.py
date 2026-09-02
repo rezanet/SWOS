@@ -229,7 +229,7 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
     if not is_absolute_iri(base):
         raise ValueError("PROV-JSON lacks an absolute base IRI")
     raw_relations = swos.get("relations")
-    if not isinstance(raw_relations, list):
+    if raw_relations is None:
         raw_relations = []
         excluded = {"prefix", "entity", "activity", "agent", "bundle", "swos"}
         for relation_type, values in payload.items():
@@ -240,6 +240,17 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
                     raw_relations.append(
                         {"type": relation_type, "id": relation_id, **dict(relation)}
                     )
+    elif not isinstance(raw_relations, list):
+        raise ValueError("PROV-JSON swos.relations must be a JSON array")
+    elif any(not isinstance(item, Mapping) for item in raw_relations):
+        raise ValueError("PROV-JSON relation entries must be JSON objects")
+    raw_extensions = swos.get("extensions", [])
+    if raw_extensions is None:
+        raw_extensions = []
+    if not isinstance(raw_extensions, list):
+        raise ValueError("PROV-JSON swos.extensions must be a JSON array")
+    if any(not isinstance(item, Mapping) for item in raw_extensions):
+        raise ValueError("PROV-JSON extension entries must be JSON objects")
     namespaces = dict(PROV_NAMESPACES)
     namespaces.update(dict(payload.get("prefix") or {}))
     return ProvDocument(
@@ -253,9 +264,7 @@ def _from_json_payload(payload: Mapping[str, Any]) -> ProvDocument:
         agents=dict(payload.get("agent") or {}),
         relations=tuple(dict(item) for item in raw_relations if isinstance(item, Mapping)),
         bundles=dict(payload.get("bundle") or {}),
-        extensions=tuple(
-            dict(item) for item in swos.get("extensions", []) if isinstance(item, Mapping)
-        ),
+        extensions=tuple(dict(item) for item in raw_extensions),
         integrity=dict(swos.get("integrity") or {}),
     )
 

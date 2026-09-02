@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
+import hashlib
+import io
 import json
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from swos_runtime.prov_model import ResourceLimits
 from tests.runtime.test_epg_v2 import sample_epg
-from tools.certify_prov_roundtrip import _limits, _load, certify
+from tools.certify_prov_roundtrip import _limits, _load, certify, main
 
 
 class ProvCertificationToolTests(unittest.TestCase):
@@ -60,6 +63,27 @@ class ProvCertificationToolTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 _limits(path)
 
+    def test_limits_reject_boolean_or_coerced_bounds(self) -> None:
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "limits.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "limits": {
+                            "max_bytes": True,
+                            "max_statements": 100_000,
+                            "max_literal_length": 1_000_000,
+                            "max_depth": 64,
+                            "timeout_seconds": 60.0,
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaises(ValueError):
+                _limits(path)
+
     def test_json_inputs_must_be_objects(self) -> None:
         with TemporaryDirectory() as directory:
             path = Path(directory) / "payload.json"
@@ -86,6 +110,18 @@ class ProvCertificationToolTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 certify(**self._certification_kwargs(directory, manifest))
 
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "checksum_algorithm": "sha256",
+                        "cases": [{"id": "sample", "epg": "case.json", "sha256": "0" * 64}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaises(ValueError):
+                certify(**self._certification_kwargs(directory, manifest))
+
     def test_corpus_manifest_rejects_path_escape(self) -> None:
         with TemporaryDirectory() as directory_name:
             directory = Path(directory_name) / "corpus"
@@ -100,6 +136,137 @@ class ProvCertificationToolTests(unittest.TestCase):
 
             with self.assertRaises(ValueError):
                 certify(**self._certification_kwargs(directory, manifest))
+
+    def test_corpus_manifest_requires_a_matching_case_checksum(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            case_path = directory / "case.json"
+            case_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+            manifest = directory / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "checksum_algorithm": "sha256",
+                        "cases": [{"id": "sample", "epg": "case.json"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaises(ValueError):
+                certify(**self._certification_kwargs(directory, manifest))
+
+    def test_corpus_certificate_binds_manifest_and_case_digests(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            case_path = directory / "case.json"
+            case_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+            case_sha256 = hashlib.sha256(case_path.read_bytes()).hexdigest()
+            manifest = directory / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "checksum_algorithm": "sha256",
+                        "required_categories": [
+                            "valid",
+                            "invalid",
+                            "large",
+                            "adversarial",
+                            "hostile_blank_node",
+                        ],
+                        "cases": [
+                            {
+                                "id": category,
+                                "epg": "case.json",
+                                "sha256": case_sha256,
+                                "category": category,
+                            }
+                            for category in (
+                                "valid",
+                                "invalid",
+                                "large",
+                                "adversarial",
+                                "hostile_blank_node",
+                            )
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            report = certify(**self._certification_kwargs(directory, manifest))
+
+            self.assertEqual("not_run", report["status"])
+            self.assertNotEqual("0" * 64, report["source_sha"])
+            self.assertNotEqual("0" * 64, report["input_digest"])
+
+    def test_nonempty_corpus_requires_frozen_case_categories(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            case_path = directory / "case.json"
+            case_path.write_text(json.dumps(sample_epg()), encoding="utf-8")
+            case_sha256 = hashlib.sha256(case_path.read_bytes()).hexdigest()
+            manifest = directory / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "checksum_algorithm": "sha256",
+                        "required_categories": [
+                            "valid",
+                            "invalid",
+                            "large",
+                            "adversarial",
+                            "hostile_blank_node",
+                        ],
+                        "cases": [{"id": "sample", "epg": "case.json", "sha256": case_sha256}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaises(ValueError):
+                certify(**self._certification_kwargs(directory, manifest))
+
+    def test_malformed_epg_is_reported_as_machine_readable_not_run(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            epg_path = directory / "epg.json"
+            epg_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "2.0.0",
+                        "profile": "swos.prov-dm-round-trip.v2",
+                        "base_iri": "https://example.org/prov/",
+                        "entities": [1],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            kwargs = self._certification_kwargs(directory, directory / "unused.json")
+            output = io.StringIO()
+
+            with redirect_stdout(output):
+                result = main(
+                    [
+                        "--epg",
+                        str(epg_path),
+                        "--profile",
+                        str(kwargs["profile_path"]),
+                        "--formats",
+                        "prov-json",
+                        "--oracle-manifest",
+                        str(kwargs["oracle_path"]),
+                        "--limits",
+                        str(kwargs["limits_path"]),
+                        "--artifact-dir",
+                        str(kwargs["artifact_dir"]),
+                        "--certificate-out",
+                        str(kwargs["certificate_out"]),
+                    ]
+                )
+
+            self.assertEqual(2, result)
+            self.assertEqual("not_run", json.loads(output.getvalue())["status"])
 
 
 if __name__ == "__main__":
