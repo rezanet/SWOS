@@ -12,17 +12,17 @@
   "implementation": {
     "pull_request": 58,
     "branch": "codex/swos-v2-t070-floor-gate",
-    "head_sha": "9474d94a43a3ecbe5579c6448dc3c9d2c9a09583",
+    "head_sha": "97598e4a046094f154bae2255a5c22c69073d501",
     "task_status_source": "specs/008-swos-v2-research-grade/tasks.md",
     "progress_source": "PROGRESS.md",
     "url": "https://github.com/rezanet/SWOS/pull/58",
     "last_reconciled_task": "T073",
-    "last_action": "Hardened T080's production-path diversity benchmark and T093-T095's provenance certification boundaries with explicit JSON-object, bounded-file, resource-limit, path-containment, canonical-depth, cycle, deadline, and licensed-oracle checks while preserving T070 and T073 fail-closed release behavior; the licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, and independent human records remain absent, so T070, T073, T079, T080, and T093-T095 remain pending.",
+    "last_action": "Hardened T080's production-path diversity benchmark and T093-T095's provenance certification boundaries with explicit JSON-object, bounded-file, checksummed-corpus, required-category, resource-limit, path-containment, canonical-depth, cycle, deadline, malformed-record, and licensed-oracle checks while preserving T070 and T073 fail-closed release behavior; the licensed corpus, approved model bundle, permitted PROV corpus, independent oracle, and independent human records remain absent, so T070, T073, T079, T080, and T093-T095 remain pending.",
     "last_action_evidence": [
       "focused T073 evaluator suite: 5 tests pass",
       "focused T080 diversity benchmark suite: 4 tests pass",
-      "focused T093-T095 provenance boundary suite: 20 tests pass",
-      "python -m unittest discover -s tests/runtime -p 'test_*.py': 240 passed",
+      "focused T093-T095 provenance boundary suite: 26 tests pass",
+      "python -m unittest discover -s tests/runtime -p 'test_*.py': 247 passed",
       "python -m unittest discover -s tests/prose -p 'test_*.py': 240 passed, 11 expected live-provider skips",
       "Ruff format and lint checks for the workflow-scanned surfaces: pass",
       "schema validation: 58 artefacts pass; research-grade contract examples and Spec Kit consistency pass",
@@ -32,7 +32,7 @@
       "task freeze audit at 0a746c7ee94f47ab1ca580600385aec8a5e7fe0a: 118 marker-only changes, zero non-marker differences",
       "T070 floor and split regression: all seven frozen minima and all five required partitions are enforced; under-floor reports remain blocked",
       "T073 release-input execution: status not_run, gate_result not_run, and zero prediction bytes because the checked-in verified model manifest is absent",
-      "PR #58 exact-head hosted checks at 9474d94a43a3ecbe5579c6448dc3c9d2c9a09583: SWOS CI 33580859523, SWOS CodeQL 33580859563, Research Grade compatibility 33580859576, SWOS Prose Benchmark 33580859668, SWOS Portability Gate 33580859672, and SWOS Engineering Quality 33580859538; 20 jobs pass and 2 non-gating jobs are explicitly skipped"
+      "PR #58 exact-head hosted checks at 97598e4a046094f154bae2255a5c22c69073d501: SWOS CI 33582033108, SWOS CodeQL 33582033133, Research Grade compatibility 33582033125, SWOS Prose Benchmark 33582033117, SWOS Portability Gate 33582033140, and SWOS Engineering Quality 33582033113; 20 jobs pass and 2 non-gating jobs are explicitly skipped"
     ]
   },
   "summary": {
@@ -239,7 +239,7 @@
     {
       "id": "implementation-hosted-ci",
       "status": "pass",
-      "evidence": "Six required workflows passed at PR #58 head 9474d94a43a3ecbe5579c6448dc3c9d2c9a09583: SWOS CI 33580859523, SWOS CodeQL 33580859563, Research Grade compatibility 33580859576, SWOS Prose Benchmark 33580859668, SWOS Portability Gate 33580859672, and SWOS Engineering Quality 33580859538; 20 jobs passed and 2 non-gating jobs were explicitly skipped."
+      "evidence": "Six required workflows passed at PR #58 head 97598e4a046094f154bae2255a5c22c69073d501: SWOS CI 33582033108, SWOS CodeQL 33582033133, Research Grade compatibility 33582033125, SWOS Prose Benchmark 33582033117, SWOS Portability Gate 33582033140, and SWOS Engineering Quality 33582033113; 20 jobs passed and 2 non-gating jobs were explicitly skipped."
     },
     {
       "id": "portability-definitions",
