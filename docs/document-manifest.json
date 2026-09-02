@@ -3072,6 +3072,32 @@
       "canonical_for": ["document-evals-fixtures-source-diversity-readme"],
       "supersedes": [],
       "superseded_by": []
+    },
+    {
+      "id": "owner-action-pack-md",
+      "path": "OWNER-ACTION-PACK.md",
+      "title": "Research Grade Closure Owner Action Pack",
+      "owner": "SWOS Maintainers",
+      "authority": "governance",
+      "status": "active",
+      "version_scheme": "date",
+      "version": "2026-09-02",
+      "canonical_for": ["document-owner-action-pack-md"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "benchmark-provenance-oracle-execution-kit",
+      "path": "benchmark/provenance/oracle-execution-kit.md",
+      "title": "Independent PROV Oracle Execution Kit",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "date",
+      "version": "2026-09-02",
+      "canonical_for": ["document-benchmark-provenance-oracle-execution-kit"],
+      "supersedes": [],
+      "superseded_by": []
     }
   ]
 }

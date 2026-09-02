@@ -31,6 +31,42 @@ The post-merge workflows for the queue/progress reconciliation head
 compatibility `33608680395`, SWOS CI `33608680407`, SWOS CodeQL `33608680430`,
 and SWOS Engineering Quality `33608680558`.
 
+## External evidence closure preparation — 2026-09-02
+
+The current exact `main`/`origin/main` head is
+`1f5135969f04a104d4a99764f921d1743d22710f`, following the signed baseline
+attestation in PR #64. Its post-merge workflows are green: Research Grade
+compatibility `33625173208`, SWOS CI `33625173215`, SWOS CodeQL `33625173194`,
+and SWOS Engineering Quality `33625173195`.
+
+The 11 open release/evidence tasks are now packaged for legitimate external
+closure without changing the frozen task authority. The authoritative
+machine-readable matrix is
+`artifacts/research-grade/evidence-closure-matrix.json`, its human-readable
+projection is `artifacts/research-grade/evidence-closure-matrix.md`, the fixed
+missing-evidence report is
+`artifacts/research-grade/missing-evidence-report.json`, the independent PROV
+handoff is `benchmark/provenance/oracle-execution-kit.md`, and the grouped
+owner handoff is `OWNER-ACTION-PACK.md`.
+
+The matrix is bound to task-authority SHA-256
+`dd1a9af5627b82464f47416b449f5b8c025e46c163c6773d84767a799dce90ae` and
+records exact required artifacts, current status, missing evidence, local and
+external prerequisites, commands/workflows, pass conditions, and downstream
+blocking relationships for T070, T073, T079, T080, T093, T094, T095, T111,
+and T127–T129. It explicitly preserves `NOT_RUN`, `RESERVED_EXTERNAL`, and
+fail-closed states; no corpus, review, approval, oracle, portability result,
+audit pack, or owner decision was fabricated.
+
+The local closure checks remain intentionally blocked: citation acquisition
+returns `NOT_RUN` with no licensed source, diversity has zero locked packets,
+PROV has no cases and no independent oracle identity, multimodal has zero
+rights-cleared cases, `tools/check_portability_acceptance.py --release` lacks
+all six PASS records and reports G-HOST/G-PORT false, and the audit-pack
+verifier identifies missing `reports/coverage.json`. No placeholder coverage
+file was created, and no architecture, feature, deployment, or release work
+was started.
+
 ## P1 contract errata and final implementation merge — 2026-09-02
 
 Owner-authorized PR #62 was opened from base `4b4788ccbaf76556624c7290744e4c1aaedb8fac` to
