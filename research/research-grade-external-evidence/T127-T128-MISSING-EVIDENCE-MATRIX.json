@@ -1,0 +1,91 @@
+{
+  "schema_version": "research-handoff.t127-t128.missing-evidence.v1",
+  "status": "preparation_only_release_blocked",
+  "baseline_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
+  "verified_on": "2026-09-03",
+  "t127": {
+    "status": "OPEN",
+    "required": {
+      "schema_approval": {
+        "requirement": "ADR plus two maintainers",
+        "status": "MISSING_EXTERNAL_APPROVAL"
+      },
+      "ontology_approval": {
+        "requirement": "maintainer plus discipline steward",
+        "status": "MISSING_EXTERNAL_APPROVAL"
+      },
+      "fixture_approval": {
+        "requirement": "two maintainers plus evaluation owner",
+        "status": "MISSING_EXTERNAL_APPROVAL"
+      },
+      "provider_adapter_approval": {
+        "requirement": "maintainer plus portability owner",
+        "status": "MISSING_EXTERNAL_APPROVAL"
+      },
+      "reviewer_criteria_approval": {
+        "requirement": "approved reviewer criteria",
+        "status": "MISSING_EXTERNAL_APPROVAL"
+      },
+      "portability": {
+        "release_command": "python tools/check_portability_acceptance.py --release",
+        "evidence_directory": "acceptance/portability/evidence/",
+        "current_repository_contents": [".gitkeep"],
+        "cases": {
+          "openai_api": "MISSING_GENUINE_PASS_RECORD",
+          "codex_chatgpt_subscription": "MISSING_GENUINE_PASS_RECORD",
+          "claude_code_subscription": "MISSING_GENUINE_PASS_RECORD",
+          "replay_host_bundle": "MISSING_GENUINE_PASS_RECORD",
+          "api_provider_changed": "BLOCKED_BY_SECOND_DIRECT_API_ADAPTER_AND_GENUINE_RUN",
+          "model_changed_same_provider": "MISSING_GENUINE_PASS_RECORD"
+        },
+        "status": "FAIL_CLOSED"
+      },
+      "hosted_ci": {
+        "status": "MUST_BE_GREEN_AT_FINAL_FROZEN_HEAD",
+        "note": "Historical/current-main green workflows do not substitute for the final integrated candidate head."
+      },
+      "independent_exact_head_review": {
+        "status": "MISSING_FOR_FINAL_INTEGRATED_HEAD",
+        "threads": "all must be resolved before T127 completion"
+      }
+    }
+  },
+  "t128": {
+    "status": "OPEN",
+    "required": "external immutable audit pack combining the committed pre-freeze manifest with exact-head CI/review/approval records and independent verification",
+    "current_committed_pack": {
+      "role": "historical/pre-freeze only",
+      "reports_present": [
+        "reports/benchmark-index.json",
+        "reports/evaluation-index.json",
+        "reports/quality-report.json",
+        "reports/regression-report.json"
+      ],
+      "reports_missing_for_final_pack": ["reports/coverage.json"],
+      "coverage_rule": "regenerate genuine coverage at the final exact head; never add a placeholder solely to satisfy a path check"
+    },
+    "external_records_missing": [
+      "final exact-head hosted CI identities/results",
+      "T127 named approval identities/dispositions",
+      "six genuine portability evidence records",
+      "fresh independent exact-head review and resolved-thread record",
+      "final Research Grade evaluation artefacts for still-open corpus/oracle/multimodal gates"
+    ],
+    "independent_audit_verification": "NOT_RUN",
+    "head_change_rule": "If review/evidence repair changes repository content, repeat T126-T128 at the new exact head."
+  },
+  "t129": {
+    "status": "OWNER_ONLY_NOT_READY",
+    "precondition": "T127 and T128 plus every preceding Research Grade gate genuinely pass",
+    "rule": "explicit owner merge approval must be an external PR decision; no commit after final exact-head review",
+    "release_authority": null
+  },
+  "do_not_fabricate": [
+    "approval identities",
+    "review dispositions",
+    "portability PASS records",
+    "coverage artefact",
+    "audit verification",
+    "owner release approval"
+  ]
+}
