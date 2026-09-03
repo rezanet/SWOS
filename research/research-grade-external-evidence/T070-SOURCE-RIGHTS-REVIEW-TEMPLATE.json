@@ -1,0 +1,38 @@
+{
+  "schema_version": "research-handoff.t070.source-rights-review.v1",
+  "status": "blank_template_not_evidence",
+  "source_id": null,
+  "canonical_source_family": null,
+  "stable_uri": null,
+  "exact_acquired_copy_uri": null,
+  "source_sha256": null,
+  "title": null,
+  "article_rights_uri": null,
+  "licence_spdx": null,
+  "licence_uri": null,
+  "permitted_uses_reviewed": [],
+  "third_party_material_review": {
+    "candidate_passages_checked": false,
+    "restrictions_found": null,
+    "excluded_passage_ids": [],
+    "notes": null
+  },
+  "reviewer": {
+    "reviewer_id": null,
+    "real_name_or_org_record": null,
+    "competence": null,
+    "conflicts": null,
+    "reviewed_at": null
+  },
+  "disposition": null,
+  "allowed_dispositions": [
+    "approved_for_candidate_annotation",
+    "approved_with_exclusions",
+    "rejected_rights",
+    "rejected_identity",
+    "needs_more_evidence"
+  ],
+  "rationale": null,
+  "approval_scope_digest": null,
+  "warning": "Blank template only. Do not populate reviewer identity or disposition except from a genuine human source-rights review bound to the exact source bytes."
+}
