@@ -1,0 +1,95 @@
+{
+  "schema_version": "research-handoff.t111.independent-review.v1",
+  "status": "blank_template_not_evidence",
+  "purpose": "Independent review record for exact T111 object/assets and derived multimodal evaluation cases. Automation may prepare candidates and validate completeness but may not populate human judgments.",
+  "object_binding": {
+    "object_id": null,
+    "object_record_sha256": null,
+    "institution": null,
+    "object_source_uri": null
+  },
+  "asset_bindings": [
+    {
+      "asset_id": null,
+      "asset_record_sha256": null,
+      "source_uri": null,
+      "byte_sha256": null,
+      "rights_uri": null,
+      "derivative_parent_sha256": null
+    }
+  ],
+  "reviewer": {
+    "reviewer_id": null,
+    "role": null,
+    "discipline_competence_basis": null,
+    "rights_review_competence_basis": null,
+    "independence_attestation": null,
+    "reviewed_at": null
+  },
+  "rights_review": {
+    "object_asset_identity_correct": null,
+    "rights_designation_verified": null,
+    "third_party_restrictions_checked": null,
+    "allowed_actions_verified": [],
+    "attribution_or_credit_correct": null,
+    "derivative_lineage_correct": null,
+    "disposition": null,
+    "allowed_dispositions": ["admit", "reject", "repair_required"],
+    "rationale": null
+  },
+  "grounding_review": {
+    "region_claim_records_reviewed": [],
+    "selectors_bound_to_exact_asset": null,
+    "atomic_observation_grounding_correct": null,
+    "observation_interpretation_separation_correct": null,
+    "view_limitations_recorded": null,
+    "material_gaps": [],
+    "rationale": null
+  },
+  "cross_modal_review": {
+    "pair_records_reviewed": [],
+    "text_source_bindings_correct": null,
+    "weakest_leg_support_policy_respected": null,
+    "unsupported_association_detected": null,
+    "rationale": null
+  },
+  "discipline_review": {
+    "art_history_task_appropriate": null,
+    "art_criticism_task_appropriate": null,
+    "task_records_reviewed": [],
+    "rationale": null
+  },
+  "accessibility_review": {
+    "accessibility_records_reviewed": [],
+    "descriptions_fit_declared_purpose": null,
+    "stale_after_derivative_or_view_change": null,
+    "rationale": null
+  },
+  "adversarial_review": {
+    "case_records_reviewed": [],
+    "truth_labels_human_verified": null,
+    "false_attribution_cases_valid": null,
+    "over_association_cases_valid": null,
+    "rights_denial_cases_valid": null,
+    "incomplete_view_cases_valid": null,
+    "rationale": null
+  },
+  "overall": {
+    "disposition": null,
+    "allowed_dispositions": ["lock", "reject", "repair_required"],
+    "limitations": [],
+    "rationale": null
+  },
+  "integrity": {
+    "review_record_sha256": null,
+    "immutable_external_record_uri": null
+  },
+  "rules": [
+    "Rights review, visual grounding truth, cross-modal truth, accessibility judgment, discipline appropriateness and adversarial truth remain human judgments.",
+    "Public web visibility or IIIF availability alone is not rights clearance.",
+    "Every reviewed asset must be bound to exact bytes where byte evidence is required.",
+    "A crop or other derivative must retain parent-byte lineage and must not be counted as a distinct object.",
+    "Any mutation to bound object/asset/case bytes invalidates the corresponding review binding.",
+    "Automation must leave all reviewer judgment and identity fields blank."
+  ]
+}
