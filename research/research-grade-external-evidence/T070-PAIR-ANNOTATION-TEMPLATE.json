@@ -1,0 +1,51 @@
+{
+  "schema_version": "research-handoff.t070.pair-annotation.v1",
+  "status": "blank_template_not_evidence",
+  "purpose": "Independent human annotation of one immutable T070 candidate pair. Automation must not populate annotator identity, label, rationale, competence attestation, or disposition.",
+  "pair_binding": {
+    "pair_id": null,
+    "packet_id": null,
+    "packet_sha256": null,
+    "source_id": null,
+    "source_sha256": null,
+    "claim_family_id": null,
+    "candidate_claim": null,
+    "exact_quote": null,
+    "source_uri": null
+  },
+  "source_rights_review_binding": {
+    "review_record_id": null,
+    "review_record_sha256": null,
+    "status_required": "approved_for_human_annotation"
+  },
+  "annotation": {
+    "annotator_id": null,
+    "annotator_role": null,
+    "competence_basis": null,
+    "independence_attestation": null,
+    "reviewed_at": null,
+    "label": null,
+    "allowed_labels": [
+      "directly_supports",
+      "partially_supports",
+      "context_only",
+      "contradicts",
+      "not_supported"
+    ],
+    "rationale": null,
+    "quote_support_locator": null,
+    "ambiguity_or_limitations": [],
+    "disposition": null
+  },
+  "integrity": {
+    "record_sha256": null,
+    "signed_or_immutable_external_record_uri": null
+  },
+  "rules": [
+    "One template instance represents exactly one annotator decision for one exact immutable pair.",
+    "Two competent independent annotations are required before adjudication where the frozen T070 workflow requires double annotation.",
+    "Do not expose acquisition stratum, generator intent, model prediction, other annotator decision, or adjudication outcome before the annotator submits.",
+    "A missing source-rights approval binding keeps the annotation ineligible for release evidence.",
+    "Blank or machine-populated human fields never count as human evidence."
+  ]
+}
