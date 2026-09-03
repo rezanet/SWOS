@@ -1,0 +1,170 @@
+name: Research T070 human review workset preparation
+
+on:
+  push:
+    branches:
+      - research/research-grade-external-evidence-2026-09-03
+    paths:
+      - research/research-grade-external-evidence/T070-PREPARE-SOURCE-RIGHTS-WORKSET.py
+      - research/research-grade-external-evidence/T070-PREPARE-BLIND-ANNOTATION-WORKSETS.py
+      - .github/workflows/t070-human-review-workset-preparation.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t070-human-review-workset-preparation
+  cancel-in-progress: false
+
+env:
+  T070_CORRECTED_HEAD: 882466a9cd7bcba671dc7ec8c757f3f6866a4487
+
+jobs:
+  prepare:
+    name: Prepare rights, blind annotation, and adjudication worksets
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout research preparation branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/research-grade-external-evidence-2026-09-03
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Acquire exact corrected PR66 inputs
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/t070/input" "$RUNNER_TEMP/t070/output"
+          git fetch --no-tags origin "$T070_CORRECTED_HEAD"
+          test "$(git rev-parse FETCH_HEAD)" = "$T070_CORRECTED_HEAD"
+          git show "$T070_CORRECTED_HEAD:benchmark/citation-support/acquisition/source-candidate-manifest.json" \
+            > "$RUNNER_TEMP/t070/input/source-candidate-manifest.json"
+          git show "$T070_CORRECTED_HEAD:benchmark/citation-support/acquisition/unlabelled-candidate-pairs.jsonl" \
+            > "$RUNNER_TEMP/t070/input/unlabelled-candidate-pairs.jsonl"
+          git show "$T070_CORRECTED_HEAD:benchmark/citation-support/acquisition/acquisition-report.json" \
+            > "$RUNNER_TEMP/t070/input/acquisition-report.json"
+
+      - name: Build 536-source rights review workset
+        run: |
+          set -euo pipefail
+          python research/research-grade-external-evidence/T070-PREPARE-SOURCE-RIGHTS-WORKSET.py \
+            --source-manifest "$RUNNER_TEMP/t070/input/source-candidate-manifest.json" \
+            --output "$RUNNER_TEMP/t070/output/source-rights-review-workset.json"
+
+      - name: Build two blind 6000-pair worksets and adjudication bindings
+        run: |
+          set -euo pipefail
+          python research/research-grade-external-evidence/T070-PREPARE-BLIND-ANNOTATION-WORKSETS.py \
+            --pairs "$RUNNER_TEMP/t070/input/unlabelled-candidate-pairs.jsonl" \
+            --output-dir "$RUNNER_TEMP/t070/output/annotation-worksets"
+
+      - name: Verify cardinality, exact bindings, and blank human fields
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path("${{ runner.temp }}/t070")
+          rights = json.loads((root / "output/source-rights-review-workset.json").read_text(encoding="utf-8"))
+          ann = json.loads((root / "output/annotation-worksets/manifest.json").read_text(encoding="utf-8"))
+          assert rights["source_count"] == 536
+          assert rights["status"] == "READY_FOR_INDEPENDENT_SOURCE_RIGHTS_REVIEW"
+          assert all(r["reviewer"]["reviewer_id"] is None for r in rights["records"])
+          assert all(r["review"]["disposition"] is None for r in rights["records"])
+          assert ann["pair_count"] == 6000
+          assert ann["unique_pair_ids"] == 6000
+          assert ann["unique_source_claim_quote_tuples"] == 6000
+          assert ann["required_human_annotations_per_pair"] == 2
+          assert ann["required_independent_adjudications_per_pair"] == 1
+          a = root / "output/annotation-worksets/annotator-A.jsonl"
+          b = root / "output/annotation-worksets/annotator-B.jsonl"
+          adj = root / "output/annotation-worksets/adjudication-bindings.jsonl"
+          assert hashlib.sha256(a.read_bytes()).hexdigest() == ann["worksets"]["A"]["sha256"]
+          assert hashlib.sha256(b.read_bytes()).hexdigest() == ann["worksets"]["B"]["sha256"]
+          assert hashlib.sha256(adj.read_bytes()).hexdigest() == ann["worksets"]["adjudication"]["sha256"]
+          assert a.read_bytes() == b.read_bytes()
+          print(json.dumps({
+              "sources": rights["source_count"],
+              "pairs": ann["pair_count"],
+              "source_manifest_sha256": rights["source_manifest_sha256"],
+              "annotator_A_sha256": ann["worksets"]["A"]["sha256"],
+              "annotator_B_sha256": ann["worksets"]["B"]["sha256"],
+              "adjudication_sha256": ann["worksets"]["adjudication"]["sha256"],
+          }, sort_keys=True))
+          PY
+
+      - name: Write compact persisted handoff manifest
+        env:
+          SOURCE_WORKFLOW_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path("${{ runner.temp }}/t070")
+          rights = json.loads((root / "output/source-rights-review-workset.json").read_text())
+          ann = json.loads((root / "output/annotation-worksets/manifest.json").read_text())
+          def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          manifest = {
+              "schema_version": "research-handoff.t070.human-review-package.v1",
+              "status": "READY_FOR_GENUINE_HUMAN_REVIEW_NOT_T070_EVIDENCE",
+              "pr_number": 66,
+              "exact_candidate_head": os.environ["T070_CORRECTED_HEAD"],
+              "source_workflow_head": os.environ["SOURCE_WORKFLOW_SHA"],
+              "source_count": 536,
+              "pair_count": 6000,
+              "unique_source_claim_quote_tuples": 6000,
+              "inputs": {
+                  "source_manifest_sha256": digest(root / "input/source-candidate-manifest.json"),
+                  "candidate_pairs_sha256": digest(root / "input/unlabelled-candidate-pairs.jsonl"),
+                  "acquisition_report_sha256": digest(root / "input/acquisition-report.json"),
+              },
+              "review_payloads": {
+                  "source_rights": {"path": "source-rights-review-workset.json", "sha256": digest(root / "output/source-rights-review-workset.json")},
+                  "annotator_A": {"path": "annotation-worksets/annotator-A.jsonl", "sha256": ann["worksets"]["A"]["sha256"]},
+                  "annotator_B": {"path": "annotation-worksets/annotator-B.jsonl", "sha256": ann["worksets"]["B"]["sha256"]},
+                  "adjudication": {"path": "annotation-worksets/adjudication-bindings.jsonl", "sha256": ann["worksets"]["adjudication"]["sha256"]},
+              },
+              "human_requirements": {
+                  "source_rights_reviewer": "genuine competent human per exact source copy",
+                  "annotations_per_pair": 2,
+                  "annotators_independent": True,
+                  "adjudicator_distinct_from_both_annotators": True,
+              },
+              "release_evidence": False,
+          }
+          Path("research/research-grade-external-evidence/T070-HUMAN-REVIEW-PACKAGE-MANIFEST.json").write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+          )
+          PY
+
+      - name: Upload human-review payload
+        uses: actions/upload-artifact@v4
+        with:
+          name: t070-human-review-package-${{ env.T070_CORRECTED_HEAD }}
+          path: ${{ runner.temp }}/t070/output/
+          if-no-files-found: error
+          compression-level: 6
+          retention-days: 30
+
+      - name: Persist compact manifest on latest research head
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/research-grade-external-evidence/T070-HUMAN-REVIEW-PACKAGE-MANIFEST.json
+          git commit -m "research: record T070 human-review package manifest" \
+            -m "Preparation only; source workflow commit: ${SOURCE_SHA}. No reviewer identity, label, adjudication, or rights approval is asserted."
+          git fetch origin research/research-grade-external-evidence-2026-09-03
+          git rebase origin/research/research-grade-external-evidence-2026-09-03
+          git push origin HEAD:research/research-grade-external-evidence-2026-09-03
