@@ -1,0 +1,45 @@
+{
+  "schema_version": "research-handoff.t070.adjudication.v1",
+  "status": "blank_template_not_evidence",
+  "purpose": "Independent adjudication of a T070 pair after the required competent annotations exist. Automation must not populate adjudicator identity, final label, rationale, or disposition.",
+  "pair_binding": {
+    "pair_id": null,
+    "packet_sha256": null,
+    "source_sha256": null,
+    "claim_family_id": null
+  },
+  "annotation_bindings": [
+    {"annotation_record_id": null, "annotation_record_sha256": null, "annotator_id": null},
+    {"annotation_record_id": null, "annotation_record_sha256": null, "annotator_id": null}
+  ],
+  "adjudication": {
+    "adjudicator_id": null,
+    "adjudicator_role": null,
+    "competence_basis": null,
+    "independence_attestation": null,
+    "reviewed_at": null,
+    "annotation_agreement_before_adjudication": null,
+    "final_label": null,
+    "allowed_labels": [
+      "directly_supports",
+      "partially_supports",
+      "context_only",
+      "contradicts",
+      "not_supported"
+    ],
+    "rationale": null,
+    "resolved_disagreement": null,
+    "limitations": [],
+    "disposition": null
+  },
+  "integrity": {
+    "record_sha256": null,
+    "signed_or_immutable_external_record_uri": null
+  },
+  "rules": [
+    "Adjudication must bind the exact pair bytes and both immutable annotation records.",
+    "The adjudicator must not be represented as independent if they generated the candidate pair or supplied either bound annotation.",
+    "A machine may validate record completeness but may not invent adjudication fields.",
+    "Changing the pair, source bytes, or either annotation digest invalidates this adjudication binding."
+  ]
+}
