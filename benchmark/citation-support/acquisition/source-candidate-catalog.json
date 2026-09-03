@@ -1,6 +1,6 @@
 {
   "catalog_type": "citation_source_candidate_catalog",
-  "generated_at": "2026-09-02T23:42:46Z",
+  "generated_at": "2026-09-03T07:30:51Z",
   "provenance": {
     "elsevier_archive_copy_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/elsevier-oa-ccby-v2.zip",
     "elsevier_archive_sha256": "877ac30109eb1333965a1c912e7e1b7b422542990cdc5b4658feb8d978d5bce2",
@@ -16,11 +16,11 @@
       "definition": "catalog_declared_held_out_domain is true"
     },
     "temporal": {
-      "criteria_id": "T070-TEMPORAL-YEAR-V1",
-      "cutoff_year": 2015,
-      "definition": "publication_year <= 2015"
+      "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+      "definition": "publication_year >= 2020 and catalog_declared_held_out_domain is not true",
+      "start_year": 2020
     },
-    "version": "1.0.0"
+    "version": "2.0.0"
   },
   "source_counts_by_discipline": {
     "art_criticism": 50,
@@ -115,9 +115,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0277953619306938",
       "stable_uri": "https://doi.org/10.1016/j.socscimed.2019.112698",
@@ -160,9 +161,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0277953614004730",
@@ -203,9 +204,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0277953614002871",
@@ -417,9 +418,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0160932714000180",
@@ -591,9 +592,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0277953619305969",
       "stable_uri": "https://doi.org/10.1016/j.socscimed.2019.112601",
@@ -677,9 +679,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0277379114002868",
@@ -722,9 +724,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0277379115000542",
@@ -765,9 +767,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0277953615301866",
@@ -934,9 +936,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S037821661500003X",
@@ -981,9 +983,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S027737911400050X",
@@ -1076,9 +1078,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S2352409X19303931",
       "stable_uri": "https://doi.org/10.1016/j.jasrep.2019.102075",
@@ -1116,9 +1119,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0277953614006625",
@@ -1380,9 +1383,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0278416515000343",
@@ -1422,9 +1425,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0277953615001665",
@@ -1510,9 +1513,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0305440313004408",
@@ -1602,9 +1605,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0277379115002115",
@@ -1731,9 +1734,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0277953615300447",
@@ -1817,9 +1820,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0004370215000995",
@@ -2036,13 +2039,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-08-24T09:25:00+02:00",
+      "publication_date": "2026-08-24T12:55:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25309",
       "stable_uri": "https://olh.openlibhums.org/article/id/25309/",
@@ -2078,13 +2082,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-07-13T12:15:00+02:00",
+      "publication_date": "2026-07-13T15:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28650",
       "stable_uri": "https://olh.openlibhums.org/article/id/28650/",
@@ -2120,13 +2125,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-04-17T10:15:00+02:00",
+      "publication_date": "2026-04-17T13:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25031",
       "stable_uri": "https://olh.openlibhums.org/article/id/25031/",
@@ -2162,13 +2168,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-11-12T11:40:00+01:00",
+      "publication_date": "2025-11-12T16:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-24212",
       "stable_uri": "https://olh.openlibhums.org/article/id/24212/",
@@ -2204,13 +2211,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-05-28T14:35:00+02:00",
+      "publication_date": "2025-05-28T18:05:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-23434",
       "stable_uri": "https://olh.openlibhums.org/article/id/23434/",
@@ -2246,13 +2254,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-02-18T10:00:00+01:00",
+      "publication_date": "2025-02-18T14:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-18710",
       "stable_uri": "https://olh.openlibhums.org/article/id/18710/",
@@ -2288,13 +2297,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-02-11T09:40:00+01:00",
+      "publication_date": "2025-02-11T14:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-16575",
       "stable_uri": "https://olh.openlibhums.org/article/id/16575/",
@@ -2330,13 +2340,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-11-25T10:10:00+01:00",
+      "publication_date": "2024-11-25T14:40:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-17217",
       "stable_uri": "https://olh.openlibhums.org/article/id/17217/",
@@ -2372,13 +2383,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-10-30T15:50:00+01:00",
+      "publication_date": "2024-10-30T20:20:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-17063",
       "stable_uri": "https://olh.openlibhums.org/article/id/17063/",
@@ -2414,13 +2426,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-10-01T16:30:00+02:00",
+      "publication_date": "2024-10-01T20:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-16293",
       "stable_uri": "https://olh.openlibhums.org/article/id/16293/",
@@ -2456,13 +2469,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-08-28T11:50:00+02:00",
+      "publication_date": "2024-08-28T15:20:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-15232",
       "stable_uri": "https://olh.openlibhums.org/article/id/15232/",
@@ -2498,13 +2512,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-08-02T10:15:00+02:00",
+      "publication_date": "2024-08-02T13:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-15329",
       "stable_uri": "https://olh.openlibhums.org/article/id/15329/",
@@ -2540,13 +2555,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-07-16T15:42:00+02:00",
+      "publication_date": "2024-07-16T19:12:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-16937",
       "stable_uri": "https://olh.openlibhums.org/article/id/16937/",
@@ -2582,13 +2598,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-07-03T16:10:00+02:00",
+      "publication_date": "2024-07-03T19:40:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-15407",
       "stable_uri": "https://olh.openlibhums.org/article/id/15407/",
@@ -2624,13 +2641,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-06-27T10:20:00+02:00",
+      "publication_date": "2024-06-27T13:50:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-10801",
       "stable_uri": "https://olh.openlibhums.org/article/id/10801/",
@@ -2666,13 +2684,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-03-08T14:15:00+01:00",
+      "publication_date": "2024-03-08T18:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-10344",
       "stable_uri": "https://olh.openlibhums.org/article/id/10344/",
@@ -2708,13 +2727,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-12-21T12:30:00+01:00",
+      "publication_date": "2023-12-21T17:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-10408",
       "stable_uri": "https://olh.openlibhums.org/article/id/10408/",
@@ -2750,13 +2770,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-12-05T10:15:00+01:00",
+      "publication_date": "2023-12-05T14:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-10303",
       "stable_uri": "https://olh.openlibhums.org/article/id/10303/",
@@ -2792,13 +2813,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-11-13T10:10:00+01:00",
+      "publication_date": "2023-11-13T14:40:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-10355",
       "stable_uri": "https://olh.openlibhums.org/article/id/10355/",
@@ -2834,13 +2856,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-10-23T12:00:00+02:00",
+      "publication_date": "2023-10-23T15:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-10211",
       "stable_uri": "https://olh.openlibhums.org/article/id/10211/",
@@ -2876,13 +2899,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-10-13T10:00:00+02:00",
+      "publication_date": "2023-10-13T13:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-9210",
       "stable_uri": "https://olh.openlibhums.org/article/id/9210/",
@@ -2918,13 +2942,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-07-10T14:30:00+02:00",
+      "publication_date": "2023-07-10T18:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-9012",
       "stable_uri": "https://olh.openlibhums.org/article/id/9012/",
@@ -2960,13 +2985,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-02-06T15:05:00+01:00",
+      "publication_date": "2023-02-06T19:35:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-6409",
       "stable_uri": "https://olh.openlibhums.org/article/id/6409/",
@@ -3002,13 +3028,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-06-20T16:50:00+02:00",
+      "publication_date": "2022-06-20T20:20:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-4696",
       "stable_uri": "https://olh.openlibhums.org/article/id/4696/",
@@ -3044,13 +3071,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-03-03T11:00:00+01:00",
+      "publication_date": "2022-03-03T15:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-6340",
       "stable_uri": "https://olh.openlibhums.org/article/id/6340/",
@@ -3086,13 +3114,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-04-14T16:00:00+02:00",
+      "publication_date": "2021-04-14T19:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4699",
       "stable_uri": "https://olh.openlibhums.org/article/id/4699/",
@@ -3128,13 +3157,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-10-28T13:00:00+01:00",
+      "publication_date": "2020-10-28T17:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4657",
       "stable_uri": "https://olh.openlibhums.org/article/id/4657/",
@@ -3170,7 +3200,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-05-13T14:40:28+02:00",
+      "publication_date": "2019-05-13T18:10:28+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3212,7 +3242,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-04-02T14:00:51+02:00",
+      "publication_date": "2019-04-02T17:30:51+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3254,7 +3284,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-12-06T13:00:00+01:00",
+      "publication_date": "2018-12-06T17:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3296,7 +3326,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-11-23T13:45:07+01:00",
+      "publication_date": "2018-11-23T18:15:07+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3338,7 +3368,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-11-02T13:27:51+01:00",
+      "publication_date": "2018-11-02T17:57:51+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3380,7 +3410,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-10-18T14:32:53+02:00",
+      "publication_date": "2018-10-18T18:02:53+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3422,7 +3452,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-09-27T14:14:16+02:00",
+      "publication_date": "2018-09-27T17:44:16+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3464,7 +3494,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-09-18T14:20:07+02:00",
+      "publication_date": "2018-09-18T17:50:07+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3506,7 +3536,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-08-13T14:52:28+02:00",
+      "publication_date": "2018-08-13T18:22:28+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3548,7 +3578,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-08-10T14:28:15+02:00",
+      "publication_date": "2018-08-10T17:58:15+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3590,7 +3620,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-06-13T14:17:24+02:00",
+      "publication_date": "2018-06-13T17:47:24+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3632,7 +3662,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-06-07T14:31:51+02:00",
+      "publication_date": "2018-06-07T18:01:51+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3674,7 +3704,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-04-24T14:29:49+02:00",
+      "publication_date": "2018-04-24T17:59:49+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3716,7 +3746,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2017-02-21T13:00:00+01:00",
+      "publication_date": "2017-02-21T17:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3758,7 +3788,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2017-02-16T13:00:00+01:00",
+      "publication_date": "2017-02-16T17:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3800,7 +3830,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2016-06-23T14:25:28+02:00",
+      "publication_date": "2016-06-23T17:55:28+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3842,7 +3872,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2016-05-31T14:16:56+02:00",
+      "publication_date": "2016-05-31T17:46:56+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -3889,9 +3919,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0277953619306379",
       "stable_uri": "https://doi.org/10.1016/j.socscimed.2019.112642",
@@ -3932,9 +3963,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0277953614002421",
@@ -4097,13 +4128,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-30T15:40:00+01:00",
+      "publication_date": "2026-01-30T20:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25294",
       "stable_uri": "https://olh.openlibhums.org/article/id/25294/",
@@ -4139,13 +4171,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-30T10:15:00+01:00",
+      "publication_date": "2026-01-30T14:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25329",
       "stable_uri": "https://olh.openlibhums.org/article/id/25329/",
@@ -4181,13 +4214,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-05T15:30:00+01:00",
+      "publication_date": "2026-01-05T20:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25303",
       "stable_uri": "https://olh.openlibhums.org/article/id/25303/",
@@ -4223,13 +4257,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-11-28T09:40:00+01:00",
+      "publication_date": "2025-11-28T14:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-25162",
       "stable_uri": "https://olh.openlibhums.org/article/id/25162/",
@@ -4265,13 +4300,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-09-09T14:49:00+02:00",
+      "publication_date": "2025-09-09T18:19:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-23973",
       "stable_uri": "https://olh.openlibhums.org/article/id/23973/",
@@ -4307,13 +4343,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-09-09T10:30:00+02:00",
+      "publication_date": "2025-09-09T14:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-23243",
       "stable_uri": "https://olh.openlibhums.org/article/id/23243/",
@@ -4349,13 +4386,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-08-20T14:35:00+02:00",
+      "publication_date": "2025-08-20T18:05:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-20347",
       "stable_uri": "https://olh.openlibhums.org/article/id/20347/",
@@ -4391,13 +4429,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-04-14T15:44:00+02:00",
+      "publication_date": "2025-04-14T19:14:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-20266",
       "stable_uri": "https://olh.openlibhums.org/article/id/20266/",
@@ -4433,13 +4472,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-06-24T16:15:00+02:00",
+      "publication_date": "2024-06-24T19:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-10172",
       "stable_uri": "https://olh.openlibhums.org/article/id/10172/",
@@ -4475,13 +4515,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-04-17T15:40:00+02:00",
+      "publication_date": "2023-04-17T19:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-8866",
       "stable_uri": "https://olh.openlibhums.org/article/id/8866/",
@@ -4517,13 +4558,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-04-17T11:00:00+02:00",
+      "publication_date": "2023-04-17T14:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-9347",
       "stable_uri": "https://olh.openlibhums.org/article/id/9347/",
@@ -4559,13 +4601,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-03-13T15:30:00+01:00",
+      "publication_date": "2023-03-13T20:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-9397",
       "stable_uri": "https://olh.openlibhums.org/article/id/9397/",
@@ -4601,13 +4644,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-08-03T12:25:00+02:00",
+      "publication_date": "2022-08-03T15:55:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-6349",
       "stable_uri": "https://olh.openlibhums.org/article/id/6349/",
@@ -4643,13 +4687,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-05-06T11:30:00+02:00",
+      "publication_date": "2022-05-06T15:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-8771",
       "stable_uri": "https://olh.openlibhums.org/article/id/8771/",
@@ -4685,13 +4730,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-12-22T12:10:00+01:00",
+      "publication_date": "2021-12-22T16:40:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-6339",
       "stable_uri": "https://olh.openlibhums.org/article/id/6339/",
@@ -4727,13 +4773,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-12-21T13:30:00+01:00",
+      "publication_date": "2021-12-21T18:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4676",
       "stable_uri": "https://olh.openlibhums.org/article/id/4676/",
@@ -4769,13 +4816,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-07-29T17:30:00+02:00",
+      "publication_date": "2021-07-29T21:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4700",
       "stable_uri": "https://olh.openlibhums.org/article/id/4700/",
@@ -4811,13 +4859,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-03-06T13:29:56+01:00",
+      "publication_date": "2020-03-06T17:59:56+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4611",
       "stable_uri": "https://olh.openlibhums.org/article/id/4611/",
@@ -4853,7 +4902,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-09-23T14:54:02+02:00",
+      "publication_date": "2019-09-23T18:24:02+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -4895,7 +4944,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-06-27T14:04:45+02:00",
+      "publication_date": "2019-06-27T17:34:45+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -4937,7 +4986,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-05-23T14:06:02+02:00",
+      "publication_date": "2019-05-23T17:36:02+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -4979,7 +5028,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-05-22T14:18:44+02:00",
+      "publication_date": "2019-05-22T17:48:44+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5021,7 +5070,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-05-06T14:32:21+02:00",
+      "publication_date": "2019-05-06T18:02:21+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5063,7 +5112,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-04-05T14:10:34+02:00",
+      "publication_date": "2019-04-05T17:40:34+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5105,7 +5154,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-03-11T13:30:22+01:00",
+      "publication_date": "2019-03-11T18:00:22+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5147,7 +5196,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-03-11T13:29:56+01:00",
+      "publication_date": "2019-03-11T17:59:56+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5189,7 +5238,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-03-11T13:29:40+01:00",
+      "publication_date": "2019-03-11T17:59:40+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5231,7 +5280,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-02-08T13:08:35+01:00",
+      "publication_date": "2019-02-08T17:38:35+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5273,7 +5322,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-01-24T13:51:50+01:00",
+      "publication_date": "2019-01-24T18:21:50+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5315,7 +5364,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-11-06T13:10:17+01:00",
+      "publication_date": "2018-11-06T17:40:17+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5357,7 +5406,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-10-05T14:07:21+02:00",
+      "publication_date": "2018-10-05T17:37:21+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5399,7 +5448,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-10-02T14:36:20+02:00",
+      "publication_date": "2018-10-02T18:06:20+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5441,7 +5490,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-08-08T14:06:51+02:00",
+      "publication_date": "2018-08-08T17:36:51+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5483,7 +5532,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-06-11T14:13:04+02:00",
+      "publication_date": "2018-06-11T17:43:04+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5525,7 +5574,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-06-07T14:14:41+02:00",
+      "publication_date": "2018-06-07T17:44:41+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5567,7 +5616,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-04-24T14:30:22+02:00",
+      "publication_date": "2018-04-24T18:00:22+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5609,7 +5658,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-04-10T14:48:46+02:00",
+      "publication_date": "2018-04-10T18:18:46+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5651,7 +5700,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-04-10T14:04:44+02:00",
+      "publication_date": "2018-04-10T17:34:44+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5693,7 +5742,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-03-23T13:45:55+01:00",
+      "publication_date": "2018-03-23T18:15:55+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5735,7 +5784,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-03-23T13:33:37+01:00",
+      "publication_date": "2018-03-23T18:03:37+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5777,7 +5826,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-03-01T13:13:40+01:00",
+      "publication_date": "2018-03-01T17:43:40+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5819,7 +5868,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-02-23T13:14:27+01:00",
+      "publication_date": "2018-02-23T17:44:27+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5861,7 +5910,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-01-30T13:55:52+01:00",
+      "publication_date": "2018-01-30T18:25:52+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5903,7 +5952,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-01-30T13:47:10+01:00",
+      "publication_date": "2018-01-30T18:17:10+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5945,7 +5994,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-01-09T13:07:26+01:00",
+      "publication_date": "2018-01-09T17:37:26+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -5994,9 +6043,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0141022915300296",
@@ -6038,9 +6087,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0925231219317163",
       "stable_uri": "https://doi.org/10.1016/j.neucom.2019.12.014",
@@ -6297,9 +6347,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0360544214003533",
@@ -6339,9 +6389,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0020768314000559",
@@ -6383,9 +6433,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0021979719315164",
       "stable_uri": "https://doi.org/10.1016/j.jcis.2019.12.053",
@@ -6727,9 +6778,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0306261914006680",
@@ -6866,9 +6917,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S092037961500277X",
@@ -7271,9 +7322,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S073497501400041X",
@@ -7360,9 +7411,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0927024815001816",
@@ -7450,9 +7501,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S1369703X19303304",
       "stable_uri": "https://doi.org/10.1016/j.bej.2019.107391",
@@ -7633,9 +7685,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0961953415301240",
@@ -7681,9 +7733,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0928493113005997",
@@ -7768,9 +7820,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0925231215002106",
@@ -7901,9 +7953,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0025556414001229",
@@ -7984,9 +8036,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S027753951400185X",
@@ -8111,9 +8163,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0305750X14003386",
@@ -8413,9 +8465,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0264837715002562",
@@ -8503,9 +8555,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S1570677X1300124X",
@@ -8702,9 +8754,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0927539815000833",
@@ -8748,9 +8800,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S1877584514000306",
@@ -8876,9 +8928,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0305750X14002939",
@@ -9026,9 +9078,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S2212371714000328",
@@ -9112,9 +9164,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S2212828X14000279",
@@ -9158,9 +9210,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S2212041615300395",
@@ -9373,9 +9425,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0899825614000463",
@@ -9499,9 +9551,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0261517714002441",
@@ -9631,9 +9683,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0048733314001991",
@@ -9800,9 +9852,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0169207014001307",
@@ -9841,9 +9893,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S1877916614000800",
@@ -9966,13 +10018,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-08-18T09:15:00+02:00",
+      "publication_date": "2026-08-18T12:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-23491",
       "stable_uri": "https://olh.openlibhums.org/article/id/23491/",
@@ -10008,13 +10061,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-08-03T16:20:00+02:00",
+      "publication_date": "2026-08-03T19:50:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28860",
       "stable_uri": "https://olh.openlibhums.org/article/id/28860/",
@@ -10050,13 +10104,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-07-22T10:00:00+02:00",
+      "publication_date": "2026-07-22T13:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28685",
       "stable_uri": "https://olh.openlibhums.org/article/id/28685/",
@@ -10092,13 +10147,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-07-03T12:05:00+02:00",
+      "publication_date": "2026-07-03T15:35:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28618",
       "stable_uri": "https://olh.openlibhums.org/article/id/28618/",
@@ -10134,13 +10190,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-06-24T11:45:00+02:00",
+      "publication_date": "2026-06-24T15:15:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28625",
       "stable_uri": "https://olh.openlibhums.org/article/id/28625/",
@@ -10176,13 +10233,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-06-10T10:15:00+02:00",
+      "publication_date": "2026-06-10T13:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28709",
       "stable_uri": "https://olh.openlibhums.org/article/id/28709/",
@@ -10218,13 +10276,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-06-03T11:45:00+02:00",
+      "publication_date": "2026-06-03T15:15:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28643",
       "stable_uri": "https://olh.openlibhums.org/article/id/28643/",
@@ -10260,13 +10319,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-05-13T09:55:00+02:00",
+      "publication_date": "2026-05-13T13:25:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25287",
       "stable_uri": "https://olh.openlibhums.org/article/id/25287/",
@@ -10302,13 +10362,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-04-01T10:00:00+02:00",
+      "publication_date": "2026-04-01T13:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28296",
       "stable_uri": "https://olh.openlibhums.org/article/id/28296/",
@@ -10344,13 +10405,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-03-25T14:50:00+01:00",
+      "publication_date": "2026-03-25T19:20:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25999",
       "stable_uri": "https://olh.openlibhums.org/article/id/25999/",
@@ -10386,13 +10448,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-03-25T09:50:00+01:00",
+      "publication_date": "2026-03-25T14:20:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-23765",
       "stable_uri": "https://olh.openlibhums.org/article/id/23765/",
@@ -10428,13 +10491,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-03-02T11:10:00+01:00",
+      "publication_date": "2026-03-02T15:40:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-28045",
       "stable_uri": "https://olh.openlibhums.org/article/id/28045/",
@@ -10470,13 +10534,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-26T15:46:00+01:00",
+      "publication_date": "2026-01-26T20:16:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-24119",
       "stable_uri": "https://olh.openlibhums.org/article/id/24119/",
@@ -10512,13 +10577,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-09T12:20:00+01:00",
+      "publication_date": "2026-01-09T16:50:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-24115",
       "stable_uri": "https://olh.openlibhums.org/article/id/24115/",
@@ -10554,13 +10620,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-07T09:45:00+01:00",
+      "publication_date": "2026-01-07T14:15:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-10853",
       "stable_uri": "https://olh.openlibhums.org/article/id/10853/",
@@ -10596,13 +10663,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-05T14:05:00+01:00",
+      "publication_date": "2026-01-05T18:35:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-23780",
       "stable_uri": "https://olh.openlibhums.org/article/id/23780/",
@@ -10638,13 +10706,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-05T13:35:00+01:00",
+      "publication_date": "2026-01-05T18:05:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-17684",
       "stable_uri": "https://olh.openlibhums.org/article/id/17684/",
@@ -10680,13 +10749,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-12-23T12:45:00+01:00",
+      "publication_date": "2025-12-23T17:15:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-24096",
       "stable_uri": "https://olh.openlibhums.org/article/id/24096/",
@@ -10722,13 +10792,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-12-23T12:15:00+01:00",
+      "publication_date": "2025-12-23T16:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-24108",
       "stable_uri": "https://olh.openlibhums.org/article/id/24108/",
@@ -10764,13 +10835,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-12-19T10:35:00+01:00",
+      "publication_date": "2025-12-19T15:05:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-24109",
       "stable_uri": "https://olh.openlibhums.org/article/id/24109/",
@@ -10806,13 +10878,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-12-09T13:15:00+01:00",
+      "publication_date": "2025-12-09T17:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-24113",
       "stable_uri": "https://olh.openlibhums.org/article/id/24113/",
@@ -10848,13 +10921,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-12-05T13:25:00+01:00",
+      "publication_date": "2025-12-05T17:55:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-24111",
       "stable_uri": "https://olh.openlibhums.org/article/id/24111/",
@@ -10890,13 +10964,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-11-28T11:30:00+01:00",
+      "publication_date": "2025-11-28T16:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-18059",
       "stable_uri": "https://olh.openlibhums.org/article/id/18059/",
@@ -10932,13 +11007,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-11-28T10:25:00+01:00",
+      "publication_date": "2025-11-28T14:55:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-17945",
       "stable_uri": "https://olh.openlibhums.org/article/id/17945/",
@@ -10974,13 +11050,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-11-24T13:30:00+01:00",
+      "publication_date": "2025-11-24T18:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-25991",
       "stable_uri": "https://olh.openlibhums.org/article/id/25991/",
@@ -11016,13 +11093,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-10-24T13:00:00+02:00",
+      "publication_date": "2025-10-24T16:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-17634",
       "stable_uri": "https://olh.openlibhums.org/article/id/17634/",
@@ -11058,13 +11136,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-10-24T11:45:00+02:00",
+      "publication_date": "2025-10-24T15:15:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-23416",
       "stable_uri": "https://olh.openlibhums.org/article/id/23416/",
@@ -11100,13 +11179,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-09-26T10:12:00+02:00",
+      "publication_date": "2025-09-26T13:42:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-17161",
       "stable_uri": "https://olh.openlibhums.org/article/id/17161/",
@@ -11142,13 +11222,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-09-19T10:00:00+02:00",
+      "publication_date": "2025-09-19T13:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-19789",
       "stable_uri": "https://olh.openlibhums.org/article/id/19789/",
@@ -11184,13 +11265,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-07-07T09:51:00+02:00",
+      "publication_date": "2025-07-07T13:21:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-17984",
       "stable_uri": "https://olh.openlibhums.org/article/id/17984/",
@@ -11226,13 +11308,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-06-25T10:58:00+02:00",
+      "publication_date": "2025-06-25T14:28:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-18314",
       "stable_uri": "https://olh.openlibhums.org/article/id/18314/",
@@ -11268,13 +11351,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-06-04T11:48:00+02:00",
+      "publication_date": "2025-06-04T15:18:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-19713",
       "stable_uri": "https://olh.openlibhums.org/article/id/19713/",
@@ -11310,13 +11394,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-06-04T10:53:00+02:00",
+      "publication_date": "2025-06-04T14:23:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-19044",
       "stable_uri": "https://olh.openlibhums.org/article/id/19044/",
@@ -11352,13 +11437,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-05-22T12:40:00+02:00",
+      "publication_date": "2025-05-22T16:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-18449",
       "stable_uri": "https://olh.openlibhums.org/article/id/18449/",
@@ -11394,13 +11480,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-05-21T10:10:00+02:00",
+      "publication_date": "2025-05-21T13:40:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-16916",
       "stable_uri": "https://olh.openlibhums.org/article/id/16916/",
@@ -11436,13 +11523,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-02-18T14:40:00+01:00",
+      "publication_date": "2025-02-18T19:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-16931",
       "stable_uri": "https://olh.openlibhums.org/article/id/16931/",
@@ -11478,13 +11566,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-02-14T13:00:00+01:00",
+      "publication_date": "2025-02-14T17:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-17997",
       "stable_uri": "https://olh.openlibhums.org/article/id/17997/",
@@ -11520,13 +11609,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-02-12T12:22:00+01:00",
+      "publication_date": "2025-02-12T16:52:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-17593",
       "stable_uri": "https://olh.openlibhums.org/article/id/17593/",
@@ -11562,13 +11652,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-02-04T15:05:00+01:00",
+      "publication_date": "2025-02-04T19:35:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-16767",
       "stable_uri": "https://olh.openlibhums.org/article/id/16767/",
@@ -11604,13 +11695,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-01-29T10:30:00+01:00",
+      "publication_date": "2025-01-29T15:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-17354",
       "stable_uri": "https://olh.openlibhums.org/article/id/17354/",
@@ -11646,13 +11738,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-01-20T16:22:00+01:00",
+      "publication_date": "2025-01-20T20:52:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-16523",
       "stable_uri": "https://olh.openlibhums.org/article/id/16523/",
@@ -11688,13 +11781,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-01-06T16:20:00+01:00",
+      "publication_date": "2025-01-06T20:50:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-16760",
       "stable_uri": "https://olh.openlibhums.org/article/id/16760/",
@@ -11730,13 +11824,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-12-02T09:38:00+01:00",
+      "publication_date": "2024-12-02T14:08:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-16695",
       "stable_uri": "https://olh.openlibhums.org/article/id/16695/",
@@ -11772,13 +11867,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-11-21T09:38:00+01:00",
+      "publication_date": "2024-11-21T14:08:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-11618",
       "stable_uri": "https://olh.openlibhums.org/article/id/11618/",
@@ -11814,13 +11910,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-11-13T16:36:00+01:00",
+      "publication_date": "2024-11-13T21:06:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-10131",
       "stable_uri": "https://olh.openlibhums.org/article/id/10131/",
@@ -12703,9 +12800,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S2352340915000529",
@@ -12917,9 +13014,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S2352340915001912",
@@ -13420,9 +13517,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0169555X14006382",
@@ -13866,9 +13963,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S2352340915001699",
@@ -13905,13 +14002,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-07-29T09:46:00+02:00",
+      "publication_date": "2026-07-29T13:16:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-26769",
       "stable_uri": "https://olh.openlibhums.org/article/id/26769/",
@@ -13947,13 +14045,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-04-14T12:40:00+02:00",
+      "publication_date": "2026-04-14T16:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25607",
       "stable_uri": "https://olh.openlibhums.org/article/id/25607/",
@@ -13989,13 +14088,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-03-17T11:45:00+01:00",
+      "publication_date": "2026-03-17T16:15:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-25023",
       "stable_uri": "https://olh.openlibhums.org/article/id/25023/",
@@ -14031,13 +14131,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-02-06T11:50:00+01:00",
+      "publication_date": "2026-02-06T16:20:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-24386",
       "stable_uri": "https://olh.openlibhums.org/article/id/24386/",
@@ -14073,13 +14174,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2026-01-12T12:15:00+01:00",
+      "publication_date": "2026-01-12T16:45:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2026
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2026,
+        "start_year": 2020
       },
       "source_id": "olh-18519",
       "stable_uri": "https://olh.openlibhums.org/article/id/18519/",
@@ -14115,13 +14217,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-09-09T16:22:00+02:00",
+      "publication_date": "2025-09-09T19:52:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-23378",
       "stable_uri": "https://olh.openlibhums.org/article/id/23378/",
@@ -14157,13 +14260,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-07-18T10:00:00+02:00",
+      "publication_date": "2022-07-18T13:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-4672",
       "stable_uri": "https://olh.openlibhums.org/article/id/4672/",
@@ -14199,13 +14303,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-04-06T15:40:00+02:00",
+      "publication_date": "2022-04-06T19:10:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-4714",
       "stable_uri": "https://olh.openlibhums.org/article/id/4714/",
@@ -14241,13 +14346,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-10-27T13:27:38+01:00",
+      "publication_date": "2020-10-27T17:57:38+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4656",
       "stable_uri": "https://olh.openlibhums.org/article/id/4656/",
@@ -14283,13 +14389,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-06-15T14:32:34+02:00",
+      "publication_date": "2020-06-15T18:02:34+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4629",
       "stable_uri": "https://olh.openlibhums.org/article/id/4629/",
@@ -14325,7 +14432,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-06-26T14:41:37+02:00",
+      "publication_date": "2019-06-26T18:11:37+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -14367,7 +14474,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2016-05-10T14:01:26+02:00",
+      "publication_date": "2016-05-10T17:31:26+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -14565,9 +14672,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S1350448714002017",
@@ -14606,9 +14713,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0168900214004719",
@@ -14658,9 +14765,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S2213231719311140",
       "stable_uri": "https://doi.org/10.1016/j.redox.2019.101362",
@@ -14749,9 +14857,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S1367593115000757",
@@ -14795,9 +14903,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S1387380615002006",
@@ -15068,9 +15176,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0304885319326976",
       "stable_uri": "https://doi.org/10.1016/j.jmmm.2019.165868",
@@ -15329,9 +15438,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0019103514003315",
@@ -15727,9 +15836,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0079642519301173",
       "stable_uri": "https://doi.org/10.1016/j.pmatsci.2019.100635",
@@ -15772,9 +15882,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0032063315000100",
@@ -15990,9 +16100,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S1386142513006823",
@@ -16039,9 +16149,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0021967315013461",
@@ -16125,9 +16235,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S2213597913000372",
@@ -16260,9 +16370,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0968089615006586",
@@ -16365,9 +16475,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0168900219309830",
       "stable_uri": "https://doi.org/10.1016/j.nima.2019.162405",
@@ -16578,9 +16689,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S2211335514000047",
@@ -16660,9 +16771,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0304380014003561",
@@ -16926,9 +17037,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0305750X19304590",
       "stable_uri": "https://doi.org/10.1016/j.worlddev.2019.104810",
@@ -16966,9 +17078,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0016718515001529",
@@ -17057,9 +17169,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0939641119313190",
       "stable_uri": "https://doi.org/10.1016/j.ejpb.2019.12.008",
@@ -17198,9 +17311,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S2214750014001589",
@@ -17239,9 +17352,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S1053810014001937",
@@ -17375,9 +17488,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0264410X14013693",
@@ -17592,9 +17705,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S1071581914001013",
@@ -17768,9 +17881,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0928493115001125",
@@ -17811,9 +17924,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S2214629614001376",
@@ -18172,9 +18285,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0040162519305943",
       "stable_uri": "https://doi.org/10.1016/j.techfore.2019.119786",
@@ -18216,9 +18330,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S2213596015300325",
@@ -18298,9 +18412,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S001671851300136X",
@@ -18426,13 +18540,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2025-10-21T13:00:00+02:00",
+      "publication_date": "2025-10-21T16:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2025
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
       },
       "source_id": "olh-25841",
       "stable_uri": "https://olh.openlibhums.org/article/id/25841/",
@@ -18468,13 +18583,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-06-27T16:30:00+02:00",
+      "publication_date": "2024-06-27T20:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-15319",
       "stable_uri": "https://olh.openlibhums.org/article/id/15319/",
@@ -18510,13 +18626,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-03-08T12:25:00+01:00",
+      "publication_date": "2024-03-08T16:55:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-10468",
       "stable_uri": "https://olh.openlibhums.org/article/id/10468/",
@@ -18552,13 +18669,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2024-01-19T09:25:00+01:00",
+      "publication_date": "2024-01-19T13:55:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2024
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2024,
+        "start_year": 2020
       },
       "source_id": "olh-11644",
       "stable_uri": "https://olh.openlibhums.org/article/id/11644/",
@@ -18594,13 +18712,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-10-18T12:30:00+02:00",
+      "publication_date": "2023-10-18T16:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-10181",
       "stable_uri": "https://olh.openlibhums.org/article/id/10181/",
@@ -18636,13 +18755,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2023-03-16T15:20:00+01:00",
+      "publication_date": "2023-03-16T19:50:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2023
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2023,
+        "start_year": 2020
       },
       "source_id": "olh-8114",
       "stable_uri": "https://olh.openlibhums.org/article/id/8114/",
@@ -18678,13 +18798,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-07-08T12:00:00+02:00",
+      "publication_date": "2022-07-08T15:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-6318",
       "stable_uri": "https://olh.openlibhums.org/article/id/6318/",
@@ -18720,13 +18841,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-01-20T10:30:00+01:00",
+      "publication_date": "2022-01-20T15:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-6337",
       "stable_uri": "https://olh.openlibhums.org/article/id/6337/",
@@ -18762,13 +18884,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-12-16T17:30:00+01:00",
+      "publication_date": "2021-12-16T22:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-7936",
       "stable_uri": "https://olh.openlibhums.org/article/id/7936/",
@@ -18804,13 +18927,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-12-06T13:30:00+01:00",
+      "publication_date": "2021-12-06T18:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4744",
       "stable_uri": "https://olh.openlibhums.org/article/id/4744/",
@@ -18846,13 +18970,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-09-03T19:00:00+02:00",
+      "publication_date": "2021-09-03T22:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4688",
       "stable_uri": "https://olh.openlibhums.org/article/id/4688/",
@@ -18888,13 +19013,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-08-25T17:00:00+02:00",
+      "publication_date": "2021-08-25T20:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4695",
       "stable_uri": "https://olh.openlibhums.org/article/id/4695/",
@@ -18930,13 +19056,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-08-11T15:00:00+02:00",
+      "publication_date": "2021-08-11T18:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4675",
       "stable_uri": "https://olh.openlibhums.org/article/id/4675/",
@@ -18972,13 +19099,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-04-13T15:20:00+02:00",
+      "publication_date": "2021-04-13T18:50:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4698",
       "stable_uri": "https://olh.openlibhums.org/article/id/4698/",
@@ -19014,13 +19142,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-12-23T13:52:39+01:00",
+      "publication_date": "2020-12-23T18:22:39+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4663",
       "stable_uri": "https://olh.openlibhums.org/article/id/4663/",
@@ -19056,13 +19185,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-12-10T13:01:22+01:00",
+      "publication_date": "2020-12-10T17:31:22+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4661",
       "stable_uri": "https://olh.openlibhums.org/article/id/4661/",
@@ -19098,13 +19228,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-10-12T14:42:18+02:00",
+      "publication_date": "2020-10-12T18:12:18+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4653",
       "stable_uri": "https://olh.openlibhums.org/article/id/4653/",
@@ -19140,13 +19271,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-10-07T14:20:35+02:00",
+      "publication_date": "2020-10-07T17:50:35+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4650",
       "stable_uri": "https://olh.openlibhums.org/article/id/4650/",
@@ -19182,13 +19314,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-06-30T14:32:11+02:00",
+      "publication_date": "2020-06-30T18:02:11+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4631",
       "stable_uri": "https://olh.openlibhums.org/article/id/4631/",
@@ -19224,13 +19357,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-03-24T13:53:26+01:00",
+      "publication_date": "2020-03-24T18:23:26+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4615",
       "stable_uri": "https://olh.openlibhums.org/article/id/4615/",
@@ -19266,7 +19400,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-11-29T13:01:16+01:00",
+      "publication_date": "2019-11-29T17:31:16+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19308,7 +19442,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-09-13T14:14:08+02:00",
+      "publication_date": "2019-09-13T17:44:08+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19350,7 +19484,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-06-13T14:02:04+02:00",
+      "publication_date": "2019-06-13T17:32:04+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19392,7 +19526,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-01-14T13:00:00+01:00",
+      "publication_date": "2019-01-14T17:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19434,7 +19568,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-10-05T14:10:35+02:00",
+      "publication_date": "2018-10-05T17:40:35+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19476,7 +19610,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-10-02T14:58:53+02:00",
+      "publication_date": "2018-10-02T18:28:53+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19518,7 +19652,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-10-02T14:19:01+02:00",
+      "publication_date": "2018-10-02T17:49:01+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19560,7 +19694,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-10-02T14:12:13+02:00",
+      "publication_date": "2018-10-02T17:42:13+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19602,7 +19736,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-08-03T14:41:26+02:00",
+      "publication_date": "2018-08-03T18:11:26+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19644,7 +19778,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-02-19T13:12:04+01:00",
+      "publication_date": "2018-02-19T17:42:04+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19686,7 +19820,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2017-11-23T13:37:16+01:00",
+      "publication_date": "2017-11-23T18:07:16+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19728,7 +19862,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2016-02-18T13:26:58+01:00",
+      "publication_date": "2016-02-18T17:56:58+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -19770,12 +19904,12 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2015-11-23T13:00:13+01:00",
+      "publication_date": "2015-11-23T17:30:13+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "olh-4409",
@@ -20089,9 +20223,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0190740919310503",
       "stable_uri": "https://doi.org/10.1016/j.childyouth.2019.104591",
@@ -20456,9 +20591,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0165032714001712",
@@ -20502,9 +20637,9 @@
       "publication_date": "2014-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2014
       },
       "source_id": "elsevier-S0920996413006026",
@@ -20640,9 +20775,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0306460319308846",
       "stable_uri": "https://doi.org/10.1016/j.addbeh.2019.106177",
@@ -20683,9 +20819,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0028393215000226",
@@ -20770,9 +20906,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0028393215000676",
@@ -20865,9 +21001,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S002209651500065X",
@@ -20908,9 +21044,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0093934X15000097",
@@ -21137,9 +21273,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0191886914007090",
@@ -21310,9 +21446,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0033350615003674",
@@ -21486,9 +21622,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S0005796719301913",
       "stable_uri": "https://doi.org/10.1016/j.brat.2019.103505",
@@ -21529,9 +21666,9 @@
       "publication_date": "2015-01-01",
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
         "publication_year": 2015
       },
       "source_id": "elsevier-S0010945215003366",
@@ -21840,13 +21977,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-07-18T15:00:00+02:00",
+      "publication_date": "2022-07-18T18:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-6574",
       "stable_uri": "https://olh.openlibhums.org/article/id/6574/",
@@ -21882,13 +22020,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-05-23T15:30:00+02:00",
+      "publication_date": "2022-05-23T19:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-7687",
       "stable_uri": "https://olh.openlibhums.org/article/id/7687/",
@@ -21924,13 +22063,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-05-16T16:00:00+02:00",
+      "publication_date": "2022-05-16T19:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-6387",
       "stable_uri": "https://olh.openlibhums.org/article/id/6387/",
@@ -21966,13 +22106,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2021-12-23T15:00:00+01:00",
+      "publication_date": "2021-12-23T19:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2021
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2021,
+        "start_year": 2020
       },
       "source_id": "olh-4724",
       "stable_uri": "https://olh.openlibhums.org/article/id/4724/",
@@ -22008,13 +22149,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-06-03T14:41:39+02:00",
+      "publication_date": "2020-06-03T18:11:39+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4624",
       "stable_uri": "https://olh.openlibhums.org/article/id/4624/",
@@ -22050,13 +22192,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-05-04T14:45:53+02:00",
+      "publication_date": "2020-05-04T18:15:53+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4621",
       "stable_uri": "https://olh.openlibhums.org/article/id/4621/",
@@ -22092,13 +22235,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-04-13T14:59:58+02:00",
+      "publication_date": "2020-04-13T18:29:58+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4616",
       "stable_uri": "https://olh.openlibhums.org/article/id/4616/",
@@ -22134,13 +22278,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-03-06T13:55:27+01:00",
+      "publication_date": "2020-03-06T18:25:27+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4612",
       "stable_uri": "https://olh.openlibhums.org/article/id/4612/",
@@ -22176,13 +22321,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-03-06T13:09:27+01:00",
+      "publication_date": "2020-03-06T17:39:27+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4614",
       "stable_uri": "https://olh.openlibhums.org/article/id/4614/",
@@ -22218,13 +22364,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2020-03-06T13:03:09+01:00",
+      "publication_date": "2020-03-06T17:33:09+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "olh-4613",
       "stable_uri": "https://olh.openlibhums.org/article/id/4613/",
@@ -22260,7 +22407,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-12-17T13:33:22+01:00",
+      "publication_date": "2019-12-17T18:03:22+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -22302,7 +22449,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-11-25T13:01:20+01:00",
+      "publication_date": "2019-11-25T17:31:20+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -22344,7 +22491,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-10-04T14:49:45+02:00",
+      "publication_date": "2019-10-04T18:19:45+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -22386,7 +22533,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-09-09T14:41:11+02:00",
+      "publication_date": "2019-09-09T18:11:11+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -22428,7 +22575,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-09-06T14:34:04+02:00",
+      "publication_date": "2019-09-06T18:04:04+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -22470,7 +22617,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-08-26T14:42:36+02:00",
+      "publication_date": "2019-08-26T18:12:36+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -22512,7 +22659,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-07-26T14:42:54+02:00",
+      "publication_date": "2019-07-26T18:12:54+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -22554,7 +22701,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-09-12T14:30:36+02:00",
+      "publication_date": "2018-09-12T18:00:36+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -22834,9 +22981,10 @@
       "publisher": "Elsevier OA CC-BY Corpus",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2020
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2020,
+        "start_year": 2020
       },
       "source_id": "elsevier-S1364815219301495",
       "stable_uri": "https://doi.org/10.1016/j.envsoft.2019.104589",
@@ -22960,13 +23108,14 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-03-28T10:00:00+02:00",
+      "publication_date": "2022-03-28T13:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2022
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2022,
+        "start_year": 2020
       },
       "source_id": "olh-6350",
       "stable_uri": "https://olh.openlibhums.org/article/id/6350/",
@@ -23002,7 +23151,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2022-01-07T11:30:00+01:00",
+      "publication_date": "2022-01-07T16:00:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": true,
@@ -23044,7 +23193,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-02-05T13:35:50+01:00",
+      "publication_date": "2019-02-05T18:05:50+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -23086,7 +23235,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-02-05T13:14:25+01:00",
+      "publication_date": "2019-02-05T17:44:25+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -23128,7 +23277,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2019-01-09T13:35:03+01:00",
+      "publication_date": "2019-01-09T18:05:03+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": true,
@@ -23170,7 +23319,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-12-18T13:00:00+01:00",
+      "publication_date": "2018-12-18T17:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -23212,7 +23361,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-11-26T13:00:00+01:00",
+      "publication_date": "2018-11-26T17:30:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -23254,7 +23403,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-11-23T13:50:52+01:00",
+      "publication_date": "2018-11-23T18:20:52+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": true,
@@ -23296,7 +23445,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-09-10T14:22:00+02:00",
+      "publication_date": "2018-09-10T17:52:00+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -23338,7 +23487,7 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2018-04-24T14:07:56+02:00",
+      "publication_date": "2018-04-24T17:37:56+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
         "catalog_declared_held_out_domain": false,
@@ -23380,13 +23529,13 @@
         "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
         "version": "4.0"
       },
-      "publication_date": "2015-10-05T14:22:03+02:00",
+      "publication_date": "2015-10-05T17:52:03+05:30",
       "publisher": "Open Library of Humanities",
       "semantic_split": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "cutoff_year": 2015,
-        "partition": "temporal",
-        "publication_year": 2015
+        "catalog_declared_held_out_domain": true,
+        "criteria_id": "T070-OOD-DOMAIN-V1",
+        "domain_id": "technical-writing-held-out-v1",
+        "partition": "ood"
       },
       "source_id": "olh-4402",
       "stable_uri": "https://olh.openlibhums.org/article/id/4402/",

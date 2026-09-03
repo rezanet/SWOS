@@ -43,8 +43,13 @@ Outputs are:
   the explicit human-review boundary;
 - `.acquisition-state.json` and `sources/`: resumable local acquisition cache.
 
-Temporal membership is semantic and predeclared as publication year <= 2015.
-OOD membership requires an explicit catalog-declared held-out-domain flag.
+Temporal membership is semantic and predeclared by policy
+`T070-TEMPORAL-LATER-YEAR-V1` (`2.0.0`) as
+`publication_year >= 2020` when the source is not independently declared OOD.
+OOD membership requires an explicit catalog-declared held-out-domain flag and
+takes precedence over the date rule. The 2020 boundary was frozen from the
+admitted-candidate publication-year histogram and pre-annotation benchmark
+viability before annotation; labels and model outcomes were not consulted.
 Hashing is used only to balance in-domain groups across train, calibration, and
 locked-test; it never defines temporal or OOD membership.
 

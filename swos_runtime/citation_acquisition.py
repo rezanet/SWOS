@@ -65,6 +65,11 @@ ALLOWED_USES = {
 }
 REQUIRED_CANDIDATE_USES = {"candidate_generation", "human_annotation"}
 
+SEMANTIC_POLICY_VERSION = "2.0.0"
+TEMPORAL_CRITERIA_ID = "T070-TEMPORAL-LATER-YEAR-V1"
+TEMPORAL_START_YEAR = 2020
+TEMPORAL_DEFINITION = "publication_year >= 2020 and catalog_declared_held_out_domain is not true"
+
 CANDIDATE_STRATA = (
     "S1",
     "S2",
@@ -116,11 +121,11 @@ _PATTERN_MARKERS: tuple[tuple[str, tuple[str, ...]], ...] = (
 SEMANTIC_PARTITIONS = ("in_domain", "temporal", "ood")
 
 DEFAULT_SEMANTIC_POLICY: dict[str, Any] = {
-    "version": "1.0.0",
+    "version": SEMANTIC_POLICY_VERSION,
     "temporal": {
-        "criteria_id": "T070-TEMPORAL-YEAR-V1",
-        "definition": "publication_year <= 2015",
-        "cutoff_year": 2015,
+        "criteria_id": TEMPORAL_CRITERIA_ID,
+        "definition": TEMPORAL_DEFINITION,
+        "start_year": TEMPORAL_START_YEAR,
     },
     "ood": {
         "criteria_id": "T070-OOD-DOMAIN-V1",
@@ -222,29 +227,37 @@ def canonical_source_family(source: Mapping[str, Any]) -> str:
 
 
 def _validate_semantic_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
-    if not isinstance(policy, Mapping) or policy.get("version") != "1.0.0":
-        raise AcquisitionValidationError("semantic split policy must be version 1.0.0")
+    if not isinstance(policy, Mapping) or policy.get("version") != SEMANTIC_POLICY_VERSION:
+        raise AcquisitionValidationError(
+            f"semantic split policy must be version {SEMANTIC_POLICY_VERSION}"
+        )
     temporal = policy.get("temporal")
     ood = policy.get("ood")
     if not isinstance(temporal, Mapping) or not isinstance(ood, Mapping):
         raise AcquisitionValidationError("semantic split policy requires temporal and ood criteria")
-    if temporal.get("criteria_id") != DEFAULT_SEMANTIC_POLICY["temporal"]["criteria_id"]:
+    if temporal.get("criteria_id") != TEMPORAL_CRITERIA_ID:
         raise AcquisitionValidationError("temporal split criteria ID is not predeclared")
-    if temporal.get("definition") != DEFAULT_SEMANTIC_POLICY["temporal"]["definition"]:
+    if temporal.get("definition") != TEMPORAL_DEFINITION:
         raise AcquisitionValidationError("temporal split definition is not predeclared")
-    cutoff = temporal.get("cutoff_year")
-    if isinstance(cutoff, bool) or not isinstance(cutoff, int) or cutoff != 2015:
-        raise AcquisitionValidationError("temporal split cutoff must be the frozen 2015 cutoff")
+    start_year = temporal.get("start_year")
+    if (
+        isinstance(start_year, bool)
+        or not isinstance(start_year, int)
+        or start_year != TEMPORAL_START_YEAR
+    ):
+        raise AcquisitionValidationError(
+            "temporal split start year must be the frozen 2020 later-window boundary"
+        )
     if ood.get("criteria_id") != DEFAULT_SEMANTIC_POLICY["ood"]["criteria_id"]:
         raise AcquisitionValidationError("OOD split criteria ID is not predeclared")
     if ood.get("definition") != DEFAULT_SEMANTIC_POLICY["ood"]["definition"]:
         raise AcquisitionValidationError("OOD split definition is not predeclared")
     return {
-        "version": "1.0.0",
+        "version": SEMANTIC_POLICY_VERSION,
         "temporal": {
             "criteria_id": str(temporal["criteria_id"]),
             "definition": str(temporal["definition"]),
-            "cutoff_year": int(cutoff),
+            "start_year": int(start_year),
         },
         "ood": {
             "criteria_id": str(ood["criteria_id"]),
@@ -272,17 +285,19 @@ def _validate_semantic_assignment(
                 "temporal candidate does not use the declared criteria"
             )
         year = value.get("publication_year")
-        cutoff = value.get("cutoff_year")
+        start_year = value.get("start_year")
         if (
             isinstance(year, bool)
             or not isinstance(year, int)
-            or year > policy["temporal"]["cutoff_year"]
+            or year < policy["temporal"]["start_year"]
         ):
             raise AcquisitionValidationError(
-                "temporal candidate lacks a publication year at or before cutoff"
+                "temporal candidate lacks a publication year in the later window"
             )
-        if cutoff != policy["temporal"]["cutoff_year"]:
-            raise AcquisitionValidationError("temporal candidate cutoff does not match policy")
+        if start_year != policy["temporal"]["start_year"]:
+            raise AcquisitionValidationError("temporal candidate start year does not match policy")
+        if value.get("catalog_declared_held_out_domain") is True:
+            raise AcquisitionValidationError("OOD candidate cannot be marked temporal")
     elif partition == "ood":
         if criteria_id != policy["ood"]["criteria_id"]:
             raise AcquisitionValidationError("OOD candidate does not use the declared criteria")
@@ -299,9 +314,9 @@ def _validate_semantic_assignment(
         if (
             isinstance(year, int)
             and not isinstance(year, bool)
-            and year <= policy["temporal"]["cutoff_year"]
+            and year >= policy["temporal"]["start_year"]
         ):
-            raise AcquisitionValidationError("pre-cutoff candidate cannot be marked in-domain")
+            raise AcquisitionValidationError("later-period candidate cannot be marked in-domain")
         if value.get("catalog_declared_held_out_domain") is True:
             raise AcquisitionValidationError("held-out-domain candidate cannot be marked in-domain")
     result["partition"] = str(partition)
@@ -635,6 +650,67 @@ def semantic_grouped_split(
 
     policy = _validate_semantic_policy(policy)
     groups = _semantic_group_partition(rows, policy)
+    source_partitions: dict[str, set[str]] = defaultdict(set)
+    claim_partitions: dict[str, set[str]] = defaultdict(set)
+    for partition, values in groups.values():
+        partition = _validate_semantic_assignment(values[0]["semantic_split"], policy=policy)[
+            "partition"
+        ]
+        for row in values:
+            source_partitions[str(row["source_id"])].add(partition)
+            claim_partitions[str(row["claim_family_id"])].add(partition)
+    for source_id, partitions in source_partitions.items():
+        if len(partitions) > 1:
+            raise AcquisitionValidationError(
+                f"source {source_id} crosses semantic split partitions"
+            )
+    for claim_family_id, partitions in claim_partitions.items():
+        if len(partitions) > 1:
+            raise AcquisitionValidationError(
+                f"claim family {claim_family_id} crosses semantic split partitions"
+            )
+    # Keep every source family together in the final train/calibration/locked-test
+    # allocation as well. A source may contribute several claim families; those
+    # groups form one deterministic assignment unit rather than being allowed to
+    # leak across in-domain partitions.
+    parent = {group_id: group_id for group_id in groups}
+
+    def find(group_id: str) -> str:
+        while parent[group_id] != group_id:
+            parent[group_id] = parent[parent[group_id]]
+            group_id = parent[group_id]
+        return group_id
+
+    def union(left: str, right: str) -> None:
+        left_root = find(left)
+        right_root = find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
+    owners: dict[tuple[str, str], str] = {}
+    for group_id, (_, values) in groups.items():
+        for row in values:
+            for key in (
+                ("source", str(row["source_id"])),
+                ("claim", str(row["claim_family_id"])),
+            ):
+                owner = owners.get(key)
+                if owner is None:
+                    owners[key] = group_id
+                else:
+                    union(group_id, owner)
+    units: dict[str, tuple[str, list[dict[str, Any]], list[str]]] = {}
+    for group_id, (partition, values) in groups.items():
+        root = find(group_id)
+        if root not in units:
+            units[root] = (partition, [], [])
+        unit_partition, unit_values, unit_groups = units[root]
+        if unit_partition != partition:
+            raise AcquisitionValidationError(
+                f"canonical source/claim unit {root} crosses semantic split partitions"
+            )
+        unit_values.extend(values)
+        unit_groups.append(group_id)
     names = ("train", "calibration", "locked_test", "temporal", "ood")
     raw = dict(proportions or {"train": 0.7, "calibration": 0.15, "locked_test": 0.15})
     if set(raw) - set(names) or not {"train", "calibration", "locked_test"}.issubset(raw):
@@ -656,13 +732,19 @@ def semantic_grouped_split(
             )
         weights[name] = float(value)
     result: dict[str, list[dict[str, Any]]] = {name: [] for name in names}
-    ordered = sorted(
-        groups, key=lambda group: hashlib.sha256(f"{seed}:{group}".encode()).hexdigest()
+    special_units = sorted(
+        (unit for unit, (partition, _, _) in units.items() if partition in {"temporal", "ood"}),
+        key=lambda unit: min(units[unit][2]),
     )
+    in_domain_units = sorted(
+        (unit for unit, (partition, _, _) in units.items() if partition == "in_domain"),
+        key=lambda unit: hashlib.sha256(f"{seed}:{min(units[unit][2])}".encode()).hexdigest(),
+    )
+    ordered = special_units + in_domain_units
     totals = {name: 0.0 for name in in_domain_names}
     target = {name: weights[name] for name in in_domain_names}
-    for group_id in ordered:
-        partition, values = groups[group_id]
+    for unit_id in ordered:
+        partition, values, _ = units[unit_id]
         if partition in {"temporal", "ood"}:
             result[partition].extend(values)
             continue
@@ -672,6 +754,16 @@ def semantic_grouped_split(
         )
         result[chosen].extend(values)
         totals[chosen] += len(values)
+    source_locations: dict[str, set[str]] = defaultdict(set)
+    claim_locations: dict[str, set[str]] = defaultdict(set)
+    for split, values in result.items():
+        for row in values:
+            source_locations[str(row["source_id"])].add(split)
+            claim_locations[str(row["claim_family_id"])].add(split)
+    if any(len(locations) > 1 for locations in source_locations.values()):
+        raise AcquisitionValidationError("source family crosses final semantic partitions")
+    if any(len(locations) > 1 for locations in claim_locations.values()):
+        raise AcquisitionValidationError("claim family crosses final semantic partitions")
     for values in result.values():
         values.sort(key=lambda row: str(row["pair_id"]))
     return result
@@ -852,13 +944,25 @@ def _source_semantic_assignment(
 ) -> dict[str, Any]:
     explicit = source.get("semantic_split") or source.get("semantic_split_default")
     year = _publication_year(source.get("publication_date"))
-    held_out = bool(source.get("catalog_declared_held_out_domain"))
+    held_out = source.get("catalog_declared_held_out_domain") is True
     if isinstance(explicit, Mapping):
         assignment = dict(explicit)
         partition = assignment.get("partition")
+        declared_year = assignment.get("publication_year")
+        if year is not None and declared_year is not None and declared_year != year:
+            raise AcquisitionValidationError(
+                "semantic assignment publication year does not match source metadata"
+            )
+        if year is not None:
+            assignment.setdefault("publication_year", year)
+        if held_out and partition != "ood":
+            raise AcquisitionValidationError(
+                "catalog-declared held-out source must remain in the OOD partition"
+            )
         if partition == "temporal":
             assignment.setdefault("publication_year", year)
-            assignment.setdefault("cutoff_year", policy["temporal"]["cutoff_year"])
+            assignment.setdefault("start_year", policy["temporal"]["start_year"])
+            assignment.setdefault("catalog_declared_held_out_domain", held_out)
         elif partition == "ood":
             assignment.setdefault("catalog_declared_held_out_domain", held_out)
         assignment.setdefault(
@@ -878,12 +982,13 @@ def _source_semantic_assignment(
                 source.get("held_out_domain_id") or "catalog-declared-held-out-domain"
             ),
         }
-    elif year is not None and year <= policy["temporal"]["cutoff_year"]:
+    elif year is not None and year >= policy["temporal"]["start_year"]:
         assignment = {
             "partition": "temporal",
             "criteria_id": policy["temporal"]["criteria_id"],
             "publication_year": year,
-            "cutoff_year": policy["temporal"]["cutoff_year"],
+            "start_year": policy["temporal"]["start_year"],
+            "catalog_declared_held_out_domain": False,
         }
     else:
         assignment = {
@@ -1420,6 +1525,99 @@ def acquire_candidates(
         for group_id, locations in sorted(group_locations.items())
         if len(locations) > 1
     ]
+    source_locations: dict[str, set[str]] = defaultdict(set)
+    claim_locations: dict[str, set[str]] = defaultdict(set)
+    for split, values in semantic_splits.items():
+        for row in values:
+            source_locations[str(row["source_id"])].add(split)
+            claim_locations[str(row["claim_family_id"])].add(split)
+    source_family_leakage = [
+        f"source family {source_id} has multiple semantic split locations"
+        for source_id, locations in sorted(source_locations.items())
+        if len(locations) > 1
+    ]
+    claim_family_split_leakage = [
+        f"claim family {claim_family_id} has multiple semantic split locations"
+        for claim_family_id, locations in sorted(claim_locations.items())
+        if len(locations) > 1
+    ]
+    if source_family_leakage or claim_family_split_leakage:
+        raise AcquisitionValidationError(
+            "; ".join(source_family_leakage + claim_family_split_leakage)
+        )
+    source_family_counts = Counter()
+    publication_year_histogram = Counter()
+    for source in source_records:
+        if source["state"] not in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}:
+            continue
+        assignment = source.get("semantic_split_default")
+        if isinstance(assignment, Mapping):
+            source_family_counts[assignment["partition"]] += 1
+        year = _publication_year(source.get("publication_date"))
+        publication_year_histogram[str(year) if year is not None else "unknown"] += 1
+    claim_family_locations: dict[str, set[str]] = defaultdict(set)
+    pair_counts_by_partition = Counter()
+    for row in candidate_rows:
+        partition = row["semantic_split"]["partition"]
+        claim_family_locations[str(row["claim_family_id"])].add(partition)
+        pair_counts_by_partition[partition] += 1
+    claim_family_leakage = [
+        f"claim family {claim_family_id} has multiple semantic split locations"
+        for claim_family_id, locations in sorted(claim_family_locations.items())
+        if len(locations) > 1
+    ]
+    if claim_family_leakage:
+        raise AcquisitionValidationError("; ".join(claim_family_leakage))
+    claim_family_counts = Counter(
+        next(iter(locations)) for locations in claim_family_locations.values()
+    )
+    semantic_partition_names = ("in_domain", "temporal", "ood")
+    source_family_counts = {
+        partition: source_family_counts[partition] for partition in semantic_partition_names
+    }
+    claim_family_counts = {
+        partition: claim_family_counts[partition] for partition in semantic_partition_names
+    }
+    pair_counts_by_partition = {
+        partition: pair_counts_by_partition[partition] for partition in semantic_partition_names
+    }
+    pair_counts_by_discipline_and_partition: dict[str, dict[str, int]] = {}
+    pair_counts_by_stratum_and_partition: dict[str, dict[str, int]] = {}
+    for dimension, target in (
+        ("discipline", pair_counts_by_discipline_and_partition),
+        ("acquisition_stratum", pair_counts_by_stratum_and_partition),
+    ):
+        values_by_dimension: dict[str, Counter[str]] = defaultdict(Counter)
+        for row in candidate_rows:
+            values_by_dimension[str(row[dimension])][row["semantic_split"]["partition"]] += 1
+        target.update(
+            {
+                value: {partition: counts[partition] for partition in semantic_partition_names}
+                for value, counts in sorted(values_by_dimension.items())
+            }
+        )
+    temporal_selection = {
+        "policy_version": policy["version"],
+        "criteria_id": policy["temporal"]["criteria_id"],
+        "start_year": policy["temporal"]["start_year"],
+        "rule": policy["temporal"]["definition"],
+        "selection_basis": (
+            "publication-year histogram and pre-annotation benchmark viability; "
+            "no human labels or model performance were consulted"
+        ),
+        "rationale": (
+            "The 2020 later window retains a useful temporal holdout while leaving "
+            "substantial non-OOD material for in-domain train, calibration, and locked-test "
+            "allocation. OOD membership remains independently predeclared and takes precedence "
+            "over date."
+        ),
+        "publication_year_histogram": dict(
+            sorted(publication_year_histogram.items(), key=lambda item: item[0])
+        ),
+        "source_families_by_partition": source_family_counts,
+        "claim_families_by_partition": claim_family_counts,
+        "pairs_by_partition": pair_counts_by_partition,
+    }
     report = {
         "schema_version": "2.0.0",
         "status": source_manifest_status,
@@ -1479,8 +1677,17 @@ def acquire_candidates(
         "candidate_pairs_by_semantic_partition": dict(
             sorted(Counter(row["semantic_split"]["partition"] for row in candidate_rows).items())
         ),
+        "publication_year_histogram": temporal_selection["publication_year_histogram"],
+        "temporal_holdout_selection": temporal_selection,
+        "source_families_by_semantic_partition": source_family_counts,
+        "claim_families_by_semantic_partition": claim_family_counts,
+        "pairs_by_semantic_partition": pair_counts_by_partition,
+        "pairs_by_discipline_and_semantic_partition": pair_counts_by_discipline_and_partition,
+        "pairs_by_stratum_and_semantic_partition": pair_counts_by_stratum_and_partition,
         "semantic_split_policy": policy,
         "group_leakage": group_leakage,
+        "source_family_leakage": source_family_leakage,
+        "claim_family_leakage": claim_family_split_leakage,
         "output_digests": {
             "source_candidate_manifest_sha256": _sha256_file(
                 output_dir / "source-candidate-manifest.json"

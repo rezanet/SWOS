@@ -30,15 +30,17 @@
       "additionalProperties": false,
       "required": ["version", "temporal", "ood"],
       "properties": {
-        "version": {"const": "1.0.0"},
+        "version": {"const": "2.0.0"},
         "temporal": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["criteria_id", "definition", "cutoff_year"],
+          "required": ["criteria_id", "definition", "start_year"],
           "properties": {
-            "criteria_id": {"const": "T070-TEMPORAL-YEAR-V1"},
-            "definition": {"const": "publication_year <= 2015"},
-            "cutoff_year": {"const": 2015}
+            "criteria_id": {"const": "T070-TEMPORAL-LATER-YEAR-V1"},
+            "definition": {
+              "const": "publication_year >= 2020 and catalog_declared_held_out_domain is not true"
+            },
+            "start_year": {"const": 2020}
           }
         },
         "ood": {
@@ -175,7 +177,7 @@
             "partition": {"enum": ["in_domain", "temporal", "ood"]},
             "criteria_id": {"type": "string", "minLength": 1},
             "publication_year": {"type": "integer"},
-            "cutoff_year": {"type": "integer"},
+            "start_year": {"type": "integer"},
             "catalog_declared_held_out_domain": {"type": "boolean"},
             "domain_id": {"type": "string", "minLength": 1}
           }

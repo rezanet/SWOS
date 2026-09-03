@@ -5,10 +5,12 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
 from swos_runtime.citation_acquisition import (
     AcquisitionValidationError,
+    _source_semantic_assignment,
     acquire_candidates,
     semantic_grouped_split,
     validate_candidate_source_binding,
@@ -30,7 +32,7 @@ class CitationAcquisitionTests(unittest.TestCase):
             "title": "A licensed example",
             "authors": ["Example Author"],
             "publisher": "Example Press",
-            "publication_date": "2020-01-02",
+            "publication_date": "2019-01-02",
             "disciplines": ["engineering"],
             "licence": {
                 "spdx": "CC-BY-4.0",
@@ -60,11 +62,11 @@ class CitationAcquisitionTests(unittest.TestCase):
             "generated_at": "2026-09-03T00:00:00Z",
             "sources": [self._source()],
             "semantic_split_policy": {
-                "version": "1.0.0",
+                "version": "2.0.0",
                 "temporal": {
-                    "criteria_id": "T070-TEMPORAL-YEAR-V1",
-                    "definition": "publication_year <= 2015",
-                    "cutoff_year": 2015,
+                    "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+                    "definition": "publication_year >= 2020 and catalog_declared_held_out_domain is not true",
+                    "start_year": 2020,
                 },
                 "ood": {
                     "criteria_id": "T070-OOD-DOMAIN-V1",
@@ -73,20 +75,32 @@ class CitationAcquisitionTests(unittest.TestCase):
             },
         }
 
-    def _pair(self, pair_id: str, group_id: str, partition: str = "in_domain") -> dict:
+    def _pair(
+        self,
+        pair_id: str,
+        group_id: str,
+        partition: str = "in_domain",
+        *,
+        source_id: str = "source-1",
+        publication_year: int | None = None,
+        claim_family_id: str | None = None,
+    ) -> dict:
+        if publication_year is None:
+            publication_year = 2020 if partition == "temporal" else 2019
+        claim_family_id = claim_family_id or f"family-{group_id}"
         return {
             "schema_version": "2.0.0",
             "packet_type": "citation_support_unlabelled_annotation",
             "packet_id": f"packet-{pair_id}",
             "pair_id": pair_id,
-            "claim_family_id": f"family-{group_id}",
+            "claim_family_id": claim_family_id,
             "group_id": group_id,
             "discipline": "engineering",
             "claim_origin": "source-authored-sentence",
             "candidate_claim": "A source-authored atomic claim.",
             "exact_quote": "A bounded source passage.",
             "context": "The surrounding source context.",
-            "source_id": "source-1",
+            "source_id": source_id,
             "source_uri": "https://doi.org/10.1234/example.1",
             "acquired_copy_uri": "file:///cache/source-1.json",
             "source_digest": "a" * 64,
@@ -98,14 +112,14 @@ class CitationAcquisitionTests(unittest.TestCase):
             "semantic_split": {
                 "partition": partition,
                 "criteria_id": (
-                    "T070-TEMPORAL-YEAR-V1"
+                    "T070-TEMPORAL-LATER-YEAR-V1"
                     if partition == "temporal"
                     else "T070-OOD-DOMAIN-V1"
                     if partition == "ood"
                     else "T070-IN-DOMAIN-V1"
                 ),
-                "publication_year": 2010 if partition == "temporal" else 2020,
-                "cutoff_year": 2015,
+                "publication_year": publication_year,
+                **({"start_year": 2020} if partition == "temporal" else {}),
                 "catalog_declared_held_out_domain": partition == "ood",
                 **({"domain_id": "held-out-domain"} if partition == "ood" else {}),
             },
@@ -155,6 +169,41 @@ class CitationAcquisitionTests(unittest.TestCase):
         }
         self.assertIsNone(_elsevier_entry(data, Path("article.json"), 0))
 
+    def test_temporal_policy_uses_a_frozen_later_window_with_ood_precedence(self) -> None:
+        policy = self._manifest()["semantic_split_policy"]
+
+        older = self._source()
+        older["publication_date"] = "2019-12-31"
+        self.assertEqual(_source_semantic_assignment(older, policy)["partition"], "in_domain")
+
+        later = self._source()
+        later["publication_date"] = "2020-01-01"
+        self.assertEqual(_source_semantic_assignment(later, policy)["partition"], "temporal")
+
+        held_out = self._source()
+        held_out["publication_date"] = "2024-01-01"
+        held_out["catalog_declared_held_out_domain"] = True
+        held_out["held_out_domain_id"] = "declared-ood-v1"
+        self.assertEqual(_source_semantic_assignment(held_out, policy)["partition"], "ood")
+
+        conflicting = dict(held_out)
+        conflicting["semantic_split"] = {
+            "partition": "temporal",
+            "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        }
+        with self.assertRaises(AcquisitionValidationError):
+            _source_semantic_assignment(conflicting, policy)
+
+    def test_temporal_cutoff_change_requires_a_policy_version_change(self) -> None:
+        policy = self._manifest()["semantic_split_policy"]
+        changed_boundary = deepcopy(policy)
+        changed_boundary["temporal"]["start_year"] = 2019
+        with self.assertRaises(AcquisitionValidationError):
+            semantic_grouped_split(
+                [self._pair("p-policy", "g-policy")],
+                policy=changed_boundary,
+            )
+
     def test_unlabelled_packet_has_blank_human_fields_and_hides_intent(self) -> None:
         packet = self._pair("p-1", "g-1")
         validate_unlabelled_candidate_pair(packet)
@@ -192,8 +241,8 @@ class CitationAcquisitionTests(unittest.TestCase):
         rows = [
             self._pair("p-in-1", "g-in", "in_domain"),
             self._pair("p-in-2", "g-in", "in_domain"),
-            self._pair("p-temporal", "g-temporal", "temporal"),
-            self._pair("p-ood", "g-ood", "ood"),
+            self._pair("p-temporal", "g-temporal", "temporal", source_id="source-temporal"),
+            self._pair("p-ood", "g-ood", "ood", source_id="source-ood", publication_year=2024),
         ]
         policy = self._manifest()["semantic_split_policy"]
         splits = semantic_grouped_split(rows, policy=policy, seed=7)
@@ -201,6 +250,9 @@ class CitationAcquisitionTests(unittest.TestCase):
             {row["semantic_split"]["partition"] for row in splits["temporal"]}, {"temporal"}
         )
         self.assertEqual({row["semantic_split"]["partition"] for row in splits["ood"]}, {"ood"})
+        for split in ("train", "calibration", "locked_test"):
+            self.assertNotIn("source-temporal", {row["source_id"] for row in splits[split]})
+            self.assertNotIn("source-ood", {row["source_id"] for row in splits[split]})
         locations = {row["group_id"]: split for split, values in splits.items() for row in values}
         self.assertEqual(locations["g-in"], "train")
         self.assertNotIn("g-in", {row["group_id"] for row in splits["locked_test"]})
@@ -214,6 +266,56 @@ class CitationAcquisitionTests(unittest.TestCase):
         with self.assertRaises(AcquisitionValidationError):
             semantic_grouped_split([hash_only], policy=policy, seed=7)
 
+        hash_ood = self._pair(
+            "p-hash-ood", "g-hash-ood", "ood", source_id="source-hash-ood", publication_year=2024
+        )
+        hash_ood["semantic_split"]["bucket"] = 3
+        with self.assertRaises(AcquisitionValidationError):
+            semantic_grouped_split([hash_ood], policy=policy, seed=7)
+
+    def test_canonical_source_and_claim_families_cannot_cross_final_partitions(self) -> None:
+        source_crossing = [
+            self._pair("p-source-old", "g-source-old", source_id="source-shared"),
+            self._pair(
+                "p-source-new",
+                "g-source-new",
+                "temporal",
+                source_id="source-shared",
+            ),
+        ]
+        with self.assertRaises(AcquisitionValidationError):
+            semantic_grouped_split(
+                source_crossing, policy=self._manifest()["semantic_split_policy"]
+            )
+
+        claim_crossing = [
+            self._pair("p-claim-old", "g-claim-old", source_id="source-claim-old"),
+            self._pair(
+                "p-claim-new",
+                "g-claim-new",
+                "temporal",
+                source_id="source-claim-new",
+                claim_family_id="family-g-claim-old",
+            ),
+        ]
+        with self.assertRaises(AcquisitionValidationError):
+            semantic_grouped_split(claim_crossing, policy=self._manifest()["semantic_split_policy"])
+
+        same_source_in_domain = [
+            self._pair("p-source-train", "g-source-train", source_id="source-one"),
+            self._pair("p-source-cal", "g-source-cal", source_id="source-one"),
+        ]
+        splits = semantic_grouped_split(
+            same_source_in_domain, policy=self._manifest()["semantic_split_policy"], seed=11
+        )
+        locations = {
+            split
+            for split, values in splits.items()
+            for row in values
+            if row["source_id"] == "source-one"
+        }
+        self.assertEqual(len(locations), 1)
+
     def test_acquisition_reuses_an_immutable_copy_and_writes_a_reproducible_report(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -222,7 +324,7 @@ class CitationAcquisitionTests(unittest.TestCase):
                 json.dumps(
                     {
                         "title": "A source",
-                        "publication_date": "2020-01-02",
+                        "publication_date": "2019-01-02",
                         "text": "This is a direct statement with enough words. Another contextual statement with enough words.",
                     }
                 ),
@@ -243,7 +345,7 @@ class CitationAcquisitionTests(unittest.TestCase):
                                 "title": "A source",
                                 "authors": ["Example Author"],
                                 "publisher": "Example Press",
-                                "publication_date": "2020-01-02",
+                                "publication_date": "2019-01-02",
                                 "disciplines": ["engineering"],
                                 "licence": {
                                     "spdx": "CC-BY-4.0",

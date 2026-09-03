@@ -34,6 +34,10 @@ OLH_API_URI = "https://olh.openlibhums.org/api/articles/"
 OLH_ARTICLE_URI = "https://olh.openlibhums.org/article/id/{article_id}/"
 OLH_USER_AGENT = "SWOS-T070-citation-acquisition/1.0 (research)"
 MAX_ARTICLE_BYTES = 50 * 1024 * 1024
+SEMANTIC_POLICY_VERSION = "2.0.0"
+TEMPORAL_CRITERIA_ID = "T070-TEMPORAL-LATER-YEAR-V1"
+TEMPORAL_START_YEAR = 2020
+TEMPORAL_DEFINITION = "publication_year >= 2020 and catalog_declared_held_out_domain is not true"
 
 DISCIPLINES = (
     "art_history",
@@ -212,13 +216,6 @@ def classify_olh(article: dict[str, Any]) -> str:
 
 
 def _semantic_assignment(year: int | None, discipline: str, ordinal: int) -> dict[str, Any]:
-    if year is not None and year <= 2015:
-        return {
-            "partition": "temporal",
-            "criteria_id": "T070-TEMPORAL-YEAR-V1",
-            "publication_year": year,
-            "cutoff_year": 2015,
-        }
     # The held-out designation is a declared domain policy, not a hash bucket:
     # technical-writing sources are withheld as a named OOD domain for every
     # third eligible modern source. Human review may revise the domain policy.
@@ -228,6 +225,14 @@ def _semantic_assignment(year: int | None, discipline: str, ordinal: int) -> dic
             "criteria_id": "T070-OOD-DOMAIN-V1",
             "catalog_declared_held_out_domain": True,
             "domain_id": "technical-writing-held-out-v1",
+        }
+    if year is not None and year >= TEMPORAL_START_YEAR:
+        return {
+            "partition": "temporal",
+            "criteria_id": TEMPORAL_CRITERIA_ID,
+            "publication_year": year,
+            "start_year": TEMPORAL_START_YEAR,
+            "catalog_declared_held_out_domain": False,
         }
     return {
         "partition": "in_domain",
@@ -467,11 +472,11 @@ def prepare_catalog(
         .isoformat()
         .replace("+00:00", "Z"),
         "semantic_split_policy": {
-            "version": "1.0.0",
+            "version": SEMANTIC_POLICY_VERSION,
             "temporal": {
-                "criteria_id": "T070-TEMPORAL-YEAR-V1",
-                "definition": "publication_year <= 2015",
-                "cutoff_year": 2015,
+                "criteria_id": TEMPORAL_CRITERIA_ID,
+                "definition": TEMPORAL_DEFINITION,
+                "start_year": TEMPORAL_START_YEAR,
             },
             "ood": {
                 "criteria_id": "T070-OOD-DOMAIN-V1",

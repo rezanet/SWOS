@@ -48,9 +48,9 @@
     "stratum_defined": 3600
   },
   "candidate_pairs_by_semantic_partition": {
-    "in_domain": 4875,
-    "ood": 210,
-    "temporal": 915
+    "in_domain": 4495,
+    "ood": 245,
+    "temporal": 1260
   },
   "candidate_pairs_by_stratum": {
     "S1": 1200,
@@ -59,9 +59,15 @@
     "S4": 1200,
     "S5": 1200
   },
-  "catalog_sha256": "b5bc67652df29c3e0bd5dd8ab9166d9fc1e56b91f51658b8c2469ec6815729a9",
+  "catalog_sha256": "62f38cec842fb112c041e8e28ff991185756e7a78abb1b0aa3e651ce97cc563e",
   "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog.json",
   "claim_families": 1200,
+  "claim_families_by_semantic_partition": {
+    "in_domain": 899,
+    "ood": 49,
+    "temporal": 252
+  },
+  "claim_family_leakage": [],
   "downloaded_sources": 0,
   "group_leakage": [],
   "human_annotation": {
@@ -81,8 +87,102 @@
     "rejected_unresolved_licence": 0
   },
   "output_digests": {
-    "source_candidate_manifest_sha256": "637d75786d9cb0c9251671847233aacc048c618a38029b22eb6c449dfca0bf11",
-    "unlabelled_candidate_pairs_sha256": "a4b2cefbaf9368eee16aaa45a0773f1f17d0b809a5666a19f49b24c27c77a66d"
+    "source_candidate_manifest_sha256": "1bddc7de8db88020ec0ee766837a70f691626d8bdf2a1cef01740d3ce79cf40d",
+    "unlabelled_candidate_pairs_sha256": "020370875eaeb08b32376f067589373a047f405a1a16c24c4ea65ebf76ff4eeb"
+  },
+  "pairs_by_discipline_and_semantic_partition": {
+    "art_criticism": {
+      "in_domain": 385,
+      "ood": 0,
+      "temporal": 285
+    },
+    "art_history": {
+      "in_domain": 505,
+      "ood": 0,
+      "temporal": 165
+    },
+    "engineering": {
+      "in_domain": 625,
+      "ood": 0,
+      "temporal": 45
+    },
+    "humanities": {
+      "in_domain": 440,
+      "ood": 0,
+      "temporal": 225
+    },
+    "interdisciplinary": {
+      "in_domain": 565,
+      "ood": 0,
+      "temporal": 100
+    },
+    "materials_science": {
+      "in_domain": 610,
+      "ood": 0,
+      "temporal": 55
+    },
+    "philosophy": {
+      "in_domain": 485,
+      "ood": 0,
+      "temporal": 180
+    },
+    "psychology": {
+      "in_domain": 530,
+      "ood": 0,
+      "temporal": 135
+    },
+    "technical_writing": {
+      "in_domain": 350,
+      "ood": 245,
+      "temporal": 70
+    }
+  },
+  "pairs_by_semantic_partition": {
+    "in_domain": 4495,
+    "ood": 245,
+    "temporal": 1260
+  },
+  "pairs_by_stratum_and_semantic_partition": {
+    "S1": {
+      "in_domain": 899,
+      "ood": 49,
+      "temporal": 252
+    },
+    "S2": {
+      "in_domain": 899,
+      "ood": 49,
+      "temporal": 252
+    },
+    "S3": {
+      "in_domain": 899,
+      "ood": 49,
+      "temporal": 252
+    },
+    "S4": {
+      "in_domain": 899,
+      "ood": 49,
+      "temporal": 252
+    },
+    "S5": {
+      "in_domain": 899,
+      "ood": 49,
+      "temporal": 252
+    }
+  },
+  "publication_year_histogram": {
+    "2014": 27,
+    "2015": 51,
+    "2016": 60,
+    "2017": 45,
+    "2018": 112,
+    "2019": 91,
+    "2020": 34,
+    "2021": 11,
+    "2022": 13,
+    "2023": 12,
+    "2024": 16,
+    "2025": 36,
+    "2026": 28
   },
   "release_status": "NOT_CERTIFIED",
   "reused_sources": 536,
@@ -94,11 +194,11 @@
       "definition": "catalog_declared_held_out_domain is true"
     },
     "temporal": {
-      "criteria_id": "T070-TEMPORAL-YEAR-V1",
-      "cutoff_year": 2015,
-      "definition": "publication_year <= 2015"
+      "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+      "definition": "publication_year >= 2020 and catalog_declared_held_out_domain is not true",
+      "start_year": 2020
     },
-    "version": "1.0.0"
+    "version": "2.0.0"
   },
   "source_counts_by_state": {
     "ADMISSIBLE_PENDING_REVIEW": 536
@@ -110,6 +210,12 @@
     },
     "unique_admissible": 536
   },
+  "source_families_by_semantic_partition": {
+    "in_domain": 380,
+    "ood": 7,
+    "temporal": 149
+  },
+  "source_family_leakage": [],
   "status": "READY_FOR_HUMAN_ANNOTATION",
   "stratum_policy": {
     "S1": "direct/complete candidate",
@@ -119,5 +225,43 @@
     "S5": "hard negative candidate"
   },
   "target_pairs": 6000,
+  "temporal_holdout_selection": {
+    "claim_families_by_partition": {
+      "in_domain": 899,
+      "ood": 49,
+      "temporal": 252
+    },
+    "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+    "pairs_by_partition": {
+      "in_domain": 4495,
+      "ood": 245,
+      "temporal": 1260
+    },
+    "policy_version": "2.0.0",
+    "publication_year_histogram": {
+      "2014": 27,
+      "2015": 51,
+      "2016": 60,
+      "2017": 45,
+      "2018": 112,
+      "2019": 91,
+      "2020": 34,
+      "2021": 11,
+      "2022": 13,
+      "2023": 12,
+      "2024": 16,
+      "2025": 36,
+      "2026": 28
+    },
+    "rationale": "The 2020 later window retains a useful temporal holdout while leaving substantial non-OOD material for in-domain train, calibration, and locked-test allocation. OOD membership remains independently predeclared and takes precedence over date.",
+    "rule": "publication_year >= 2020 and catalog_declared_held_out_domain is not true",
+    "selection_basis": "publication-year histogram and pre-annotation benchmark viability; no human labels or model performance were consulted",
+    "source_families_by_partition": {
+      "in_domain": 380,
+      "ood": 7,
+      "temporal": 149
+    },
+    "start_year": 2020
+  },
   "third_party_warning_sources": 536
 }
