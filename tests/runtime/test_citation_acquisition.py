@@ -18,7 +18,12 @@ from swos_runtime.citation_acquisition import (
     validate_unlabelled_candidate_pair,
 )
 from swos_runtime.citation_dataset import DatasetValidationError, validate_pair_record
-from tools.prepare_t070_catalog import _elsevier_entry, _olh_entry
+from tools.prepare_t070_catalog import (
+    _elsevier_entry,
+    _olh_entry,
+    _semantic_assignment,
+    classify_elsevier,
+)
 
 
 class CitationAcquisitionTests(unittest.TestCase):
@@ -168,6 +173,53 @@ class CitationAcquisitionTests(unittest.TestCase):
             },
         }
         self.assertIsNone(_elsevier_entry(data, Path("article.json"), 0))
+
+    def test_elsevier_arts_assignment_requires_article_level_topic_evidence(self) -> None:
+        unrelated = {
+            "title": "Collective strategies to cope with neonatal nursing stress in Kenya",
+            "subjareas": ["ARTS", "SOCI"],
+            "keywords": ["nursing", "stress", "Kenya"],
+        }
+        self.assertIsNone(classify_elsevier(unrelated))
+
+        art_history = {
+            "title": "Museum collections and conservation of ancient paintings",
+            "subjareas": ["ARTS", "SOCI"],
+            "keywords": ["heritage", "painting"],
+        }
+        self.assertEqual(classify_elsevier(art_history), "art_history")
+
+    def test_catalog_discipline_assignment_records_pending_source_evidence(self) -> None:
+        data = {
+            "docId": "S0000000000000001",
+            "metadata": {
+                "openaccess": "Full",
+                "title": "Museum collections and conservation of ancient paintings",
+                "subjareas": ["ARTS", "SOCI"],
+                "keywords": ["heritage", "painting"],
+                "authors": [{"first": "Example", "last": "Author"}],
+                "pub_year": 2019,
+                "doi": "10.1234/example.1",
+            },
+        }
+        entry = _elsevier_entry(data, Path("article.json"), 0)
+        self.assertIsNotNone(entry)
+        assert entry is not None
+        self.assertEqual(entry["disciplines"], ["art_history"])
+        self.assertEqual(
+            entry["discipline_assignment"],
+            {
+                "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
+                "review_status": "pending_human_review",
+                "subject_codes": ["ARTS", "SOCI"],
+                "matched_terms": ["conservation", "heritage", "museum", "painting"],
+            },
+        )
+
+    def test_ood_domain_assignment_is_not_an_ordinal_bucket(self) -> None:
+        self.assertEqual(_semantic_assignment(2019, "technical_writing", 1)["partition"], "ood")
+        self.assertEqual(_semantic_assignment(2025, "technical_writing", 2)["partition"], "ood")
+        self.assertEqual(_semantic_assignment(2025, "engineering", 1)["partition"], "temporal")
 
     def test_olh_catalog_preserves_every_named_author(self) -> None:
         article = {

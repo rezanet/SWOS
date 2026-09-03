@@ -13,12 +13,12 @@
     "A14": "summary stronger than passage",
     "A15": "neighboring mechanism"
   },
-  "candidate_families_rejected_for_span_collision": 168,
+  "candidate_families_rejected_for_span_collision": 171,
   "candidate_pairs": 6000,
   "candidate_pairs_by_discipline": {
-    "art_criticism": 675,
-    "art_history": 640,
-    "engineering": 675,
+    "art_criticism": 680,
+    "art_history": 630,
+    "engineering": 680,
     "humanities": 655,
     "interdisciplinary": 655,
     "materials_science": 705,
@@ -30,28 +30,28 @@
     "A01": 1200,
     "A02": 1200,
     "A03": 1200,
-    "A04": 633,
-    "A05": 454,
-    "A06": 234,
-    "A07": 158,
-    "A08": 87,
-    "A09": 227,
+    "A04": 629,
+    "A05": 446,
+    "A06": 230,
+    "A07": 159,
+    "A08": 89,
+    "A09": 228,
     "A10": 366,
-    "A11": 88,
+    "A11": 97,
     "A12": 28,
-    "A13": 21,
-    "A14": 40,
-    "A15": 64
+    "A13": 18,
+    "A14": 43,
+    "A15": 67
   },
   "candidate_pairs_by_pattern_basis": {
-    "fallback_pending_human_review": 181,
-    "lexical_heuristic": 2219,
+    "fallback_pending_human_review": 175,
+    "lexical_heuristic": 2225,
     "stratum_defined": 3600
   },
   "candidate_pairs_by_semantic_partition": {
-    "in_domain": 4435,
-    "ood": 240,
-    "temporal": 1325
+    "in_domain": 4035,
+    "ood": 690,
+    "temporal": 1275
   },
   "candidate_pairs_by_stratum": {
     "S1": 1200,
@@ -60,16 +60,16 @@
     "S4": 1200,
     "S5": 1200
   },
-  "catalog_sha256": "170847623602303592ca4b3d869e7e7ffbd7f542b8f5c5b90c4d87756e038b1a",
-  "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog.json",
+  "catalog_sha256": "502c1fb7fb0b94e068f2b00d381d86db9a32a1e0ad3a56ffa3ad1f53fbdd2b65",
+  "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog-v3.json",
   "claim_families": 1200,
   "claim_families_by_semantic_partition": {
-    "in_domain": 887,
-    "ood": 48,
-    "temporal": 265
+    "in_domain": 807,
+    "ood": 138,
+    "temporal": 255
   },
   "claim_family_leakage": [],
-  "downloaded_sources": 0,
+  "downloaded_sources": 536,
   "duplicate_candidate_span_count": 0,
   "group_leakage": [],
   "human_annotation": {
@@ -89,22 +89,22 @@
     "rejected_unresolved_licence": 0
   },
   "output_digests": {
-    "source_candidate_manifest_sha256": "165ab2b28420c669e21b9e8fd215eaf69fcab13e77154b8ff08594c7568095d3",
-    "unlabelled_candidate_pairs_sha256": "7360d5556e158829c46f1c69a34716381dcf184b54dc06a11a03079c2f23aa8f"
+    "source_candidate_manifest_sha256": "e418b4ffc62852e1c27ba8a8a7b42754c92332765431ee1d50e88f8cab26743e",
+    "unlabelled_candidate_pairs_sha256": "85ace77141ca29cd3ab0f80f03f5588c4336ee4c9f2f6a5bc09bfcb90e646458"
   },
   "pairs_by_discipline_and_semantic_partition": {
     "art_criticism": {
-      "in_domain": 425,
+      "in_domain": 430,
       "ood": 0,
       "temporal": 250
     },
     "art_history": {
-      "in_domain": 430,
+      "in_domain": 400,
       "ood": 0,
-      "temporal": 210
+      "temporal": 230
     },
     "engineering": {
-      "in_domain": 630,
+      "in_domain": 635,
       "ood": 0,
       "temporal": 45
     },
@@ -134,51 +134,51 @@
       "temporal": 120
     },
     "technical_writing": {
-      "in_domain": 380,
-      "ood": 240,
-      "temporal": 70
+      "in_domain": 0,
+      "ood": 690,
+      "temporal": 0
     }
   },
   "pairs_by_semantic_partition": {
-    "in_domain": 4435,
-    "ood": 240,
-    "temporal": 1325
+    "in_domain": 4035,
+    "ood": 690,
+    "temporal": 1275
   },
   "pairs_by_stratum_and_semantic_partition": {
     "S1": {
-      "in_domain": 887,
-      "ood": 48,
-      "temporal": 265
+      "in_domain": 807,
+      "ood": 138,
+      "temporal": 255
     },
     "S2": {
-      "in_domain": 887,
-      "ood": 48,
-      "temporal": 265
+      "in_domain": 807,
+      "ood": 138,
+      "temporal": 255
     },
     "S3": {
-      "in_domain": 887,
-      "ood": 48,
-      "temporal": 265
+      "in_domain": 807,
+      "ood": 138,
+      "temporal": 255
     },
     "S4": {
-      "in_domain": 887,
-      "ood": 48,
-      "temporal": 265
+      "in_domain": 807,
+      "ood": 138,
+      "temporal": 255
     },
     "S5": {
-      "in_domain": 887,
-      "ood": 48,
-      "temporal": 265
+      "in_domain": 807,
+      "ood": 138,
+      "temporal": 255
     }
   },
   "publication_year_histogram": {
     "2014": 27,
-    "2015": 51,
-    "2016": 60,
-    "2017": 45,
-    "2018": 112,
-    "2019": 91,
-    "2020": 34,
+    "2015": 46,
+    "2016": 59,
+    "2017": 47,
+    "2018": 107,
+    "2019": 98,
+    "2020": 36,
     "2021": 11,
     "2022": 13,
     "2023": 12,
@@ -187,7 +187,7 @@
     "2026": 28
   },
   "release_status": "NOT_CERTIFIED",
-  "reused_sources": 536,
+  "reused_sources": 0,
   "schema_version": "2.0.0",
   "scholarly_works_discovered": 536,
   "semantic_split_policy": {
@@ -213,8 +213,8 @@
     "unique_admissible": 536
   },
   "source_families_by_semantic_partition": {
-    "in_domain": 380,
-    "ood": 7,
+    "in_domain": 368,
+    "ood": 19,
     "temporal": 149
   },
   "source_family_leakage": [],
@@ -229,25 +229,25 @@
   "target_pairs": 6000,
   "temporal_holdout_selection": {
     "claim_families_by_partition": {
-      "in_domain": 887,
-      "ood": 48,
-      "temporal": 265
+      "in_domain": 807,
+      "ood": 138,
+      "temporal": 255
     },
     "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
     "pairs_by_partition": {
-      "in_domain": 4435,
-      "ood": 240,
-      "temporal": 1325
+      "in_domain": 4035,
+      "ood": 690,
+      "temporal": 1275
     },
     "policy_version": "2.0.0",
     "publication_year_histogram": {
       "2014": 27,
-      "2015": 51,
-      "2016": 60,
-      "2017": 45,
-      "2018": 112,
-      "2019": 91,
-      "2020": 34,
+      "2015": 46,
+      "2016": 59,
+      "2017": 47,
+      "2018": 107,
+      "2019": 98,
+      "2020": 36,
       "2021": 11,
       "2022": 13,
       "2023": 12,
@@ -259,8 +259,8 @@
     "rule": "publication_year >= 2020 and catalog_declared_held_out_domain is not true",
     "selection_basis": "publication-year histogram and pre-annotation benchmark viability; no human labels or model performance were consulted",
     "source_families_by_partition": {
-      "in_domain": 380,
-      "ood": 7,
+      "in_domain": 368,
+      "ood": 19,
       "temporal": 149
     },
     "start_year": 2020

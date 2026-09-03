@@ -46,10 +46,15 @@ Outputs are:
 Temporal membership is semantic and predeclared by policy
 `T070-TEMPORAL-LATER-YEAR-V1` (`2.0.0`) as
 `publication_year >= 2020` when the source is not independently declared OOD.
-OOD membership requires an explicit catalog-declared held-out-domain flag and
-takes precedence over the date rule. The 2020 boundary was frozen from the
-admitted-candidate publication-year histogram and pre-annotation benchmark
-viability before annotation; labels and model outcomes were not consulted.
+OOD membership is the complete predeclared `technical_writing` domain
+(`technical-writing-held-out-v1`), represented by an explicit
+catalog-declared held-out-domain flag, and takes precedence over the date rule.
+The 2020 boundary was frozen from the admitted-candidate publication-year
+histogram and pre-annotation benchmark viability before annotation; labels and
+model outcomes were not consulted. Source disciplines use
+`T070-DISCIPLINE-SOURCE-METADATA-V1`: official subject metadata plus auditable
+title/keyword evidence, with unresolved assignments excluded and all surviving
+assignments pending human review.
 Hashing is used only to balance in-domain groups across train, calibration, and
 locked-test; it never defines temporal or OOD membership.
 

@@ -38,6 +38,9 @@ SEMANTIC_POLICY_VERSION = "2.0.0"
 TEMPORAL_CRITERIA_ID = "T070-TEMPORAL-LATER-YEAR-V1"
 TEMPORAL_START_YEAR = 2020
 TEMPORAL_DEFINITION = "publication_year >= 2020 and catalog_declared_held_out_domain is not true"
+DISCIPLINE_CRITERIA_ID = "T070-DISCIPLINE-SOURCE-METADATA-V1"
+OOD_CRITERIA_ID = "T070-OOD-DOMAIN-V1"
+OOD_DOMAIN_ID = "technical-writing-held-out-v1"
 
 DISCIPLINES = (
     "art_history",
@@ -55,6 +58,30 @@ _ENGINEERING = {"ENGI", "CENG", "COMP", "ENER", "MATH"}
 _MATERIALS = {"MATE", "CHEM", "PHYS"}
 _PSYCHOLOGY = {"PSYC"}
 _ARTS = {"ARTS"}
+_ART_CRITICISM_TERMS = ("criticism", "critical", "cinema", "film", "visual culture")
+_ART_HISTORY_TERMS = (
+    "art history",
+    "archaeolog",
+    "museum",
+    "museolog",
+    "heritage",
+    "iconograph",
+    "curat",
+    "painting",
+    "sculptur",
+    "visual art",
+    "artwork",
+    "gallery",
+    "mumm",
+    "paleopath",
+    "zooarchaeolog",
+    "material culture",
+    "ancient egypt",
+    "architecture",
+    "architectural history",
+    "manuscript illumination",
+    "conservation",
+)
 
 
 def _sha256(path: Path) -> str:
@@ -116,6 +143,20 @@ def _keywords(metadata: dict[str, Any]) -> str:
     return " ".join(str(value) for value in values)
 
 
+def _discipline_evidence(*, discipline: str, text: str, subject_codes: list[str]) -> dict[str, Any]:
+    terms = {
+        "art_criticism": _ART_CRITICISM_TERMS,
+        "art_history": _ART_HISTORY_TERMS,
+    }.get(discipline, ())
+    matched_terms = sorted({term for term in terms if term in text.casefold()})
+    return {
+        "criteria_id": DISCIPLINE_CRITERIA_ID,
+        "review_status": "pending_human_review",
+        "subject_codes": sorted(subject_codes),
+        "matched_terms": matched_terms,
+    }
+
+
 def classify_elsevier(metadata: dict[str, Any]) -> str | None:
     subjects = {str(value).upper() for value in metadata.get("subjareas", [])}
     text = f"{metadata.get('title', '')} {_keywords(metadata)}".lower()
@@ -149,11 +190,11 @@ def classify_elsevier(metadata: dict[str, Any]) -> str | None:
     if "psych" in text or subjects & _PSYCHOLOGY:
         return "psychology"
     if subjects & _ARTS:
-        if any(
-            token in text for token in ("criticism", "critical", "cinema", "film", "visual culture")
-        ):
+        if any(token in text for token in _ART_CRITICISM_TERMS):
             return "art_criticism"
-        return "art_history"
+        if any(token in text for token in _ART_HISTORY_TERMS):
+            return "art_history"
+        return None
     if subjects & _ENGINEERING:
         return "engineering"
     if subjects & _MATERIALS:
@@ -216,15 +257,16 @@ def classify_olh(article: dict[str, Any]) -> str:
 
 
 def _semantic_assignment(year: int | None, discipline: str, ordinal: int) -> dict[str, Any]:
+    del ordinal
     # The held-out designation is a declared domain policy, not a hash bucket:
-    # technical-writing sources are withheld as a named OOD domain for every
-    # third eligible modern source. Human review may revise the domain policy.
-    if discipline == "technical_writing" and ordinal % 3 == 0:
+    # the complete technical-writing domain is withheld. Human review remains
+    # required before any candidate is promoted to a locked evaluation split.
+    if discipline == "technical_writing":
         return {
             "partition": "ood",
-            "criteria_id": "T070-OOD-DOMAIN-V1",
+            "criteria_id": OOD_CRITERIA_ID,
             "catalog_declared_held_out_domain": True,
-            "domain_id": "technical-writing-held-out-v1",
+            "domain_id": OOD_DOMAIN_ID,
         }
     if year is not None and year >= TEMPORAL_START_YEAR:
         return {
@@ -287,6 +329,11 @@ def _elsevier_entry(
         "publisher": "Elsevier OA CC-BY Corpus",
         "publication_date": f"{year:04d}-01-01" if year else "undated",
         "disciplines": [discipline],
+        "discipline_assignment": _discipline_evidence(
+            discipline=discipline,
+            text=f"{metadata.get('title', '')} {_keywords(metadata)}",
+            subject_codes=[str(value).upper() for value in metadata.get("subjareas", [])],
+        ),
         "licence": _license(
             rights_uri=stable_uri,
             evidence_uri="https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
@@ -400,6 +447,11 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
         "publisher": "Open Library of Humanities",
         "publication_date": str(article.get("date_published") or "undated"),
         "disciplines": [discipline],
+        "discipline_assignment": _discipline_evidence(
+            discipline=discipline,
+            text=" ".join(str(article.get(key) or "") for key in ("title", "section", "abstract")),
+            subject_codes=[],
+        ),
         "licence": _license(
             rights_uri=article_uri,
             evidence_uri=f"{OLH_API_URI}{article_id}/",
@@ -540,9 +592,18 @@ def prepare_catalog(
                 "start_year": TEMPORAL_START_YEAR,
             },
             "ood": {
-                "criteria_id": "T070-OOD-DOMAIN-V1",
+                "criteria_id": OOD_CRITERIA_ID,
                 "definition": "catalog_declared_held_out_domain is true",
             },
+        },
+        "discipline_assignment_policy": {
+            "criteria_id": DISCIPLINE_CRITERIA_ID,
+            "version": "1.0.0",
+            "review_status": "pending_human_review",
+            "definition": (
+                "Source-level candidate discipline is assigned only from official subject metadata "
+                "and auditable title/keyword evidence; unresolved records are excluded from the catalog."
+            ),
         },
         "provenance": {
             "elsevier_dataset_doi": ELSEVIER_DOI,
