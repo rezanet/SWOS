@@ -1,0 +1,143 @@
+name: Research T093 W3C fixture harvest
+
+on:
+  push:
+    branches:
+      - research/research-grade-external-evidence-2026-09-03
+    paths:
+      - research/research-grade-external-evidence/T093-HARVEST-W3C-FIXTURES.py
+      - .github/workflows/t093-w3c-fixture-harvest-research.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t093-w3c-fixture-harvest-research
+  cancel-in-progress: false
+
+jobs:
+  harvest:
+    name: Hash pinned W3C PROV fixtures
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/research-grade-external-evidence-2026-09-03
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Harvest exact pinned W3C testcase bytes ephemerally
+        run: |
+          set -euo pipefail
+          python research/research-grade-external-evidence/T093-HARVEST-W3C-FIXTURES.py \
+            --output "$RUNNER_TEMP/t093-harvest"
+
+      - name: Verify full catalogue and representation hashes
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("${{ runner.temp }}/t093-harvest/manifest.json")
+          payload = json.loads(path.read_text(encoding="utf-8"))
+          cases = payload.get("cases") or []
+          assert payload["case_count"] == 280, payload["case_count"]
+          assert len(cases) == 280
+          assert len({case["case_id"] for case in cases}) == 280
+          assert all(case["expected_validation"] in {"pass", "fail", "unspecified"} for case in cases)
+          reps = [rep for case in cases for rep in case["representations"].values()]
+          assert reps
+          assert all(len(rep["sha256"]) == 64 and rep["bytes"] > 0 for rep in reps)
+          assert all(rep["pinned_uri"].startswith("https://raw.githubusercontent.com/w3c/prov/aa82bd71b6bb1f7b735bf3f7f5b948fae87764f0/") for rep in reps)
+          print(json.dumps({"case_count": len(cases), "representation_file_count": len(reps)}, sort_keys=True))
+          PY
+
+      - name: Inspect exact historical suite for licence linkage
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import urllib.request
+          from pathlib import Path
+
+          commit = "aa82bd71b6bb1f7b735bf3f7f5b948fae87764f0"
+          candidates = [
+              "testcases/process.html",
+              "testcases/README",
+              "testcases/README.md",
+              "testcases/index.html",
+              "LICENSE",
+              "LICENSE.md",
+              "COPYING",
+          ]
+          observations = []
+          explicit = False
+          for rel in candidates:
+              uri = f"https://raw.githubusercontent.com/w3c/prov/{commit}/{rel}"
+              try:
+                  with urllib.request.urlopen(uri, timeout=30) as response:
+                      raw = response.read()
+              except Exception as exc:
+                  observations.append({"path": rel, "status": "not_found_or_unreadable", "reason": type(exc).__name__})
+                  continue
+              text = raw.decode("utf-8", errors="replace").lower()
+              links_current = "w3.org/copyright/test-suite-license" in text or "w3.org/copyright/3-clause-bsd" in text
+              links_legacy = "copyright" in text and ("test suite" in text or "license" in text or "licence" in text)
+              explicit = explicit or links_current
+              observations.append({
+                  "path": rel,
+                  "status": "read",
+                  "sha256": hashlib.sha256(raw).hexdigest(),
+                  "bytes": len(raw),
+                  "explicit_current_test_suite_license_link": links_current,
+                  "generic_licence_language_observed": links_legacy,
+              })
+          result = {
+              "schema_version": "research-handoff.t093.legacy-licence-observation.v1",
+              "source_commit": commit,
+              "current_w3c_policy_uri": "https://www.w3.org/copyright/test-suites-licenses/",
+              "policy_non_retroactivity_rule": "Current W3C test-suite policy does not affect pre-policy test suites until they are modified to include the new licence statement.",
+              "observations": observations,
+              "explicit_current_dual_licence_link_found": explicit,
+              "admission_status": "LICENCE_ROUTE_REQUIRES_EXACT_HISTORICAL_CONFIRMATION" if not explicit else "EXPLICIT_LINK_OBSERVED_STILL_REQUIRES_SCOPE_CONFIRMATION",
+              "release_evidence": False,
+          }
+          out = Path("${{ runner.temp }}/t093-licence-observation.json")
+          out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          print(json.dumps({"explicit_current_dual_licence_link_found": explicit, "files_checked": len(observations)}, sort_keys=True))
+          PY
+
+      - name: Persist hashes and licence observation, not testcase bytes
+        run: |
+          set -euo pipefail
+          cp "$RUNNER_TEMP/t093-harvest/manifest.json" \
+            research/research-grade-external-evidence/T093-W3C-HARVESTED-MANIFEST.json
+          cp "$RUNNER_TEMP/t093-licence-observation.json" \
+            research/research-grade-external-evidence/T093-W3C-LICENSE-OBSERVATION.json
+
+      - name: Commit preparation records
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            research/research-grade-external-evidence/T093-W3C-HARVESTED-MANIFEST.json \
+            research/research-grade-external-evidence/T093-W3C-LICENSE-OBSERVATION.json
+          if git diff --cached --quiet; then
+            echo "Hash/licence records unchanged; nothing to commit."
+            exit 0
+          fi
+          git commit -m "research: record pinned W3C PROV fixture hash inventory" \
+            -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Historical test bytes are not committed pending exact licence-scope confirmation."
+          git push origin HEAD:research/research-grade-external-evidence-2026-09-03
