@@ -7,7 +7,7 @@ source digests. Acquisition strata, pattern IDs and semantic-partition intent ar
 excluded from annotator-facing worksets so retrieval/generator intent does not
 bias the two independent annotations.
 
-Run only after the PR #66 packet-integrity P1 findings are repaired and the exact
+Run only after the PR #66 packet-integrity findings are repaired and the exact
 source rights review has admitted the corresponding source copies for annotation.
 """
 from __future__ import annotations
@@ -139,7 +139,10 @@ def prepare_row(row: dict[str, Any], line_no: int) -> tuple[str, tuple[str, str,
             "machine_prediction_hidden": True
         }
     }
-    semantic_key = (source_id, claim_family_id, quote)
+    # This matches the corrected PR #66 collision contract: one unique
+    # source/claim/span identity regardless of acquisition stratum or opaque
+    # candidate pattern.
+    semantic_key = (source_id, claim, quote)
     return pair_id, semantic_key, blind
 
 
@@ -163,7 +166,7 @@ def main() -> int:
                 raise ValueError(f"line {line_no}: duplicate pair_id {pair_id}")
             if semantic_key in semantic_keys:
                 raise ValueError(
-                    f"line {line_no}: duplicate semantic span {semantic_key[0]}/{semantic_key[1]}; repair and backfill before human review"
+                    f"line {line_no}: duplicate source/claim/span identity for source {semantic_key[0]}; repair and backfill before human review"
                 )
             pair_ids.add(pair_id)
             semantic_keys.add(semantic_key)
@@ -194,6 +197,8 @@ def main() -> int:
             })
         if not blind_rows:
             raise ValueError("no candidate pairs found")
+        if len(blind_rows) < 6000:
+            raise ValueError(f"citation release floor requires at least 6000 unique candidate pairs; got {len(blind_rows)}")
         out = args.output_dir.resolve()
         if out.exists() and any(out.iterdir()):
             raise ValueError(f"refusing to overwrite non-empty workset directory: {out}")
@@ -220,7 +225,7 @@ def main() -> int:
             },
             "release_evidence": False,
             "preconditions": [
-                "PR #66 integrity/author-attribution/duplicate-span P1s repaired on the exact packet head",
+                "PR #66 integrity/author-attribution/duplicate-span findings repaired on the exact packet head",
                 "exact source copies receive genuine rights review before annotation",
                 "annotator A and B are genuine independent competent humans",
                 "adjudicator is a genuine competent human independent of both annotators"
