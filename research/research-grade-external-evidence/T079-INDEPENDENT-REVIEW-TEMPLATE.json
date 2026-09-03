@@ -1,7 +1,7 @@
 {
   "schema_version": "research-handoff.t079.independent-review.v1",
   "status": "blank_template_not_evidence",
-  "purpose": "Independent human lock/reject/repair review of one exact T079 diversity packet.",
+  "purpose": "Independent human lock/reject/repair review of one exact T079 diversity packet. Benchmark truth fields remain human judgments and are required only when disposition=lock for a locked candidate.",
   "packet_binding": {
     "packet_id": null,
     "packet_sha256": null,
@@ -18,6 +18,7 @@
     "role": null,
     "discipline_competence_basis": null,
     "independence_attestation": null,
+    "conflict_declaration": null,
     "reviewed_at": null
   },
   "review": {
@@ -34,6 +35,12 @@
     "expected_outcome": null,
     "allowed_expected_outcomes": ["pass", "fail", "review_required", "not_run"],
     "expected_failure_dimensions": [],
+    "benchmark_truth": {
+      "material_gap": null,
+      "adequate": null,
+      "justified_narrow": null,
+      "seeded_fake_or_missing_strata": null
+    },
     "rationale": null,
     "disposition": null,
     "allowed_dispositions": ["lock", "reject", "repair_required"]
@@ -47,6 +54,8 @@
     "Only observed or externally_verified metadata may count as known coverage.",
     "Provider multiplicity, mirrors and duplicate editions must not manufacture canonical-family diversity.",
     "The reviewer may reject or require repair instead of locking a packet.",
+    "For disposition=lock on a locked_candidate packet, benchmark_truth.material_gap, adequate, justified_narrow and seeded_fake_or_missing_strata must each be explicit booleans supplied by the human reviewer; automation must not derive them from the stress-category name or machine_result.",
+    "benchmark_truth.material_gap=true is incompatible with adequate=true or justified_narrow=true.",
     "Any mutation after lock requires a new packet digest/version and a new review.",
     "Automation must leave all reviewer judgment and identity fields blank."
   ]
