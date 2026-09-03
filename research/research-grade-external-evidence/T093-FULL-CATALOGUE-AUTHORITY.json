@@ -1,0 +1,36 @@
+{
+  "schema_version": "research-handoff.t093.catalogue-authority.v1",
+  "status": "full_catalogue_authority_pinned_byte_harvest_pending",
+  "baseline_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
+  "w3c_source": {
+    "repository": "w3c/prov",
+    "commit": "aa82bd71b6bb1f7b735bf3f7f5b948fae87764f0",
+    "catalogue_path": "testcases/all-tests.txt",
+    "catalogue_git_blob": "0c8940cf34282a3728a0b5b6794892c73be9f727",
+    "provn_list_path": "testcases/provn-tests.txt",
+    "provn_list_git_blob": "ff73b632876da5018b9cd4c2e65fff79d3d48106",
+    "process_page": "testcases/process.html",
+    "reported_test_cases": 280,
+    "representations": ["prov_o_turtle", "provn", "prov_xml"]
+  },
+  "classification_rule": {
+    "pass": "case basename contains -PASS-",
+    "fail": "case basename contains -FAIL-",
+    "constraint_ids": "extract cNN tokens from case basename",
+    "adversarial": "SWOS-generated mutations are separate records and never relabelled as unchanged W3C tests"
+  },
+  "license_policy": {
+    "policy_uri": "https://www.w3.org/copyright/test-suites-licenses/",
+    "unchanged_tests": "retain exact upstream bytes and applicable notices; verify exact test-suite licence before any W3C conformance claim",
+    "modified_tests": "use the permitted 3-clause BSD route only where the exact source test is covered; retain notices and do not call modified cases authoritative W3C conformance tests",
+    "swos_original": "mark independently generated hostile/resource fixtures as SWOS-original"
+  },
+  "harvester": "T093-HARVEST-W3C-FIXTURES.py",
+  "existing_manual_catalogue": {
+    "path": "T093-W3C-FIXTURE-INVENTORY.json",
+    "exact_cases_previously_catalogued": 32,
+    "role": "superseded as the catalogue authority by this pinned full-catalogue record; retain as historical preparation evidence"
+  },
+  "next_machine_step": "Run the harvester in a networked controlled environment, require exactly 280 case identities, compute SHA-256 for every acquired representation, verify exact licence/notices, then import only permitted unchanged fixtures into the production T093 manifest.",
+  "t093_status": "OPEN"
+}
