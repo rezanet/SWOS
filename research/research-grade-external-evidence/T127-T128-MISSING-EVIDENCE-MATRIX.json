@@ -3,6 +3,36 @@
   "status": "preparation_only_release_blocked",
   "baseline_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
   "verified_on": "2026-09-03",
+  "upstream_gate_blockers": {
+    "pr66_t070_candidate_acquisition": {
+      "pr": 66,
+      "observed_head": "7d2416bff6c5a3f0021b5c7f16243752449a7df9",
+      "status": "NOT_READY_FOR_HUMAN_ANNOTATION",
+      "unresolved_review_threads": [
+        {
+          "thread_id": "PRRT_kwDOT9f0pM6e1BIp",
+          "severity": "P1",
+          "issue": "Persisted acquisition checksums are stale and do not identify the committed final corpus bytes."
+        },
+        {
+          "thread_id": "PRRT_kwDOT9f0pM6e1BIt",
+          "severity": "P1",
+          "issue": "OLH frozenauthors parsing loses named authors and emits placeholder attribution for the OLH candidate sources."
+        },
+        {
+          "thread_id": "PRRT_kwDOT9f0pM6e1BIw",
+          "severity": "P1",
+          "issue": "The 6000 candidate rows contain only 5848 unique source/claim/exact_quote tuples; colliding spans must be rejected and backfilled."
+        }
+      ],
+      "additional_pre_human_technical_findings": [
+        "Discipline assignment is too broad: clearly non-art-history records are currently mapped into art_history and require auditable source-level correction/review state.",
+        "OOD membership is currently ordinal sampling within technical_writing rather than a coherent predeclared semantic held-out domain/source/task criterion."
+      ],
+      "annotation_gate": "Do not send the candidate pairs to human annotators until these defects are repaired, artifacts regenerated, all current review threads resolved, and a fresh exact-head review is clean.",
+      "t070_completion_effect": "T070 remains OPEN regardless; repair only restores a valid pre-annotation candidate boundary."
+    }
+  },
   "t127": {
     "status": "OPEN",
     "required": {
