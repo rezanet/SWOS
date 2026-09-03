@@ -567,8 +567,10 @@ def validate_unlabelled_candidate_pair(
     for item in annotations:
         if not isinstance(item, Mapping):
             raise AcquisitionValidationError("candidate annotation field must be an object")
-        if set(item) - {"annotator_id", "label", "rationale"}:
-            raise AcquisitionValidationError("candidate annotation field has unknown data")
+        if set(item) != {"annotator_id", "label", "rationale"}:
+            raise AcquisitionValidationError(
+                "candidate annotation field must contain exactly the reserved keys"
+            )
         if (
             item.get("annotator_id") is not None
             or item.get("label") is not None
@@ -576,13 +578,15 @@ def validate_unlabelled_candidate_pair(
         ):
             raise AcquisitionValidationError("candidate annotation fields must remain blank")
     adjudication = row.get("adjudication")
-    if not isinstance(adjudication, Mapping) or set(adjudication) - {
+    if not isinstance(adjudication, Mapping) or set(adjudication) != {
         "status",
         "adjudicator_id",
         "label",
         "rationale",
     }:
-        raise AcquisitionValidationError("candidate adjudication field is invalid")
+        raise AcquisitionValidationError(
+            "candidate adjudication field must contain exactly the reserved keys"
+        )
     if (
         adjudication.get("status") != "pending"
         or adjudication.get("adjudicator_id") is not None

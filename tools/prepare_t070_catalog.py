@@ -194,11 +194,13 @@ _ELSEVIER_INTERDISCIPLINARY_TERMS = (
     "transdisciplinary",
 )
 _ELSEVIER_PHILOSOPHY_TERMS = (
+    "philosoph",
     "epistem",
     "ontology",
     "ethic",
     "hermeneutic",
 )
+_ELSEVIER_PSYCHOLOGY_TERMS = ("psych",)
 _ELSEVIER_ART_CRITICISM_TERMS = (
     "criticism",
     "critical",
@@ -250,6 +252,26 @@ _OLH_HUMANITIES_TERMS = (
     "medieval",
     "history",
 )
+_ELSEVIER_DISCIPLINE_RULES = {
+    "art_criticism": (_ELSEVIER_ART_CRITICISM_TERMS, _ARTS),
+    "art_history": (_ART_HISTORY_TERMS, _ARTS),
+    "engineering": ((), _ENGINEERING),
+    "humanities": ((), {"SOCI", "ECON", "BUSI", "DECI"}),
+    "interdisciplinary": (_ELSEVIER_INTERDISCIPLINARY_TERMS, {"MULT"}),
+    "materials_science": ((), _MATERIALS),
+    "philosophy": (_ELSEVIER_PHILOSOPHY_TERMS, set()),
+    "psychology": (_ELSEVIER_PSYCHOLOGY_TERMS, _PSYCHOLOGY),
+    "technical_writing": (_TECHNICAL_WRITING_TERMS, set()),
+}
+_OLH_DISCIPLINE_RULES = {
+    "art_criticism": (_OLH_ART_CRITICISM_TERMS, set()),
+    "art_history": (_OLH_ART_HISTORY_TERMS, set()),
+    "humanities": (_OLH_HUMANITIES_TERMS, set()),
+    "interdisciplinary": (_OLH_INTERDISCIPLINARY_TERMS, set()),
+    "philosophy": (_OLH_PHILOSOPHY_TERMS, set()),
+    "psychology": (_OLH_PSYCHOLOGY_TERMS, set()),
+    "technical_writing": (_TECHNICAL_WRITING_TERMS, set()),
+}
 
 
 def _sha256(path: Path) -> str:
@@ -332,9 +354,13 @@ def _discipline_evidence(
     discipline: str,
     fields: dict[str, Any],
     subject_codes: list[str],
+    rule_terms: tuple[str, ...] | None = None,
+    rule_subject_codes: set[str] | None = None,
     fallback_basis: str | None = None,
 ) -> dict[str, Any]:
-    rule_terms = tuple(_DISCIPLINE_RULE_TERMS.get(discipline, ()))
+    rule_terms = tuple(
+        _DISCIPLINE_RULE_TERMS.get(discipline, ()) if rule_terms is None else rule_terms
+    )
     text_by_field = {name: _evidence_text(value).casefold() for name, value in fields.items()}
     matched_evidence = {
         name: sorted({term for term in rule_terms if term in text})
@@ -342,21 +368,31 @@ def _discipline_evidence(
         if any(term in text for term in rule_terms)
     }
     normalised_subject_codes = _subject_codes(subject_codes)
-    rule_subject_codes = sorted(_DISCIPLINE_SUBJECT_CODES.get(discipline, set()))
+    rule_subject_codes = sorted(
+        _DISCIPLINE_SUBJECT_CODES.get(discipline, set())
+        if rule_subject_codes is None
+        else rule_subject_codes
+    )
+    matched_terms = sorted({term for terms in matched_evidence.values() for term in terms})
+    matched_subject_codes = sorted(set(normalised_subject_codes).intersection(rule_subject_codes))
+    if matched_subject_codes and "subjareas" in fields:
+        matched_evidence["subjareas"] = matched_subject_codes
     evidence = {
         "criteria_id": DISCIPLINE_CRITERIA_ID,
         "review_status": "pending_human_review",
         "evidence_fields": list(fields),
         "subject_codes": normalised_subject_codes,
         "rule_subject_codes": rule_subject_codes,
-        "matched_subject_codes": sorted(
-            set(normalised_subject_codes).intersection(rule_subject_codes)
-        ),
+        "matched_subject_codes": matched_subject_codes,
         "rule_terms": list(rule_terms),
-        "matched_terms": sorted({term for terms in matched_evidence.values() for term in terms}),
+        "matched_terms": matched_terms,
         "matched_evidence": matched_evidence,
+        "classifier_predicate": {
+            "text_any": list(rule_terms),
+            "subject_any": rule_subject_codes,
+        },
     }
-    if fallback_basis is not None:
+    if fallback_basis is not None and not matched_terms and not matched_subject_codes:
         evidence["fallback_basis"] = fallback_basis
     return evidence
 
@@ -368,9 +404,9 @@ def classify_elsevier(metadata: dict[str, Any]) -> str | None:
         return "technical_writing"
     if any(token in text for token in _ELSEVIER_INTERDISCIPLINARY_TERMS) or "MULT" in subjects:
         return "interdisciplinary"
-    if "philosoph" in text or any(token in text for token in _ELSEVIER_PHILOSOPHY_TERMS):
+    if any(token in text for token in _ELSEVIER_PHILOSOPHY_TERMS):
         return "philosophy"
-    if "psych" in text or subjects & _PSYCHOLOGY:
+    if any(token in text for token in _ELSEVIER_PSYCHOLOGY_TERMS) or subjects & _PSYCHOLOGY:
         return "psychology"
     if subjects & _ARTS:
         if any(token in text for token in _ELSEVIER_ART_CRITICISM_TERMS):
@@ -464,6 +500,7 @@ def _elsevier_entry(
     stable_uri = f"https://doi.org/{doi}" if doi else f"https://data.elsevier.com/article/{doc_id}"
     year = metadata.get("pub_year")
     year = int(year) if isinstance(year, int) and not isinstance(year, bool) else None
+    rule_terms, rule_subject_codes = _ELSEVIER_DISCIPLINE_RULES[discipline]
     authors = []
     for author in metadata.get("authors", []):
         if isinstance(author, dict):
@@ -489,6 +526,8 @@ def _elsevier_entry(
                 "subjareas": _subject_codes(metadata.get("subjareas")),
             },
             subject_codes=_subject_codes(metadata.get("subjareas")),
+            rule_terms=rule_terms,
+            rule_subject_codes=rule_subject_codes,
         ),
         "licence": _license(
             rights_uri=stable_uri,
@@ -593,6 +632,7 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
     match = re.match(r"^(\d{4})", str(article.get("date_published") or ""))
     if match:
         year = int(match.group(1))
+    rule_terms, rule_subject_codes = _OLH_DISCIPLINE_RULES[discipline]
     return {
         "source_id": f"olh-{article_id}",
         "doi": f"10.16995/olh.{article_id}",
@@ -611,6 +651,8 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
                 "abstract": article.get("abstract"),
             },
             subject_codes=[],
+            rule_terms=rule_terms,
+            rule_subject_codes=rule_subject_codes,
             fallback_basis=(
                 "official_olh_humanities_scope" if discipline == "humanities" else None
             ),

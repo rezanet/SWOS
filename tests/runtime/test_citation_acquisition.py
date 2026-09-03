@@ -164,6 +164,17 @@ class CitationAcquisitionTests(unittest.TestCase):
         with self.assertRaises(AcquisitionValidationError):
             validate_source_candidate_manifest(missing_use)
 
+    def test_unlabelled_validation_requires_all_reserved_human_keys(self) -> None:
+        missing_annotation_key = self._pair("pair-1", "group-1")
+        del missing_annotation_key["annotations"][0]["rationale"]
+        with self.assertRaises(AcquisitionValidationError):
+            validate_unlabelled_candidate_pair(missing_annotation_key)
+
+        missing_adjudication_key = self._pair("pair-2", "group-2")
+        del missing_adjudication_key["adjudication"]["label"]
+        with self.assertRaises(AcquisitionValidationError):
+            validate_unlabelled_candidate_pair(missing_adjudication_key)
+
     def test_elsevier_catalog_requires_article_level_open_access_marker(self) -> None:
         data = {
             "docId": "S0000000000000000",
@@ -250,9 +261,50 @@ class CitationAcquisitionTests(unittest.TestCase):
             evidence["matched_evidence"],
             {
                 "keywords": ["heritage", "painting"],
+                "subjareas": ["ARTS"],
                 "title": ["conservation", "museum", "painting"],
             },
         )
+
+    def test_discipline_evidence_uses_the_actual_classifier_predicate(self) -> None:
+        psychological = {
+            "docId": "S0000000000000002",
+            "metadata": {
+                "openaccess": "Full",
+                "title": "Psychometric assessment of human memory",
+                "subjareas": ["COMP"],
+                "keywords": [],
+                "authors": [],
+                "pub_year": 2019,
+                "doi": "10.1234/example.2",
+            },
+        }
+        entry = _elsevier_entry(psychological, Path("psychological.json"), 0)
+        self.assertIsNotNone(entry)
+        assert entry is not None
+        evidence = entry["discipline_assignment"]
+        self.assertEqual(entry["disciplines"], ["psychology"])
+        self.assertIn("psych", evidence["rule_terms"])
+        self.assertEqual(evidence["matched_terms"], ["psych"])
+        self.assertEqual(evidence["matched_evidence"]["title"], ["psych"])
+
+        olh = {
+            "pk": 5678,
+            "license": {"short_name": "CC BY 4.0"},
+            "galleys": [{"type": "xml", "path": "https://example.org/5678.xml"}],
+            "title": "Collections and public memory",
+            "section": "Research article",
+            "abstract": "A study of museum collections.",
+            "date_published": "2019-01-02",
+        }
+        olh_entry = _olh_entry(olh, Path("collections.xml"), 0)
+        self.assertIsNotNone(olh_entry)
+        assert olh_entry is not None
+        olh_evidence = olh_entry["discipline_assignment"]
+        self.assertEqual(olh_entry["disciplines"], ["art_history"])
+        self.assertIn("collections", olh_evidence["rule_terms"])
+        self.assertEqual(olh_evidence["matched_terms"], ["collections", "museum"])
+        self.assertEqual(olh_evidence["matched_evidence"]["title"], ["collections"])
 
     def test_ood_domain_assignment_is_not_an_ordinal_bucket(self) -> None:
         self.assertEqual(_semantic_assignment(2019, "technical_writing", 1)["partition"], "ood")
@@ -283,7 +335,7 @@ class CitationAcquisitionTests(unittest.TestCase):
         self.assertIn("Katherine Johnson", entry["attribution"])
         evidence = entry["discipline_assignment"]
         self.assertEqual(evidence["evidence_fields"], ["title", "section", "abstract"])
-        self.assertIn("humanities", evidence["rule_terms"])
+        self.assertIn("history", evidence["rule_terms"])
         self.assertEqual(evidence["matched_terms"], [])
         self.assertEqual(evidence["fallback_basis"], "official_olh_humanities_scope")
 

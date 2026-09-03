@@ -60,8 +60,8 @@
     "S4": 1200,
     "S5": 1200
   },
-  "catalog_sha256": "59e080cac7aaf06200981c7a6ddba739e9668c7c9bb35a24d59bd1d8d5c4ca9f",
-  "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog-v5.json",
+  "catalog_sha256": "a2e17b9394e8bcaf1f5b78d88b5a8e9dd17c07d9cd35d9e25117baa6054a6680",
+  "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog-v6.json",
   "claim_families": 1200,
   "claim_families_by_semantic_partition": {
     "in_domain": 803,
@@ -89,8 +89,8 @@
     "rejected_unresolved_licence": 0
   },
   "output_digests": {
-    "source_candidate_manifest_sha256": "1f08402213cd92626d1bb223fd95e1f4441af6e1a0f9590fc8a7efa6411b94b0",
-    "unlabelled_candidate_pairs_sha256": "b49c15cf3f1ec222ad00df3e9ed260c79ab59b7247e087501ce2392593cefc57"
+    "source_candidate_manifest_sha256": "aa87577f4c382b7bfb7c8e8828873d6d4b92002553cf6fffdd79a926bbb41522",
+    "unlabelled_candidate_pairs_sha256": "a0cf476fd0f3f741b8a47d2dc7c8cec9997de1c64c5b2fa0804e8b8051119e55"
   },
   "pairs_by_discipline_and_semantic_partition": {
     "art_criticism": {

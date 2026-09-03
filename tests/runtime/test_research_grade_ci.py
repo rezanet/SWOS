@@ -62,7 +62,9 @@ class ResearchGradeCIContractTests(unittest.TestCase):
 
     def test_prov_certification_runs_the_frozen_corpus_manifest(self) -> None:
         text = PROV_WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("evals/fixtures/provenance/manifest.json", text)
+        corpus_input = text.split("corpus_manifest:", 1)[1].split("oracle:", 1)[0]
+        self.assertIn("required: true", corpus_input)
+        self.assertNotIn("default:", corpus_input)
         self.assertIn("--corpus-manifest", text)
         self.assertNotIn("--epg", text)
 

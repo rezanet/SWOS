@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       corpus_manifest:
-        description: "Repository-relative checksummed PROV corpus manifest"
+        description: "Required repository-relative checksummed PROV corpus manifest"
         required: true
-        default: "evals/fixtures/provenance/manifest.json"
       oracle:
         description: "Repository-relative independent oracle manifest"
         required: true
