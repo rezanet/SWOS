@@ -68,7 +68,7 @@ def _sha256(path: Path) -> str:
 def _write_atomic(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
-        "w", encoding="utf-8", dir=path.parent, delete=False
+        "w", encoding="utf-8", newline="\n", dir=path.parent, delete=False
     ) as handle:
         json.dump(payload, handle, indent=2, sort_keys=True)
         handle.write("\n")
@@ -303,6 +303,72 @@ def _elsevier_entry(
     }
 
 
+def _olh_author_names(value: Any) -> list[str]:
+    """Extract every bibliographic author name while preserving source order."""
+
+    names: list[str] = []
+    seen: set[str] = set()
+
+    def add(candidate: Any) -> None:
+        if isinstance(candidate, (dict, list, tuple, set)):
+            return
+        name = _strip_markup(candidate)
+        if name and name not in seen:
+            seen.add(name)
+            names.append(name)
+
+    def collect(author: Any) -> None:
+        if isinstance(author, (list, tuple, set)):
+            for item in author:
+                collect(item)
+            return
+        if isinstance(author, str):
+            raw = author.strip()
+            if raw[:1] in {"{", "["}:
+                try:
+                    parsed = json.loads(raw)
+                except json.JSONDecodeError:
+                    parsed = None
+                if parsed is not None:
+                    collect(parsed)
+                    return
+            add(raw)
+            return
+        if not isinstance(author, dict):
+            return
+
+        direct_name = next(
+            (author.get(key) for key in ("name", "full_name", "display_name") if author.get(key)),
+            None,
+        )
+        if direct_name is not None:
+            add(direct_name)
+        else:
+            components = [
+                author.get(key)
+                for key in (
+                    "first_name",
+                    "given_name",
+                    "first",
+                    "last_name",
+                    "family_name",
+                    "last",
+                    "surname",
+                )
+                if author.get(key)
+            ]
+            if components:
+                add(" ".join(_strip_markup(component) for component in components))
+
+        for key in ("author", "person", "creator", "authors"):
+            nested = author.get(key)
+            if isinstance(nested, (dict, list, tuple, set)):
+                collect(nested)
+
+    collect(value)
+    return names
+
+
 def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dict[str, Any] | None:
     article_id = article.get("pk")
     licence = article.get("license")
@@ -316,14 +382,9 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
         return None
     article_uri = OLH_ARTICLE_URI.format(article_id=article_id)
     discipline = classify_olh(article)
-    author = article.get("frozenauthors")
-    authors = []
-    if isinstance(author, dict):
-        name = " ".join(
-            str(author.get(key) or "").strip() for key in ("first_name", "last_name")
-        ).strip()
-        if name:
-            authors.append(name)
+    authors = _olh_author_names(article.get("frozenauthors"))
+    if not authors:
+        authors = _olh_author_names(article.get("authors"))
     authors = authors or ["Open Library of Humanities author"]
     year = None
     match = re.match(r"^(\d{4})", str(article.get("date_published") or ""))

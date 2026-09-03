@@ -18,7 +18,7 @@ from swos_runtime.citation_acquisition import (
     validate_unlabelled_candidate_pair,
 )
 from swos_runtime.citation_dataset import DatasetValidationError, validate_pair_record
-from tools.prepare_t070_catalog import _elsevier_entry
+from tools.prepare_t070_catalog import _elsevier_entry, _olh_entry
 
 
 class CitationAcquisitionTests(unittest.TestCase):
@@ -168,6 +168,108 @@ class CitationAcquisitionTests(unittest.TestCase):
             },
         }
         self.assertIsNone(_elsevier_entry(data, Path("article.json"), 0))
+
+    def test_olh_catalog_preserves_every_named_author(self) -> None:
+        article = {
+            "pk": 1234,
+            "license": {"short_name": "CC BY 4.0"},
+            "galleys": [{"type": "xml", "path": "https://example.org/1234.xml"}],
+            "frozenauthors": [
+                {"first_name": "Ada", "last_name": "Lovelace"},
+                {"given_name": "Grace", "family_name": "Hopper"},
+                "Katherine Johnson",
+            ],
+            "date_published": "2022-01-02",
+            "title": "A source with complete attribution",
+        }
+
+        entry = _olh_entry(article, Path("article.xml"), 0)
+
+        self.assertIsNotNone(entry)
+        assert entry is not None
+        self.assertEqual(entry["authors"], ["Ada Lovelace", "Grace Hopper", "Katherine Johnson"])
+        self.assertIn("Ada Lovelace", entry["attribution"])
+        self.assertIn("Grace Hopper", entry["attribution"])
+        self.assertIn("Katherine Johnson", entry["attribution"])
+
+    def test_candidate_span_collisions_are_rejected_and_backfilled(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            content = root / "source.json"
+            content.write_text(
+                json.dumps(
+                    {
+                        "title": "A source",
+                        "publication_date": "2019-01-02",
+                        "text": (
+                            "Short claim with five words. "
+                            "The established design provides reliable evidence across several engineering contexts. "
+                            "Contextual analysis records independent sources and measured outcomes for the system. "
+                            "The baseline method reports calibrated measurements from multiple independent engineering sources. "
+                            "A contrary analysis does not provide reliable evidence for the proposed design. "
+                            "The established design provides reliable evidence across several engineering contexts with additional validation."
+                        ),
+                    }
+                ),
+                encoding="utf-8",
+            )
+            catalog = root / "catalog.json"
+            catalog.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "2.0.0",
+                        "catalog_type": "citation_source_candidate_catalog",
+                        "sources": [
+                            {
+                                "source_id": "source-1",
+                                "doi": "10.1234/example.1",
+                                "stable_uri": "https://doi.org/10.1234/example.1",
+                                "content_uri": content.as_uri(),
+                                "title": "A source",
+                                "authors": ["Example Author"],
+                                "publisher": "Example Press",
+                                "publication_date": "2019-01-02",
+                                "disciplines": ["engineering"],
+                                "licence": {
+                                    "spdx": "CC-BY-4.0",
+                                    "uri": "https://creativecommons.org/licenses/by/4.0/",
+                                    "version": "4.0",
+                                    "article_rights_uri": "https://example.org/rights",
+                                    "verification": "article_level_verified",
+                                },
+                                "attribution": "Example Author, A source, Example Press",
+                                "allowed_uses": ["candidate_generation", "human_annotation"],
+                                "third_party": {
+                                    "status": "warning",
+                                    "warning": "Review third-party content.",
+                                },
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            report = acquire_candidates(catalog, root / "output", max_pairs=5)
+            rows = [
+                json.loads(line)
+                for line in (root / "output" / "unlabelled-candidate-pairs.jsonl")
+                .read_text(encoding="utf-8")
+                .splitlines()
+            ]
+
+            self.assertEqual(report["status"], "READY_FOR_HUMAN_ANNOTATION")
+            self.assertEqual(report["candidate_families_rejected_for_span_collision"], 1)
+            self.assertEqual(len(rows), 5)
+            self.assertEqual(
+                len(
+                    {(row["source_id"], row["candidate_claim"], row["exact_quote"]) for row in rows}
+                ),
+                5,
+            )
+            self.assertNotIn(
+                "Short claim with five words.", {row["candidate_claim"] for row in rows}
+            )
 
     def test_temporal_policy_uses_a_frozen_later_window_with_ood_precedence(self) -> None:
         policy = self._manifest()["semantic_split_policy"]
@@ -325,7 +427,13 @@ class CitationAcquisitionTests(unittest.TestCase):
                     {
                         "title": "A source",
                         "publication_date": "2019-01-02",
-                        "text": "This is a direct statement with enough words. Another contextual statement with enough words.",
+                        "text": (
+                            "This direct statement provides reliable evidence across several engineering contexts. "
+                            "Contextual analysis records independent sources and measured outcomes for the system. "
+                            "The baseline method reports calibrated measurements from multiple independent engineering sources. "
+                            "A contrary analysis does not provide reliable evidence for the proposed design. "
+                            "This direct statement provides reliable evidence across several engineering contexts with additional validation."
+                        ),
                     }
                 ),
                 encoding="utf-8",
@@ -378,9 +486,14 @@ class CitationAcquisitionTests(unittest.TestCase):
             self.assertEqual(second["reused_sources"], 1)
             self.assertEqual(first["candidate_pairs"], second["candidate_pairs"])
             self.assertEqual(first["output_digests"], second["output_digests"])
-            self.assertTrue((output / "source-candidate-manifest.json").is_file())
-            self.assertTrue((output / "unlabelled-candidate-pairs.jsonl").is_file())
-            self.assertTrue((output / "acquisition-report.json").is_file())
+            output_files = (
+                output / "source-candidate-manifest.json",
+                output / "unlabelled-candidate-pairs.jsonl",
+                output / "acquisition-report.json",
+            )
+            for output_file in output_files:
+                self.assertTrue(output_file.is_file())
+                self.assertNotIn(b"\r\n", output_file.read_bytes())
 
             limited = acquire_candidates(catalog, output, max_pairs=5, max_bytes=10)
             self.assertEqual(limited["status"], "ACQUISITION_INCOMPLETE")

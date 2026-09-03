@@ -908,6 +908,22 @@ def _candidate_quotes(sentences: Sequence[str], index: int) -> list[str]:
     return [claim, _partial_quote(claim), context, contradiction, hard_negative]
 
 
+def _candidate_span_identity(row: Mapping[str, Any]) -> tuple[str, str, str]:
+    return (
+        str(row["source_id"]),
+        str(row["candidate_claim"]),
+        str(row["exact_quote"]),
+    )
+
+
+def _candidate_rows_have_unique_spans(
+    rows: Sequence[Mapping[str, Any]],
+    seen_spans: set[tuple[str, str, str]],
+) -> bool:
+    identities = [_candidate_span_identity(row) for row in rows]
+    return len(identities) == len(set(identities)) and not seen_spans.intersection(identities)
+
+
 def _candidate_pattern_id(
     stratum: str, family_index: int, claim: str, quote: str
 ) -> tuple[str, str]:
@@ -1090,7 +1106,7 @@ def _source_record(
 def _write_json_atomic(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
-        "w", encoding="utf-8", dir=path.parent, delete=False
+        "w", encoding="utf-8", newline="\n", dir=path.parent, delete=False
     ) as handle:
         json.dump(payload, handle, indent=2, sort_keys=True)
         handle.write("\n")
@@ -1101,7 +1117,7 @@ def _write_json_atomic(path: Path, payload: Any) -> None:
 def _write_jsonl_atomic(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
-        "w", encoding="utf-8", dir=path.parent, delete=False
+        "w", encoding="utf-8", newline="\n", dir=path.parent, delete=False
     ) as handle:
         for row in rows:
             handle.write(json.dumps(row, sort_keys=True) + "\n")
@@ -1452,6 +1468,8 @@ def acquire_candidates(
     ]
     families_needed = math.ceil(max_pairs / len(CANDIDATE_STRATA))
     candidate_rows: list[dict[str, Any]] = []
+    seen_candidate_spans: set[tuple[str, str, str]] = set()
+    candidate_families_rejected_for_span_collision = 0
     family_number = 0
     while family_number < families_needed and all_disciplines:
         made = False
@@ -1474,7 +1492,16 @@ def acquire_candidates(
                 continue
             source, sentences = selected
             sentence_index = (source_positions[discipline] - 1) // max(1, len(candidates))
-            candidate_rows.extend(_make_pair(source, sentences, sentence_index, policy=policy))
+            family_rows = _make_pair(source, sentences, sentence_index, policy=policy)
+            if not _candidate_rows_have_unique_spans(family_rows, seen_candidate_spans):
+                # The source position has been consumed, so the next round can
+                # backfill from another sentence or source.  A colliding family
+                # is never counted toward the requested pair total.
+                candidate_families_rejected_for_span_collision += 1
+                made = True
+                continue
+            candidate_rows.extend(family_rows)
+            seen_candidate_spans.update(_candidate_span_identity(row) for row in family_rows)
             family_number += 1
             made = True
         if not made:
@@ -1486,6 +1513,15 @@ def acquire_candidates(
         candidate_rows = candidate_rows[
             : len(candidate_rows) - (len(candidate_rows) % complete_pairs)
         ]
+    candidate_span_identities = [_candidate_span_identity(row) for row in candidate_rows]
+    duplicate_candidate_span_count = len(candidate_span_identities) - len(
+        set(candidate_span_identities)
+    )
+    if duplicate_candidate_span_count:
+        raise AcquisitionValidationError(
+            "candidate source/claim/span identities must be unique; "
+            f"found {duplicate_candidate_span_count} duplicate rows"
+        )
     if len(candidate_rows) >= max_pairs:
         source_manifest_status = "READY_FOR_HUMAN_ANNOTATION"
 
@@ -1630,6 +1666,8 @@ def acquire_candidates(
         "target_pairs": max_pairs,
         "candidate_pairs": len(candidate_rows),
         "claim_families": len({row["claim_family_id"] for row in candidate_rows}),
+        "candidate_families_rejected_for_span_collision": candidate_families_rejected_for_span_collision,
+        "duplicate_candidate_span_count": duplicate_candidate_span_count,
         "scholarly_works_discovered": len(catalog_sources),
         "downloaded_sources": downloaded,
         "reused_sources": reused,

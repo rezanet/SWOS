@@ -3,9 +3,10 @@ name: Research Grade PROV certification
 on:
   workflow_dispatch:
     inputs:
-      epg:
-        description: "Repository-relative EPG v2 input"
+      corpus_manifest:
+        description: "Repository-relative checksummed PROV corpus manifest"
         required: true
+        default: "evals/fixtures/provenance/manifest.json"
       oracle:
         description: "Repository-relative independent oracle manifest"
         required: true
@@ -30,7 +31,7 @@ jobs:
       - name: Run exact conversion matrix
         run: |
           python tools/certify_prov_roundtrip.py \
-            --epg "${{ inputs.epg }}" \
+            --corpus-manifest "${{ inputs.corpus_manifest }}" \
             --profile schemas/research-grade/prov-profile.json \
             --formats prov-json prov-n prov-o-trig \
             --oracle-manifest "${{ inputs.oracle }}" \
