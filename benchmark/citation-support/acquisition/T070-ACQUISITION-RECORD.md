@@ -23,11 +23,11 @@ The bulk archive and acquired article copies are machine-local under
 
 ## Prepared candidate set
 
-- 536 unique pending source families: 328 Elsevier and 208 OLH.
+- 524 unique pending source families: 320 Elsevier and 204 OLH.
 - 1,200 source-authored claim families and exactly 6,000 candidate pairs.
-- Candidate pairs by discipline are: art_criticism 680, art_history 630,
-  engineering 680, humanities 655, interdisciplinary 655, materials_science
-  705, philosophy 650, psychology 655, and technical_writing 690.
+- Candidate pairs by discipline are: art_criticism 675, art_history 625,
+  engineering 675, humanities 655, interdisciplinary 655, materials_science
+  705, philosophy 650, psychology 655, and technical_writing 705.
 - Exactly 1,200 candidates in each acquisition stratum: direct candidate,
   partial candidate, same-topic/context, contradiction candidate, and hard
   negative.
@@ -39,26 +39,28 @@ The bulk archive and acquired article copies are machine-local under
   it is not an ordinal or hash bucket. Hashing balances in-domain groups only
   and defines neither temporal nor OOD membership.
 - Discipline assignment uses `T070-DISCIPLINE-SOURCE-METADATA-V1`: official
-  source subject metadata plus auditable title/keyword evidence; unresolved
-  Elsevier `ARTS` records are excluded rather than being assigned to
-  `art_history`. Every assignment remains pending human review.
-- The frozen publication-year histogram for the 536 admitted source families is:
-  `2014: 27`, `2015: 46`, `2016: 59`, `2017: 47`, `2018: 107`, `2019: 98`,
-  `2020: 36`, `2021: 11`, `2022: 13`, `2023: 12`, `2024: 16`, `2025: 36`,
+  source subject metadata plus auditable title/keyword/section/abstract
+  evidence. Each assignment records the fields inspected, discipline rule
+  terms, matched terms, matched subject codes, and any explicit corpus-scope
+  fallback; unresolved Elsevier `ARTS` records are excluded rather than being
+  assigned to `art_history`. Every assignment remains pending human review.
+- The frozen publication-year histogram for the 524 admitted source families is:
+  `2014: 27`, `2015: 45`, `2016: 58`, `2017: 47`, `2018: 101`, `2019: 96`,
+  `2020: 35`, `2021: 11`, `2022: 12`, `2023: 12`, `2024: 16`, `2025: 36`,
   `2026: 28`.
 - The 2020 boundary was selected from corpus availability and pre-annotation
-  benchmark viability only: 368 in-domain source families / 807 claim families
-  / 4,035 pairs; 149 temporal source families / 255 claim families / 1,275
-  pairs; and 19 OOD source families / 138 claim families / 690 pairs. It retains a
+  benchmark viability only: 368 in-domain source families / 803 claim families
+  / 4,015 pairs; 150 temporal source families / 256 claim families / 1,280
+  pairs; and 6 OOD source families / 141 claim families / 705 pairs. It retains a
   useful later holdout while leaving substantial in-domain material for train,
   calibration, and locked-test. No human labels or model performance were
   consulted, and changing the boundary requires a new semantic policy version.
 - Pair counts by discipline `(in_domain, temporal, ood)` are: art_criticism
-  `(430, 250, 0)`, art_history `(400, 230, 0)`, engineering `(635, 45, 0)`,
+  `(410, 265, 0)`, art_history `(405, 220, 0)`, engineering `(630, 45, 0)`,
   humanities `(395, 260, 0)`, interdisciplinary `(560, 95, 0)`,
   materials_science `(645, 60, 0)`, philosophy `(435, 215, 0)`, psychology
-  `(535, 120, 0)`, and technical_writing `(0, 0, 690)`. Each stratum S1–S5
-  has `(807, 255, 138)` pairs in `(in_domain, temporal, ood)`.
+  `(535, 120, 0)`, and technical_writing `(0, 0, 705)`. Each stratum S1–S5
+  has `(803, 256, 141)` pairs in `(in_domain, temporal, ood)`.
 - 1,200 isolated canonical claim groups; no group crosses a semantic partition
   or generated split.
 - 0 support labels, 0 annotator identities, and 0 adjudications are present.
@@ -67,7 +69,7 @@ The bulk archive and acquired article copies are machine-local under
 
 ## Human and release boundary
 
-All 536 sources are `ADMISSIBLE_PENDING_REVIEW`, never `APPROVED`. All 6,000
+All 524 sources are `ADMISSIBLE_PENDING_REVIEW`, never `APPROVED`. All 6,000
 packets are unlabelled candidates, not evaluation truth. Independent source-rights
 review, two competent independent annotators per pair, independent adjudication,
 locked-test construction, and the remaining Research Grade release gates are

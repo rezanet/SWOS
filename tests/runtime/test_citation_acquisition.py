@@ -23,6 +23,7 @@ from tools.prepare_t070_catalog import (
     _olh_entry,
     _semantic_assignment,
     classify_elsevier,
+    classify_olh,
 )
 
 
@@ -189,6 +190,35 @@ class CitationAcquisitionTests(unittest.TestCase):
         }
         self.assertEqual(classify_elsevier(art_history), "art_history")
 
+    def test_generic_documentation_does_not_define_technical_writing(self) -> None:
+        vaccine = {
+            "title": "Documentation of vaccine handling and service delivery",
+            "subjareas": ["MULT"],
+            "keywords": ["Public health", "Vaccines"],
+        }
+        self.assertEqual(classify_elsevier(vaccine), "interdisciplinary")
+
+        red_list = {
+            "title": "Using documentation in national Red Lists",
+            "subjareas": ["AGRI", "ENVI"],
+            "keywords": ["forest species", "conservation"],
+        }
+        self.assertIsNone(classify_elsevier(red_list))
+
+        olh_documentation = {
+            "title": "The documentation of historical archives",
+            "section": "Research article",
+            "abstract": "This humanities study examines archival practice.",
+        }
+        self.assertEqual(classify_olh(olh_documentation), "humanities")
+
+        olh_technical = {
+            "title": "Technical Communication and public outreach",
+            "section": "Research article",
+            "abstract": "A study of technical communication practices.",
+        }
+        self.assertEqual(classify_olh(olh_technical), "technical_writing")
+
     def test_catalog_discipline_assignment_records_pending_source_evidence(self) -> None:
         data = {
             "docId": "S0000000000000001",
@@ -206,13 +236,21 @@ class CitationAcquisitionTests(unittest.TestCase):
         self.assertIsNotNone(entry)
         assert entry is not None
         self.assertEqual(entry["disciplines"], ["art_history"])
+        evidence = entry["discipline_assignment"]
+        self.assertEqual(evidence["criteria_id"], "T070-DISCIPLINE-SOURCE-METADATA-V1")
+        self.assertEqual(evidence["review_status"], "pending_human_review")
+        self.assertEqual(evidence["evidence_fields"], ["title", "keywords", "subjareas"])
+        self.assertEqual(evidence["subject_codes"], ["ARTS", "SOCI"])
+        self.assertEqual(evidence["matched_subject_codes"], ["ARTS"])
         self.assertEqual(
-            entry["discipline_assignment"],
+            evidence["matched_terms"], ["conservation", "heritage", "museum", "painting"]
+        )
+        self.assertIn("museum", evidence["rule_terms"])
+        self.assertEqual(
+            evidence["matched_evidence"],
             {
-                "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
-                "review_status": "pending_human_review",
-                "subject_codes": ["ARTS", "SOCI"],
-                "matched_terms": ["conservation", "heritage", "museum", "painting"],
+                "keywords": ["heritage", "painting"],
+                "title": ["conservation", "museum", "painting"],
             },
         )
 
@@ -243,6 +281,11 @@ class CitationAcquisitionTests(unittest.TestCase):
         self.assertIn("Ada Lovelace", entry["attribution"])
         self.assertIn("Grace Hopper", entry["attribution"])
         self.assertIn("Katherine Johnson", entry["attribution"])
+        evidence = entry["discipline_assignment"]
+        self.assertEqual(evidence["evidence_fields"], ["title", "section", "abstract"])
+        self.assertIn("humanities", evidence["rule_terms"])
+        self.assertEqual(evidence["matched_terms"], [])
+        self.assertEqual(evidence["fallback_basis"], "official_olh_humanities_scope")
 
     def test_candidate_span_collisions_are_rejected_and_backfilled(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

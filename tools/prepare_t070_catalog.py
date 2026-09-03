@@ -58,7 +58,73 @@ _ENGINEERING = {"ENGI", "CENG", "COMP", "ENER", "MATH"}
 _MATERIALS = {"MATE", "CHEM", "PHYS"}
 _PSYCHOLOGY = {"PSYC"}
 _ARTS = {"ARTS"}
-_ART_CRITICISM_TERMS = ("criticism", "critical", "cinema", "film", "visual culture")
+_TECHNICAL_WRITING_TERMS = ("technical communication", "technical writing")
+_INTERDISCIPLINARY_TERMS = (
+    "interdisciplinary",
+    "cross-disciplinary",
+    "cross disciplinary",
+    "multidisciplinary",
+    "transdisciplinary",
+    "digital humanities",
+)
+_PHILOSOPHY_TERMS = (
+    "philosoph",
+    "epistem",
+    "ontology",
+    "ethic",
+    "hermeneutic",
+    "posthuman",
+    "political theory",
+)
+_PSYCHOLOGY_TERMS = (
+    "psycholog",
+    "psychoanal",
+    "cognitive",
+    "mental health",
+    "behavior",
+    "behaviour",
+    "pathological body",
+    "medieval brain",
+    "audience psychology",
+)
+_HUMANITIES_TERMS = (
+    "anthropolog",
+    "sociolog",
+    "humanities",
+    "literature",
+    "literary",
+    "language",
+    "linguistic",
+    "culture",
+    "cultural",
+    "history",
+    "historical",
+    "education",
+    "pedagog",
+    "politic",
+    "society",
+    "religion",
+    "gender",
+    "migration",
+    "media",
+    "communication",
+    "rhetoric",
+    "discourse",
+    "writing",
+    "textual",
+    "medieval",
+)
+_ART_CRITICISM_TERMS = (
+    "art criticism",
+    "criticism",
+    "critical",
+    "cinema",
+    "film",
+    "visual culture",
+    "cartoon",
+    "visual rhetor",
+    "game studies",
+)
 _ART_HISTORY_TERMS = (
     "art history",
     "archaeolog",
@@ -81,6 +147,108 @@ _ART_HISTORY_TERMS = (
     "architectural history",
     "manuscript illumination",
     "conservation",
+)
+_DISCIPLINE_RULE_TERMS = {
+    "art_criticism": _ART_CRITICISM_TERMS,
+    "art_history": _ART_HISTORY_TERMS,
+    "engineering": (
+        "engineering",
+        "engineer",
+        "technology",
+        "technical",
+        "computer science",
+        "software",
+        "algorithm",
+    ),
+    "humanities": _HUMANITIES_TERMS,
+    "interdisciplinary": _INTERDISCIPLINARY_TERMS,
+    "materials_science": (
+        "materials science",
+        "material",
+        "materials",
+        "metallurg",
+        "polymer",
+        "ceramic",
+        "composite",
+        "nanomaterial",
+    ),
+    "philosophy": _PHILOSOPHY_TERMS,
+    "psychology": _PSYCHOLOGY_TERMS,
+    "technical_writing": _TECHNICAL_WRITING_TERMS,
+}
+_DISCIPLINE_SUBJECT_CODES = {
+    "art_criticism": _ARTS,
+    "art_history": _ARTS,
+    "engineering": _ENGINEERING,
+    "humanities": {"SOCI", "ECON", "BUSI", "DECI"},
+    "interdisciplinary": {"MULT"},
+    "materials_science": _MATERIALS,
+    "philosophy": set(),
+    "psychology": _PSYCHOLOGY,
+    "technical_writing": set(),
+}
+_ELSEVIER_INTERDISCIPLINARY_TERMS = (
+    "interdisciplinary",
+    "cross-disciplinary",
+    "multidisciplinary",
+    "transdisciplinary",
+)
+_ELSEVIER_PHILOSOPHY_TERMS = (
+    "epistem",
+    "ontology",
+    "ethic",
+    "hermeneutic",
+)
+_ELSEVIER_ART_CRITICISM_TERMS = (
+    "criticism",
+    "critical",
+    "cinema",
+    "film",
+    "visual culture",
+)
+_OLH_INTERDISCIPLINARY_TERMS = (
+    "interdisciplinary",
+    "cross-disciplinary",
+    "cross disciplinary",
+    "digital humanities",
+)
+_OLH_PHILOSOPHY_TERMS = (
+    "philosoph",
+    "posthuman",
+    "political theory",
+    "ethic",
+    "ontology",
+)
+_OLH_PSYCHOLOGY_TERMS = (
+    "psychoanal",
+    "pathological body",
+    "medieval brain",
+    "audience psychology",
+)
+_OLH_ART_HISTORY_TERMS = (
+    "visual art",
+    "museum",
+    "curat",
+    "iconograph",
+    "art history",
+    "collections",
+)
+_OLH_ART_CRITICISM_TERMS = (
+    "art criticism",
+    "cinema",
+    "film",
+    "cartoon",
+    "visual rhetor",
+    "game studies",
+)
+_OLH_HUMANITIES_TERMS = (
+    "language",
+    "writing",
+    "textual",
+    "literature",
+    "culture",
+    "medieval",
+    "history",
 )
 
 
@@ -143,54 +311,69 @@ def _keywords(metadata: dict[str, Any]) -> str:
     return " ".join(str(value) for value in values)
 
 
-def _discipline_evidence(*, discipline: str, text: str, subject_codes: list[str]) -> dict[str, Any]:
-    terms = {
-        "art_criticism": _ART_CRITICISM_TERMS,
-        "art_history": _ART_HISTORY_TERMS,
-    }.get(discipline, ())
-    matched_terms = sorted({term for term in terms if term in text.casefold()})
-    return {
+def _subject_codes(value: Any) -> list[str]:
+    if isinstance(value, (list, tuple, set)):
+        values = value
+    elif value:
+        values = [value]
+    else:
+        values = []
+    return sorted({str(item).strip().upper() for item in values if str(item).strip()})
+
+
+def _evidence_text(value: Any) -> str:
+    if isinstance(value, (list, tuple, set)):
+        return " ".join(_evidence_text(item) for item in value)
+    return _strip_markup(value)
+
+
+def _discipline_evidence(
+    *,
+    discipline: str,
+    fields: dict[str, Any],
+    subject_codes: list[str],
+    fallback_basis: str | None = None,
+) -> dict[str, Any]:
+    rule_terms = tuple(_DISCIPLINE_RULE_TERMS.get(discipline, ()))
+    text_by_field = {name: _evidence_text(value).casefold() for name, value in fields.items()}
+    matched_evidence = {
+        name: sorted({term for term in rule_terms if term in text})
+        for name, text in text_by_field.items()
+        if any(term in text for term in rule_terms)
+    }
+    normalised_subject_codes = _subject_codes(subject_codes)
+    rule_subject_codes = sorted(_DISCIPLINE_SUBJECT_CODES.get(discipline, set()))
+    evidence = {
         "criteria_id": DISCIPLINE_CRITERIA_ID,
         "review_status": "pending_human_review",
-        "subject_codes": sorted(subject_codes),
-        "matched_terms": matched_terms,
+        "evidence_fields": list(fields),
+        "subject_codes": normalised_subject_codes,
+        "rule_subject_codes": rule_subject_codes,
+        "matched_subject_codes": sorted(
+            set(normalised_subject_codes).intersection(rule_subject_codes)
+        ),
+        "rule_terms": list(rule_terms),
+        "matched_terms": sorted({term for terms in matched_evidence.values() for term in terms}),
+        "matched_evidence": matched_evidence,
     }
+    if fallback_basis is not None:
+        evidence["fallback_basis"] = fallback_basis
+    return evidence
 
 
 def classify_elsevier(metadata: dict[str, Any]) -> str | None:
-    subjects = {str(value).upper() for value in metadata.get("subjareas", [])}
+    subjects = set(_subject_codes(metadata.get("subjareas")))
     text = f"{metadata.get('title', '')} {_keywords(metadata)}".lower()
-    if any(
-        token in text
-        for token in (
-            "technical communication",
-            "technical writing",
-            "documentation",
-            "documentation",
-        )
-    ):
+    if any(token in text for token in _TECHNICAL_WRITING_TERMS):
         return "technical_writing"
-    if (
-        any(
-            token in text
-            for token in (
-                "interdisciplinary",
-                "cross-disciplinary",
-                "multidisciplinary",
-                "transdisciplinary",
-            )
-        )
-        or "MULT" in subjects
-    ):
+    if any(token in text for token in _ELSEVIER_INTERDISCIPLINARY_TERMS) or "MULT" in subjects:
         return "interdisciplinary"
-    if "philosoph" in text or any(
-        token in text for token in ("epistem", "ontology", "ethic", "hermeneutic")
-    ):
+    if "philosoph" in text or any(token in text for token in _ELSEVIER_PHILOSOPHY_TERMS):
         return "philosophy"
     if "psych" in text or subjects & _PSYCHOLOGY:
         return "psychology"
     if subjects & _ARTS:
-        if any(token in text for token in _ART_CRITICISM_TERMS):
+        if any(token in text for token in _ELSEVIER_ART_CRITICISM_TERMS):
             return "art_criticism"
         if any(token in text for token in _ART_HISTORY_TERMS):
             return "art_history"
@@ -205,53 +388,22 @@ def classify_elsevier(metadata: dict[str, Any]) -> str | None:
 
 
 def classify_olh(article: dict[str, Any]) -> str:
-    text = " ".join(str(article.get(key) or "") for key in ("title", "section", "abstract")).lower()
-    if any(
-        token in text for token in ("technical communication", "technical writing", "documentation")
-    ):
+    text = " ".join(
+        _evidence_text(article.get(key)) for key in ("title", "section", "abstract")
+    ).lower()
+    if any(token in text for token in _TECHNICAL_WRITING_TERMS):
         return "technical_writing"
-    if any(
-        token in text
-        for token in (
-            "interdisciplinary",
-            "cross-disciplinary",
-            "cross disciplinary",
-            "digital humanities",
-        )
-    ):
+    if any(token in text for token in _OLH_INTERDISCIPLINARY_TERMS):
         return "interdisciplinary"
-    if any(
-        token in text
-        for token in ("philosoph", "posthuman", "political theory", "ethic", "ontology")
-    ):
+    if any(token in text for token in _OLH_PHILOSOPHY_TERMS):
         return "philosophy"
-    if any(
-        token in text
-        for token in ("psychoanal", "pathological body", "medieval brain", "audience psychology")
-    ):
+    if any(token in text for token in _OLH_PSYCHOLOGY_TERMS):
         return "psychology"
-    if any(
-        token in text
-        for token in ("visual art", "museum", "curat", "iconograph", "art history", "collections")
-    ):
+    if any(token in text for token in _OLH_ART_HISTORY_TERMS):
         return "art_history"
-    if any(
-        token in text
-        for token in ("art criticism", "cinema", "film", "cartoon", "visual rhetor", "game studies")
-    ):
+    if any(token in text for token in _OLH_ART_CRITICISM_TERMS):
         return "art_criticism"
-    if any(
-        token in text
-        for token in (
-            "language",
-            "writing",
-            "textual",
-            "literature",
-            "culture",
-            "medieval",
-            "history",
-        )
-    ):
+    if any(token in text for token in _OLH_HUMANITIES_TERMS):
         return "humanities"
     return "humanities"
 
@@ -331,8 +483,12 @@ def _elsevier_entry(
         "disciplines": [discipline],
         "discipline_assignment": _discipline_evidence(
             discipline=discipline,
-            text=f"{metadata.get('title', '')} {_keywords(metadata)}",
-            subject_codes=[str(value).upper() for value in metadata.get("subjareas", [])],
+            fields={
+                "title": metadata.get("title"),
+                "keywords": _keywords(metadata),
+                "subjareas": _subject_codes(metadata.get("subjareas")),
+            },
+            subject_codes=_subject_codes(metadata.get("subjareas")),
         ),
         "licence": _license(
             rights_uri=stable_uri,
@@ -449,8 +605,15 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
         "disciplines": [discipline],
         "discipline_assignment": _discipline_evidence(
             discipline=discipline,
-            text=" ".join(str(article.get(key) or "") for key in ("title", "section", "abstract")),
+            fields={
+                "title": article.get("title"),
+                "section": article.get("section"),
+                "abstract": article.get("abstract"),
+            },
             subject_codes=[],
+            fallback_basis=(
+                "official_olh_humanities_scope" if discipline == "humanities" else None
+            ),
         ),
         "licence": _license(
             rights_uri=article_uri,

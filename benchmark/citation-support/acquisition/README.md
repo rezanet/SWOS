@@ -53,8 +53,10 @@ The 2020 boundary was frozen from the admitted-candidate publication-year
 histogram and pre-annotation benchmark viability before annotation; labels and
 model outcomes were not consulted. Source disciplines use
 `T070-DISCIPLINE-SOURCE-METADATA-V1`: official subject metadata plus auditable
-title/keyword evidence, with unresolved assignments excluded and all surviving
-assignments pending human review.
+title/keyword/section/abstract evidence. Each assignment retains the inspected
+fields, discipline rule terms, matched terms, matched subject codes, and any
+explicit corpus-scope fallback; unresolved assignments are excluded and all
+surviving assignments remain pending human review.
 Hashing is used only to balance in-domain groups across train, calibration, and
 locked-test; it never defines temporal or OOD membership.
 
