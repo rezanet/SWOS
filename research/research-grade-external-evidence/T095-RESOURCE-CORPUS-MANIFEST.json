@@ -1,0 +1,88 @@
+{
+  "schema_version": "research-handoff.t095.resource-corpus.v1",
+  "status": "deterministic_corpus_identity_preparation_only",
+  "baseline_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
+  "generator": "T095-GENERATE-RESOURCE-CORPORA.py",
+  "frozen_main_resource_contract": {
+    "max_bytes": 5000000,
+    "max_statements": 100000,
+    "max_literal_length": 1000000,
+    "max_depth": 64,
+    "timeout_seconds": 60.0,
+    "release_p95_seconds": 60.0,
+    "required_statement_corpora": [1000, 10000, 100000],
+    "hostile_blank_node_policy": "bounded_and_fail_closed"
+  },
+  "generated_identities": [
+    {
+      "name": "valid-1000",
+      "format": "provn",
+      "statement_count": 1000,
+      "bytes": 17961,
+      "sha256": "3144d58f93712f80cd8230ce7c50888582aa40ffbf717dac3860907996bc3029",
+      "expected_role": "valid_performance"
+    },
+    {
+      "name": "valid-10000",
+      "format": "provn",
+      "statement_count": 10000,
+      "bytes": 188961,
+      "sha256": "fec9da5c07a86c13e62c3c0421aa1b7cdf7c80de9631d23270c09513adc73f38",
+      "expected_role": "valid_performance"
+    },
+    {
+      "name": "valid-100000",
+      "format": "provn",
+      "statement_count": 100000,
+      "bytes": 1988961,
+      "sha256": "63aad102894cffe7bf85939dc5d3c379feecdc7fc992cdfc5d06fa5e96f3a1eb",
+      "expected_role": "valid_performance"
+    },
+    {
+      "name": "hostile-bnodes-1000",
+      "format": "trig",
+      "blank_node_count": 1000,
+      "bytes": 73666,
+      "sha256": "15a933383a4309d50d8bebd0200ba8dcd4eb9b67d69cbc1b3209130c449261bb",
+      "expected_role": "canonicalization_stress"
+    },
+    {
+      "name": "hostile-bnodes-5000",
+      "format": "trig",
+      "blank_node_count": 5000,
+      "bytes": 385666,
+      "sha256": "d292a91d8838f483cda8021585445834c246de2ca7ac46c5bf28e57eb4372085",
+      "expected_role": "canonicalization_stress"
+    },
+    {
+      "name": "hostile-bnodes-10000",
+      "format": "trig",
+      "blank_node_count": 10000,
+      "bytes": 775666,
+      "sha256": "d2e527c794ae857f79ade97527cafe574f4d392679e383b1ab1d55897206b624",
+      "expected_role": "canonicalization_stress"
+    }
+  ],
+  "measurement_record_shape": {
+    "required_fields": [
+      "corpus_name",
+      "corpus_sha256",
+      "code_sha",
+      "runtime_identity",
+      "operation",
+      "started_at",
+      "wall_seconds",
+      "cpu_seconds",
+      "peak_rss_bytes",
+      "exit_status",
+      "semantic_result",
+      "limit_disposition"
+    ],
+    "repeat_policy": "record every frozen repeat; compute p95 only over complete eligible repeats",
+    "missing_measurement": "NOT_RUN",
+    "timeout_or_resource_limit": "fail_closed_and_record_exact_limit"
+  },
+  "release_measurements": [],
+  "approval": null,
+  "warning": "The exact corpus identities are preparation artefacts only. T095 remains OPEN until the approved exact-head workflow regenerates/verifies these bytes, runs the required measurements, proves the resource gates, and records genuine approval."
+}
