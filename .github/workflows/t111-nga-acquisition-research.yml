@@ -1,0 +1,101 @@
+name: Research T111 NGA candidate acquisition
+
+on:
+  push:
+    branches:
+      - research/research-grade-external-evidence-2026-09-03
+    paths:
+      - research/research-grade-external-evidence/T111-NGA-ACQUIRE-CANDIDATES.py
+      - .github/workflows/t111-nga-acquisition-research.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t111-nga-acquisition-research
+  cancel-in-progress: false
+
+jobs:
+  acquire:
+    name: Acquire and checksum NGA candidates
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/research-grade-external-evidence-2026-09-03
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Acquire 80 unique NGA open-access works and exact image bytes
+        run: |
+          set -euo pipefail
+          python research/research-grade-external-evidence/T111-NGA-ACQUIRE-CANDIDATES.py \
+            --cache-dir "$RUNNER_TEMP/t111-nga/cache" \
+            --output-dir "$RUNNER_TEMP/t111-nga/output" \
+            --target 80 \
+            --download-assets \
+            --max-asset-bytes 26214400
+
+      - name: Verify candidate manifest fail closed
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("${{ runner.temp }}/t111-nga/output/nga-candidate-manifest.json")
+          payload = json.loads(path.read_text(encoding="utf-8"))
+          records = payload.get("records") or []
+          assert payload.get("status") == "candidate_assets_prepared_human_review_required"
+          assert len(records) == 80, len(records)
+          assert len({row["object_id"] for row in records}) == 80
+          assert len({row["uuid"] for row in records}) == 80
+          assert all(row["rights"]["image_openaccess_flag"] == 1 for row in records)
+          assert all(row["human_review"] is None for row in records)
+          assert all(row["asset"]["status"] == "downloaded_checksummed" for row in records)
+          assert all(isinstance(row["asset"]["byte_sha256"], str) and len(row["asset"]["byte_sha256"]) == 64 for row in records)
+          assert all((row["asset"].get("byte_size") or 0) > 0 for row in records)
+          classes = {row["media_class"] for row in records}
+          assert len(classes) >= 6, classes
+          print(json.dumps({"verified_records": len(records), "media_classes": sorted(classes)}, sort_keys=True))
+          PY
+
+      - name: Stage preparation manifest only
+        run: |
+          set -euo pipefail
+          cp "$RUNNER_TEMP/t111-nga/output/nga-candidate-manifest.json" \
+            research/research-grade-external-evidence/T111-NGA-CANDIDATE-MANIFEST.json
+
+      - name: Upload exact candidate image bytes for short-lived human-prep access
+        uses: actions/upload-artifact@v4
+        with:
+          name: t111-nga-candidate-assets-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/t111-nga/output/assets/
+            ${{ runner.temp }}/t111-nga/output/nga-candidate-manifest.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+      - name: Persist manifest on research branch
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/research-grade-external-evidence/T111-NGA-CANDIDATE-MANIFEST.json
+          if git diff --cached --quiet; then
+            echo "Manifest unchanged; nothing to commit."
+            exit 0
+          fi
+          git commit -m "research: record checksummed T111 NGA candidate manifest" \
+            -m "Preparation only; source workflow commit: ${SOURCE_SHA}. No human review or T111 completion asserted."
+          git push origin HEAD:research/research-grade-external-evidence-2026-09-03
