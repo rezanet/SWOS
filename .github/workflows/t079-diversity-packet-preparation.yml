@@ -14,7 +14,7 @@ permissions:
 
 concurrency:
   group: t079-diversity-packet-preparation
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -46,7 +46,6 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
-          import hashlib
           import json
           from collections import Counter
           from pathlib import Path
@@ -78,13 +77,6 @@ jobs:
           print(json.dumps({"verified_packets": 108, "categories": dict(categories)}, sort_keys=True))
           PY
 
-      - name: Stage packets and manifest
-        run: |
-          set -euo pipefail
-          rm -rf research/research-grade-external-evidence/generated/t079
-          mkdir -p research/research-grade-external-evidence/generated/t079
-          cp -R "$RUNNER_TEMP/t079/output/." research/research-grade-external-evidence/generated/t079/
-
       - name: Upload metadata acquisition cache for short-lived audit/replay
         uses: actions/upload-artifact@v4
         with:
@@ -94,11 +86,17 @@ jobs:
           compression-level: 6
           retention-days: 14
 
-      - name: Persist reviewer-prep packet set
+      - name: Persist reviewer-prep packet set on latest branch head
         env:
           SOURCE_SHA: ${{ github.sha }}
+          TARGET_BRANCH: research/research-grade-external-evidence-2026-09-03
         run: |
           set -euo pipefail
+          git fetch origin "$TARGET_BRANCH"
+          git reset --hard "origin/$TARGET_BRANCH"
+          rm -rf research/research-grade-external-evidence/generated/t079
+          mkdir -p research/research-grade-external-evidence/generated/t079
+          cp -R "$RUNNER_TEMP/t079/output/." research/research-grade-external-evidence/generated/t079/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add research/research-grade-external-evidence/generated/t079
@@ -108,4 +106,4 @@ jobs:
           fi
           git commit -m "research: record 108 T079 reviewer-prep packets" \
             -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Human review fields remain blank and T079 remains open."
-          git push origin HEAD:research/research-grade-external-evidence-2026-09-03
+          git push origin "HEAD:$TARGET_BRANCH"
