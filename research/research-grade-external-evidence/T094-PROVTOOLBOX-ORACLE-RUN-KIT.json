@@ -1,0 +1,74 @@
+{
+  "schema_version": "research-handoff.t094.oracle-run-kit.v1",
+  "status": "identity_and_license_pinned_executable_bundle_pending",
+  "baseline_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
+  "oracle": {
+    "implementation": "ProvToolbox",
+    "version": "2.2.3",
+    "upstream_repository": "lucmoreau/ProvToolbox",
+    "tag": "ProvToolbox-2.2.3",
+    "annotated_tag_object": "37e37913f815689d0f4f2eaba55537dcd5b3a9f0",
+    "tagged_commit": "aef0816c2a277958774fac88cf0076248e7065cc",
+    "tag_date": "2026-03-16T11:04:45Z",
+    "maven_coordinate": "org.openprovenance.prov:provconvert:2.2.3",
+    "license": {
+      "family": "MIT-style",
+      "source_path": "license.txt",
+      "source_git_blob": "081be2ec53583c2ac533e041abd9f34add7a1b2e",
+      "exact_license_sha256": null,
+      "sha256_status": "exact_tagged_file_bytes_must_be_acquired_and_hashed"
+    }
+  },
+  "swos_oracle_contract": {
+    "manifest_path": "benchmark/provenance/oracle-manifest.json",
+    "required_runtime_placeholders": ["{artifact}", "{input}", "{profile}", "{formats}", "{output}"],
+    "required_oracle_output_fields": ["status", "input_digest", "profile", "formats"],
+    "accepted_output_statuses": ["pass", "passed", "valid", "accepted"],
+    "execution": "offline subprocess with network unavailable/unused",
+    "timeout_seconds": 60.0,
+    "max_oracle_output_bytes": 65536,
+    "artifact_uri_rule": "relative path under the oracle-manifest directory",
+    "artifact_sha256_rule": "lowercase SHA-256 of the exact executable artifact bytes"
+  },
+  "package_strategy": {
+    "required": "one independently reviewable offline oracle execution package whose exact identity includes ProvToolbox 2.2.3 and every runtime dependency needed by the SWOS adapter",
+    "must_include": [
+      "ProvToolbox 2.2.3 executable/runtime",
+      "dependency lock or complete dependency inventory with hashes",
+      "license.txt from tagged commit",
+      "thin adapter that emits the SWOS oracle-output JSON contract without deciding SWOS scholarly policy",
+      "version probe output",
+      "build/acquisition provenance"
+    ],
+    "prohibited": [
+      "floating Maven versions",
+      "network dependency resolution during certification",
+      "hashing only a wrapper while leaving the actual ProvToolbox/dependency identity unbound",
+      "using SWOS's own PROV parser as the independent oracle"
+    ],
+    "artifact_uri": null,
+    "artifact_sha256": null,
+    "package_sha256_status": "NOT_ACQUIRED"
+  },
+  "expected_invocation_contract": [
+    "<approved-oracle-launcher>",
+    "--artifact", "{artifact}",
+    "--input", "{input}",
+    "--profile", "{profile}",
+    "--formats", "{formats}",
+    "--output", "{output}"
+  ],
+  "preflight": [
+    "Acquire/build the exact offline package in a clean external environment.",
+    "Record Java/runtime identity and all dependency hashes.",
+    "Hash exact license.txt bytes and package bytes.",
+    "Run provconvert --version or equivalent and bind the returned identity to 2.2.3.",
+    "Test the adapter against one valid and one invalid permitted fixture without using SWOS's own parser as truth.",
+    "Obtain the required maintainer/steward approval bound to package digest, command, Java identity and corpus manifest.",
+    "Only then promote benchmark/provenance/oracle-manifest.json from not_run to an accepted status and execute the exact-head certification workflow."
+  ],
+  "known_contract_risk": "Main currently verifies only one local artifact file before executing the oracle command. The final package design must prove that the hashed artifact cryptographically binds the actual ProvToolbox 2.2.3 runtime and dependencies; a hashed thin wrapper plus unbound external jars is insufficient.",
+  "independent_execution": "NOT_RUN",
+  "approval": null,
+  "t094_status": "OPEN"
+}
