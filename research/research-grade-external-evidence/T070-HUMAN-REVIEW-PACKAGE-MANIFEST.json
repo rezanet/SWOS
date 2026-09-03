@@ -1,0 +1,40 @@
+{
+  "exact_candidate_head": "882466a9cd7bcba671dc7ec8c757f3f6866a4487",
+  "human_requirements": {
+    "adjudicator_distinct_from_both_annotators": true,
+    "annotations_per_pair": 2,
+    "annotators_independent": true,
+    "source_rights_reviewer": "genuine competent human per exact source copy"
+  },
+  "inputs": {
+    "acquisition_report_sha256": "eade763d448c9b7eae5ad5f78908d322485f4a05ef65def132f1f7eff6ef2067",
+    "candidate_pairs_sha256": "7360d5556e158829c46f1c69a34716381dcf184b54dc06a11a03079c2f23aa8f",
+    "source_manifest_sha256": "165ab2b28420c669e21b9e8fd215eaf69fcab13e77154b8ff08594c7568095d3"
+  },
+  "pair_count": 6000,
+  "pr_number": 66,
+  "release_evidence": false,
+  "review_payloads": {
+    "adjudication": {
+      "path": "annotation-worksets/adjudication-bindings.jsonl",
+      "sha256": "db344513cae3f89a9269cdf0f253d372817e90b69087154ec2065016a743d112"
+    },
+    "annotator_A": {
+      "path": "annotation-worksets/annotator-A.jsonl",
+      "sha256": "048b65eade5c724ca6d4906697b6dcfc8c9c422333d3959da84c93760e714b3d"
+    },
+    "annotator_B": {
+      "path": "annotation-worksets/annotator-B.jsonl",
+      "sha256": "048b65eade5c724ca6d4906697b6dcfc8c9c422333d3959da84c93760e714b3d"
+    },
+    "source_rights": {
+      "path": "source-rights-review-workset.json",
+      "sha256": "c7a91f89cefe10dc06ab33a6480fbb98a93762f52bd71b463c35512cc01c8d94"
+    }
+  },
+  "schema_version": "research-handoff.t070.human-review-package.v1",
+  "source_count": 536,
+  "source_workflow_head": "68a19dc5ed68e9b60e8a4bd7e4e40bbbbdcd0a87",
+  "status": "READY_FOR_GENUINE_HUMAN_REVIEW_NOT_T070_EVIDENCE",
+  "unique_source_claim_quote_tuples": 6000
+}
