@@ -1,0 +1,53 @@
+{
+  "schema_version": "research-handoff.t079.independent-review.v1",
+  "status": "blank_template_not_evidence",
+  "purpose": "Independent human lock/reject/repair review of one exact T079 diversity packet.",
+  "packet_binding": {
+    "packet_id": null,
+    "packet_sha256": null,
+    "discipline": null,
+    "partition": null,
+    "construction_stress_category": null,
+    "source_metadata_snapshot_sha256": null,
+    "canonical_family_digest": null,
+    "requirement_digest": null,
+    "machine_result_digest": null
+  },
+  "reviewer": {
+    "reviewer_id": null,
+    "role": null,
+    "discipline_competence_basis": null,
+    "independence_attestation": null,
+    "reviewed_at": null
+  },
+  "review": {
+    "family_canonicalization_correct": null,
+    "provider_identity_excluded_from_diversity": null,
+    "metadata_evidence_states_correct": null,
+    "claim_exposure_edges_correct": null,
+    "pre_retrieval_requirement_genuinely_predeclared": null,
+    "required_strata_materially_appropriate": null,
+    "counter_position_handling_correct": null,
+    "construction_stress_pattern_present": null,
+    "material_gaps": [],
+    "narrow_corpus_exception_justified": null,
+    "expected_outcome": null,
+    "allowed_expected_outcomes": ["pass", "fail", "review_required", "not_run"],
+    "expected_failure_dimensions": [],
+    "rationale": null,
+    "disposition": null,
+    "allowed_dispositions": ["lock", "reject", "repair_required"]
+  },
+  "integrity": {
+    "review_record_sha256": null,
+    "immutable_external_record_uri": null
+  },
+  "rules": [
+    "The construction stress category is an intent, not the expected human outcome.",
+    "Only observed or externally_verified metadata may count as known coverage.",
+    "Provider multiplicity, mirrors and duplicate editions must not manufacture canonical-family diversity.",
+    "The reviewer may reject or require repair instead of locking a packet.",
+    "Any mutation after lock requires a new packet digest/version and a new review.",
+    "Automation must leave all reviewer judgment and identity fields blank."
+  ]
+}
