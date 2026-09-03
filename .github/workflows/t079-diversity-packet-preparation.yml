@@ -1,0 +1,111 @@
+name: Research T079 diversity packet preparation
+
+on:
+  push:
+    branches:
+      - research/research-grade-external-evidence-2026-09-03
+    paths:
+      - research/research-grade-external-evidence/T079-BUILD-REVIEWER-PACKETS.py
+      - .github/workflows/t079-diversity-packet-preparation.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t079-diversity-packet-preparation
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build 108 real-metadata review candidates
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/research-grade-external-evidence-2026-09-03
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build reviewer-ready candidate packets
+        run: |
+          set -euo pipefail
+          python research/research-grade-external-evidence/T079-BUILD-REVIEWER-PACKETS.py \
+            --output-dir "$RUNNER_TEMP/t079/output" \
+            --cache-dir "$RUNNER_TEMP/t079/cache" \
+            --mailto "41898282+github-actions[bot]@users.noreply.github.com" \
+            --pool-size 90
+
+      - name: Verify packet cardinality and human boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          root = Path("${{ runner.temp }}/t079/output")
+          manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+          packet_paths = sorted((root / "packets").glob("*.json"))
+          assert manifest["status"] == "READY_FOR_HUMAN_REVIEW"
+          assert manifest["packet_count"] == 108
+          assert len(packet_paths) == 108
+          assert set(manifest["packets_by_discipline"].values()) == {12}
+          assert sum(1 for p in manifest["packet_records"] if p["partition"] == "tuning_candidate") == 18
+          assert sum(1 for p in manifest["packet_records"] if p["partition"] == "locked_candidate") == 90
+          categories = Counter()
+          for path in packet_paths:
+              packet = json.loads(path.read_text(encoding="utf-8"))
+              assert packet["status"] == "READY_FOR_HUMAN_REVIEW"
+              assert packet["review"] is None
+              assert packet["source_records"]
+              assert packet["canonical_families"]
+              assert packet["claim_exposure_records"]
+              assert packet["machine_result"] is not None
+              assert len(packet["packet_digest"]) == 64
+              assert all(row.get("provider") in {"openalex", "crossref"} for row in packet["source_records"])
+              assert all(row.get("canonical_work_id") for row in packet["source_records"])
+              categories[packet["stress_category"]] += 1
+          expected = {"balanced":18,"concentrated":18,"sparse":9,"narrow":9,"multilingual":9,"historical":9,"method_monoculture":9,"duplicate":9,"fake_diversity":9,"missing_strata":9}
+          assert dict(categories) == expected, (categories, expected)
+          print(json.dumps({"verified_packets": 108, "categories": dict(categories)}, sort_keys=True))
+          PY
+
+      - name: Stage packets and manifest
+        run: |
+          set -euo pipefail
+          rm -rf research/research-grade-external-evidence/generated/t079
+          mkdir -p research/research-grade-external-evidence/generated/t079
+          cp -R "$RUNNER_TEMP/t079/output/." research/research-grade-external-evidence/generated/t079/
+
+      - name: Upload metadata acquisition cache for short-lived audit/replay
+        uses: actions/upload-artifact@v4
+        with:
+          name: t079-metadata-snapshots-${{ github.sha }}
+          path: ${{ runner.temp }}/t079/cache/
+          if-no-files-found: error
+          compression-level: 6
+          retention-days: 14
+
+      - name: Persist reviewer-prep packet set
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/research-grade-external-evidence/generated/t079
+          if git diff --cached --quiet; then
+            echo "Generated packet set unchanged; nothing to commit."
+            exit 0
+          fi
+          git commit -m "research: record 108 T079 reviewer-prep packets" \
+            -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Human review fields remain blank and T079 remains open."
+          git push origin HEAD:research/research-grade-external-evidence-2026-09-03
