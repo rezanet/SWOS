@@ -1,0 +1,98 @@
+name: Research T111 review corpus preparation
+
+on:
+  push:
+    branches:
+      - research/research-grade-external-evidence-2026-09-03
+    paths:
+      - research/research-grade-external-evidence/T111-PREPARE-REVIEW-CORPUS.py
+      - research/research-grade-external-evidence/T111-NGA-CANDIDATE-MANIFEST.json
+      - .github/workflows/t111-review-corpus-preparation.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t111-review-corpus-preparation
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Prepare exact derived assets and human-review slots
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/research-grade-external-evidence-2026-09-03
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build review-candidate corpus
+        run: |
+          set -euo pipefail
+          python research/research-grade-external-evidence/T111-PREPARE-REVIEW-CORPUS.py \
+            --source-manifest research/research-grade-external-evidence/T111-NGA-CANDIDATE-MANIFEST.json \
+            --output-dir "$RUNNER_TEMP/t111-review" \
+            --download-derived
+
+      - name: Verify candidate counts and human-null boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("${{ runner.temp }}/t111-review/review-candidate-manifest.json")
+          m = json.loads(p.read_text())
+          c = m["counts"]
+          assert m["status"] == "READY_FOR_INDEPENDENT_HUMAN_REVIEW_NOT_T111_EVIDENCE"
+          assert c["objects"] >= 60
+          assert c["renditions"] >= 96
+          assert c["region_grounding_candidates"] >= 80 and c["region_assets"] >= 20
+          assert c["cross_modal_candidates"] >= 120
+          assert c["discipline_tasks"] >= 48 and c["discipline_works"] >= 24
+          assert c["adversarial_candidates"] >= 96
+          assert c["media_material_classes"] >= 6
+          assert c["mediation_conditions"] == 2
+          assert m["human_review"] is None
+          assert all(x["human_atomic_observation"] is None for x in m["region_grounding_candidates"])
+          assert all(x["human_relation"] is None for x in m["cross_modal_candidates"])
+          assert all(x["human_expected_answer"] is None for x in m["discipline_task_candidates"])
+          assert all(x["human_expected_disposition"] is None for x in m["adversarial_candidates"])
+          assert all(x["human_validated"] is None for x in m["accessibility_candidates"])
+          derived = [a for a in m["assets"] if a["mediation_condition"] == "deterministic_iiif_detail_crop"]
+          assert len(derived) == 16
+          assert all(isinstance(a["byte_digest"], str) and len(a["byte_digest"]) == 64 for a in derived)
+          print(json.dumps(c, sort_keys=True))
+          PY
+
+      - name: Upload derived bytes and complete candidate manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: t111-review-candidate-corpus-${{ github.sha }}
+          path: ${{ runner.temp }}/t111-review/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+
+      - name: Persist review-candidate manifest only on latest research head
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          cp "$RUNNER_TEMP/t111-review/review-candidate-manifest.json" \
+             research/research-grade-external-evidence/T111-REVIEW-CANDIDATE-MANIFEST.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/research-grade-external-evidence/T111-REVIEW-CANDIDATE-MANIFEST.json
+          git commit -m "research: record T111 review-candidate manifest" \
+            -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Human truth remains null and third mediation condition remains external."
+          git fetch origin research/research-grade-external-evidence-2026-09-03
+          git rebase origin/research/research-grade-external-evidence-2026-09-03
+          git push origin HEAD:research/research-grade-external-evidence-2026-09-03
