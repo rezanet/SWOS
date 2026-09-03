@@ -267,25 +267,39 @@ def _validate_semantic_assignment(
     result = dict(value)
     if partition == "temporal":
         if criteria_id != policy["temporal"]["criteria_id"]:
-            raise AcquisitionValidationError("temporal candidate does not use the declared criteria")
+            raise AcquisitionValidationError(
+                "temporal candidate does not use the declared criteria"
+            )
         year = value.get("publication_year")
         cutoff = value.get("cutoff_year")
-        if isinstance(year, bool) or not isinstance(year, int) or year > policy["temporal"]["cutoff_year"]:
-            raise AcquisitionValidationError("temporal candidate lacks a publication year at or before cutoff")
+        if (
+            isinstance(year, bool)
+            or not isinstance(year, int)
+            or year > policy["temporal"]["cutoff_year"]
+        ):
+            raise AcquisitionValidationError(
+                "temporal candidate lacks a publication year at or before cutoff"
+            )
         if cutoff != policy["temporal"]["cutoff_year"]:
             raise AcquisitionValidationError("temporal candidate cutoff does not match policy")
     elif partition == "ood":
         if criteria_id != policy["ood"]["criteria_id"]:
             raise AcquisitionValidationError("OOD candidate does not use the declared criteria")
         if value.get("catalog_declared_held_out_domain") is not True:
-            raise AcquisitionValidationError("OOD candidate lacks catalog-declared held-out-domain evidence")
+            raise AcquisitionValidationError(
+                "OOD candidate lacks catalog-declared held-out-domain evidence"
+            )
         if not _nonempty(value.get("domain_id")):
             raise AcquisitionValidationError("OOD candidate lacks a named held-out domain")
     elif criteria_id != _IN_DOMAIN_CRITERIA_ID:
         raise AcquisitionValidationError("in-domain candidate does not use the declared criteria")
     if partition == "in_domain":
         year = value.get("publication_year")
-        if isinstance(year, int) and not isinstance(year, bool) and year <= policy["temporal"]["cutoff_year"]:
+        if (
+            isinstance(year, int)
+            and not isinstance(year, bool)
+            and year <= policy["temporal"]["cutoff_year"]
+        ):
             raise AcquisitionValidationError("pre-cutoff candidate cannot be marked in-domain")
         if value.get("catalog_declared_held_out_domain") is True:
             raise AcquisitionValidationError("held-out-domain candidate cannot be marked in-domain")
@@ -341,7 +355,9 @@ def validate_source_candidate_manifest(
         missing = [name for name in required if name not in source]
         if missing:
             raise AcquisitionValidationError(f"source {source_id} lacks " + ", ".join(missing))
-        if not _nonempty(source.get("stable_uri")) or not _nonempty(source.get("canonical_source_family")):
+        if not _nonempty(source.get("stable_uri")) or not _nonempty(
+            source.get("canonical_source_family")
+        ):
             raise AcquisitionValidationError(f"source {source_id} lacks stable identity")
         if not _nonempty(source.get("title")) or not _nonempty(source.get("publisher")):
             raise AcquisitionValidationError(f"source {source_id} lacks bibliographic metadata")
@@ -372,7 +388,9 @@ def validate_source_candidate_manifest(
                 raise AcquisitionValidationError(f"source {source_id} licence lacks {field}")
         spdx = _normalise_license(licence.get("spdx"))
         if spdx != licence.get("spdx"):
-            raise AcquisitionValidationError(f"source {source_id} licence identifier is not canonical")
+            raise AcquisitionValidationError(
+                f"source {source_id} licence identifier is not canonical"
+            )
         allowed = source.get("allowed_uses")
         if (
             not isinstance(allowed, Sequence)
@@ -382,37 +400,60 @@ def validate_source_candidate_manifest(
         ):
             raise AcquisitionValidationError(f"source {source_id} allowed uses are invalid")
         third_party = source.get("third_party")
-        if not isinstance(third_party, Mapping) or third_party.get("status") not in {"clear", "warning", "unknown"}:
+        if not isinstance(third_party, Mapping) or third_party.get("status") not in {
+            "clear",
+            "warning",
+            "unknown",
+        }:
             raise AcquisitionValidationError(f"source {source_id} third-party status is invalid")
         if not _nonempty(third_party.get("warning")):
             raise AcquisitionValidationError(f"source {source_id} third-party warning is missing")
         approval = source.get("approval")
-        if not isinstance(approval, Mapping) or approval.get("status") not in {"pending", "not_requested"}:
+        if not isinstance(approval, Mapping) or approval.get("status") not in {
+            "pending",
+            "not_requested",
+        }:
             raise AcquisitionValidationError(f"source {source_id} approval state is invalid")
         if approval.get("reviewer_id") not in {None, ""}:
-            raise AcquisitionValidationError(f"source {source_id} cannot record an approval reviewer")
+            raise AcquisitionValidationError(
+                f"source {source_id} cannot record an approval reviewer"
+            )
         rejection_reason = source.get("rejection_reason")
         accepted = state in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}
         if accepted:
             if spdx not in ADMISSIBLE_LICENSES:
-                raise AcquisitionValidationError(f"source {source_id} uses a non-admissible licence")
+                raise AcquisitionValidationError(
+                    f"source {source_id} uses a non-admissible licence"
+                )
             if licence.get("verification") != "article_level_verified":
-                raise AcquisitionValidationError(f"source {source_id} lacks article-level rights verification")
-            if not _nonempty(source.get("exact_acquired_copy_uri")) or not _is_sha256(source.get("sha256")):
+                raise AcquisitionValidationError(
+                    f"source {source_id} lacks article-level rights verification"
+                )
+            if not _nonempty(source.get("exact_acquired_copy_uri")) or not _is_sha256(
+                source.get("sha256")
+            ):
                 raise AcquisitionValidationError(f"source {source_id} lacks an acquired-copy hash")
             if not allowed:
-                raise AcquisitionValidationError(f"source {source_id} has no permitted candidate use")
+                raise AcquisitionValidationError(
+                    f"source {source_id} has no permitted candidate use"
+                )
             if approval.get("status") != "pending":
                 raise AcquisitionValidationError(f"source {source_id} must remain pending review")
             if rejection_reason not in {None, ""}:
-                raise AcquisitionValidationError(f"source {source_id} cannot have a rejection reason")
+                raise AcquisitionValidationError(
+                    f"source {source_id} cannot have a rejection reason"
+                )
         else:
             if approval.get("status") != "not_requested":
                 raise AcquisitionValidationError(f"rejected source {source_id} cannot be approved")
             if not _nonempty(rejection_reason):
-                raise AcquisitionValidationError(f"rejected source {source_id} lacks a rejection reason")
+                raise AcquisitionValidationError(
+                    f"rejected source {source_id} lacks a rejection reason"
+                )
             if source.get("sha256") is not None and not _is_sha256(source.get("sha256")):
-                raise AcquisitionValidationError(f"source {source_id} rejected record has an invalid hash")
+                raise AcquisitionValidationError(
+                    f"source {source_id} rejected record has an invalid hash"
+                )
         if "semantic_split_default" in source:
             _validate_semantic_assignment(source["semantic_split_default"], policy=policy)
         family = str(source.get("canonical_source_family")).strip().lower()
@@ -436,7 +477,9 @@ def validate_unlabelled_candidate_pair(
     if not isinstance(row, Mapping):
         raise AcquisitionValidationError("candidate packet must be an object")
     if "label" in row or "retrieval_intent" in row or "relation" in row:
-        raise AcquisitionValidationError("unlabelled packet exposes a forbidden label or retrieval intent")
+        raise AcquisitionValidationError(
+            "unlabelled packet exposes a forbidden label or retrieval intent"
+        )
     required = (
         "schema_version",
         "packet_type",
@@ -462,10 +505,18 @@ def validate_unlabelled_candidate_pair(
         "annotations",
         "adjudication",
     )
-    missing = [name for name in required if not _nonempty(row.get(name)) and name not in {"annotations", "adjudication", "semantic_split"}]
+    missing = [
+        name
+        for name in required
+        if not _nonempty(row.get(name))
+        and name not in {"annotations", "adjudication", "semantic_split"}
+    ]
     if missing:
         raise AcquisitionValidationError("candidate packet lacks " + ", ".join(missing))
-    if row.get("schema_version") != "2.0.0" or row.get("packet_type") != "citation_support_unlabelled_annotation":
+    if (
+        row.get("schema_version") != "2.0.0"
+        or row.get("packet_type") != "citation_support_unlabelled_annotation"
+    ):
         raise AcquisitionValidationError("candidate packet schema or type is unsupported")
     if row.get("discipline") not in SUPPORTED_DISCIPLINES:
         raise AcquisitionValidationError("candidate packet discipline is not supported")
@@ -498,7 +549,11 @@ def validate_unlabelled_candidate_pair(
             raise AcquisitionValidationError("candidate annotation field must be an object")
         if set(item) - {"annotator_id", "label", "rationale"}:
             raise AcquisitionValidationError("candidate annotation field has unknown data")
-        if item.get("annotator_id") is not None or item.get("label") is not None or item.get("rationale") is not None:
+        if (
+            item.get("annotator_id") is not None
+            or item.get("label") is not None
+            or item.get("rationale") is not None
+        ):
             raise AcquisitionValidationError("candidate annotation fields must remain blank")
     adjudication = row.get("adjudication")
     if not isinstance(adjudication, Mapping) or set(adjudication) - {
@@ -525,7 +580,9 @@ def validate_candidate_source_binding(
     source_id = str(row.get("source_id") or "").strip()
     source = sources.get(source_id)
     if source is None or source.get("state") not in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}:
-        raise AcquisitionValidationError(f"candidate {row.get('pair_id', '<unknown>')} lacks a pending source")
+        raise AcquisitionValidationError(
+            f"candidate {row.get('pair_id', '<unknown>')} lacks a pending source"
+        )
     comparisons = (
         ("source_uri", source.get("stable_uri")),
         ("acquired_copy_uri", source.get("exact_acquired_copy_uri")),
@@ -538,7 +595,9 @@ def validate_candidate_source_binding(
                 f"candidate {row.get('pair_id', '<unknown>')} source binding mismatches {field}"
             )
     if row.get("licence") != source.get("licence", {}).get("spdx"):
-        raise AcquisitionValidationError(f"candidate {row.get('pair_id', '<unknown>')} licence binding mismatches")
+        raise AcquisitionValidationError(
+            f"candidate {row.get('pair_id', '<unknown>')} licence binding mismatches"
+        )
 
 
 def _semantic_group_partition(
@@ -574,16 +633,27 @@ def semantic_grouped_split(
     names = ("train", "calibration", "locked_test", "temporal", "ood")
     raw = dict(proportions or {"train": 0.7, "calibration": 0.15, "locked_test": 0.15})
     if set(raw) - set(names) or not {"train", "calibration", "locked_test"}.issubset(raw):
-        raise AcquisitionValidationError("semantic split proportions must name in-domain partitions")
+        raise AcquisitionValidationError(
+            "semantic split proportions must name in-domain partitions"
+        )
     in_domain_names = ("train", "calibration", "locked_test")
     weights: dict[str, float] = {}
     for name in in_domain_names:
         value = raw[name]
-        if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)) or value <= 0:
-            raise AcquisitionValidationError("semantic split proportions must be positive finite numbers")
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not math.isfinite(float(value))
+            or value <= 0
+        ):
+            raise AcquisitionValidationError(
+                "semantic split proportions must be positive finite numbers"
+            )
         weights[name] = float(value)
     result: dict[str, list[dict[str, Any]]] = {name: [] for name in names}
-    ordered = sorted(groups, key=lambda group: hashlib.sha256(f"{seed}:{group}".encode()).hexdigest())
+    ordered = sorted(
+        groups, key=lambda group: hashlib.sha256(f"{seed}:{group}".encode()).hexdigest()
+    )
     totals = {name: 0.0 for name in in_domain_names}
     target = {name: weights[name] for name in in_domain_names}
     for group_id in ordered:
@@ -741,7 +811,9 @@ def _candidate_quotes(sentences: Sequence[str], index: int) -> list[str]:
     return [claim, _partial_quote(claim), context, contradiction, hard_negative]
 
 
-def _candidate_pattern_id(stratum: str, family_index: int, claim: str, quote: str) -> tuple[str, str]:
+def _candidate_pattern_id(
+    stratum: str, family_index: int, claim: str, quote: str
+) -> tuple[str, str]:
     """Select an opaque pattern code without exposing retrieval intent."""
 
     offsets = {
@@ -770,7 +842,9 @@ def _publication_year(value: Any) -> int | None:
     return int(match.group(1)) if match else None
 
 
-def _source_semantic_assignment(source: Mapping[str, Any], policy: Mapping[str, Any]) -> dict[str, Any]:
+def _source_semantic_assignment(
+    source: Mapping[str, Any], policy: Mapping[str, Any]
+) -> dict[str, Any]:
     explicit = source.get("semantic_split") or source.get("semantic_split_default")
     year = _publication_year(source.get("publication_date"))
     held_out = bool(source.get("catalog_declared_held_out_domain"))
@@ -782,17 +856,22 @@ def _source_semantic_assignment(source: Mapping[str, Any], policy: Mapping[str, 
             assignment.setdefault("cutoff_year", policy["temporal"]["cutoff_year"])
         elif partition == "ood":
             assignment.setdefault("catalog_declared_held_out_domain", held_out)
-        assignment.setdefault("criteria_id", {
-            "temporal": policy["temporal"]["criteria_id"],
-            "ood": policy["ood"]["criteria_id"],
-            "in_domain": _IN_DOMAIN_CRITERIA_ID,
-        }.get(partition, ""))
+        assignment.setdefault(
+            "criteria_id",
+            {
+                "temporal": policy["temporal"]["criteria_id"],
+                "ood": policy["ood"]["criteria_id"],
+                "in_domain": _IN_DOMAIN_CRITERIA_ID,
+            }.get(partition, ""),
+        )
     elif held_out:
         assignment = {
             "partition": "ood",
             "criteria_id": policy["ood"]["criteria_id"],
             "catalog_declared_held_out_domain": True,
-            "domain_id": str(source.get("held_out_domain_id") or "catalog-declared-held-out-domain"),
+            "domain_id": str(
+                source.get("held_out_domain_id") or "catalog-declared-held-out-domain"
+            ),
         }
     elif year is not None and year <= policy["temporal"]["cutoff_year"]:
         assignment = {
@@ -821,18 +900,33 @@ def _safe_source_filename(source_id: str) -> str:
 
 
 def _source_record(
-    entry: Mapping[str, Any], *, state: str, acquired_uri: str | None, digest: str | None, reason: str | None
+    entry: Mapping[str, Any],
+    *,
+    state: str,
+    acquired_uri: str | None,
+    digest: str | None,
+    reason: str | None,
 ) -> dict[str, Any]:
     raw_licence = entry.get("licence", entry.get("license", {}))
     raw_licence = raw_licence if isinstance(raw_licence, Mapping) else {}
     spdx = _normalise_license(raw_licence.get("spdx", raw_licence.get("name")))
-    disciplines = [str(value) for value in entry.get("disciplines", []) if str(value) in SUPPORTED_DISCIPLINES]
+    disciplines = [
+        str(value) for value in entry.get("disciplines", []) if str(value) in SUPPORTED_DISCIPLINES
+    ]
     if not disciplines:
         disciplines = ["interdisciplinary"]
-    stable_uri = str(entry.get("stable_uri") or entry.get("uri") or entry.get("content_uri") or "").strip()
-    rights_uri = str(raw_licence.get("article_rights_uri") or entry.get("article_rights_uri") or stable_uri).strip()
-    licence_uri = str(raw_licence.get("uri") or "https://spdx.org/licenses/NOASSERTION.html").strip()
-    authors = [str(value).strip() for value in entry.get("authors", []) if str(value).strip()] or ["Unknown author"]
+    stable_uri = str(
+        entry.get("stable_uri") or entry.get("uri") or entry.get("content_uri") or ""
+    ).strip()
+    rights_uri = str(
+        raw_licence.get("article_rights_uri") or entry.get("article_rights_uri") or stable_uri
+    ).strip()
+    licence_uri = str(
+        raw_licence.get("uri") or "https://spdx.org/licenses/NOASSERTION.html"
+    ).strip()
+    authors = [str(value).strip() for value in entry.get("authors", []) if str(value).strip()] or [
+        "Unknown author"
+    ]
     title = str(entry.get("title") or "Untitled candidate source").strip()
     record: dict[str, Any] = {
         "source_id": str(entry.get("source_id") or "").strip(),
@@ -857,17 +951,27 @@ def _source_record(
         "attribution": str(entry.get("attribution") or " ".join(authors) + ", " + title).strip(),
         "acquired_at": _now(),
         "sha256": digest,
-        "allowed_uses": [str(value) for value in entry.get("allowed_uses", []) if str(value) in ALLOWED_USES],
+        "allowed_uses": [
+            str(value) for value in entry.get("allowed_uses", []) if str(value) in ALLOWED_USES
+        ],
         "third_party": {
             "status": str((entry.get("third_party") or {}).get("status") or "unknown")
             if isinstance(entry.get("third_party"), Mapping)
             else "unknown",
-            "warning": str((entry.get("third_party") or {}).get("warning") or "Article-level third-party rights require human review.")
+            "warning": str(
+                (entry.get("third_party") or {}).get("warning")
+                or "Article-level third-party rights require human review."
+            )
             if isinstance(entry.get("third_party"), Mapping)
             else "Article-level third-party rights require human review.",
         },
         "state": state,
-        "approval": {"status": "pending" if state in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"} else "not_requested", "reviewer_id": None},
+        "approval": {
+            "status": "pending"
+            if state in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}
+            else "not_requested",
+            "reviewer_id": None,
+        },
         "rejection_reason": reason,
     }
     return record
@@ -875,7 +979,9 @@ def _source_record(
 
 def _write_json_atomic(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as handle:
+    with tempfile.NamedTemporaryFile(
+        "w", encoding="utf-8", dir=path.parent, delete=False
+    ) as handle:
         json.dump(payload, handle, indent=2, sort_keys=True)
         handle.write("\n")
         temporary = Path(handle.name)
@@ -884,7 +990,9 @@ def _write_json_atomic(path: Path, payload: Any) -> None:
 
 def _write_jsonl_atomic(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as handle:
+    with tempfile.NamedTemporaryFile(
+        "w", encoding="utf-8", dir=path.parent, delete=False
+    ) as handle:
         for row in rows:
             handle.write(json.dumps(row, sort_keys=True) + "\n")
         temporary = Path(handle.name)
@@ -898,7 +1006,11 @@ def _load_state(path: Path) -> dict[str, Any]:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, json.JSONDecodeError):
         return {"version": "1.0.0", "sources": {}}
-    return payload if isinstance(payload, Mapping) and isinstance(payload.get("sources"), Mapping) else {"version": "1.0.0", "sources": {}}
+    return (
+        payload
+        if isinstance(payload, Mapping) and isinstance(payload.get("sources"), Mapping)
+        else {"version": "1.0.0", "sources": {}}
+    )
 
 
 def _entry_licence_error(entry: Mapping[str, Any]) -> tuple[str, str] | None:
@@ -908,7 +1020,10 @@ def _entry_licence_error(entry: Mapping[str, Any]) -> tuple[str, str] | None:
     spdx = _normalise_license(raw.get("spdx", raw.get("name")))
     if spdx not in ADMISSIBLE_LICENSES:
         if spdx in {"UNKNOWN", "", "OTHER-OA", "CC-BY-SA"} or not spdx:
-            return "REJECTED_UNRESOLVED_LICENCE", f"licence is not resolved to an admissible exact term: {spdx}"
+            return (
+                "REJECTED_UNRESOLVED_LICENCE",
+                f"licence is not resolved to an admissible exact term: {spdx}",
+            )
         return "REJECTED_RIGHTS", f"licence is outside the conservative admission policy: {spdx}"
     if not _nonempty(raw.get("uri")) or not _nonempty(raw.get("version")):
         return "REJECTED_UNRESOLVED_LICENCE", "exact licence URI or version is missing"
@@ -947,19 +1062,29 @@ def _catalog_entry_validity(entry: Mapping[str, Any]) -> str | None:
         return "discipline mapping is missing or unsupported"
     if not _nonempty(entry.get("title")) or not _nonempty(entry.get("publisher")):
         return "bibliographic metadata is incomplete"
-    if not isinstance(entry.get("authors"), Sequence) or isinstance(entry.get("authors"), (str, bytes)) or not entry.get("authors"):
+    if (
+        not isinstance(entry.get("authors"), Sequence)
+        or isinstance(entry.get("authors"), (str, bytes))
+        or not entry.get("authors")
+    ):
         return "authors are missing"
     return None
 
 
 def _make_pair(
-    source: Mapping[str, Any], sentences: Sequence[str], family_index: int, *, policy: Mapping[str, Any]
+    source: Mapping[str, Any],
+    sentences: Sequence[str],
+    family_index: int,
+    *,
+    policy: Mapping[str, Any],
 ) -> list[dict[str, Any]]:
     claim = sentences[family_index]
     family_id = f"{source['source_id']}:claim-family:{family_index:06d}"
     semantic = _source_semantic_assignment(source, policy)
     rows: list[dict[str, Any]] = []
-    for stratum, quote in zip(CANDIDATE_STRATA, _candidate_quotes(sentences, family_index), strict=True):
+    for stratum, quote in zip(
+        CANDIDATE_STRATA, _candidate_quotes(sentences, family_index), strict=True
+    ):
         pattern_id, pattern_basis = _candidate_pattern_id(stratum, family_index, claim, quote)
         identity = {
             "source_id": source["source_id"],
@@ -968,7 +1093,10 @@ def _make_pair(
             "claim": claim,
             "quote": quote,
         }
-        pair_id = "p-" + hashlib.sha256(json.dumps(identity, sort_keys=True).encode("utf-8")).hexdigest()[:24]
+        pair_id = (
+            "p-"
+            + hashlib.sha256(json.dumps(identity, sort_keys=True).encode("utf-8")).hexdigest()[:24]
+        )
         row = {
             "schema_version": "2.0.0",
             "packet_type": "citation_support_unlabelled_annotation",
@@ -980,7 +1108,9 @@ def _make_pair(
             "claim_origin": "source-authored-sentence",
             "candidate_claim": claim,
             "exact_quote": quote,
-            "context": " ".join(sentences[max(0, family_index - 1) : min(len(sentences), family_index + 2)]),
+            "context": " ".join(
+                sentences[max(0, family_index - 1) : min(len(sentences), family_index + 2)]
+            ),
             "source_id": source["source_id"],
             "source_uri": source["stable_uri"],
             "acquired_copy_uri": source["exact_acquired_copy_uri"],
@@ -1017,14 +1147,21 @@ def acquire_candidates(
 ) -> dict[str, Any]:
     """Acquire admissible source copies and emit deterministic unlabelled packets."""
 
-    if isinstance(max_pairs, bool) or not isinstance(max_pairs, int) or max_pairs <= 0 or max_pairs % len(CANDIDATE_STRATA):
+    if (
+        isinstance(max_pairs, bool)
+        or not isinstance(max_pairs, int)
+        or max_pairs <= 0
+        or max_pairs % len(CANDIDATE_STRATA)
+    ):
         raise AcquisitionValidationError(
             f"max_pairs must be a positive multiple of {len(CANDIDATE_STRATA)}"
         )
     catalog_path = Path(catalog_path).resolve()
     output_dir = Path(output_dir).resolve()
     catalog, catalog_digest = _read_catalog(catalog_path)
-    policy = _validate_semantic_policy(catalog.get("semantic_split_policy", DEFAULT_SEMANTIC_POLICY))
+    policy = _validate_semantic_policy(
+        catalog.get("semantic_split_policy", DEFAULT_SEMANTIC_POLICY)
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
     sources_dir = output_dir / "sources"
     sources_dir.mkdir(parents=True, exist_ok=True)
@@ -1036,7 +1173,10 @@ def acquire_candidates(
     if previous_manifest_path.is_file():
         try:
             loaded_manifest = json.loads(previous_manifest_path.read_text(encoding="utf-8"))
-            if isinstance(loaded_manifest, Mapping) and loaded_manifest.get("catalog_sha256") == catalog_digest:
+            if (
+                isinstance(loaded_manifest, Mapping)
+                and loaded_manifest.get("catalog_sha256") == catalog_digest
+            ):
                 previous_manifest = loaded_manifest
         except (OSError, UnicodeError, json.JSONDecodeError):
             previous_manifest = {}
@@ -1056,19 +1196,33 @@ def acquire_candidates(
         source_id = str(entry.get("source_id") or "").strip()
         validity = _catalog_entry_validity(entry)
         if validity:
-            record = _source_record(entry, state="REJECTED_CONTENT", acquired_uri=None, digest=None, reason=validity)
+            record = _source_record(
+                entry, state="REJECTED_CONTENT", acquired_uri=None, digest=None, reason=validity
+            )
             source_records.append(record)
             counts[record["state"]] += 1
             continue
         licence_error = _entry_licence_error(entry)
         if licence_error:
-            record = _source_record(entry, state=licence_error[0], acquired_uri=None, digest=None, reason=licence_error[1])
+            record = _source_record(
+                entry,
+                state=licence_error[0],
+                acquired_uri=None,
+                digest=None,
+                reason=licence_error[1],
+            )
             source_records.append(record)
             counts[record["state"]] += 1
             continue
         family = canonical_source_family(entry)
         if family in seen_families:
-            record = _source_record(entry, state="REJECTED_DUPLICATE", acquired_uri=None, digest=None, reason=f"canonical source family already admitted: {family}")
+            record = _source_record(
+                entry,
+                state="REJECTED_DUPLICATE",
+                acquired_uri=None,
+                digest=None,
+                reason=f"canonical source family already admitted: {family}",
+            )
             source_records.append(record)
             counts[record["state"]] += 1
             continue
@@ -1092,24 +1246,48 @@ def acquire_candidates(
                 _copy_content(content_uri, target, max_bytes=max_bytes)
                 digest = _sha256_file(target)
         except (OSError, ValueError, urllib.error.URLError) as exc:
-            record = _source_record(entry, state="REJECTED_CONTENT", acquired_uri=_file_uri(target) if target.is_file() else None, digest=None, reason=str(exc))
+            record = _source_record(
+                entry,
+                state="REJECTED_CONTENT",
+                acquired_uri=_file_uri(target) if target.is_file() else None,
+                digest=None,
+                reason=str(exc),
+            )
             source_records.append(record)
             counts[record["state"]] += 1
             continue
         expected = entry.get("expected_sha256")
         if expected is not None and (not _is_sha256(expected) or str(expected).lower() != digest):
-            record = _source_record(entry, state="REJECTED_CONTENT", acquired_uri=_file_uri(target), digest=digest, reason="acquired content does not match expected SHA-256")
+            record = _source_record(
+                entry,
+                state="REJECTED_CONTENT",
+                acquired_uri=_file_uri(target),
+                digest=digest,
+                reason="acquired content does not match expected SHA-256",
+            )
             source_records.append(record)
             counts[record["state"]] += 1
             continue
         if digest in seen_digests:
-            record = _source_record(entry, state="REJECTED_DUPLICATE", acquired_uri=_file_uri(target), digest=digest, reason="acquired bytes duplicate an earlier source")
+            record = _source_record(
+                entry,
+                state="REJECTED_DUPLICATE",
+                acquired_uri=_file_uri(target),
+                digest=digest,
+                reason="acquired bytes duplicate an earlier source",
+            )
             source_records.append(record)
             counts[record["state"]] += 1
             continue
         seen_families.add(family)
         seen_digests.add(digest)
-        record = _source_record(entry, state="ADMISSIBLE_PENDING_REVIEW", acquired_uri=_file_uri(target), digest=digest, reason=None)
+        record = _source_record(
+            entry,
+            state="ADMISSIBLE_PENDING_REVIEW",
+            acquired_uri=_file_uri(target),
+            digest=digest,
+            reason=None,
+        )
         if is_reused and isinstance(cached, Mapping) and _nonempty(cached.get("acquired_at")):
             record["acquired_at"] = cached["acquired_at"]
         record["semantic_split_default"] = _source_semantic_assignment(entry, policy)
@@ -1154,7 +1332,9 @@ def acquire_candidates(
         # duplicate claim groups with conflicting discipline identities.
         by_discipline[source["disciplines"][0]].append((source, sentences))
     source_positions = {discipline: 0 for discipline in by_discipline}
-    all_disciplines = [discipline for discipline in SUPPORTED_DISCIPLINES if discipline in by_discipline]
+    all_disciplines = [
+        discipline for discipline in SUPPORTED_DISCIPLINES if discipline in by_discipline
+    ]
     families_needed = math.ceil(max_pairs / len(CANDIDATE_STRATA))
     candidate_rows: list[dict[str, Any]] = []
     family_number = 0
@@ -1188,7 +1368,9 @@ def acquire_candidates(
     # Candidate groups must not be split by this preparatory truncation.
     complete_pairs = len(CANDIDATE_STRATA)
     if len(candidate_rows) % complete_pairs:
-        candidate_rows = candidate_rows[: len(candidate_rows) - (len(candidate_rows) % complete_pairs)]
+        candidate_rows = candidate_rows[
+            : len(candidate_rows) - (len(candidate_rows) % complete_pairs)
+        ]
     if len(candidate_rows) >= max_pairs:
         source_manifest_status = "READY_FOR_HUMAN_ANNOTATION"
 
@@ -1220,9 +1402,7 @@ def acquire_candidates(
     _write_jsonl_atomic(output_dir / "unlabelled-candidate-pairs.jsonl", candidate_rows)
     semantic_splits = semantic_grouped_split(candidate_rows, policy=policy, seed=seed)
     group_locations = {
-        str(row["group_id"]): split
-        for split, values in semantic_splits.items()
-        for row in values
+        str(row["group_id"]): split for split, values in semantic_splits.items() for row in values
     }
     group_leakage = [
         f"group {row['group_id']} has multiple semantic split locations"
@@ -1232,7 +1412,9 @@ def acquire_candidates(
     report = {
         "schema_version": "2.0.0",
         "status": source_manifest_status,
-        "human_boundary": "READY_FOR_HUMAN_ANNOTATION" if source_manifest_status == "READY_FOR_HUMAN_ANNOTATION" else "ACQUISITION_INCOMPLETE",
+        "human_boundary": "READY_FOR_HUMAN_ANNOTATION"
+        if source_manifest_status == "READY_FOR_HUMAN_ANNOTATION"
+        else "ACQUISITION_INCOMPLETE",
         "release_status": "NOT_CERTIFIED",
         "catalog_uri": _file_uri(catalog_path),
         "catalog_sha256": catalog_digest,
@@ -1251,22 +1433,50 @@ def acquire_candidates(
             "rejected_content": counts["REJECTED_CONTENT"],
         },
         "source_families": {
-            "unique_admissible": len({source["canonical_source_family"] for source in source_records if source["state"] in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}}),
-            "by_provider": dict(sorted(Counter(source["source_id"].split("-", 1)[0] for source in source_records).items())),
+            "unique_admissible": len(
+                {
+                    source["canonical_source_family"]
+                    for source in source_records
+                    if source["state"] in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}
+                }
+            ),
+            "by_provider": dict(
+                sorted(
+                    Counter(
+                        source["source_id"].split("-", 1)[0] for source in source_records
+                    ).items()
+                )
+            ),
         },
-        "third_party_warning_sources": sum(source["third_party"]["status"] == "warning" for source in source_records),
-        "candidate_pairs_by_discipline": dict(sorted(Counter(row["discipline"] for row in candidate_rows).items())),
-        "candidate_pairs_by_stratum": dict(sorted(Counter(row["acquisition_stratum"] for row in candidate_rows).items())),
+        "third_party_warning_sources": sum(
+            source["third_party"]["status"] == "warning" for source in source_records
+        ),
+        "candidate_pairs_by_discipline": dict(
+            sorted(Counter(row["discipline"] for row in candidate_rows).items())
+        ),
+        "candidate_pairs_by_stratum": dict(
+            sorted(Counter(row["acquisition_stratum"] for row in candidate_rows).items())
+        ),
         "stratum_policy": STRATUM_DEFINITIONS,
-        "candidate_pairs_by_pattern": dict(sorted(Counter(row["candidate_pattern_id"] for row in candidate_rows).items())),
+        "candidate_pairs_by_pattern": dict(
+            sorted(Counter(row["candidate_pattern_id"] for row in candidate_rows).items())
+        ),
         "adversarial_pattern_policy": ADVERSARIAL_PATTERN_DEFINITIONS,
-        "candidate_pairs_by_pattern_basis": dict(sorted(Counter(row["pattern_basis"] for row in candidate_rows).items())),
-        "candidate_pairs_by_semantic_partition": dict(sorted(Counter(row["semantic_split"]["partition"] for row in candidate_rows).items())),
+        "candidate_pairs_by_pattern_basis": dict(
+            sorted(Counter(row["pattern_basis"] for row in candidate_rows).items())
+        ),
+        "candidate_pairs_by_semantic_partition": dict(
+            sorted(Counter(row["semantic_split"]["partition"] for row in candidate_rows).items())
+        ),
         "semantic_split_policy": policy,
         "group_leakage": group_leakage,
         "output_digests": {
-            "source_candidate_manifest_sha256": _sha256_file(output_dir / "source-candidate-manifest.json"),
-            "unlabelled_candidate_pairs_sha256": _sha256_file(output_dir / "unlabelled-candidate-pairs.jsonl"),
+            "source_candidate_manifest_sha256": _sha256_file(
+                output_dir / "source-candidate-manifest.json"
+            ),
+            "unlabelled_candidate_pairs_sha256": _sha256_file(
+                output_dir / "unlabelled-candidate-pairs.jsonl"
+            ),
         },
         "labels_present": [],
         "independent_approval": False,
@@ -1274,7 +1484,9 @@ def acquire_candidates(
             "packet_file": "unlabelled-candidate-pairs.jsonl",
             "required_independent_annotators_per_pair": 2,
             "required_independent_adjudicator": 1,
-            "status": "READY_FOR_HUMAN_ANNOTATION" if source_manifest_status == "READY_FOR_HUMAN_ANNOTATION" else "NOT_READY",
+            "status": "READY_FOR_HUMAN_ANNOTATION"
+            if source_manifest_status == "READY_FOR_HUMAN_ANNOTATION"
+            else "NOT_READY",
         },
     }
     _write_json_atomic(output_dir / "acquisition-report.json", report)
@@ -1297,7 +1509,13 @@ def main() -> int:
             seed=args.seed,
             max_bytes=args.max_bytes,
         )
-    except (AcquisitionValidationError, OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
+    except (
+        AcquisitionValidationError,
+        OSError,
+        UnicodeError,
+        json.JSONDecodeError,
+        ValueError,
+    ) as exc:
         print(json.dumps({"status": "ACQUISITION_INCOMPLETE", "reason": str(exc)}, sort_keys=True))
         return 2
     print(json.dumps(report, sort_keys=True))

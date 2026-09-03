@@ -180,11 +180,11 @@ class CitationAcquisitionTests(unittest.TestCase):
         ]
         policy = self._manifest()["semantic_split_policy"]
         splits = semantic_grouped_split(rows, policy=policy, seed=7)
-        self.assertEqual({row["semantic_split"]["partition"] for row in splits["temporal"]}, {"temporal"})
+        self.assertEqual(
+            {row["semantic_split"]["partition"] for row in splits["temporal"]}, {"temporal"}
+        )
         self.assertEqual({row["semantic_split"]["partition"] for row in splits["ood"]}, {"ood"})
-        locations = {
-            row["group_id"]: split for split, values in splits.items() for row in values
-        }
+        locations = {row["group_id"]: split for split, values in splits.items() for row in values}
         self.assertEqual(locations["g-in"], "train")
         self.assertNotIn("g-in", {row["group_id"] for row in splits["locked_test"]})
 

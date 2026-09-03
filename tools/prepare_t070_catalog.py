@@ -25,7 +25,9 @@ from pathlib import Path
 from typing import Any
 
 ELSEVIER_DOI = "10.17632/zm33cdndxs.2"
-ELSEVIER_ARCHIVE_URI = "https://elsevier.digitalcommonsdata.com/public-api/zip/zm33cdndxs/download/2"
+ELSEVIER_ARCHIVE_URI = (
+    "https://elsevier.digitalcommonsdata.com/public-api/zip/zm33cdndxs/download/2"
+)
 ELSEVIER_ARCHIVE_SHA256 = "877ac30109eb1333965a1c912e7e1b7b422542990cdc5b4658feb8d978d5bce2"
 CC_BY_URI = "https://creativecommons.org/licenses/by/4.0/"
 OLH_API_URI = "https://olh.openlibhums.org/api/articles/"
@@ -60,7 +62,9 @@ def _sha256(path: Path) -> str:
 
 def _write_atomic(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as handle:
+    with tempfile.NamedTemporaryFile(
+        "w", encoding="utf-8", dir=path.parent, delete=False
+    ) as handle:
         json.dump(payload, handle, indent=2, sort_keys=True)
         handle.write("\n")
         temporary = Path(handle.name)
@@ -72,7 +76,10 @@ def _download(url: str, path: Path) -> None:
     temporary = path.with_name(path.name + ".part")
     request = urllib.request.Request(url, headers={"User-Agent": OLH_USER_AGENT})
     try:
-        with urllib.request.urlopen(request, timeout=120) as response, temporary.open("wb") as handle:
+        with (
+            urllib.request.urlopen(request, timeout=120) as response,
+            temporary.open("wb") as handle,
+        ):
             for block in iter(lambda: response.read(1024 * 1024), b""):
                 handle.write(block)
         os.replace(temporary, path)
@@ -100,16 +107,39 @@ def _keywords(metadata: dict[str, Any]) -> str:
 def classify_elsevier(metadata: dict[str, Any]) -> str | None:
     subjects = {str(value).upper() for value in metadata.get("subjareas", [])}
     text = f"{metadata.get('title', '')} {_keywords(metadata)}".lower()
-    if any(token in text for token in ("technical communication", "technical writing", "documentation", "documentation")):
+    if any(
+        token in text
+        for token in (
+            "technical communication",
+            "technical writing",
+            "documentation",
+            "documentation",
+        )
+    ):
         return "technical_writing"
-    if any(token in text for token in ("interdisciplinary", "cross-disciplinary", "multidisciplinary", "transdisciplinary")) or "MULT" in subjects:
+    if (
+        any(
+            token in text
+            for token in (
+                "interdisciplinary",
+                "cross-disciplinary",
+                "multidisciplinary",
+                "transdisciplinary",
+            )
+        )
+        or "MULT" in subjects
+    ):
         return "interdisciplinary"
-    if "philosoph" in text or any(token in text for token in ("epistem", "ontology", "ethic", "hermeneutic")):
+    if "philosoph" in text or any(
+        token in text for token in ("epistem", "ontology", "ethic", "hermeneutic")
+    ):
         return "philosophy"
     if "psych" in text or subjects & _PSYCHOLOGY:
         return "psychology"
     if subjects & _ARTS:
-        if any(token in text for token in ("criticism", "critical", "cinema", "film", "visual culture")):
+        if any(
+            token in text for token in ("criticism", "critical", "cinema", "film", "visual culture")
+        ):
             return "art_criticism"
         return "art_history"
     if subjects & _ENGINEERING:
@@ -122,23 +152,53 @@ def classify_elsevier(metadata: dict[str, Any]) -> str | None:
 
 
 def classify_olh(article: dict[str, Any]) -> str:
-    text = " ".join(
-        str(article.get(key) or "")
-        for key in ("title", "section", "abstract")
-    ).lower()
-    if any(token in text for token in ("technical communication", "technical writing", "documentation")):
+    text = " ".join(str(article.get(key) or "") for key in ("title", "section", "abstract")).lower()
+    if any(
+        token in text for token in ("technical communication", "technical writing", "documentation")
+    ):
         return "technical_writing"
-    if any(token in text for token in ("interdisciplinary", "cross-disciplinary", "cross disciplinary", "digital humanities")):
+    if any(
+        token in text
+        for token in (
+            "interdisciplinary",
+            "cross-disciplinary",
+            "cross disciplinary",
+            "digital humanities",
+        )
+    ):
         return "interdisciplinary"
-    if any(token in text for token in ("philosoph", "posthuman", "political theory", "ethic", "ontology")):
+    if any(
+        token in text
+        for token in ("philosoph", "posthuman", "political theory", "ethic", "ontology")
+    ):
         return "philosophy"
-    if any(token in text for token in ("psychoanal", "pathological body", "medieval brain", "audience psychology")):
+    if any(
+        token in text
+        for token in ("psychoanal", "pathological body", "medieval brain", "audience psychology")
+    ):
         return "psychology"
-    if any(token in text for token in ("visual art", "museum", "curat", "iconograph", "art history", "collections")):
+    if any(
+        token in text
+        for token in ("visual art", "museum", "curat", "iconograph", "art history", "collections")
+    ):
         return "art_history"
-    if any(token in text for token in ("art criticism", "cinema", "film", "cartoon", "visual rhetor", "game studies")):
+    if any(
+        token in text
+        for token in ("art criticism", "cinema", "film", "cartoon", "visual rhetor", "game studies")
+    ):
         return "art_criticism"
-    if any(token in text for token in ("language", "writing", "textual", "literature", "culture", "medieval", "history")):
+    if any(
+        token in text
+        for token in (
+            "language",
+            "writing",
+            "textual",
+            "literature",
+            "culture",
+            "medieval",
+            "history",
+        )
+    ):
         return "humanities"
     return "humanities"
 
@@ -181,7 +241,9 @@ def _license(*, rights_uri: str, evidence_uri: str, basis: str) -> dict[str, str
     }
 
 
-def _elsevier_entry(data: dict[str, Any], content_path: Path, ordinal: int) -> dict[str, Any] | None:
+def _elsevier_entry(
+    data: dict[str, Any], content_path: Path, ordinal: int
+) -> dict[str, Any] | None:
     metadata = data.get("metadata")
     if not isinstance(metadata, dict):
         return None
@@ -244,7 +306,9 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
     author = article.get("frozenauthors")
     authors = []
     if isinstance(author, dict):
-        name = " ".join(str(author.get(key) or "").strip() for key in ("first_name", "last_name")).strip()
+        name = " ".join(
+            str(author.get(key) or "").strip() for key in ("first_name", "last_name")
+        ).strip()
         if name:
             authors.append(name)
     authors = authors or ["Open Library of Humanities author"]
@@ -280,7 +344,9 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
 
 
 def _fetch_json(url: str) -> dict[str, Any]:
-    request = urllib.request.Request(url, headers={"User-Agent": OLH_USER_AGENT, "Accept": "application/json"})
+    request = urllib.request.Request(
+        url, headers={"User-Agent": OLH_USER_AGENT, "Accept": "application/json"}
+    )
     with urllib.request.urlopen(request, timeout=90) as response:
         payload = json.loads(response.read().decode("utf-8"))
     if not isinstance(payload, dict):
@@ -327,7 +393,10 @@ def prepare_catalog(
     selected: dict[str, list[dict[str, Any]]] = defaultdict(list)
     seen_ids: set[str] = set()
     with zipfile.ZipFile(archive_path) as outer:
-        with outer.open("json-articals.zip") as nested_stream, zipfile.ZipFile(nested_stream) as nested:
+        with (
+            outer.open("json-articals.zip") as nested_stream,
+            zipfile.ZipFile(nested_stream) as nested,
+        ):
             for info in nested.infolist():
                 if info.is_dir():
                     continue
@@ -362,7 +431,9 @@ def prepare_catalog(
             continue
         article_id = article.get("pk")
         galleys = article.get("galleys")
-        xml_galleys = [item for item in galleys or [] if isinstance(item, dict) and item.get("type") == "xml"]
+        xml_galleys = [
+            item for item in galleys or [] if isinstance(item, dict) and item.get("type") == "xml"
+        ]
         if not article_id or not xml_galleys:
             continue
         target = olh_dir / f"{article_id}.xml"
@@ -378,7 +449,10 @@ def prepare_catalog(
     catalog = {
         "schema_version": "2.0.0",
         "catalog_type": "citation_source_candidate_catalog",
-        "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+        "generated_at": datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z"),
         "semantic_split_policy": {
             "version": "1.0.0",
             "temporal": {
