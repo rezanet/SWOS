@@ -14,7 +14,7 @@ permissions:
 
 concurrency:
   group: t093-w3c-fixture-harvest-research
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   harvest:
@@ -116,19 +116,20 @@ jobs:
           print(json.dumps({"explicit_current_dual_licence_link_found": explicit, "files_checked": len(observations)}, sort_keys=True))
           PY
 
-      - name: Persist hashes and licence observation, not testcase bytes
-        run: |
-          set -euo pipefail
-          cp "$RUNNER_TEMP/t093-harvest/manifest.json" \
-            research/research-grade-external-evidence/T093-W3C-HARVESTED-MANIFEST.json
-          cp "$RUNNER_TEMP/t093-licence-observation.json" \
-            research/research-grade-external-evidence/T093-W3C-LICENSE-OBSERVATION.json
-
-      - name: Commit preparation records
+      - name: Persist hash inventory on latest research branch head
         env:
           SOURCE_SHA: ${{ github.sha }}
+          TARGET_BRANCH: research/research-grade-external-evidence-2026-09-03
         run: |
           set -euo pipefail
+          cp "$RUNNER_TEMP/t093-harvest/manifest.json" "$RUNNER_TEMP/T093-W3C-HARVESTED-MANIFEST.json"
+          cp "$RUNNER_TEMP/t093-licence-observation.json" "$RUNNER_TEMP/T093-W3C-LICENSE-OBSERVATION.json"
+          git fetch origin "$TARGET_BRANCH"
+          git reset --hard "origin/$TARGET_BRANCH"
+          cp "$RUNNER_TEMP/T093-W3C-HARVESTED-MANIFEST.json" \
+            research/research-grade-external-evidence/T093-W3C-HARVESTED-MANIFEST.json
+          cp "$RUNNER_TEMP/T093-W3C-LICENSE-OBSERVATION.json" \
+            research/research-grade-external-evidence/T093-W3C-LICENSE-OBSERVATION.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
@@ -140,4 +141,4 @@ jobs:
           fi
           git commit -m "research: record pinned W3C PROV fixture hash inventory" \
             -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Historical test bytes are not committed pending exact licence-scope confirmation."
-          git push origin HEAD:research/research-grade-external-evidence-2026-09-03
+          git push origin "HEAD:$TARGET_BRANCH"
