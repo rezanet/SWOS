@@ -1,6 +1,6 @@
 {
   "schema_version": "research-handoff.t094.oracle-run-kit.v1",
-  "status": "identity_and_license_pinned_executable_bundle_pending",
+  "status": "identity_license_and_maven_coordinate_pinned_executable_bundle_pending",
   "baseline_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
   "oracle": {
     "implementation": "ProvToolbox",
@@ -10,13 +10,33 @@
     "annotated_tag_object": "37e37913f815689d0f4f2eaba55537dcd5b3a9f0",
     "tagged_commit": "aef0816c2a277958774fac88cf0076248e7065cc",
     "tag_date": "2026-03-16T11:04:45Z",
-    "maven_coordinate": "org.openprovenance.prov:provconvert:2.2.3",
+    "maven": {
+      "coordinate": "org.openprovenance.prov:provconvert:2.2.3",
+      "package_url": "pkg:maven/org.openprovenance.prov/provconvert@2.2.3",
+      "registry_evidence_uri": "https://central.sonatype.com/artifact/org.openprovenance.prov/provconvert/2.2.3",
+      "packaging": "jar",
+      "description": "A tool to manipulate PROV representations from the command line.",
+      "declared_direct_runtime_components": [
+        "org.openprovenance.prov:prov-n:2.2.3",
+        "org.openprovenance.prov:prov-interop:2.2.3",
+        "org.openprovenance.prov:prov-dot:2.2.3",
+        "org.openprovenance.prov:prov-template:2.2.3",
+        "org.openprovenance.prov:prov-template-compiler:2.2.3",
+        "org.openprovenance.prov:prov-template-library:2.2.3",
+        "org.openprovenance.prov:prov-generator:2.2.3",
+        "org.slf4j:slf4j-nop:<parent-resolved-version>"
+      ],
+      "main_class_from_upstream_build": "org.openprovenance.prov.interop.CommandLineArguments",
+      "command_name_from_upstream_build": "provconvert",
+      "dependency_closure_status": "MUST_BE_RESOLVED_AND_HASHED_IN_FINAL_OFFLINE_PACKAGE"
+    },
     "license": {
-      "family": "MIT-style",
+      "family": "MIT",
       "source_path": "license.txt",
       "source_git_blob": "081be2ec53583c2ac533e041abd9f34add7a1b2e",
-      "exact_license_sha256": null,
-      "sha256_status": "exact_tagged_file_bytes_must_be_acquired_and_hashed"
+      "exact_license_sha256": "147f99cd87ca23fb66e8da69fba39ef5f937d12e3575f7ca1bbd942e00e55fba",
+      "exact_byte_length": 1250,
+      "verification": "SHA-256 computed from the exact base64 bytes returned for license.txt at tagged commit aef0816c2a277958774fac88cf0076248e7065cc; decoded bytes reproduce Git blob 081be2ec53583c2ac533e041abd9f34add7a1b2e."
     }
   },
   "swos_oracle_contract": {
@@ -28,21 +48,25 @@
     "timeout_seconds": 60.0,
     "max_oracle_output_bytes": 65536,
     "artifact_uri_rule": "relative path under the oracle-manifest directory",
-    "artifact_sha256_rule": "lowercase SHA-256 of the exact executable artifact bytes"
+    "artifact_sha256_rule": "lowercase SHA-256 of the exact executable package bytes"
   },
   "package_strategy": {
     "required": "one independently reviewable offline oracle execution package whose exact identity includes ProvToolbox 2.2.3 and every runtime dependency needed by the SWOS adapter",
+    "preferred_shape": "a deterministic archive containing the provconvert launcher/runtime, fully materialized dependency closure, dependency inventory with per-file SHA-256, upstream MIT license, third-party licence inventory, Java/runtime requirement record, and the thin SWOS-output adapter; hash the archive itself and verify every internal digest before execution",
     "must_include": [
-      "ProvToolbox 2.2.3 executable/runtime",
-      "dependency lock or complete dependency inventory with hashes",
-      "license.txt from tagged commit",
+      "ProvToolbox 2.2.3 provconvert executable/runtime",
+      "complete transitive dependency inventory with versions and hashes",
+      "license.txt with SHA-256 147f99cd87ca23fb66e8da69fba39ef5f937d12e3575f7ca1bbd942e00e55fba",
+      "third-party licence inventory generated/retained by the upstream packaging route",
       "thin adapter that emits the SWOS oracle-output JSON contract without deciding SWOS scholarly policy",
-      "version probe output",
+      "provconvert --version output",
+      "Java/runtime fingerprint",
       "build/acquisition provenance"
     ],
     "prohibited": [
       "floating Maven versions",
       "network dependency resolution during certification",
+      "hashing only provconvert-2.2.3.jar while leaving its dependency closure unbound",
       "hashing only a wrapper while leaving the actual ProvToolbox/dependency identity unbound",
       "using SWOS's own PROV parser as the independent oracle"
     ],
@@ -59,15 +83,15 @@
     "--output", "{output}"
   ],
   "preflight": [
-    "Acquire/build the exact offline package in a clean external environment.",
-    "Record Java/runtime identity and all dependency hashes.",
-    "Hash exact license.txt bytes and package bytes.",
-    "Run provconvert --version or equivalent and bind the returned identity to 2.2.3.",
+    "Acquire Maven artifact org.openprovenance.prov:provconvert:2.2.3 and resolve its exact transitive dependency closure in a clean external build environment.",
+    "Materialize that closure into one deterministic offline package; record Maven repository/source URIs and SHA-256 for every file.",
+    "Verify exact license.txt SHA-256 and retain upstream/third-party notices.",
+    "Record Java/runtime identity and execute provconvert --version or equivalent, binding the returned identity to 2.2.3.",
     "Test the adapter against one valid and one invalid permitted fixture without using SWOS's own parser as truth.",
     "Obtain the required maintainer/steward approval bound to package digest, command, Java identity and corpus manifest.",
     "Only then promote benchmark/provenance/oracle-manifest.json from not_run to an accepted status and execute the exact-head certification workflow."
   ],
-  "known_contract_risk": "Main currently verifies only one local artifact file before executing the oracle command. The final package design must prove that the hashed artifact cryptographically binds the actual ProvToolbox 2.2.3 runtime and dependencies; a hashed thin wrapper plus unbound external jars is insufficient.",
+  "known_contract_risk": "Main verifies one local artifact file before executing the oracle command. Therefore the final `artifact` must itself be the cryptographic root for the entire executable dependency closure, not a launcher that discovers unbound jars from the host.",
   "independent_execution": "NOT_RUN",
   "approval": null,
   "t094_status": "OPEN"
