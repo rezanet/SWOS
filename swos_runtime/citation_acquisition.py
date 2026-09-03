@@ -1621,21 +1621,26 @@ def acquire_candidates(
     pair_counts_by_partition = {
         partition: pair_counts_by_partition[partition] for partition in semantic_partition_names
     }
-    pair_counts_by_discipline_and_partition: dict[str, dict[str, int]] = {}
-    pair_counts_by_stratum_and_partition: dict[str, dict[str, int]] = {}
-    for dimension, target in (
-        ("discipline", pair_counts_by_discipline_and_partition),
-        ("acquisition_stratum", pair_counts_by_stratum_and_partition),
-    ):
-        values_by_dimension: dict[str, Counter[str]] = defaultdict(Counter)
-        for row in candidate_rows:
-            values_by_dimension[str(row[dimension])][row["semantic_split"]["partition"]] += 1
-        target.update(
-            {
-                value: {partition: counts[partition] for partition in semantic_partition_names}
-                for value, counts in sorted(values_by_dimension.items())
-            }
-        )
+    values_by_discipline: dict[str, Counter[str]] = defaultdict(Counter)
+    values_by_stratum: dict[str, Counter[str]] = defaultdict(Counter)
+    for row in candidate_rows:
+        partition = row["semantic_split"]["partition"]
+        values_by_discipline[str(row["discipline"])][partition] += 1
+        values_by_stratum[str(row["acquisition_stratum"])][partition] += 1
+    pair_counts_by_discipline_and_partition = {
+        discipline: {
+            partition: values_by_discipline[discipline][partition]
+            for partition in semantic_partition_names
+        }
+        for discipline in SUPPORTED_DISCIPLINES
+    }
+    pair_counts_by_stratum_and_partition = {
+        stratum: {
+            partition: values_by_stratum[stratum][partition]
+            for partition in semantic_partition_names
+        }
+        for stratum in CANDIDATE_STRATA
+    }
     temporal_selection = {
         "policy_version": policy["version"],
         "criteria_id": policy["temporal"]["criteria_id"],
@@ -1702,12 +1707,13 @@ def acquire_candidates(
         "third_party_warning_sources": sum(
             source["third_party"]["status"] == "warning" for source in source_records
         ),
-        "candidate_pairs_by_discipline": dict(
-            sorted(Counter(row["discipline"] for row in candidate_rows).items())
-        ),
-        "candidate_pairs_by_stratum": dict(
-            sorted(Counter(row["acquisition_stratum"] for row in candidate_rows).items())
-        ),
+        "candidate_pairs_by_discipline": {
+            discipline: sum(values_by_discipline[discipline].values())
+            for discipline in SUPPORTED_DISCIPLINES
+        },
+        "candidate_pairs_by_stratum": {
+            stratum: sum(values_by_stratum[stratum].values()) for stratum in CANDIDATE_STRATA
+        },
         "stratum_policy": STRATUM_DEFINITIONS,
         "candidate_pairs_by_pattern": dict(
             sorted(Counter(row["candidate_pattern_id"] for row in candidate_rows).items())

@@ -61,7 +61,10 @@ Hashing is used only to balance in-domain groups across train, calibration, and
 locked-test; it never defines temporal or OOD membership.
 
 The official Elsevier v2 dataset is an acquisition lead, not automatic release
-admission. Pin its version/DOI and exact returned archive, inspect article-level
-rights and third-party notices, preserve attribution, and record the resulting
-SHA-256 before generating candidates. See the persisted source verification note
-at `research/research-grade-external-evidence/T070-SOURCE-VERIFICATION-2026-09-03.md`.
+admission. In the current regeneration, its 315 selected records remain
+`REJECTED_UNRESOLVED_LICENCE` because the archive exposes only the dataset-level
+`openaccess=Full` marker; no Elsevier bytes enter the packet output. Pin its
+version/DOI and exact returned archive, inspect article-level rights and
+third-party notices, preserve attribution, and record the resulting SHA-256
+before generating candidates. See the persisted source verification note at
+`research/research-grade-external-evidence/T070-SOURCE-VERIFICATION-2026-09-03.md`.

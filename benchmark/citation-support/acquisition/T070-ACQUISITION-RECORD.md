@@ -14,20 +14,29 @@ not certified. This record describes a pre-annotation candidate set only.
 - Open Library of Humanities article API:
   `https://olh.openlibhums.org/api/articles/`
 - Article-level OLH XML galleys were fetched only when the official article API
-  returned `CC BY 4.0`. Every source retains its article rights URI, exact
-  licence URI/version, attribution, exact acquired-copy URI, SHA-256, and a
-  third-party-rights warning.
+  returned `CC BY 4.0`. The 193 admitted OLH source families retain their
+  article rights URI, exact licence URI/version, attribution, exact
+  acquired-copy URI, SHA-256, and a third-party-rights warning.
+- The Elsevier archive records only the dataset-level `openaccess=Full` marker
+  for the selected 315 source records. That marker is retained as an
+  unresolved acquisition lead; it is not article-level rights verification.
+  The runtime rejects those records before copying source bytes or generating
+  packets, pending inspection of each article licence or rights notice.
 
 The bulk archive and acquired article copies are machine-local under
 `C:\GitHub\SWOS-t070-acquisition-cache`; no raw source bytes are committed.
 
 ## Prepared candidate set
 
-- 517 unique pending source families: 321 Elsevier and 196 OLH.
+- 508 catalog source records: 315 Elsevier records with unresolved rights and
+  193 OLH source families admissible pending human review. Only the 193
+  article-level rights-screened OLH source families enter the packet manifest.
 - 1,200 source-authored claim families and exactly 6,000 candidate pairs.
-- Candidate pairs by discipline are: art_criticism 675, art_history 625,
-  engineering 675, humanities 655, interdisciplinary 655, materials_science
-  700, philosophy 650, psychology 650, and technical_writing 705.
+- Candidate pairs by discipline are: art_criticism 870, art_history 825,
+  engineering 0, humanities 865, interdisciplinary 870, materials_science 0,
+  philosophy 850, psychology 820, and technical_writing 900. Zero-count
+  disciplines are reported explicitly because their rights-cleared source
+  profiles are not yet available.
 - Exactly 1,200 candidates in each acquisition stratum: direct candidate,
   partial candidate, same-topic/context, contradiction candidate, and hard
   negative.
@@ -44,23 +53,22 @@ The bulk archive and acquired article copies are machine-local under
   terms, matched terms, matched subject codes, and any explicit corpus-scope
   fallback; unresolved Elsevier `ARTS` records are excluded rather than being
   assigned to `art_history`. Every assignment remains pending human review.
-- The frozen publication-year histogram for the 517 admitted source families is:
-  `2014: 27`, `2015: 46`, `2016: 56`, `2017: 45`, `2018: 101`, `2019: 97`,
-  `2020: 33`, `2021: 11`, `2022: 12`, `2023: 11`, `2024: 14`, `2025: 36`,
-  `2026: 28`.
+- The publication-year histogram for the 193 admitted packet source families
+  is: `2015: 1`, `2016: 1`, `2017: 1`, `2018: 34`, `2019: 28`, `2020: 16`,
+  `2021: 11`, `2022: 12`, `2023: 11`, `2024: 14`, `2025: 36`, `2026: 28`.
 - The 2020 boundary was selected from corpus availability and pre-annotation
-  benchmark viability only: 366 in-domain source families / 814 claim families
-  / 4,070 pairs; 145 temporal source families / 245 claim families / 1,225
-  pairs; and 6 OOD source families / 141 claim families / 705 pairs. It retains a
+  benchmark viability only: 59 in-domain source families / 291 claim families
+  / 1,455 pairs; 128 temporal source families / 729 claim families / 3,645
+  pairs; and 6 OOD source families / 180 claim families / 900 pairs. It retains a
   useful later holdout while leaving substantial in-domain material for train,
   calibration, and locked-test. No human labels or model performance were
   consulted, and changing the boundary requires a new semantic policy version.
 - Pair counts by discipline `(in_domain, temporal, ood)` are: art_criticism
-  `(425, 260, 0)`, art_history `(400, 225, 0)`, engineering `(630, 45, 0)`,
-  humanities `(395, 260, 0)`, interdisciplinary `(560, 95, 0)`,
-  materials_science `(640, 60, 0)`, philosophy `(490, 160, 0)`, psychology
-  `(530, 120, 0)`, and technical_writing `(0, 0, 705)`. Each stratum S1–S5
-  has `(814, 245, 141)` pairs in `(in_domain, temporal, ood)`.
+  `(445, 425, 0)`, art_history `(285, 540, 0)`, engineering `(0, 0, 0)`,
+  humanities `(0, 865, 0)`, interdisciplinary `(130, 740, 0)`,
+  materials_science `(0, 0, 0)`, philosophy `(260, 590, 0)`, psychology
+  `(335, 485, 0)`, and technical_writing `(0, 0, 900)`. Each stratum S1–S5
+  has `(291, 729, 180)` pairs in `(in_domain, temporal, ood)`.
 - 1,200 isolated canonical claim groups; no group crosses a semantic partition
   or generated split.
 - 0 support labels, 0 annotator identities, and 0 adjudications are present.
@@ -69,12 +77,14 @@ The bulk archive and acquired article copies are machine-local under
 
 ## Human and release boundary
 
-All 517 sources are `ADMISSIBLE_PENDING_REVIEW`, never `APPROVED`. All 6,000
-packets are unlabelled candidates, not evaluation truth. Independent source-rights
-review, two competent independent annotators per pair, independent adjudication,
-locked-test construction, and the remaining Research Grade release gates are
-still required. T073 training/calibration/locked evaluation remains fail-closed
-until those human-reviewed labelled and locked artefacts exist.
+All 193 admitted sources are `ADMISSIBLE_PENDING_REVIEW`, never `APPROVED`; the
+315 Elsevier records are `REJECTED_UNRESOLVED_LICENCE` and have no acquired
+copy in the packet output. All 6,000 packets are unlabelled candidates, not
+evaluation truth. Independent source-rights review, two competent independent
+annotators per pair, independent adjudication, locked-test construction, and
+the remaining Research Grade release gates are still required. T073
+training/calibration/locked evaluation remains fail-closed until those
+human-reviewed labelled and locked artefacts exist.
 
 Machine-readable details and output digests are in
 `acquisition-report.json`; the source and packet contracts are in the two v2

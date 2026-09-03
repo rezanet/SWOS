@@ -10,6 +10,7 @@ from pathlib import Path
 
 from swos_runtime.citation_acquisition import (
     AcquisitionValidationError,
+    _entry_licence_error,
     _source_semantic_assignment,
     acquire_candidates,
     semantic_grouped_split,
@@ -186,6 +187,25 @@ class CitationAcquisitionTests(unittest.TestCase):
         }
         self.assertIsNone(_elsevier_entry(data, Path("article.json"), 0))
 
+    def test_elsevier_dataset_open_access_marker_does_not_verify_article_rights(self) -> None:
+        data = {
+            "docId": "S0000000000000003",
+            "metadata": {
+                "openaccess": "Full",
+                "title": "An engineering article",
+                "subjareas": ["ENGI"],
+            },
+        }
+        entry = _elsevier_entry(data, Path("article.json"), 0)
+        self.assertIsNotNone(entry)
+        assert entry is not None
+        self.assertEqual(entry["licence"]["verification"], "unverified")
+        error = _entry_licence_error(entry)
+        self.assertIsNotNone(error)
+        assert error is not None
+        self.assertEqual(error[0], "REJECTED_UNRESOLVED_LICENCE")
+        self.assertIn("article-level", error[1])
+
     def test_elsevier_arts_assignment_requires_article_level_topic_evidence(self) -> None:
         unrelated = {
             "title": "Collective strategies to cope with neonatal nursing stress in Kenya",
@@ -251,6 +271,28 @@ class CitationAcquisitionTests(unittest.TestCase):
             "keywords": ["ethical theory"],
         }
         self.assertEqual(classify_elsevier(philosophy), "philosophy")
+
+    def test_generic_ontology_does_not_define_philosophy(self) -> None:
+        paleontology = {
+            "title": "A virtual world of paleontology",
+            "subjareas": ["AGRI"],
+            "keywords": [],
+        }
+        self.assertNotEqual(classify_elsevier(paleontology), "philosophy")
+
+        ontology_authoring = {
+            "title": "Ontology authoring for scientific data integration",
+            "subjareas": ["COMP"],
+            "keywords": [],
+        }
+        self.assertNotEqual(classify_elsevier(ontology_authoring), "philosophy")
+
+        philosophical_ontology = {
+            "title": "Philosophical ontology and the structure of reality",
+            "subjareas": ["ARTS"],
+            "keywords": [],
+        }
+        self.assertEqual(classify_elsevier(philosophical_ontology), "philosophy")
 
     def test_catalog_discipline_assignment_records_pending_source_evidence(self) -> None:
         data = {

@@ -70,7 +70,6 @@ _INTERDISCIPLINARY_TERMS = (
 _PHILOSOPHY_TERMS = (
     "philosoph",
     "epistem",
-    "ontology",
     "hermeneutic",
     "posthuman",
     "political theory",
@@ -200,7 +199,6 @@ _ELSEVIER_INTERDISCIPLINARY_TERMS = (
 _ELSEVIER_PHILOSOPHY_TERMS = (
     "philosoph",
     "epistem",
-    "ontology",
     "hermeneutic",
     "ethical theory",
     "normative ethics",
@@ -226,7 +224,6 @@ _OLH_PHILOSOPHY_TERMS = (
     "philosoph",
     "posthuman",
     "political theory",
-    "ontology",
     "ethical theory",
     "normative ethics",
     "metaethic",
@@ -484,16 +481,57 @@ def _semantic_assignment(year: int | None, discipline: str, ordinal: int) -> dic
     }
 
 
-def _license(*, rights_uri: str, evidence_uri: str, basis: str) -> dict[str, str]:
+def _license(
+    *,
+    rights_uri: str,
+    evidence_uri: str,
+    basis: str,
+    verification: str = "article_level_verified",
+) -> dict[str, str]:
     return {
         "spdx": "CC-BY-4.0",
         "uri": CC_BY_URI,
         "version": "4.0",
         "article_rights_uri": rights_uri,
-        "verification": "article_level_verified",
+        "verification": verification,
         "evidence_uri": evidence_uri,
         "verification_basis": basis,
     }
+
+
+def _elsevier_licence(metadata: dict[str, Any]) -> dict[str, str]:
+    """Return article-level rights only when the archive supplies them explicitly.
+
+    The pinned dataset's ``openaccess=Full`` field is an acquisition lead, not
+    article-level rights evidence.  Keep that lead visible in the catalog, but
+    make the resulting record fail the runtime rights gate until an
+    article-specific licence and notice are supplied.
+    """
+
+    article_license = metadata.get("article_license")
+    if isinstance(article_license, dict):
+        rights_uri = str(article_license.get("article_rights_uri") or "").strip()
+        evidence_uri = str(article_license.get("evidence_uri") or "").strip()
+        if (
+            str(article_license.get("spdx") or "").strip().upper() == "CC-BY-4.0"
+            and rights_uri
+            and evidence_uri
+        ):
+            return _license(
+                rights_uri=rights_uri,
+                evidence_uri=evidence_uri,
+                basis="explicit article-level licence record and article rights notice",
+            )
+
+    return _license(
+        rights_uri="",
+        evidence_uri="https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
+        basis=(
+            "dataset-level openaccess=Full marker only; article-level licence or notice "
+            "was not inspected and candidate generation is blocked"
+        ),
+        verification="unverified",
+    )
 
 
 def _elsevier_entry(
@@ -541,11 +579,7 @@ def _elsevier_entry(
             rule_terms=rule_terms,
             rule_subject_codes=rule_subject_codes,
         ),
-        "licence": _license(
-            rights_uri=stable_uri,
-            evidence_uri="https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
-            basis="official v2 oa-ccby article ID list plus metadata openaccess=Full; embedded third-party material remains a human-review warning",
-        ),
+        "licence": _elsevier_licence(metadata),
         "attribution": f"Elsevier OA CC-BY Corpus, {metadata.get('title') or doc_id}, {', '.join(authors)}",
         "allowed_uses": ["candidate_generation", "human_annotation", "provenance_audit"],
         "third_party": {
@@ -828,7 +862,11 @@ def prepare_catalog(
             "elsevier_archive_sha256": archive_digest,
             "elsevier_archive_copy_uri": archive_path.as_uri(),
             "olh_api_uri": OLH_API_URI,
-            "rights_policy": "CC BY 4.0 only; article-level licence and third-party warning retained for independent review",
+            "rights_policy": (
+                "CC BY 4.0 only; Elsevier dataset-level open-access markers remain "
+                "unresolved until article-level licence/notice evidence is supplied; "
+                "OLH article API licence records are retained for independent review"
+            ),
         },
         "source_counts_by_discipline": dict(sorted(counts.items())),
         "sources": sources,
