@@ -1,0 +1,337 @@
+{
+  "artifact": {
+    "bytes": 20235743,
+    "path": "/home/runner/work/_temp/t094/provtoolbox-oracle-2.2.3.pyz",
+    "sha256": "7b2535ddc4eced15ca51d25a7e1259524637980fa24c54af542b51dcc33a71a8"
+  },
+  "artifact_contract": {
+    "invocation": [
+      "python3",
+      "{artifact}",
+      "--artifact",
+      "{artifact}",
+      "--input",
+      "{input}",
+      "--profile",
+      "{profile}",
+      "--formats",
+      "{formats}",
+      "--output",
+      "{output}"
+    ],
+    "note": "The artifact hashes and contains the adapter plus the full runtime dependency closure; no network dependency resolution is needed during certification.",
+    "python_zipapp": true,
+    "single_file": true
+  },
+  "candidate_oracle_manifest_patch": {
+    "artifact_sha256": "7b2535ddc4eced15ca51d25a7e1259524637980fa24c54af542b51dcc33a71a8",
+    "artifact_uri": null,
+    "command": [
+      "python3",
+      "{artifact}",
+      "--artifact",
+      "{artifact}",
+      "--input",
+      "{input}",
+      "--profile",
+      "{profile}",
+      "--formats",
+      "{formats}",
+      "--output",
+      "{output}"
+    ],
+    "implementation": "ProvToolbox",
+    "licence": "MIT",
+    "reason": "Artifact prepared and hashed; independent approval and execution still required before accepted status.",
+    "schema_version": "2.0.0",
+    "status": "not_run_pending_independent_approval",
+    "version": "2.2.3"
+  },
+  "coordinate": "org.openprovenance.prov:provconvert:2.2.3",
+  "files": [
+    {
+      "bytes": 3118,
+      "path": "DEPENDENCY-TREE.txt",
+      "sha256": "b82b3b34d15ffe9f9632b3e4b17c5ad5b4542670febcd84592a99eaccb4ad466"
+    },
+    {
+      "bytes": 1250,
+      "path": "LICENSE-provtoolbox.txt",
+      "sha256": "147f99cd87ca23fb66e8da69fba39ef5f937d12e3575f7ca1bbd942e00e55fba"
+    },
+    {
+      "bytes": 8191,
+      "path": "__main__.py",
+      "sha256": "47947cca34b406f1124572b29b4eeb0f7c127cad3b163dbbcae07cd80310ada3"
+    },
+    {
+      "bytes": 459295,
+      "path": "lib/RoaringBitmap-1.3.0.jar",
+      "sha256": "73443a71a2e2401c7d518a487983539fcaf5f9652efbd178f929e7b6d36881d0"
+    },
+    {
+      "bytes": 173220,
+      "path": "lib/antlr-runtime-3.5.3.jar",
+      "sha256": "68bf9f5a33dfcb34033495c587e6236bef4e37aa6612919f5b1e843b90669fb9"
+    },
+    {
+      "bytes": 889211,
+      "path": "lib/caffeine-3.1.8.jar",
+      "sha256": "7dd15f9df1be238ffaa367ce6f556737a88031de4294dad18eef57c474ddf1d3"
+    },
+    {
+      "bytes": 164973,
+      "path": "lib/collection-0.7.jar",
+      "sha256": "e50cbc8379325ee17e8127eed7eb88fb70b94ba16e5e3d97e12401a1fc248fb8"
+    },
+    {
+      "bytes": 110167,
+      "path": "lib/commons-cli-1.11.0.jar",
+      "sha256": "8f7f8605d68e15bf32db61ec94eac6fdafc51b1bdbe1e0e0802b57d23f387792"
+    },
+    {
+      "bytes": 374716,
+      "path": "lib/commons-codec-1.19.0.jar",
+      "sha256": "5c3881e4f556855e9c532927ee0c9dfde94cc66760d5805c031a59887070af5f"
+    },
+    {
+      "bytes": 898652,
+      "path": "lib/commons-collections4-4.5.0.jar",
+      "sha256": "00f93263c267be201b8ae521b44a7137271b16688435340bf629db1bac0a5845"
+    },
+    {
+      "bytes": 1087319,
+      "path": "lib/commons-compress-1.27.1.jar",
+      "sha256": "293d80f54b536b74095dcd7ea3cf0a29bbfc3402519281332495f4420d370d16"
+    },
+    {
+      "bytes": 60964,
+      "path": "lib/commons-csv-1.14.1.jar",
+      "sha256": "32be0e1e76673092f5d12cb790bd2acb6c2ab04c4ea6efc69ea5ee17911c24fe"
+    },
+    {
+      "bytes": 585274,
+      "path": "lib/commons-io-2.21.0.jar",
+      "sha256": "7d643a2afea8b058b762aa6fb90e5b256f6c729739f8b3784c3370ddc609e88d"
+    },
+    {
+      "bytes": 713862,
+      "path": "lib/commons-lang3-3.20.0.jar",
+      "sha256": "69e5c9fa35da7a51a5fd2099dfe56a2d8d32cf233e2f6d770e796146440263f4"
+    },
+    {
+      "bytes": 259876,
+      "path": "lib/commons-text-1.14.0.jar",
+      "sha256": "121fce2282910c8f0c3ba793a5436b31beb710423cbe2d574a3fb7a73c508e92"
+    },
+    {
+      "bytes": 57633,
+      "path": "lib/itu-1.14.0.jar",
+      "sha256": "5cf40ab0cc77828ab2b875b1f3ecd71c8295d7721933476abc2e08fddcea164a"
+    },
+    {
+      "bytes": 79311,
+      "path": "lib/jackson-annotations-2.19.4.jar",
+      "sha256": "ab26383fa3c10c0df1ffd1bb035d81161c059b1af71927d73c24473c058baa16"
+    },
+    {
+      "bytes": 591409,
+      "path": "lib/jackson-core-2.19.4.jar",
+      "sha256": "466ae4dc4f7054f51525f4211df411d9a64d65cc169995d32bf49e20e6f586e5"
+    },
+    {
+      "bytes": 1679441,
+      "path": "lib/jackson-databind-2.19.4.jar",
+      "sha256": "b781c431be870deb0bf84421e99e774c256a701f4ba678df80248f55cd16ff74"
+    },
+    {
+      "bytes": 130131,
+      "path": "lib/jackson-dataformat-xml-2.19.4.jar",
+      "sha256": "645d831848f950b47e2c72053e448179faec68e8d1683e4c273a346b83247feb"
+    },
+    {
+      "bytes": 60230,
+      "path": "lib/jackson-dataformat-yaml-2.19.2.jar",
+      "sha256": "80a213e7d998244922ab7bcf0938ea03eb7868e88e2d05a8407c6228c885a37e"
+    },
+    {
+      "bytes": 63473,
+      "path": "lib/jakarta.activation-api-2.1.0.jar",
+      "sha256": "56e8d994095fe49c28138c60291482f66f18d12ac2b720e938697dce6a3135c7"
+    },
+    {
+      "bytes": 154815,
+      "path": "lib/jakarta.ws.rs-api-3.1.0.jar",
+      "sha256": "6b3b3628b8b4aedda0d24c3354335e985497d8ef3c510b8f3028e920d5b8663d"
+    },
+    {
+      "bytes": 127111,
+      "path": "lib/jakarta.xml.bind-api-4.0.0.jar",
+      "sha256": "57e3796ad5753640088f5f9d3c53c183f2c250b7dad90529ea3e19a5515aa122"
+    },
+    {
+      "bytes": 106068,
+      "path": "lib/javapoet-1.13.0.jar",
+      "sha256": "4c7517e848a71b36d069d12bb3bf46a70fd4cda3105d822b0ed2e19c00b69291"
+    },
+    {
+      "bytes": 261247,
+      "path": "lib/jena-base-5.2.0.jar",
+      "sha256": "053a20de9878b1526e98c417aaa5e39c327cd2406ce80dfdff87ea258863799f"
+    },
+    {
+      "bytes": 2014656,
+      "path": "lib/jena-core-5.2.0.jar",
+      "sha256": "7805b39842a2f0139460338cff699762e2417fd46cdc151a5e1360c2786d5121"
+    },
+    {
+      "bytes": 138624,
+      "path": "lib/jena-iri-5.2.0.jar",
+      "sha256": "bdd31ace24c47c12f5c1e6b772cc5790e0465e6497ff28f219439af76e6bf046"
+    },
+    {
+      "bytes": 586082,
+      "path": "lib/json-schema-validator-1.5.9.jar",
+      "sha256": "e0b8baeb78fd1ba027454ee3974d8a02f54447eaa510d3052820a7d2160d9ae4"
+    },
+    {
+      "bytes": 349595,
+      "path": "lib/log4j-api-2.25.2.jar",
+      "sha256": "9fd66c9fe0bea06fa9666c147989a46cafaa92b4a88753697d3945cc43338cbb"
+    },
+    {
+      "bytes": 2018265,
+      "path": "lib/log4j-core-2.25.2.jar",
+      "sha256": "e50db7701430ff907981850ef527a41d51a53dd0017f53a0860afcbab8570277"
+    },
+    {
+      "bytes": 25410,
+      "path": "lib/log4j-slf4j-impl-2.25.2.jar",
+      "sha256": "3ca2e24cc2b18104828414f260e84a97b8f5fa8a1408d3d6b1ee5c372aff2915"
+    },
+    {
+      "bytes": 217939,
+      "path": "lib/maven-model-3.9.11.jar",
+      "sha256": "163aa596f976264384efeb50b4cb8a806086fd64a9b755ad1f69195fed3998ad"
+    },
+    {
+      "bytes": 271773,
+      "path": "lib/plexus-utils-3.6.0.jar",
+      "sha256": "27ef130e32c236090e408fb5498d94cb9ea26d14070fb1c8985d607b62d098d1"
+    },
+    {
+      "bytes": 24838,
+      "path": "lib/prov-dot-2.2.3.jar",
+      "sha256": "002bb2b3220b81b0dbb8b63b0d6f6074b9eddaa87d1174ce4df26d205ecc54e9"
+    },
+    {
+      "bytes": 11128,
+      "path": "lib/prov-generator-2.2.3.jar",
+      "sha256": "4288652473d130ff91abfbcd4d5248d1aa3f01213a1dd7d6bdd6142ca2093a00"
+    },
+    {
+      "bytes": 40256,
+      "path": "lib/prov-interop-2.2.3.jar",
+      "sha256": "edc217327e6f6bec374c3a0c72bbe6aca4b467863331e0cdf982b493cdc15c86"
+    },
+    {
+      "bytes": 142707,
+      "path": "lib/prov-jsonld-2.2.3.jar",
+      "sha256": "67b5264958c742d77e60dc55f530ba8fc8eef4a3f95830694ff36607ec1d18ce"
+    },
+    {
+      "bytes": 77178,
+      "path": "lib/prov-jsonld-xml-2.2.3.jar",
+      "sha256": "efc3a885dda9220a913443a19d4892f869ab1e34e0df6531e7b050351171a03d"
+    },
+    {
+      "bytes": 489201,
+      "path": "lib/prov-model-2.2.3.jar",
+      "sha256": "9bb8adfec8ce44ef370951ee26fc7142172b56978da05582c17c3ad2fd736cc8"
+    },
+    {
+      "bytes": 174069,
+      "path": "lib/prov-n-2.2.3.jar",
+      "sha256": "a177502028d27810fe4808fdfbbdd10e5521a431a37b9cbfc4a442920bc4b276"
+    },
+    {
+      "bytes": 1061815,
+      "path": "lib/prov-template-2.2.3-template-library.zip",
+      "sha256": "fedba2c4f47caccc335c4b5dfa142978c38c8441d0a043f8d894be336cfcb269"
+    },
+    {
+      "bytes": 465201,
+      "path": "lib/prov-template-2.2.3.jar",
+      "sha256": "93484b6470cbebd99285d23dd8642136ff90ac712d3bdeb99469cfaf555c1423"
+    },
+    {
+      "bytes": 777851,
+      "path": "lib/prov-template-compiler-2.2.3.jar",
+      "sha256": "d66744ad6a4143a26a0fc07bc13f6171bb116ade0f892c4fcfdcd3087d0b7357"
+    },
+    {
+      "bytes": 1918237,
+      "path": "lib/prov-template-library-2.2.3.jar",
+      "sha256": "2aed08078bf035a74944f15f8ecd2783ee6d1d04c1aaa6a7db9d459976a390be"
+    },
+    {
+      "bytes": 28522,
+      "path": "lib/provconvert-2.2.3.jar",
+      "sha256": "f692b1e8216f385aaf1a9943fe4047b5c2cc89ebfe97db188084dbbf238fe503"
+    },
+    {
+      "bytes": 69908,
+      "path": "lib/slf4j-api-2.0.17.jar",
+      "sha256": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832"
+    },
+    {
+      "bytes": 4982,
+      "path": "lib/slf4j-nop-2.0.17.jar",
+      "sha256": "3716f83649ec66161a2edefd4f49df34d1dd1c51cdcf941996c6987260f0a829"
+    },
+    {
+      "bytes": 339825,
+      "path": "lib/snakeyaml-2.4.jar",
+      "sha256": "ef779af5d29a9dde8cc70ce0341f5c6f7735e23edff9685ceaa9d35359b7bb7f"
+    },
+    {
+      "bytes": 195922,
+      "path": "lib/stax2-api-4.2.2.jar",
+      "sha256": "a61c48d553efad78bc01fffc4ac528bebbae64cbaec170b2a5e39cf61eb51abe"
+    },
+    {
+      "bytes": 226406,
+      "path": "lib/stringtemplate-4.0.2.jar",
+      "sha256": "8056d5586e1b18d3def6347b5d020a85722d850bb9f4d7a9aafe4f842c651ef9"
+    },
+    {
+      "bytes": 1612256,
+      "path": "lib/woodstox-core-7.1.1.jar",
+      "sha256": "02b9d022e9d47704ff8a7a859a0dbfd3b2882a8311eb7ff1e180f760ccda2712"
+    }
+  ],
+  "implementation": "ProvToolbox",
+  "independent_approval": null,
+  "independent_execution": "NOT_RUN",
+  "license": {
+    "sha256": "147f99cd87ca23fb66e8da69fba39ef5f937d12e3575f7ca1bbd942e00e55fba",
+    "source_uri": "https://raw.githubusercontent.com/lucmoreau/ProvToolbox/aef0816c2a277958774fac88cf0076248e7065cc/license.txt",
+    "spdx": "MIT"
+  },
+  "release_evidence": false,
+  "runtime": {
+    "jar_count": 48,
+    "java_executable": "/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.12-1/x64/bin/java",
+    "main_class": "org.openprovenance.prov.interop.CommandLineArguments",
+    "version_probe": {
+      "exit_code": 0,
+      "reported_text": "provconvert version 2.2.3 (2026-03-16 11:05)",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d3a1a619f5efd47488ca350a9419044f656e8dfeb41e16a236b355578e656a91"
+    }
+  },
+  "schema_version": "research-handoff.t094.provtoolbox-package.v1",
+  "status": "package_built_pending_independent_approval_and_execution",
+  "upstream_tag_commit": "aef0816c2a277958774fac88cf0076248e7065cc",
+  "version": "2.2.3"
+}
