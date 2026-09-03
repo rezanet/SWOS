@@ -21,9 +21,13 @@
   },
   "license_policy": {
     "policy_uri": "https://www.w3.org/copyright/test-suites-licenses/",
-    "unchanged_tests": "retain exact upstream bytes and applicable notices; verify exact test-suite licence before any W3C conformance claim",
-    "modified_tests": "use the permitted 3-clause BSD route only where the exact source test is covered; retain notices and do not call modified cases authoritative W3C conformance tests",
-    "swos_original": "mark independently generated hostile/resource fixtures as SWOS-original"
+    "bsd_uri": "https://www.w3.org/copyright/3-clause-bsd-license-2008/",
+    "current_policy_summary": "W3C provides two mutually exclusive test-suite use routes: the 3-clause BSD route permits alteration for development but modified tests cannot support W3C performance/conformance claims; the W3C Test Suite License permits performance claims only against unmodified tests.",
+    "legacy_non_retroactivity": "The W3C policy explicitly states that it does not affect pre-policy test suites until they are modified to include the new licence statement. Therefore the historical PROV testcases MUST NOT be assumed dual-licensed merely because the current W3C policy exists.",
+    "admission_rule": "For every imported historical PROV testcase or collection, bind an exact licence/notice that actually accompanies or governs that testcase/collection at the pinned source. If no applicable notice can be demonstrated, keep the testcase catalogued but licence_status=unverified and do not redistribute it as T093 release evidence.",
+    "unchanged_tests": "retain exact upstream bytes and applicable notices; only make W3C performance/conformance claims where the exact historical test or collection is demonstrably covered by the W3C Test Suite License route",
+    "modified_tests": "only modify an upstream testcase when that exact source is demonstrably covered by a modification-permitting licence such as the W3C 3-clause BSD route; retain notices and never call modified cases authoritative W3C conformance tests",
+    "swos_original": "mark independently generated hostile/resource fixtures as SWOS-original; do not imply W3C authorship or conformance authority"
   },
   "harvester": "T093-HARVEST-W3C-FIXTURES.py",
   "existing_manual_catalogue": {
@@ -31,6 +35,6 @@
     "exact_cases_previously_catalogued": 32,
     "role": "superseded as the catalogue authority by this pinned full-catalogue record; retain as historical preparation evidence"
   },
-  "next_machine_step": "Run the harvester in a networked controlled environment, require exactly 280 case identities, compute SHA-256 for every acquired representation, verify exact licence/notices, then import only permitted unchanged fixtures into the production T093 manifest.",
+  "next_machine_step": "Run the harvester in a networked controlled environment, require exactly 280 case identities, compute SHA-256 for every acquired representation, verify the exact licence/notice attached to the pinned historical testcase/collection, mark ambiguous rights fail-closed, then import only permitted fixtures into the production T093 manifest.",
   "t093_status": "OPEN"
 }
