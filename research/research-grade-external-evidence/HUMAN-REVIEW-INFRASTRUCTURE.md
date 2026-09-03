@@ -2,7 +2,7 @@
 
 Status: PREPARATION / BLANK FORMS ONLY / NOT HUMAN EVIDENCE
 
-These forms reduce reviewer overhead without manufacturing the human judgments required by T070, T079 and T111. A model, builder, repository maintainer or this preparation agent must not pre-fill reviewer identities or final judgments and then count them as independent evidence.
+These forms reduce reviewer overhead without manufacturing the human judgments required by T070, T079/T080 and T111. A model, builder, repository maintainer or this preparation agent must not pre-fill reviewer identities or final judgments and then count them as independent evidence.
 
 ## Shared independence rules
 
@@ -30,9 +30,11 @@ Source disposition values:
 - `rejected_identity`
 - `needs_more_evidence`
 
-### Stage B — two independent claim/passage annotations
+### Stage B — prepare and distribute two blind independent worksets
 
-Annotators receive the atomic claim, exact bounded passage, necessary source context, discipline and source identity. Hide acquisition stratum/retrieval intent.
+After the PR #66 integrity blockers are repaired, run `T070-PREPARE-BLIND-ANNOTATION-WORKSETS.py` against the regenerated `unlabelled-candidate-pairs.jsonl`. The preparation tool refuses duplicate pair IDs, duplicate `(source_id, claim_family_id, exact_quote)` semantic spans, non-blank annotation/adjudication slots and malformed source digests. It hides acquisition stratum, candidate pattern, semantic partition, the other annotator decision and machine prediction.
+
+Annotators receive the atomic claim, exact bounded passage, necessary source context, discipline and source identity. Bind the corresponding completed source-rights review before annotation begins.
 
 Allowed labels:
 
@@ -50,9 +52,9 @@ The adjudicator must not be annotator A or B. They receive both completed annota
 
 No T070 pair becomes release truth until both annotations, adjudication, source approval and all final corpus checks pass.
 
-## T079 workflow
+## T079 / T080 workflow
 
-Use `T079-DIVERSITY-REVIEW-TEMPLATE.json` for each locked candidate packet.
+Use `T079-INDEPENDENT-REVIEW-TEMPLATE.json` for each locked candidate packet.
 
 Reviewer checks:
 
@@ -63,14 +65,18 @@ Reviewer checks:
 - `inferred`/`unknown` values are not allowed to improve diversity;
 - claim-exposure edges deduplicate `(claim_id, canonical_family_id)`;
 - provider identity is provenance only;
-- seeded category intention (balanced, concentrated, sparse, narrow, multilingual, historical, method_monoculture, duplicate, fake_diversity, missing_strata) is genuinely represented by the packet;
-- expected raw disposition is recorded independently of any machine prediction.
+- seeded construction intention (balanced, concentrated, sparse, narrow, multilingual, historical, method_monoculture, duplicate, fake_diversity, missing_strata) is genuinely represented by the packet;
+- expected raw disposition and the four T080 benchmark-truth booleans are recorded independently of any machine prediction.
 
-The reviewer may reject the packet rather than force it into the intended category.
+For a packet locked into T080, the human reviewer must explicitly supply `benchmark_truth.material_gap`, `adequate`, `justified_narrow`, and `seeded_fake_or_missing_strata`. Automation must not infer those values from the construction category or machine result.
+
+The reviewer may reject or require repair rather than force a packet into the intended category. If a locked candidate is rejected, generate and independently review a replacement so each supported discipline still has at least ten genuinely locked packets.
+
+After real review, use `T080-BUILD-LOCKED-BENCHMARK-INPUT.py` to import and validate the exact bound human records. Only then run the production `tools/run_source_diversity_benchmark.py` path.
 
 ## T111 workflow
 
-Use `T111-MULTIMODAL-REVIEW-TEMPLATE.json`.
+Use `T111-INDEPENDENT-REVIEW-TEMPLATE.json` together with the generated `T111-REVIEW-CANDIDATE-MANIFEST.json` and `T111-ALTERNATE-VIEW-MANIFEST.json`.
 
 Human review has separable legs:
 
@@ -81,7 +87,7 @@ Human review has separable legs:
 5. discipline-task answer/critique truth where required;
 6. adversarial case disposition.
 
-A rights-cleared object is not automatically a correct grounding case, and a visually plausible model answer is not automatically a supported art-historical/material attribution.
+The prepared candidate corpus supplies exact primary/crop/alternate-view asset bindings and blank review slots. It does not supply human truth. A rights-cleared object is not automatically a correct grounding case, and a visually plausible model answer is not automatically a supported art-historical/material attribution.
 
 ## Import discipline
 
@@ -92,4 +98,4 @@ A rights-cleared object is not automatically a correct grounding case, and a vis
 - Preserve timestamps, competence declaration, conflict declaration and rationale.
 - Keep rejected/invalid reviews in the audit trail with disposition; do not delete them to improve agreement statistics.
 
-These forms are deliberately neutral. They do not make T070, T079 or T111 complete merely by being filled; the production validators and required independent approvals remain authoritative.
+These forms are deliberately neutral. They do not make T070, T079, T080 or T111 complete merely by being filled; the production validators and required independent approvals remain authoritative.
