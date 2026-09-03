@@ -63,6 +63,7 @@ ALLOWED_USES = {
     "human_annotation",
     "provenance_audit",
 }
+REQUIRED_CANDIDATE_USES = {"candidate_generation", "human_annotation"}
 
 CANDIDATE_STRATA = (
     "S1",
@@ -436,6 +437,10 @@ def validate_source_candidate_manifest(
             if not allowed:
                 raise AcquisitionValidationError(
                     f"source {source_id} has no permitted candidate use"
+                )
+            if not REQUIRED_CANDIDATE_USES.issubset(set(map(str, allowed))):
+                raise AcquisitionValidationError(
+                    f"source {source_id} lacks candidate-generation and human-annotation uses"
                 )
             if approval.get("status") != "pending":
                 raise AcquisitionValidationError(f"source {source_id} must remain pending review")
@@ -1032,8 +1037,11 @@ def _entry_licence_error(entry: Mapping[str, Any]) -> tuple[str, str] | None:
     if raw.get("verification") != "article_level_verified":
         return "REJECTED_UNRESOLVED_LICENCE", "article-level licence verification is not recorded"
     allowed = raw_entry_allowed_uses(entry)
-    if not allowed:
-        return "REJECTED_RIGHTS", "no permitted candidate use is recorded"
+    if not REQUIRED_CANDIDATE_USES.issubset(set(allowed)):
+        return (
+            "REJECTED_RIGHTS",
+            "candidate-generation and human-annotation uses are not both recorded",
+        )
     return None
 
 
@@ -1238,6 +1246,8 @@ def acquire_candidates(
                 and cached.get("content_uri") == content_uri
                 and _is_sha256(cached.get("sha256"))
             ):
+                if target.stat().st_size > max_bytes:
+                    raise OSError(f"cached content exceeds resource limit: {max_bytes} bytes")
                 digest = _sha256_file(target)
                 if digest != str(cached["sha256"]).lower():
                     raise OSError("cached source digest does not match acquisition state")
@@ -1401,13 +1411,14 @@ def acquire_candidates(
     _write_json_atomic(output_dir / "source-candidate-manifest.json", manifest)
     _write_jsonl_atomic(output_dir / "unlabelled-candidate-pairs.jsonl", candidate_rows)
     semantic_splits = semantic_grouped_split(candidate_rows, policy=policy, seed=seed)
-    group_locations = {
-        str(row["group_id"]): split for split, values in semantic_splits.items() for row in values
-    }
+    group_locations: dict[str, set[str]] = defaultdict(set)
+    for split, values in semantic_splits.items():
+        for row in values:
+            group_locations[str(row["group_id"])].add(split)
     group_leakage = [
-        f"group {row['group_id']} has multiple semantic split locations"
-        for row in candidate_rows
-        if group_locations.get(str(row["group_id"])) is None
+        f"group {group_id} has multiple semantic split locations"
+        for group_id, locations in sorted(group_locations.items())
+        if len(locations) > 1
     ]
     report = {
         "schema_version": "2.0.0",

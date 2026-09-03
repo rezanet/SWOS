@@ -16,6 +16,7 @@ from swos_runtime.citation_acquisition import (
     validate_unlabelled_candidate_pair,
 )
 from swos_runtime.citation_dataset import DatasetValidationError, validate_pair_record
+from tools.prepare_t070_catalog import _elsevier_entry
 
 
 class CitationAcquisitionTests(unittest.TestCase):
@@ -137,6 +138,22 @@ class CitationAcquisitionTests(unittest.TestCase):
         unknown["sources"][0]["licence"]["spdx"] = "UNKNOWN"
         with self.assertRaises(AcquisitionValidationError):
             validate_source_candidate_manifest(unknown)
+
+        missing_use = self._manifest()
+        missing_use["sources"][0]["allowed_uses"] = ["provenance_audit"]
+        with self.assertRaises(AcquisitionValidationError):
+            validate_source_candidate_manifest(missing_use)
+
+    def test_elsevier_catalog_requires_article_level_open_access_marker(self) -> None:
+        data = {
+            "docId": "S0000000000000000",
+            "metadata": {
+                "openaccess": "No",
+                "title": "An engineering article",
+                "subjareas": ["ENGI"],
+            },
+        }
+        self.assertIsNone(_elsevier_entry(data, Path("article.json"), 0))
 
     def test_unlabelled_packet_has_blank_human_fields_and_hides_intent(self) -> None:
         packet = self._pair("p-1", "g-1")
@@ -262,6 +279,10 @@ class CitationAcquisitionTests(unittest.TestCase):
             self.assertTrue((output / "source-candidate-manifest.json").is_file())
             self.assertTrue((output / "unlabelled-candidate-pairs.jsonl").is_file())
             self.assertTrue((output / "acquisition-report.json").is_file())
+
+            limited = acquire_candidates(catalog, output, max_pairs=5, max_bytes=10)
+            self.assertEqual(limited["status"], "ACQUISITION_INCOMPLETE")
+            self.assertEqual(limited["candidate_pairs"], 0)
 
 
 if __name__ == "__main__":

@@ -33,6 +33,7 @@ CC_BY_URI = "https://creativecommons.org/licenses/by/4.0/"
 OLH_API_URI = "https://olh.openlibhums.org/api/articles/"
 OLH_ARTICLE_URI = "https://olh.openlibhums.org/article/id/{article_id}/"
 OLH_USER_AGENT = "SWOS-T070-citation-acquisition/1.0 (research)"
+MAX_ARTICLE_BYTES = 50 * 1024 * 1024
 
 DISCIPLINES = (
     "art_history",
@@ -71,7 +72,7 @@ def _write_atomic(path: Path, payload: Any) -> None:
     os.replace(temporary, path)
 
 
-def _download(url: str, path: Path) -> None:
+def _download(url: str, path: Path, *, max_bytes: int = MAX_ARTICLE_BYTES) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.name + ".part")
     request = urllib.request.Request(url, headers={"User-Agent": OLH_USER_AGENT})
@@ -80,7 +81,14 @@ def _download(url: str, path: Path) -> None:
             urllib.request.urlopen(request, timeout=120) as response,
             temporary.open("wb") as handle,
         ):
+            length = response.headers.get("Content-Length")
+            if length and int(length) > max_bytes:
+                raise OSError(f"article content exceeds resource limit: {max_bytes} bytes")
+            count = 0
             for block in iter(lambda: response.read(1024 * 1024), b""):
+                count += len(block)
+                if count > max_bytes:
+                    raise OSError(f"article content exceeds resource limit: {max_bytes} bytes")
                 handle.write(block)
         os.replace(temporary, path)
     finally:
@@ -245,7 +253,7 @@ def _elsevier_entry(
     data: dict[str, Any], content_path: Path, ordinal: int
 ) -> dict[str, Any] | None:
     metadata = data.get("metadata")
-    if not isinstance(metadata, dict):
+    if not isinstance(metadata, dict) or str(metadata.get("openaccess") or "").casefold() != "full":
         return None
     discipline = classify_elsevier(metadata)
     if discipline is None:
@@ -407,7 +415,12 @@ def prepare_catalog(
                 if not isinstance(data, dict):
                     continue
                 metadata = data.get("metadata")
-                discipline = classify_elsevier(metadata) if isinstance(metadata, dict) else None
+                discipline = (
+                    classify_elsevier(metadata)
+                    if isinstance(metadata, dict)
+                    and str(metadata.get("openaccess") or "").casefold() == "full"
+                    else None
+                )
                 if discipline is None or len(selected[discipline]) >= per_discipline:
                     continue
                 doc_id = str(data.get("docId") or "").strip()
@@ -438,7 +451,7 @@ def prepare_catalog(
             continue
         target = olh_dir / f"{article_id}.xml"
         if not target.is_file():
-            _download(str(xml_galleys[0].get("path")), target)
+            _download(str(xml_galleys[0].get("path")), target, max_bytes=MAX_ARTICLE_BYTES)
         entry = _olh_entry(article, target, len(selected[discipline]))
         if entry is not None:
             selected[discipline].append(entry)
