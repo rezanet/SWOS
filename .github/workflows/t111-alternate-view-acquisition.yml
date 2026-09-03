@@ -1,0 +1,77 @@
+name: Research T111 alternate view acquisition
+
+on:
+  push:
+    branches:
+      - research/research-grade-external-evidence-2026-09-03
+    paths:
+      - research/research-grade-external-evidence/T111-ACQUIRE-ALTERNATE-VIEWS.py
+      - research/research-grade-external-evidence/T111-NGA-CANDIDATE-MANIFEST.json
+      - .github/workflows/t111-alternate-view-acquisition.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t111-alternate-view-acquisition
+  cancel-in-progress: false
+
+jobs:
+  acquire:
+    name: Acquire checksummed alternate institutional views
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/research-grade-external-evidence-2026-09-03
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Acquire 16 alternate open-access views
+        run: |
+          set -euo pipefail
+          python research/research-grade-external-evidence/T111-ACQUIRE-ALTERNATE-VIEWS.py \
+            --source-manifest research/research-grade-external-evidence/T111-NGA-CANDIDATE-MANIFEST.json \
+            --output-dir "$RUNNER_TEMP/t111-alternate" \
+            --target 16
+      - name: Verify human-null and exact-byte boundaries
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("${{ runner.temp }}/t111-alternate/alternate-view-manifest.json")
+          m = json.loads(p.read_text())
+          assert m["record_count"] == 16
+          assert m["human_review"] is None
+          assert m["mediation_condition"] == "institutional_alternate_view"
+          assert all(r["image_openaccess_flag"] == 1 for r in m["records"])
+          assert all(r["human_rights_review"] is None and r["human_identity_review"] is None for r in m["records"])
+          assert all(isinstance(r["byte_sha256"], str) and len(r["byte_sha256"]) == 64 for r in m["records"])
+          print(json.dumps({"record_count": m["record_count"]}, sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: t111-alternate-view-candidates-${{ github.sha }}
+          path: ${{ runner.temp }}/t111-alternate/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+      - name: Persist alternate-view manifest only on latest research head
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          cp "$RUNNER_TEMP/t111-alternate/alternate-view-manifest.json" \
+             research/research-grade-external-evidence/T111-ALTERNATE-VIEW-MANIFEST.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/research-grade-external-evidence/T111-ALTERNATE-VIEW-MANIFEST.json
+          git commit -m "research: record T111 alternate-view manifest" \
+            -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Human rights/identity review remain null."
+          git fetch origin research/research-grade-external-evidence-2026-09-03
+          git rebase origin/research/research-grade-external-evidence-2026-09-03
+          git push origin HEAD:research/research-grade-external-evidence-2026-09-03
