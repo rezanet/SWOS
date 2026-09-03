@@ -39,7 +39,6 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-          cache: maven
 
       - name: Build deterministic ProvToolbox 2.2.3 package
         run: |
