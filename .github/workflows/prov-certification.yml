@@ -3,6 +3,10 @@ name: Research Grade PROV certification
 on:
   workflow_dispatch:
     inputs:
+      source_sha:
+        description: Full 40-character commit SHA to evaluate
+        required: true
+        type: string
       corpus_manifest:
         description: "Required repository-relative checksummed PROV corpus manifest"
         required: true
@@ -21,10 +25,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.source_sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Verify exact evaluated commit
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          case "$SOURCE_SHA" in
+            *[!0-9a-fA-F]*|'') echo "source_sha must be a hexadecimal commit SHA" >&2; exit 1 ;;
+          esac
+          test "${#SOURCE_SHA}" -eq 40
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Install runtime and release validators
         run: python -m pip install --disable-pip-version-check --no-input -e ".[research-grade]"
       - name: Run exact conversion matrix
@@ -37,3 +51,19 @@ jobs:
             --limits benchmark/provenance/resource-limits.json \
             --artifact-dir artifacts/research-grade/provenance \
             --certificate-out artifacts/research-grade/provenance/roundtrip-certificate.json
+      - name: Record exact evaluated SHA
+        if: always()
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          mkdir -p artifacts/research-grade/provenance
+          printf '%s\n' "$SOURCE_SHA" > artifacts/research-grade/provenance/input-sha.txt
+          git rev-parse HEAD > artifacts/research-grade/provenance/checked-out-sha.txt
+      - name: Upload immutable PROV certification outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-grade-provenance-${{ inputs.source_sha }}
+          path: artifacts/research-grade/provenance/
+          if-no-files-found: warn
+          retention-days: 30
