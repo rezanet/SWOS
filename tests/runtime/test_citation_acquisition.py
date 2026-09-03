@@ -230,6 +230,28 @@ class CitationAcquisitionTests(unittest.TestCase):
         }
         self.assertEqual(classify_olh(olh_technical), "technical_writing")
 
+    def test_generic_ethics_does_not_define_philosophy(self) -> None:
+        hydrogel = {
+            "title": "Antibacterial hydrogel for wound healing",
+            "subjareas": ["ENGI", "MATE", "PHYS"],
+            "keywords": ["ethics", "biocompatibility"],
+        }
+        self.assertNotEqual(classify_elsevier(hydrogel), "philosophy")
+
+        microneedle = {
+            "title": "Microneedle drug delivery systems",
+            "subjareas": ["MATE", "PHYS"],
+            "keywords": ["ethics", "drug delivery"],
+        }
+        self.assertNotEqual(classify_elsevier(microneedle), "philosophy")
+
+        philosophy = {
+            "title": "Normative ethics and moral theory",
+            "subjareas": ["ARTS"],
+            "keywords": ["ethical theory"],
+        }
+        self.assertEqual(classify_elsevier(philosophy), "philosophy")
+
     def test_catalog_discipline_assignment_records_pending_source_evidence(self) -> None:
         data = {
             "docId": "S0000000000000001",

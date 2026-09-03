@@ -23,11 +23,11 @@ The bulk archive and acquired article copies are machine-local under
 
 ## Prepared candidate set
 
-- 524 unique pending source families: 320 Elsevier and 204 OLH.
+- 517 unique pending source families: 321 Elsevier and 196 OLH.
 - 1,200 source-authored claim families and exactly 6,000 candidate pairs.
 - Candidate pairs by discipline are: art_criticism 675, art_history 625,
   engineering 675, humanities 655, interdisciplinary 655, materials_science
-  705, philosophy 650, psychology 655, and technical_writing 705.
+  700, philosophy 650, psychology 650, and technical_writing 705.
 - Exactly 1,200 candidates in each acquisition stratum: direct candidate,
   partial candidate, same-topic/context, contradiction candidate, and hard
   negative.
@@ -44,23 +44,23 @@ The bulk archive and acquired article copies are machine-local under
   terms, matched terms, matched subject codes, and any explicit corpus-scope
   fallback; unresolved Elsevier `ARTS` records are excluded rather than being
   assigned to `art_history`. Every assignment remains pending human review.
-- The frozen publication-year histogram for the 524 admitted source families is:
-  `2014: 27`, `2015: 45`, `2016: 58`, `2017: 47`, `2018: 101`, `2019: 96`,
-  `2020: 35`, `2021: 11`, `2022: 12`, `2023: 12`, `2024: 16`, `2025: 36`,
+- The frozen publication-year histogram for the 517 admitted source families is:
+  `2014: 27`, `2015: 46`, `2016: 56`, `2017: 45`, `2018: 101`, `2019: 97`,
+  `2020: 33`, `2021: 11`, `2022: 12`, `2023: 11`, `2024: 14`, `2025: 36`,
   `2026: 28`.
 - The 2020 boundary was selected from corpus availability and pre-annotation
-  benchmark viability only: 368 in-domain source families / 803 claim families
-  / 4,015 pairs; 150 temporal source families / 256 claim families / 1,280
+  benchmark viability only: 366 in-domain source families / 814 claim families
+  / 4,070 pairs; 145 temporal source families / 245 claim families / 1,225
   pairs; and 6 OOD source families / 141 claim families / 705 pairs. It retains a
   useful later holdout while leaving substantial in-domain material for train,
   calibration, and locked-test. No human labels or model performance were
   consulted, and changing the boundary requires a new semantic policy version.
 - Pair counts by discipline `(in_domain, temporal, ood)` are: art_criticism
-  `(410, 265, 0)`, art_history `(405, 220, 0)`, engineering `(630, 45, 0)`,
+  `(425, 260, 0)`, art_history `(400, 225, 0)`, engineering `(630, 45, 0)`,
   humanities `(395, 260, 0)`, interdisciplinary `(560, 95, 0)`,
-  materials_science `(645, 60, 0)`, philosophy `(435, 215, 0)`, psychology
-  `(535, 120, 0)`, and technical_writing `(0, 0, 705)`. Each stratum S1–S5
-  has `(803, 256, 141)` pairs in `(in_domain, temporal, ood)`.
+  materials_science `(640, 60, 0)`, philosophy `(490, 160, 0)`, psychology
+  `(530, 120, 0)`, and technical_writing `(0, 0, 705)`. Each stratum S1–S5
+  has `(814, 245, 141)` pairs in `(in_domain, temporal, ood)`.
 - 1,200 isolated canonical claim groups; no group crosses a semantic partition
   or generated split.
 - 0 support labels, 0 annotator identities, and 0 adjudications are present.
@@ -69,7 +69,7 @@ The bulk archive and acquired article copies are machine-local under
 
 ## Human and release boundary
 
-All 524 sources are `ADMISSIBLE_PENDING_REVIEW`, never `APPROVED`. All 6,000
+All 517 sources are `ADMISSIBLE_PENDING_REVIEW`, never `APPROVED`. All 6,000
 packets are unlabelled candidates, not evaluation truth. Independent source-rights
 review, two competent independent annotators per pair, independent adjudication,
 locked-test construction, and the remaining Research Grade release gates are

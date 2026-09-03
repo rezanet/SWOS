@@ -71,10 +71,14 @@ _PHILOSOPHY_TERMS = (
     "philosoph",
     "epistem",
     "ontology",
-    "ethic",
     "hermeneutic",
     "posthuman",
     "political theory",
+    "ethical theory",
+    "normative ethics",
+    "metaethic",
+    "applied ethics",
+    "bioethic",
 )
 _PSYCHOLOGY_TERMS = (
     "psycholog",
@@ -197,8 +201,12 @@ _ELSEVIER_PHILOSOPHY_TERMS = (
     "philosoph",
     "epistem",
     "ontology",
-    "ethic",
     "hermeneutic",
+    "ethical theory",
+    "normative ethics",
+    "metaethic",
+    "applied ethics",
+    "bioethic",
 )
 _ELSEVIER_PSYCHOLOGY_TERMS = ("psych",)
 _ELSEVIER_ART_CRITICISM_TERMS = (
@@ -218,8 +226,12 @@ _OLH_PHILOSOPHY_TERMS = (
     "philosoph",
     "posthuman",
     "political theory",
-    "ethic",
     "ontology",
+    "ethical theory",
+    "normative ethics",
+    "metaethic",
+    "applied ethics",
+    "bioethic",
 )
 _OLH_PSYCHOLOGY_TERMS = (
     "psychoanal",
