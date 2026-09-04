@@ -47,13 +47,14 @@ This folder persists external research and preparation recommendations for the f
 - `T127-T128-CLOSURE-PREFLIGHT.py` — deterministic closure preflight that separates repository verification from external audit certification and fails closed on missing evidence.
 - `PARALLEL-CLOSURE-RESEARCH.md` — consolidated cross-track summary.
 
-Immediate production-side T070 action remains: builder should create the source-candidate manifest/acquisition workflow, prepare 6,000 UNLABELLED candidate pairs, and stop at the genuine human annotation/adjudication boundary if reviewers are unavailable.
+Deterministic T070 pre-annotation preparation is complete: the persisted package binds PR #66 exact candidate head `e4cf7afca8cbb6712064e66d8ed001a0e3700e95`, 508 source records, 1,200 claim families, 6,000 UNLABELLED candidate pairs, and 6,000 unique source/claim/quote tuples. Its status remains `READY_FOR_GENUINE_HUMAN_REVIEW_NOT_T070_EVIDENCE` with `release_evidence: false`; the next action is genuine human source-rights review, double annotation, and adjudication. Do not add labels or mark T070 complete from this preparation.
 
-Concrete parallel next steps from this branch are now mechanical rather than exploratory:
+The next evidence actions from this branch are bounded and external rather than exploratory:
 
-1. populate the 108 T079 candidate packets with real metadata/family/claim-exposure records and run the production diversity path, stopping before human review;
-2. harvest the remaining W3C PROV catalogue records, acquire permitted exact bytes, verify notices and compute per-representation SHA-256 values;
-3. expand the T111 asset candidate inventory toward the >70-work/>115-rendition pre-review target, then acquire and hash exact permitted assets;
-4. hand `PORTABILITY-SECOND-DIRECT-API-HANDOFF.md` to the implementation builder and keep `api_provider_changed` NOT_RUN until a genuine second-provider run passes the canonical validator and official recorder.
+1. T070: obtain genuine human source-rights review, two independent annotations per pair, and adjudication through the importer; leave T070 open until all exact bindings and human decisions are present;
+2. T079/T080: obtain independent human packet reviews and a real locked benchmark input, then run the source-diversity evaluation;
+3. T093–T095: acquire the remaining W3C PROV bytes and licence evidence, independently approve/install the ProvToolbox 2.2.3 oracle, and run the approved resource-limit measurement command;
+4. T111: obtain all six required human multimodal review legs over the prepared candidate corpus;
+5. T127–T129: record six genuine portability environments, named approvals, exact-head independent review, genuine coverage/audit-pack evidence, and final owner authority. Keep `api_provider_changed` NOT_RUN until a genuine second-provider run passes the canonical validator and official recorder.
 
 None of these research files may be promoted to PASS evidence merely because they exist in Git.
