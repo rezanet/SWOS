@@ -2,7 +2,7 @@
   "human_review": null,
   "mediation_condition": "institutional_alternate_view",
   "published_images_snapshot": {
-    "sha256": "48a5e4c5ccea7dc199e90a8896c8f6d7391bc05b4c6fcf722a2111e2be8549d1",
+    "sha256": "563e7fa53242457aa8bd5fab874edfa01f75e11b155b1a8344a74bc53c6b3755",
     "uri": "https://raw.githubusercontent.com/NationalGalleryOfArt/opendata/main/data/published_images.csv"
   },
   "record_count": 16,
