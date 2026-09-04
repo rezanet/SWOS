@@ -17,24 +17,24 @@
   "review_payloads": {
     "adjudication": {
       "path": "annotation-worksets/adjudication-bindings.jsonl",
-      "sha256": "218c647399910f87d5e4687c92402a82b6b9113852f2027d8d5c24e7ac219042"
+      "sha256": "ee45cd0a409e78a5b95d41d2504d5812ac16f1c0dd5194905d95e0a221c2d9f4"
     },
     "annotator_A": {
       "path": "annotation-worksets/annotator-A.jsonl",
-      "sha256": "28641500dac13e0ec8d1579f3f76756eaf41106a86b561d1d9c1a61f04986f0b"
+      "sha256": "816c085c51292f005918cc1d0cff1b9598db06b5104d88857186533d5ae917db"
     },
     "annotator_B": {
       "path": "annotation-worksets/annotator-B.jsonl",
-      "sha256": "28641500dac13e0ec8d1579f3f76756eaf41106a86b561d1d9c1a61f04986f0b"
+      "sha256": "816c085c51292f005918cc1d0cff1b9598db06b5104d88857186533d5ae917db"
     },
     "source_rights": {
       "path": "source-rights-review-workset.json",
-      "sha256": "ba5f097b20154791c3ea8d3a2195c10bf4727792a571550699d2e66817e8ab9a"
+      "sha256": "3260ef78dd6ce1400adcee2c3d3c954a94e13760ef3de90f7201af5ad8906909"
     }
   },
   "schema_version": "research-handoff.t070.human-review-package.v1",
   "source_count": 508,
-  "source_workflow_head": null,
+  "source_workflow_head": "27d27c25ce61133fe84944dac4bff88dc07aeb9a",
   "status": "READY_FOR_GENUINE_HUMAN_REVIEW_NOT_T070_EVIDENCE",
   "unique_source_claim_quote_tuples": 6000
 }
