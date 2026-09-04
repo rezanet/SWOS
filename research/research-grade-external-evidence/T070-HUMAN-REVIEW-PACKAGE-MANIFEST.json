@@ -34,7 +34,7 @@
   },
   "schema_version": "research-handoff.t070.human-review-package.v1",
   "source_count": 508,
-  "source_workflow_head": "27d27c25ce61133fe84944dac4bff88dc07aeb9a",
+  "source_workflow_head": "50a4b0431a712fdda7cffe8aec536f33c489d8db",
   "status": "READY_FOR_GENUINE_HUMAN_REVIEW_NOT_T070_EVIDENCE",
   "unique_source_claim_quote_tuples": 6000
 }
