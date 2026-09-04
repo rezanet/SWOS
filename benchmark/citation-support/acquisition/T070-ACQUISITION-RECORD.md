@@ -69,7 +69,7 @@ The bulk archive and acquired article copies are machine-local under
 - Pair counts by discipline `(in_domain, temporal, ood)` are: art_criticism
   `(385, 440, 0)`, art_history `(285, 620, 0)`, engineering `(0, 0, 0)`,
   humanities `(0, 850, 0)`, interdisciplinary `(135, 740, 0)`,
-  materials_science `(0, 0, 0)`, philosophy `(235, 600, 0)`, psychology
+  materials_science `(0, 0, 0)`, philosophy `(235, 605, 0)`, psychology
   `(325, 485, 0)`, and technical_writing `(0, 0, 895)`. Each stratum S1–S5
   has `(273, 748, 179)` pairs in `(in_domain, temporal, ood)`.
 - 1,200 isolated canonical claim groups; no group crosses a semantic partition

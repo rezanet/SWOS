@@ -428,6 +428,12 @@ def _validate_semantic_assignment(
     elif criteria_id != _IN_DOMAIN_CRITERIA_ID:
         raise AcquisitionValidationError("in-domain candidate does not use the declared criteria")
     if partition == "in_domain":
+        if "publication_year" not in value:
+            raise AcquisitionValidationError("in-domain candidate lacks a publication year field")
+        if "catalog_declared_held_out_domain" not in value:
+            raise AcquisitionValidationError(
+                "in-domain candidate lacks an explicit non-OOD field"
+            )
         year = value.get("publication_year")
         if (
             isinstance(year, int)
@@ -435,8 +441,10 @@ def _validate_semantic_assignment(
             and year >= policy["temporal"]["start_year"]
         ):
             raise AcquisitionValidationError("later-period candidate cannot be marked in-domain")
-        if value.get("catalog_declared_held_out_domain") is True:
-            raise AcquisitionValidationError("held-out-domain candidate cannot be marked in-domain")
+        if value.get("catalog_declared_held_out_domain") is not False:
+            raise AcquisitionValidationError(
+                "held-out-domain candidate must be explicitly false in-domain"
+            )
     result["partition"] = str(partition)
     result["criteria_id"] = str(criteria_id)
     return result
@@ -1285,7 +1293,12 @@ def _source_semantic_assignment(
 
     explicit = source.get("semantic_split") or source.get("semantic_split_default")
     if isinstance(explicit, Mapping):
-        declared = _validate_semantic_assignment(explicit, policy=policy)
+        if (
+            explicit.get("partition") not in SEMANTIC_PARTITIONS
+            or not _nonempty(explicit.get("criteria_id"))
+        ):
+            raise AcquisitionValidationError("semantic assignment is incomplete")
+        declared = dict(explicit)
         for field, value in declared.items():
             if field in expected and value != expected[field]:
                 raise AcquisitionValidationError(

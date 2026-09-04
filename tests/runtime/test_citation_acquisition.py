@@ -1041,6 +1041,22 @@ class CitationAcquisitionTests(unittest.TestCase):
         with self.assertRaises(AcquisitionValidationError):
             validate_unlabelled_candidate_pair(missing_temporal_domain_flag, policy=policy)
 
+        missing_in_domain_year = self._pair(
+            "runtime-in-domain-year", "runtime-in-domain-year", "in_domain"
+        )
+        missing_in_domain_year["semantic_split"].pop("publication_year")
+        with self.assertRaises(AcquisitionValidationError):
+            validate_unlabelled_candidate_pair(missing_in_domain_year, policy=policy)
+
+        missing_in_domain_domain_flag = self._pair(
+            "runtime-in-domain-domain-flag", "runtime-in-domain-domain-flag", "in_domain"
+        )
+        missing_in_domain_domain_flag["semantic_split"].pop(
+            "catalog_declared_held_out_domain"
+        )
+        with self.assertRaises(AcquisitionValidationError):
+            validate_unlabelled_candidate_pair(missing_in_domain_domain_flag, policy=policy)
+
     def test_temporal_cutoff_change_requires_a_policy_version_change(self) -> None:
         policy = self._manifest()["semantic_split_policy"]
         changed_boundary = deepcopy(policy)
