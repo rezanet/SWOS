@@ -128,7 +128,7 @@
             "verification_basis": {"type": ["string", "null"]}
           }
         },
-        "attribution": {"type": "string", "minLength": 1},
+        "attribution": {"type": "string"},
         "acquired_at": {"type": "string", "minLength": 1},
         "sha256": {
           "type": ["string", "null"],
@@ -187,7 +187,8 @@
                 "partition",
                 "criteria_id",
                 "publication_year",
-                "start_year"
+                "start_year",
+                "catalog_declared_held_out_domain"
               ],
               "properties": {
                 "partition": {"const": "temporal"},
@@ -242,6 +243,7 @@
             "required": ["semantic_split_default"],
             "properties": {
               "authors": {"minItems": 1},
+              "attribution": {"minLength": 1},
               "exact_acquired_copy_uri": {"type": "string", "minLength": 1},
               "sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
               "allowed_uses": {

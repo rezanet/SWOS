@@ -13,35 +13,35 @@
     "A14": "summary stronger than passage",
     "A15": "neighboring mechanism"
   },
-  "candidate_families_rejected_for_span_collision": 180,
+  "candidate_families_rejected_for_span_collision": 185,
   "candidate_pairs": 6000,
   "candidate_pairs_by_discipline": {
-    "art_criticism": 835,
+    "art_criticism": 825,
     "art_history": 905,
     "engineering": 0,
-    "humanities": 845,
-    "interdisciplinary": 865,
+    "humanities": 850,
+    "interdisciplinary": 875,
     "materials_science": 0,
-    "philosophy": 835,
-    "psychology": 815,
-    "technical_writing": 900
+    "philosophy": 840,
+    "psychology": 810,
+    "technical_writing": 895
   },
   "candidate_pairs_by_pattern": {
     "A01": 1200,
     "A02": 1200,
     "A03": 1200,
-    "A04": 632,
-    "A05": 409,
-    "A06": 135,
-    "A07": 126,
-    "A08": 86,
-    "A09": 117,
-    "A10": 511,
-    "A11": 199,
-    "A12": 38,
-    "A13": 5,
-    "A14": 63,
-    "A15": 79
+    "A04": 629,
+    "A05": 413,
+    "A06": 133,
+    "A07": 125,
+    "A08": 89,
+    "A09": 115,
+    "A10": 519,
+    "A11": 195,
+    "A12": 37,
+    "A13": 6,
+    "A14": 61,
+    "A15": 78
   },
   "candidate_pairs_by_pattern_basis": {
     "fallback_pending_human_review": 168,
@@ -49,9 +49,9 @@
     "stratum_defined": 3600
   },
   "candidate_pairs_by_semantic_partition": {
-    "in_domain": 1375,
-    "ood": 900,
-    "temporal": 3725
+    "in_domain": 1365,
+    "ood": 895,
+    "temporal": 3740
   },
   "candidate_pairs_by_stratum": {
     "S1": 1200,
@@ -64,9 +64,9 @@
   "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog-v13.json",
   "claim_families": 1200,
   "claim_families_by_semantic_partition": {
-    "in_domain": 275,
-    "ood": 180,
-    "temporal": 745
+    "in_domain": 273,
+    "ood": 179,
+    "temporal": 748
   },
   "claim_family_leakage": [],
   "downloaded_sources": 178,
@@ -89,12 +89,12 @@
     "rejected_unresolved_licence": 315
   },
   "output_digests": {
-    "source_candidate_manifest_sha256": "1f54f1dae6b53b29ddcc930b41eae0712477a9ae2f113646fbefdec528449e94",
-    "unlabelled_candidate_pairs_sha256": "97d32a62707b08d53fd59cb637fa87463b13480816370d54af30aa358853cda5"
+    "source_candidate_manifest_sha256": "b138e4e03dc3ad3138caec1ec9f2c46c7ef8594fbf73338b0f4580591afbb39b",
+    "unlabelled_candidate_pairs_sha256": "ce4ef919e09c4c95918a3e8ced74764e2e1c7c8f9eb1aac8cf417034dc249433"
   },
   "pairs_by_discipline_and_semantic_partition": {
     "art_criticism": {
-      "in_domain": 395,
+      "in_domain": 385,
       "ood": 0,
       "temporal": 440
     },
@@ -111,12 +111,12 @@
     "humanities": {
       "in_domain": 0,
       "ood": 0,
-      "temporal": 845
+      "temporal": 850
     },
     "interdisciplinary": {
       "in_domain": 135,
       "ood": 0,
-      "temporal": 730
+      "temporal": 740
     },
     "materials_science": {
       "in_domain": 0,
@@ -126,49 +126,49 @@
     "philosophy": {
       "in_domain": 235,
       "ood": 0,
-      "temporal": 600
+      "temporal": 605
     },
     "psychology": {
       "in_domain": 325,
       "ood": 0,
-      "temporal": 490
+      "temporal": 485
     },
     "technical_writing": {
       "in_domain": 0,
-      "ood": 900,
+      "ood": 895,
       "temporal": 0
     }
   },
   "pairs_by_semantic_partition": {
-    "in_domain": 1375,
-    "ood": 900,
-    "temporal": 3725
+    "in_domain": 1365,
+    "ood": 895,
+    "temporal": 3740
   },
   "pairs_by_stratum_and_semantic_partition": {
     "S1": {
-      "in_domain": 275,
-      "ood": 180,
-      "temporal": 745
+      "in_domain": 273,
+      "ood": 179,
+      "temporal": 748
     },
     "S2": {
-      "in_domain": 275,
-      "ood": 180,
-      "temporal": 745
+      "in_domain": 273,
+      "ood": 179,
+      "temporal": 748
     },
     "S3": {
-      "in_domain": 275,
-      "ood": 180,
-      "temporal": 745
+      "in_domain": 273,
+      "ood": 179,
+      "temporal": 748
     },
     "S4": {
-      "in_domain": 275,
-      "ood": 180,
-      "temporal": 745
+      "in_domain": 273,
+      "ood": 179,
+      "temporal": 748
     },
     "S5": {
-      "in_domain": 275,
-      "ood": 180,
-      "temporal": 745
+      "in_domain": 273,
+      "ood": 179,
+      "temporal": 748
     }
   },
   "publication_year_histogram": {
@@ -228,15 +228,15 @@
   "target_pairs": 6000,
   "temporal_holdout_selection": {
     "claim_families_by_partition": {
-      "in_domain": 275,
-      "ood": 180,
-      "temporal": 745
+      "in_domain": 273,
+      "ood": 179,
+      "temporal": 748
     },
     "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
     "pairs_by_partition": {
-      "in_domain": 1375,
-      "ood": 900,
-      "temporal": 3725
+      "in_domain": 1365,
+      "ood": 895,
+      "temporal": 3740
     },
     "policy_version": "2.0.0",
     "publication_year_histogram": {

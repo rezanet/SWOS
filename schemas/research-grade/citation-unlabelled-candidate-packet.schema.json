@@ -90,7 +90,13 @@
       },
       "oneOf": [
         {
-          "required": ["partition", "criteria_id", "publication_year", "start_year"],
+          "required": [
+            "partition",
+            "criteria_id",
+            "publication_year",
+            "start_year",
+            "catalog_declared_held_out_domain"
+          ],
           "properties": {
             "partition": {"const": "temporal"},
             "criteria_id": {"const": "T070-TEMPORAL-LATER-YEAR-V1"},

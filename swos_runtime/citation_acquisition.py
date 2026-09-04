@@ -291,16 +291,21 @@ def _normalise_license(value: Any) -> str:
     return aliases.get(raw, raw or "UNKNOWN")
 
 
+def _normalise_doi(value: Any) -> str | None:
+    raw = str(value or "").strip().lower()
+    raw = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", raw).strip().rstrip(".")
+    return raw or None
+
+
 def canonical_source_family(source: Mapping[str, Any]) -> str:
     """Return a stable work-family identity, independent of URL decoration."""
 
+    doi = _normalise_doi(source.get("doi"))
+    if doi:
+        return f"doi:{doi}"
     explicit = str(source.get("canonical_source_family") or "").strip().lower()
     if explicit:
         return explicit
-    doi = str(source.get("doi") or "").strip().lower()
-    doi = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi).strip().rstrip(".")
-    if doi:
-        return f"doi:{doi}"
     uri = str(source.get("stable_uri") or source.get("content_uri") or "").strip()
     parsed = urllib.parse.urlsplit(uri)
     if parsed.scheme and parsed.netloc:
@@ -407,8 +412,10 @@ def _validate_semantic_assignment(
             )
         if start_year != policy["temporal"]["start_year"]:
             raise AcquisitionValidationError("temporal candidate start year does not match policy")
-        if value.get("catalog_declared_held_out_domain") is True:
-            raise AcquisitionValidationError("OOD candidate cannot be marked temporal")
+        if value.get("catalog_declared_held_out_domain") is not False:
+            raise AcquisitionValidationError(
+                "temporal candidate must explicitly record a non-OOD source"
+            )
     elif partition == "ood":
         if criteria_id != policy["ood"]["criteria_id"]:
             raise AcquisitionValidationError("OOD candidate does not use the declared criteria")
@@ -495,6 +502,12 @@ def validate_source_candidate_manifest(
             source.get("canonical_source_family")
         ):
             raise AcquisitionValidationError(f"source {source_id} lacks stable identity")
+        family = str(source.get("canonical_source_family")).strip().lower()
+        expected_family = canonical_source_family(source)
+        if family != expected_family:
+            raise AcquisitionValidationError(
+                f"source {source_id} canonical family does not match its DOI identity"
+            )
         if not _nonempty(source.get("title")) or not _nonempty(source.get("publisher")):
             raise AcquisitionValidationError(f"source {source_id} lacks bibliographic metadata")
         authors = source.get("authors")
@@ -637,7 +650,6 @@ def validate_source_candidate_manifest(
                 raise AcquisitionValidationError(
                     f"source {source_id} semantic assignment does not match source metadata"
                 )
-        family = str(source.get("canonical_source_family")).strip().lower()
         if family in families and state in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}:
             raise AcquisitionValidationError(
                 f"source family {family} appears more than once among admissible candidates"
@@ -1102,6 +1114,7 @@ def _read_text_content(path: Path) -> str:
                         "front",
                         "ref-list",
                         "supplementary-material",
+                        "title",
                     }
 
                     def collect(element: ET.Element) -> list[str]:

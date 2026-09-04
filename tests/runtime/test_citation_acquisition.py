@@ -17,6 +17,7 @@ from swos_runtime.citation_acquisition import (
     _source_record,
     _source_semantic_assignment,
     acquire_candidates,
+    canonical_source_family,
     semantic_grouped_split,
     validate_candidate_source_binding,
     validate_source_candidate_manifest,
@@ -186,6 +187,14 @@ class CitationAcquisitionTests(unittest.TestCase):
         unknown_source_field["sources"][0]["approved"] = True
         with self.assertRaises(AcquisitionValidationError):
             validate_source_candidate_manifest(unknown_source_field)
+
+    def test_doi_bearing_source_families_cannot_override_doi_identity(self) -> None:
+        source = self._source()
+        source["canonical_source_family"] = "uri:https://example.org/another-work"
+
+        self.assertEqual(canonical_source_family(source), "doi:10.1234/example.1")
+        with self.assertRaises(AcquisitionValidationError):
+            validate_source_candidate_manifest({**self._manifest(), "sources": [source]})
 
     def test_unlabelled_validation_requires_all_reserved_human_keys(self) -> None:
         missing_annotation_key = self._pair("pair-1", "group-1")
@@ -770,6 +779,19 @@ class CitationAcquisitionTests(unittest.TestCase):
             text, "First bounded article sentence here. Second bounded article sentence here."
         )
 
+    def test_jats_section_titles_are_not_source_authored_prose(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "section-title.xml"
+            content.write_text(
+                "<article><body><sec><title>Introduction</title>"
+                "<p>First bounded article sentence here.</p></sec></body></article>",
+                encoding="utf-8",
+            )
+
+            text = _read_text_content(content)
+
+        self.assertEqual(text, "First bounded article sentence here.")
+
     def test_olh_curatorial_terms_require_an_art_specific_context(self) -> None:
         generic_curation = {
             "title": "Four Theses on Algorithmic Folklore",
@@ -807,6 +829,12 @@ class CitationAcquisitionTests(unittest.TestCase):
         incomplete_in_domain["semantic_split"].pop("catalog_declared_held_out_domain")
         self.assertTrue(list(validator.iter_errors(incomplete_in_domain)))
 
+        missing_temporal_domain_flag = self._pair(
+            "schema-temporal-domain-flag", "schema-temporal-domain-flag", "temporal"
+        )
+        missing_temporal_domain_flag["semantic_split"].pop("catalog_declared_held_out_domain")
+        self.assertTrue(list(validator.iter_errors(missing_temporal_domain_flag)))
+
         temporal = self._pair("schema-temporal", "schema-temporal", "temporal")
         temporal["semantic_split"].pop("publication_year")
         self.assertTrue(list(validator.iter_errors(temporal)))
@@ -831,6 +859,27 @@ class CitationAcquisitionTests(unittest.TestCase):
         candidate["sources"][0]["approval"]["reviewer_id"] = "reviewer-1"
         errors = list(jsonschema.Draft202012Validator(schema).iter_errors(candidate))
         self.assertTrue(any(list(error.absolute_path)[-1:] == ["reviewer_id"] for error in errors))
+
+    def test_source_schema_allows_missing_rejected_attribution_only(self) -> None:
+        schema = json.loads(
+            Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        import jsonschema
+
+        validator = jsonschema.Draft202012Validator(schema)
+        rejected = self._source(state="REJECTED_UNRESOLVED_LICENCE")
+        rejected["attribution"] = ""
+        rejected["approval"] = {"status": "not_requested", "reviewer_id": None}
+        rejected["rejection_reason"] = "Article-level licence evidence is unresolved."
+        rejected_manifest = {**self._manifest(), "sources": [rejected]}
+        self.assertEqual(list(validator.iter_errors(rejected_manifest)), [])
+
+        admissible = self._source()
+        admissible["attribution"] = ""
+        admissible_manifest = {**self._manifest(), "sources": [admissible]}
+        self.assertTrue(list(validator.iter_errors(admissible_manifest)))
 
     def test_candidate_schema_has_valid_source_level_rights_condition(self) -> None:
         schema = json.loads(
@@ -984,6 +1033,13 @@ class CitationAcquisitionTests(unittest.TestCase):
         }
         with self.assertRaises(AcquisitionValidationError):
             _source_semantic_assignment(conflicting, policy)
+
+        missing_temporal_domain_flag = self._pair(
+            "runtime-temporal-domain-flag", "runtime-temporal-domain-flag", "temporal"
+        )
+        missing_temporal_domain_flag["semantic_split"].pop("catalog_declared_held_out_domain")
+        with self.assertRaises(AcquisitionValidationError):
+            validate_unlabelled_candidate_pair(missing_temporal_domain_flag, policy=policy)
 
     def test_temporal_cutoff_change_requires_a_policy_version_change(self) -> None:
         policy = self._manifest()["semantic_split_policy"]
