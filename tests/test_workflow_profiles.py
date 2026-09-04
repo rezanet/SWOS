@@ -23,9 +23,9 @@ class WorkflowProfileInspectionTests(unittest.TestCase):
         }
         for workflow_name, artifact_name in expectations.items():
             with self.subTest(workflow=workflow_name):
-                workflow = (
-                    REPOSITORY_ROOT / ".github" / "workflows" / workflow_name
-                ).read_text(encoding="utf-8")
+                workflow = (REPOSITORY_ROOT / ".github" / "workflows" / workflow_name).read_text(
+                    encoding="utf-8"
+                )
 
                 self.assertIn("source_sha:", workflow)
                 self.assertIn("description: Full 40-character commit SHA to evaluate", workflow)
