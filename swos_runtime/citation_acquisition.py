@@ -213,6 +213,20 @@ _NEGATION_MARKERS = (
     " absence ",
     " without ",
 )
+_JATS_BLOCK_TAGS = frozenset(
+    {
+        "abstract",
+        "caption",
+        "disp-quote",
+        "list-item",
+        "p",
+        "sec",
+        "statement",
+        "td",
+        "th",
+        "title",
+    }
+)
 
 
 def _now() -> str:
@@ -1096,6 +1110,8 @@ def _read_text_content(path: Path) -> str:
                         values = [element.text or ""]
                         for child in element:
                             values.extend(collect(child))
+                            if str(child.tag).rsplit("}", 1)[-1] in _JATS_BLOCK_TAGS:
+                                values.append(" ")
                             values.append(child.tail or "")
                         return values
 

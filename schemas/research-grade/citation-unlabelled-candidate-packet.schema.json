@@ -83,7 +83,7 @@
       "properties": {
         "partition": {"enum": ["in_domain", "temporal", "ood"]},
         "criteria_id": {"type": "string", "minLength": 1},
-        "publication_year": {"type": "integer"},
+        "publication_year": {"type": ["integer", "null"]},
         "start_year": {"type": "integer"},
         "catalog_declared_held_out_domain": {"type": "boolean"},
         "domain_id": {"type": "string", "minLength": 1}
@@ -100,7 +100,12 @@
           }
         },
         {
-          "required": ["partition", "criteria_id"],
+          "required": [
+            "partition",
+            "criteria_id",
+            "publication_year",
+            "catalog_declared_held_out_domain"
+          ],
           "properties": {
             "partition": {"const": "in_domain"},
             "criteria_id": {"const": "T070-IN-DOMAIN-V1"},

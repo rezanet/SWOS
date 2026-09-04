@@ -241,9 +241,21 @@ _OLH_PSYCHOLOGY_TERMS = (
 _OLH_ART_HISTORY_TERMS = (
     "visual art",
     "museum",
-    "curat",
     "iconograph",
     "art history",
+)
+_OLH_ART_HISTORY_CURATORIAL_TERM = "curat"
+_OLH_ART_HISTORY_CONTEXT_TERMS = (
+    "archaeolog",
+    "architectur",
+    "exhibition",
+    "gallery",
+    "heritage",
+    "iconograph",
+    "manuscript",
+    "museum",
+    "painting",
+    "sculptur",
 )
 _OLH_ART_CRITICISM_TERMS = (
     "art criticism",
@@ -275,7 +287,10 @@ _ELSEVIER_DISCIPLINE_RULES = {
 }
 _OLH_DISCIPLINE_RULES = {
     "art_criticism": (_OLH_ART_CRITICISM_TERMS, set()),
-    "art_history": (_OLH_ART_HISTORY_TERMS, set()),
+    "art_history": (
+        _OLH_ART_HISTORY_TERMS + (_OLH_ART_HISTORY_CURATORIAL_TERM,),
+        set(),
+    ),
     "humanities": (_OLH_HUMANITIES_TERMS, set()),
     "interdisciplinary": (_OLH_INTERDISCIPLINARY_TERMS, set()),
     "philosophy": (_OLH_PHILOSOPHY_TERMS, set()),
@@ -489,13 +504,21 @@ def classify_olh(article: dict[str, Any]) -> str:
         return "philosophy"
     if any(_term_matches(text, token) for token in _OLH_PSYCHOLOGY_TERMS):
         return "psychology"
-    if any(_term_matches(text, token) for token in _OLH_ART_HISTORY_TERMS):
+    if _matches_olh_art_history(text):
         return "art_history"
     if any(_term_matches(text, token) for token in _OLH_ART_CRITICISM_TERMS):
         return "art_criticism"
     if any(_term_matches(text, token) for token in _OLH_HUMANITIES_TERMS):
         return "humanities"
     return "humanities"
+
+
+def _matches_olh_art_history(text: str) -> bool:
+    if any(_term_matches(text, token) for token in _OLH_ART_HISTORY_TERMS):
+        return True
+    return _term_matches(text, _OLH_ART_HISTORY_CURATORIAL_TERM) and any(
+        _term_matches(text, token) for token in _OLH_ART_HISTORY_CONTEXT_TERMS
+    )
 
 
 def _semantic_assignment(year: int | None, discipline: str, ordinal: int) -> dict[str, Any]:

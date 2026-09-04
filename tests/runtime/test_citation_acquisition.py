@@ -755,6 +755,39 @@ class CitationAcquisitionTests(unittest.TestCase):
 
         self.assertEqual(text, "")
 
+    def test_jats_block_elements_remain_separate_prose_sentences(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "adjacent-paragraphs.xml"
+            content.write_text(
+                "<article><body><p>First bounded article sentence here.</p>"
+                "<p>Second bounded article sentence here.</p></body></article>",
+                encoding="utf-8",
+            )
+
+            text = _read_text_content(content)
+
+        self.assertEqual(
+            text, "First bounded article sentence here. Second bounded article sentence here."
+        )
+
+    def test_olh_curatorial_terms_require_an_art_specific_context(self) -> None:
+        generic_curation = {
+            "title": "Four Theses on Algorithmic Folklore",
+            "abstract": (
+                "The paper studies content curation in algorithmic systems and treats "
+                "art as a broad social category."
+            ),
+            "section": "Automation",
+        }
+        art_curation = {
+            "title": "Curatorial practice in a museum collection",
+            "abstract": "The article examines visual art and museum interpretation.",
+            "section": "Art history",
+        }
+
+        self.assertNotEqual(classify_olh(generic_curation), "art_history")
+        self.assertEqual(classify_olh(art_curation), "art_history")
+
     def test_packet_schema_encodes_partition_specific_semantic_requirements(self) -> None:
         schema = json.loads(
             Path(
@@ -764,6 +797,15 @@ class CitationAcquisitionTests(unittest.TestCase):
         import jsonschema
 
         validator = jsonschema.Draft202012Validator(schema)
+
+        valid_undated = self._pair("schema-undated", "schema-undated")
+        valid_undated["semantic_split"]["publication_year"] = None
+        self.assertEqual(list(validator.iter_errors(valid_undated)), [])
+
+        incomplete_in_domain = self._pair("schema-incomplete", "schema-incomplete")
+        incomplete_in_domain["semantic_split"].pop("publication_year")
+        incomplete_in_domain["semantic_split"].pop("catalog_declared_held_out_domain")
+        self.assertTrue(list(validator.iter_errors(incomplete_in_domain)))
 
         temporal = self._pair("schema-temporal", "schema-temporal", "temporal")
         temporal["semantic_split"].pop("publication_year")

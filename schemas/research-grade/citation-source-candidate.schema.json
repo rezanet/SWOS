@@ -198,7 +198,12 @@
               }
             },
             {
-              "required": ["partition", "criteria_id"],
+              "required": [
+                "partition",
+                "criteria_id",
+                "publication_year",
+                "catalog_declared_held_out_domain"
+              ],
               "properties": {
                 "partition": {"const": "in_domain"},
                 "criteria_id": {"const": "T070-IN-DOMAIN-V1"},
