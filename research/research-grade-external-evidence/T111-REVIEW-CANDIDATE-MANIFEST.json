@@ -2308,7 +2308,7 @@
     }
   ],
   "alternate_view_manifest_path": "research/research-grade-external-evidence/T111-ALTERNATE-VIEW-MANIFEST.json",
-  "alternate_view_manifest_sha256": "e9193f9cc661d581fb3affad1a948ce2e15e51bf9f5812c9e4910e47bcbaec5b",
+  "alternate_view_manifest_sha256": "60da51bd84ba78d93eb82da036f8e7c176268e23a38522053b7292d72078bc65",
   "assets": [
     {
       "acquisition_uri": "https://api.nga.gov/iiif/00209fb1-64a2-4961-9ccc-8c6c06117df2/full/!1600,1600/0/default.jpg",
