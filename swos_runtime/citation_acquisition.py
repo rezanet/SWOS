@@ -249,6 +249,16 @@ def _reject_undeclared_fields(
         )
 
 
+def _require_declared_fields(
+    value: Mapping[str, Any], required: frozenset[str], *, label: str
+) -> None:
+    missing = sorted(str(name) for name in required if name not in value)
+    if missing:
+        raise AcquisitionValidationError(
+            f"{label} lacks required fields: " + ", ".join(missing)
+        )
+
+
 def _normalise_license(value: Any) -> str:
     raw = str(value or "").strip().upper().replace(" ", "-").replace("_", "-")
     raw = raw.replace("CREATIVE-COMMONS-", "CC-")
@@ -460,6 +470,8 @@ def validate_source_candidate_manifest(
             "state",
             "approval",
             "rejection_reason",
+            "doi",
+            "sha256",
         )
         missing = [name for name in required if name not in source]
         if missing:
@@ -495,6 +507,11 @@ def validate_source_candidate_manifest(
         if not isinstance(licence, Mapping):
             raise AcquisitionValidationError(f"source {source_id} licence record is invalid")
         _reject_undeclared_fields(licence, _LICENCE_FIELDS, label=f"source {source_id} licence")
+        _require_declared_fields(
+            licence,
+            frozenset({"spdx", "uri", "version", "article_rights_uri", "verification"}),
+            label=f"source {source_id} licence",
+        )
         for field in ("spdx", "uri", "version", "verification"):
             if not _nonempty(licence.get(field)):
                 raise AcquisitionValidationError(f"source {source_id} licence lacks {field}")
@@ -523,6 +540,11 @@ def validate_source_candidate_manifest(
             _THIRD_PARTY_FIELDS,
             label=f"source {source_id} third-party record",
         )
+        _require_declared_fields(
+            third_party,
+            frozenset({"status", "warning"}),
+            label=f"source {source_id} third-party record",
+        )
         if not _nonempty(third_party.get("warning")):
             raise AcquisitionValidationError(f"source {source_id} third-party warning is missing")
         approval = source.get("approval")
@@ -534,6 +556,11 @@ def validate_source_candidate_manifest(
         _reject_undeclared_fields(
             approval,
             _APPROVAL_FIELDS,
+            label=f"source {source_id} approval record",
+        )
+        _require_declared_fields(
+            approval,
+            frozenset({"status", "reviewer_id"}),
             label=f"source {source_id} approval record",
         )
         if approval.get("reviewer_id") not in {None, ""}:
@@ -593,6 +620,11 @@ def validate_source_candidate_manifest(
             )
         if semantic_split_default is not None:
             _validate_semantic_assignment(semantic_split_default, policy=policy)
+            expected_assignment = _source_semantic_assignment(source, policy)
+            if dict(semantic_split_default) != expected_assignment:
+                raise AcquisitionValidationError(
+                    f"source {source_id} semantic assignment does not match source metadata"
+                )
         family = str(source.get("canonical_source_family")).strip().lower()
         if family in families and state in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}:
             raise AcquisitionValidationError(
@@ -754,10 +786,11 @@ def validate_candidate_source_binding(
         raise AcquisitionValidationError(
             f"candidate {row.get('pair_id', '<unknown>')} source lacks a semantic split binding"
         )
-    expected_assignment = _validate_semantic_assignment(
-        declared_assignment,
-        policy=policy,
-    )
+    expected_assignment = _source_semantic_assignment(source, policy)
+    if dict(declared_assignment) != expected_assignment:
+        raise AcquisitionValidationError(
+            f"candidate {row.get('pair_id', '<unknown>')} source split metadata mismatches"
+        )
     actual_assignment = _validate_semantic_assignment(row.get("semantic_split"), policy=policy)
     if actual_assignment != expected_assignment:
         raise AcquisitionValidationError(
@@ -962,6 +995,33 @@ def _copy_content(uri: str, target: Path, *, max_bytes: int) -> None:
         temporary.unlink(missing_ok=True)
 
 
+def _cached_source_is_current(
+    content_uri: str,
+    target: Path,
+    cached: Mapping[str, Any],
+    entry: Mapping[str, Any],
+    *,
+    max_bytes: int,
+) -> bool:
+    """Use a cached copy only when its source identity is still evidenced."""
+
+    cached_digest = str(cached.get("sha256") or "").lower()
+    if not target.is_file() or not _is_sha256(cached_digest):
+        return False
+    local = _content_path(content_uri)
+    if local is not None:
+        if not local.is_file():
+            raise OSError(f"content file is missing: {local}")
+        if local.stat().st_size > max_bytes:
+            raise OSError(f"content exceeds resource limit: {max_bytes} bytes")
+        return _sha256_file(local) == cached_digest
+
+    # A remote URI is only reusable when the catalog has pinned its bytes.
+    # Otherwise acquisition must fetch the current representation again.
+    expected = entry.get("expected_sha256")
+    return _is_sha256(expected) and str(expected).lower() == cached_digest
+
+
 def _read_catalog(path: Path) -> tuple[dict[str, Any], str]:
     raw = path.read_bytes()
     payload = json.loads(raw.decode("utf-8-sig"))
@@ -1044,6 +1104,7 @@ def _read_text_content(path: Path) -> str:
                     return " ".join(
                         " ".join("".join(collect(element)).split()) for element in prose_nodes
                     ).strip()
+                return ""
             return "\n".join(" ".join(root.itertext()).split())
         except ET.ParseError:
             pass
@@ -1144,48 +1205,43 @@ def _publication_year(value: Any) -> int | None:
 def _source_semantic_assignment(
     source: Mapping[str, Any], policy: Mapping[str, Any]
 ) -> dict[str, Any]:
-    explicit = source.get("semantic_split") or source.get("semantic_split_default")
+    """Derive a source partition from pre-annotation source metadata.
+
+    The catalog's semantic assignment is an auditable declaration, not the
+    authority for the partition itself.  Recomputing the assignment here
+    prevents a packet or manifest from changing a source's date/domain facts
+    and then changing its split along with them.
+    """
+
     year = _publication_year(source.get("publication_date"))
-    held_out = source.get("catalog_declared_held_out_domain") is True
-    if isinstance(explicit, Mapping):
-        assignment = dict(explicit)
-        partition = assignment.get("partition")
-        declared_year = assignment.get("publication_year")
-        if year is not None and declared_year is not None and declared_year != year:
-            raise AcquisitionValidationError(
-                "semantic assignment publication year does not match source metadata"
+    disciplines = source.get("disciplines")
+    declared_disciplines = (
+        {str(value) for value in disciplines}
+        if isinstance(disciplines, Sequence) and not isinstance(disciplines, (str, bytes))
+        else set()
+    )
+    held_out = (
+        source.get("catalog_declared_held_out_domain") is True
+        or _nonempty(source.get("held_out_domain_id"))
+        or "technical_writing" in declared_disciplines
+    )
+    if held_out:
+        domain_id = str(
+            source.get("held_out_domain_id")
+            or (
+                "technical-writing-held-out-v1"
+                if "technical_writing" in declared_disciplines
+                else "catalog-declared-held-out-domain"
             )
-        if year is not None:
-            assignment.setdefault("publication_year", year)
-        if held_out and partition != "ood":
-            raise AcquisitionValidationError(
-                "catalog-declared held-out source must remain in the OOD partition"
-            )
-        if partition == "temporal":
-            assignment.setdefault("publication_year", year)
-            assignment.setdefault("start_year", policy["temporal"]["start_year"])
-            assignment.setdefault("catalog_declared_held_out_domain", held_out)
-        elif partition == "ood":
-            assignment.setdefault("catalog_declared_held_out_domain", held_out)
-        assignment.setdefault(
-            "criteria_id",
-            {
-                "temporal": policy["temporal"]["criteria_id"],
-                "ood": policy["ood"]["criteria_id"],
-                "in_domain": _IN_DOMAIN_CRITERIA_ID,
-            }.get(partition, ""),
         )
-    elif held_out:
-        assignment = {
+        expected = {
             "partition": "ood",
             "criteria_id": policy["ood"]["criteria_id"],
             "catalog_declared_held_out_domain": True,
-            "domain_id": str(
-                source.get("held_out_domain_id") or "catalog-declared-held-out-domain"
-            ),
+            "domain_id": domain_id,
         }
     elif year is not None and year >= policy["temporal"]["start_year"]:
-        assignment = {
+        expected = {
             "partition": "temporal",
             "criteria_id": policy["temporal"]["criteria_id"],
             "publication_year": year,
@@ -1193,16 +1249,26 @@ def _source_semantic_assignment(
             "catalog_declared_held_out_domain": False,
         }
     else:
-        assignment = {
+        expected = {
             "partition": "in_domain",
             "criteria_id": _IN_DOMAIN_CRITERIA_ID,
             "publication_year": year,
             "catalog_declared_held_out_domain": False,
         }
-    if assignment.get("partition") == "in_domain":
-        assignment.setdefault("publication_year", year)
-        assignment.setdefault("catalog_declared_held_out_domain", False)
-    return _validate_semantic_assignment(assignment, policy=policy)
+
+    explicit = source.get("semantic_split") or source.get("semantic_split_default")
+    if isinstance(explicit, Mapping):
+        declared = _validate_semantic_assignment(explicit, policy=policy)
+        for field, value in declared.items():
+            if field in expected and value != expected[field]:
+                raise AcquisitionValidationError(
+                    "semantic assignment does not match source publication/domain metadata"
+                )
+        if set(declared) - set(expected):
+            raise AcquisitionValidationError(
+                "semantic assignment contains fields inconsistent with source metadata"
+            )
+    return _validate_semantic_assignment(expected, policy=policy)
 
 
 def _safe_source_filename(source_id: str) -> str:
@@ -1551,12 +1617,20 @@ def acquire_candidates(
                 and cached.get("content_uri") == content_uri
                 and _is_sha256(cached.get("sha256"))
             ):
-                if target.stat().st_size > max_bytes:
-                    raise OSError(f"cached content exceeds resource limit: {max_bytes} bytes")
-                digest = _sha256_file(target)
-                if digest != str(cached["sha256"]).lower():
-                    raise OSError("cached source digest does not match acquisition state")
-                is_reused = True
+                if _cached_source_is_current(
+                    content_uri, target, cached, entry, max_bytes=max_bytes
+                ):
+                    if target.stat().st_size > max_bytes:
+                        raise OSError(
+                            f"cached content exceeds resource limit: {max_bytes} bytes"
+                        )
+                    digest = _sha256_file(target)
+                    if digest != str(cached["sha256"]).lower():
+                        raise OSError("cached source digest does not match acquisition state")
+                    is_reused = True
+                else:
+                    _copy_content(content_uri, target, max_bytes=max_bytes)
+                    digest = _sha256_file(target)
             else:
                 _copy_content(content_uri, target, max_bytes=max_bytes)
                 digest = _sha256_file(target)

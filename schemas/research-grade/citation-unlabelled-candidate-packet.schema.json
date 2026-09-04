@@ -87,7 +87,42 @@
         "start_year": {"type": "integer"},
         "catalog_declared_held_out_domain": {"type": "boolean"},
         "domain_id": {"type": "string", "minLength": 1}
-      }
+      },
+      "oneOf": [
+        {
+          "required": ["partition", "criteria_id", "publication_year", "start_year"],
+          "properties": {
+            "partition": {"const": "temporal"},
+            "criteria_id": {"const": "T070-TEMPORAL-LATER-YEAR-V1"},
+            "publication_year": {"type": "integer", "minimum": 2020},
+            "start_year": {"const": 2020},
+            "catalog_declared_held_out_domain": {"const": false}
+          }
+        },
+        {
+          "required": ["partition", "criteria_id"],
+          "properties": {
+            "partition": {"const": "in_domain"},
+            "criteria_id": {"const": "T070-IN-DOMAIN-V1"},
+            "publication_year": {"type": ["integer", "null"], "maximum": 2019},
+            "catalog_declared_held_out_domain": {"const": false}
+          }
+        },
+        {
+          "required": [
+            "partition",
+            "criteria_id",
+            "catalog_declared_held_out_domain",
+            "domain_id"
+          ],
+          "properties": {
+            "partition": {"const": "ood"},
+            "criteria_id": {"const": "T070-OOD-DOMAIN-V1"},
+            "catalog_declared_held_out_domain": {"const": true},
+            "domain_id": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
     },
     "annotations": {
       "type": "array",

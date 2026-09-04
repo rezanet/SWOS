@@ -569,6 +569,42 @@ class CitationAcquisitionTests(unittest.TestCase):
         with self.assertRaises(AcquisitionValidationError):
             validate_candidate_source_binding(wrong_split, indexed)
 
+    def test_source_partition_binding_recomputes_from_metadata_and_declared_domain(self) -> None:
+        later_metadata = self._manifest()
+        later_metadata["sources"][0]["publication_date"] = "2026-01-01"
+        with self.assertRaises(AcquisitionValidationError):
+            validate_source_candidate_manifest(later_metadata)
+
+        wrong_ood_domain = self._manifest()
+        source = wrong_ood_domain["sources"][0]
+        source["disciplines"] = ["psychology"]
+        source["semantic_split_default"] = {
+            "partition": "ood",
+            "criteria_id": "T070-OOD-DOMAIN-V1",
+            "catalog_declared_held_out_domain": True,
+            "domain_id": "technical-writing-held-out-v1",
+        }
+        with self.assertRaises(AcquisitionValidationError):
+            validate_source_candidate_manifest(wrong_ood_domain)
+
+    def test_source_manifest_requires_all_nested_and_digest_keys(self) -> None:
+        mutations = (
+            ("doi", lambda source: source.pop("doi")),
+            ("sha256", lambda source: source.pop("sha256")),
+            (
+                "article rights",
+                lambda source: source["licence"].pop("article_rights_uri"),
+            ),
+            ("approval reviewer", lambda source: source["approval"].pop("reviewer_id")),
+            ("third-party warning", lambda source: source["third_party"].pop("warning")),
+        )
+        for name, mutate in mutations:
+            with self.subTest(name=name):
+                manifest = self._manifest()
+                mutate(manifest["sources"][0])
+                with self.assertRaises(AcquisitionValidationError):
+                    validate_source_candidate_manifest(manifest)
+
     def test_existing_olh_cache_is_reacquired_for_the_current_galley_uri(self) -> None:
         article = {
             "pk": 9011,
@@ -704,6 +740,57 @@ class CitationAcquisitionTests(unittest.TestCase):
         self.assertNotIn("Front metadata title", text)
         self.assertNotIn("Copyright notice", text)
         self.assertNotIn("Back matter reference text", text)
+
+    def test_jats_without_eligible_abstract_or_body_has_no_extractable_prose(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "metadata-only.xml"
+            content.write_text(
+                "<article><front><article-meta><article-title>Metadata only</article-title>"
+                "</article-meta></front><back><ref-list><ref>Reference only.</ref>"
+                "</ref-list></back></article>",
+                encoding="utf-8",
+            )
+
+            text = _read_text_content(content)
+
+        self.assertEqual(text, "")
+
+    def test_packet_schema_encodes_partition_specific_semantic_requirements(self) -> None:
+        schema = json.loads(
+            Path(
+                "schemas/research-grade/citation-unlabelled-candidate-packet.schema.json"
+            ).read_text(encoding="utf-8")
+        )
+        import jsonschema
+
+        validator = jsonschema.Draft202012Validator(schema)
+
+        temporal = self._pair("schema-temporal", "schema-temporal", "temporal")
+        temporal["semantic_split"].pop("publication_year")
+        self.assertTrue(list(validator.iter_errors(temporal)))
+
+        in_domain = self._pair("schema-in-domain", "schema-in-domain")
+        in_domain["semantic_split"]["publication_year"] = 2020
+        self.assertTrue(list(validator.iter_errors(in_domain)))
+
+        ood = self._pair("schema-ood", "schema-ood", "ood", publication_year=2025)
+        ood["semantic_split"]["catalog_declared_held_out_domain"] = False
+        self.assertTrue(list(validator.iter_errors(ood)))
+
+    def test_pending_source_schema_forbids_a_reviewer_identity(self) -> None:
+        schema = json.loads(
+            Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        import jsonschema
+
+        candidate = self._manifest()
+        candidate["sources"][0]["approval"]["reviewer_id"] = "reviewer-1"
+        errors = list(jsonschema.Draft202012Validator(schema).iter_errors(candidate))
+        self.assertTrue(
+            any(list(error.absolute_path)[-1:] == ["reviewer_id"] for error in errors)
+        )
 
     def test_candidate_schema_has_valid_source_level_rights_condition(self) -> None:
         schema = json.loads(
@@ -1060,6 +1147,72 @@ class CitationAcquisitionTests(unittest.TestCase):
             limited = acquire_candidates(catalog, output, max_pairs=5, max_bytes=10)
             self.assertEqual(limited["status"], "ACQUISITION_INCOMPLETE")
             self.assertEqual(limited["candidate_pairs"], 0)
+
+    def test_acquisition_revalidates_a_local_source_when_the_uri_bytes_change(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            content = root / "source.json"
+            sentences = (
+                "This original statement provides reliable evidence across several engineering contexts. "
+                "Contextual analysis records independent sources and measured outcomes for the system. "
+                "The baseline method reports calibrated measurements from multiple independent engineering sources. "
+                "A contrary analysis does not provide reliable evidence for the proposed design. "
+                "This original statement provides reliable evidence across several engineering contexts with validation."
+            )
+            content.write_text(json.dumps({"text": sentences}), encoding="utf-8")
+            catalog = root / "catalog.json"
+            catalog.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "2.0.0",
+                        "catalog_type": "citation_source_candidate_catalog",
+                        "sources": [
+                            {
+                                "source_id": "source-1",
+                                "doi": "10.1234/example.1",
+                                "stable_uri": "https://doi.org/10.1234/example.1",
+                                "content_uri": content.as_uri(),
+                                "title": "A source",
+                                "authors": ["Example Author"],
+                                "publisher": "Example Press",
+                                "publication_date": "2019-01-02",
+                                "disciplines": ["engineering"],
+                                "licence": {
+                                    "spdx": "CC-BY-4.0",
+                                    "uri": "https://creativecommons.org/licenses/by/4.0/",
+                                    "version": "4.0",
+                                    "article_rights_uri": "https://example.org/rights",
+                                    "verification": "article_level_verified",
+                                },
+                                "attribution": "Example Author, A source, Example Press",
+                                "allowed_uses": ["candidate_generation", "human_annotation"],
+                                "third_party": {
+                                    "status": "warning",
+                                    "warning": "Review third-party content.",
+                                },
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            output = root / "output"
+            first = acquire_candidates(catalog, output, max_pairs=5)
+
+            content.write_text(
+                json.dumps(
+                    {
+                        "text": sentences.replace("original", "revised")
+                    }
+                ),
+                encoding="utf-8",
+            )
+            second = acquire_candidates(catalog, output, max_pairs=5)
+
+            self.assertEqual(first["downloaded_sources"], 1)
+            self.assertEqual(second["reused_sources"], 0)
+            self.assertEqual(second["downloaded_sources"], 1)
+            self.assertNotEqual(first["output_digests"], second["output_digests"])
 
 
 if __name__ == "__main__":

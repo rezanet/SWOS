@@ -249,7 +249,8 @@
               },
               "approval": {
                 "properties": {
-                  "status": {"const": "pending"}
+                  "status": {"const": "pending"},
+                  "reviewer_id": {"type": "null"}
                 }
               },
               "licence": {
