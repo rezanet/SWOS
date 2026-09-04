@@ -951,8 +951,7 @@ def _read_text_content(path: Path) -> str:
                         return values
 
                     return " ".join(
-                        " ".join("".join(collect(element)).split())
-                        for element in prose_nodes
+                        " ".join("".join(collect(element)).split()) for element in prose_nodes
                     ).strip()
             return "\n".join(" ".join(root.itertext()).split())
         except ET.ParseError:

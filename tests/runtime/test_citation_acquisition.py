@@ -590,7 +590,9 @@ class CitationAcquisitionTests(unittest.TestCase):
 
             self.assertIsNotNone(entry)
             assert entry is not None
-            self.assertEqual(entry["authors"], ["Ada Lovelace", "Grace Hopper", "Katherine Johnson"])
+            self.assertEqual(
+                entry["authors"], ["Ada Lovelace", "Grace Hopper", "Katherine Johnson"]
+            )
             self.assertIn("Ada Lovelace", entry["attribution"])
             self.assertIn("Grace Hopper", entry["attribution"])
             self.assertIn("Katherine Johnson", entry["attribution"])
