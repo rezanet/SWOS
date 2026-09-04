@@ -99,6 +99,12 @@ Every case must record:
 - wall-clock limit;
 - runner identity in actual execution evidence.
 
+The committed predeclared resource contract is 60.0 CPU seconds, 1,048,576
+KB peak RSS, and a 60.0-second wall-clock timeout, alongside the existing
+byte/statement/depth bounds. These are inputs to the measurement workflow and
+were not selected from observed benchmark results; a measurement that exceeds
+any one of them is recorded as fail-closed rather than converted into a PASS.
+
 Do not choose limits after observing benchmark results. Limits are inputs to the release benchmark.
 
 ## Human/external boundary

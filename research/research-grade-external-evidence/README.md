@@ -9,6 +9,7 @@ This folder persists external research and preparation recommendations for the f
 ## T070 citation support
 
 - `T070-CORPUS-ACQUISITION-RESEARCH.md` — legally conservative scholarly source stack, 6,000-pair acquisition design, adversarial strategy, and temporal/OOD split concern.
+- `T070-IMPORT-COMPLETED-REVIEWS.py` — fail-closed importer for future human rights reviews, double annotations, and adjudications; it cannot create labels or release evidence.
 
 ## T079 diversity
 
@@ -16,18 +17,22 @@ This folder persists external research and preparation recommendations for the f
 - `T079-VERIFIED-METADATA-SOURCES.md` — verified OpenAlex/Crossref/OpenCitations/DOAJ rights and operational boundaries.
 - `T079-PACKET-CONSTRUCTION-SPEC.md` — concrete packet/source-family/claim-exposure/machine-result/human-review data shape and generator invariants.
 - `T079-CANDIDATE-PACKET-SET.json` — deterministic 108 candidate packet identities: 12 per discipline, with two tuning and ten locked candidates per discipline.
+- `T079-BUILD-REVIEWER-PACKETS.py` and `T080-BUILD-LOCKED-BENCHMARK-INPUT.py` — isolated packet preparation and human-reviewed locked-input validation; the committed packets remain unreviewed.
 
 ## T093–T095 PROV
 
 - `T093-PROV-CORPUS-PLAN.md` — W3C fixture/licensing strategy, oracle pinning and performance/resource corpus design.
 - `T093-ORACLE-CANDIDATE-2.2.3.md` — current ProvToolbox 2.2.3 tag/Maven candidate and correction of the earlier 2.2.2 assumption.
 - `T093-W3C-FIXTURE-INVENTORY.json` — first exact W3C PROV-CONSTRAINTS catalogue tranche with PASS/FAIL expectations, constraint IDs and per-representation acquisition URIs; hashes/licence-notice verification deliberately pending byte acquisition.
+- `T094-BUILD-PROVTOOLBOX-PACKAGE.py`, `T094-ORACLE-ADAPTER.py`, and `T094-PROVTOOLBOX-PACKAGE-MANIFEST.json` — pinned 2.2.3 package handoff and safe extraction/adapter checks; independent execution and approval remain pending.
+- `T095-GENERATE-RESOURCE-CORPORA.py` and `T095-MEASURE-RESOURCE-CORPORA.py` — deterministic 1k/10k/100k and hostile blank-node corpora with bound source identity, seed, parameters, and CPU/RSS/wall limits. `benchmark/provenance/manifest.json` is generated/not measured, not a PASS.
 
 ## T111 multimodal
 
 - `T111-MULTIMODAL-CORPUS-PLAN.md` — CC0 institutional image/3D source stack and candidate corpus design.
 - `T111-VERIFIED-RIGHTS-SOURCES.md` — verified institution-level rights policies and per-asset admission boundary.
 - `T111-ASSET-CANDIDATE-INVENTORY.json` — first concrete institutional candidate tranche with 22 object-level rights-verified works across Smithsonian, NGA and AIC; exact asset bytes/digests and human review remain pending.
+- `T111-PREPARE-REVIEW-CORPUS.py` and `T111-IMPORT-COMPLETED-REVIEWS.py` — exact primary/alternate/derived rendition reconciliation and fail-closed six-leg human-review import. `T111-REVIEW-CANDIDATE-MANIFEST.json` remains a pre-review candidate only.
 
 ## Portability
 
@@ -39,6 +44,7 @@ This folder persists external research and preparation recommendations for the f
 
 - `T127-T129-RELEASE-CLOSURE-PLAN.md` — final exact-head approvals, immutable audit pack, and owner decision sequence.
 - `T127-T129-CURRENT-READINESS.md` — current blockers, real coverage-generation path for T128, and owner-only T129 boundary.
+- `T127-T128-CLOSURE-PREFLIGHT.py` — deterministic closure preflight that separates repository verification from external audit certification and fails closed on missing evidence.
 - `PARALLEL-CLOSURE-RESEARCH.md` — consolidated cross-track summary.
 
 Immediate production-side T070 action remains: builder should create the source-candidate manifest/acquisition workflow, prepare 6,000 UNLABELLED candidate pairs, and stop at the genuine human annotation/adjudication boundary if reviewers are unavailable.

@@ -1,13 +1,211 @@
 {
-  "schema_version": "2.0.0",
-  "status": "not_run",
-  "reason": "The checksummed 1k/10k/100k and hostile blank-node performance corpus is not supplied.",
   "corpora": [
-    {"name": "1k", "statements": 1000, "status": "not_run"},
-    {"name": "10k", "statements": 10000, "status": "not_run"},
-    {"name": "100k", "statements": 100000, "status": "not_run"},
-    {"name": "hostile_blank_nodes", "statements": null, "status": "not_run"}
+    {
+      "bytes": 17961,
+      "expected_status": "valid",
+      "format": "provn",
+      "generator": {
+        "input_parameters": {
+          "document_kind": "valid_provn",
+          "namespace": "https://example.org/swos/provbench/",
+          "statement_count": 1000
+        },
+        "name": "T095-GENERATE-RESOURCE-CORPORA.py",
+        "profile_id": "swos.prov-dm-round-trip.v2",
+        "resource_limits": {
+          "path": "benchmark/provenance/resource-limits.json",
+          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+        },
+        "seed": 0,
+        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "version": "1.0.0"
+      },
+      "name": "valid-1000",
+      "path": "valid-1000.provn",
+      "profile_id": "swos.prov-dm-round-trip.v2",
+      "purpose": "parser/converter/canonicalization performance",
+      "sha256": "3144d58f93712f80cd8230ce7c50888582aa40ffbf717dac3860907996bc3029",
+      "statement_count": 1000
+    },
+    {
+      "bytes": 188961,
+      "expected_status": "valid",
+      "format": "provn",
+      "generator": {
+        "input_parameters": {
+          "document_kind": "valid_provn",
+          "namespace": "https://example.org/swos/provbench/",
+          "statement_count": 10000
+        },
+        "name": "T095-GENERATE-RESOURCE-CORPORA.py",
+        "profile_id": "swos.prov-dm-round-trip.v2",
+        "resource_limits": {
+          "path": "benchmark/provenance/resource-limits.json",
+          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+        },
+        "seed": 0,
+        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "version": "1.0.0"
+      },
+      "name": "valid-10000",
+      "path": "valid-10000.provn",
+      "profile_id": "swos.prov-dm-round-trip.v2",
+      "purpose": "parser/converter/canonicalization performance",
+      "sha256": "fec9da5c07a86c13e62c3c0421aa1b7cdf7c80de9631d23270c09513adc73f38",
+      "statement_count": 10000
+    },
+    {
+      "bytes": 1988961,
+      "expected_status": "valid",
+      "format": "provn",
+      "generator": {
+        "input_parameters": {
+          "document_kind": "valid_provn",
+          "namespace": "https://example.org/swos/provbench/",
+          "statement_count": 100000
+        },
+        "name": "T095-GENERATE-RESOURCE-CORPORA.py",
+        "profile_id": "swos.prov-dm-round-trip.v2",
+        "resource_limits": {
+          "path": "benchmark/provenance/resource-limits.json",
+          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+        },
+        "seed": 0,
+        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "version": "1.0.0"
+      },
+      "name": "valid-100000",
+      "path": "valid-100000.provn",
+      "profile_id": "swos.prov-dm-round-trip.v2",
+      "purpose": "parser/converter/canonicalization performance",
+      "sha256": "63aad102894cffe7bf85939dc5d3c379feecdc7fc992cdfc5d06fa5e96f3a1eb",
+      "statement_count": 100000
+    },
+    {
+      "blank_node_count": 1000,
+      "bytes": 73666,
+      "expected_status": "resource_limit_or_bounded_canonicalization",
+      "format": "trig",
+      "generator": {
+        "input_parameters": {
+          "blank_node_count": 1000,
+          "document_kind": "hostile_blank_nodes",
+          "namespace": "https://example.org/swos/provbench/",
+          "prov_namespace": "http://www.w3.org/ns/prov#"
+        },
+        "name": "T095-GENERATE-RESOURCE-CORPORA.py",
+        "profile_id": "swos.prov-dm-round-trip.v2",
+        "resource_limits": {
+          "path": "benchmark/provenance/resource-limits.json",
+          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+        },
+        "seed": 0,
+        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "version": "1.0.0"
+      },
+      "name": "hostile-bnodes-1000",
+      "path": "hostile-bnodes-1000.trig",
+      "profile_id": "swos.prov-dm-round-trip.v2",
+      "purpose": "RDF dataset canonicalization/resource-bound stress",
+      "sha256": "15a933383a4309d50d8bebd0200ba8dcd4eb9b67d69cbc1b3209130c449261bb"
+    },
+    {
+      "blank_node_count": 5000,
+      "bytes": 385666,
+      "expected_status": "resource_limit_or_bounded_canonicalization",
+      "format": "trig",
+      "generator": {
+        "input_parameters": {
+          "blank_node_count": 5000,
+          "document_kind": "hostile_blank_nodes",
+          "namespace": "https://example.org/swos/provbench/",
+          "prov_namespace": "http://www.w3.org/ns/prov#"
+        },
+        "name": "T095-GENERATE-RESOURCE-CORPORA.py",
+        "profile_id": "swos.prov-dm-round-trip.v2",
+        "resource_limits": {
+          "path": "benchmark/provenance/resource-limits.json",
+          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+        },
+        "seed": 0,
+        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "version": "1.0.0"
+      },
+      "name": "hostile-bnodes-5000",
+      "path": "hostile-bnodes-5000.trig",
+      "profile_id": "swos.prov-dm-round-trip.v2",
+      "purpose": "RDF dataset canonicalization/resource-bound stress",
+      "sha256": "d292a91d8838f483cda8021585445834c246de2ca7ac46c5bf28e57eb4372085"
+    },
+    {
+      "blank_node_count": 10000,
+      "bytes": 775666,
+      "expected_status": "resource_limit_or_bounded_canonicalization",
+      "format": "trig",
+      "generator": {
+        "input_parameters": {
+          "blank_node_count": 10000,
+          "document_kind": "hostile_blank_nodes",
+          "namespace": "https://example.org/swos/provbench/",
+          "prov_namespace": "http://www.w3.org/ns/prov#"
+        },
+        "name": "T095-GENERATE-RESOURCE-CORPORA.py",
+        "profile_id": "swos.prov-dm-round-trip.v2",
+        "resource_limits": {
+          "path": "benchmark/provenance/resource-limits.json",
+          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+        },
+        "seed": 0,
+        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "version": "1.0.0"
+      },
+      "name": "hostile-bnodes-10000",
+      "path": "hostile-bnodes-10000.trig",
+      "profile_id": "swos.prov-dm-round-trip.v2",
+      "purpose": "RDF dataset canonicalization/resource-bound stress",
+      "sha256": "d2e527c794ae857f79ade97527cafe574f4d392679e383b1ab1d55897206b624"
+    }
   ],
-  "resource_limits": "resource-limits.json",
-  "raw_measurements": []
+  "generator": {
+    "input_parameters": {
+      "hostile_blank_node_counts": [
+        1000,
+        5000,
+        10000
+      ],
+      "valid_statement_counts": [
+        1000,
+        10000,
+        100000
+      ]
+    },
+    "name": "T095-GENERATE-RESOURCE-CORPORA.py",
+    "profile_id": "swos.prov-dm-round-trip.v2",
+    "resource_limits": {
+      "path": "benchmark/provenance/resource-limits.json",
+      "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+    },
+    "seed": 0,
+    "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+    "version": "1.0.0"
+  },
+  "profile_id": "swos.prov-dm-round-trip.v2",
+  "release_evidence": false,
+  "release_measurements": [],
+  "resource_limits": {
+    "limits": {
+      "cpu_seconds": 60.0,
+      "max_bytes": 5000000,
+      "max_depth": 64,
+      "max_literal_length": 1000000,
+      "max_rss_kb": 1048576,
+      "max_statements": 100000,
+      "timeout_seconds": 60.0
+    },
+    "path": "benchmark/provenance/resource-limits.json",
+    "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+  },
+  "schema_version": "research-handoff.t095.resource-corpus.v1",
+  "status": "generated_not_measured",
+  "warning": "No generated corpus or digest is a T095 PASS until exact-head resource measurements and required approvals exist."
 }

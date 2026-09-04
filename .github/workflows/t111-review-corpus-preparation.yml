@@ -7,6 +7,7 @@ on:
     paths:
       - research/research-grade-external-evidence/T111-PREPARE-REVIEW-CORPUS.py
       - research/research-grade-external-evidence/T111-NGA-CANDIDATE-MANIFEST.json
+      - research/research-grade-external-evidence/T111-ALTERNATE-VIEW-MANIFEST.json
       - .github/workflows/t111-review-corpus-preparation.yml
   workflow_dispatch:
 
@@ -39,6 +40,7 @@ jobs:
           set -euo pipefail
           python research/research-grade-external-evidence/T111-PREPARE-REVIEW-CORPUS.py \
             --source-manifest research/research-grade-external-evidence/T111-NGA-CANDIDATE-MANIFEST.json \
+            --alternate-view-manifest research/research-grade-external-evidence/T111-ALTERNATE-VIEW-MANIFEST.json \
             --output-dir "$RUNNER_TEMP/t111-review" \
             --download-derived
 
@@ -54,13 +56,17 @@ jobs:
           assert m["status"] == "READY_FOR_INDEPENDENT_HUMAN_REVIEW_NOT_T111_EVIDENCE"
           assert c["objects"] >= 60
           assert c["renditions"] >= 96
+          assert c["primary_renditions"] == 80
+          assert c["alternate_view_renditions"] >= 16
           assert c["region_grounding_candidates"] >= 80 and c["region_assets"] >= 20
           assert c["cross_modal_candidates"] >= 120
           assert c["discipline_tasks"] >= 48 and c["discipline_works"] >= 24
           assert c["adversarial_candidates"] >= 96
           assert c["media_material_classes"] >= 6
-          assert c["mediation_conditions"] == 2
+          assert c["mediation_conditions"] == 3
           assert m["human_review"] is None
+          assert m["release_evidence"] is False
+          assert m["alternate_view_manifest_sha256"]
           assert all(x["human_atomic_observation"] is None for x in m["region_grounding_candidates"])
           assert all(x["human_relation"] is None for x in m["cross_modal_candidates"])
           assert all(x["human_expected_answer"] is None for x in m["discipline_task_candidates"])
@@ -69,6 +75,11 @@ jobs:
           derived = [a for a in m["assets"] if a["mediation_condition"] == "deterministic_iiif_detail_crop"]
           assert len(derived) == 16
           assert all(isinstance(a["byte_digest"], str) and len(a["byte_digest"]) == 64 for a in derived)
+          alternate = [a for a in m["assets"] if a["mediation_condition"] == "institutional_alternate_view"]
+          assert len(alternate) >= 16
+          assert len({a["asset_id"] for a in m["assets"]}) == len(m["assets"])
+          exact_digests = [a["byte_digest"] for a in m["assets"] if a["byte_digest"]]
+          assert len(exact_digests) == len(set(exact_digests))
           print(json.dumps(c, sort_keys=True))
           PY
 
@@ -92,7 +103,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add research/research-grade-external-evidence/T111-REVIEW-CANDIDATE-MANIFEST.json
           git commit -m "research: record T111 review-candidate manifest" \
-            -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Human truth remains null and third mediation condition remains external."
+            -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Human truth remains null and the third mediation condition remains unreviewed."
           git fetch origin research/research-grade-external-evidence-2026-09-03
           git rebase origin/research/research-grade-external-evidence-2026-09-03
           git push origin HEAD:research/research-grade-external-evidence-2026-09-03

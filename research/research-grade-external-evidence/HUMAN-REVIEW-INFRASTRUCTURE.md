@@ -78,6 +78,22 @@ After real review, use `T080-BUILD-LOCKED-BENCHMARK-INPUT.py` to import and vali
 
 Use `T111-INDEPENDENT-REVIEW-TEMPLATE.json` together with the generated `T111-REVIEW-CANDIDATE-MANIFEST.json` and `T111-ALTERNATE-VIEW-MANIFEST.json`.
 
+Completed records are imported with:
+
+```text
+python research/research-grade-external-evidence/T111-IMPORT-COMPLETED-REVIEWS.py \
+  --candidate-manifest <exact-review-candidate-manifest.json> \
+  --completed-reviews <completed-review-records.jsonl> \
+  --output-dir <new-reviewed-corpus-directory>
+```
+
+The importer requires the exact candidate-manifest digest, canonical object and
+asset digests, explicit human identity/competence/conflict declarations, human
+decision origin on each review leg, and complete coverage of rights/identity,
+grounding, cross-modal, accessibility, discipline and adversarial records. It
+emits a provider-evaluation candidate manifest with `release_evidence=false`;
+the independent provider run and T111 release gates remain separate.
+
 Human review has separable legs:
 
 1. exact-asset rights/identity confirmation;

@@ -2,7 +2,7 @@
 
 Status: RELEASE BLOCKED / PREPARATION ONLY
 Baseline: `1f5135969f04a104d4a99764f921d1743d22710f`
-Verified: 2026-09-03
+Verified: 2026-09-04
 
 ## T127
 
@@ -24,6 +24,11 @@ After all upstream evidence is complete, T127 must bind one immutable candidate 
 - independent exact-head review;
 - zero unresolved review threads.
 
+The deterministic preflight accepts only external JSON records using
+`swos.external-evidence-record.v1`, with a full exact-head binding, an explicit
+disposition, and an HTTPS immutable external URI. File presence alone is not
+accepted as approval, review, or hosted-CI evidence.
+
 Do not request these final approvals while fixture/oracle/corpus content is still changing.
 
 ## T128
@@ -31,6 +36,10 @@ Do not request these final approvals while fixture/oracle/corpus content is stil
 The audit-pack implementation itself is content-addressed and fail-closed: verification enumerates the directory, rejects missing/extra files and re-hashes every artifact.
 
 The current known mechanical failure is the missing `reports/coverage.json` within the pre-freeze pack.
+
+The preflight keeps deterministic audit-pack verification separate from the
+independent external audit certification, which remains `NOT_RUN` until an
+external auditor records that decision.
 
 Repository evidence shows the quality process previously generated real coverage with a command equivalent to:
 

@@ -14,9 +14,11 @@ stance truth, or locked disposition is invented. Metadata that cannot be directl
 observed from the provider is marked `unknown` or `inferred`, and therefore cannot
 improve the Research Grade diversity score.
 """
+
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import os
@@ -49,14 +51,30 @@ USER_AGENT = "SWOS-T079-diversity-preparation/1.0 (research; contact supplied by
 
 DISCIPLINE_QUERIES = {
     "art_history": ["art history", "visual culture history", "museum collections history"],
-    "art_criticism": ["art criticism", "aesthetic criticism visual art", "contemporary art criticism"],
+    "art_criticism": [
+        "art criticism",
+        "aesthetic criticism visual art",
+        "contemporary art criticism",
+    ],
     "engineering": ["engineering design", "mechanical engineering", "civil engineering"],
     "humanities": ["humanities literature history", "cultural history", "literary studies"],
-    "interdisciplinary": ["interdisciplinary research", "transdisciplinary research", "digital humanities interdisciplinary"],
-    "materials_science": ["materials science", "materials characterization", "materials engineering"],
+    "interdisciplinary": [
+        "interdisciplinary research",
+        "transdisciplinary research",
+        "digital humanities interdisciplinary",
+    ],
+    "materials_science": [
+        "materials science",
+        "materials characterization",
+        "materials engineering",
+    ],
     "philosophy": ["philosophy epistemology", "philosophy ethics", "philosophy ontology"],
     "psychology": ["psychology cognition", "social psychology", "experimental psychology"],
-    "technical_writing": ["technical writing", "technical communication", "documentation usability"],
+    "technical_writing": [
+        "technical writing",
+        "technical communication",
+        "documentation usability",
+    ],
 }
 
 # Frozen 12-candidate allocation from T079-CANDIDATE-PACKET-SET.json.
@@ -175,12 +193,17 @@ def openalex_source(work: dict[str, Any], snapshot_uri: str) -> dict[str, Any]:
         "period": decade(work.get("publication_year")),
         "methodology": None,
         "source_type": work.get("type"),
-        "access_mode": "open_access" if isinstance(oa, dict) and oa.get("is_oa") is True else "closed_or_unknown",
+        "access_mode": "open_access"
+        if isinstance(oa, dict) and oa.get("is_oa") is True
+        else "closed_or_unknown",
         "stance": None,
     }
-    states = {key: ("observed" if value not in (None, "") else "unknown") for key, value in values.items()}
+    states = {
+        key: ("observed" if value not in (None, "") else "unknown") for key, value in values.items()
+    }
     return {
-        "source_id": "openalex-" + str(work.get("id") or canonical_digest(work)[:24]).rstrip("/").split("/")[-1],
+        "source_id": "openalex-"
+        + str(work.get("id") or canonical_digest(work)[:24]).rstrip("/").split("/")[-1],
         "provider": "openalex",
         "retrieved_uri": snapshot_uri,
         "canonical_work_id": f"doi:{doi}" if doi else str(work.get("id") or ""),
@@ -251,13 +274,17 @@ def crossref_source(doi: str, *, mailto: str, cache_dir: Path) -> dict[str, Any]
         "doi": doi,
         "title": title,
         **values,
-        "metadata_status": {key: ("observed" if val not in (None, "") else "unknown") for key, val in values.items()},
+        "metadata_status": {
+            key: ("observed" if val not in (None, "") else "unknown") for key, val in values.items()
+        },
         "metadata_provenance": url,
         "provider_record_id": doi,
     }
 
 
-def acquire_pool(discipline: str, *, mailto: str, cache_dir: Path, target: int = 90) -> list[dict[str, Any]]:
+def acquire_pool(
+    discipline: str, *, mailto: str, cache_dir: Path, target: int = 90
+) -> list[dict[str, Any]]:
     pool: list[dict[str, Any]] = []
     seen: set[str] = set()
     for query in DISCIPLINE_QUERIES[discipline]:
@@ -291,10 +318,15 @@ def acquire_pool(discipline: str, *, mailto: str, cache_dir: Path, target: int =
 
 
 def known(source: dict[str, Any], key: str) -> bool:
-    return source.get(key) not in (None, "") and source.get("metadata_status", {}).get(key) in {"observed", "externally_verified"}
+    return source.get(key) not in (None, "") and source.get("metadata_status", {}).get(key) in {
+        "observed",
+        "externally_verified",
+    }
 
 
-def different_by(pool: Iterable[dict[str, Any]], dimensions: tuple[str, ...], limit: int) -> list[dict[str, Any]]:
+def different_by(
+    pool: Iterable[dict[str, Any]], dimensions: tuple[str, ...], limit: int
+) -> list[dict[str, Any]]:
     selected: list[dict[str, Any]] = []
     signatures: set[tuple[str, ...]] = set()
     for source in pool:
@@ -342,7 +374,9 @@ def historical(pool: list[dict[str, Any]], limit: int) -> list[dict[str, Any]]:
     return rows[:limit]
 
 
-def duplicate_sources(base: list[dict[str, Any]], *, mailto: str, cache_dir: Path, limit: int) -> list[dict[str, Any]]:
+def duplicate_sources(
+    base: list[dict[str, Any]], *, mailto: str, cache_dir: Path, limit: int
+) -> list[dict[str, Any]]:
     result: list[dict[str, Any]] = []
     for source in base:
         result.append(source)
@@ -377,20 +411,26 @@ def make_claims(source_records: list[dict[str, Any]], category: str) -> list[dic
         if category == "concentrated" and index == 0:
             repeats = 8
         for rep in range(repeats):
-            claims.append({
-                "claim_id": f"STRUCT-{index+1:02d}-{rep+1:02d}",
-                "claim_kind": "synthetic_structural_exposure_only",
-                "source_ids": [source["source_id"]],
-            })
+            claims.append(
+                {
+                    "claim_id": f"STRUCT-{index + 1:02d}-{rep + 1:02d}",
+                    "claim_kind": "synthetic_structural_exposure_only",
+                    "source_ids": [source["source_id"]],
+                }
+            )
     return claims
 
 
-def requirement_for(packet_id: str, category: str, sources: list[dict[str, Any]]) -> DiversityRequirement:
+def requirement_for(
+    packet_id: str, category: str, sources: list[dict[str, Any]]
+) -> DiversityRequirement:
     dims = ("publisher", "venue", "geography", "language", "period", "source_type", "access_mode")
     required: dict[str, tuple[str, ...]] = {}
     counter_required = False
     if category == "multilingual":
-        langs = tuple(dict.fromkeys(str(s["language"]) for s in sources if known(s, "language")))[:2]
+        langs = tuple(dict.fromkeys(str(s["language"]) for s in sources if known(s, "language")))[
+            :2
+        ]
         if langs:
             required["language"] = langs
     elif category == "historical":
@@ -420,9 +460,13 @@ def requirement_for(packet_id: str, category: str, sources: list[dict[str, Any]]
     )
 
 
-def select_for_category(pool: list[dict[str, Any]], category: str, ordinal: int, *, mailto: str, cache_dir: Path) -> list[dict[str, Any]]:
+def select_for_category(
+    pool: list[dict[str, Any]], category: str, ordinal: int, *, mailto: str, cache_dir: Path
+) -> list[dict[str, Any]]:
     offset = (ordinal * 7) % max(1, len(pool))
-    rotated = pool[offset:] + pool[:offset]
+    # A packet is an immutable evidence snapshot. Category-specific structural
+    # annotations must never mutate source dictionaries shared by other packets.
+    rotated = copy.deepcopy(pool[offset:] + pool[:offset])
     if category == "balanced":
         return different_by(rotated, ("publisher", "venue", "geography", "period"), 8)
     if category == "concentrated":
@@ -457,7 +501,9 @@ def packet_digest_payload(packet: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in packet.items() if key not in {"packet_digest", "review"}}
 
 
-def build_packet(discipline: str, ordinal: int, pool: list[dict[str, Any]], *, mailto: str, cache_dir: Path) -> dict[str, Any]:
+def build_packet(
+    discipline: str, ordinal: int, pool: list[dict[str, Any]], *, mailto: str, cache_dir: Path
+) -> dict[str, Any]:
     partition, category = ALLOCATION[ordinal]
     packet_id = f"{PREFIX[discipline]}-{ordinal:02d}"
     records = select_for_category(pool, category, ordinal, mailto=mailto, cache_dir=cache_dir)
@@ -505,7 +551,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--cache-dir", type=Path, required=True)
-    parser.add_argument("--mailto", required=True, help="Contact email sent to metadata providers; never written as secret material.")
+    parser.add_argument(
+        "--mailto",
+        required=True,
+        help="Contact email sent to metadata providers; never written as secret material.",
+    )
     parser.add_argument("--pool-size", type=int, default=90)
     args = parser.parse_args()
     output_dir = args.output_dir.resolve()
@@ -514,7 +564,9 @@ def main() -> int:
         packets = []
         by_discipline: dict[str, int] = {}
         for discipline in DISCIPLINE_QUERIES:
-            pool = acquire_pool(discipline, mailto=args.mailto, cache_dir=cache_dir, target=args.pool_size)
+            pool = acquire_pool(
+                discipline, mailto=args.mailto, cache_dir=cache_dir, target=args.pool_size
+            )
             if len(pool) < 12:
                 raise ValueError(f"{discipline}: insufficient real metadata pool ({len(pool)})")
             discipline_packets = [
@@ -533,7 +585,9 @@ def main() -> int:
             "generated_at": utc(),
             "packet_count": len(packets),
             "packets_by_discipline": by_discipline,
-            "categories": dict(sorted(Counter(packet["stress_category"] for packet in packets).items())),
+            "categories": dict(
+                sorted(Counter(packet["stress_category"] for packet in packets).items())
+            ),
             "packet_records": [
                 {
                     "packet_id": packet["packet_id"],
@@ -550,13 +604,22 @@ def main() -> int:
                 "required_locked_packets_per_discipline": 10,
                 "template": "T079-INDEPENDENT-REVIEW-TEMPLATE.json",
             },
-            "release_evidence": false,
+            "release_evidence": False,
         }
         atomic_json(output_dir / "manifest.json", manifest)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(json.dumps({"status": "PREPARATION_INCOMPLETE", "reason": str(exc)}, sort_keys=True))
         return 2
-    print(json.dumps({"status": "READY_FOR_HUMAN_REVIEW", "packet_count": 108, "by_discipline": by_discipline}, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "status": "READY_FOR_HUMAN_REVIEW",
+                "packet_count": 108,
+                "by_discipline": by_discipline,
+            },
+            sort_keys=True,
+        )
+    )
     return 0
 
 

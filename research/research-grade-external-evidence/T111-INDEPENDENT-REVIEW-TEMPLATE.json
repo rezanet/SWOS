@@ -1,6 +1,9 @@
 {
   "schema_version": "research-handoff.t111.independent-review.v1",
   "status": "blank_template_not_evidence",
+  "review_id": null,
+  "release_evidence": false,
+  "candidate_manifest_sha256": null,
   "purpose": "Independent review record for exact T111 object/assets and derived multimodal evaluation cases. Automation may prepare candidates and validate completeness but may not populate human judgments.",
   "object_binding": {
     "object_id": null,
@@ -11,6 +14,8 @@
   "asset_bindings": [
     {
       "asset_id": null,
+      "object_id": null,
+      "object_record_sha256": null,
       "asset_record_sha256": null,
       "source_uri": null,
       "byte_sha256": null,
@@ -18,13 +23,26 @@
       "derivative_parent_sha256": null
     }
   ],
+  "evaluation_expectations": {
+    "asset_id": {
+      "status": null,
+      "target_questions": [],
+      "allowed_actions": [],
+      "ontology_binding": {},
+      "resource_limits": {},
+      "provider_policy": {}
+    }
+  },
   "reviewer": {
     "reviewer_id": null,
     "role": null,
     "discipline_competence_basis": null,
     "rights_review_competence_basis": null,
+    "rights_review_competence_basis": null,
     "independence_attestation": null,
-    "reviewed_at": null
+    "reviewed_at": null,
+    "conflict_declaration": null,
+    "decision_origin": null
   },
   "rights_review": {
     "object_asset_identity_correct": null,
@@ -35,7 +53,8 @@
     "derivative_lineage_correct": null,
     "disposition": null,
     "allowed_dispositions": ["admit", "reject", "repair_required"],
-    "rationale": null
+    "rationale": null,
+    "decision_origin": null
   },
   "grounding_review": {
     "region_claim_records_reviewed": [],
@@ -44,26 +63,34 @@
     "observation_interpretation_separation_correct": null,
     "view_limitations_recorded": null,
     "material_gaps": [],
-    "rationale": null
+    "rationale": null,
+    "decisions": {},
+    "decision_origin": null
   },
   "cross_modal_review": {
     "pair_records_reviewed": [],
     "text_source_bindings_correct": null,
     "weakest_leg_support_policy_respected": null,
     "unsupported_association_detected": null,
-    "rationale": null
+    "rationale": null,
+    "decisions": {},
+    "decision_origin": null
   },
   "discipline_review": {
     "art_history_task_appropriate": null,
     "art_criticism_task_appropriate": null,
     "task_records_reviewed": [],
-    "rationale": null
+    "rationale": null,
+    "decisions": {},
+    "decision_origin": null
   },
   "accessibility_review": {
     "accessibility_records_reviewed": [],
     "descriptions_fit_declared_purpose": null,
     "stale_after_derivative_or_view_change": null,
-    "rationale": null
+    "rationale": null,
+    "decisions": {},
+    "decision_origin": null
   },
   "adversarial_review": {
     "case_records_reviewed": [],
@@ -72,13 +99,16 @@
     "over_association_cases_valid": null,
     "rights_denial_cases_valid": null,
     "incomplete_view_cases_valid": null,
-    "rationale": null
+    "rationale": null,
+    "decisions": {},
+    "decision_origin": null
   },
   "overall": {
     "disposition": null,
     "allowed_dispositions": ["lock", "reject", "repair_required"],
     "limitations": [],
-    "rationale": null
+    "rationale": null,
+    "decision_origin": null
   },
   "integrity": {
     "review_record_sha256": null,

@@ -15,7 +15,7 @@ from swos_runtime.prov_interop import epg_to_prov
 from swos_runtime.prov_model import ResourceLimits
 from swos_runtime.prov_validation import canonical_fingerprint
 from tests.runtime.test_epg_v2 import sample_epg
-from tools.certify_prov_roundtrip import _limits, _load, certify, main
+from tools.certify_prov_roundtrip import _limits, _load, _load_oracle_manifest, certify, main
 
 
 class ProvCertificationToolTests(unittest.TestCase):
@@ -129,6 +129,48 @@ class ProvCertificationToolTests(unittest.TestCase):
             kwargs["oracle_path"] = oracle_path
             with self.assertRaisesRegex(ValueError, "artifact"):
                 certify(**kwargs)
+
+    def test_oracle_package_hashing_is_not_limited_by_epg_input_bytes(self) -> None:
+        with TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            artifact = directory / "oracle.pyz"
+            artifact.write_bytes(b"pinned package" * 100)
+            oracle = directory / "oracle.json"
+            oracle.write_text(
+                json.dumps(
+                    {
+                        "status": "accepted",
+                        "artifact_uri": artifact.name,
+                        "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                        "command": [
+                            "python3",
+                            "{artifact}",
+                            "--input",
+                            "{input}",
+                            "--profile",
+                            "{profile}",
+                            "--formats",
+                            "{formats}",
+                            "--output",
+                            "{output}",
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            loaded = _load_oracle_manifest(
+                oracle,
+                ResourceLimits(
+                    max_bytes=512,
+                    max_statements=100,
+                    max_literal_length=100,
+                    max_depth=8,
+                    timeout_seconds=1.0,
+                ),
+            )
+
+            self.assertTrue(loaded["artifact_verified"])
 
     def test_accepted_oracle_must_execute_a_pinned_command_and_bind_its_output(self) -> None:
         with TemporaryDirectory() as directory_name:

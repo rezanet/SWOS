@@ -5,6 +5,7 @@ This is preparation only. It selects alternate institutional image records for t
 already-selected 80 NGA objects, requires ``openaccess=1``, downloads bounded IIIF
 renditions, hashes exact bytes, and leaves human rights/identity review null.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -16,9 +17,10 @@ import os
 import tempfile
 import urllib.request
 from pathlib import Path
-from typing import Any
 
-PUBLISHED_IMAGES_URI = "https://raw.githubusercontent.com/NationalGalleryOfArt/opendata/main/data/published_images.csv"
+PUBLISHED_IMAGES_URI = (
+    "https://raw.githubusercontent.com/NationalGalleryOfArt/opendata/main/data/published_images.csv"
+)
 USER_AGENT = "SWOS-T111-alternate-view-acquisition/1.0"
 
 
@@ -94,7 +96,9 @@ def main() -> int:
         candidates.sort(key=lambda item: (item[0], item[1], item[2]))
         selected = candidates[: args.target]
         if len(selected) < args.target:
-            raise ValueError(f"only {len(selected)} qualifying alternate views found; target={args.target}")
+            raise ValueError(
+                f"only {len(selected)} qualifying alternate views found; target={args.target}"
+            )
         out = args.output_dir.resolve()
         if out.exists() and any(out.iterdir()):
             raise ValueError(f"refusing to overwrite non-empty directory: {out}")
@@ -107,31 +111,33 @@ def main() -> int:
             target = assets_dir / f"nga-alt-{object_id}-{uuid}.jpg"
             download(rendition, target, args.max_asset_bytes)
             rights = object_row["rights"]
-            output_records.append({
-                "candidate_id": f"MM-NGA-ALT-{index:03d}",
-                "object_id": object_id,
-                "asset_id": f"NGA-{uuid}-ALTERNATE",
-                "uuid": uuid,
-                "institution": object_row["institution"],
-                "object_source_uri": object_row["object_uri"],
-                "source_uri": rendition,
-                "iiif_service_uri": iiif,
-                "viewtype": "alternate",
-                "sequence": sequence,
-                "mediation_condition": "institutional_alternate_view",
-                "rights_uri": rights["rights_uri"],
-                "rights_designation": rights["designation"],
-                "image_openaccess_flag": 1,
-                "allowed_actions_candidate": rights.get("allowed_actions_candidate") or [],
-                "attribution_statement": object_row["attribution_statement"],
-                "byte_sha256": sha256_file(target),
-                "byte_size": target.stat().st_size,
-                "source_width": image_row.get("width"),
-                "source_height": image_row.get("height"),
-                "source_assistive_text": image_row.get("assistivetext") or None,
-                "human_rights_review": None,
-                "human_identity_review": None,
-            })
+            output_records.append(
+                {
+                    "candidate_id": f"MM-NGA-ALT-{index:03d}",
+                    "object_id": object_id,
+                    "asset_id": f"NGA-{uuid}-ALTERNATE",
+                    "uuid": uuid,
+                    "institution": object_row["institution"],
+                    "object_source_uri": object_row["object_uri"],
+                    "source_uri": rendition,
+                    "iiif_service_uri": iiif,
+                    "viewtype": "alternate",
+                    "sequence": sequence,
+                    "mediation_condition": "institutional_alternate_view",
+                    "rights_uri": rights["rights_uri"],
+                    "rights_designation": rights["designation"],
+                    "image_openaccess_flag": 1,
+                    "allowed_actions_candidate": rights.get("allowed_actions_candidate") or [],
+                    "attribution_statement": object_row["attribution_statement"],
+                    "byte_sha256": sha256_file(target),
+                    "byte_size": target.stat().st_size,
+                    "source_width": image_row.get("width"),
+                    "source_height": image_row.get("height"),
+                    "source_assistive_text": image_row.get("assistivetext") or None,
+                    "human_rights_review": None,
+                    "human_identity_review": None,
+                }
+            )
         manifest = {
             "schema_version": "research-handoff.t111.nga-alternate-views.v1",
             "status": "THIRD_MEDIATION_CANDIDATES_READY_FOR_HUMAN_REVIEW",
@@ -146,11 +152,27 @@ def main() -> int:
             "human_review": None,
             "release_evidence": False,
         }
-        (out / "alternate-view-manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        (out / "alternate-view-manifest.json").write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
     except Exception as exc:
-        print(json.dumps({"status": "ACQUISITION_FAILED", "reason": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False))
+        print(
+            json.dumps(
+                {"status": "ACQUISITION_FAILED", "reason": f"{type(exc).__name__}: {exc}"},
+                ensure_ascii=False,
+            )
+        )
         return 2
-    print(json.dumps({"status": manifest["status"], "record_count": len(output_records), "output": str(out / 'alternate-view-manifest.json')}, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "status": manifest["status"],
+                "record_count": len(output_records),
+                "output": str(out / "alternate-view-manifest.json"),
+            },
+            sort_keys=True,
+        )
+    )
     return 0
 
 

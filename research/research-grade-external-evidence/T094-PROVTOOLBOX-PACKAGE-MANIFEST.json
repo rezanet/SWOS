@@ -1,7 +1,7 @@
 {
   "artifact": {
     "bytes": 20235743,
-    "path": "/home/runner/work/_temp/t094/provtoolbox-oracle-2.2.3.pyz",
+    "path": "provtoolbox-oracle-2.2.3.pyz",
     "sha256": "7b2535ddc4eced15ca51d25a7e1259524637980fa24c54af542b51dcc33a71a8"
   },
   "artifact_contract": {
@@ -321,7 +321,7 @@
   "release_evidence": false,
   "runtime": {
     "jar_count": 48,
-    "java_executable": "/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.12-1/x64/bin/java",
+    "java_executable": "java",
     "main_class": "org.openprovenance.prov.interop.CommandLineArguments",
     "version_probe": {
       "exit_code": 0,

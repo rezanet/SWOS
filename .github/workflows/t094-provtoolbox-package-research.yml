@@ -63,6 +63,11 @@ jobs:
           assert manifest["version"] == "2.2.3"
           assert manifest["independent_execution"] == "NOT_RUN"
           assert manifest["independent_approval"] is None
+          assert not Path(manifest["artifact"]["path"]).is_absolute()
+          assert manifest["runtime"]["java_executable"] == "java"
+          assert not Path(manifest["runtime"]["java_executable"]).is_absolute()
+          assert manifest["artifact_contract"]["single_file"] is True
+          assert manifest["artifact_contract"]["python_zipapp"] is True
           with zipfile.ZipFile(artifact) as z:
               names = set(z.namelist())
               assert "__main__.py" in names

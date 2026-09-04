@@ -7,6 +7,7 @@ file-hash manifest into one SHA-256-addressable artifact. It is preparation only
 independent approval and independent execution remain mandatory before the
 production oracle manifest may move from NOT_RUN to accepted.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -53,32 +54,61 @@ def maven_pom() -> str:
 
 def dependency_tree(mvn: str, pom: Path, output: Path) -> None:
     process = subprocess.run(
-        [mvn, "-q", "-f", str(pom), "dependency:tree", "-Dscope=runtime", f"-DoutputFile={output}", "-DappendOutput=false"],
+        [
+            mvn,
+            "-q",
+            "-f",
+            str(pom),
+            "dependency:tree",
+            "-Dscope=runtime",
+            f"-DoutputFile={output}",
+            "-DappendOutput=false",
+        ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,
     )
     if process.returncode != 0 or not output.is_file():
-        raise RuntimeError("Maven dependency:tree failed: " + process.stderr.decode("utf-8", errors="replace")[-2000:])
+        raise RuntimeError(
+            "Maven dependency:tree failed: "
+            + process.stderr.decode("utf-8", errors="replace")[-2000:]
+        )
 
 
 def copy_dependencies(mvn: str, pom: Path, output: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     process = subprocess.run(
-        [mvn, "-q", "-f", str(pom), "dependency:copy-dependencies", "-DincludeScope=runtime", f"-DoutputDirectory={output}"],
+        [
+            mvn,
+            "-q",
+            "-f",
+            str(pom),
+            "dependency:copy-dependencies",
+            "-DincludeScope=runtime",
+            f"-DoutputDirectory={output}",
+        ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,
     )
     if process.returncode != 0:
-        raise RuntimeError("Maven dependency:copy-dependencies failed: " + process.stderr.decode("utf-8", errors="replace")[-2000:])
+        raise RuntimeError(
+            "Maven dependency:copy-dependencies failed: "
+            + process.stderr.decode("utf-8", errors="replace")[-2000:]
+        )
 
 
-def run_version_probe(lib: Path) -> dict[str, Any]:
+def run_version_probe(lib: Path, java: str) -> dict[str, Any]:
     jars = sorted(lib.glob("*.jar"))
     classpath = os.pathsep.join(str(path) for path in jars)
     process = subprocess.run(
-        ["java", "-cp", classpath, "org.openprovenance.prov.interop.CommandLineArguments", "--version"],
+        [
+            java,
+            "-cp",
+            classpath,
+            "org.openprovenance.prov.interop.CommandLineArguments",
+            "--version",
+        ],
         stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -89,6 +119,25 @@ def run_version_probe(lib: Path) -> dict[str, Any]:
     combined = (process.stdout + b"\n" + process.stderr).decode("utf-8", errors="replace")
     if VERSION not in combined:
         raise RuntimeError(f"ProvToolbox version probe did not report pinned version {VERSION}")
+    return {
+        "exit_code": process.returncode,
+        "stdout_sha256": sha256_bytes(process.stdout),
+        "stderr_sha256": sha256_bytes(process.stderr),
+        "reported_text": combined.strip(),
+    }
+
+
+def run_java_version_probe(java: str) -> dict[str, Any]:
+    process = subprocess.run(
+        [java, "-version"],
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if process.returncode != 0:
+        raise RuntimeError("Java version probe failed")
+    combined = (process.stdout + b"\n" + process.stderr).decode("utf-8", errors="replace")
     return {
         "exit_code": process.returncode,
         "stdout_sha256": sha256_bytes(process.stdout),
@@ -111,7 +160,9 @@ def write_deterministic_zip(root: Path, output: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--adapter", type=Path, default=Path(__file__).with_name("T094-ORACLE-ADAPTER.py"))
+    parser.add_argument(
+        "--adapter", type=Path, default=Path(__file__).with_name("T094-ORACLE-ADAPTER.py")
+    )
     parser.add_argument("--output", type=Path, required=True, help="Output .pyz path")
     parser.add_argument("--manifest-out", type=Path, default=None)
     args = parser.parse_args()
@@ -145,15 +196,18 @@ def main() -> int:
                 raise RuntimeError("pinned ProvToolbox licence bytes do not match expected SHA-256")
             (staging / "LICENSE-provtoolbox.txt").write_bytes(licence)
             shutil.copyfile(adapter, staging / "__main__.py")
-            probe = run_version_probe(lib)
+            probe = run_version_probe(lib, java)
+            java_probe = run_java_version_probe(java)
             files = []
             for path in sorted(staging.rglob("*"), key=lambda p: p.relative_to(staging).as_posix()):
                 if path.is_file() and path.name != "package-manifest.json":
-                    files.append({
-                        "path": path.relative_to(staging).as_posix(),
-                        "bytes": path.stat().st_size,
-                        "sha256": sha256_file(path),
-                    })
+                    files.append(
+                        {
+                            "path": path.relative_to(staging).as_posix(),
+                            "bytes": path.stat().st_size,
+                            "sha256": sha256_file(path),
+                        }
+                    )
             manifest = {
                 "schema_version": "research-handoff.t094.provtoolbox-package.v1",
                 "status": "package_built_pending_independent_approval_and_execution",
@@ -169,21 +223,37 @@ def main() -> int:
                 "runtime": {
                     "main_class": "org.openprovenance.prov.interop.CommandLineArguments",
                     "jar_count": len(jars),
-                    "java_executable": java,
+                    "java_executable": "java",
+                    "java_version_probe": java_probe,
                     "version_probe": probe,
                 },
                 "files": files,
                 "artifact_contract": {
                     "single_file": True,
                     "python_zipapp": True,
-                    "invocation": ["python3", "{artifact}", "--artifact", "{artifact}", "--input", "{input}", "--profile", "{profile}", "--formats", "{formats}", "--output", "{output}"],
-                    "note": "The artifact hashes and contains the adapter plus the full runtime dependency closure; no network dependency resolution is needed during certification."
+                    "invocation": [
+                        "python3",
+                        "{artifact}",
+                        "--artifact",
+                        "{artifact}",
+                        "--input",
+                        "{input}",
+                        "--profile",
+                        "{profile}",
+                        "--formats",
+                        "{formats}",
+                        "--output",
+                        "{output}",
+                    ],
+                    "note": "The artifact hashes and contains the adapter plus the full runtime dependency closure; no network dependency resolution is needed during certification.",
                 },
                 "independent_approval": None,
                 "independent_execution": "NOT_RUN",
                 "release_evidence": False,
             }
-            (staging / "package-manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            (staging / "package-manifest.json").write_text(
+                json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
             # Add the manifest to its own file list only through the outer artifact
             # digest; package-manifest.json cannot recursively contain its own hash.
             write_deterministic_zip(staging, output)
@@ -191,7 +261,7 @@ def main() -> int:
         outer = {
             **manifest,
             "artifact": {
-                "path": str(output),
+                "path": output.name,
                 "bytes": output.stat().st_size,
                 "sha256": artifact_sha,
             },
@@ -203,18 +273,52 @@ def main() -> int:
                 "licence": "MIT",
                 "artifact_uri": None,
                 "artifact_sha256": artifact_sha,
-                "command": ["python3", "{artifact}", "--artifact", "{artifact}", "--input", "{input}", "--profile", "{profile}", "--formats", "{formats}", "--output", "{output}"],
-                "reason": "Artifact prepared and hashed; independent approval and execution still required before accepted status."
-            }
+                "command": [
+                    "python3",
+                    "{artifact}",
+                    "--artifact",
+                    "{artifact}",
+                    "--input",
+                    "{input}",
+                    "--profile",
+                    "{profile}",
+                    "--formats",
+                    "{formats}",
+                    "--output",
+                    "{output}",
+                ],
+                "reason": "Artifact prepared and hashed; independent approval and execution still required before accepted status.",
+            },
         }
-        manifest_out = (args.manifest_out.resolve() if args.manifest_out else output.with_suffix(output.suffix + ".manifest.json"))
+        manifest_out = (
+            args.manifest_out.resolve()
+            if args.manifest_out
+            else output.with_suffix(output.suffix + ".manifest.json")
+        )
         if manifest_out.exists():
             raise RuntimeError(f"refusing to overwrite package manifest: {manifest_out}")
-        manifest_out.write_text(json.dumps(outer, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        manifest_out.write_text(
+            json.dumps(outer, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
     except Exception as exc:
-        print(json.dumps({"status": "PACKAGE_BUILD_FAILED", "reason": f"{type(exc).__name__}: {exc}"}, ensure_ascii=False))
+        print(
+            json.dumps(
+                {"status": "PACKAGE_BUILD_FAILED", "reason": f"{type(exc).__name__}: {exc}"},
+                ensure_ascii=False,
+            )
+        )
         return 2
-    print(json.dumps({"status": "PACKAGE_BUILT_PENDING_EXTERNAL_APPROVAL", "artifact": str(output), "artifact_sha256": artifact_sha, "manifest": str(manifest_out)}, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "status": "PACKAGE_BUILT_PENDING_EXTERNAL_APPROVAL",
+                "artifact": str(output),
+                "artifact_sha256": artifact_sha,
+                "manifest": str(manifest_out),
+            },
+            sort_keys=True,
+        )
+    )
     return 0
 
 

@@ -1,14 +1,29 @@
 {
   "schema_version": "research-handoff.t095.resource-corpus.v1",
   "status": "deterministic_corpus_identity_preparation_only",
+  "release_evidence": false,
   "baseline_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
   "generator": "T095-GENERATE-RESOURCE-CORPORA.py",
+  "generator_version": "1.0.0",
+  "generator_source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+  "profile_id": "swos.prov-dm-round-trip.v2",
+  "resource_limits": {
+    "path": "benchmark/provenance/resource-limits.json",
+    "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab",
+    "limits": {
+      "cpu_seconds": 60.0,
+      "max_rss_kb": 1048576,
+      "timeout_seconds": 60.0
+    }
+  },
   "frozen_main_resource_contract": {
     "max_bytes": 5000000,
     "max_statements": 100000,
     "max_literal_length": 1000000,
     "max_depth": 64,
     "timeout_seconds": 60.0,
+    "cpu_seconds": 60.0,
+    "max_rss_kb": 1048576,
     "release_p95_seconds": 60.0,
     "required_statement_corpora": [1000, 10000, 100000],
     "hostile_blank_node_policy": "bounded_and_fail_closed"

@@ -26,6 +26,7 @@ REQUIRED_CORPUS_CATEGORIES = frozenset(
     {"valid", "invalid", "large", "adversarial", "hostile_blank_node"}
 )
 ORACLE_MAX_OUTPUT_BYTES = 64 * 1024
+ORACLE_MAX_ARTIFACT_BYTES = 64 * 1024 * 1024
 ORACLE_ENVIRONMENT_KEYS = frozenset(
     {"LANG", "LC_ALL", "PATH", "PATHEXT", "SYSTEMROOT", "TEMP", "TMP", "TMPDIR", "TZ"}
 )
@@ -39,6 +40,18 @@ def _read(path: Path, limits: ResourceLimits | None = None) -> bytes:
         raw = stream.read(limits.max_bytes + 1)
     limits.check_bytes(len(raw))
     return raw
+
+
+def _sha256_bounded_file(path: Path, maximum: int) -> str:
+    digest = hashlib.sha256()
+    total = 0
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            total += len(block)
+            if total > maximum:
+                raise ValueError("independent oracle artifact exceeds its package-size limit")
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def _load_json_with_digest(
@@ -82,7 +95,7 @@ def _load_oracle_manifest(path: Path, limits: ResourceLimits) -> dict[str, Any]:
         or any(character not in "0123456789abcdef" for character in expected_sha256)
     ):
         raise ValueError("accepted oracle manifest requires a lowercase artifact_sha256")
-    actual_sha256 = hashlib.sha256(_read(artifact_path, limits)).hexdigest()
+    actual_sha256 = _sha256_bounded_file(artifact_path, ORACLE_MAX_ARTIFACT_BYTES)
     if actual_sha256 != expected_sha256:
         raise ValueError("accepted oracle artifact checksum mismatch")
     command = oracle.get("command")

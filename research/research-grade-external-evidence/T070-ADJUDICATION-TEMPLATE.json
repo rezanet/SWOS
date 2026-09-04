@@ -17,6 +17,7 @@
     "adjudicator_role": null,
     "competence_basis": null,
     "independence_attestation": null,
+    "conflict_declaration": null,
     "reviewed_at": null,
     "annotation_agreement_before_adjudication": null,
     "final_label": null,
@@ -30,7 +31,8 @@
     "rationale": null,
     "resolved_disagreement": null,
     "limitations": [],
-    "disposition": null
+    "disposition": null,
+    "decision_origin": null
   },
   "integrity": {
     "record_sha256": null,

@@ -16,14 +16,16 @@
   "source_rights_review_binding": {
     "review_record_id": null,
     "review_record_sha256": null,
-    "status_required": "approved_for_human_annotation"
+    "status_required": "approved_for_candidate_annotation"
   },
   "annotation": {
     "annotator_id": null,
     "annotator_role": null,
     "competence_basis": null,
     "independence_attestation": null,
+    "conflict_declaration": null,
     "reviewed_at": null,
+    "decision_origin": null,
     "label": null,
     "allowed_labels": [
       "directly_supports",

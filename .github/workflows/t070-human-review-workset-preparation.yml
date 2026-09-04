@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  T070_CORRECTED_HEAD: 882466a9cd7bcba671dc7ec8c757f3f6866a4487
+  T070_CORRECTED_HEAD: e4cf7afca8cbb6712064e66d8ed001a0e3700e95
 
 jobs:
   prepare:
@@ -50,7 +50,7 @@ jobs:
           git show "$T070_CORRECTED_HEAD:benchmark/citation-support/acquisition/acquisition-report.json" \
             > "$RUNNER_TEMP/t070/input/acquisition-report.json"
 
-      - name: Build 536-source rights review workset
+      - name: Build source rights review workset
         run: |
           set -euo pipefail
           python research/research-grade-external-evidence/T070-PREPARE-SOURCE-RIGHTS-WORKSET.py \
@@ -62,7 +62,8 @@ jobs:
           set -euo pipefail
           python research/research-grade-external-evidence/T070-PREPARE-BLIND-ANNOTATION-WORKSETS.py \
             --pairs "$RUNNER_TEMP/t070/input/unlabelled-candidate-pairs.jsonl" \
-            --output-dir "$RUNNER_TEMP/t070/output/annotation-worksets"
+            --output-dir "$RUNNER_TEMP/t070/output/annotation-worksets" \
+            --source-rights-review "$RUNNER_TEMP/t070/output/source-rights-review-workset.json"
 
       - name: Verify cardinality, exact bindings, and blank human fields
         run: |
@@ -75,7 +76,7 @@ jobs:
           root = Path("${{ runner.temp }}/t070")
           rights = json.loads((root / "output/source-rights-review-workset.json").read_text(encoding="utf-8"))
           ann = json.loads((root / "output/annotation-worksets/manifest.json").read_text(encoding="utf-8"))
-          assert rights["source_count"] == 536
+          assert rights["source_count"] == len(rights["records"])
           assert rights["status"] == "READY_FOR_INDEPENDENT_SOURCE_RIGHTS_REVIEW"
           assert all(r["reviewer"]["reviewer_id"] is None for r in rights["records"])
           assert all(r["review"]["disposition"] is None for r in rights["records"])
@@ -87,6 +88,9 @@ jobs:
           a = root / "output/annotation-worksets/annotator-A.jsonl"
           b = root / "output/annotation-worksets/annotator-B.jsonl"
           adj = root / "output/annotation-worksets/adjudication-bindings.jsonl"
+          rights_path = root / "output/source-rights-review-workset.json"
+          assert ann["source_rights_review"]["path"] == "../source-rights-review-workset.json"
+          assert hashlib.sha256(rights_path.read_bytes()).hexdigest() == ann["source_rights_review"]["sha256"]
           assert hashlib.sha256(a.read_bytes()).hexdigest() == ann["worksets"]["A"]["sha256"]
           assert hashlib.sha256(b.read_bytes()).hexdigest() == ann["worksets"]["B"]["sha256"]
           assert hashlib.sha256(adj.read_bytes()).hexdigest() == ann["worksets"]["adjudication"]["sha256"]
@@ -119,7 +123,7 @@ jobs:
               "pr_number": 66,
               "exact_candidate_head": os.environ["T070_CORRECTED_HEAD"],
               "source_workflow_head": os.environ["SOURCE_WORKFLOW_SHA"],
-              "source_count": 536,
+              "source_count": rights["source_count"],
               "pair_count": 6000,
               "unique_source_claim_quote_tuples": 6000,
               "inputs": {

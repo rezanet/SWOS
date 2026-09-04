@@ -5,7 +5,9 @@
     "max_statements": 100000,
     "max_literal_length": 1000000,
     "max_depth": 64,
-    "timeout_seconds": 60.0
+    "timeout_seconds": 60.0,
+    "cpu_seconds": 60.0,
+    "max_rss_kb": 1048576
   },
   "release_performance_targets": {
     "p95_seconds": 60.0,
