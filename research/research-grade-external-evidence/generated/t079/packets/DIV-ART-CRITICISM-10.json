@@ -1,0 +1,1255 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-5809a364a7502289d5575b79",
+      "canonical_key": "doi:10.1093/aesthj/aym039",
+      "family_id": "family-5809a364a7502289d5575b79",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1093/aesthj/aym039",
+        "doi": "10.1093/aesthj/aym039"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Sherri Irvin"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Oxford University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "The British Journal of Aesthetics"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1093/aesthj/aym039"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-1ae2ad16698cdefa58412160",
+        "openalex-W2039262251"
+      ],
+      "titles": [
+        "The Pervasiveness of the Aesthetic in Ordinary Experience"
+      ]
+    },
+    {
+      "canonical_id": "family-58ec80da74080d8386925311",
+      "canonical_key": "doi:10.15175/1984-2503-202315208",
+      "family_id": "family-58ec80da74080d8386925311",
+      "identifiers": {
+        "canonical_work_id": "doi:10.15175/1984-2503-202315208",
+        "doi": "10.15175/1984-2503-202315208"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Hamed Jamalpour | Javad Yaghoobi Derabi"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "IR"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2020s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Fluminense Federal University"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Passagens Revista Internacional de História Política e Cultura Jurídica"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.15175/1984-2503-202315208"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-85e02008753ff7694aaedd29",
+        "openalex-W4380989034"
+      ],
+      "titles": [
+        "Aesthetic Experience, Neurology and Cultural Memory"
+      ]
+    },
+    {
+      "canonical_id": "family-92a6d2287829a8afb95c6dba",
+      "canonical_key": "doi:10.1258/jrsm.2010.100256",
+      "family_id": "family-92a6d2287829a8afb95c6dba",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1258/jrsm.2010.100256",
+        "doi": "10.1258/jrsm.2010.100256"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Louise Lankston | Pearce Cusack | Chris Fremantle"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "GB"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "SAGE Publishing"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of the Royal Society of Medicine"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1258/jrsm.2010.100256"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-961ba9508411a73b7450f085",
+        "openalex-W2144867145"
+      ],
+      "titles": [
+        "Visual art in hospitals: case studies and review of the                evidence",
+        "Visual art in hospitals: case studies and review of the evidence"
+      ]
+    },
+    {
+      "canonical_id": "family-c471c83484a746dad2a765ba",
+      "canonical_key": "doi:10.2307/j.ctv16qk36q",
+      "family_id": "family-c471c83484a746dad2a765ba",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/j.ctv16qk36q",
+        "doi": "10.2307/j.ctv16qk36q"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "John Paul M. Kanwit"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2020s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Ohio State University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Ohio State University Press eBooks"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/j.ctv16qk36q"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-e477a5833a98f63512571011",
+        "openalex-W816399673"
+      ],
+      "titles": [
+        "Victorian Art Criticism and the Woman Writer"
+      ]
+    },
+    {
+      "canonical_id": "family-ce20a1772a9d8a68a8f147ad",
+      "canonical_key": "doi:10.1007/s00221-010-2283-6",
+      "family_id": "family-ce20a1772a9d8a68a8f147ad",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1007/s00221-010-2283-6",
+        "doi": "10.1007/s00221-010-2283-6"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Beatriz Calvo‐Merino | Cosimo Urgesi | Guido Orgs"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Springer Science+Business Media"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Experimental Brain Research"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1007/s00221-010-2283-6"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-359f3a29ed1f5c0e75e6bec6",
+        "openalex-W2088489038"
+      ],
+      "titles": [
+        "Extrastriate body area underlies aesthetic evaluation of body stimuli"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2144867145"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2039262251"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4380989034"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W816399673"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2088489038"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "duplicate",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:21Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "b6c4306364e78804f487c498f9899cb21ea2e362080449d85272c94c8d5f119e"
+  },
+  "discipline": "art_criticism",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:21.409791Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "open_access": 5
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "open_access": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "open_access": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 5,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "open_access": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "open_access": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "open_access": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "GB": 1,
+          "IR": 1,
+          "US": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "GB": 1,
+            "IR": 1,
+            "US": 1
+          },
+          "effective_categories": 3.0,
+          "hhi": 0.3333333333333333,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 1.0,
+          "shares": {
+            "GB": 0.3333333333333333,
+            "IR": 0.3333333333333333,
+            "US": 0.3333333333333333
+          }
+        },
+        "claim_exposure_hhi": 0.3333333333333333,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 3.0,
+        "hhi": 0.3333333333333333,
+        "known_count": 3,
+        "max_share": 0.3333333333333333,
+        "metadata_completeness": 0.6,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "GB": 0.3333333333333333,
+          "IR": 0.3333333333333333,
+          "US": 0.3333333333333333
+        },
+        "source_count": {
+          "category_counts": {
+            "GB": 1,
+            "IR": 1,
+            "US": 1
+          },
+          "effective_categories": 3.0,
+          "hhi": 0.3333333333333333,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 1.0,
+          "shares": {
+            "GB": 0.3333333333333333,
+            "IR": 0.3333333333333333,
+            "US": 0.3333333333333333
+          }
+        },
+        "source_count_hhi": 0.3333333333333333,
+        "status": "fail",
+        "unknown_count": 2,
+        "unknown_rate": 0.4
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 5
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 5,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.9599999999999997,
+        "category_counts": {
+          "2000s": 1,
+          "2010s": 2,
+          "2020s": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "2000s": 1,
+            "2010s": 2,
+            "2020s": 2
+          },
+          "effective_categories": 2.7777777777777772,
+          "hhi": 0.3600000000000001,
+          "max_share": 0.4,
+          "normalized_balance": 0.9599999999999997,
+          "shares": {
+            "2000s": 0.2,
+            "2010s": 0.4,
+            "2020s": 0.4
+          }
+        },
+        "claim_exposure_hhi": 0.3600000000000001,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 2.7777777777777772,
+        "hhi": 0.3600000000000001,
+        "known_count": 5,
+        "max_share": 0.4,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9599999999999997,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "2000s": 0.2,
+          "2010s": 0.4,
+          "2020s": 0.4
+        },
+        "source_count": {
+          "category_counts": {
+            "2000s": 1,
+            "2010s": 2,
+            "2020s": 2
+          },
+          "effective_categories": 2.7777777777777772,
+          "hhi": 0.3600000000000001,
+          "max_share": 0.4,
+          "normalized_balance": 0.9599999999999997,
+          "shares": {
+            "2000s": 0.2,
+            "2010s": 0.4,
+            "2020s": 0.4
+          }
+        },
+        "source_count_hhi": 0.3600000000000001,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "Fluminense Federal University": 1,
+          "Ohio State University Press": 1,
+          "Oxford University Press": 1,
+          "SAGE Publishing": 1,
+          "Springer Science+Business Media": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Fluminense Federal University": 1,
+            "Ohio State University Press": 1,
+            "Oxford University Press": 1,
+            "SAGE Publishing": 1,
+            "Springer Science+Business Media": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Fluminense Federal University": 0.2,
+            "Ohio State University Press": 0.2,
+            "Oxford University Press": 0.2,
+            "SAGE Publishing": 0.2,
+            "Springer Science+Business Media": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.20000000000000004,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 4.999999999999999,
+        "hhi": 0.20000000000000004,
+        "known_count": 5,
+        "max_share": 0.2,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "Fluminense Federal University": 0.2,
+          "Ohio State University Press": 0.2,
+          "Oxford University Press": 0.2,
+          "SAGE Publishing": 0.2,
+          "Springer Science+Business Media": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "Fluminense Federal University": 1,
+            "Ohio State University Press": 1,
+            "Oxford University Press": 1,
+            "SAGE Publishing": 1,
+            "Springer Science+Business Media": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Fluminense Federal University": 0.2,
+            "Ohio State University Press": 0.2,
+            "Oxford University Press": 0.2,
+            "SAGE Publishing": 0.2,
+            "Springer Science+Business Media": 0.2
+          }
+        },
+        "source_count_hhi": 0.20000000000000004,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.6399999999999997,
+        "category_counts": {
+          "article": 4,
+          "book": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 4,
+            "book": 1
+          },
+          "effective_categories": 1.4705882352941173,
+          "hhi": 0.6800000000000002,
+          "max_share": 0.8,
+          "normalized_balance": 0.6399999999999997,
+          "shares": {
+            "article": 0.8,
+            "book": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.6800000000000002,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.4705882352941173,
+        "hhi": 0.6800000000000002,
+        "known_count": 5,
+        "max_share": 0.8,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.6399999999999997,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "article": 0.8,
+          "book": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 4,
+            "book": 1
+          },
+          "effective_categories": 1.4705882352941173,
+          "hhi": 0.6800000000000002,
+          "max_share": 0.8,
+          "normalized_balance": 0.6399999999999997,
+          "shares": {
+            "article": 0.8,
+            "book": 0.2
+          }
+        },
+        "source_count_hhi": 0.6800000000000002,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "Experimental Brain Research": 1,
+          "Journal of the Royal Society of Medicine": 1,
+          "Ohio State University Press eBooks": 1,
+          "Passagens Revista Internacional de História Política e Cultura Jurídica": 1,
+          "The British Journal of Aesthetics": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Experimental Brain Research": 1,
+            "Journal of the Royal Society of Medicine": 1,
+            "Ohio State University Press eBooks": 1,
+            "Passagens Revista Internacional de História Política e Cultura Jurídica": 1,
+            "The British Journal of Aesthetics": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Experimental Brain Research": 0.2,
+            "Journal of the Royal Society of Medicine": 0.2,
+            "Ohio State University Press eBooks": 0.2,
+            "Passagens Revista Internacional de História Política e Cultura Jurídica": 0.2,
+            "The British Journal of Aesthetics": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.20000000000000004,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 4.999999999999999,
+        "hhi": 0.20000000000000004,
+        "known_count": 5,
+        "max_share": 0.2,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "Experimental Brain Research": 0.2,
+          "Journal of the Royal Society of Medicine": 0.2,
+          "Ohio State University Press eBooks": 0.2,
+          "Passagens Revista Internacional de História Política e Cultura Jurídica": 0.2,
+          "The British Journal of Aesthetics": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "Experimental Brain Research": 1,
+            "Journal of the Royal Society of Medicine": 1,
+            "Ohio State University Press eBooks": 1,
+            "Passagens Revista Internacional de História Política e Cultura Jurídica": 1,
+            "The British Journal of Aesthetics": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Experimental Brain Research": 0.2,
+            "Journal of the Royal Society of Medicine": 0.2,
+            "Ohio State University Press eBooks": 0.2,
+            "Passagens Revista Internacional de História Política e Cultura Jurídica": 0.2,
+            "The British Journal of Aesthetics": 0.2
+          }
+        },
+        "source_count_hhi": 0.20000000000000004,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      }
+    },
+    "exception": {},
+    "family_count": 5,
+    "family_digest": "1d91c92f480f1483a9660495c45ba536aab9a3692b32c3cff0124c775877a779",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 2,
+    "raw_status": "fail",
+    "report_id": "diversity-fd7539ed9bf36ce879f33300",
+    "requirement_digest": "55e68b44361fabffad249902fcc658e60aafb0e08ac4ea0469882873ecc0bff2",
+    "requirement_id": "REQ-DIV-ART-CRITICISM-10",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "f6939577536de59882256ded1697b9bc1db3db3c65f56491ea593cd23557efed",
+  "packet_id": "DIV-ART-CRITICISM-10",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-ART-CRITICISM-10",
+    "research_question": "T079 structural source-diversity evaluation for DIV-ART-CRITICISM-10"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-ART-CRITICISM-10",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Louise Lankston | Pearce Cusack | Chris Fremantle",
+      "canonical_work_id": "doi:10.1258/jrsm.2010.100256",
+      "doi": "10.1258/jrsm.2010.100256",
+      "geography": "GB",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2144867145",
+      "publisher": "SAGE Publishing",
+      "retrieved_uri": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2144867145",
+      "source_type": "article",
+      "stance": null,
+      "title": "Visual art in hospitals: case studies and review of the evidence",
+      "venue": "Journal of the Royal Society of Medicine"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Louise Lankston | Pearce Cusack | Chris Fremantle",
+      "canonical_work_id": "doi:10.1258/jrsm.2010.100256",
+      "doi": "10.1258/jrsm.2010.100256",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1258%2Fjrsm.2010.100256",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "crossref",
+      "provider_record_id": "10.1258/jrsm.2010.100256",
+      "publisher": "SAGE Publications",
+      "retrieved_uri": "https://api.crossref.org/works/10.1258%2Fjrsm.2010.100256",
+      "source_id": "crossref-961ba9508411a73b7450f085",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Visual art in hospitals: case studies and review of the                evidence",
+      "venue": "Journal of the Royal Society of Medicine"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Sherri Irvin",
+      "canonical_work_id": "doi:10.1093/aesthj/aym039",
+      "doi": "10.1093/aesthj/aym039",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2039262251",
+      "publisher": "Oxford University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2039262251",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Pervasiveness of the Aesthetic in Ordinary Experience",
+      "venue": "The British Journal of Aesthetics"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "S. Irvin",
+      "canonical_work_id": "doi:10.1093/aesthj/aym039",
+      "doi": "10.1093/aesthj/aym039",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1093%2Faesthj%2Faym039",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "crossref",
+      "provider_record_id": "10.1093/aesthj/aym039",
+      "publisher": "Oxford University Press (OUP)",
+      "retrieved_uri": "https://api.crossref.org/works/10.1093%2Faesthj%2Faym039",
+      "source_id": "crossref-1ae2ad16698cdefa58412160",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "The Pervasiveness of the Aesthetic in Ordinary Experience",
+      "venue": "The British Journal of Aesthetics"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Hamed Jamalpour | Javad Yaghoobi Derabi",
+      "canonical_work_id": "doi:10.15175/1984-2503-202315208",
+      "doi": "10.15175/1984-2503-202315208",
+      "geography": "IR",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W4380989034",
+      "publisher": "Fluminense Federal University",
+      "retrieved_uri": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W4380989034",
+      "source_type": "article",
+      "stance": null,
+      "title": "Aesthetic Experience, Neurology and Cultural Memory",
+      "venue": "Passagens Revista Internacional de História Política e Cultura Jurídica"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Hamed Jamalpour | Javad Yaghoobi Derabi",
+      "canonical_work_id": "doi:10.15175/1984-2503-202315208",
+      "doi": "10.15175/1984-2503-202315208",
+      "geography": null,
+      "language": null,
+      "metadata_provenance": "https://api.crossref.org/works/10.15175%2F1984-2503-202315208",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "unknown",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "crossref",
+      "provider_record_id": "10.15175/1984-2503-202315208",
+      "publisher": "Passagens",
+      "retrieved_uri": "https://api.crossref.org/works/10.15175%2F1984-2503-202315208",
+      "source_id": "crossref-85e02008753ff7694aaedd29",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Aesthetic Experience, Neurology and Cultural Memory",
+      "venue": "Passagens: Revista Internacional de História Política e Cultura Jurídica"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "John Paul M. Kanwit",
+      "canonical_work_id": "doi:10.2307/j.ctv16qk36q",
+      "doi": "10.2307/j.ctv16qk36q",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W816399673",
+      "publisher": "Ohio State University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W816399673",
+      "source_type": "book",
+      "stance": null,
+      "title": "Victorian Art Criticism and the Woman Writer",
+      "venue": "Ohio State University Press eBooks"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "John Paul M. Kanwit",
+      "canonical_work_id": "doi:10.2307/j.ctv16qk36q",
+      "doi": "10.2307/j.ctv16qk36q",
+      "geography": null,
+      "language": null,
+      "metadata_provenance": "https://api.crossref.org/works/10.2307%2Fj.ctv16qk36q",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "unknown",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "crossref",
+      "provider_record_id": "10.2307/j.ctv16qk36q",
+      "publisher": "Ohio State University Press",
+      "retrieved_uri": "https://api.crossref.org/works/10.2307%2Fj.ctv16qk36q",
+      "source_id": "crossref-e477a5833a98f63512571011",
+      "source_type": "monograph",
+      "stance": null,
+      "title": "Victorian Art Criticism and the Woman Writer",
+      "venue": null
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Beatriz Calvo‐Merino | Cosimo Urgesi | Guido Orgs",
+      "canonical_work_id": "doi:10.1007/s00221-010-2283-6",
+      "doi": "10.1007/s00221-010-2283-6",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2088489038",
+      "publisher": "Springer Science+Business Media",
+      "retrieved_uri": "https://api.openalex.org/works?search=aesthetic+criticism+visual+art&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2088489038",
+      "source_type": "article",
+      "stance": null,
+      "title": "Extrastriate body area underlies aesthetic evaluation of body stimuli",
+      "venue": "Experimental Brain Research"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "B. Calvo-Merino | C. Urgesi | G. Orgs",
+      "canonical_work_id": "doi:10.1007/s00221-010-2283-6",
+      "doi": "10.1007/s00221-010-2283-6",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1007%2Fs00221-010-2283-6",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "crossref",
+      "provider_record_id": "10.1007/s00221-010-2283-6",
+      "publisher": "Springer Science and Business Media LLC",
+      "retrieved_uri": "https://api.crossref.org/works/10.1007%2Fs00221-010-2283-6",
+      "source_id": "crossref-359f3a29ed1f5c0e75e6bec6",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Extrastriate body area underlies aesthetic evaluation of body stimuli",
+      "venue": "Experimental Brain Research"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "duplicate"
+}

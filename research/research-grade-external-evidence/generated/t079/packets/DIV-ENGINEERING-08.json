@@ -1,0 +1,1442 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-349139bb09a6adf2907aa9f7",
+      "canonical_key": "doi:10.13182/nse81-a20112",
+      "family_id": "family-349139bb09a6adf2907aa9f7",
+      "identifiers": {
+        "canonical_work_id": "doi:10.13182/nse81-a20112",
+        "doi": "10.13182/nse81-a20112"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Chia‐Jung Hsu"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Taylor & Francis"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Nuclear Science and Engineering"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.13182/nse81-a20112"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2744008313"
+      ],
+      "titles": [
+        "Numerical Heat Transfer and Fluid Flow"
+      ]
+    },
+    {
+      "canonical_id": "family-5110a99fc4a7797089244119",
+      "canonical_key": "https://openalex.org/w1601605178",
+      "family_id": "family-5110a99fc4a7797089244119",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1601605178"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Kailash Chander Kapur | Leonard R. Lamberson"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1601605178"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1601605178"
+      ],
+      "titles": [
+        "Reliability in engineering design"
+      ]
+    },
+    {
+      "canonical_id": "family-659925835fb0220bc7bb72c6",
+      "canonical_key": "doi:10.1115/1.3426572",
+      "family_id": "family-659925835fb0220bc7bb72c6",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1115/1.3426572",
+        "doi": "10.1115/1.3426572"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "R. L. Fox | C. D. Mote"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "ASM International"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of Dynamic Systems Measurement and Control"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1115/1.3426572"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2003713053"
+      ],
+      "titles": [
+        "Optimization Methods for Engineering Design"
+      ]
+    },
+    {
+      "canonical_id": "family-8496e6ed392dae76ceed757a",
+      "canonical_key": "doi:10.1016/0094-114x(73)90012-8",
+      "family_id": "family-8496e6ed392dae76ceed757a",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/0094-114x(73)90012-8",
+        "doi": "10.1016/0094-114x(73)90012-8"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "K. H. Hunt"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Mechanism and Machine Theory"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/0094-114x(73)90012-8"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2911830038"
+      ],
+      "titles": [
+        "Mechanical Engineering Design"
+      ]
+    },
+    {
+      "canonical_id": "family-9fac821cee321b9cda6b669e",
+      "canonical_key": "doi:10.1007/bf01580003",
+      "family_id": "family-9fac821cee321b9cda6b669e",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1007/bf01580003",
+        "doi": "10.1007/bf01580003"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Susan Finger | John R. Dixon"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Springer Science+Business Media"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Research in Engineering Design"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1007/bf01580003"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2091502957"
+      ],
+      "titles": [
+        "A review of research in mechanical engineering design. Part I: Descriptive, prescriptive, and computer-based models of design processes"
+      ]
+    },
+    {
+      "canonical_id": "family-a805ec4c532fd24f5234574c",
+      "canonical_key": "https://openalex.org/w1578829123",
+      "family_id": "family-a805ec4c532fd24f5234574c",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1578829123"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Richard G. Budynas | J. Keith Nisbett"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "other"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1578829123"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1578829123"
+      ],
+      "titles": [
+        "Shigley's Mechanical Engineering Design"
+      ]
+    },
+    {
+      "canonical_id": "family-ada27488e1204bdd6533fe1c",
+      "canonical_key": "https://openalex.org/w1552609157",
+      "family_id": "family-ada27488e1204bdd6533fe1c",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1552609157"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "M. Hetényi"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "École Polytechnique Fédérale de Lausanne"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Infoscience (Ecole Polytechnique Fédérale de Lausanne)"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1552609157"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1552609157"
+      ],
+      "titles": [
+        "Beams on Elastic Foundation: theory with applications in the fields of civil and mechanical engineering"
+      ]
+    },
+    {
+      "canonical_id": "family-fe7ece1a0c5f77f1bfe77ec5",
+      "canonical_key": "doi:10.1049/sqj.1963.0055",
+      "family_id": "family-fe7ece1a0c5f77f1bfe77ec5",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1049/sqj.1963.0055",
+        "doi": "10.1049/sqj.1963.0055"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1960s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Students Quarterly Journal"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1049/sqj.1963.0055"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W3041149780"
+      ],
+      "titles": [
+        "Engineering Design: A Systematic Approach"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W3041149780"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1552609157"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2911830038"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1578829123"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1601605178"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2003713053"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2091502957"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2744008313"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "historical",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:24Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "e2ff542a3882488511c5de773ea14788ce5ae9d5ec36bd36f8274bd7cbcc4aa5"
+  },
+  "discipline": "engineering",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across period",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:24.360500Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.75,
+        "category_counts": {
+          "closed_or_unknown": 6,
+          "open_access": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 6,
+            "open_access": 2
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "closed_or_unknown": 0.75,
+            "open_access": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.625,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.6,
+        "hhi": 0.625,
+        "known_count": 8,
+        "max_share": 0.75,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.75,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 0.75,
+          "open_access": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 6,
+            "open_access": 2
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "closed_or_unknown": 0.75,
+            "open_access": 0.25
+          }
+        },
+        "source_count_hhi": 0.625,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "US": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "US": 3
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "US": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 3,
+        "max_share": 1.0,
+        "metadata_completeness": 0.375,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "US": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "US": 3
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "US": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 5,
+        "unknown_rate": 0.625
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.7968749999999999,
+        "category_counts": {
+          "1960s": 1,
+          "1970s": 5,
+          "1980s": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1960s": 1,
+            "1970s": 5,
+            "1980s": 2
+          },
+          "effective_categories": 2.1333333333333333,
+          "hhi": 0.46875,
+          "max_share": 0.625,
+          "normalized_balance": 0.7968749999999999,
+          "shares": {
+            "1960s": 0.125,
+            "1970s": 0.625,
+            "1980s": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.46875,
+        "corrective_query": "independent source evidence across period",
+        "covered_strata": [
+          "1960s",
+          "1970s"
+        ],
+        "dimension": "period",
+        "effective_categories": 2.1333333333333333,
+        "hhi": 0.46875,
+        "known_count": 8,
+        "max_share": 0.625,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.7968749999999999,
+        "required_strata": [
+          "1960s",
+          "1970s"
+        ],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "1960s": 0.125,
+          "1970s": 0.625,
+          "1980s": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "1960s": 1,
+            "1970s": 5,
+            "1980s": 2
+          },
+          "effective_categories": 2.1333333333333333,
+          "hhi": 0.46875,
+          "max_share": 0.625,
+          "normalized_balance": 0.7968749999999999,
+          "shares": {
+            "1960s": 0.125,
+            "1970s": 0.625,
+            "1980s": 0.25
+          }
+        },
+        "source_count_hhi": 0.46875,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "ASM International": 1,
+          "Elsevier BV": 1,
+          "Springer Science+Business Media": 1,
+          "Taylor & Francis": 1,
+          "École Polytechnique Fédérale de Lausanne": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "ASM International": 1,
+            "Elsevier BV": 1,
+            "Springer Science+Business Media": 1,
+            "Taylor & Francis": 1,
+            "École Polytechnique Fédérale de Lausanne": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "ASM International": 0.2,
+            "Elsevier BV": 0.2,
+            "Springer Science+Business Media": 0.2,
+            "Taylor & Francis": 0.2,
+            "École Polytechnique Fédérale de Lausanne": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.20000000000000004,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 4.999999999999999,
+        "hhi": 0.20000000000000004,
+        "known_count": 5,
+        "max_share": 0.2,
+        "metadata_completeness": 0.625,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "ASM International": 0.2,
+          "Elsevier BV": 0.2,
+          "Springer Science+Business Media": 0.2,
+          "Taylor & Francis": 0.2,
+          "École Polytechnique Fédérale de Lausanne": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "ASM International": 1,
+            "Elsevier BV": 1,
+            "Springer Science+Business Media": 1,
+            "Taylor & Francis": 1,
+            "École Polytechnique Fédérale de Lausanne": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "ASM International": 0.2,
+            "Elsevier BV": 0.2,
+            "Springer Science+Business Media": 0.2,
+            "Taylor & Francis": 0.2,
+            "École Polytechnique Fédérale de Lausanne": 0.2
+          }
+        },
+        "source_count_hhi": 0.20000000000000004,
+        "status": "fail",
+        "unknown_count": 3,
+        "unknown_rate": 0.375
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.6093749999999999,
+        "category_counts": {
+          "article": 6,
+          "book-review": 1,
+          "other": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 6,
+            "book-review": 1,
+            "other": 1
+          },
+          "effective_categories": 1.6842105263157894,
+          "hhi": 0.59375,
+          "max_share": 0.75,
+          "normalized_balance": 0.6093749999999999,
+          "shares": {
+            "article": 0.75,
+            "book-review": 0.125,
+            "other": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.59375,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.6842105263157894,
+        "hhi": 0.59375,
+        "known_count": 8,
+        "max_share": 0.75,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.6093749999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 0.75,
+          "book-review": 0.125,
+          "other": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 6,
+            "book-review": 1,
+            "other": 1
+          },
+          "effective_categories": 1.6842105263157894,
+          "hhi": 0.59375,
+          "max_share": 0.75,
+          "normalized_balance": 0.6093749999999999,
+          "shares": {
+            "article": 0.75,
+            "book-review": 0.125,
+            "other": 0.125
+          }
+        },
+        "source_count_hhi": 0.59375,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "Infoscience (Ecole Polytechnique Fédérale de Lausanne)": 1,
+          "Journal of Dynamic Systems Measurement and Control": 1,
+          "Mechanism and Machine Theory": 1,
+          "Nuclear Science and Engineering": 1,
+          "Research in Engineering Design": 1,
+          "Students Quarterly Journal": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Infoscience (Ecole Polytechnique Fédérale de Lausanne)": 1,
+            "Journal of Dynamic Systems Measurement and Control": 1,
+            "Mechanism and Machine Theory": 1,
+            "Nuclear Science and Engineering": 1,
+            "Research in Engineering Design": 1,
+            "Students Quarterly Journal": 1
+          },
+          "effective_categories": 5.999999999999999,
+          "hhi": 0.16666666666666669,
+          "max_share": 0.16666666666666666,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Infoscience (Ecole Polytechnique Fédérale de Lausanne)": 0.16666666666666666,
+            "Journal of Dynamic Systems Measurement and Control": 0.16666666666666666,
+            "Mechanism and Machine Theory": 0.16666666666666666,
+            "Nuclear Science and Engineering": 0.16666666666666666,
+            "Research in Engineering Design": 0.16666666666666666,
+            "Students Quarterly Journal": 0.16666666666666666
+          }
+        },
+        "claim_exposure_hhi": 0.16666666666666669,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 5.999999999999999,
+        "hhi": 0.16666666666666669,
+        "known_count": 6,
+        "max_share": 0.16666666666666666,
+        "metadata_completeness": 0.75,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Infoscience (Ecole Polytechnique Fédérale de Lausanne)": 0.16666666666666666,
+          "Journal of Dynamic Systems Measurement and Control": 0.16666666666666666,
+          "Mechanism and Machine Theory": 0.16666666666666666,
+          "Nuclear Science and Engineering": 0.16666666666666666,
+          "Research in Engineering Design": 0.16666666666666666,
+          "Students Quarterly Journal": 0.16666666666666666
+        },
+        "source_count": {
+          "category_counts": {
+            "Infoscience (Ecole Polytechnique Fédérale de Lausanne)": 1,
+            "Journal of Dynamic Systems Measurement and Control": 1,
+            "Mechanism and Machine Theory": 1,
+            "Nuclear Science and Engineering": 1,
+            "Research in Engineering Design": 1,
+            "Students Quarterly Journal": 1
+          },
+          "effective_categories": 5.999999999999999,
+          "hhi": 0.16666666666666669,
+          "max_share": 0.16666666666666666,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Infoscience (Ecole Polytechnique Fédérale de Lausanne)": 0.16666666666666666,
+            "Journal of Dynamic Systems Measurement and Control": 0.16666666666666666,
+            "Mechanism and Machine Theory": 0.16666666666666666,
+            "Nuclear Science and Engineering": 0.16666666666666666,
+            "Research in Engineering Design": 0.16666666666666666,
+            "Students Quarterly Journal": 0.16666666666666666
+          }
+        },
+        "source_count_hhi": 0.16666666666666669,
+        "status": "fail",
+        "unknown_count": 2,
+        "unknown_rate": 0.25
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "986effbc958a2cd8080b0d2b15a90a31cd87883b35f7846075db93d3446c8df2",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-27a1e57369d2a0eb0c6f08db",
+    "requirement_digest": "537322934f8d0d86317ea2ad763ddb3f5e0acf07986385531db6a3136b3e7363",
+    "requirement_id": "REQ-DIV-ENGINEERING-08",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "fca8368c4cfd0017691f4a0aaace1ec3c30ca3d0cedfd3e43cb0ea0d7e4532a2",
+  "packet_id": "DIV-ENGINEERING-08",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {
+      "period": [
+        "1960s",
+        "1970s"
+      ]
+    },
+    "requirement_id": "REQ-DIV-ENGINEERING-08",
+    "research_question": "T079 structural source-diversity evaluation for DIV-ENGINEERING-08"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-ENGINEERING-08",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "open_access",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.1049/sqj.1963.0055",
+      "doi": "10.1049/sqj.1963.0055",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1960s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W3041149780",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W3041149780",
+      "source_type": "article",
+      "stance": null,
+      "title": "Engineering Design: A Systematic Approach",
+      "venue": "Students Quarterly Journal"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "M. Hetényi",
+      "canonical_work_id": "https://openalex.org/W1552609157",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1552609157",
+      "publisher": "École Polytechnique Fédérale de Lausanne",
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1552609157",
+      "source_type": "article",
+      "stance": null,
+      "title": "Beams on Elastic Foundation: theory with applications in the fields of civil and mechanical engineering",
+      "venue": "Infoscience (Ecole Polytechnique Fédérale de Lausanne)"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "K. H. Hunt",
+      "canonical_work_id": "doi:10.1016/0094-114x(73)90012-8",
+      "doi": "10.1016/0094-114x(73)90012-8",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2911830038",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2911830038",
+      "source_type": "article",
+      "stance": null,
+      "title": "Mechanical Engineering Design",
+      "venue": "Mechanism and Machine Theory"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Richard G. Budynas | J. Keith Nisbett",
+      "canonical_work_id": "https://openalex.org/W1578829123",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1578829123",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1578829123",
+      "source_type": "other",
+      "stance": null,
+      "title": "Shigley's Mechanical Engineering Design",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Kailash Chander Kapur | Leonard R. Lamberson",
+      "canonical_work_id": "https://openalex.org/W1601605178",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1601605178",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1601605178",
+      "source_type": "article",
+      "stance": null,
+      "title": "Reliability in engineering design",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "R. L. Fox | C. D. Mote",
+      "canonical_work_id": "doi:10.1115/1.3426572",
+      "doi": "10.1115/1.3426572",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2003713053",
+      "publisher": "ASM International",
+      "retrieved_uri": "https://api.openalex.org/works?search=engineering+design&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2003713053",
+      "source_type": "article",
+      "stance": null,
+      "title": "Optimization Methods for Engineering Design",
+      "venue": "Journal of Dynamic Systems Measurement and Control"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Susan Finger | John R. Dixon",
+      "canonical_work_id": "doi:10.1007/bf01580003",
+      "doi": "10.1007/bf01580003",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2091502957",
+      "publisher": "Springer Science+Business Media",
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2091502957",
+      "source_type": "article",
+      "stance": null,
+      "title": "A review of research in mechanical engineering design. Part I: Descriptive, prescriptive, and computer-based models of design processes",
+      "venue": "Research in Engineering Design"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Chia‐Jung Hsu",
+      "canonical_work_id": "doi:10.13182/nse81-a20112",
+      "doi": "10.13182/nse81-a20112",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2744008313",
+      "publisher": "Taylor & Francis",
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2744008313",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "Numerical Heat Transfer and Fluid Flow",
+      "venue": "Nuclear Science and Engineering"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "historical"
+}

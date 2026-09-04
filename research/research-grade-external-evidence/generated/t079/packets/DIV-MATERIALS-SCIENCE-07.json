@@ -1,0 +1,1472 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-666df02025d9abbc5045ee9a",
+      "canonical_key": "doi:10.1016/j.enggeo.2005.06.006",
+      "family_id": "family-666df02025d9abbc5045ee9a",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.enggeo.2005.06.006",
+        "doi": "10.1016/j.enggeo.2005.06.006"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Adnan Aydın | A. Basu"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "HK"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Engineering Geology"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.enggeo.2005.06.006"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2060754934"
+      ],
+      "titles": [
+        "The Schmidt hammer in rock material characterization"
+      ]
+    },
+    {
+      "canonical_id": "family-731d297589cfeb70f9ef83f0",
+      "canonical_key": "doi:10.1021/cm0101069",
+      "family_id": "family-731d297589cfeb70f9ef83f0",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1021/cm0101069",
+        "doi": "10.1021/cm0101069"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Michał Kruk | Mietek Jaroniec"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "American Chemical Society"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Chemistry of Materials"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1021/cm0101069"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2024610881"
+      ],
+      "titles": [
+        "Gas Adsorption Characterization of Ordered Organic−Inorganic Nanocomposite Materials"
+      ]
+    },
+    {
+      "canonical_id": "family-a5296abed4457816dfacf88c",
+      "canonical_key": "doi:10.1002/9780470020463",
+      "family_id": "family-a5296abed4457816dfacf88c",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1002/9780470020463",
+        "doi": "10.1002/9780470020463"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "L. F. Chen | C. K. Ong | C. P. Neo"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "other"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1002/9780470020463"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W270690376"
+      ],
+      "titles": [
+        "Microwave Electronics: Measurement and Materials Characterization"
+      ]
+    },
+    {
+      "canonical_id": "family-b6b0743b7841b6577cff622f",
+      "canonical_key": "doi:10.1017/s0885715619000812",
+      "family_id": "family-b6b0743b7841b6577cff622f",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1017/s0885715619000812",
+        "doi": "10.1017/s0885715619000812"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Stacy Gates-Rector | Thomas N. Blanton"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Cambridge University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Powder Diffraction"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1017/s0885715619000812"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2986413343"
+      ],
+      "titles": [
+        "The Powder Diffraction File: a quality materials characterization database"
+      ]
+    },
+    {
+      "canonical_id": "family-c4168484a818c82f217c04c3",
+      "canonical_key": "doi:10.1002/0471749095",
+      "family_id": "family-c4168484a818c82f217c04c3",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1002/0471749095",
+        "doi": "10.1002/0471749095"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "D.K. Schroder"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1002/0471749095"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2086103622"
+      ],
+      "titles": [
+        "Semiconductor Material and Device Characterization"
+      ]
+    },
+    {
+      "canonical_id": "family-c4cbeb48c7c2f390f01fb341",
+      "canonical_key": "doi:10.1038/s43246-022-00315-6",
+      "family_id": "family-c4cbeb48c7c2f390f01fb341",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1038/s43246-022-00315-6",
+        "doi": "10.1038/s43246-022-00315-6"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Patrick Reiser | Marlen Neubert | André Eberhard"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "DE"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2020s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Nature Portfolio"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Communications Materials"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1038/s43246-022-00315-6"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W4310273071"
+      ],
+      "titles": [
+        "Graph neural networks for materials science and chemistry"
+      ]
+    },
+    {
+      "canonical_id": "family-da596a30b6ed0bee528b5924",
+      "canonical_key": "doi:10.1098/rsta.2009.0091",
+      "family_id": "family-da596a30b6ed0bee528b5924",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1098/rsta.2009.0091",
+        "doi": "10.1098/rsta.2009.0091"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Gerhard A. Holzapfel | Ray W. Ogden"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "AT"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Royal Society"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1098/rsta.2009.0091"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2102339840"
+      ],
+      "titles": [
+        "Constitutive modelling of passive myocardium: a structurally based framework for material characterization"
+      ]
+    },
+    {
+      "canonical_id": "family-f610cba4764b9970e3d77f70",
+      "canonical_key": "doi:10.1039/c5cs00580a",
+      "family_id": "family-f610cba4764b9970e3d77f70",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1039/c5cs00580a",
+        "doi": "10.1039/c5cs00580a"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Yonggang Wang | Yanfang Song | Yongyao Xia"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "CN"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Royal Society of Chemistry"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Chemical Society Reviews"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1039/c5cs00580a"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2510604673"
+      ],
+      "titles": [
+        "Electrochemical capacitors: mechanism, materials, systems, characterization and applications"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4310273071"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2986413343"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2086103622"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W270690376"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2510604673"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2060754934"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2024610881"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2102339840"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "multilingual",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:42Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "0a87f6fb76013e4d7c966d58c560be20ab15ac84e8ad58230dadec0f8e960af5"
+  },
+  "discipline": "materials_science",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across period",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:42.725833Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.75,
+        "category_counts": {
+          "closed_or_unknown": 6,
+          "open_access": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 6,
+            "open_access": 2
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "closed_or_unknown": 0.75,
+            "open_access": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.625,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.6,
+        "hhi": 0.625,
+        "known_count": 8,
+        "max_share": 0.75,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.75,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 0.75,
+          "open_access": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 6,
+            "open_access": 2
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "closed_or_unknown": 0.75,
+            "open_access": 0.25
+          }
+        },
+        "source_count_hhi": 0.625,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.9722222222222221,
+        "category_counts": {
+          "AT": 1,
+          "CN": 1,
+          "DE": 1,
+          "HK": 1,
+          "US": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "AT": 1,
+            "CN": 1,
+            "DE": 1,
+            "HK": 1,
+            "US": 2
+          },
+          "effective_categories": 4.499999999999999,
+          "hhi": 0.22222222222222227,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 0.9722222222222221,
+          "shares": {
+            "AT": 0.16666666666666666,
+            "CN": 0.16666666666666666,
+            "DE": 0.16666666666666666,
+            "HK": 0.16666666666666666,
+            "US": 0.3333333333333333
+          }
+        },
+        "claim_exposure_hhi": 0.22222222222222227,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 4.499999999999999,
+        "hhi": 0.22222222222222227,
+        "known_count": 6,
+        "max_share": 0.3333333333333333,
+        "metadata_completeness": 0.75,
+        "missing_strata": [],
+        "normalized_balance": 0.9722222222222221,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "AT": 0.16666666666666666,
+          "CN": 0.16666666666666666,
+          "DE": 0.16666666666666666,
+          "HK": 0.16666666666666666,
+          "US": 0.3333333333333333
+        },
+        "source_count": {
+          "category_counts": {
+            "AT": 1,
+            "CN": 1,
+            "DE": 1,
+            "HK": 1,
+            "US": 2
+          },
+          "effective_categories": 4.499999999999999,
+          "hhi": 0.22222222222222227,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 0.9722222222222221,
+          "shares": {
+            "AT": 0.16666666666666666,
+            "CN": 0.16666666666666666,
+            "DE": 0.16666666666666666,
+            "HK": 0.16666666666666666,
+            "US": 0.3333333333333333
+          }
+        },
+        "source_count_hhi": 0.22222222222222227,
+        "status": "fail",
+        "unknown_count": 2,
+        "unknown_rate": 0.25
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [
+          "en"
+        ],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [
+          "en"
+        ],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.7968749999999999,
+        "category_counts": {
+          "2000s": 5,
+          "2010s": 2,
+          "2020s": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "2000s": 5,
+            "2010s": 2,
+            "2020s": 1
+          },
+          "effective_categories": 2.1333333333333333,
+          "hhi": 0.46875,
+          "max_share": 0.625,
+          "normalized_balance": 0.7968749999999999,
+          "shares": {
+            "2000s": 0.625,
+            "2010s": 0.25,
+            "2020s": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.46875,
+        "corrective_query": "independent source evidence across period",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 2.1333333333333333,
+        "hhi": 0.46875,
+        "known_count": 8,
+        "max_share": 0.625,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.7968749999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "2000s": 0.625,
+          "2010s": 0.25,
+          "2020s": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "2000s": 5,
+            "2010s": 2,
+            "2020s": 1
+          },
+          "effective_categories": 2.1333333333333333,
+          "hhi": 0.46875,
+          "max_share": 0.625,
+          "normalized_balance": 0.7968749999999999,
+          "shares": {
+            "2000s": 0.625,
+            "2010s": 0.25,
+            "2020s": 0.125
+          }
+        },
+        "source_count_hhi": 0.46875,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "American Chemical Society": 1,
+          "Cambridge University Press": 1,
+          "Elsevier BV": 1,
+          "Nature Portfolio": 1,
+          "Royal Society": 1,
+          "Royal Society of Chemistry": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "American Chemical Society": 1,
+            "Cambridge University Press": 1,
+            "Elsevier BV": 1,
+            "Nature Portfolio": 1,
+            "Royal Society": 1,
+            "Royal Society of Chemistry": 1
+          },
+          "effective_categories": 5.999999999999999,
+          "hhi": 0.16666666666666669,
+          "max_share": 0.16666666666666666,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "American Chemical Society": 0.16666666666666666,
+            "Cambridge University Press": 0.16666666666666666,
+            "Elsevier BV": 0.16666666666666666,
+            "Nature Portfolio": 0.16666666666666666,
+            "Royal Society": 0.16666666666666666,
+            "Royal Society of Chemistry": 0.16666666666666666
+          }
+        },
+        "claim_exposure_hhi": 0.16666666666666669,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 5.999999999999999,
+        "hhi": 0.16666666666666669,
+        "known_count": 6,
+        "max_share": 0.16666666666666666,
+        "metadata_completeness": 0.75,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "American Chemical Society": 0.16666666666666666,
+          "Cambridge University Press": 0.16666666666666666,
+          "Elsevier BV": 0.16666666666666666,
+          "Nature Portfolio": 0.16666666666666666,
+          "Royal Society": 0.16666666666666666,
+          "Royal Society of Chemistry": 0.16666666666666666
+        },
+        "source_count": {
+          "category_counts": {
+            "American Chemical Society": 1,
+            "Cambridge University Press": 1,
+            "Elsevier BV": 1,
+            "Nature Portfolio": 1,
+            "Royal Society": 1,
+            "Royal Society of Chemistry": 1
+          },
+          "effective_categories": 5.999999999999999,
+          "hhi": 0.16666666666666669,
+          "max_share": 0.16666666666666666,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "American Chemical Society": 0.16666666666666666,
+            "Cambridge University Press": 0.16666666666666666,
+            "Elsevier BV": 0.16666666666666666,
+            "Nature Portfolio": 0.16666666666666666,
+            "Royal Society": 0.16666666666666666,
+            "Royal Society of Chemistry": 0.16666666666666666
+          }
+        },
+        "source_count_hhi": 0.16666666666666669,
+        "status": "fail",
+        "unknown_count": 2,
+        "unknown_rate": 0.25
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.6093749999999999,
+        "category_counts": {
+          "article": 6,
+          "book": 1,
+          "other": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 6,
+            "book": 1,
+            "other": 1
+          },
+          "effective_categories": 1.6842105263157894,
+          "hhi": 0.59375,
+          "max_share": 0.75,
+          "normalized_balance": 0.6093749999999999,
+          "shares": {
+            "article": 0.75,
+            "book": 0.125,
+            "other": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.59375,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.6842105263157894,
+        "hhi": 0.59375,
+        "known_count": 8,
+        "max_share": 0.75,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.6093749999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 0.75,
+          "book": 0.125,
+          "other": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 6,
+            "book": 1,
+            "other": 1
+          },
+          "effective_categories": 1.6842105263157894,
+          "hhi": 0.59375,
+          "max_share": 0.75,
+          "normalized_balance": 0.6093749999999999,
+          "shares": {
+            "article": 0.75,
+            "book": 0.125,
+            "other": 0.125
+          }
+        },
+        "source_count_hhi": 0.59375,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "Chemical Society Reviews": 1,
+          "Chemistry of Materials": 1,
+          "Communications Materials": 1,
+          "Engineering Geology": 1,
+          "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences": 1,
+          "Powder Diffraction": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Chemical Society Reviews": 1,
+            "Chemistry of Materials": 1,
+            "Communications Materials": 1,
+            "Engineering Geology": 1,
+            "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences": 1,
+            "Powder Diffraction": 1
+          },
+          "effective_categories": 5.999999999999999,
+          "hhi": 0.16666666666666669,
+          "max_share": 0.16666666666666666,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Chemical Society Reviews": 0.16666666666666666,
+            "Chemistry of Materials": 0.16666666666666666,
+            "Communications Materials": 0.16666666666666666,
+            "Engineering Geology": 0.16666666666666666,
+            "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences": 0.16666666666666666,
+            "Powder Diffraction": 0.16666666666666666
+          }
+        },
+        "claim_exposure_hhi": 0.16666666666666669,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 5.999999999999999,
+        "hhi": 0.16666666666666669,
+        "known_count": 6,
+        "max_share": 0.16666666666666666,
+        "metadata_completeness": 0.75,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Chemical Society Reviews": 0.16666666666666666,
+          "Chemistry of Materials": 0.16666666666666666,
+          "Communications Materials": 0.16666666666666666,
+          "Engineering Geology": 0.16666666666666666,
+          "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences": 0.16666666666666666,
+          "Powder Diffraction": 0.16666666666666666
+        },
+        "source_count": {
+          "category_counts": {
+            "Chemical Society Reviews": 1,
+            "Chemistry of Materials": 1,
+            "Communications Materials": 1,
+            "Engineering Geology": 1,
+            "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences": 1,
+            "Powder Diffraction": 1
+          },
+          "effective_categories": 5.999999999999999,
+          "hhi": 0.16666666666666669,
+          "max_share": 0.16666666666666666,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Chemical Society Reviews": 0.16666666666666666,
+            "Chemistry of Materials": 0.16666666666666666,
+            "Communications Materials": 0.16666666666666666,
+            "Engineering Geology": 0.16666666666666666,
+            "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences": 0.16666666666666666,
+            "Powder Diffraction": 0.16666666666666666
+          }
+        },
+        "source_count_hhi": 0.16666666666666669,
+        "status": "fail",
+        "unknown_count": 2,
+        "unknown_rate": 0.25
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "651727df14d3a8fe71c14e646fd7f754206799dc6287183befb29eeb121e9802",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-caf862919784cf27aa57a814",
+    "requirement_digest": "38af4923aa19c31ca83bdcbf829f8c419db366b2e67a0857cd8fd4a5d0740389",
+    "requirement_id": "REQ-DIV-MATERIALS-SCIENCE-07",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "85315a4b4b8ba8ffb4e41b6e7fc33584a4ef06bea8a9fb0013bb36b5f2f2c1e5",
+  "packet_id": "DIV-MATERIALS-SCIENCE-07",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {
+      "language": [
+        "en"
+      ]
+    },
+    "requirement_id": "REQ-DIV-MATERIALS-SCIENCE-07",
+    "research_question": "T079 structural source-diversity evaluation for DIV-MATERIALS-SCIENCE-07"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-MATERIALS-SCIENCE-07",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Patrick Reiser | Marlen Neubert | André Eberhard",
+      "canonical_work_id": "doi:10.1038/s43246-022-00315-6",
+      "doi": "10.1038/s43246-022-00315-6",
+      "geography": "DE",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W4310273071",
+      "publisher": "Nature Portfolio",
+      "retrieved_uri": "https://api.openalex.org/works?search=materials+science&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W4310273071",
+      "source_type": "article",
+      "stance": null,
+      "title": "Graph neural networks for materials science and chemistry",
+      "venue": "Communications Materials"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Stacy Gates-Rector | Thomas N. Blanton",
+      "canonical_work_id": "doi:10.1017/s0885715619000812",
+      "doi": "10.1017/s0885715619000812",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2986413343",
+      "publisher": "Cambridge University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2986413343",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Powder Diffraction File: a quality materials characterization database",
+      "venue": "Powder Diffraction"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "D.K. Schroder",
+      "canonical_work_id": "doi:10.1002/0471749095",
+      "doi": "10.1002/0471749095",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2086103622",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2086103622",
+      "source_type": "book",
+      "stance": null,
+      "title": "Semiconductor Material and Device Characterization",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "L. F. Chen | C. K. Ong | C. P. Neo",
+      "canonical_work_id": "doi:10.1002/9780470020463",
+      "doi": "10.1002/9780470020463",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W270690376",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W270690376",
+      "source_type": "other",
+      "stance": null,
+      "title": "Microwave Electronics: Measurement and Materials Characterization",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Yonggang Wang | Yanfang Song | Yongyao Xia",
+      "canonical_work_id": "doi:10.1039/c5cs00580a",
+      "doi": "10.1039/c5cs00580a",
+      "geography": "CN",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2510604673",
+      "publisher": "Royal Society of Chemistry",
+      "retrieved_uri": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2510604673",
+      "source_type": "article",
+      "stance": null,
+      "title": "Electrochemical capacitors: mechanism, materials, systems, characterization and applications",
+      "venue": "Chemical Society Reviews"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Adnan Aydın | A. Basu",
+      "canonical_work_id": "doi:10.1016/j.enggeo.2005.06.006",
+      "doi": "10.1016/j.enggeo.2005.06.006",
+      "geography": "HK",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2060754934",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2060754934",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Schmidt hammer in rock material characterization",
+      "venue": "Engineering Geology"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Michał Kruk | Mietek Jaroniec",
+      "canonical_work_id": "doi:10.1021/cm0101069",
+      "doi": "10.1021/cm0101069",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2024610881",
+      "publisher": "American Chemical Society",
+      "retrieved_uri": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2024610881",
+      "source_type": "article",
+      "stance": null,
+      "title": "Gas Adsorption Characterization of Ordered Organic−Inorganic Nanocomposite Materials",
+      "venue": "Chemistry of Materials"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Gerhard A. Holzapfel | Ray W. Ogden",
+      "canonical_work_id": "doi:10.1098/rsta.2009.0091",
+      "doi": "10.1098/rsta.2009.0091",
+      "geography": "AT",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2102339840",
+      "publisher": "Royal Society",
+      "retrieved_uri": "https://api.openalex.org/works?search=materials+characterization&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2102339840",
+      "source_type": "article",
+      "stance": null,
+      "title": "Constitutive modelling of passive myocardium: a structurally based framework for material characterization",
+      "venue": "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "multilingual"
+}

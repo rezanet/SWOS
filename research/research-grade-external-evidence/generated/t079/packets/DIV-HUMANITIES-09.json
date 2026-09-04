@@ -1,0 +1,1337 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-5f6209bc9100dce90663b9cd",
+      "canonical_key": "doi:10.7208/chicago/9780226545721.001.0001",
+      "family_id": "family-5f6209bc9100dce90663b9cd",
+      "identifiers": {
+        "canonical_work_id": "doi:10.7208/chicago/9780226545721.001.0001",
+        "doi": "10.7208/chicago/9780226545721.001.0001"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Staffan Müller‐Wille | Hans‐Jörg Rheinberger"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "DE"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.7208/chicago/9780226545721.001.0001"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W659542164"
+      ],
+      "titles": [
+        "A Cultural History of Heredity"
+      ]
+    },
+    {
+      "canonical_id": "family-78200d83ba3cf2aa8340c7b0",
+      "canonical_key": "https://openalex.org/w2158691812",
+      "family_id": "family-78200d83ba3cf2aa8340c7b0",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W2158691812"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Robert Darnton"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "other"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W2158691812"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2158691812"
+      ],
+      "titles": [
+        "The Great Cat Massacre: And Other Episodes in French Cultural History"
+      ]
+    },
+    {
+      "canonical_id": "family-93badb7e943b7b9f9c832908",
+      "canonical_key": "https://openalex.org/w1510639147",
+      "family_id": "family-93badb7e943b7b9f9c832908",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1510639147"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Peter J. Burke"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1510639147"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1510639147"
+      ],
+      "titles": [
+        "Varieties of cultural history"
+      ]
+    },
+    {
+      "canonical_id": "family-caea66a89d55e4b838d08272",
+      "canonical_key": "doi:10.5860/choice.40-5039",
+      "family_id": "family-caea66a89d55e4b838d08272",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.40-5039",
+        "doi": "10.5860/choice.40-5039"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.40-5039"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1488863503"
+      ],
+      "titles": [
+        "Photography: a cultural history"
+      ]
+    },
+    {
+      "canonical_id": "family-d6306bbd927c1f47210a1514",
+      "canonical_key": "doi:10.5860/choice.32-2613",
+      "family_id": "family-d6306bbd927c1f47210a1514",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.32-2613",
+        "doi": "10.5860/choice.32-2613"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.32-2613"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2231329890"
+      ],
+      "titles": [
+        "The republic of letters: a cultural history of the French Enlightenment"
+      ]
+    },
+    {
+      "canonical_id": "family-dc1cacc79274b6c61a2f8c59",
+      "canonical_key": "doi:10.1163/2468-1733_shafr_sim270030027",
+      "family_id": "family-dc1cacc79274b6c61a2f8c59",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1163/2468-1733_shafr_sim270030027",
+        "doi": "10.1163/2468-1733_shafr_sim270030027"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Siegel, Mona L"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "reference-entry"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "The SHAFR Guide Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1163/2468-1733_shafr_sim270030027"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2042040734"
+      ],
+      "titles": [
+        "Manliness and Civilization: A Cultural History of Gender and Race in the United States, 1880-1917"
+      ]
+    },
+    {
+      "canonical_id": "family-df316d02750eca52eae91bbf",
+      "canonical_key": "doi:10.2307/20554896",
+      "family_id": "family-df316d02750eca52eae91bbf",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/20554896",
+        "doi": "10.2307/20554896"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Caoilfhionn Nic Pháidín | Terence Brown"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Duke University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Comhar"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/20554896"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1560831291"
+      ],
+      "titles": [
+        "Ireland: A Social and Cultural History 1922-1979"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2158691812"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2231329890"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2042040734"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1488863503"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1560831291"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1510639147"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W659542164"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "method_monoculture",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:35Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "6445d9fdd87f9d55c0c0924d5b36e65bd9a538ab7eed406b0565289fac89a52c"
+  },
+  "discipline": "humanities",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across access_mode",
+      "independent source evidence across methodology"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:35.271089Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "closed_or_unknown": 7
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 7,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "closed_or_unknown": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "DE": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "DE": 1
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "DE": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 1,
+        "max_share": 1.0,
+        "metadata_completeness": 0.14285714285714285,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "DE": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "DE": 1
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "DE": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 6,
+        "unknown_rate": 0.8571428571428571
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 7
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 7,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "methodology": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {},
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {},
+          "effective_categories": 0.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {}
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across methodology",
+        "covered_strata": [],
+        "dimension": "methodology",
+        "effective_categories": 0.0,
+        "hhi": 1.0,
+        "known_count": 0,
+        "max_share": 1.0,
+        "metadata_completeness": 0.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {},
+        "source_count": {
+          "category_counts": {},
+          "effective_categories": 0.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {}
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 7,
+        "unknown_rate": 1.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.9795918367346937,
+        "category_counts": {
+          "1980s": 2,
+          "1990s": 2,
+          "2000s": 1,
+          "2010s": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1980s": 2,
+            "1990s": 2,
+            "2000s": 1,
+            "2010s": 2
+          },
+          "effective_categories": 3.769230769230769,
+          "hhi": 0.2653061224489796,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346937,
+          "shares": {
+            "1980s": 0.2857142857142857,
+            "1990s": 0.2857142857142857,
+            "2000s": 0.14285714285714285,
+            "2010s": 0.2857142857142857
+          }
+        },
+        "claim_exposure_hhi": 0.2653061224489796,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 3.769230769230769,
+        "hhi": 0.2653061224489796,
+        "known_count": 7,
+        "max_share": 0.2857142857142857,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9795918367346937,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "1980s": 0.2857142857142857,
+          "1990s": 0.2857142857142857,
+          "2000s": 0.14285714285714285,
+          "2010s": 0.2857142857142857
+        },
+        "source_count": {
+          "category_counts": {
+            "1980s": 2,
+            "1990s": 2,
+            "2000s": 1,
+            "2010s": 2
+          },
+          "effective_categories": 3.769230769230769,
+          "hhi": 0.2653061224489796,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346937,
+          "shares": {
+            "1980s": 0.2857142857142857,
+            "1990s": 0.2857142857142857,
+            "2000s": 0.14285714285714285,
+            "2010s": 0.2857142857142857
+          }
+        },
+        "source_count_hhi": 0.2653061224489796,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.8888888888888888,
+        "category_counts": {
+          "Association of College and Research Libraries": 2,
+          "Duke University Press": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Association of College and Research Libraries": 2,
+            "Duke University Press": 1
+          },
+          "effective_categories": 1.7999999999999998,
+          "hhi": 0.5555555555555556,
+          "max_share": 0.6666666666666666,
+          "normalized_balance": 0.8888888888888888,
+          "shares": {
+            "Association of College and Research Libraries": 0.6666666666666666,
+            "Duke University Press": 0.3333333333333333
+          }
+        },
+        "claim_exposure_hhi": 0.5555555555555556,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 1.7999999999999998,
+        "hhi": 0.5555555555555556,
+        "known_count": 3,
+        "max_share": 0.6666666666666666,
+        "metadata_completeness": 0.42857142857142855,
+        "missing_strata": [],
+        "normalized_balance": 0.8888888888888888,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "Association of College and Research Libraries": 0.6666666666666666,
+          "Duke University Press": 0.3333333333333333
+        },
+        "source_count": {
+          "category_counts": {
+            "Association of College and Research Libraries": 2,
+            "Duke University Press": 1
+          },
+          "effective_categories": 1.7999999999999998,
+          "hhi": 0.5555555555555556,
+          "max_share": 0.6666666666666666,
+          "normalized_balance": 0.8888888888888888,
+          "shares": {
+            "Association of College and Research Libraries": 0.6666666666666666,
+            "Duke University Press": 0.3333333333333333
+          }
+        },
+        "source_count_hhi": 0.5555555555555556,
+        "status": "fail",
+        "unknown_count": 4,
+        "unknown_rate": 0.5714285714285714
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.9693877551020408,
+        "category_counts": {
+          "article": 2,
+          "book": 1,
+          "book-review": 2,
+          "other": 1,
+          "reference-entry": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 2,
+            "book": 1,
+            "book-review": 2,
+            "other": 1,
+            "reference-entry": 1
+          },
+          "effective_categories": 4.454545454545454,
+          "hhi": 0.22448979591836735,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9693877551020408,
+          "shares": {
+            "article": 0.2857142857142857,
+            "book": 0.14285714285714285,
+            "book-review": 0.2857142857142857,
+            "other": 0.14285714285714285,
+            "reference-entry": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.22448979591836735,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 4.454545454545454,
+        "hhi": 0.22448979591836735,
+        "known_count": 7,
+        "max_share": 0.2857142857142857,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9693877551020408,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "article": 0.2857142857142857,
+          "book": 0.14285714285714285,
+          "book-review": 0.2857142857142857,
+          "other": 0.14285714285714285,
+          "reference-entry": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 2,
+            "book": 1,
+            "book-review": 2,
+            "other": 1,
+            "reference-entry": 1
+          },
+          "effective_categories": 4.454545454545454,
+          "hhi": 0.22448979591836735,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9693877551020408,
+          "shares": {
+            "article": 0.2857142857142857,
+            "book": 0.14285714285714285,
+            "book-review": 0.2857142857142857,
+            "other": 0.14285714285714285,
+            "reference-entry": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.22448979591836735,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9374999999999999,
+        "category_counts": {
+          "Choice Reviews Online": 2,
+          "Comhar": 1,
+          "The SHAFR Guide Online": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Choice Reviews Online": 2,
+            "Comhar": 1,
+            "The SHAFR Guide Online": 1
+          },
+          "effective_categories": 2.6666666666666665,
+          "hhi": 0.375,
+          "max_share": 0.5,
+          "normalized_balance": 0.9374999999999999,
+          "shares": {
+            "Choice Reviews Online": 0.5,
+            "Comhar": 0.25,
+            "The SHAFR Guide Online": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.375,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 2.6666666666666665,
+        "hhi": 0.375,
+        "known_count": 4,
+        "max_share": 0.5,
+        "metadata_completeness": 0.5714285714285714,
+        "missing_strata": [],
+        "normalized_balance": 0.9374999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "Choice Reviews Online": 0.5,
+          "Comhar": 0.25,
+          "The SHAFR Guide Online": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "Choice Reviews Online": 2,
+            "Comhar": 1,
+            "The SHAFR Guide Online": 1
+          },
+          "effective_categories": 2.6666666666666665,
+          "hhi": 0.375,
+          "max_share": 0.5,
+          "normalized_balance": 0.9374999999999999,
+          "shares": {
+            "Choice Reviews Online": 0.5,
+            "Comhar": 0.25,
+            "The SHAFR Guide Online": 0.25
+          }
+        },
+        "source_count_hhi": 0.375,
+        "status": "fail",
+        "unknown_count": 3,
+        "unknown_rate": 0.42857142857142855
+      }
+    },
+    "exception": {},
+    "family_count": 7,
+    "family_digest": "1f0e4e71a4d406c3b4a9e71856e5e013c8c3039fefab11a5cf4c558c8d64af11",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-a68a6db80edc8029d2e0d686",
+    "requirement_digest": "c4b0bb59317159057e3c65180f8de3369ef1068790b0ba4ede70e93d92684dd0",
+    "requirement_id": "REQ-DIV-HUMANITIES-09",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "411672eeded962019ef459e3021d17a158db2a671a62f5da306d57c7a064e4d4",
+  "packet_id": "DIV-HUMANITIES-09",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode",
+      "methodology"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-HUMANITIES-09",
+    "research_question": "T079 structural source-diversity evaluation for DIV-HUMANITIES-09"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-HUMANITIES-09",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Robert Darnton",
+      "canonical_work_id": "https://openalex.org/W2158691812",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2158691812",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2158691812",
+      "source_type": "other",
+      "stance": null,
+      "title": "The Great Cat Massacre: And Other Episodes in French Cultural History",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.32-2613",
+      "doi": "10.5860/choice.32-2613",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2231329890",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2231329890",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "The republic of letters: a cultural history of the French Enlightenment",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Siegel, Mona L",
+      "canonical_work_id": "doi:10.1163/2468-1733_shafr_sim270030027",
+      "doi": "10.1163/2468-1733_shafr_sim270030027",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2042040734",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2042040734",
+      "source_type": "reference-entry",
+      "stance": null,
+      "title": "Manliness and Civilization: A Cultural History of Gender and Race in the United States, 1880-1917",
+      "venue": "The SHAFR Guide Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.40-5039",
+      "doi": "10.5860/choice.40-5039",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1488863503",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1488863503",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "Photography: a cultural history",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Caoilfhionn Nic Pháidín | Terence Brown",
+      "canonical_work_id": "doi:10.2307/20554896",
+      "doi": "10.2307/20554896",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1560831291",
+      "publisher": "Duke University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1560831291",
+      "source_type": "article",
+      "stance": null,
+      "title": "Ireland: A Social and Cultural History 1922-1979",
+      "venue": "Comhar"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Peter J. Burke",
+      "canonical_work_id": "https://openalex.org/W1510639147",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1510639147",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1510639147",
+      "source_type": "article",
+      "stance": null,
+      "title": "Varieties of cultural history",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Staffan Müller‐Wille | Hans‐Jörg Rheinberger",
+      "canonical_work_id": "doi:10.7208/chicago/9780226545721.001.0001",
+      "doi": "10.7208/chicago/9780226545721.001.0001",
+      "geography": "DE",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W659542164",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=cultural+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W659542164",
+      "source_type": "book",
+      "stance": null,
+      "title": "A Cultural History of Heredity",
+      "venue": null
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "method_monoculture"
+}

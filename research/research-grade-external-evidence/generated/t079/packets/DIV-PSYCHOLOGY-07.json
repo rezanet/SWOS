@@ -1,0 +1,1459 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-3dadee97ec2d55ff611c9c0f",
+      "canonical_key": "doi:10.2307/2989929",
+      "family_id": "family-3dadee97ec2d55ff611c9c0f",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/2989929",
+        "doi": "10.2307/2989929"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "J. Richard Hackman | Daniel Katz | Robert L. Kahn"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "SAGE Publishing"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Administrative Science Quarterly"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/2989929"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2140256961"
+      ],
+      "titles": [
+        "The Social Psychology of Organizations."
+      ]
+    },
+    {
+      "canonical_id": "family-4753e4d9754fd33354630376",
+      "canonical_key": "doi:10.1097/nmd.0b013e3181813228",
+      "family_id": "family-4753e4d9754fd33354630376",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1097/nmd.0b013e3181813228",
+        "doi": "10.1097/nmd.0b013e3181813228"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Kohen, Dov, ha-Rav 1912-2005 | Shinobu Kitayama"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "fr"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Lippincott Williams & Wilkins"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "The Journal of Nervous and Mental Disease"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1097/nmd.0b013e3181813228"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1576165815"
+      ],
+      "titles": [
+        "Handbook of Cultural Psychology"
+      ]
+    },
+    {
+      "canonical_id": "family-c546d29c38c88736d8856f6c",
+      "canonical_key": "https://openalex.org/w386986494",
+      "family_id": "family-c546d29c38c88736d8856f6c",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W386986494"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "William G. Austin | Stephen Worchel"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Japan Society of Medical Entomology and Zoology"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Medical Entomology and Zoology"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W386986494"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W386986494"
+      ],
+      "titles": [
+        "The Social psychology of intergroup relations"
+      ]
+    },
+    {
+      "canonical_id": "family-c5a5e1deb7a3fbaae2c8806f",
+      "canonical_key": "https://openalex.org/w1498488428",
+      "family_id": "family-c5a5e1deb7a3fbaae2c8806f",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1498488428"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Karl E. Weick"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1960s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Ministerio de Defensa"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Virtual Defense Library (Ministerio de Defensa)"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1498488428"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1498488428"
+      ],
+      "titles": [
+        "The social psychology of organizing"
+      ]
+    },
+    {
+      "canonical_id": "family-c7213da522708f654f029463",
+      "canonical_key": "doi:10.4324/9781315807102",
+      "family_id": "family-c7213da522708f654f029463",
+      "identifiers": {
+        "canonical_work_id": "doi:10.4324/9781315807102",
+        "doi": "10.4324/9781315807102"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Robert S. Wyer | Thomas K. Srull"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "fr"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Psychology Press eBooks"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.4324/9781315807102"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1557998370"
+      ],
+      "titles": [
+        "Handbook of Social Cognition"
+      ]
+    },
+    {
+      "canonical_id": "family-d1eec3ab045d49be3ae1d53d",
+      "canonical_key": "doi:10.2307/582242",
+      "family_id": "family-d1eec3ab045d49be3ae1d53d",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/582242",
+        "doi": "10.2307/582242"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Arthur E. Gravatt | Gardner Lindzey | F. Aronson"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1960s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "National Council on Family Relations"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "The Family Coordinator"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/582242"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1488837022"
+      ],
+      "titles": [
+        "The Handbook of Social Psychology"
+      ]
+    },
+    {
+      "canonical_id": "family-f3582722a5f7ea947cc9e2de",
+      "canonical_key": "doi:10.2307/3319917",
+      "family_id": "family-f3582722a5f7ea947cc9e2de",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/3319917",
+        "doi": "10.2307/3319917"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Catherine De Montlibert | John Thibaut | Harold H. Kelley"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "fr"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1960s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Editions Ophrys"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Revue Française de Sociologie"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/3319917"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2301761582"
+      ],
+      "titles": [
+        "The Social Psychology of Groups"
+      ]
+    },
+    {
+      "canonical_id": "family-ff94442ca5ee434e6b94d6f7",
+      "canonical_key": "doi:10.1016/s0065-2601(22)x0002-6",
+      "family_id": "family-ff94442ca5ee434e6b94d6f7",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/s0065-2601(22)x0002-6",
+        "doi": "10.1016/s0065-2601(22)x0002-6"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2020s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Advances in experimental social psychology"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/s0065-2601(22)x0002-6"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W4214907476"
+      ],
+      "titles": [
+        "Advances In Experimental Social Psychology"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214907476"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1488837022"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2140256961"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1498488428"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1576165815"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2301761582"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1557998370"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W386986494"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "multilingual",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:48Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "0e76cd11223f6e9936864cdd2d602d217d4eefcd91981c6bc55d36ae7c0a4610"
+  },
+  "discipline": "psychology",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:48.125870Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "closed_or_unknown": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {},
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {},
+          "effective_categories": 0.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {}
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 0.0,
+        "hhi": 1.0,
+        "known_count": 0,
+        "max_share": 1.0,
+        "metadata_completeness": 0.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {},
+        "source_count": {
+          "category_counts": {},
+          "effective_categories": 0.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {}
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 8,
+        "unknown_rate": 1.0
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.9375,
+        "category_counts": {
+          "en": 5,
+          "fr": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 5,
+            "fr": 3
+          },
+          "effective_categories": 1.8823529411764706,
+          "hhi": 0.53125,
+          "max_share": 0.625,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "en": 0.625,
+            "fr": 0.375
+          }
+        },
+        "claim_exposure_hhi": 0.53125,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [
+          "en",
+          "fr"
+        ],
+        "dimension": "language",
+        "effective_categories": 1.8823529411764706,
+        "hhi": 0.53125,
+        "known_count": 8,
+        "max_share": 0.625,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9375,
+        "required_strata": [
+          "en",
+          "fr"
+        ],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 0.625,
+          "fr": 0.375
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 5,
+            "fr": 3
+          },
+          "effective_categories": 1.8823529411764706,
+          "hhi": 0.53125,
+          "max_share": 0.625,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "en": 0.625,
+            "fr": 0.375
+          }
+        },
+        "source_count_hhi": 0.53125,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.9375,
+        "category_counts": {
+          "1960s": 3,
+          "1970s": 2,
+          "2000s": 1,
+          "2010s": 1,
+          "2020s": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1960s": 3,
+            "1970s": 2,
+            "2000s": 1,
+            "2010s": 1,
+            "2020s": 1
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.375,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "1960s": 0.375,
+            "1970s": 0.25,
+            "2000s": 0.125,
+            "2010s": 0.125,
+            "2020s": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.25,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 4.0,
+        "hhi": 0.25,
+        "known_count": 8,
+        "max_share": 0.375,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9375,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "1960s": 0.375,
+          "1970s": 0.25,
+          "2000s": 0.125,
+          "2010s": 0.125,
+          "2020s": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "1960s": 3,
+            "1970s": 2,
+            "2000s": 1,
+            "2010s": 1,
+            "2020s": 1
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.375,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "1960s": 0.375,
+            "1970s": 0.25,
+            "2000s": 0.125,
+            "2010s": 0.125,
+            "2020s": 0.125
+          }
+        },
+        "source_count_hhi": 0.25,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "Editions Ophrys": 1,
+          "Elsevier BV": 1,
+          "Japan Society of Medical Entomology and Zoology": 1,
+          "Lippincott Williams & Wilkins": 1,
+          "Ministerio de Defensa": 1,
+          "National Council on Family Relations": 1,
+          "SAGE Publishing": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Editions Ophrys": 1,
+            "Elsevier BV": 1,
+            "Japan Society of Medical Entomology and Zoology": 1,
+            "Lippincott Williams & Wilkins": 1,
+            "Ministerio de Defensa": 1,
+            "National Council on Family Relations": 1,
+            "SAGE Publishing": 1
+          },
+          "effective_categories": 7.0,
+          "hhi": 0.14285714285714285,
+          "max_share": 0.14285714285714285,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Editions Ophrys": 0.14285714285714285,
+            "Elsevier BV": 0.14285714285714285,
+            "Japan Society of Medical Entomology and Zoology": 0.14285714285714285,
+            "Lippincott Williams & Wilkins": 0.14285714285714285,
+            "Ministerio de Defensa": 0.14285714285714285,
+            "National Council on Family Relations": 0.14285714285714285,
+            "SAGE Publishing": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.14285714285714285,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 7.0,
+        "hhi": 0.14285714285714285,
+        "known_count": 7,
+        "max_share": 0.14285714285714285,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Editions Ophrys": 0.14285714285714285,
+          "Elsevier BV": 0.14285714285714285,
+          "Japan Society of Medical Entomology and Zoology": 0.14285714285714285,
+          "Lippincott Williams & Wilkins": 0.14285714285714285,
+          "Ministerio de Defensa": 0.14285714285714285,
+          "National Council on Family Relations": 0.14285714285714285,
+          "SAGE Publishing": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "Editions Ophrys": 1,
+            "Elsevier BV": 1,
+            "Japan Society of Medical Entomology and Zoology": 1,
+            "Lippincott Williams & Wilkins": 1,
+            "Ministerio de Defensa": 1,
+            "National Council on Family Relations": 1,
+            "SAGE Publishing": 1
+          },
+          "effective_categories": 7.0,
+          "hhi": 0.14285714285714285,
+          "max_share": 0.14285714285714285,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Editions Ophrys": 0.14285714285714285,
+            "Elsevier BV": 0.14285714285714285,
+            "Japan Society of Medical Entomology and Zoology": 0.14285714285714285,
+            "Lippincott Williams & Wilkins": 0.14285714285714285,
+            "Ministerio de Defensa": 0.14285714285714285,
+            "National Council on Family Relations": 0.14285714285714285,
+            "SAGE Publishing": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.14285714285714285,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "article": 4,
+          "book": 4
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 4,
+            "book": 4
+          },
+          "effective_categories": 2.0,
+          "hhi": 0.5,
+          "max_share": 0.5,
+          "normalized_balance": 1.0,
+          "shares": {
+            "article": 0.5,
+            "book": 0.5
+          }
+        },
+        "claim_exposure_hhi": 0.5,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 2.0,
+        "hhi": 0.5,
+        "known_count": 8,
+        "max_share": 0.5,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 0.5,
+          "book": 0.5
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 4,
+            "book": 4
+          },
+          "effective_categories": 2.0,
+          "hhi": 0.5,
+          "max_share": 0.5,
+          "normalized_balance": 1.0,
+          "shares": {
+            "article": 0.5,
+            "book": 0.5
+          }
+        },
+        "source_count_hhi": 0.5,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "Administrative Science Quarterly": 1,
+          "Advances in experimental social psychology": 1,
+          "Medical Entomology and Zoology": 1,
+          "Psychology Press eBooks": 1,
+          "Revue Française de Sociologie": 1,
+          "The Family Coordinator": 1,
+          "The Journal of Nervous and Mental Disease": 1,
+          "Virtual Defense Library (Ministerio de Defensa)": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Administrative Science Quarterly": 1,
+            "Advances in experimental social psychology": 1,
+            "Medical Entomology and Zoology": 1,
+            "Psychology Press eBooks": 1,
+            "Revue Française de Sociologie": 1,
+            "The Family Coordinator": 1,
+            "The Journal of Nervous and Mental Disease": 1,
+            "Virtual Defense Library (Ministerio de Defensa)": 1
+          },
+          "effective_categories": 8.0,
+          "hhi": 0.125,
+          "max_share": 0.125,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Administrative Science Quarterly": 0.125,
+            "Advances in experimental social psychology": 0.125,
+            "Medical Entomology and Zoology": 0.125,
+            "Psychology Press eBooks": 0.125,
+            "Revue Française de Sociologie": 0.125,
+            "The Family Coordinator": 0.125,
+            "The Journal of Nervous and Mental Disease": 0.125,
+            "Virtual Defense Library (Ministerio de Defensa)": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.125,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 8.0,
+        "hhi": 0.125,
+        "known_count": 8,
+        "max_share": 0.125,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Administrative Science Quarterly": 0.125,
+          "Advances in experimental social psychology": 0.125,
+          "Medical Entomology and Zoology": 0.125,
+          "Psychology Press eBooks": 0.125,
+          "Revue Française de Sociologie": 0.125,
+          "The Family Coordinator": 0.125,
+          "The Journal of Nervous and Mental Disease": 0.125,
+          "Virtual Defense Library (Ministerio de Defensa)": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "Administrative Science Quarterly": 1,
+            "Advances in experimental social psychology": 1,
+            "Medical Entomology and Zoology": 1,
+            "Psychology Press eBooks": 1,
+            "Revue Française de Sociologie": 1,
+            "The Family Coordinator": 1,
+            "The Journal of Nervous and Mental Disease": 1,
+            "Virtual Defense Library (Ministerio de Defensa)": 1
+          },
+          "effective_categories": 8.0,
+          "hhi": 0.125,
+          "max_share": 0.125,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Administrative Science Quarterly": 0.125,
+            "Advances in experimental social psychology": 0.125,
+            "Medical Entomology and Zoology": 0.125,
+            "Psychology Press eBooks": 0.125,
+            "Revue Française de Sociologie": 0.125,
+            "The Family Coordinator": 0.125,
+            "The Journal of Nervous and Mental Disease": 0.125,
+            "Virtual Defense Library (Ministerio de Defensa)": 0.125
+          }
+        },
+        "source_count_hhi": 0.125,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "a64b655dff9ecf3f2f085c3df972da34be17af1d38659ffe4590ffe754cc63e9",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-c8c4cbc13f32108c7b21a2ba",
+    "requirement_digest": "d8856a3edfa84d4d998650154923db94cc47c95100683eabd933b6eb53f58ff4",
+    "requirement_id": "REQ-DIV-PSYCHOLOGY-07",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "566268c15f5d06d7ac2170d36be58f938f813bb2932231e2dc2cab9cc67e2972",
+  "packet_id": "DIV-PSYCHOLOGY-07",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {
+      "language": [
+        "en",
+        "fr"
+      ]
+    },
+    "requirement_id": "REQ-DIV-PSYCHOLOGY-07",
+    "research_question": "T079 structural source-diversity evaluation for DIV-PSYCHOLOGY-07"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-PSYCHOLOGY-07",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.1016/s0065-2601(22)x0002-6",
+      "doi": "10.1016/s0065-2601(22)x0002-6",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W4214907476",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W4214907476",
+      "source_type": "book",
+      "stance": null,
+      "title": "Advances In Experimental Social Psychology",
+      "venue": "Advances in experimental social psychology"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Arthur E. Gravatt | Gardner Lindzey | F. Aronson",
+      "canonical_work_id": "doi:10.2307/582242",
+      "doi": "10.2307/582242",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1960s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1488837022",
+      "publisher": "National Council on Family Relations",
+      "retrieved_uri": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1488837022",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Handbook of Social Psychology",
+      "venue": "The Family Coordinator"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "J. Richard Hackman | Daniel Katz | Robert L. Kahn",
+      "canonical_work_id": "doi:10.2307/2989929",
+      "doi": "10.2307/2989929",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2140256961",
+      "publisher": "SAGE Publishing",
+      "retrieved_uri": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2140256961",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Social Psychology of Organizations.",
+      "venue": "Administrative Science Quarterly"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Karl E. Weick",
+      "canonical_work_id": "https://openalex.org/W1498488428",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1960s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1498488428",
+      "publisher": "Ministerio de Defensa",
+      "retrieved_uri": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1498488428",
+      "source_type": "book",
+      "stance": null,
+      "title": "The social psychology of organizing",
+      "venue": "Virtual Defense Library (Ministerio de Defensa)"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Kohen, Dov, ha-Rav 1912-2005 | Shinobu Kitayama",
+      "canonical_work_id": "doi:10.1097/nmd.0b013e3181813228",
+      "doi": "10.1097/nmd.0b013e3181813228",
+      "geography": null,
+      "language": "fr",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1576165815",
+      "publisher": "Lippincott Williams & Wilkins",
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1576165815",
+      "source_type": "article",
+      "stance": null,
+      "title": "Handbook of Cultural Psychology",
+      "venue": "The Journal of Nervous and Mental Disease"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Catherine De Montlibert | John Thibaut | Harold H. Kelley",
+      "canonical_work_id": "doi:10.2307/3319917",
+      "doi": "10.2307/3319917",
+      "geography": null,
+      "language": "fr",
+      "metadata_provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1960s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2301761582",
+      "publisher": "Editions Ophrys",
+      "retrieved_uri": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2301761582",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Social Psychology of Groups",
+      "venue": "Revue Française de Sociologie"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Robert S. Wyer | Thomas K. Srull",
+      "canonical_work_id": "doi:10.4324/9781315807102",
+      "doi": "10.4324/9781315807102",
+      "geography": null,
+      "language": "fr",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1557998370",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1557998370",
+      "source_type": "book",
+      "stance": null,
+      "title": "Handbook of Social Cognition",
+      "venue": "Psychology Press eBooks"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "William G. Austin | Stephen Worchel",
+      "canonical_work_id": "https://openalex.org/W386986494",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W386986494",
+      "publisher": "Japan Society of Medical Entomology and Zoology",
+      "retrieved_uri": "https://api.openalex.org/works?search=social+psychology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W386986494",
+      "source_type": "book",
+      "stance": null,
+      "title": "The Social psychology of intergroup relations",
+      "venue": "Medical Entomology and Zoology"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "multilingual"
+}

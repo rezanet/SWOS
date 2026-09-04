@@ -1,0 +1,1447 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-34dd2ca1e7c2fd19485efc4c",
+      "canonical_key": "doi:10.5860/choice.29-2744",
+      "family_id": "family-34dd2ca1e7c2fd19485efc4c",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.29-2744",
+        "doi": "10.5860/choice.29-2744"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.29-2744"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2129430110"
+      ],
+      "titles": [
+        "Writing space: the computer, hypertext, and the history of writing"
+      ]
+    },
+    {
+      "canonical_id": "family-8f6694fdb6070dfa6c3cf076",
+      "canonical_key": "doi:10.5860/choice.42-0467",
+      "family_id": "family-8f6694fdb6070dfa6c3cf076",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.42-0467",
+        "doi": "10.5860/choice.42-0467"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.42-0467"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W572760646"
+      ],
+      "titles": [
+        "History after apartheid: visual culture and public memory in a democratic South Africa"
+      ]
+    },
+    {
+      "canonical_id": "family-944aed4b021458ce04c90c13",
+      "canonical_key": "doi:10.4324/9780203466780",
+      "family_id": "family-944aed4b021458ce04c90c13",
+      "identifiers": {
+        "canonical_work_id": "doi:10.4324/9780203466780",
+        "doi": "10.4324/9780203466780"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Jonathan Harris"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "GB"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.4324/9780203466780"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W195139379"
+      ],
+      "titles": [
+        "The New Art History"
+      ]
+    },
+    {
+      "canonical_id": "family-a85827568af493b430f245d1",
+      "canonical_key": "doi:10.5860/choice.41-5681",
+      "family_id": "family-a85827568af493b430f245d1",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.41-5681",
+        "doi": "10.5860/choice.41-5681"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.41-5681"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W4214693982"
+      ],
+      "titles": [
+        "Art history after modernism"
+      ]
+    },
+    {
+      "canonical_id": "family-c59955b984a93ce3560311ce",
+      "canonical_key": "doi:10.1111/1467-8365.12490",
+      "family_id": "family-c59955b984a93ce3560311ce",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1111/1467-8365.12490",
+        "doi": "10.1111/1467-8365.12490"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Catherine Grant | Dorothy Price"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2020s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Oxford University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Art History"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1111/1467-8365.12490"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W3001767529"
+      ],
+      "titles": [
+        "Decolonizing Art History"
+      ]
+    },
+    {
+      "canonical_id": "family-c98c9f28882cd9de729f374b",
+      "canonical_key": "doi:10.5860/choice.43-1515",
+      "family_id": "family-c98c9f28882cd9de729f374b",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.43-1515",
+        "doi": "10.5860/choice.43-1515"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.43-1515"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W616546886"
+      ],
+      "titles": [
+        "The sacred gaze: religious visual culture in theory and practice"
+      ]
+    },
+    {
+      "canonical_id": "family-cd1e6cdc19746a5c49ab8cb8",
+      "canonical_key": "doi:10.5860/choice.31-3067",
+      "family_id": "family-cd1e6cdc19746a5c49ab8cb8",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.31-3067",
+        "doi": "10.5860/choice.31-3067"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.31-3067"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1586437107"
+      ],
+      "titles": [
+        "Alois Riegl: art history and theory"
+      ]
+    },
+    {
+      "canonical_id": "family-ec16cc1ee3b9a088b1dab50a",
+      "canonical_key": "doi:10.5860/choice.190353",
+      "family_id": "family-ec16cc1ee3b9a088b1dab50a",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.190353",
+        "doi": "10.5860/choice.190353"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.190353"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W572162579"
+      ],
+      "titles": [
+        "Visual cultures in science and technology: a comparative history"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214693982"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-02",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214693982"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-03",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214693982"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-04",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214693982"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-05",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214693982"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-06",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214693982"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-07",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214693982"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-08",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4214693982"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1586437107"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W572760646"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W572162579"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W616546886"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2129430110"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W195139379"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W3001767529"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "concentrated",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:09Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "03eba69226898655bdbabfa525045dffbd19e111fabb63600d3a0b2dc0636cce"
+  },
+  "discipline": "art_history",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across period",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:09.361725Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.24888888888888872,
+        "category_counts": {
+          "closed_or_unknown": 7,
+          "open_access": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 14,
+            "open_access": 1
+          },
+          "effective_categories": 1.1421319796954315,
+          "hhi": 0.8755555555555556,
+          "max_share": 0.9333333333333333,
+          "normalized_balance": 0.24888888888888872,
+          "shares": {
+            "closed_or_unknown": 0.9333333333333333,
+            "open_access": 0.06666666666666667
+          }
+        },
+        "claim_exposure_hhi": 0.8755555555555556,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.1421319796954315,
+        "hhi": 0.8755555555555556,
+        "known_count": 8,
+        "max_share": 0.9333333333333333,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.24888888888888872,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 0.875,
+          "open_access": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 7,
+            "open_access": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "closed_or_unknown": 0.875,
+            "open_access": 0.125
+          }
+        },
+        "source_count_hhi": 0.78125,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "GB": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "GB": 1
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "GB": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 1,
+        "max_share": 1.0,
+        "metadata_completeness": 0.125,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "GB": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "GB": 1
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "GB": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 7,
+        "unknown_rate": 0.875
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 15
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.5807407407407408,
+        "category_counts": {
+          "1990s": 2,
+          "2000s": 4,
+          "2010s": 1,
+          "2020s": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1990s": 2,
+            "2000s": 11,
+            "2010s": 1,
+            "2020s": 1
+          },
+          "effective_categories": 1.7716535433070868,
+          "hhi": 0.5644444444444444,
+          "max_share": 0.7333333333333333,
+          "normalized_balance": 0.5807407407407408,
+          "shares": {
+            "1990s": 0.13333333333333333,
+            "2000s": 0.7333333333333333,
+            "2010s": 0.06666666666666667,
+            "2020s": 0.06666666666666667
+          }
+        },
+        "claim_exposure_hhi": 0.5644444444444444,
+        "corrective_query": "independent source evidence across period",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 1.7716535433070868,
+        "hhi": 0.5644444444444444,
+        "known_count": 8,
+        "max_share": 0.7333333333333333,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.5807407407407408,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "1990s": 0.25,
+          "2000s": 0.5,
+          "2010s": 0.125,
+          "2020s": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "1990s": 2,
+            "2000s": 4,
+            "2010s": 1,
+            "2020s": 1
+          },
+          "effective_categories": 2.909090909090909,
+          "hhi": 0.34375,
+          "max_share": 0.5,
+          "normalized_balance": 0.875,
+          "shares": {
+            "1990s": 0.25,
+            "2000s": 0.5,
+            "2010s": 0.125,
+            "2020s": 0.125
+          }
+        },
+        "source_count_hhi": 0.34375,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.26530612244897966,
+        "category_counts": {
+          "Association of College and Research Libraries": 6,
+          "Oxford University Press": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Association of College and Research Libraries": 13,
+            "Oxford University Press": 1
+          },
+          "effective_categories": 1.1529411764705884,
+          "hhi": 0.8673469387755102,
+          "max_share": 0.9285714285714286,
+          "normalized_balance": 0.26530612244897966,
+          "shares": {
+            "Association of College and Research Libraries": 0.9285714285714286,
+            "Oxford University Press": 0.07142857142857142
+          }
+        },
+        "claim_exposure_hhi": 0.8673469387755102,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 1.1529411764705884,
+        "hhi": 0.8673469387755102,
+        "known_count": 7,
+        "max_share": 0.9285714285714286,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 0.26530612244897966,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Association of College and Research Libraries": 0.8571428571428571,
+          "Oxford University Press": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "Association of College and Research Libraries": 6,
+            "Oxford University Press": 1
+          },
+          "effective_categories": 1.3243243243243243,
+          "hhi": 0.7551020408163265,
+          "max_share": 0.8571428571428571,
+          "normalized_balance": 0.48979591836734704,
+          "shares": {
+            "Association of College and Research Libraries": 0.8571428571428571,
+            "Oxford University Press": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.7551020408163265,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.35999999999999976,
+        "category_counts": {
+          "article": 1,
+          "book": 1,
+          "book-review": 6
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 1,
+            "book": 1,
+            "book-review": 13
+          },
+          "effective_categories": 1.3157894736842104,
+          "hhi": 0.7600000000000001,
+          "max_share": 0.8666666666666667,
+          "normalized_balance": 0.35999999999999976,
+          "shares": {
+            "article": 0.06666666666666667,
+            "book": 0.06666666666666667,
+            "book-review": 0.8666666666666667
+          }
+        },
+        "claim_exposure_hhi": 0.7600000000000001,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.3157894736842104,
+        "hhi": 0.7600000000000001,
+        "known_count": 8,
+        "max_share": 0.8666666666666667,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.35999999999999976,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 0.125,
+          "book": 0.125,
+          "book-review": 0.75
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 1,
+            "book": 1,
+            "book-review": 6
+          },
+          "effective_categories": 1.6842105263157894,
+          "hhi": 0.59375,
+          "max_share": 0.75,
+          "normalized_balance": 0.6093749999999999,
+          "shares": {
+            "article": 0.125,
+            "book": 0.125,
+            "book-review": 0.75
+          }
+        },
+        "source_count_hhi": 0.59375,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.26530612244897966,
+        "category_counts": {
+          "Art History": 1,
+          "Choice Reviews Online": 6
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Art History": 1,
+            "Choice Reviews Online": 13
+          },
+          "effective_categories": 1.1529411764705884,
+          "hhi": 0.8673469387755102,
+          "max_share": 0.9285714285714286,
+          "normalized_balance": 0.26530612244897966,
+          "shares": {
+            "Art History": 0.07142857142857142,
+            "Choice Reviews Online": 0.9285714285714286
+          }
+        },
+        "claim_exposure_hhi": 0.8673469387755102,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 1.1529411764705884,
+        "hhi": 0.8673469387755102,
+        "known_count": 7,
+        "max_share": 0.9285714285714286,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 0.26530612244897966,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Art History": 0.14285714285714285,
+          "Choice Reviews Online": 0.8571428571428571
+        },
+        "source_count": {
+          "category_counts": {
+            "Art History": 1,
+            "Choice Reviews Online": 6
+          },
+          "effective_categories": 1.3243243243243243,
+          "hhi": 0.7551020408163265,
+          "max_share": 0.8571428571428571,
+          "normalized_balance": 0.48979591836734704,
+          "shares": {
+            "Art History": 0.14285714285714285,
+            "Choice Reviews Online": 0.8571428571428571
+          }
+        },
+        "source_count_hhi": 0.7551020408163265,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "7de9a5d610b555738e0b4319717c6ff077d7b6f31cbacc43b213bd21c695fe74",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-85380e100720136cbdde38eb",
+    "requirement_digest": "bc9c8bd3055ffa4c2a9ea4a03179976b244bcf09ce157666581ba85049339d7c",
+    "requirement_id": "REQ-DIV-ART-HISTORY-04",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "d93cedf4154123383ea87f90fc66ffb360d0f8251cd3de6773fa3da37f28ddf9",
+  "packet_id": "DIV-ART-HISTORY-04",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-ART-HISTORY-04",
+    "research_question": "T079 structural source-diversity evaluation for DIV-ART-HISTORY-04"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-ART-HISTORY-04",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.41-5681",
+      "doi": "10.5860/choice.41-5681",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W4214693982",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W4214693982",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "Art history after modernism",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.31-3067",
+      "doi": "10.5860/choice.31-3067",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1586437107",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1586437107",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "Alois Riegl: art history and theory",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.42-0467",
+      "doi": "10.5860/choice.42-0467",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W572760646",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W572760646",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "History after apartheid: visual culture and public memory in a democratic South Africa",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.190353",
+      "doi": "10.5860/choice.190353",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W572162579",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W572162579",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "Visual cultures in science and technology: a comparative history",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.43-1515",
+      "doi": "10.5860/choice.43-1515",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W616546886",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W616546886",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "The sacred gaze: religious visual culture in theory and practice",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.29-2744",
+      "doi": "10.5860/choice.29-2744",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2129430110",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2129430110",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "Writing space: the computer, hypertext, and the history of writing",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Jonathan Harris",
+      "canonical_work_id": "doi:10.4324/9780203466780",
+      "doi": "10.4324/9780203466780",
+      "geography": "GB",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W195139379",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W195139379",
+      "source_type": "book",
+      "stance": null,
+      "title": "The New Art History",
+      "venue": null
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Catherine Grant | Dorothy Price",
+      "canonical_work_id": "doi:10.1111/1467-8365.12490",
+      "doi": "10.1111/1467-8365.12490",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W3001767529",
+      "publisher": "Oxford University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=art+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W3001767529",
+      "source_type": "article",
+      "stance": null,
+      "title": "Decolonizing Art History",
+      "venue": "Art History"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "concentrated"
+}

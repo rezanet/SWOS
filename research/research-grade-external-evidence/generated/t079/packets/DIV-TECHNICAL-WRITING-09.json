@@ -1,0 +1,1368 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-114412b5afa8cf5788e423aa",
+      "canonical_key": "doi:10.1109/17.403739",
+      "family_id": "family-114412b5afa8cf5788e423aa",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1109/17.403739",
+        "doi": "10.1109/17.403739"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Mark D. Morelli | Steven D. Eppinger | Rosaline K. Gulati"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Institute of Electrical and Electronics Engineers"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "IEEE Transactions on Engineering Management"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1109/17.403739"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2148395942"
+      ],
+      "titles": [
+        "Predicting technical communication in product development organizations"
+      ]
+    },
+    {
+      "canonical_id": "family-9119b778ea73f1957154a2cd",
+      "canonical_key": "doi:10.5465/255704",
+      "family_id": "family-9119b778ea73f1957154a2cd",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5465/255704",
+        "doi": "10.5465/255704"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Michael L. Tushman"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Academy of Management"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Academy of Management Journal"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5465/255704"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1998164907"
+      ],
+      "titles": [
+        "Technical Communication in R & D Laboratories: The Impact of Project Work Characteristics"
+      ]
+    },
+    {
+      "canonical_id": "family-96d20b25cbae3483e3202ee1",
+      "canonical_key": "doi:10.1207/s15427625tcq1101_1",
+      "family_id": "family-96d20b25cbae3483e3202ee1",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1207/s15427625tcq1101_1",
+        "doi": "10.1207/s15427625tcq1101_1"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Kelli Cargile Cook"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Routledge"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Technical Communication Quarterly"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1207/s15427625tcq1101_1"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2151956779"
+      ],
+      "titles": [
+        "Layered Literacies: A Theoretical Frame for Technical Communication Pedagogy"
+      ]
+    },
+    {
+      "canonical_id": "family-bb6a5c713313b48bf78fd993",
+      "canonical_key": "doi:10.1207/s15427625tcq0503_1",
+      "family_id": "family-bb6a5c713313b48bf78fd993",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1207/s15427625tcq0503_1",
+        "doi": "10.1207/s15427625tcq0503_1"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Johndan Johnson-Eilola"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Routledge"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Technical Communication Quarterly"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1207/s15427625tcq0503_1"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1987281348"
+      ],
+      "titles": [
+        "Relocating the Value of Work: Technical Communication in a Post-Industrial Age"
+      ]
+    },
+    {
+      "canonical_id": "family-d78e500f1251058cc7c382ad",
+      "canonical_key": "doi:10.1177/1050651908329562",
+      "family_id": "family-d78e500f1251058cc7c382ad",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1177/1050651908329562",
+        "doi": "10.1177/1050651908329562"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Carolyn D. Rude"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "SAGE Publishing"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of Business and Technical Communication"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1177/1050651908329562"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2009166799"
+      ],
+      "titles": [
+        "Mapping the Research Questions in Technical Communication"
+      ]
+    },
+    {
+      "canonical_id": "family-e8595fc9f2dea4eb1ed2d757",
+      "canonical_key": "doi:10.1179/174651008x386920",
+      "family_id": "family-e8595fc9f2dea4eb1ed2d757",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1179/174651008x386920",
+        "doi": "10.1179/174651008x386920"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "R.B. Pope | Robert E. Luna | R.R. Rawl"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Taylor & Francis"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Packaging Transport Storage & Security of Radioactive Material"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1179/174651008x386920"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W4251390666"
+      ],
+      "titles": [
+        "Technical Communication"
+      ]
+    },
+    {
+      "canonical_id": "family-f948965ce723e7964ec91ab7",
+      "canonical_key": "doi:10.1016/b978-0-409-10126-3.50004-0",
+      "family_id": "family-f948965ce723e7964ec91ab7",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/b978-0-409-10126-3.50004-0",
+        "doi": "10.1016/b978-0-409-10126-3.50004-0"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "JC HUEBSCH"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "AT"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-chapter"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier eBooks"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/b978-0-409-10126-3.50004-0"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W3023848597"
+      ],
+      "titles": [
+        "Technical communication"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4251390666"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2151956779"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2148395942"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1987281348"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1998164907"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W3023848597"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2009166799"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "method_monoculture",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:50Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "02ca636b817c43d31ef75550a6bfcbf23d635134639544b638644b1317eb0506"
+  },
+  "discipline": "technical_writing",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode",
+      "independent source evidence across methodology"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:50.752087Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "closed_or_unknown": 7
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 7,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "closed_or_unknown": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.75,
+        "category_counts": {
+          "AT": 1,
+          "US": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "AT": 1,
+            "US": 3
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "AT": 0.25,
+            "US": 0.75
+          }
+        },
+        "claim_exposure_hhi": 0.625,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 1.6,
+        "hhi": 0.625,
+        "known_count": 4,
+        "max_share": 0.75,
+        "metadata_completeness": 0.5714285714285714,
+        "missing_strata": [],
+        "normalized_balance": 0.75,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "AT": 0.25,
+          "US": 0.75
+        },
+        "source_count": {
+          "category_counts": {
+            "AT": 1,
+            "US": 3
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "AT": 0.25,
+            "US": 0.75
+          }
+        },
+        "source_count_hhi": 0.625,
+        "status": "fail",
+        "unknown_count": 3,
+        "unknown_rate": 0.42857142857142855
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 7
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 7,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "methodology": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {},
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {},
+          "effective_categories": 0.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {}
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across methodology",
+        "covered_strata": [],
+        "dimension": "methodology",
+        "effective_categories": 0.0,
+        "hhi": 1.0,
+        "known_count": 0,
+        "max_share": 1.0,
+        "metadata_completeness": 0.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {},
+        "source_count": {
+          "category_counts": {},
+          "effective_categories": 0.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {}
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 7,
+        "unknown_rate": 1.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.9251700680272109,
+        "category_counts": {
+          "1970s": 1,
+          "1980s": 1,
+          "1990s": 2,
+          "2000s": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1970s": 1,
+            "1980s": 1,
+            "1990s": 2,
+            "2000s": 3
+          },
+          "effective_categories": 3.2666666666666666,
+          "hhi": 0.30612244897959184,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9251700680272109,
+          "shares": {
+            "1970s": 0.14285714285714285,
+            "1980s": 0.14285714285714285,
+            "1990s": 0.2857142857142857,
+            "2000s": 0.42857142857142855
+          }
+        },
+        "claim_exposure_hhi": 0.30612244897959184,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 3.2666666666666666,
+        "hhi": 0.30612244897959184,
+        "known_count": 7,
+        "max_share": 0.42857142857142855,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9251700680272109,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "1970s": 0.14285714285714285,
+          "1980s": 0.14285714285714285,
+          "1990s": 0.2857142857142857,
+          "2000s": 0.42857142857142855
+        },
+        "source_count": {
+          "category_counts": {
+            "1970s": 1,
+            "1980s": 1,
+            "1990s": 2,
+            "2000s": 3
+          },
+          "effective_categories": 3.2666666666666666,
+          "hhi": 0.30612244897959184,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9251700680272109,
+          "shares": {
+            "1970s": 0.14285714285714285,
+            "1980s": 0.14285714285714285,
+            "1990s": 0.2857142857142857,
+            "2000s": 0.42857142857142855
+          }
+        },
+        "source_count_hhi": 0.30612244897959184,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9795918367346939,
+        "category_counts": {
+          "Academy of Management": 1,
+          "Elsevier BV": 1,
+          "Institute of Electrical and Electronics Engineers": 1,
+          "Routledge": 2,
+          "SAGE Publishing": 1,
+          "Taylor & Francis": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Academy of Management": 1,
+            "Elsevier BV": 1,
+            "Institute of Electrical and Electronics Engineers": 1,
+            "Routledge": 2,
+            "SAGE Publishing": 1,
+            "Taylor & Francis": 1
+          },
+          "effective_categories": 5.444444444444445,
+          "hhi": 0.18367346938775508,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346939,
+          "shares": {
+            "Academy of Management": 0.14285714285714285,
+            "Elsevier BV": 0.14285714285714285,
+            "Institute of Electrical and Electronics Engineers": 0.14285714285714285,
+            "Routledge": 0.2857142857142857,
+            "SAGE Publishing": 0.14285714285714285,
+            "Taylor & Francis": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.18367346938775508,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 5.444444444444445,
+        "hhi": 0.18367346938775508,
+        "known_count": 7,
+        "max_share": 0.2857142857142857,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9795918367346939,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "Academy of Management": 0.14285714285714285,
+          "Elsevier BV": 0.14285714285714285,
+          "Institute of Electrical and Electronics Engineers": 0.14285714285714285,
+          "Routledge": 0.2857142857142857,
+          "SAGE Publishing": 0.14285714285714285,
+          "Taylor & Francis": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "Academy of Management": 1,
+            "Elsevier BV": 1,
+            "Institute of Electrical and Electronics Engineers": 1,
+            "Routledge": 2,
+            "SAGE Publishing": 1,
+            "Taylor & Francis": 1
+          },
+          "effective_categories": 5.444444444444445,
+          "hhi": 0.18367346938775508,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346939,
+          "shares": {
+            "Academy of Management": 0.14285714285714285,
+            "Elsevier BV": 0.14285714285714285,
+            "Institute of Electrical and Electronics Engineers": 0.14285714285714285,
+            "Routledge": 0.2857142857142857,
+            "SAGE Publishing": 0.14285714285714285,
+            "Taylor & Francis": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.18367346938775508,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.48979591836734704,
+        "category_counts": {
+          "article": 6,
+          "book-chapter": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 6,
+            "book-chapter": 1
+          },
+          "effective_categories": 1.3243243243243243,
+          "hhi": 0.7551020408163265,
+          "max_share": 0.8571428571428571,
+          "normalized_balance": 0.48979591836734704,
+          "shares": {
+            "article": 0.8571428571428571,
+            "book-chapter": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.7551020408163265,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.3243243243243243,
+        "hhi": 0.7551020408163265,
+        "known_count": 7,
+        "max_share": 0.8571428571428571,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.48979591836734704,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "article": 0.8571428571428571,
+          "book-chapter": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 6,
+            "book-chapter": 1
+          },
+          "effective_categories": 1.3243243243243243,
+          "hhi": 0.7551020408163265,
+          "max_share": 0.8571428571428571,
+          "normalized_balance": 0.48979591836734704,
+          "shares": {
+            "article": 0.8571428571428571,
+            "book-chapter": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.7551020408163265,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9795918367346939,
+        "category_counts": {
+          "Academy of Management Journal": 1,
+          "Elsevier eBooks": 1,
+          "IEEE Transactions on Engineering Management": 1,
+          "Journal of Business and Technical Communication": 1,
+          "Packaging Transport Storage & Security of Radioactive Material": 1,
+          "Technical Communication Quarterly": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Academy of Management Journal": 1,
+            "Elsevier eBooks": 1,
+            "IEEE Transactions on Engineering Management": 1,
+            "Journal of Business and Technical Communication": 1,
+            "Packaging Transport Storage & Security of Radioactive Material": 1,
+            "Technical Communication Quarterly": 2
+          },
+          "effective_categories": 5.444444444444445,
+          "hhi": 0.18367346938775508,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346939,
+          "shares": {
+            "Academy of Management Journal": 0.14285714285714285,
+            "Elsevier eBooks": 0.14285714285714285,
+            "IEEE Transactions on Engineering Management": 0.14285714285714285,
+            "Journal of Business and Technical Communication": 0.14285714285714285,
+            "Packaging Transport Storage & Security of Radioactive Material": 0.14285714285714285,
+            "Technical Communication Quarterly": 0.2857142857142857
+          }
+        },
+        "claim_exposure_hhi": 0.18367346938775508,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 5.444444444444445,
+        "hhi": 0.18367346938775508,
+        "known_count": 7,
+        "max_share": 0.2857142857142857,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9795918367346939,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "Academy of Management Journal": 0.14285714285714285,
+          "Elsevier eBooks": 0.14285714285714285,
+          "IEEE Transactions on Engineering Management": 0.14285714285714285,
+          "Journal of Business and Technical Communication": 0.14285714285714285,
+          "Packaging Transport Storage & Security of Radioactive Material": 0.14285714285714285,
+          "Technical Communication Quarterly": 0.2857142857142857
+        },
+        "source_count": {
+          "category_counts": {
+            "Academy of Management Journal": 1,
+            "Elsevier eBooks": 1,
+            "IEEE Transactions on Engineering Management": 1,
+            "Journal of Business and Technical Communication": 1,
+            "Packaging Transport Storage & Security of Radioactive Material": 1,
+            "Technical Communication Quarterly": 2
+          },
+          "effective_categories": 5.444444444444445,
+          "hhi": 0.18367346938775508,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346939,
+          "shares": {
+            "Academy of Management Journal": 0.14285714285714285,
+            "Elsevier eBooks": 0.14285714285714285,
+            "IEEE Transactions on Engineering Management": 0.14285714285714285,
+            "Journal of Business and Technical Communication": 0.14285714285714285,
+            "Packaging Transport Storage & Security of Radioactive Material": 0.14285714285714285,
+            "Technical Communication Quarterly": 0.2857142857142857
+          }
+        },
+        "source_count_hhi": 0.18367346938775508,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      }
+    },
+    "exception": {},
+    "family_count": 7,
+    "family_digest": "882f94f11a3524a3247933ff67cb752d7da51d354da715d69ce1dbfb3d3e6ab9",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-8f0c9a4455b58bac64aebf82",
+    "requirement_digest": "af7c32bb16b7b24395cfa29f11b0be0a29dd9debd109d0fce8347d901604bc45",
+    "requirement_id": "REQ-DIV-TECHNICAL-WRITING-09",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "493e457817b07d30a8a38854eb7d01037e421ae6247acfd244ad72b8874d221a",
+  "packet_id": "DIV-TECHNICAL-WRITING-09",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode",
+      "methodology"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-TECHNICAL-WRITING-09",
+    "research_question": "T079 structural source-diversity evaluation for DIV-TECHNICAL-WRITING-09"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-TECHNICAL-WRITING-09",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "R.B. Pope | Robert E. Luna | R.R. Rawl",
+      "canonical_work_id": "doi:10.1179/174651008x386920",
+      "doi": "10.1179/174651008x386920",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W4251390666",
+      "publisher": "Taylor & Francis",
+      "retrieved_uri": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W4251390666",
+      "source_type": "article",
+      "stance": null,
+      "title": "Technical Communication",
+      "venue": "Packaging Transport Storage & Security of Radioactive Material"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Kelli Cargile Cook",
+      "canonical_work_id": "doi:10.1207/s15427625tcq1101_1",
+      "doi": "10.1207/s15427625tcq1101_1",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2151956779",
+      "publisher": "Routledge",
+      "retrieved_uri": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2151956779",
+      "source_type": "article",
+      "stance": null,
+      "title": "Layered Literacies: A Theoretical Frame for Technical Communication Pedagogy",
+      "venue": "Technical Communication Quarterly"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Mark D. Morelli | Steven D. Eppinger | Rosaline K. Gulati",
+      "canonical_work_id": "doi:10.1109/17.403739",
+      "doi": "10.1109/17.403739",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2148395942",
+      "publisher": "Institute of Electrical and Electronics Engineers",
+      "retrieved_uri": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2148395942",
+      "source_type": "article",
+      "stance": null,
+      "title": "Predicting technical communication in product development organizations",
+      "venue": "IEEE Transactions on Engineering Management"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Johndan Johnson-Eilola",
+      "canonical_work_id": "doi:10.1207/s15427625tcq0503_1",
+      "doi": "10.1207/s15427625tcq0503_1",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1987281348",
+      "publisher": "Routledge",
+      "retrieved_uri": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1987281348",
+      "source_type": "article",
+      "stance": null,
+      "title": "Relocating the Value of Work: Technical Communication in a Post-Industrial Age",
+      "venue": "Technical Communication Quarterly"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Michael L. Tushman",
+      "canonical_work_id": "doi:10.5465/255704",
+      "doi": "10.5465/255704",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1998164907",
+      "publisher": "Academy of Management",
+      "retrieved_uri": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1998164907",
+      "source_type": "article",
+      "stance": null,
+      "title": "Technical Communication in R & D Laboratories: The Impact of Project Work Characteristics",
+      "venue": "Academy of Management Journal"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "JC HUEBSCH",
+      "canonical_work_id": "doi:10.1016/b978-0-409-10126-3.50004-0",
+      "doi": "10.1016/b978-0-409-10126-3.50004-0",
+      "geography": "AT",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W3023848597",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W3023848597",
+      "source_type": "book-chapter",
+      "stance": null,
+      "title": "Technical communication",
+      "venue": "Elsevier eBooks"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Carolyn D. Rude",
+      "canonical_work_id": "doi:10.1177/1050651908329562",
+      "doi": "10.1177/1050651908329562",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2009166799",
+      "publisher": "SAGE Publishing",
+      "retrieved_uri": "https://api.openalex.org/works?search=technical+communication&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2009166799",
+      "source_type": "article",
+      "stance": null,
+      "title": "Mapping the Research Questions in Technical Communication",
+      "venue": "Journal of Business and Technical Communication"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "method_monoculture"
+}

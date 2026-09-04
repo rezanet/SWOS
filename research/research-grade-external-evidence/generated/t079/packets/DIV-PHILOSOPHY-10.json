@@ -1,0 +1,1159 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-425bd0b61a814d923ba763c2",
+      "canonical_key": "doi:10.4135/9781412956260",
+      "family_id": "family-425bd0b61a814d923ba763c2",
+      "identifiers": {
+        "canonical_work_id": "doi:10.4135/9781412956260",
+        "doi": "10.4135/9781412956260"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Joseph R. DesJardins"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.crossref.org/works/10.4135%2F9781412956260",
+          "status": "observed",
+          "value": "SAGE Publications, Inc."
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.4135/9781412956260"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-a734f4c149c108bf38f7d7e1",
+        "openalex-W1511056229"
+      ],
+      "titles": [
+        "Encyclopedia of Business Ethics and Society",
+        "Environmental Ethics: An Introduction to Environmental Philosophy"
+      ]
+    },
+    {
+      "canonical_id": "family-6c55e9db5ced9117c59cac0a",
+      "canonical_key": "doi:10.5840/beq201020329",
+      "family_id": "family-6c55e9db5ced9117c59cac0a",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5840/beq201020329",
+        "doi": "10.5840/beq201020329"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Joseph Heath | Jeffrey Moriarty | Wayne Norman"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Cambridge University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Business Ethics Quarterly"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5840/beq201020329"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-ede45e908880fafef8aff2c8",
+        "openalex-W2008290151"
+      ],
+      "titles": [
+        "Business Ethics and (or as) Political Philosophy"
+      ]
+    },
+    {
+      "canonical_id": "family-cf424b2b0fb9e9fb2efb9ea5",
+      "canonical_key": "https://openalex.org/w1489140245",
+      "family_id": "family-cf424b2b0fb9e9fb2efb9ea5",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1489140245"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "J. Baird Callicott | Robert Frodeman"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Center for Security and Emerging Technology"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "DigitalGeorgetown (Georgetown University Library)"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1489140245"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1489140245"
+      ],
+      "titles": [
+        "Encyclopedia of Environmental Ethics and Philosophy"
+      ]
+    },
+    {
+      "canonical_id": "family-f2a67121d7e70026c4ce0d9e",
+      "canonical_key": "doi:10.1177/027614678600600103",
+      "family_id": "family-f2a67121d7e70026c4ce0d9e",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1177/027614678600600103",
+        "doi": "10.1177/027614678600600103"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Shelby D. Hunt | Scott J. Vitell"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "SAGE Publishing"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of Macromarketing"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1177/027614678600600103"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-9a8ef04f3d56ddf52bf5438d",
+        "openalex-W2137705772"
+      ],
+      "titles": [
+        "A General Theory of Marketing Ethics"
+      ]
+    },
+    {
+      "canonical_id": "family-fb6a209f8a53bca1130118ee",
+      "canonical_key": "https://openalex.org/w1505999675",
+      "family_id": "family-fb6a209f8a53bca1130118ee",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1505999675"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Mark N. K. Saunders | Philip Lewis | Adrian Thornhill"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1505999675"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1505999675"
+      ],
+      "titles": [
+        "Research Methods for Business Students"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1489140245"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2137705772"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1511056229"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1505999675"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2008290151"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "duplicate",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:46Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "25a9e85482515f6422f0ba3e00c0e4bd74bff390ca360c4537dcfa10722f69ca"
+  },
+  "discipline": "philosophy",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:46.469259Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "closed_or_unknown": 5
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 5,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "closed_or_unknown": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "US": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "US": 1
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "US": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 1,
+        "max_share": 1.0,
+        "metadata_completeness": 0.2,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "US": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "US": 1
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "US": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 4,
+        "unknown_rate": 0.8
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 5
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 5,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.96,
+        "category_counts": {
+          "1980s": 1,
+          "1990s": 2,
+          "2000s": 1,
+          "2010s": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1980s": 1,
+            "1990s": 2,
+            "2000s": 1,
+            "2010s": 1
+          },
+          "effective_categories": 3.571428571428571,
+          "hhi": 0.28,
+          "max_share": 0.4,
+          "normalized_balance": 0.96,
+          "shares": {
+            "1980s": 0.2,
+            "1990s": 0.4,
+            "2000s": 0.2,
+            "2010s": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.28,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 3.571428571428571,
+        "hhi": 0.28,
+        "known_count": 5,
+        "max_share": 0.4,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.96,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "1980s": 0.2,
+          "1990s": 0.4,
+          "2000s": 0.2,
+          "2010s": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "1980s": 1,
+            "1990s": 2,
+            "2000s": 1,
+            "2010s": 1
+          },
+          "effective_categories": 3.571428571428571,
+          "hhi": 0.28,
+          "max_share": 0.4,
+          "normalized_balance": 0.96,
+          "shares": {
+            "1980s": 0.2,
+            "1990s": 0.4,
+            "2000s": 0.2,
+            "2010s": 0.2
+          }
+        },
+        "source_count_hhi": 0.28,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "Cambridge University Press": 1,
+          "Center for Security and Emerging Technology": 1,
+          "SAGE Publications, Inc.": 1,
+          "SAGE Publishing": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Cambridge University Press": 1,
+            "Center for Security and Emerging Technology": 1,
+            "SAGE Publications, Inc.": 1,
+            "SAGE Publishing": 1
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.25,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Cambridge University Press": 0.25,
+            "Center for Security and Emerging Technology": 0.25,
+            "SAGE Publications, Inc.": 0.25,
+            "SAGE Publishing": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.25,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 4.0,
+        "hhi": 0.25,
+        "known_count": 4,
+        "max_share": 0.25,
+        "metadata_completeness": 0.8,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "Cambridge University Press": 0.25,
+          "Center for Security and Emerging Technology": 0.25,
+          "SAGE Publications, Inc.": 0.25,
+          "SAGE Publishing": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "Cambridge University Press": 1,
+            "Center for Security and Emerging Technology": 1,
+            "SAGE Publications, Inc.": 1,
+            "SAGE Publishing": 1
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.25,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Cambridge University Press": 0.25,
+            "Center for Security and Emerging Technology": 0.25,
+            "SAGE Publications, Inc.": 0.25,
+            "SAGE Publishing": 0.25
+          }
+        },
+        "source_count_hhi": 0.25,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.2
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "article": 5
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "article": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 5,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "article": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "article": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "Business Ethics Quarterly": 1,
+          "DigitalGeorgetown (Georgetown University Library)": 1,
+          "Journal of Macromarketing": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Business Ethics Quarterly": 1,
+            "DigitalGeorgetown (Georgetown University Library)": 1,
+            "Journal of Macromarketing": 1
+          },
+          "effective_categories": 3.0,
+          "hhi": 0.3333333333333333,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Business Ethics Quarterly": 0.3333333333333333,
+            "DigitalGeorgetown (Georgetown University Library)": 0.3333333333333333,
+            "Journal of Macromarketing": 0.3333333333333333
+          }
+        },
+        "claim_exposure_hhi": 0.3333333333333333,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 3.0,
+        "hhi": 0.3333333333333333,
+        "known_count": 3,
+        "max_share": 0.3333333333333333,
+        "metadata_completeness": 0.6,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "Business Ethics Quarterly": 0.3333333333333333,
+          "DigitalGeorgetown (Georgetown University Library)": 0.3333333333333333,
+          "Journal of Macromarketing": 0.3333333333333333
+        },
+        "source_count": {
+          "category_counts": {
+            "Business Ethics Quarterly": 1,
+            "DigitalGeorgetown (Georgetown University Library)": 1,
+            "Journal of Macromarketing": 1
+          },
+          "effective_categories": 3.0,
+          "hhi": 0.3333333333333333,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Business Ethics Quarterly": 0.3333333333333333,
+            "DigitalGeorgetown (Georgetown University Library)": 0.3333333333333333,
+            "Journal of Macromarketing": 0.3333333333333333
+          }
+        },
+        "source_count_hhi": 0.3333333333333333,
+        "status": "fail",
+        "unknown_count": 2,
+        "unknown_rate": 0.4
+      }
+    },
+    "exception": {},
+    "family_count": 5,
+    "family_digest": "84039cc8c1d5ace674f0caf728869227b19bb16fd66ceb2378b3b906ff780aba",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 2,
+    "raw_status": "fail",
+    "report_id": "diversity-26c6e4dc406af0f3800cb345",
+    "requirement_digest": "375c41f01014a8ae0858bd2251c8cbc9c1fad34f7aa07d167a7a4b0ff8c53138",
+    "requirement_id": "REQ-DIV-PHILOSOPHY-10",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "4966e2c25d255c27efb35c278f6f20902a5bf05d149fe74afc376d952366d0f2",
+  "packet_id": "DIV-PHILOSOPHY-10",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-PHILOSOPHY-10",
+    "research_question": "T079 structural source-diversity evaluation for DIV-PHILOSOPHY-10"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-PHILOSOPHY-10",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "J. Baird Callicott | Robert Frodeman",
+      "canonical_work_id": "https://openalex.org/W1489140245",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1489140245",
+      "publisher": "Center for Security and Emerging Technology",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1489140245",
+      "source_type": "article",
+      "stance": null,
+      "title": "Encyclopedia of Environmental Ethics and Philosophy",
+      "venue": "DigitalGeorgetown (Georgetown University Library)"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Shelby D. Hunt | Scott J. Vitell",
+      "canonical_work_id": "doi:10.1177/027614678600600103",
+      "doi": "10.1177/027614678600600103",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2137705772",
+      "publisher": "SAGE Publishing",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2137705772",
+      "source_type": "article",
+      "stance": null,
+      "title": "A General Theory of Marketing Ethics",
+      "venue": "Journal of Macromarketing"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Shelby D. Hunt | Scott Vitell",
+      "canonical_work_id": "doi:10.1177/027614678600600103",
+      "doi": "10.1177/027614678600600103",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1177%2F027614678600600103",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "crossref",
+      "provider_record_id": "10.1177/027614678600600103",
+      "publisher": "SAGE Publications",
+      "retrieved_uri": "https://api.crossref.org/works/10.1177%2F027614678600600103",
+      "source_id": "crossref-9a8ef04f3d56ddf52bf5438d",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "A General Theory of Marketing Ethics",
+      "venue": "Journal of Macromarketing"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Joseph R. DesJardins",
+      "canonical_work_id": "doi:10.4135/9781412956260",
+      "doi": "10.4135/9781412956260",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1511056229",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1511056229",
+      "source_type": "article",
+      "stance": null,
+      "title": "Environmental Ethics: An Introduction to Environmental Philosophy",
+      "venue": null
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Robert Kolb",
+      "canonical_work_id": "doi:10.4135/9781412956260",
+      "doi": "10.4135/9781412956260",
+      "geography": null,
+      "language": null,
+      "metadata_provenance": "https://api.crossref.org/works/10.4135%2F9781412956260",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "unknown",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "crossref",
+      "provider_record_id": "10.4135/9781412956260",
+      "publisher": "SAGE Publications, Inc.",
+      "retrieved_uri": "https://api.crossref.org/works/10.4135%2F9781412956260",
+      "source_id": "crossref-a734f4c149c108bf38f7d7e1",
+      "source_type": "reference-book",
+      "stance": null,
+      "title": "Encyclopedia of Business Ethics and Society",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Mark N. K. Saunders | Philip Lewis | Adrian Thornhill",
+      "canonical_work_id": "https://openalex.org/W1505999675",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1505999675",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1505999675",
+      "source_type": "article",
+      "stance": null,
+      "title": "Research Methods for Business Students",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Joseph Heath | Jeffrey Moriarty | Wayne Norman",
+      "canonical_work_id": "doi:10.5840/beq201020329",
+      "doi": "10.5840/beq201020329",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2008290151",
+      "publisher": "Cambridge University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2008290151",
+      "source_type": "article",
+      "stance": null,
+      "title": "Business Ethics and (or as) Political Philosophy",
+      "venue": "Business Ethics Quarterly"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Joseph Heath | Jeffrey Moriarty | Wayne Norman",
+      "canonical_work_id": "doi:10.5840/beq201020329",
+      "doi": "10.5840/beq201020329",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.5840%2Fbeq201020329",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "crossref",
+      "provider_record_id": "10.5840/beq201020329",
+      "publisher": "Cambridge University Press (CUP)",
+      "retrieved_uri": "https://api.crossref.org/works/10.5840%2Fbeq201020329",
+      "source_id": "crossref-ede45e908880fafef8aff2c8",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Business Ethics and (or as) Political Philosophy",
+      "venue": "Business Ethics Quarterly"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "duplicate"
+}

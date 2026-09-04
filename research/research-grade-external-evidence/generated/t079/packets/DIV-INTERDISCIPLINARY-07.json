@@ -1,0 +1,1469 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-037a188faa0c890e034d7367",
+      "canonical_key": "doi:10.1111/j.1540-5826.2009.00281.x",
+      "family_id": "family-037a188faa0c890e034d7367",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1111/j.1540-5826.2009.00281.x",
+        "doi": "10.1111/j.1540-5826.2009.00281.x"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Virginia W. Berninger"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Wiley"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Learning Disabilities Research and Practice"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1111/j.1540-5826.2009.00281.x"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2073556927"
+      ],
+      "titles": [
+        "Highlights of Programmatic, Interdisciplinary Research on Writing"
+      ]
+    },
+    {
+      "canonical_id": "family-21efc104de3860249e9cd349",
+      "canonical_key": "doi:10.14512/9783962388638",
+      "family_id": "family-21efc104de3860249e9cd349",
+      "identifiers": {
+        "canonical_work_id": "doi:10.14512/9783962388638",
+        "doi": "10.14512/9783962388638"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Christian Pohl | Gertrude Hirsch Hadorn"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "oekom verlag"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "oekom verlag eBooks"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.14512/9783962388638"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W3172282069"
+      ],
+      "titles": [
+        "Principles for Designing Transdisciplinary Research"
+      ]
+    },
+    {
+      "canonical_id": "family-552961500b691c444b2a5ac9",
+      "canonical_key": "doi:10.1007/s11625-011-0149-x",
+      "family_id": "family-552961500b691c444b2a5ac9",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1007/s11625-011-0149-x",
+        "doi": "10.1007/s11625-011-0149-x"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Daniel J. Lang | Arnim Wiek | Matthias Bergmann"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "DE"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Springer Science+Business Media"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Sustainability Science"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1007/s11625-011-0149-x"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1982748232"
+      ],
+      "titles": [
+        "Transdisciplinary research in sustainability science: practice, principles, and challenges"
+      ]
+    },
+    {
+      "canonical_id": "family-722d713acaf455a0a137f2c7",
+      "canonical_key": "doi:10.1007/978-1-4020-6699-3",
+      "family_id": "family-722d713acaf455a0a137f2c7",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1007/978-1-4020-6699-3",
+        "doi": "10.1007/978-1-4020-6699-3"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Gertrude Hirsch Hadorn | Holger Hoffmann-Riem | Susette Biber-Klemm"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1007/978-1-4020-6699-3"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1506165256"
+      ],
+      "titles": [
+        "Handbook of Transdisciplinary Research"
+      ]
+    },
+    {
+      "canonical_id": "family-93f1fab56565343783a3cd2c",
+      "canonical_key": "doi:10.1051/nss:2008035",
+      "family_id": "family-93f1fab56565343783a3cd2c",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1051/nss:2008035",
+        "doi": "10.1051/nss:2008035"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Christian Pohl | Gertrude Hirsch Hadorn"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "CH"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "fr"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "EDP Sciences"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Natures Sciences Sociétés"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1051/nss:2008035"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2147717642"
+      ],
+      "titles": [
+        "Methodological challenges of transdisciplinary research"
+      ]
+    },
+    {
+      "canonical_id": "family-9c15db4402702d96fe87e4aa",
+      "canonical_key": "doi:10.1016/j.futures.2006.02.011",
+      "family_id": "family-9c15db4402702d96fe87e4aa",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.futures.2006.02.011",
+        "doi": "10.1016/j.futures.2006.02.011"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Fern Wickson | Alj Carew | A. Wendy Russell"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "AU"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Futures"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.futures.2006.02.011"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2168723631"
+      ],
+      "titles": [
+        "Transdisciplinary research: characteristics, quandaries and quality"
+      ]
+    },
+    {
+      "canonical_id": "family-a3c73310bf6adfb9d5701292",
+      "canonical_key": "doi:10.1016/j.ecolecon.2013.04.008",
+      "family_id": "family-a3c73310bf6adfb9d5701292",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.ecolecon.2013.04.008",
+        "doi": "10.1016/j.ecolecon.2013.04.008"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Patric Brandt | Anna Ernst | Fabienne Gralla"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "DE"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Ecological Economics"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.ecolecon.2013.04.008"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2123797837"
+      ],
+      "titles": [
+        "A review of transdisciplinary research in sustainability science"
+      ]
+    },
+    {
+      "canonical_id": "family-b553e641b64466aa17f9275b",
+      "canonical_key": "doi:10.1016/0277-9536(92)90038-r",
+      "family_id": "family-b553e641b64466aa17f9275b",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/0277-9536(92)90038-r",
+        "doi": "10.1016/0277-9536(92)90038-r"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Patricia L. Rosenfield"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Social Science & Medicine"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/0277-9536(92)90038-r"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1967742762"
+      ],
+      "titles": [
+        "The potential of transdisciplinary research for sustaining and extending linkages between the health and social sciences"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2073556927"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1982748232"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1506165256"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2123797837"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2147717642"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2168723631"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W3172282069"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1967742762"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "multilingual",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:38Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "5975f2ed4485a1123728250ca7dc2b1abfcd81a1bd7864d83bb0d607a53cad55"
+  },
+  "discipline": "interdisciplinary",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across period",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:38.566342Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.9375,
+        "category_counts": {
+          "closed_or_unknown": 3,
+          "open_access": 5
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 3,
+            "open_access": 5
+          },
+          "effective_categories": 1.8823529411764706,
+          "hhi": 0.53125,
+          "max_share": 0.625,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "closed_or_unknown": 0.375,
+            "open_access": 0.625
+          }
+        },
+        "claim_exposure_hhi": 0.53125,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.8823529411764706,
+        "hhi": 0.53125,
+        "known_count": 8,
+        "max_share": 0.625,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9375,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 0.375,
+          "open_access": 0.625
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 3,
+            "open_access": 5
+          },
+          "effective_categories": 1.8823529411764706,
+          "hhi": 0.53125,
+          "max_share": 0.625,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "closed_or_unknown": 0.375,
+            "open_access": 0.625
+          }
+        },
+        "source_count_hhi": 0.53125,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.9251700680272109,
+        "category_counts": {
+          "AU": 1,
+          "CH": 1,
+          "DE": 2,
+          "US": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "AU": 1,
+            "CH": 1,
+            "DE": 2,
+            "US": 3
+          },
+          "effective_categories": 3.2666666666666666,
+          "hhi": 0.30612244897959184,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9251700680272109,
+          "shares": {
+            "AU": 0.14285714285714285,
+            "CH": 0.14285714285714285,
+            "DE": 0.2857142857142857,
+            "US": 0.42857142857142855
+          }
+        },
+        "claim_exposure_hhi": 0.30612244897959184,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 3.2666666666666666,
+        "hhi": 0.30612244897959184,
+        "known_count": 7,
+        "max_share": 0.42857142857142855,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 0.9251700680272109,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "AU": 0.14285714285714285,
+          "CH": 0.14285714285714285,
+          "DE": 0.2857142857142857,
+          "US": 0.42857142857142855
+        },
+        "source_count": {
+          "category_counts": {
+            "AU": 1,
+            "CH": 1,
+            "DE": 2,
+            "US": 3
+          },
+          "effective_categories": 3.2666666666666666,
+          "hhi": 0.30612244897959184,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9251700680272109,
+          "shares": {
+            "AU": 0.14285714285714285,
+            "CH": 0.14285714285714285,
+            "DE": 0.2857142857142857,
+            "US": 0.42857142857142855
+          }
+        },
+        "source_count_hhi": 0.30612244897959184,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.4375,
+        "category_counts": {
+          "en": 7,
+          "fr": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 7,
+            "fr": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "en": 0.875,
+            "fr": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.78125,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [
+          "en",
+          "fr"
+        ],
+        "dimension": "language",
+        "effective_categories": 1.28,
+        "hhi": 0.78125,
+        "known_count": 8,
+        "max_share": 0.875,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.4375,
+        "required_strata": [
+          "en",
+          "fr"
+        ],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 0.875,
+          "fr": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 7,
+            "fr": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "en": 0.875,
+            "fr": 0.125
+          }
+        },
+        "source_count_hhi": 0.78125,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.7968749999999999,
+        "category_counts": {
+          "1990s": 1,
+          "2000s": 5,
+          "2010s": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1990s": 1,
+            "2000s": 5,
+            "2010s": 2
+          },
+          "effective_categories": 2.1333333333333333,
+          "hhi": 0.46875,
+          "max_share": 0.625,
+          "normalized_balance": 0.7968749999999999,
+          "shares": {
+            "1990s": 0.125,
+            "2000s": 0.625,
+            "2010s": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.46875,
+        "corrective_query": "independent source evidence across period",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 2.1333333333333333,
+        "hhi": 0.46875,
+        "known_count": 8,
+        "max_share": 0.625,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.7968749999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "1990s": 0.125,
+          "2000s": 0.625,
+          "2010s": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "1990s": 1,
+            "2000s": 5,
+            "2010s": 2
+          },
+          "effective_categories": 2.1333333333333333,
+          "hhi": 0.46875,
+          "max_share": 0.625,
+          "normalized_balance": 0.7968749999999999,
+          "shares": {
+            "1990s": 0.125,
+            "2000s": 0.625,
+            "2010s": 0.25
+          }
+        },
+        "source_count_hhi": 0.46875,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9183673469387755,
+        "category_counts": {
+          "EDP Sciences": 1,
+          "Elsevier BV": 3,
+          "Springer Science+Business Media": 1,
+          "Wiley": 1,
+          "oekom verlag": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "EDP Sciences": 1,
+            "Elsevier BV": 3,
+            "Springer Science+Business Media": 1,
+            "Wiley": 1,
+            "oekom verlag": 1
+          },
+          "effective_categories": 3.7692307692307696,
+          "hhi": 0.26530612244897955,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9183673469387755,
+          "shares": {
+            "EDP Sciences": 0.14285714285714285,
+            "Elsevier BV": 0.42857142857142855,
+            "Springer Science+Business Media": 0.14285714285714285,
+            "Wiley": 0.14285714285714285,
+            "oekom verlag": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.26530612244897955,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 3.7692307692307696,
+        "hhi": 0.26530612244897955,
+        "known_count": 7,
+        "max_share": 0.42857142857142855,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 0.9183673469387755,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "EDP Sciences": 0.14285714285714285,
+          "Elsevier BV": 0.42857142857142855,
+          "Springer Science+Business Media": 0.14285714285714285,
+          "Wiley": 0.14285714285714285,
+          "oekom verlag": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "EDP Sciences": 1,
+            "Elsevier BV": 3,
+            "Springer Science+Business Media": 1,
+            "Wiley": 1,
+            "oekom verlag": 1
+          },
+          "effective_categories": 3.7692307692307696,
+          "hhi": 0.26530612244897955,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9183673469387755,
+          "shares": {
+            "EDP Sciences": 0.14285714285714285,
+            "Elsevier BV": 0.42857142857142855,
+            "Springer Science+Business Media": 0.14285714285714285,
+            "Wiley": 0.14285714285714285,
+            "oekom verlag": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.26530612244897955,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.75,
+        "category_counts": {
+          "article": 6,
+          "book": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 6,
+            "book": 2
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "article": 0.75,
+            "book": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.625,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.6,
+        "hhi": 0.625,
+        "known_count": 8,
+        "max_share": 0.75,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.75,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 0.75,
+          "book": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 6,
+            "book": 2
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "article": 0.75,
+            "book": 0.25
+          }
+        },
+        "source_count_hhi": 0.625,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "Ecological Economics": 1,
+          "Futures": 1,
+          "Learning Disabilities Research and Practice": 1,
+          "Natures Sciences Sociétés": 1,
+          "Social Science & Medicine": 1,
+          "Sustainability Science": 1,
+          "oekom verlag eBooks": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Ecological Economics": 1,
+            "Futures": 1,
+            "Learning Disabilities Research and Practice": 1,
+            "Natures Sciences Sociétés": 1,
+            "Social Science & Medicine": 1,
+            "Sustainability Science": 1,
+            "oekom verlag eBooks": 1
+          },
+          "effective_categories": 7.0,
+          "hhi": 0.14285714285714285,
+          "max_share": 0.14285714285714285,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Ecological Economics": 0.14285714285714285,
+            "Futures": 0.14285714285714285,
+            "Learning Disabilities Research and Practice": 0.14285714285714285,
+            "Natures Sciences Sociétés": 0.14285714285714285,
+            "Social Science & Medicine": 0.14285714285714285,
+            "Sustainability Science": 0.14285714285714285,
+            "oekom verlag eBooks": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.14285714285714285,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 7.0,
+        "hhi": 0.14285714285714285,
+        "known_count": 7,
+        "max_share": 0.14285714285714285,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Ecological Economics": 0.14285714285714285,
+          "Futures": 0.14285714285714285,
+          "Learning Disabilities Research and Practice": 0.14285714285714285,
+          "Natures Sciences Sociétés": 0.14285714285714285,
+          "Social Science & Medicine": 0.14285714285714285,
+          "Sustainability Science": 0.14285714285714285,
+          "oekom verlag eBooks": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "Ecological Economics": 1,
+            "Futures": 1,
+            "Learning Disabilities Research and Practice": 1,
+            "Natures Sciences Sociétés": 1,
+            "Social Science & Medicine": 1,
+            "Sustainability Science": 1,
+            "oekom verlag eBooks": 1
+          },
+          "effective_categories": 7.0,
+          "hhi": 0.14285714285714285,
+          "max_share": 0.14285714285714285,
+          "normalized_balance": 1.0,
+          "shares": {
+            "Ecological Economics": 0.14285714285714285,
+            "Futures": 0.14285714285714285,
+            "Learning Disabilities Research and Practice": 0.14285714285714285,
+            "Natures Sciences Sociétés": 0.14285714285714285,
+            "Social Science & Medicine": 0.14285714285714285,
+            "Sustainability Science": 0.14285714285714285,
+            "oekom verlag eBooks": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.14285714285714285,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "52935fddaa3ce7fe3ef1efbee9ec7fb82ee353f61608193d2fbc5d80de9ef73c",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-92383db4a97c03f89dbca264",
+    "requirement_digest": "b1f101ba3dff1354267ae4bc1ff018862bc289ddde464a6f56f70685ccd35973",
+    "requirement_id": "REQ-DIV-INTERDISCIPLINARY-07",
+    "research_grade_composite": 0.7992132707967692,
+    "status": "fail"
+  },
+  "packet_digest": "f217c99daf0d9cfa5ca51e406f51226b08e17b2183440abc0165024451d40b51",
+  "packet_id": "DIV-INTERDISCIPLINARY-07",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {
+      "language": [
+        "en",
+        "fr"
+      ]
+    },
+    "requirement_id": "REQ-DIV-INTERDISCIPLINARY-07",
+    "research_question": "T079 structural source-diversity evaluation for DIV-INTERDISCIPLINARY-07"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-INTERDISCIPLINARY-07",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Virginia W. Berninger",
+      "canonical_work_id": "doi:10.1111/j.1540-5826.2009.00281.x",
+      "doi": "10.1111/j.1540-5826.2009.00281.x",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2073556927",
+      "publisher": "Wiley",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2073556927",
+      "source_type": "article",
+      "stance": null,
+      "title": "Highlights of Programmatic, Interdisciplinary Research on Writing",
+      "venue": "Learning Disabilities Research and Practice"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Daniel J. Lang | Arnim Wiek | Matthias Bergmann",
+      "canonical_work_id": "doi:10.1007/s11625-011-0149-x",
+      "doi": "10.1007/s11625-011-0149-x",
+      "geography": "DE",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1982748232",
+      "publisher": "Springer Science+Business Media",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1982748232",
+      "source_type": "article",
+      "stance": null,
+      "title": "Transdisciplinary research in sustainability science: practice, principles, and challenges",
+      "venue": "Sustainability Science"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Gertrude Hirsch Hadorn | Holger Hoffmann-Riem | Susette Biber-Klemm",
+      "canonical_work_id": "doi:10.1007/978-1-4020-6699-3",
+      "doi": "10.1007/978-1-4020-6699-3",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1506165256",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1506165256",
+      "source_type": "book",
+      "stance": null,
+      "title": "Handbook of Transdisciplinary Research",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Patric Brandt | Anna Ernst | Fabienne Gralla",
+      "canonical_work_id": "doi:10.1016/j.ecolecon.2013.04.008",
+      "doi": "10.1016/j.ecolecon.2013.04.008",
+      "geography": "DE",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2123797837",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2123797837",
+      "source_type": "article",
+      "stance": null,
+      "title": "A review of transdisciplinary research in sustainability science",
+      "venue": "Ecological Economics"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Christian Pohl | Gertrude Hirsch Hadorn",
+      "canonical_work_id": "doi:10.1051/nss:2008035",
+      "doi": "10.1051/nss:2008035",
+      "geography": "CH",
+      "language": "fr",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2147717642",
+      "publisher": "EDP Sciences",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2147717642",
+      "source_type": "article",
+      "stance": null,
+      "title": "Methodological challenges of transdisciplinary research",
+      "venue": "Natures Sciences Sociétés"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Fern Wickson | Alj Carew | A. Wendy Russell",
+      "canonical_work_id": "doi:10.1016/j.futures.2006.02.011",
+      "doi": "10.1016/j.futures.2006.02.011",
+      "geography": "AU",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2168723631",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2168723631",
+      "source_type": "article",
+      "stance": null,
+      "title": "Transdisciplinary research: characteristics, quandaries and quality",
+      "venue": "Futures"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Christian Pohl | Gertrude Hirsch Hadorn",
+      "canonical_work_id": "doi:10.14512/9783962388638",
+      "doi": "10.14512/9783962388638",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W3172282069",
+      "publisher": "oekom verlag",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W3172282069",
+      "source_type": "book",
+      "stance": null,
+      "title": "Principles for Designing Transdisciplinary Research",
+      "venue": "oekom verlag eBooks"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Patricia L. Rosenfield",
+      "canonical_work_id": "doi:10.1016/0277-9536(92)90038-r",
+      "doi": "10.1016/0277-9536(92)90038-r",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1967742762",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1967742762",
+      "source_type": "article",
+      "stance": null,
+      "title": "The potential of transdisciplinary research for sustaining and extending linkages between the health and social sciences",
+      "venue": "Social Science & Medicine"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "multilingual"
+}

@@ -1,0 +1,1455 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-1dc51872a50079454ab7ed43",
+      "canonical_key": "doi:10.5840/newvico1986439",
+      "family_id": "family-1dc51872a50079454ab7ed43",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5840/newvico1986439",
+        "doi": "10.5840/newvico1986439"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "John D. Schaeffer"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Philosophy Documentation Center"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "New Vico Studies"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5840/newvico1986439"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2326620733"
+      ],
+      "titles": [
+        "Ethics and the Limits of Philosophy"
+      ]
+    },
+    {
+      "canonical_id": "family-28c9a0d88fdd58ece6eda743",
+      "canonical_key": "https://openalex.org/w1498044776",
+      "family_id": "family-28c9a0d88fdd58ece6eda743",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1498044776"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Tom L. Beauchamp"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "other"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1498044776"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1498044776"
+      ],
+      "titles": [
+        "Philosophical Ethics: An Introduction to Moral Philosophy"
+      ]
+    },
+    {
+      "canonical_id": "family-3b3bad0b0467d9e9daaebeb1",
+      "canonical_key": "doi:10.1111/j.1468-0149.1978.tb00392.x",
+      "family_id": "family-3b3bad0b0467d9e9daaebeb1",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1111/j.1468-0149.1978.tb00392.x",
+        "doi": "10.1111/j.1468-0149.1978.tb00392.x"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "A. R. LAGEY"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "GB"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Wiley"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Philosophical Books"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1111/j.1468-0149.1978.tb00392.x"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1876401414"
+      ],
+      "titles": [
+        "SIDGWICK'S ETHICS AND VICTORIAN MORAL PHILOSOPHY"
+      ]
+    },
+    {
+      "canonical_id": "family-4a38a5705a78513516779410",
+      "canonical_key": "doi:10.1016/0191-6599(87)90190-2",
+      "family_id": "family-4a38a5705a78513516779410",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/0191-6599(87)90190-2",
+        "doi": "10.1016/0191-6599(87)90190-2"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Judith N. Shklar"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Routledge"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "History of European Ideas"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/0191-6599(87)90190-2"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2022606528"
+      ],
+      "titles": [
+        "Ethics and the limits of Philosophy"
+      ]
+    },
+    {
+      "canonical_id": "family-7bc0a9ea428a2050e980956f",
+      "canonical_key": "doi:10.2307/2103834",
+      "family_id": "family-7bc0a9ea428a2050e980956f",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/2103834",
+        "doi": "10.2307/2103834"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Laurence J. Lafleur | C. D. Broad"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1950s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Wiley"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Philosophy and Phenomenological Research"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/2103834"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2318393377"
+      ],
+      "titles": [
+        "Ethics and the History of Philosophy."
+      ]
+    },
+    {
+      "canonical_id": "family-bc87a18e09a2062c6b3ce7fb",
+      "canonical_key": "doi:10.2307/2092093",
+      "family_id": "family-bc87a18e09a2062c6b3ce7fb",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/2092093",
+        "doi": "10.2307/2092093"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "William R. Catton | Peter Winch"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1960s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "SAGE Publishing"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "American Sociological Review"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/2092093"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2068769676"
+      ],
+      "titles": [
+        "The Idea of a Social Science and Its Relation to Philosophy."
+      ]
+    },
+    {
+      "canonical_id": "family-f2a67121d7e70026c4ce0d9e",
+      "canonical_key": "doi:10.1177/027614678600600103",
+      "family_id": "family-f2a67121d7e70026c4ce0d9e",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1177/027614678600600103",
+        "doi": "10.1177/027614678600600103"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Shelby D. Hunt | Scott J. Vitell"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "SAGE Publishing"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of Macromarketing"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1177/027614678600600103"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2137705772"
+      ],
+      "titles": [
+        "A General Theory of Marketing Ethics"
+      ]
+    },
+    {
+      "canonical_id": "family-fd54354a0b6a90b796b86c4a",
+      "canonical_key": "doi:10.1017/s0031819100037943",
+      "family_id": "family-fd54354a0b6a90b796b86c4a",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1017/s0031819100037943",
+        "doi": "10.1017/s0031819100037943"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "G. E. M. Anscombe"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1950s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Cambridge University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Philosophy"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1017/s0031819100037943"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W4292083047"
+      ],
+      "titles": [
+        "Modern Moral Philosophy"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W4292083047"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2318393377"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2068769676"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1876401414"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2326620733"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1498044776"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2137705772"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2022606528"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "historical",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:45Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "d135a7ddb610890838652028fae69bdbff4bba774fcf80954270829273aa6424"
+  },
+  "discipline": "philosophy",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:45.889385Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.4375,
+        "category_counts": {
+          "closed_or_unknown": 7,
+          "open_access": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 7,
+            "open_access": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "closed_or_unknown": 0.875,
+            "open_access": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.78125,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.28,
+        "hhi": 0.78125,
+        "known_count": 8,
+        "max_share": 0.875,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.4375,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 0.875,
+          "open_access": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 7,
+            "open_access": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "closed_or_unknown": 0.875,
+            "open_access": 0.125
+          }
+        },
+        "source_count_hhi": 0.78125,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.75,
+        "category_counts": {
+          "GB": 1,
+          "US": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "GB": 1,
+            "US": 3
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "GB": 0.25,
+            "US": 0.75
+          }
+        },
+        "claim_exposure_hhi": 0.625,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 1.6,
+        "hhi": 0.625,
+        "known_count": 4,
+        "max_share": 0.75,
+        "metadata_completeness": 0.5,
+        "missing_strata": [],
+        "normalized_balance": 0.75,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "GB": 0.25,
+          "US": 0.75
+        },
+        "source_count": {
+          "category_counts": {
+            "GB": 1,
+            "US": 3
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "GB": 0.25,
+            "US": 0.75
+          }
+        },
+        "source_count_hhi": 0.625,
+        "status": "fail",
+        "unknown_count": 4,
+        "unknown_rate": 0.5
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.875,
+        "category_counts": {
+          "1950s": 2,
+          "1960s": 1,
+          "1970s": 1,
+          "1980s": 4
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1950s": 2,
+            "1960s": 1,
+            "1970s": 1,
+            "1980s": 4
+          },
+          "effective_categories": 2.909090909090909,
+          "hhi": 0.34375,
+          "max_share": 0.5,
+          "normalized_balance": 0.875,
+          "shares": {
+            "1950s": 0.25,
+            "1960s": 0.125,
+            "1970s": 0.125,
+            "1980s": 0.5
+          }
+        },
+        "claim_exposure_hhi": 0.34375,
+        "corrective_query": "",
+        "covered_strata": [
+          "1950s",
+          "1960s"
+        ],
+        "dimension": "period",
+        "effective_categories": 2.909090909090909,
+        "hhi": 0.34375,
+        "known_count": 8,
+        "max_share": 0.5,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.875,
+        "required_strata": [
+          "1950s",
+          "1960s"
+        ],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "1950s": 0.25,
+          "1960s": 0.125,
+          "1970s": 0.125,
+          "1980s": 0.5
+        },
+        "source_count": {
+          "category_counts": {
+            "1950s": 2,
+            "1960s": 1,
+            "1970s": 1,
+            "1980s": 4
+          },
+          "effective_categories": 2.909090909090909,
+          "hhi": 0.34375,
+          "max_share": 0.5,
+          "normalized_balance": 0.875,
+          "shares": {
+            "1950s": 0.25,
+            "1960s": 0.125,
+            "1970s": 0.125,
+            "1980s": 0.5
+          }
+        },
+        "source_count_hhi": 0.34375,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9693877551020408,
+        "category_counts": {
+          "Cambridge University Press": 1,
+          "Philosophy Documentation Center": 1,
+          "Routledge": 1,
+          "SAGE Publishing": 2,
+          "Wiley": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Cambridge University Press": 1,
+            "Philosophy Documentation Center": 1,
+            "Routledge": 1,
+            "SAGE Publishing": 2,
+            "Wiley": 2
+          },
+          "effective_categories": 4.454545454545455,
+          "hhi": 0.22448979591836732,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9693877551020408,
+          "shares": {
+            "Cambridge University Press": 0.14285714285714285,
+            "Philosophy Documentation Center": 0.14285714285714285,
+            "Routledge": 0.14285714285714285,
+            "SAGE Publishing": 0.2857142857142857,
+            "Wiley": 0.2857142857142857
+          }
+        },
+        "claim_exposure_hhi": 0.22448979591836732,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 4.454545454545455,
+        "hhi": 0.22448979591836732,
+        "known_count": 7,
+        "max_share": 0.2857142857142857,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 0.9693877551020408,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Cambridge University Press": 0.14285714285714285,
+          "Philosophy Documentation Center": 0.14285714285714285,
+          "Routledge": 0.14285714285714285,
+          "SAGE Publishing": 0.2857142857142857,
+          "Wiley": 0.2857142857142857
+        },
+        "source_count": {
+          "category_counts": {
+            "Cambridge University Press": 1,
+            "Philosophy Documentation Center": 1,
+            "Routledge": 1,
+            "SAGE Publishing": 2,
+            "Wiley": 2
+          },
+          "effective_categories": 4.454545454545455,
+          "hhi": 0.22448979591836732,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9693877551020408,
+          "shares": {
+            "Cambridge University Press": 0.14285714285714285,
+            "Philosophy Documentation Center": 0.14285714285714285,
+            "Routledge": 0.14285714285714285,
+            "SAGE Publishing": 0.2857142857142857,
+            "Wiley": 0.2857142857142857
+          }
+        },
+        "source_count_hhi": 0.22448979591836732,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.4375,
+        "category_counts": {
+          "article": 7,
+          "other": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 7,
+            "other": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "article": 0.875,
+            "other": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.78125,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.28,
+        "hhi": 0.78125,
+        "known_count": 8,
+        "max_share": 0.875,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.4375,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 0.875,
+          "other": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 7,
+            "other": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "article": 0.875,
+            "other": 0.125
+          }
+        },
+        "source_count_hhi": 0.78125,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "American Sociological Review": 1,
+          "History of European Ideas": 1,
+          "Journal of Macromarketing": 1,
+          "New Vico Studies": 1,
+          "Philosophical Books": 1,
+          "Philosophy": 1,
+          "Philosophy and Phenomenological Research": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "American Sociological Review": 1,
+            "History of European Ideas": 1,
+            "Journal of Macromarketing": 1,
+            "New Vico Studies": 1,
+            "Philosophical Books": 1,
+            "Philosophy": 1,
+            "Philosophy and Phenomenological Research": 1
+          },
+          "effective_categories": 7.0,
+          "hhi": 0.14285714285714285,
+          "max_share": 0.14285714285714285,
+          "normalized_balance": 1.0,
+          "shares": {
+            "American Sociological Review": 0.14285714285714285,
+            "History of European Ideas": 0.14285714285714285,
+            "Journal of Macromarketing": 0.14285714285714285,
+            "New Vico Studies": 0.14285714285714285,
+            "Philosophical Books": 0.14285714285714285,
+            "Philosophy": 0.14285714285714285,
+            "Philosophy and Phenomenological Research": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.14285714285714285,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 7.0,
+        "hhi": 0.14285714285714285,
+        "known_count": 7,
+        "max_share": 0.14285714285714285,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "American Sociological Review": 0.14285714285714285,
+          "History of European Ideas": 0.14285714285714285,
+          "Journal of Macromarketing": 0.14285714285714285,
+          "New Vico Studies": 0.14285714285714285,
+          "Philosophical Books": 0.14285714285714285,
+          "Philosophy": 0.14285714285714285,
+          "Philosophy and Phenomenological Research": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "American Sociological Review": 1,
+            "History of European Ideas": 1,
+            "Journal of Macromarketing": 1,
+            "New Vico Studies": 1,
+            "Philosophical Books": 1,
+            "Philosophy": 1,
+            "Philosophy and Phenomenological Research": 1
+          },
+          "effective_categories": 7.0,
+          "hhi": 0.14285714285714285,
+          "max_share": 0.14285714285714285,
+          "normalized_balance": 1.0,
+          "shares": {
+            "American Sociological Review": 0.14285714285714285,
+            "History of European Ideas": 0.14285714285714285,
+            "Journal of Macromarketing": 0.14285714285714285,
+            "New Vico Studies": 0.14285714285714285,
+            "Philosophical Books": 0.14285714285714285,
+            "Philosophy": 0.14285714285714285,
+            "Philosophy and Phenomenological Research": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.14285714285714285,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "7876d5583eda7537bae6a388fb899157a2ce8af5420fa3afbf021f6c84c79290",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-8f9ce0566e22cfadf5633a64",
+    "requirement_digest": "af511b173c1147f23e75b0ae9babfcc01b18dea9b93ac429c39a8a9368507ecb",
+    "requirement_id": "REQ-DIV-PHILOSOPHY-08",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "2f8a67590aa4c923a3c092b0f3909cb2a187e3ff29c3dcfa0ce8f0b9fa0c0847",
+  "packet_id": "DIV-PHILOSOPHY-08",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {
+      "period": [
+        "1950s",
+        "1960s"
+      ]
+    },
+    "requirement_id": "REQ-DIV-PHILOSOPHY-08",
+    "research_question": "T079 structural source-diversity evaluation for DIV-PHILOSOPHY-08"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-PHILOSOPHY-08",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "open_access",
+      "author_cluster": "G. E. M. Anscombe",
+      "canonical_work_id": "doi:10.1017/s0031819100037943",
+      "doi": "10.1017/s0031819100037943",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1950s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W4292083047",
+      "publisher": "Cambridge University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W4292083047",
+      "source_type": "article",
+      "stance": null,
+      "title": "Modern Moral Philosophy",
+      "venue": "Philosophy"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Laurence J. Lafleur | C. D. Broad",
+      "canonical_work_id": "doi:10.2307/2103834",
+      "doi": "10.2307/2103834",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1950s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2318393377",
+      "publisher": "Wiley",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2318393377",
+      "source_type": "article",
+      "stance": null,
+      "title": "Ethics and the History of Philosophy.",
+      "venue": "Philosophy and Phenomenological Research"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "William R. Catton | Peter Winch",
+      "canonical_work_id": "doi:10.2307/2092093",
+      "doi": "10.2307/2092093",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1960s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2068769676",
+      "publisher": "SAGE Publishing",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2068769676",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Idea of a Social Science and Its Relation to Philosophy.",
+      "venue": "American Sociological Review"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "A. R. LAGEY",
+      "canonical_work_id": "doi:10.1111/j.1468-0149.1978.tb00392.x",
+      "doi": "10.1111/j.1468-0149.1978.tb00392.x",
+      "geography": "GB",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1876401414",
+      "publisher": "Wiley",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1876401414",
+      "source_type": "article",
+      "stance": null,
+      "title": "SIDGWICK'S ETHICS AND VICTORIAN MORAL PHILOSOPHY",
+      "venue": "Philosophical Books"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "John D. Schaeffer",
+      "canonical_work_id": "doi:10.5840/newvico1986439",
+      "doi": "10.5840/newvico1986439",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2326620733",
+      "publisher": "Philosophy Documentation Center",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2326620733",
+      "source_type": "article",
+      "stance": null,
+      "title": "Ethics and the Limits of Philosophy",
+      "venue": "New Vico Studies"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Tom L. Beauchamp",
+      "canonical_work_id": "https://openalex.org/W1498044776",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1498044776",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1498044776",
+      "source_type": "other",
+      "stance": null,
+      "title": "Philosophical Ethics: An Introduction to Moral Philosophy",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Shelby D. Hunt | Scott J. Vitell",
+      "canonical_work_id": "doi:10.1177/027614678600600103",
+      "doi": "10.1177/027614678600600103",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2137705772",
+      "publisher": "SAGE Publishing",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2137705772",
+      "source_type": "article",
+      "stance": null,
+      "title": "A General Theory of Marketing Ethics",
+      "venue": "Journal of Macromarketing"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Judith N. Shklar",
+      "canonical_work_id": "doi:10.1016/0191-6599(87)90190-2",
+      "doi": "10.1016/0191-6599(87)90190-2",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2022606528",
+      "publisher": "Routledge",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+ethics&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2022606528",
+      "source_type": "article",
+      "stance": null,
+      "title": "Ethics and the limits of Philosophy",
+      "venue": "History of European Ideas"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "historical"
+}

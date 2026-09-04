@@ -1,0 +1,1356 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-12054ec9ce4daa691dac505e",
+      "canonical_key": "doi:10.2307/3341985",
+      "family_id": "family-12054ec9ce4daa691dac505e",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/3341985",
+        "doi": "10.2307/3341985"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Christopher G. Trott | Constance Classen"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "University of Alberta"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "The Canadian Journal of Sociology"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/3341985"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1587992405"
+      ],
+      "titles": [
+        "Worlds of Sense: Exploring the Senses in History and across Cultures"
+      ]
+    },
+    {
+      "canonical_id": "family-3eac04b1462738bd4793d213",
+      "canonical_key": "doi:10.4135/9781036233136",
+      "family_id": "family-3eac04b1462738bd4793d213",
+      "identifiers": {
+        "canonical_work_id": "doi:10.4135/9781036233136",
+        "doi": "10.4135/9781036233136"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Clive Seale"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2020s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.4135/9781036233136"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1511604355"
+      ],
+      "titles": [
+        "Researching Society and Culture"
+      ]
+    },
+    {
+      "canonical_id": "family-4e423e21dc7886726da79011",
+      "canonical_key": "doi:10.2307/2700435",
+      "family_id": "family-4e423e21dc7886726da79011",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/2700435",
+        "doi": "10.2307/2700435"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Jane Rhodes | Marcus Wood"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Oxford University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of American History"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/2700435"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2032914735"
+      ],
+      "titles": [
+        "Blind Memory: Visual Representations of Slavery in England and America, 1780-1865"
+      ]
+    },
+    {
+      "canonical_id": "family-78993d0fb8aeb8c2e26ac673",
+      "canonical_key": "doi:10.2307/3034522",
+      "family_id": "family-78993d0fb8aeb8c2e26ac673",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/3034522",
+        "doi": "10.2307/3034522"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Paul Hockings | Marcus Banks | Howard Morphy"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Wiley"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of the Royal Anthropological Institute"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/3034522"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2037287302"
+      ],
+      "titles": [
+        "Rethinking Visual Anthropology."
+      ]
+    },
+    {
+      "canonical_id": "family-966ed01ca698b2a3686ff01e",
+      "canonical_key": "doi:10.1075/aila.27.02kra",
+      "family_id": "family-966ed01ca698b2a3686ff01e",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1075/aila.27.02kra",
+        "doi": "10.1075/aila.27.02kra"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Claire Kramsch"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "John Benjamins Publishing Company"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "AILA Review"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1075/aila.27.02kra"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1659145884"
+      ],
+      "titles": [
+        "Language and Culture"
+      ]
+    },
+    {
+      "canonical_id": "family-9b48baf656616ba67c358168",
+      "canonical_key": "https://openalex.org/w1522244082",
+      "family_id": "family-9b48baf656616ba67c358168",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1522244082"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Nina Lübbren | David Crouch"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Berg eBooks"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1522244082"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1522244082"
+      ],
+      "titles": [
+        "Visual culture and tourism"
+      ]
+    },
+    {
+      "canonical_id": "family-c198c6d9e7549b30ab3a1594",
+      "canonical_key": "https://openalex.org/w2112957339",
+      "family_id": "family-c198c6d9e7549b30ab3a1594",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W2112957339"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Henry Jenkins | Ravi Purushotma"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "inferred",
+          "value": "candidate_method_family_requires_human_verification"
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "BiblioBoard Library Catalog (Open Research Library)"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W2112957339"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2112957339"
+      ],
+      "titles": [
+        "Confronting the Challenges of Participatory Culture: Media Education for the 21st Century"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1511604355"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2037287302"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2112957339"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1659145884"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1587992405"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1522244082"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2032914735"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "method_monoculture",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:09Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "704fffec644c4c6964cf6b9b48322054d443884fd5668c0ede0eb7ce09fdb728"
+  },
+  "discipline": "art_history",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode",
+      "independent source evidence across methodology"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:09.376379Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.9795918367346941,
+        "category_counts": {
+          "closed_or_unknown": 3,
+          "open_access": 4
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 3,
+            "open_access": 4
+          },
+          "effective_categories": 1.9600000000000004,
+          "hhi": 0.510204081632653,
+          "max_share": 0.5714285714285714,
+          "normalized_balance": 0.9795918367346941,
+          "shares": {
+            "closed_or_unknown": 0.42857142857142855,
+            "open_access": 0.5714285714285714
+          }
+        },
+        "claim_exposure_hhi": 0.510204081632653,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.9600000000000004,
+        "hhi": 0.510204081632653,
+        "known_count": 7,
+        "max_share": 0.5714285714285714,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9795918367346941,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "closed_or_unknown": 0.42857142857142855,
+          "open_access": 0.5714285714285714
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 3,
+            "open_access": 4
+          },
+          "effective_categories": 1.9600000000000004,
+          "hhi": 0.510204081632653,
+          "max_share": 0.5714285714285714,
+          "normalized_balance": 0.9795918367346941,
+          "shares": {
+            "closed_or_unknown": 0.42857142857142855,
+            "open_access": 0.5714285714285714
+          }
+        },
+        "source_count_hhi": 0.510204081632653,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "US": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "US": 2
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "US": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 2,
+        "max_share": 1.0,
+        "metadata_completeness": 0.2857142857142857,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "US": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "US": 2
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "US": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 5,
+        "unknown_rate": 0.7142857142857143
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 7
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 7,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 7
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "methodology": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {},
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {},
+          "effective_categories": 0.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {}
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across methodology",
+        "covered_strata": [],
+        "dimension": "methodology",
+        "effective_categories": 0.0,
+        "hhi": 1.0,
+        "known_count": 0,
+        "max_share": 1.0,
+        "metadata_completeness": 0.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {},
+        "source_count": {
+          "category_counts": {},
+          "effective_categories": 0.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {}
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 7,
+        "unknown_rate": 1.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.9251700680272109,
+        "category_counts": {
+          "1990s": 2,
+          "2000s": 3,
+          "2010s": 1,
+          "2020s": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1990s": 2,
+            "2000s": 3,
+            "2010s": 1,
+            "2020s": 1
+          },
+          "effective_categories": 3.2666666666666666,
+          "hhi": 0.30612244897959184,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9251700680272109,
+          "shares": {
+            "1990s": 0.2857142857142857,
+            "2000s": 0.42857142857142855,
+            "2010s": 0.14285714285714285,
+            "2020s": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.30612244897959184,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 3.2666666666666666,
+        "hhi": 0.30612244897959184,
+        "known_count": 7,
+        "max_share": 0.42857142857142855,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9251700680272109,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "1990s": 0.2857142857142857,
+          "2000s": 0.42857142857142855,
+          "2010s": 0.14285714285714285,
+          "2020s": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "1990s": 2,
+            "2000s": 3,
+            "2010s": 1,
+            "2020s": 1
+          },
+          "effective_categories": 3.2666666666666666,
+          "hhi": 0.30612244897959184,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9251700680272109,
+          "shares": {
+            "1990s": 0.2857142857142857,
+            "2000s": 0.42857142857142855,
+            "2010s": 0.14285714285714285,
+            "2020s": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.30612244897959184,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "John Benjamins Publishing Company": 1,
+          "Oxford University Press": 1,
+          "University of Alberta": 1,
+          "Wiley": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "John Benjamins Publishing Company": 1,
+            "Oxford University Press": 1,
+            "University of Alberta": 1,
+            "Wiley": 1
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.25,
+          "normalized_balance": 1.0,
+          "shares": {
+            "John Benjamins Publishing Company": 0.25,
+            "Oxford University Press": 0.25,
+            "University of Alberta": 0.25,
+            "Wiley": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.25,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 4.0,
+        "hhi": 0.25,
+        "known_count": 4,
+        "max_share": 0.25,
+        "metadata_completeness": 0.5714285714285714,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "John Benjamins Publishing Company": 0.25,
+          "Oxford University Press": 0.25,
+          "University of Alberta": 0.25,
+          "Wiley": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "John Benjamins Publishing Company": 1,
+            "Oxford University Press": 1,
+            "University of Alberta": 1,
+            "Wiley": 1
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.25,
+          "normalized_balance": 1.0,
+          "shares": {
+            "John Benjamins Publishing Company": 0.25,
+            "Oxford University Press": 0.25,
+            "University of Alberta": 0.25,
+            "Wiley": 0.25
+          }
+        },
+        "source_count_hhi": 0.25,
+        "status": "fail",
+        "unknown_count": 3,
+        "unknown_rate": 0.42857142857142855
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.9795918367346941,
+        "category_counts": {
+          "article": 4,
+          "book": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 4,
+            "book": 3
+          },
+          "effective_categories": 1.9600000000000004,
+          "hhi": 0.510204081632653,
+          "max_share": 0.5714285714285714,
+          "normalized_balance": 0.9795918367346941,
+          "shares": {
+            "article": 0.5714285714285714,
+            "book": 0.42857142857142855
+          }
+        },
+        "claim_exposure_hhi": 0.510204081632653,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.9600000000000004,
+        "hhi": 0.510204081632653,
+        "known_count": 7,
+        "max_share": 0.5714285714285714,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9795918367346941,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "article": 0.5714285714285714,
+          "book": 0.42857142857142855
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 4,
+            "book": 3
+          },
+          "effective_categories": 1.9600000000000004,
+          "hhi": 0.510204081632653,
+          "max_share": 0.5714285714285714,
+          "normalized_balance": 0.9795918367346941,
+          "shares": {
+            "article": 0.5714285714285714,
+            "book": 0.42857142857142855
+          }
+        },
+        "source_count_hhi": 0.510204081632653,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "AILA Review": 1,
+          "Berg eBooks": 1,
+          "BiblioBoard Library Catalog (Open Research Library)": 1,
+          "Journal of American History": 1,
+          "Journal of the Royal Anthropological Institute": 1,
+          "The Canadian Journal of Sociology": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "AILA Review": 1,
+            "Berg eBooks": 1,
+            "BiblioBoard Library Catalog (Open Research Library)": 1,
+            "Journal of American History": 1,
+            "Journal of the Royal Anthropological Institute": 1,
+            "The Canadian Journal of Sociology": 1
+          },
+          "effective_categories": 5.999999999999999,
+          "hhi": 0.16666666666666669,
+          "max_share": 0.16666666666666666,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "AILA Review": 0.16666666666666666,
+            "Berg eBooks": 0.16666666666666666,
+            "BiblioBoard Library Catalog (Open Research Library)": 0.16666666666666666,
+            "Journal of American History": 0.16666666666666666,
+            "Journal of the Royal Anthropological Institute": 0.16666666666666666,
+            "The Canadian Journal of Sociology": 0.16666666666666666
+          }
+        },
+        "claim_exposure_hhi": 0.16666666666666669,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 5.999999999999999,
+        "hhi": 0.16666666666666669,
+        "known_count": 6,
+        "max_share": 0.16666666666666666,
+        "metadata_completeness": 0.8571428571428571,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 7,
+        "shares": {
+          "AILA Review": 0.16666666666666666,
+          "Berg eBooks": 0.16666666666666666,
+          "BiblioBoard Library Catalog (Open Research Library)": 0.16666666666666666,
+          "Journal of American History": 0.16666666666666666,
+          "Journal of the Royal Anthropological Institute": 0.16666666666666666,
+          "The Canadian Journal of Sociology": 0.16666666666666666
+        },
+        "source_count": {
+          "category_counts": {
+            "AILA Review": 1,
+            "Berg eBooks": 1,
+            "BiblioBoard Library Catalog (Open Research Library)": 1,
+            "Journal of American History": 1,
+            "Journal of the Royal Anthropological Institute": 1,
+            "The Canadian Journal of Sociology": 1
+          },
+          "effective_categories": 5.999999999999999,
+          "hhi": 0.16666666666666669,
+          "max_share": 0.16666666666666666,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "AILA Review": 0.16666666666666666,
+            "Berg eBooks": 0.16666666666666666,
+            "BiblioBoard Library Catalog (Open Research Library)": 0.16666666666666666,
+            "Journal of American History": 0.16666666666666666,
+            "Journal of the Royal Anthropological Institute": 0.16666666666666666,
+            "The Canadian Journal of Sociology": 0.16666666666666666
+          }
+        },
+        "source_count_hhi": 0.16666666666666669,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.14285714285714285
+      }
+    },
+    "exception": {},
+    "family_count": 7,
+    "family_digest": "12c8caecd1a1f3579b0b17c8cc0c1649050f4083b1cd308534a979c0ba2207f6",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-8ec7b7d3e24db3d31b7143f9",
+    "requirement_digest": "7ccaa05df79f51ed4c40262df5dee312120b6cf41700f3d73fe295a0718f0395",
+    "requirement_id": "REQ-DIV-ART-HISTORY-09",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "c4b3cc31edc8f8f3558dadc108758515b83067434d7ec77320d5c0fc00ad0d37",
+  "packet_id": "DIV-ART-HISTORY-09",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode",
+      "methodology"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-ART-HISTORY-09",
+    "research_question": "T079 structural source-diversity evaluation for DIV-ART-HISTORY-09"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-ART-HISTORY-09",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Clive Seale",
+      "canonical_work_id": "doi:10.4135/9781036233136",
+      "doi": "10.4135/9781036233136",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2020s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1511604355",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1511604355",
+      "source_type": "book",
+      "stance": null,
+      "title": "Researching Society and Culture",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Paul Hockings | Marcus Banks | Howard Morphy",
+      "canonical_work_id": "doi:10.2307/3034522",
+      "doi": "10.2307/3034522",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2037287302",
+      "publisher": "Wiley",
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2037287302",
+      "source_type": "article",
+      "stance": null,
+      "title": "Rethinking Visual Anthropology.",
+      "venue": "Journal of the Royal Anthropological Institute"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Henry Jenkins | Ravi Purushotma",
+      "canonical_work_id": "https://openalex.org/W2112957339",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2112957339",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2112957339",
+      "source_type": "book",
+      "stance": null,
+      "title": "Confronting the Challenges of Participatory Culture: Media Education for the 21st Century",
+      "venue": "BiblioBoard Library Catalog (Open Research Library)"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Claire Kramsch",
+      "canonical_work_id": "doi:10.1075/aila.27.02kra",
+      "doi": "10.1075/aila.27.02kra",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1659145884",
+      "publisher": "John Benjamins Publishing Company",
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1659145884",
+      "source_type": "article",
+      "stance": null,
+      "title": "Language and Culture",
+      "venue": "AILA Review"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Christopher G. Trott | Constance Classen",
+      "canonical_work_id": "doi:10.2307/3341985",
+      "doi": "10.2307/3341985",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1587992405",
+      "publisher": "University of Alberta",
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1587992405",
+      "source_type": "article",
+      "stance": null,
+      "title": "Worlds of Sense: Exploring the Senses in History and across Cultures",
+      "venue": "The Canadian Journal of Sociology"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Nina Lübbren | David Crouch",
+      "canonical_work_id": "https://openalex.org/W1522244082",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1522244082",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1522244082",
+      "source_type": "book",
+      "stance": null,
+      "title": "Visual culture and tourism",
+      "venue": "Berg eBooks"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Jane Rhodes | Marcus Wood",
+      "canonical_work_id": "doi:10.2307/2700435",
+      "doi": "10.2307/2700435",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "inferred",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": "candidate_method_family_requires_human_verification",
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2032914735",
+      "publisher": "Oxford University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=visual+culture+history&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2032914735",
+      "source_type": "article",
+      "stance": null,
+      "title": "Blind Memory: Visual Representations of Slavery in England and America, 1780-1865",
+      "venue": "Journal of American History"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "method_monoculture"
+}

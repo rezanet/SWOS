@@ -1,0 +1,1456 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-01ab1570aaa0522cdcb7e8e9",
+      "canonical_key": "doi:10.5860/choice.45-3496",
+      "family_id": "family-01ab1570aaa0522cdcb7e8e9",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.45-3496",
+        "doi": "10.5860/choice.45-3496"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.45-3496"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1603542031"
+      ],
+      "titles": [
+        "Social psychology: handbook of basic principles"
+      ]
+    },
+    {
+      "canonical_id": "family-05176272ee22a9eeb459c827",
+      "canonical_key": "doi:10.1146/annurev.psych.59.103006.093629",
+      "family_id": "family-05176272ee22a9eeb459c827",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1146/annurev.psych.59.103006.093629",
+        "doi": "10.1146/annurev.psych.59.103006.093629"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Jonathan St. B. T. Evans"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "GB"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Annual Reviews"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Annual Review of Psychology"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1146/annurev.psych.59.103006.093629"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2155479778"
+      ],
+      "titles": [
+        "Dual-Processing Accounts of Reasoning, Judgment, and Social Cognition"
+      ]
+    },
+    {
+      "canonical_id": "family-197e9869914c8dc3f114749d",
+      "canonical_key": "doi:10.1146/annurev.psych.121208.131628",
+      "family_id": "family-197e9869914c8dc3f114749d",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1146/annurev.psych.121208.131628",
+        "doi": "10.1146/annurev.psych.121208.131628"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Leda Cosmides | John Tooby"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Annual Reviews"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Annual Review of Psychology"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1146/annurev.psych.121208.131628"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2129902464"
+      ],
+      "titles": [
+        "Evolutionary Psychology: New Perspectives on Cognition and Motivation"
+      ]
+    },
+    {
+      "canonical_id": "family-2128ccb41825fa008304a7ac",
+      "canonical_key": "doi:10.2307/2800186",
+      "family_id": "family-2128ccb41825fa008304a7ac",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/2800186",
+        "doi": "10.2307/2800186"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "W. D. Wilder | John W. Berry | P. R. Dasen"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "RU"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Royal Anthropological Institute of Great Britain and Ireland"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Man"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/2800186"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W581506536"
+      ],
+      "titles": [
+        "Culture and Cognition: Readings in Cross-Cultural Psychology"
+      ]
+    },
+    {
+      "canonical_id": "family-5e12106ceaf1e1eab10ed619",
+      "canonical_key": "https://openalex.org/w1580027790",
+      "family_id": "family-5e12106ceaf1e1eab10ed619",
+      "identifiers": {
+        "canonical_work_id": "https://openalex.org/W1580027790"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Daniel Stokols | Irwin Altman"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "https://openalex.org/W1580027790"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1580027790"
+      ],
+      "titles": [
+        "Handbook of environmental psychology"
+      ]
+    },
+    {
+      "canonical_id": "family-5f2d65c7d30aa59eecefffac",
+      "canonical_key": "doi:10.1146/annurev.soc.23.1.263",
+      "family_id": "family-5f2d65c7d30aa59eecefffac",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1146/annurev.soc.23.1.263",
+        "doi": "10.1146/annurev.soc.23.1.263"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Paul DiMaggio"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Annual Reviews"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Annual Review of Sociology"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1146/annurev.soc.23.1.263"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2104190044"
+      ],
+      "titles": [
+        "Culture and Cognition"
+      ]
+    },
+    {
+      "canonical_id": "family-80c5ba2a62e6c49b0b6c170a",
+      "canonical_key": "doi:10.1038/nrn1884",
+      "family_id": "family-80c5ba2a62e6c49b0b6c170a",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1038/nrn1884",
+        "doi": "10.1038/nrn1884"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "David M. Amodio | Chris Frith"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Nature Portfolio"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Nature reviews. Neuroscience"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1038/nrn1884"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2052610531"
+      ],
+      "titles": [
+        "Meeting of minds: the medial frontal cortex and social cognition"
+      ]
+    },
+    {
+      "canonical_id": "family-aaa8f0cdb7d482c8a94d886f",
+      "canonical_key": "doi:10.1007/s11097-010-9182-y",
+      "family_id": "family-aaa8f0cdb7d482c8a94d886f",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1007/s11097-010-9182-y",
+        "doi": "10.1007/s11097-010-9182-y"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "John Sutton | Celia B. Harris | Paul G. Keil"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "AU"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Springer Nature"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Phenomenology and the Cognitive Sciences"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1007/s11097-010-9182-y"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1994178598"
+      ],
+      "titles": [
+        "The psychology of memory, extended cognition, and socially distributed remembering"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2155479778"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1603542031"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2104190044"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2129902464"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2052610531"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W581506536"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1580027790"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1994178598"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "balanced",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:48Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "6f7abf4cd7af9ded4ffb40d9162d3565de0f1b352006eaab9ba6a08c0179dbd4"
+  },
+  "discipline": "psychology",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:48.110884Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.75,
+        "category_counts": {
+          "closed_or_unknown": 6,
+          "open_access": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 6,
+            "open_access": 2
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "closed_or_unknown": 0.75,
+            "open_access": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.625,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.6,
+        "hhi": 0.625,
+        "known_count": 8,
+        "max_share": 0.75,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.75,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 0.75,
+          "open_access": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 6,
+            "open_access": 2
+          },
+          "effective_categories": 1.6,
+          "hhi": 0.625,
+          "max_share": 0.75,
+          "normalized_balance": 0.75,
+          "shares": {
+            "closed_or_unknown": 0.75,
+            "open_access": 0.25
+          }
+        },
+        "source_count_hhi": 0.625,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.8888888888888888,
+        "category_counts": {
+          "AU": 1,
+          "GB": 1,
+          "RU": 1,
+          "US": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "AU": 1,
+            "GB": 1,
+            "RU": 1,
+            "US": 3
+          },
+          "effective_categories": 2.9999999999999996,
+          "hhi": 0.33333333333333337,
+          "max_share": 0.5,
+          "normalized_balance": 0.8888888888888888,
+          "shares": {
+            "AU": 0.16666666666666666,
+            "GB": 0.16666666666666666,
+            "RU": 0.16666666666666666,
+            "US": 0.5
+          }
+        },
+        "claim_exposure_hhi": 0.33333333333333337,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 2.9999999999999996,
+        "hhi": 0.33333333333333337,
+        "known_count": 6,
+        "max_share": 0.5,
+        "metadata_completeness": 0.75,
+        "missing_strata": [],
+        "normalized_balance": 0.8888888888888888,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "AU": 0.16666666666666666,
+          "GB": 0.16666666666666666,
+          "RU": 0.16666666666666666,
+          "US": 0.5
+        },
+        "source_count": {
+          "category_counts": {
+            "AU": 1,
+            "GB": 1,
+            "RU": 1,
+            "US": 3
+          },
+          "effective_categories": 2.9999999999999996,
+          "hhi": 0.33333333333333337,
+          "max_share": 0.5,
+          "normalized_balance": 0.8888888888888888,
+          "shares": {
+            "AU": 0.16666666666666666,
+            "GB": 0.16666666666666666,
+            "RU": 0.16666666666666666,
+            "US": 0.5
+          }
+        },
+        "source_count_hhi": 0.33333333333333337,
+        "status": "fail",
+        "unknown_count": 2,
+        "unknown_rate": 0.25
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.9375,
+        "category_counts": {
+          "1970s": 1,
+          "1980s": 1,
+          "1990s": 1,
+          "2000s": 3,
+          "2010s": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1970s": 1,
+            "1980s": 1,
+            "1990s": 1,
+            "2000s": 3,
+            "2010s": 2
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.375,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "1970s": 0.125,
+            "1980s": 0.125,
+            "1990s": 0.125,
+            "2000s": 0.375,
+            "2010s": 0.25
+          }
+        },
+        "claim_exposure_hhi": 0.25,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 4.0,
+        "hhi": 0.25,
+        "known_count": 8,
+        "max_share": 0.375,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9375,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "1970s": 0.125,
+          "1980s": 0.125,
+          "1990s": 0.125,
+          "2000s": 0.375,
+          "2010s": 0.25
+        },
+        "source_count": {
+          "category_counts": {
+            "1970s": 1,
+            "1980s": 1,
+            "1990s": 1,
+            "2000s": 3,
+            "2010s": 2
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.375,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "1970s": 0.125,
+            "1980s": 0.125,
+            "1990s": 0.125,
+            "2000s": 0.375,
+            "2010s": 0.25
+          }
+        },
+        "source_count_hhi": 0.25,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9183673469387755,
+        "category_counts": {
+          "Annual Reviews": 3,
+          "Association of College and Research Libraries": 1,
+          "Nature Portfolio": 1,
+          "Royal Anthropological Institute of Great Britain and Ireland": 1,
+          "Springer Nature": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Annual Reviews": 3,
+            "Association of College and Research Libraries": 1,
+            "Nature Portfolio": 1,
+            "Royal Anthropological Institute of Great Britain and Ireland": 1,
+            "Springer Nature": 1
+          },
+          "effective_categories": 3.7692307692307696,
+          "hhi": 0.26530612244897955,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9183673469387755,
+          "shares": {
+            "Annual Reviews": 0.42857142857142855,
+            "Association of College and Research Libraries": 0.14285714285714285,
+            "Nature Portfolio": 0.14285714285714285,
+            "Royal Anthropological Institute of Great Britain and Ireland": 0.14285714285714285,
+            "Springer Nature": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.26530612244897955,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 3.7692307692307696,
+        "hhi": 0.26530612244897955,
+        "known_count": 7,
+        "max_share": 0.42857142857142855,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 0.9183673469387755,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Annual Reviews": 0.42857142857142855,
+          "Association of College and Research Libraries": 0.14285714285714285,
+          "Nature Portfolio": 0.14285714285714285,
+          "Royal Anthropological Institute of Great Britain and Ireland": 0.14285714285714285,
+          "Springer Nature": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "Annual Reviews": 3,
+            "Association of College and Research Libraries": 1,
+            "Nature Portfolio": 1,
+            "Royal Anthropological Institute of Great Britain and Ireland": 1,
+            "Springer Nature": 1
+          },
+          "effective_categories": 3.7692307692307696,
+          "hhi": 0.26530612244897955,
+          "max_share": 0.42857142857142855,
+          "normalized_balance": 0.9183673469387755,
+          "shares": {
+            "Annual Reviews": 0.42857142857142855,
+            "Association of College and Research Libraries": 0.14285714285714285,
+            "Nature Portfolio": 0.14285714285714285,
+            "Royal Anthropological Institute of Great Britain and Ireland": 0.14285714285714285,
+            "Springer Nature": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.26530612244897955,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.4375,
+        "category_counts": {
+          "article": 7,
+          "book-review": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 7,
+            "book-review": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "article": 0.875,
+            "book-review": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.78125,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.28,
+        "hhi": 0.78125,
+        "known_count": 8,
+        "max_share": 0.875,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.4375,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 0.875,
+          "book-review": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 7,
+            "book-review": 1
+          },
+          "effective_categories": 1.28,
+          "hhi": 0.78125,
+          "max_share": 0.875,
+          "normalized_balance": 0.4375,
+          "shares": {
+            "article": 0.875,
+            "book-review": 0.125
+          }
+        },
+        "source_count_hhi": 0.78125,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9795918367346939,
+        "category_counts": {
+          "Annual Review of Psychology": 2,
+          "Annual Review of Sociology": 1,
+          "Choice Reviews Online": 1,
+          "Man": 1,
+          "Nature reviews. Neuroscience": 1,
+          "Phenomenology and the Cognitive Sciences": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Annual Review of Psychology": 2,
+            "Annual Review of Sociology": 1,
+            "Choice Reviews Online": 1,
+            "Man": 1,
+            "Nature reviews. Neuroscience": 1,
+            "Phenomenology and the Cognitive Sciences": 1
+          },
+          "effective_categories": 5.444444444444445,
+          "hhi": 0.18367346938775508,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346939,
+          "shares": {
+            "Annual Review of Psychology": 0.2857142857142857,
+            "Annual Review of Sociology": 0.14285714285714285,
+            "Choice Reviews Online": 0.14285714285714285,
+            "Man": 0.14285714285714285,
+            "Nature reviews. Neuroscience": 0.14285714285714285,
+            "Phenomenology and the Cognitive Sciences": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.18367346938775508,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 5.444444444444445,
+        "hhi": 0.18367346938775508,
+        "known_count": 7,
+        "max_share": 0.2857142857142857,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 0.9795918367346939,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Annual Review of Psychology": 0.2857142857142857,
+          "Annual Review of Sociology": 0.14285714285714285,
+          "Choice Reviews Online": 0.14285714285714285,
+          "Man": 0.14285714285714285,
+          "Nature reviews. Neuroscience": 0.14285714285714285,
+          "Phenomenology and the Cognitive Sciences": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "Annual Review of Psychology": 2,
+            "Annual Review of Sociology": 1,
+            "Choice Reviews Online": 1,
+            "Man": 1,
+            "Nature reviews. Neuroscience": 1,
+            "Phenomenology and the Cognitive Sciences": 1
+          },
+          "effective_categories": 5.444444444444445,
+          "hhi": 0.18367346938775508,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346939,
+          "shares": {
+            "Annual Review of Psychology": 0.2857142857142857,
+            "Annual Review of Sociology": 0.14285714285714285,
+            "Choice Reviews Online": 0.14285714285714285,
+            "Man": 0.14285714285714285,
+            "Nature reviews. Neuroscience": 0.14285714285714285,
+            "Phenomenology and the Cognitive Sciences": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.18367346938775508,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "a2b7e060dbec8ce35a0129e35bff694752d697fd0dcb63c93774cd77ee2daa39",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-caa886754c047f2914d9aa8d",
+    "requirement_digest": "8505005aeaadc1e4ebd02bb6e7807d1805037b88f5ca0f184893e21ae5245d46",
+    "requirement_id": "REQ-DIV-PSYCHOLOGY-02",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "86fcc0125bcbdd4e2c2e9e33bae9b86ac5d534c847e7965dfc43c62d3006a6d4",
+  "packet_id": "DIV-PSYCHOLOGY-02",
+  "partition": "tuning_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-PSYCHOLOGY-02",
+    "research_question": "T079 structural source-diversity evaluation for DIV-PSYCHOLOGY-02"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-PSYCHOLOGY-02",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Jonathan St. B. T. Evans",
+      "canonical_work_id": "doi:10.1146/annurev.psych.59.103006.093629",
+      "doi": "10.1146/annurev.psych.59.103006.093629",
+      "geography": "GB",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2155479778",
+      "publisher": "Annual Reviews",
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2155479778",
+      "source_type": "article",
+      "stance": null,
+      "title": "Dual-Processing Accounts of Reasoning, Judgment, and Social Cognition",
+      "venue": "Annual Review of Psychology"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.45-3496",
+      "doi": "10.5860/choice.45-3496",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1603542031",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1603542031",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "Social psychology: handbook of basic principles",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Paul DiMaggio",
+      "canonical_work_id": "doi:10.1146/annurev.soc.23.1.263",
+      "doi": "10.1146/annurev.soc.23.1.263",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2104190044",
+      "publisher": "Annual Reviews",
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2104190044",
+      "source_type": "article",
+      "stance": null,
+      "title": "Culture and Cognition",
+      "venue": "Annual Review of Sociology"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Leda Cosmides | John Tooby",
+      "canonical_work_id": "doi:10.1146/annurev.psych.121208.131628",
+      "doi": "10.1146/annurev.psych.121208.131628",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2129902464",
+      "publisher": "Annual Reviews",
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2129902464",
+      "source_type": "article",
+      "stance": null,
+      "title": "Evolutionary Psychology: New Perspectives on Cognition and Motivation",
+      "venue": "Annual Review of Psychology"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "David M. Amodio | Chris Frith",
+      "canonical_work_id": "doi:10.1038/nrn1884",
+      "doi": "10.1038/nrn1884",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2052610531",
+      "publisher": "Nature Portfolio",
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2052610531",
+      "source_type": "article",
+      "stance": null,
+      "title": "Meeting of minds: the medial frontal cortex and social cognition",
+      "venue": "Nature reviews. Neuroscience"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "W. D. Wilder | John W. Berry | P. R. Dasen",
+      "canonical_work_id": "doi:10.2307/2800186",
+      "doi": "10.2307/2800186",
+      "geography": "RU",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W581506536",
+      "publisher": "Royal Anthropological Institute of Great Britain and Ireland",
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W581506536",
+      "source_type": "article",
+      "stance": null,
+      "title": "Culture and Cognition: Readings in Cross-Cultural Psychology",
+      "venue": "Man"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Daniel Stokols | Irwin Altman",
+      "canonical_work_id": "https://openalex.org/W1580027790",
+      "doi": null,
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1580027790",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1580027790",
+      "source_type": "article",
+      "stance": null,
+      "title": "Handbook of environmental psychology",
+      "venue": null
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "John Sutton | Celia B. Harris | Paul G. Keil",
+      "canonical_work_id": "doi:10.1007/s11097-010-9182-y",
+      "doi": "10.1007/s11097-010-9182-y",
+      "geography": "AU",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1994178598",
+      "publisher": "Springer Nature",
+      "retrieved_uri": "https://api.openalex.org/works?search=psychology+cognition&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1994178598",
+      "source_type": "article",
+      "stance": null,
+      "title": "The psychology of memory, extended cognition, and socially distributed remembering",
+      "venue": "Phenomenology and the Cognitive Sciences"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "balanced"
+}

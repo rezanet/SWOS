@@ -1,0 +1,1463 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-5dc24876cd41a3d6671197f6",
+      "canonical_key": "doi:10.1037/0022-0167.52.2.126",
+      "family_id": "family-5dc24876cd41a3d6671197f6",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1037/0022-0167.52.2.126",
+        "doi": "10.1037/0022-0167.52.2.126"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Joseph G. Ponterotto"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "American Psychological Association"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of Counseling Psychology"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1037/0022-0167.52.2.126"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1977334056"
+      ],
+      "titles": [
+        "Qualitative research in counseling psychology: A primer on research paradigms and philosophy of science."
+      ]
+    },
+    {
+      "canonical_id": "family-7105a1473dc9d60ae96b5ffa",
+      "canonical_key": "doi:10.5860/choice.28-5025",
+      "family_id": "family-7105a1473dc9d60ae96b5ffa",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5860/choice.28-5025",
+        "doi": "10.5860/choice.28-5025"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Association of College and Research Libraries"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-review"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Choice Reviews Online"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5860/choice.28-5025"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1550854217"
+      ],
+      "titles": [
+        "Expressionism in philosophy: Spinoza"
+      ]
+    },
+    {
+      "canonical_id": "family-76b8da48e915e4cd9e95c2b4",
+      "canonical_key": "doi:10.1007/978-3-319-04672-3",
+      "family_id": "family-76b8da48e915e4cd9e95c2b4",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1007/978-3-319-04672-3",
+        "doi": "10.1007/978-3-319-04672-3"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Abrol Fairweather | Owen Flanagan"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "other"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1007/978-3-319-04672-3"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W574984718"
+      ],
+      "titles": [
+        "Virtue Epistemology Naturalized: Bridges between Virtue Epistemology and Philosophy of Science"
+      ]
+    },
+    {
+      "canonical_id": "family-aa1b34a68ecfbcdbbb1c0a61",
+      "canonical_key": "doi:10.1016/0277-5395(84)90025-6",
+      "family_id": "family-aa1b34a68ecfbcdbbb1c0a61",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/0277-5395(84)90025-6",
+        "doi": "10.1016/0277-5395(84)90025-6"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Kathleen Moran"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1980s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Women s Studies International Forum"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/0277-5395(84)90025-6"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2312731692"
+      ],
+      "titles": [
+        "Discovering reality: Feminist perspectives on epistemology, metaphysics, methodology, and philosophy of science"
+      ]
+    },
+    {
+      "canonical_id": "family-bc87a18e09a2062c6b3ce7fb",
+      "canonical_key": "doi:10.2307/2092093",
+      "family_id": "family-bc87a18e09a2062c6b3ce7fb",
+      "identifiers": {
+        "canonical_work_id": "doi:10.2307/2092093",
+        "doi": "10.2307/2092093"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "William R. Catton | Peter Winch"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1960s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "SAGE Publishing"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "American Sociological Review"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.2307/2092093"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2068769676"
+      ],
+      "titles": [
+        "The Idea of a Social Science and Its Relation to Philosophy."
+      ]
+    },
+    {
+      "canonical_id": "family-c51df6f4117a733dac1ecec9",
+      "canonical_key": "doi:10.1177/1046878109353470",
+      "family_id": "family-c51df6f4117a733dac1ecec9",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1177/1046878109353470",
+        "doi": "10.1177/1046878109353470"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Till Grüne‐Yanoff | Paul Weirich"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "FI"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "SAGE Publishing"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Simulation & Gaming"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1177/1046878109353470"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2137404164"
+      ],
+      "titles": [
+        "The Philosophy and Epistemology of Simulation: A Review"
+      ]
+    },
+    {
+      "canonical_id": "family-d8da590da21d9b604f4434bc",
+      "canonical_key": "doi:10.1111/j.1467-9752.2012.00851.x",
+      "family_id": "family-d8da590da21d9b604f4434bc",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1111/j.1467-9752.2012.00851.x",
+        "doi": "10.1111/j.1467-9752.2012.00851.x"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "James MacAllister"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "GB"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Oxford University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Journal of Philosophy of Education"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1111/j.1467-9752.2012.00851.x"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1580622172"
+      ],
+      "titles": [
+        "Virtue Epistemology and the Philosophy of Education"
+      ]
+    },
+    {
+      "canonical_id": "family-f6821432a8dfc255d2335b81",
+      "canonical_key": "doi:10.1400/23287",
+      "family_id": "family-f6821432a8dfc255d2335b81",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1400/23287",
+        "doi": "10.1400/23287"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Hans Lenk"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "FrancoAngeli"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "EPISTEMOLOGIA"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1400/23287"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2174721032"
+      ],
+      "titles": [
+        "Towards an Action-theoretical and Technology-oriented Philosophy of Science and Epistemology"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2174721032"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1977334056"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2137404164"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2068769676"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2312731692"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1550854217"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W574984718"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1580622172"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "balanced",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:45Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "87f809b386b7fd0e71dc106d9cd7c6360782a6b3d301f79839514f3223aa2516"
+  },
+  "discipline": "philosophy",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across venue",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:45.868093Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "closed_or_unknown": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "closed_or_unknown": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "FI": 1,
+          "GB": 1,
+          "US": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "FI": 1,
+            "GB": 1,
+            "US": 1
+          },
+          "effective_categories": 3.0,
+          "hhi": 0.3333333333333333,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 1.0,
+          "shares": {
+            "FI": 0.3333333333333333,
+            "GB": 0.3333333333333333,
+            "US": 0.3333333333333333
+          }
+        },
+        "claim_exposure_hhi": 0.3333333333333333,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 3.0,
+        "hhi": 0.3333333333333333,
+        "known_count": 3,
+        "max_share": 0.3333333333333333,
+        "metadata_completeness": 0.375,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "FI": 0.3333333333333333,
+          "GB": 0.3333333333333333,
+          "US": 0.3333333333333333
+        },
+        "source_count": {
+          "category_counts": {
+            "FI": 1,
+            "GB": 1,
+            "US": 1
+          },
+          "effective_categories": 3.0,
+          "hhi": 0.3333333333333333,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 1.0,
+          "shares": {
+            "FI": 0.3333333333333333,
+            "GB": 0.3333333333333333,
+            "US": 0.3333333333333333
+          }
+        },
+        "source_count_hhi": 0.3333333333333333,
+        "status": "fail",
+        "unknown_count": 5,
+        "unknown_rate": 0.625
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.9375,
+        "category_counts": {
+          "1960s": 1,
+          "1980s": 1,
+          "1990s": 1,
+          "2000s": 2,
+          "2010s": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1960s": 1,
+            "1980s": 1,
+            "1990s": 1,
+            "2000s": 2,
+            "2010s": 3
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.375,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "1960s": 0.125,
+            "1980s": 0.125,
+            "1990s": 0.125,
+            "2000s": 0.25,
+            "2010s": 0.375
+          }
+        },
+        "claim_exposure_hhi": 0.25,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 4.0,
+        "hhi": 0.25,
+        "known_count": 8,
+        "max_share": 0.375,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9375,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "1960s": 0.125,
+          "1980s": 0.125,
+          "1990s": 0.125,
+          "2000s": 0.25,
+          "2010s": 0.375
+        },
+        "source_count": {
+          "category_counts": {
+            "1960s": 1,
+            "1980s": 1,
+            "1990s": 1,
+            "2000s": 2,
+            "2010s": 3
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.375,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "1960s": 0.125,
+            "1980s": 0.125,
+            "1990s": 0.125,
+            "2000s": 0.25,
+            "2010s": 0.375
+          }
+        },
+        "source_count_hhi": 0.25,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9795918367346939,
+        "category_counts": {
+          "American Psychological Association": 1,
+          "Association of College and Research Libraries": 1,
+          "Elsevier BV": 1,
+          "FrancoAngeli": 1,
+          "Oxford University Press": 1,
+          "SAGE Publishing": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "American Psychological Association": 1,
+            "Association of College and Research Libraries": 1,
+            "Elsevier BV": 1,
+            "FrancoAngeli": 1,
+            "Oxford University Press": 1,
+            "SAGE Publishing": 2
+          },
+          "effective_categories": 5.444444444444445,
+          "hhi": 0.18367346938775508,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346939,
+          "shares": {
+            "American Psychological Association": 0.14285714285714285,
+            "Association of College and Research Libraries": 0.14285714285714285,
+            "Elsevier BV": 0.14285714285714285,
+            "FrancoAngeli": 0.14285714285714285,
+            "Oxford University Press": 0.14285714285714285,
+            "SAGE Publishing": 0.2857142857142857
+          }
+        },
+        "claim_exposure_hhi": 0.18367346938775508,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 5.444444444444445,
+        "hhi": 0.18367346938775508,
+        "known_count": 7,
+        "max_share": 0.2857142857142857,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 0.9795918367346939,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "American Psychological Association": 0.14285714285714285,
+          "Association of College and Research Libraries": 0.14285714285714285,
+          "Elsevier BV": 0.14285714285714285,
+          "FrancoAngeli": 0.14285714285714285,
+          "Oxford University Press": 0.14285714285714285,
+          "SAGE Publishing": 0.2857142857142857
+        },
+        "source_count": {
+          "category_counts": {
+            "American Psychological Association": 1,
+            "Association of College and Research Libraries": 1,
+            "Elsevier BV": 1,
+            "FrancoAngeli": 1,
+            "Oxford University Press": 1,
+            "SAGE Publishing": 2
+          },
+          "effective_categories": 5.444444444444445,
+          "hhi": 0.18367346938775508,
+          "max_share": 0.2857142857142857,
+          "normalized_balance": 0.9795918367346939,
+          "shares": {
+            "American Psychological Association": 0.14285714285714285,
+            "Association of College and Research Libraries": 0.14285714285714285,
+            "Elsevier BV": 0.14285714285714285,
+            "FrancoAngeli": 0.14285714285714285,
+            "Oxford University Press": 0.14285714285714285,
+            "SAGE Publishing": 0.2857142857142857
+          }
+        },
+        "source_count_hhi": 0.18367346938775508,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.6093749999999999,
+        "category_counts": {
+          "article": 6,
+          "book-review": 1,
+          "other": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 6,
+            "book-review": 1,
+            "other": 1
+          },
+          "effective_categories": 1.6842105263157894,
+          "hhi": 0.59375,
+          "max_share": 0.75,
+          "normalized_balance": 0.6093749999999999,
+          "shares": {
+            "article": 0.75,
+            "book-review": 0.125,
+            "other": 0.125
+          }
+        },
+        "claim_exposure_hhi": 0.59375,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.6842105263157894,
+        "hhi": 0.59375,
+        "known_count": 8,
+        "max_share": 0.75,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.6093749999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 0.75,
+          "book-review": 0.125,
+          "other": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 6,
+            "book-review": 1,
+            "other": 1
+          },
+          "effective_categories": 1.6842105263157894,
+          "hhi": 0.59375,
+          "max_share": 0.75,
+          "normalized_balance": 0.6093749999999999,
+          "shares": {
+            "article": 0.75,
+            "book-review": 0.125,
+            "other": 0.125
+          }
+        },
+        "source_count_hhi": 0.59375,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "American Sociological Review": 1,
+          "Choice Reviews Online": 1,
+          "EPISTEMOLOGIA": 1,
+          "Journal of Counseling Psychology": 1,
+          "Journal of Philosophy of Education": 1,
+          "Simulation & Gaming": 1,
+          "Women s Studies International Forum": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "American Sociological Review": 1,
+            "Choice Reviews Online": 1,
+            "EPISTEMOLOGIA": 1,
+            "Journal of Counseling Psychology": 1,
+            "Journal of Philosophy of Education": 1,
+            "Simulation & Gaming": 1,
+            "Women s Studies International Forum": 1
+          },
+          "effective_categories": 7.0,
+          "hhi": 0.14285714285714285,
+          "max_share": 0.14285714285714285,
+          "normalized_balance": 1.0,
+          "shares": {
+            "American Sociological Review": 0.14285714285714285,
+            "Choice Reviews Online": 0.14285714285714285,
+            "EPISTEMOLOGIA": 0.14285714285714285,
+            "Journal of Counseling Psychology": 0.14285714285714285,
+            "Journal of Philosophy of Education": 0.14285714285714285,
+            "Simulation & Gaming": 0.14285714285714285,
+            "Women s Studies International Forum": 0.14285714285714285
+          }
+        },
+        "claim_exposure_hhi": 0.14285714285714285,
+        "corrective_query": "independent source evidence across venue",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 7.0,
+        "hhi": 0.14285714285714285,
+        "known_count": 7,
+        "max_share": 0.14285714285714285,
+        "metadata_completeness": 0.875,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "American Sociological Review": 0.14285714285714285,
+          "Choice Reviews Online": 0.14285714285714285,
+          "EPISTEMOLOGIA": 0.14285714285714285,
+          "Journal of Counseling Psychology": 0.14285714285714285,
+          "Journal of Philosophy of Education": 0.14285714285714285,
+          "Simulation & Gaming": 0.14285714285714285,
+          "Women s Studies International Forum": 0.14285714285714285
+        },
+        "source_count": {
+          "category_counts": {
+            "American Sociological Review": 1,
+            "Choice Reviews Online": 1,
+            "EPISTEMOLOGIA": 1,
+            "Journal of Counseling Psychology": 1,
+            "Journal of Philosophy of Education": 1,
+            "Simulation & Gaming": 1,
+            "Women s Studies International Forum": 1
+          },
+          "effective_categories": 7.0,
+          "hhi": 0.14285714285714285,
+          "max_share": 0.14285714285714285,
+          "normalized_balance": 1.0,
+          "shares": {
+            "American Sociological Review": 0.14285714285714285,
+            "Choice Reviews Online": 0.14285714285714285,
+            "EPISTEMOLOGIA": 0.14285714285714285,
+            "Journal of Counseling Psychology": 0.14285714285714285,
+            "Journal of Philosophy of Education": 0.14285714285714285,
+            "Simulation & Gaming": 0.14285714285714285,
+            "Women s Studies International Forum": 0.14285714285714285
+          }
+        },
+        "source_count_hhi": 0.14285714285714285,
+        "status": "fail",
+        "unknown_count": 1,
+        "unknown_rate": 0.125
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "3e994bda5d69d2725ca071fccd93d8424cdc542d08adddaa5cbacf95a6dd6896",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-f76cd9e43926d20dee6259d7",
+    "requirement_digest": "fd218490a92394ddda5ebc5a07ecee6ea705f0d67b7fcc961e8cc62e88c5d832",
+    "requirement_id": "REQ-DIV-PHILOSOPHY-01",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "32885e5e904db582fcd642d4ec76797463f6519846ad4f6545387b829695edb1",
+  "packet_id": "DIV-PHILOSOPHY-01",
+  "partition": "tuning_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-PHILOSOPHY-01",
+    "research_question": "T079 structural source-diversity evaluation for DIV-PHILOSOPHY-01"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-PHILOSOPHY-01",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Hans Lenk",
+      "canonical_work_id": "doi:10.1400/23287",
+      "doi": "10.1400/23287",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2174721032",
+      "publisher": "FrancoAngeli",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2174721032",
+      "source_type": "article",
+      "stance": null,
+      "title": "Towards an Action-theoretical and Technology-oriented Philosophy of Science and Epistemology",
+      "venue": "EPISTEMOLOGIA"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Joseph G. Ponterotto",
+      "canonical_work_id": "doi:10.1037/0022-0167.52.2.126",
+      "doi": "10.1037/0022-0167.52.2.126",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1977334056",
+      "publisher": "American Psychological Association",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1977334056",
+      "source_type": "article",
+      "stance": null,
+      "title": "Qualitative research in counseling psychology: A primer on research paradigms and philosophy of science.",
+      "venue": "Journal of Counseling Psychology"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Till Grüne‐Yanoff | Paul Weirich",
+      "canonical_work_id": "doi:10.1177/1046878109353470",
+      "doi": "10.1177/1046878109353470",
+      "geography": "FI",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2137404164",
+      "publisher": "SAGE Publishing",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2137404164",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Philosophy and Epistemology of Simulation: A Review",
+      "venue": "Simulation & Gaming"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "William R. Catton | Peter Winch",
+      "canonical_work_id": "doi:10.2307/2092093",
+      "doi": "10.2307/2092093",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1960s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2068769676",
+      "publisher": "SAGE Publishing",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2068769676",
+      "source_type": "article",
+      "stance": null,
+      "title": "The Idea of a Social Science and Its Relation to Philosophy.",
+      "venue": "American Sociological Review"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Kathleen Moran",
+      "canonical_work_id": "doi:10.1016/0277-5395(84)90025-6",
+      "doi": "10.1016/0277-5395(84)90025-6",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1980s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2312731692",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2312731692",
+      "source_type": "article",
+      "stance": null,
+      "title": "Discovering reality: Feminist perspectives on epistemology, metaphysics, methodology, and philosophy of science",
+      "venue": "Women s Studies International Forum"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": null,
+      "canonical_work_id": "doi:10.5860/choice.28-5025",
+      "doi": "10.5860/choice.28-5025",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "unknown",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1550854217",
+      "publisher": "Association of College and Research Libraries",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1550854217",
+      "source_type": "book-review",
+      "stance": null,
+      "title": "Expressionism in philosophy: Spinoza",
+      "venue": "Choice Reviews Online"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Abrol Fairweather | Owen Flanagan",
+      "canonical_work_id": "doi:10.1007/978-3-319-04672-3",
+      "doi": "10.1007/978-3-319-04672-3",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W574984718",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W574984718",
+      "source_type": "other",
+      "stance": null,
+      "title": "Virtue Epistemology Naturalized: Bridges between Virtue Epistemology and Philosophy of Science",
+      "venue": null
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "James MacAllister",
+      "canonical_work_id": "doi:10.1111/j.1467-9752.2012.00851.x",
+      "doi": "10.1111/j.1467-9752.2012.00851.x",
+      "geography": "GB",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1580622172",
+      "publisher": "Oxford University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=philosophy+epistemology&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1580622172",
+      "source_type": "article",
+      "stance": null,
+      "title": "Virtue Epistemology and the Philosophy of Education",
+      "venue": "Journal of Philosophy of Education"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "balanced"
+}

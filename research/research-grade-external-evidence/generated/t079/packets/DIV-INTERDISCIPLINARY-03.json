@@ -1,0 +1,1492 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-193f9dbc8060d46a86c01c48",
+      "canonical_key": "doi:10.1016/j.respol.2012.05.006",
+      "family_id": "family-193f9dbc8060d46a86c01c48",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.respol.2012.05.006",
+        "doi": "10.1016/j.respol.2012.05.006"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Bettina König | Katharina Diehl | Karen Tscherning"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "DE"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Research Policy"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.respol.2012.05.006"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2079278348"
+      ],
+      "titles": [
+        "A framework for structuring interdisciplinary research management"
+      ]
+    },
+    {
+      "canonical_id": "family-2b6623d2d55c5293e4ac483a",
+      "canonical_key": "doi:10.1016/j.futures.2012.03.011",
+      "family_id": "family-2b6623d2d55c5293e4ac483a",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.futures.2012.03.011",
+        "doi": "10.1016/j.futures.2012.03.011"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Catherine Lyall | Laura Meagher"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "GB"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Futures"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.futures.2012.03.011"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W1993544419"
+      ],
+      "titles": [
+        "A Masterclass in interdisciplinarity: Research into practice in training the next generation of interdisciplinary researchers"
+      ]
+    },
+    {
+      "canonical_id": "family-72ae08517ce5d7c0ec057452",
+      "canonical_key": "doi:10.1016/j.apenergy.2018.10.005",
+      "family_id": "family-72ae08517ce5d7c0ec057452",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.apenergy.2018.10.005",
+        "doi": "10.1016/j.apenergy.2018.10.005"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Darren McCauley | Vasna Ramasar | Raphael J. Heffron"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "GB"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Applied Energy"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.apenergy.2018.10.005"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2899431647"
+      ],
+      "titles": [
+        "Energy justice in the transition to low carbon energy systems: Exploring key themes in interdisciplinary research"
+      ]
+    },
+    {
+      "canonical_id": "family-771b05e02031ce7708b1e1c5",
+      "canonical_key": "doi:10.1016/j.amepre.2008.05.010",
+      "family_id": "family-771b05e02031ce7708b1e1c5",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.amepre.2008.05.010",
+        "doi": "10.1016/j.amepre.2008.05.010"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Julie Thompson Klein"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "American Journal of Preventive Medicine"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.amepre.2008.05.010"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2035081121"
+      ],
+      "titles": [
+        "Evaluation of Interdisciplinary and Transdisciplinary Research"
+      ]
+    },
+    {
+      "canonical_id": "family-86904aa895b0fe716eb43e37",
+      "canonical_key": "doi:10.1007/s00607-021-01016-7",
+      "family_id": "family-86904aa895b0fe716eb43e37",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1007/s00607-021-01016-7",
+        "doi": "10.1007/s00607-021-01016-7"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Asbjørn Følstad | Theo Araujo | Effie Lai‐Chong Law"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "NO"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2020s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Springer Science+Business Media"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Computing"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1007/s00607-021-01016-7"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W3205211246"
+      ],
+      "titles": [
+        "Future directions for chatbot research: an interdisciplinary research agenda"
+      ]
+    },
+    {
+      "canonical_id": "family-a3a3516e12be29d30ba82ad6",
+      "canonical_key": "doi:10.1016/0048-7333(79)90030-1",
+      "family_id": "family-a3a3516e12be29d30ba82ad6",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/0048-7333(79)90030-1",
+        "doi": "10.1016/0048-7333(79)90030-1"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Frederick A. Rossini | Alan L. Porter"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1970s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Research Policy"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/0048-7333(79)90030-1"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2012834639"
+      ],
+      "titles": [
+        "Frameworks for integrating interdisciplinary research"
+      ]
+    },
+    {
+      "canonical_id": "family-d927b4edcc1e3a455245e321",
+      "canonical_key": "doi:10.1353/rhe.2010.0006",
+      "family_id": "family-d927b4edcc1e3a455245e321",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1353/rhe.2010.0006",
+        "doi": "10.1353/rhe.2010.0006"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Maura Borrego | Lynita K. Newswander"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Johns Hopkins University Press"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Review of higher education/The review of higher education"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1353/rhe.2010.0006"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2064305091"
+      ],
+      "titles": [
+        "Definitions of Interdisciplinary Research: Toward Graduate-Level Interdisciplinary Learning Outcomes"
+      ]
+    },
+    {
+      "canonical_id": "family-e77454115aee2844fdc13c68",
+      "canonical_key": "doi:10.1016/j.annals.2011.07.002",
+      "family_id": "family-e77454115aee2844fdc13c68",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.annals.2011.07.002",
+        "doi": "10.1016/j.annals.2011.07.002"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Frédéric Darbellay | Mathis Stock"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "CH"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Annals of Tourism Research"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.annals.2011.07.002"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W2058546406"
+      ],
+      "titles": [
+        "Tourism as complex interdisciplinary research object"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2899431647"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-02",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2899431647"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-03",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2899431647"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-04",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2899431647"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-05",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2899431647"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-06",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2899431647"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-07",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2899431647"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-01-08",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2899431647"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2058546406"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2079278348"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2035081121"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2012834639"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-06-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1993544419"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-07-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2064305091"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-08-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W3205211246"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "concentrated",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:38Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "dd04c3ea63875afaed07b2778b225f1168689e48f03e361f6e898219527ae435"
+  },
+  "discipline": "interdisciplinary",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across publisher",
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across period",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:38.554686Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.7822222222222224,
+        "category_counts": {
+          "closed_or_unknown": 4,
+          "open_access": 4
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 4,
+            "open_access": 11
+          },
+          "effective_categories": 1.6423357664233578,
+          "hhi": 0.6088888888888888,
+          "max_share": 0.7333333333333333,
+          "normalized_balance": 0.7822222222222224,
+          "shares": {
+            "closed_or_unknown": 0.26666666666666666,
+            "open_access": 0.7333333333333333
+          }
+        },
+        "claim_exposure_hhi": 0.6088888888888888,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.6423357664233578,
+        "hhi": 0.6088888888888888,
+        "known_count": 8,
+        "max_share": 0.7333333333333333,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.7822222222222224,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "closed_or_unknown": 0.5,
+          "open_access": 0.5
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 4,
+            "open_access": 4
+          },
+          "effective_categories": 2.0,
+          "hhi": 0.5,
+          "max_share": 0.5,
+          "normalized_balance": 1.0,
+          "shares": {
+            "closed_or_unknown": 0.5,
+            "open_access": 0.5
+          }
+        },
+        "source_count_hhi": 0.5,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.7333333333333334,
+        "category_counts": {
+          "CH": 1,
+          "DE": 1,
+          "GB": 2,
+          "NO": 1,
+          "US": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "CH": 1,
+            "DE": 1,
+            "GB": 9,
+            "NO": 1,
+            "US": 3
+          },
+          "effective_categories": 2.419354838709678,
+          "hhi": 0.4133333333333332,
+          "max_share": 0.6,
+          "normalized_balance": 0.7333333333333334,
+          "shares": {
+            "CH": 0.06666666666666667,
+            "DE": 0.06666666666666667,
+            "GB": 0.6,
+            "NO": 0.06666666666666667,
+            "US": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.4133333333333332,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 2.419354838709678,
+        "hhi": 0.4133333333333332,
+        "known_count": 8,
+        "max_share": 0.6,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.7333333333333334,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "CH": 0.125,
+          "DE": 0.125,
+          "GB": 0.25,
+          "NO": 0.125,
+          "US": 0.375
+        },
+        "source_count": {
+          "category_counts": {
+            "CH": 1,
+            "DE": 1,
+            "GB": 2,
+            "NO": 1,
+            "US": 3
+          },
+          "effective_categories": 4.0,
+          "hhi": 0.25,
+          "max_share": 0.375,
+          "normalized_balance": 0.9375,
+          "shares": {
+            "CH": 0.125,
+            "DE": 0.125,
+            "GB": 0.25,
+            "NO": 0.125,
+            "US": 0.375
+          }
+        },
+        "source_count_hhi": 0.25,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 15
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.4622222222222219,
+        "category_counts": {
+          "1970s": 1,
+          "2000s": 1,
+          "2010s": 5,
+          "2020s": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1970s": 1,
+            "2000s": 1,
+            "2010s": 12,
+            "2020s": 1
+          },
+          "effective_categories": 1.5306122448979587,
+          "hhi": 0.6533333333333335,
+          "max_share": 0.8,
+          "normalized_balance": 0.4622222222222219,
+          "shares": {
+            "1970s": 0.06666666666666667,
+            "2000s": 0.06666666666666667,
+            "2010s": 0.8,
+            "2020s": 0.06666666666666667
+          }
+        },
+        "claim_exposure_hhi": 0.6533333333333335,
+        "corrective_query": "independent source evidence across period",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 1.5306122448979587,
+        "hhi": 0.6533333333333335,
+        "known_count": 8,
+        "max_share": 0.8,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.4622222222222219,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "1970s": 0.125,
+          "2000s": 0.125,
+          "2010s": 0.625,
+          "2020s": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "1970s": 1,
+            "2000s": 1,
+            "2010s": 5,
+            "2020s": 1
+          },
+          "effective_categories": 2.2857142857142856,
+          "hhi": 0.4375,
+          "max_share": 0.625,
+          "normalized_balance": 0.75,
+          "shares": {
+            "1970s": 0.125,
+            "2000s": 0.125,
+            "2010s": 0.625,
+            "2020s": 0.125
+          }
+        },
+        "source_count_hhi": 0.4375,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.35999999999999976,
+        "category_counts": {
+          "Elsevier BV": 6,
+          "Johns Hopkins University Press": 1,
+          "Springer Science+Business Media": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Elsevier BV": 13,
+            "Johns Hopkins University Press": 1,
+            "Springer Science+Business Media": 1
+          },
+          "effective_categories": 1.3157894736842104,
+          "hhi": 0.7600000000000001,
+          "max_share": 0.8666666666666667,
+          "normalized_balance": 0.35999999999999976,
+          "shares": {
+            "Elsevier BV": 0.8666666666666667,
+            "Johns Hopkins University Press": 0.06666666666666667,
+            "Springer Science+Business Media": 0.06666666666666667
+          }
+        },
+        "claim_exposure_hhi": 0.7600000000000001,
+        "corrective_query": "independent source evidence across publisher",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 1.3157894736842104,
+        "hhi": 0.7600000000000001,
+        "known_count": 8,
+        "max_share": 0.8666666666666667,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.35999999999999976,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "Elsevier BV": 0.75,
+          "Johns Hopkins University Press": 0.125,
+          "Springer Science+Business Media": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "Elsevier BV": 6,
+            "Johns Hopkins University Press": 1,
+            "Springer Science+Business Media": 1
+          },
+          "effective_categories": 1.6842105263157894,
+          "hhi": 0.59375,
+          "max_share": 0.75,
+          "normalized_balance": 0.6093749999999999,
+          "shares": {
+            "Elsevier BV": 0.75,
+            "Johns Hopkins University Press": 0.125,
+            "Springer Science+Business Media": 0.125
+          }
+        },
+        "source_count_hhi": 0.59375,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "article": 8
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 15
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "article": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 8,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "article": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 8
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "article": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.7881481481481483,
+        "category_counts": {
+          "American Journal of Preventive Medicine": 1,
+          "Annals of Tourism Research": 1,
+          "Applied Energy": 1,
+          "Computing": 1,
+          "Futures": 1,
+          "Research Policy": 2,
+          "Review of higher education/The review of higher education": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "American Journal of Preventive Medicine": 1,
+            "Annals of Tourism Research": 1,
+            "Applied Energy": 8,
+            "Computing": 1,
+            "Futures": 1,
+            "Research Policy": 2,
+            "Review of higher education/The review of higher education": 1
+          },
+          "effective_categories": 3.082191780821919,
+          "hhi": 0.3244444444444443,
+          "max_share": 0.5333333333333333,
+          "normalized_balance": 0.7881481481481483,
+          "shares": {
+            "American Journal of Preventive Medicine": 0.06666666666666667,
+            "Annals of Tourism Research": 0.06666666666666667,
+            "Applied Energy": 0.5333333333333333,
+            "Computing": 0.06666666666666667,
+            "Futures": 0.06666666666666667,
+            "Research Policy": 0.13333333333333333,
+            "Review of higher education/The review of higher education": 0.06666666666666667
+          }
+        },
+        "claim_exposure_hhi": 0.3244444444444443,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 3.082191780821919,
+        "hhi": 0.3244444444444443,
+        "known_count": 8,
+        "max_share": 0.5333333333333333,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.7881481481481483,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 8,
+        "shares": {
+          "American Journal of Preventive Medicine": 0.125,
+          "Annals of Tourism Research": 0.125,
+          "Applied Energy": 0.125,
+          "Computing": 0.125,
+          "Futures": 0.125,
+          "Research Policy": 0.25,
+          "Review of higher education/The review of higher education": 0.125
+        },
+        "source_count": {
+          "category_counts": {
+            "American Journal of Preventive Medicine": 1,
+            "Annals of Tourism Research": 1,
+            "Applied Energy": 1,
+            "Computing": 1,
+            "Futures": 1,
+            "Research Policy": 2,
+            "Review of higher education/The review of higher education": 1
+          },
+          "effective_categories": 6.4,
+          "hhi": 0.15625,
+          "max_share": 0.25,
+          "normalized_balance": 0.9843749999999999,
+          "shares": {
+            "American Journal of Preventive Medicine": 0.125,
+            "Annals of Tourism Research": 0.125,
+            "Applied Energy": 0.125,
+            "Computing": 0.125,
+            "Futures": 0.125,
+            "Research Policy": 0.25,
+            "Review of higher education/The review of higher education": 0.125
+          }
+        },
+        "source_count_hhi": 0.15625,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      }
+    },
+    "exception": {},
+    "family_count": 8,
+    "family_digest": "cd5c1cfbef5825ba7aa760aa96fdbfa2bbc2df6b529134394fc9afae7b7e97a8",
+    "limitations": [],
+    "policy_version": "2.0.0",
+    "provider_count": 1,
+    "raw_status": "fail",
+    "report_id": "diversity-727bb9819385915a6ac0de71",
+    "requirement_digest": "6b451fd3d11d2d9c34aca9e2eb0882b7455f8450b0f4a602c0f3b4f2ef551874",
+    "requirement_id": "REQ-DIV-INTERDISCIPLINARY-03",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "32c10e5f269b4dcab237ca0d52e9917518be9ab033676bedaca59d82be4142f0",
+  "packet_id": "DIV-INTERDISCIPLINARY-03",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-INTERDISCIPLINARY-03",
+    "research_question": "T079 structural source-diversity evaluation for DIV-INTERDISCIPLINARY-03"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-INTERDISCIPLINARY-03",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Darren McCauley | Vasna Ramasar | Raphael J. Heffron",
+      "canonical_work_id": "doi:10.1016/j.apenergy.2018.10.005",
+      "doi": "10.1016/j.apenergy.2018.10.005",
+      "geography": "GB",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2899431647",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2899431647",
+      "source_type": "article",
+      "stance": null,
+      "title": "Energy justice in the transition to low carbon energy systems: Exploring key themes in interdisciplinary research",
+      "venue": "Applied Energy"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Frédéric Darbellay | Mathis Stock",
+      "canonical_work_id": "doi:10.1016/j.annals.2011.07.002",
+      "doi": "10.1016/j.annals.2011.07.002",
+      "geography": "CH",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2058546406",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2058546406",
+      "source_type": "article",
+      "stance": null,
+      "title": "Tourism as complex interdisciplinary research object",
+      "venue": "Annals of Tourism Research"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Bettina König | Katharina Diehl | Karen Tscherning",
+      "canonical_work_id": "doi:10.1016/j.respol.2012.05.006",
+      "doi": "10.1016/j.respol.2012.05.006",
+      "geography": "DE",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2079278348",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2079278348",
+      "source_type": "article",
+      "stance": null,
+      "title": "A framework for structuring interdisciplinary research management",
+      "venue": "Research Policy"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Julie Thompson Klein",
+      "canonical_work_id": "doi:10.1016/j.amepre.2008.05.010",
+      "doi": "10.1016/j.amepre.2008.05.010",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2035081121",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2035081121",
+      "source_type": "article",
+      "stance": null,
+      "title": "Evaluation of Interdisciplinary and Transdisciplinary Research",
+      "venue": "American Journal of Preventive Medicine"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Frederick A. Rossini | Alan L. Porter",
+      "canonical_work_id": "doi:10.1016/0048-7333(79)90030-1",
+      "doi": "10.1016/0048-7333(79)90030-1",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1970s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2012834639",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2012834639",
+      "source_type": "article",
+      "stance": null,
+      "title": "Frameworks for integrating interdisciplinary research",
+      "venue": "Research Policy"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Catherine Lyall | Laura Meagher",
+      "canonical_work_id": "doi:10.1016/j.futures.2012.03.011",
+      "doi": "10.1016/j.futures.2012.03.011",
+      "geography": "GB",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1993544419",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1993544419",
+      "source_type": "article",
+      "stance": null,
+      "title": "A Masterclass in interdisciplinarity: Research into practice in training the next generation of interdisciplinary researchers",
+      "venue": "Futures"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Maura Borrego | Lynita K. Newswander",
+      "canonical_work_id": "doi:10.1353/rhe.2010.0006",
+      "doi": "10.1353/rhe.2010.0006",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2064305091",
+      "publisher": "Johns Hopkins University Press",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2064305091",
+      "source_type": "article",
+      "stance": null,
+      "title": "Definitions of Interdisciplinary Research: Toward Graduate-Level Interdisciplinary Learning Outcomes",
+      "venue": "Review of higher education/The review of higher education"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Asbjørn Følstad | Theo Araujo | Effie Lai‐Chong Law",
+      "canonical_work_id": "doi:10.1007/s00607-021-01016-7",
+      "doi": "10.1007/s00607-021-01016-7",
+      "geography": "NO",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W3205211246",
+      "publisher": "Springer Science+Business Media",
+      "retrieved_uri": "https://api.openalex.org/works?search=interdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W3205211246",
+      "source_type": "article",
+      "stance": null,
+      "title": "Future directions for chatbot research: an interdisciplinary research agenda",
+      "venue": "Computing"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "concentrated"
+}

@@ -1,0 +1,1233 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-669eade999a4da9ec6a7868c",
+      "canonical_key": "doi:10.5948/upo9781614441052.029",
+      "family_id": "family-669eade999a4da9ec6a7868c",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5948/upo9781614441052.029",
+        "doi": "10.5948/upo9781614441052.029"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Julie Pollitt"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "1990s"
+        },
+        "publisher": {
+          "provenance": "https://api.crossref.org/works/10.5948%2Fupo9781614441052.029",
+          "status": "observed",
+          "value": "American Mathematical Society"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "other"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.crossref.org/works/10.5948%2Fupo9781614441052.029",
+          "status": "observed",
+          "value": "Classroom Resource Materials"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5948/upo9781614441052.029"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-5058407f8e0a47576ab59f03",
+        "openalex-W1939400179"
+      ],
+      "titles": [
+        "Mechanical Engineering"
+      ]
+    },
+    {
+      "canonical_id": "family-6fe0ee00a55b5ee436fc6d90",
+      "canonical_key": "doi:10.1002/adem.201800864",
+      "family_id": "family-6fe0ee00a55b5ee436fc6d90",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1002/adem.201800864",
+        "doi": "10.1002/adem.201800864"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "James Utama Surjadi | Libo Gao | Huifeng Du"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "HK"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Wiley"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Advanced Engineering Materials"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1002/adem.201800864"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-8bff933db80c393c66f2d664",
+        "openalex-W2908367391"
+      ],
+      "titles": [
+        "Mechanical Metamaterials and Their Engineering Applications"
+      ]
+    },
+    {
+      "canonical_id": "family-836f06fe2d0b5b1188b59b2f",
+      "canonical_key": "doi:10.17605/osf.io/qak2z",
+      "family_id": "family-836f06fe2d0b5b1188b59b2f",
+      "identifiers": {
+        "canonical_work_id": "doi:10.17605/osf.io/qak2z",
+        "doi": "10.17605/osf.io/qak2z"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Iaeme Publication"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2020s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Center for Open Science"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "preprint"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "OSF Preprints (OSF Preprints)"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.17605/osf.io/qak2z"
+        }
+      },
+      "provider_count": 1,
+      "source_ids": [
+        "openalex-W3204672765"
+      ],
+      "titles": [
+        "International Journal of Mechanical Engineering and Technology (IJMET)"
+      ]
+    },
+    {
+      "canonical_id": "family-d53449ac643fd5d533bf37f5",
+      "canonical_key": "doi:10.1016/j.compedu.2009.05.012",
+      "family_id": "family-d53449ac643fd5d533bf37f5",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.compedu.2009.05.012",
+        "doi": "10.1016/j.compedu.2009.05.012"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Brianno Coller | Mike Scott"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "US"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Computers & Education"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.compedu.2009.05.012"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-1be2157c58c4f7244afbe70b",
+        "openalex-W2164859174"
+      ],
+      "titles": [
+        "Effectiveness of using a video game to teach a course in mechanical engineering"
+      ]
+    },
+    {
+      "canonical_id": "family-da3c0c39edb243b588c2cddc",
+      "canonical_key": "doi:10.1016/j.asoc.2015.10.048",
+      "family_id": "family-da3c0c39edb243b588c2cddc",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.asoc.2015.10.048",
+        "doi": "10.1016/j.asoc.2015.10.048"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Najeh Ben Guedria"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "TN"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Applied Soft Computing"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.asoc.2015.10.048"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-fdbd6c27f6bc2499d41e8f8f",
+        "openalex-W2220913511"
+      ],
+      "titles": [
+        "Improved accelerated PSO algorithm for mechanical engineering optimization problems"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2908367391"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W3204672765"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W1939400179"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2220913511"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2164859174"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "duplicate",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:32Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "dff4678cd9d5e0ce9c25c082b28dac4736c228a3a4f81c0136ec1646f876723a"
+  },
+  "discipline": "engineering",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across geography",
+      "independent source evidence across language",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:32.940140Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.6399999999999997,
+        "category_counts": {
+          "closed_or_unknown": 4,
+          "open_access": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 4,
+            "open_access": 1
+          },
+          "effective_categories": 1.4705882352941173,
+          "hhi": 0.6800000000000002,
+          "max_share": 0.8,
+          "normalized_balance": 0.6399999999999997,
+          "shares": {
+            "closed_or_unknown": 0.8,
+            "open_access": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.6800000000000002,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.4705882352941173,
+        "hhi": 0.6800000000000002,
+        "known_count": 5,
+        "max_share": 0.8,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.6399999999999997,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "closed_or_unknown": 0.8,
+          "open_access": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 4,
+            "open_access": 1
+          },
+          "effective_categories": 1.4705882352941173,
+          "hhi": 0.6800000000000002,
+          "max_share": 0.8,
+          "normalized_balance": 0.6399999999999997,
+          "shares": {
+            "closed_or_unknown": 0.8,
+            "open_access": 0.2
+          }
+        },
+        "source_count_hhi": 0.6800000000000002,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 1.0,
+        "category_counts": {
+          "HK": 1,
+          "TN": 1,
+          "US": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "HK": 1,
+            "TN": 1,
+            "US": 1
+          },
+          "effective_categories": 3.0,
+          "hhi": 0.3333333333333333,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 1.0,
+          "shares": {
+            "HK": 0.3333333333333333,
+            "TN": 0.3333333333333333,
+            "US": 0.3333333333333333
+          }
+        },
+        "claim_exposure_hhi": 0.3333333333333333,
+        "corrective_query": "independent source evidence across geography",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 3.0,
+        "hhi": 0.3333333333333333,
+        "known_count": 3,
+        "max_share": 0.3333333333333333,
+        "metadata_completeness": 0.6,
+        "missing_strata": [],
+        "normalized_balance": 1.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "HK": 0.3333333333333333,
+          "TN": 0.3333333333333333,
+          "US": 0.3333333333333333
+        },
+        "source_count": {
+          "category_counts": {
+            "HK": 1,
+            "TN": 1,
+            "US": 1
+          },
+          "effective_categories": 3.0,
+          "hhi": 0.3333333333333333,
+          "max_share": 0.3333333333333333,
+          "normalized_balance": 1.0,
+          "shares": {
+            "HK": 0.3333333333333333,
+            "TN": 0.3333333333333333,
+            "US": 0.3333333333333333
+          }
+        },
+        "source_count_hhi": 0.3333333333333333,
+        "status": "fail",
+        "unknown_count": 2,
+        "unknown_rate": 0.4
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 5
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 5,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.96,
+        "category_counts": {
+          "1990s": 1,
+          "2000s": 1,
+          "2010s": 2,
+          "2020s": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "1990s": 1,
+            "2000s": 1,
+            "2010s": 2,
+            "2020s": 1
+          },
+          "effective_categories": 3.571428571428571,
+          "hhi": 0.28,
+          "max_share": 0.4,
+          "normalized_balance": 0.96,
+          "shares": {
+            "1990s": 0.2,
+            "2000s": 0.2,
+            "2010s": 0.4,
+            "2020s": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.28,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 3.571428571428571,
+        "hhi": 0.28,
+        "known_count": 5,
+        "max_share": 0.4,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.96,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "1990s": 0.2,
+          "2000s": 0.2,
+          "2010s": 0.4,
+          "2020s": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "1990s": 1,
+            "2000s": 1,
+            "2010s": 2,
+            "2020s": 1
+          },
+          "effective_categories": 3.571428571428571,
+          "hhi": 0.28,
+          "max_share": 0.4,
+          "normalized_balance": 0.96,
+          "shares": {
+            "1990s": 0.2,
+            "2000s": 0.2,
+            "2010s": 0.4,
+            "2020s": 0.2
+          }
+        },
+        "source_count_hhi": 0.28,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.96,
+        "category_counts": {
+          "American Mathematical Society": 1,
+          "Center for Open Science": 1,
+          "Elsevier BV": 2,
+          "Wiley": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "American Mathematical Society": 1,
+            "Center for Open Science": 1,
+            "Elsevier BV": 2,
+            "Wiley": 1
+          },
+          "effective_categories": 3.571428571428571,
+          "hhi": 0.28,
+          "max_share": 0.4,
+          "normalized_balance": 0.96,
+          "shares": {
+            "American Mathematical Society": 0.2,
+            "Center for Open Science": 0.2,
+            "Elsevier BV": 0.4,
+            "Wiley": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.28,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 3.571428571428571,
+        "hhi": 0.28,
+        "known_count": 5,
+        "max_share": 0.4,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.96,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "American Mathematical Society": 0.2,
+          "Center for Open Science": 0.2,
+          "Elsevier BV": 0.4,
+          "Wiley": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "American Mathematical Society": 1,
+            "Center for Open Science": 1,
+            "Elsevier BV": 2,
+            "Wiley": 1
+          },
+          "effective_categories": 3.571428571428571,
+          "hhi": 0.28,
+          "max_share": 0.4,
+          "normalized_balance": 0.96,
+          "shares": {
+            "American Mathematical Society": 0.2,
+            "Center for Open Science": 0.2,
+            "Elsevier BV": 0.4,
+            "Wiley": 0.2
+          }
+        },
+        "source_count_hhi": 0.28,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.8399999999999999,
+        "category_counts": {
+          "article": 3,
+          "other": 1,
+          "preprint": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 3,
+            "other": 1,
+            "preprint": 1
+          },
+          "effective_categories": 2.2727272727272725,
+          "hhi": 0.44000000000000006,
+          "max_share": 0.6,
+          "normalized_balance": 0.8399999999999999,
+          "shares": {
+            "article": 0.6,
+            "other": 0.2,
+            "preprint": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.44000000000000006,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 2.2727272727272725,
+        "hhi": 0.44000000000000006,
+        "known_count": 5,
+        "max_share": 0.6,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.8399999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "article": 0.6,
+          "other": 0.2,
+          "preprint": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 3,
+            "other": 1,
+            "preprint": 1
+          },
+          "effective_categories": 2.2727272727272725,
+          "hhi": 0.44000000000000006,
+          "max_share": 0.6,
+          "normalized_balance": 0.8399999999999999,
+          "shares": {
+            "article": 0.6,
+            "other": 0.2,
+            "preprint": 0.2
+          }
+        },
+        "source_count_hhi": 0.44000000000000006,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "Advanced Engineering Materials": 1,
+          "Applied Soft Computing": 1,
+          "Classroom Resource Materials": 1,
+          "Computers & Education": 1,
+          "OSF Preprints (OSF Preprints)": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Advanced Engineering Materials": 1,
+            "Applied Soft Computing": 1,
+            "Classroom Resource Materials": 1,
+            "Computers & Education": 1,
+            "OSF Preprints (OSF Preprints)": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Advanced Engineering Materials": 0.2,
+            "Applied Soft Computing": 0.2,
+            "Classroom Resource Materials": 0.2,
+            "Computers & Education": 0.2,
+            "OSF Preprints (OSF Preprints)": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.20000000000000004,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 4.999999999999999,
+        "hhi": 0.20000000000000004,
+        "known_count": 5,
+        "max_share": 0.2,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "Advanced Engineering Materials": 0.2,
+          "Applied Soft Computing": 0.2,
+          "Classroom Resource Materials": 0.2,
+          "Computers & Education": 0.2,
+          "OSF Preprints (OSF Preprints)": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "Advanced Engineering Materials": 1,
+            "Applied Soft Computing": 1,
+            "Classroom Resource Materials": 1,
+            "Computers & Education": 1,
+            "OSF Preprints (OSF Preprints)": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Advanced Engineering Materials": 0.2,
+            "Applied Soft Computing": 0.2,
+            "Classroom Resource Materials": 0.2,
+            "Computers & Education": 0.2,
+            "OSF Preprints (OSF Preprints)": 0.2
+          }
+        },
+        "source_count_hhi": 0.20000000000000004,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      }
+    },
+    "exception": {},
+    "family_count": 5,
+    "family_digest": "69fb5a3990485e4fc5a0664a792166e452dfcc8182dcb2f8cd8beef8f10d4f22",
+    "limitations": [
+      "Unknown or inferred metadata does not count as coverage."
+    ],
+    "policy_version": "2.0.0",
+    "provider_count": 2,
+    "raw_status": "fail",
+    "report_id": "diversity-f0c7c24cd4801ff38991563f",
+    "requirement_digest": "076d40a0b471372376786480c76156aafaaf6d58261c5bb9f24d2b3662919546",
+    "requirement_id": "REQ-DIV-ENGINEERING-10",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "f37e0b635d59a12f1123db6e459628fcfc18fd1075afc9ff09d09f3b2c7160f7",
+  "packet_id": "DIV-ENGINEERING-10",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-ENGINEERING-10",
+    "research_question": "T079 structural source-diversity evaluation for DIV-ENGINEERING-10"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-ENGINEERING-10",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "James Utama Surjadi | Libo Gao | Huifeng Du",
+      "canonical_work_id": "doi:10.1002/adem.201800864",
+      "doi": "10.1002/adem.201800864",
+      "geography": "HK",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2908367391",
+      "publisher": "Wiley",
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2908367391",
+      "source_type": "article",
+      "stance": null,
+      "title": "Mechanical Metamaterials and Their Engineering Applications",
+      "venue": "Advanced Engineering Materials"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "James Utama Surjadi | Libo Gao | Huifeng Du",
+      "canonical_work_id": "doi:10.1002/adem.201800864",
+      "doi": "10.1002/adem.201800864",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1002%2Fadem.201800864",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "crossref",
+      "provider_record_id": "10.1002/adem.201800864",
+      "publisher": "Wiley",
+      "retrieved_uri": "https://api.crossref.org/works/10.1002%2Fadem.201800864",
+      "source_id": "crossref-8bff933db80c393c66f2d664",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Mechanical Metamaterials and Their Engineering Applications",
+      "venue": "Advanced Engineering Materials"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Iaeme Publication",
+      "canonical_work_id": "doi:10.17605/osf.io/qak2z",
+      "doi": "10.17605/osf.io/qak2z",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2020s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W3204672765",
+      "publisher": "Center for Open Science",
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W3204672765",
+      "source_type": "preprint",
+      "stance": null,
+      "title": "International Journal of Mechanical Engineering and Technology (IJMET)",
+      "venue": "OSF Preprints (OSF Preprints)"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Julie Pollitt",
+      "canonical_work_id": "doi:10.5948/upo9781614441052.029",
+      "doi": "10.5948/upo9781614441052.029",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "unknown"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W1939400179",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W1939400179",
+      "source_type": "other",
+      "stance": null,
+      "title": "Mechanical Engineering",
+      "venue": null
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Julie Pollitt",
+      "canonical_work_id": "doi:10.5948/upo9781614441052.029",
+      "doi": "10.5948/upo9781614441052.029",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.5948%2Fupo9781614441052.029",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "1990s",
+      "provider": "crossref",
+      "provider_record_id": "10.5948/upo9781614441052.029",
+      "publisher": "American Mathematical Society",
+      "retrieved_uri": "https://api.crossref.org/works/10.5948%2Fupo9781614441052.029",
+      "source_id": "crossref-5058407f8e0a47576ab59f03",
+      "source_type": "other",
+      "stance": null,
+      "title": "Mechanical Engineering",
+      "venue": "Classroom Resource Materials"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Najeh Ben Guedria",
+      "canonical_work_id": "doi:10.1016/j.asoc.2015.10.048",
+      "doi": "10.1016/j.asoc.2015.10.048",
+      "geography": "TN",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2220913511",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2220913511",
+      "source_type": "article",
+      "stance": null,
+      "title": "Improved accelerated PSO algorithm for mechanical engineering optimization problems",
+      "venue": "Applied Soft Computing"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Najeh Ben Guedria",
+      "canonical_work_id": "doi:10.1016/j.asoc.2015.10.048",
+      "doi": "10.1016/j.asoc.2015.10.048",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1016%2Fj.asoc.2015.10.048",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "crossref",
+      "provider_record_id": "10.1016/j.asoc.2015.10.048",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.crossref.org/works/10.1016%2Fj.asoc.2015.10.048",
+      "source_id": "crossref-fdbd6c27f6bc2499d41e8f8f",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Improved accelerated PSO algorithm for mechanical engineering optimization problems",
+      "venue": "Applied Soft Computing"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Brianno Coller | Mike Scott",
+      "canonical_work_id": "doi:10.1016/j.compedu.2009.05.012",
+      "doi": "10.1016/j.compedu.2009.05.012",
+      "geography": "US",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2164859174",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=mechanical+engineering&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2164859174",
+      "source_type": "article",
+      "stance": null,
+      "title": "Effectiveness of using a video game to teach a course in mechanical engineering",
+      "venue": "Computers & Education"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "B.D. Coller | M.J. Scott",
+      "canonical_work_id": "doi:10.1016/j.compedu.2009.05.012",
+      "doi": "10.1016/j.compedu.2009.05.012",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1016%2Fj.compedu.2009.05.012",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "crossref",
+      "provider_record_id": "10.1016/j.compedu.2009.05.012",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.crossref.org/works/10.1016%2Fj.compedu.2009.05.012",
+      "source_id": "crossref-1be2157c58c4f7244afbe70b",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Effectiveness of using a video game to teach a course in mechanical engineering",
+      "venue": "Computers &amp; Education"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "duplicate"
+}

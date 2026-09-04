@@ -1,0 +1,901 @@
+{
+  "categories": {
+    "balanced": 18,
+    "concentrated": 18,
+    "duplicate": 9,
+    "fake_diversity": 9,
+    "historical": 9,
+    "method_monoculture": 9,
+    "missing_strata": 9,
+    "multilingual": 9,
+    "narrow": 9,
+    "sparse": 9
+  },
+  "generated_at": "2026-09-04T02:24:52Z",
+  "human_review": {
+    "required_locked_packets_per_discipline": 10,
+    "status": "not_run",
+    "template": "T079-INDEPENDENT-REVIEW-TEMPLATE.json"
+  },
+  "packet_count": 108,
+  "packet_records": [
+    {
+      "discipline": "art_history",
+      "packet_digest": "c96d6894f89c332e72ca6ebf9cd26071f69321f0ec7fc1a4883284ebf1539b13",
+      "packet_id": "DIV-ART-HISTORY-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "aabee7ae15e7cd33cceb8c140bfe19707234ab3701b392e70e266f4931125e44",
+      "packet_id": "DIV-ART-HISTORY-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "df8bb92f4523e2de44ea0de309625c90ea26bae00d57a0583ace6fe25cfc2c6b",
+      "packet_id": "DIV-ART-HISTORY-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "d93cedf4154123383ea87f90fc66ffb360d0f8251cd3de6773fa3da37f28ddf9",
+      "packet_id": "DIV-ART-HISTORY-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "45706c8f3165292aa7ce631adfcf2d8e383b496aa0bc029c6d96ae8a68fb9315",
+      "packet_id": "DIV-ART-HISTORY-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "bcbff1749b931e5aa687a263753dccb05d1ca04f74766a08c5e030056769c851",
+      "packet_id": "DIV-ART-HISTORY-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "1f0cd79450ba3b3b3554d82e1ad3d81cf0d48c54d795bc450fe7419b5efbb078",
+      "packet_id": "DIV-ART-HISTORY-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "c97aa10e64522f4d25b41c6584cfe3b0d226d1b0ab98086d343c8dfa024ba9c0",
+      "packet_id": "DIV-ART-HISTORY-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "c4b3cc31edc8f8f3558dadc108758515b83067434d7ec77320d5c0fc00ad0d37",
+      "packet_id": "DIV-ART-HISTORY-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "968143fd7edd8d16769ec8367a4b6cf1276101af24ceeaa66d98c407aa0662b8",
+      "packet_id": "DIV-ART-HISTORY-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "3823db58dc2e0f89f3c5855bc845d075bdbc3e8f9708372ee4055bf1ea984459",
+      "packet_id": "DIV-ART-HISTORY-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "art_history",
+      "packet_digest": "8e451c9ca7373fc4558fac01d5e2d33b9f5075695606c7623a383f60a0314ce6",
+      "packet_id": "DIV-ART-HISTORY-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "434fdacda43a2d0f0a6d09719b6cfcbc6f7c362915772b64090b91d37211dddd",
+      "packet_id": "DIV-ART-CRITICISM-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "c6f41ae35b4982a0aefcc3de1495ea46559c82ce43b1baa038f55d0023d64e56",
+      "packet_id": "DIV-ART-CRITICISM-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "6a47531cd228fe2afd885c7e911205f0615f9432401eb31f80f64f5c17f5ab69",
+      "packet_id": "DIV-ART-CRITICISM-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "ffe60f86f19903b46b296bdef0f9c315e93e9724eacd031978a4ebc50e0a022a",
+      "packet_id": "DIV-ART-CRITICISM-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "cd3f731c44d155540a533739561b9a85181b5c42cfe514d225c58bd76e9db595",
+      "packet_id": "DIV-ART-CRITICISM-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "f93a5b2247b77cae91f085ad2498913e8cb94a9ac704de838d4bd39625c07405",
+      "packet_id": "DIV-ART-CRITICISM-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "f5e3f15d286d0bec968b885be47b4bcf08529ec3d48351685a11d4c4f540f2df",
+      "packet_id": "DIV-ART-CRITICISM-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "e2a0b741c1a69a16459747997f8e8b9dfcbb7d484cde98d96862b3d73833af41",
+      "packet_id": "DIV-ART-CRITICISM-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "2471ec76c7e32bb0b2d4cf1cb6a9e8777db1766b8401c14626567c360bc1d1b5",
+      "packet_id": "DIV-ART-CRITICISM-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "f6939577536de59882256ded1697b9bc1db3db3c65f56491ea593cd23557efed",
+      "packet_id": "DIV-ART-CRITICISM-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "30af370d3fc1789a062f0255ab532a50afa3959872f48f8dca74ce02c3cbacef",
+      "packet_id": "DIV-ART-CRITICISM-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "art_criticism",
+      "packet_digest": "d41e26eb55bf8398a9109e4f0bf306e351c7880be563985d56060a8178ebfbb8",
+      "packet_id": "DIV-ART-CRITICISM-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "b5f7cef9af27416cddb1d705c3dfd7fa01e25d4800ac479ca2cf3d327fc14a30",
+      "packet_id": "DIV-ENGINEERING-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "937b55ea9e059670c8ff76a51bbd5be364c6e27d59d4d8b4fb8cb7b2eac81731",
+      "packet_id": "DIV-ENGINEERING-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "8ceb9ca1cba2b75430e8634948a63f0005d20d66d6062f206f647ec4c88dd855",
+      "packet_id": "DIV-ENGINEERING-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "0031929869123a050f58862b1811a78e3ba97fa95b36ccb7cc222e64266e13f3",
+      "packet_id": "DIV-ENGINEERING-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "bcc6131aa6ff9c7b016b13a17d5657ce324e195e050f11e67559931456221c56",
+      "packet_id": "DIV-ENGINEERING-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "aea1886a32720264d1832f9759a610ae22304bad35554527d88c3025df8dd301",
+      "packet_id": "DIV-ENGINEERING-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "5dba8625bf18255894d9b9603e5b87a0398683fa8f31256bbb9248fd34812a10",
+      "packet_id": "DIV-ENGINEERING-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "fca8368c4cfd0017691f4a0aaace1ec3c30ca3d0cedfd3e43cb0ea0d7e4532a2",
+      "packet_id": "DIV-ENGINEERING-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "0df0a9b6a7db0531258d0ffebeefc59d41431120544f04d775465e17186bb14b",
+      "packet_id": "DIV-ENGINEERING-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "f37e0b635d59a12f1123db6e459628fcfc18fd1075afc9ff09d09f3b2c7160f7",
+      "packet_id": "DIV-ENGINEERING-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "61ada8aa99a04a89800990609d9c3ceb232fc4c90f900b009d2e292a77a01a1e",
+      "packet_id": "DIV-ENGINEERING-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "engineering",
+      "packet_digest": "7263c03920aaeb1915dfd87f397fcab19d2c49161362bb7859f3be681f54db1d",
+      "packet_id": "DIV-ENGINEERING-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "79794a2e714d3f63fc4cfbc608a5a75889db4185dd8384e48d297de1884093c2",
+      "packet_id": "DIV-HUMANITIES-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "f0d8d443e66d18d3020d4e047997e699f6fe0eb6afd95e6a76e3970a70ff600a",
+      "packet_id": "DIV-HUMANITIES-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "f78f52a9c3c57926341bee203bac73476a6b41f59266e9164d45493d37571c3f",
+      "packet_id": "DIV-HUMANITIES-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "2a3f6337e5aed50132b7fc9b941c480cc34814ed445d7dc1d5b3b03e593f95bc",
+      "packet_id": "DIV-HUMANITIES-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "4e199ce5afca0aa228a2003403f05af583ee01cf0eb58b236624eacdcb16a17b",
+      "packet_id": "DIV-HUMANITIES-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "c1dbee639e8f43073484b816bd032a277916a6a9ee5e62405693d935ec84c21b",
+      "packet_id": "DIV-HUMANITIES-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "297853940ca8c79d170e3ec0fe089c6e4350014f0288efbd7e49307b3dc86f32",
+      "packet_id": "DIV-HUMANITIES-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "d8102990e7adf20a5016a713756ccccea1b0c22413cb11179eec7ed79a520f62",
+      "packet_id": "DIV-HUMANITIES-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "411672eeded962019ef459e3021d17a158db2a671a62f5da306d57c7a064e4d4",
+      "packet_id": "DIV-HUMANITIES-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "d12bf2090479d2254ed27a0a3d4a780b0ada283f379b79eb44b6cf7b21575d67",
+      "packet_id": "DIV-HUMANITIES-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "86e623a152950ab8f7e3327fade7bb7d57915ecd90dc2c26251c2216f26a3d35",
+      "packet_id": "DIV-HUMANITIES-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "humanities",
+      "packet_digest": "0bf3b3840078d82fc9d9d4ac61688d0edeaef900d156758da1f91d3b053288cb",
+      "packet_id": "DIV-HUMANITIES-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "4adf94f3a9b7781ae85b414661dae96efb96c54f6d6296fd747a7dfaeb481bde",
+      "packet_id": "DIV-INTERDISCIPLINARY-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "24ce5a30c12c840a411154a160e5009aa8da038d60ddc4db670d87920f80f686",
+      "packet_id": "DIV-INTERDISCIPLINARY-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "32c10e5f269b4dcab237ca0d52e9917518be9ab033676bedaca59d82be4142f0",
+      "packet_id": "DIV-INTERDISCIPLINARY-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "9dc33d05303e4ff1e832dc4c85708bec03b477ecd066856dcc5a14a949463fb1",
+      "packet_id": "DIV-INTERDISCIPLINARY-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "908ff7b938fe0556281b60e99ed22e4cfc0930a17e2836f860f907b8bfc0f1a7",
+      "packet_id": "DIV-INTERDISCIPLINARY-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "b2cfb14b388f20e5cae29a4d45c474b49cafbe93840eb23aabee6e1788bf0ed6",
+      "packet_id": "DIV-INTERDISCIPLINARY-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "f217c99daf0d9cfa5ca51e406f51226b08e17b2183440abc0165024451d40b51",
+      "packet_id": "DIV-INTERDISCIPLINARY-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "eca31a3beb824acc5457f3ce78537c737e5277848e6ba351146732318464791c",
+      "packet_id": "DIV-INTERDISCIPLINARY-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "22a3e4c55baae539f100be3a94fcfd5b3d0d7663ee78b1cc601f7d71c69dcfc7",
+      "packet_id": "DIV-INTERDISCIPLINARY-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "e097edb16415f6c0d6a1ff304d576f6fc75e3ebd4b0faa3605011307157d1d0e",
+      "packet_id": "DIV-INTERDISCIPLINARY-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "c21596f04111dbf3510a33617559b29864df6a32c4398f0939a55949ff535a48",
+      "packet_id": "DIV-INTERDISCIPLINARY-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "interdisciplinary",
+      "packet_digest": "8da39eabbdcb8cd940b6ae54ff18e1b6b7b4ce3acfce0c25b9c21d1f7f306800",
+      "packet_id": "DIV-INTERDISCIPLINARY-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "0b843d7f2643c83544ebd6e647d22261652d2697c2b9f5970a4bdd2ed81f2dc0",
+      "packet_id": "DIV-MATERIALS-SCIENCE-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "8171ee119180b5c376fe8581b714bc122c5a65ffc8595a9705f5412b3625d0be",
+      "packet_id": "DIV-MATERIALS-SCIENCE-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "baf7208ecd633ab566b49f0ea147ad67b2c6644fbfe8f00d54f5d870cc48e5f8",
+      "packet_id": "DIV-MATERIALS-SCIENCE-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "6275c44270ecd8a7c26d589409cea7edde161b3b78a3c1fbf46e80dbf9d90645",
+      "packet_id": "DIV-MATERIALS-SCIENCE-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "1e3a5a6f8e92cd68c4aea7b0fcb22932c8539a5c2a878e44f12d4dd21328ba7f",
+      "packet_id": "DIV-MATERIALS-SCIENCE-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "787d56986212bcfe12e3efb23378013b26a64c58f753a877e66a366115731eaa",
+      "packet_id": "DIV-MATERIALS-SCIENCE-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "85315a4b4b8ba8ffb4e41b6e7fc33584a4ef06bea8a9fb0013bb36b5f2f2c1e5",
+      "packet_id": "DIV-MATERIALS-SCIENCE-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "c7638a27a4893cb1ee50d61f257c105b3c08ea7ccd13886473a88ab2400934a4",
+      "packet_id": "DIV-MATERIALS-SCIENCE-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "342e78d6d41f7b1995e66553655a800224fa4e5e94f579e8a9ef53b4dc550cd2",
+      "packet_id": "DIV-MATERIALS-SCIENCE-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "c981e910aca311c5fad76ce2a2e5ea1dce1e2b3bce0e0ae004f5980cd9d168f7",
+      "packet_id": "DIV-MATERIALS-SCIENCE-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "50c509b1ccacc125c48c799f0228e4435da5b916173311bac15d3418f1781175",
+      "packet_id": "DIV-MATERIALS-SCIENCE-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "materials_science",
+      "packet_digest": "b30003194228529a826790dead8e68bc258f29baae2bb27c675e2d45f47b9617",
+      "packet_id": "DIV-MATERIALS-SCIENCE-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "32885e5e904db582fcd642d4ec76797463f6519846ad4f6545387b829695edb1",
+      "packet_id": "DIV-PHILOSOPHY-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "fde502269d4d53c6378afdea75e0f6bcfa108b514004046f200a1341e50f2635",
+      "packet_id": "DIV-PHILOSOPHY-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "f1fd55067964ba74891dd94288e6f5ca7c965fc84ab1ea8e347d3b03fb5cb5b6",
+      "packet_id": "DIV-PHILOSOPHY-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "3d81b365464a5ad850a26082aa307806c9124075dce7d3daee9e78ef893fb785",
+      "packet_id": "DIV-PHILOSOPHY-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "df06984b888a09dd12a5d124999f17424e41b4b33597bd87095e2d79d51d50aa",
+      "packet_id": "DIV-PHILOSOPHY-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "47b49cefdc94b3062a92b4a25fd2c2b23de1af93ed408703bf11039dacf0cb5f",
+      "packet_id": "DIV-PHILOSOPHY-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "6d7d8ca183b0552974e3eed1db3196c989037ab7009f3f6b2939c0ff6f881c15",
+      "packet_id": "DIV-PHILOSOPHY-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "2f8a67590aa4c923a3c092b0f3909cb2a187e3ff29c3dcfa0ce8f0b9fa0c0847",
+      "packet_id": "DIV-PHILOSOPHY-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "a6cf3ae54d5b0f53e9eb8a08c7272cb0c3693273c7e2f1d8a0d037904efa844c",
+      "packet_id": "DIV-PHILOSOPHY-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "4966e2c25d255c27efb35c278f6f20902a5bf05d149fe74afc376d952366d0f2",
+      "packet_id": "DIV-PHILOSOPHY-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "352fb358a0b72ae9488e886bd04805bbff423efcb780fa28204dec15b7279dd5",
+      "packet_id": "DIV-PHILOSOPHY-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "philosophy",
+      "packet_digest": "634191a03c866162869eb5acfea5e8a0fe30a97585519e3c5f700bb624b2149a",
+      "packet_id": "DIV-PHILOSOPHY-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "1a2a2bdcf33821bbebb032e42723b9df1b0355c92e90683b277afba0348c33a3",
+      "packet_id": "DIV-PSYCHOLOGY-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "86fcc0125bcbdd4e2c2e9e33bae9b86ac5d534c847e7965dfc43c62d3006a6d4",
+      "packet_id": "DIV-PSYCHOLOGY-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "0d32af64cab034801e85d0b3e4633dd4b0a193c34fb231642e7b97facd282364",
+      "packet_id": "DIV-PSYCHOLOGY-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "89f2cdcc74ee7a7368b06c95713951a4aa49feb9a7d5fc9a84d6e475f1557ef7",
+      "packet_id": "DIV-PSYCHOLOGY-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "7ace6f5e674aadbefbb66aad08416f607b7e34952462170dd5cd5c849f148b5b",
+      "packet_id": "DIV-PSYCHOLOGY-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "85958838601387356f221c1a7434e1cd8f89bff6c211c6b0507f4bffb6673602",
+      "packet_id": "DIV-PSYCHOLOGY-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "566268c15f5d06d7ac2170d36be58f938f813bb2932231e2dc2cab9cc67e2972",
+      "packet_id": "DIV-PSYCHOLOGY-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "2db2f8441fd50582e52ebe81ce48a7c6f4699fcb47a2135f3af8e962f53fe1c1",
+      "packet_id": "DIV-PSYCHOLOGY-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "5b3ed3ac2c7dd13ba0963f21d4e66e61bd2ca1dcfc77fe862549401c7e0d1a7b",
+      "packet_id": "DIV-PSYCHOLOGY-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "c627be693b52e05378170c7264fc71ac359aa082e7213c14359e7c489bf52aaa",
+      "packet_id": "DIV-PSYCHOLOGY-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "977e010c65953293eab04f08716166130960de0bb70dc1322fc8660618b524ba",
+      "packet_id": "DIV-PSYCHOLOGY-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "psychology",
+      "packet_digest": "1ee7687e8446668fd51e74c4b381c6ff5ea13c0ac02154154e69227b7d38609b",
+      "packet_id": "DIV-PSYCHOLOGY-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "13f307d70c8d12b7526c3f5a6b44938b59081c6899eb5fc7c9bd8058df7ffd0e",
+      "packet_id": "DIV-TECHNICAL-WRITING-01",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "57f0db714c41d1e9bb8ef86a87991f9c100d43e9b043e2ff437a2fd5a6968e72",
+      "packet_id": "DIV-TECHNICAL-WRITING-02",
+      "partition": "tuning_candidate",
+      "review_status": "not_run",
+      "stress_category": "balanced"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "81ffc113e2fd2f8c432be043d02a552a4ab0fc992b5e0f115e894f0fd30d799a",
+      "packet_id": "DIV-TECHNICAL-WRITING-03",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "48a8eeb32346557f9e7ed821d094d409aa82337c9e217b47a9a0e722b0271216",
+      "packet_id": "DIV-TECHNICAL-WRITING-04",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "concentrated"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "f201fde26d419f796c62ef14af101bc26a2654e0adc0fcdd5df3ab6509b4903c",
+      "packet_id": "DIV-TECHNICAL-WRITING-05",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "sparse"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "52808d74c982bf7328e18db80d05468b10308ea61db7f4cc53d4992df4c072be",
+      "packet_id": "DIV-TECHNICAL-WRITING-06",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "narrow"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "4fd974389efe1cdc9b501c4fcb098f0aae58b968e21eebd1420c8d67e5bf5901",
+      "packet_id": "DIV-TECHNICAL-WRITING-07",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "multilingual"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "655e553fca23213c8ae42dffda6d2d4873ee40869e08d8d623ab1c2757caa137",
+      "packet_id": "DIV-TECHNICAL-WRITING-08",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "historical"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "493e457817b07d30a8a38854eb7d01037e421ae6247acfd244ad72b8874d221a",
+      "packet_id": "DIV-TECHNICAL-WRITING-09",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "method_monoculture"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "328a55de84bc2d044ee2ad2794a49bac8f3947f557163e81666bd93ff3130ed8",
+      "packet_id": "DIV-TECHNICAL-WRITING-10",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "duplicate"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "16a980ecb5a53fe74ad29dbe2032af53462beb06be4d994e6f64bdf07dfc95aa",
+      "packet_id": "DIV-TECHNICAL-WRITING-11",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "fake_diversity"
+    },
+    {
+      "discipline": "technical_writing",
+      "packet_digest": "02d2986390fe3cd70cca4aca7c0e9cbfbaa014c22c82029533d5a423ef5447ab",
+      "packet_id": "DIV-TECHNICAL-WRITING-12",
+      "partition": "locked_candidate",
+      "review_status": "not_run",
+      "stress_category": "missing_strata"
+    }
+  ],
+  "packets_by_discipline": {
+    "art_criticism": 12,
+    "art_history": 12,
+    "engineering": 12,
+    "humanities": 12,
+    "interdisciplinary": 12,
+    "materials_science": 12,
+    "philosophy": 12,
+    "psychology": 12,
+    "technical_writing": 12
+  },
+  "release_evidence": false,
+  "schema_version": "research-handoff.t079.candidate-manifest.v1",
+  "status": "READY_FOR_HUMAN_REVIEW"
+}

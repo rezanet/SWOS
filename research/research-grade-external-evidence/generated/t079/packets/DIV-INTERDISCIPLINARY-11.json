@@ -1,0 +1,1258 @@
+{
+  "canonical_families": [
+    {
+      "canonical_id": "family-49b84287279c1e169cf2e4a3",
+      "canonical_key": "doi:10.5751/es-07580-200222",
+      "family_id": "family-49b84287279c1e169cf2e4a3",
+      "identifiers": {
+        "canonical_work_id": "doi:10.5751/es-07580-200222",
+        "doi": "10.5751/es-07580-200222"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Georgina Cundill | Dirk J. Roux | John N. Parker"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "ZA"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Resilience Alliance"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Ecology and Society"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.5751/es-07580-200222"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-9f1f096445c6d3d276bff250",
+        "openalex-W2574836281"
+      ],
+      "titles": [
+        "Nurturing communities of practice for transdisciplinary research"
+      ]
+    },
+    {
+      "canonical_id": "family-51e0b672ad01de4f7251c1be",
+      "canonical_key": "doi:10.1075/dapsac.13.06fai",
+      "family_id": "family-51e0b672ad01de4f7251c1be",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1075/dapsac.13.06fai",
+        "doi": "10.1075/dapsac.13.06fai"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Norman Fairclough"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "GB"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "John Benjamins Publishing Company"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "book-chapter"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Discourse approaches to politics, society and culture"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1075/dapsac.13.06fai"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-59bc8bf46e6193f82e213e74",
+        "openalex-W117982022"
+      ],
+      "titles": [
+        "Critical discourse analysis in transdisciplinary research"
+      ]
+    },
+    {
+      "canonical_id": "family-5591a4d39b74e5f3df133229",
+      "canonical_key": "doi:10.22545/2010/0006",
+      "family_id": "family-5591a4d39b74e5f3df133229",
+      "identifiers": {
+        "canonical_work_id": "doi:10.22545/2010/0006",
+        "doi": "10.22545/2010/0006"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "open_access"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Christian Pohl"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "CH"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.crossref.org/works/10.22545%2F2010%2F0006",
+          "status": "observed",
+          "value": "The Academy of Transdisciplinary Learning and Advanced Studies"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Transdisciplinary Journal of Engineering & Science"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.22545/2010/0006"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-e8c03f2e5448f2a136117c0d",
+        "openalex-W2181964589"
+      ],
+      "titles": [
+        "From Transdisciplinarity to Transdisciplinary Research"
+      ]
+    },
+    {
+      "canonical_id": "family-9c062686fec1745c4055b10a",
+      "canonical_key": "doi:10.1007/s11625-017-0461-1",
+      "family_id": "family-9c062686fec1745c4055b10a",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1007/s11625-017-0461-1",
+        "doi": "10.1007/s11625-017-0461-1"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Bagele Chilisa"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "BW"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2010s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Springer Science+Business Media"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Sustainability Science"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1007/s11625-017-0461-1"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-272c2744484c66000e0b9488",
+        "openalex-W2751517291"
+      ],
+      "titles": [
+        "Decolonising transdisciplinary research approaches: an African perspective for enhancing knowledge integration in sustainability science"
+      ]
+    },
+    {
+      "canonical_id": "family-e4000610bcbee5606ec5f516",
+      "canonical_key": "doi:10.1016/j.futures.2003.10.001",
+      "family_id": "family-e4000610bcbee5606ec5f516",
+      "identifiers": {
+        "canonical_work_id": "doi:10.1016/j.futures.2003.10.001",
+        "doi": "10.1016/j.futures.2003.10.001"
+      },
+      "metadata": {
+        "access_mode": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "closed_or_unknown"
+        },
+        "author_cluster": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Roderick J. Lawrence"
+        },
+        "geography": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "CH"
+        },
+        "language": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "en"
+        },
+        "methodology": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "period": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "2000s"
+        },
+        "publisher": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Elsevier BV"
+        },
+        "source_type": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "article"
+        },
+        "stance": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "unknown",
+          "value": null
+        },
+        "venue": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "Futures"
+        },
+        "work_family": {
+          "provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+          "status": "observed",
+          "value": "doi:10.1016/j.futures.2003.10.001"
+        }
+      },
+      "provider_count": 2,
+      "source_ids": [
+        "crossref-5366104cee57ea2c9beff331",
+        "openalex-W2034251512"
+      ],
+      "titles": [
+        "Housing and health: from interdisciplinary principles to transdisciplinary research and practice"
+      ]
+    }
+  ],
+  "claim_exposure_records": [
+    {
+      "claim_id": "STRUCT-01-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W117982022"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-02-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2751517291"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-03-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2574836281"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-04-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2034251512"
+      ]
+    },
+    {
+      "claim_id": "STRUCT-05-01",
+      "claim_kind": "synthetic_structural_exposure_only",
+      "source_ids": [
+        "openalex-W2181964589"
+      ]
+    }
+  ],
+  "construction": {
+    "construction_intent": "fake_diversity",
+    "construction_notes": [
+      "Stress category is construction intent only, not the human expected outcome.",
+      "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
+      "Unknown/inferred methodology or stance cannot improve the metric."
+    ],
+    "generated_at": "2026-09-04T02:24:40Z",
+    "generator": "T079-BUILD-REVIEWER-PACKETS.py",
+    "source_metadata_snapshot_digest": "5b6697c69ac5a54d421f9567a88779b89b61fbfdf54e1415dd17fec2036b46ee"
+  },
+  "discipline": "interdisciplinary",
+  "machine_result": {
+    "corrective_queries": [
+      "independent source evidence across language",
+      "independent source evidence across period",
+      "independent source evidence across source_type",
+      "independent source evidence across access_mode"
+    ],
+    "counter_position": {
+      "required": false,
+      "status": "not_required"
+    },
+    "created_at": "2026-09-04T02:24:40.273329Z",
+    "dimensions": {
+      "access_mode": {
+        "applicable": true,
+        "balance_dimension": 0.96,
+        "category_counts": {
+          "closed_or_unknown": 3,
+          "open_access": 2
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "closed_or_unknown": 3,
+            "open_access": 2
+          },
+          "effective_categories": 1.923076923076923,
+          "hhi": 0.52,
+          "max_share": 0.6,
+          "normalized_balance": 0.96,
+          "shares": {
+            "closed_or_unknown": 0.6,
+            "open_access": 0.4
+          }
+        },
+        "claim_exposure_hhi": 0.52,
+        "corrective_query": "independent source evidence across access_mode",
+        "covered_strata": [],
+        "dimension": "access_mode",
+        "effective_categories": 1.923076923076923,
+        "hhi": 0.52,
+        "known_count": 5,
+        "max_share": 0.6,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.96,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "closed_or_unknown": 0.6,
+          "open_access": 0.4
+        },
+        "source_count": {
+          "category_counts": {
+            "closed_or_unknown": 3,
+            "open_access": 2
+          },
+          "effective_categories": 1.923076923076923,
+          "hhi": 0.52,
+          "max_share": 0.6,
+          "normalized_balance": 0.96,
+          "shares": {
+            "closed_or_unknown": 0.6,
+            "open_access": 0.4
+          }
+        },
+        "source_count_hhi": 0.52,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "geography": {
+        "applicable": true,
+        "balance_dimension": 0.96,
+        "category_counts": {
+          "BW": 1,
+          "CH": 2,
+          "GB": 1,
+          "ZA": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "BW": 1,
+            "CH": 2,
+            "GB": 1,
+            "ZA": 1
+          },
+          "effective_categories": 3.571428571428571,
+          "hhi": 0.28,
+          "max_share": 0.4,
+          "normalized_balance": 0.96,
+          "shares": {
+            "BW": 0.2,
+            "CH": 0.4,
+            "GB": 0.2,
+            "ZA": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.28,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "geography",
+        "effective_categories": 3.571428571428571,
+        "hhi": 0.28,
+        "known_count": 5,
+        "max_share": 0.4,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.96,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "BW": 0.2,
+          "CH": 0.4,
+          "GB": 0.2,
+          "ZA": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "BW": 1,
+            "CH": 2,
+            "GB": 1,
+            "ZA": 1
+          },
+          "effective_categories": 3.571428571428571,
+          "hhi": 0.28,
+          "max_share": 0.4,
+          "normalized_balance": 0.96,
+          "shares": {
+            "BW": 0.2,
+            "CH": 0.4,
+            "GB": 0.2,
+            "ZA": 0.2
+          }
+        },
+        "source_count_hhi": 0.28,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "language": {
+        "applicable": true,
+        "balance_dimension": 0.0,
+        "category_counts": {
+          "en": 5
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "en": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "claim_exposure_hhi": 1.0,
+        "corrective_query": "independent source evidence across language",
+        "covered_strata": [],
+        "dimension": "language",
+        "effective_categories": 1.0,
+        "hhi": 1.0,
+        "known_count": 5,
+        "max_share": 1.0,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.0,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "en": 1.0
+        },
+        "source_count": {
+          "category_counts": {
+            "en": 5
+          },
+          "effective_categories": 1.0,
+          "hhi": 1.0,
+          "max_share": 1.0,
+          "normalized_balance": 0.0,
+          "shares": {
+            "en": 1.0
+          }
+        },
+        "source_count_hhi": 1.0,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "period": {
+        "applicable": true,
+        "balance_dimension": 0.96,
+        "category_counts": {
+          "2000s": 2,
+          "2010s": 3
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "2000s": 2,
+            "2010s": 3
+          },
+          "effective_categories": 1.923076923076923,
+          "hhi": 0.52,
+          "max_share": 0.6,
+          "normalized_balance": 0.96,
+          "shares": {
+            "2000s": 0.4,
+            "2010s": 0.6
+          }
+        },
+        "claim_exposure_hhi": 0.52,
+        "corrective_query": "independent source evidence across period",
+        "covered_strata": [],
+        "dimension": "period",
+        "effective_categories": 1.923076923076923,
+        "hhi": 0.52,
+        "known_count": 5,
+        "max_share": 0.6,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.96,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "2000s": 0.4,
+          "2010s": 0.6
+        },
+        "source_count": {
+          "category_counts": {
+            "2000s": 2,
+            "2010s": 3
+          },
+          "effective_categories": 1.923076923076923,
+          "hhi": 0.52,
+          "max_share": 0.6,
+          "normalized_balance": 0.96,
+          "shares": {
+            "2000s": 0.4,
+            "2010s": 0.6
+          }
+        },
+        "source_count_hhi": 0.52,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "publisher": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "Elsevier BV": 1,
+          "John Benjamins Publishing Company": 1,
+          "Resilience Alliance": 1,
+          "Springer Science+Business Media": 1,
+          "The Academy of Transdisciplinary Learning and Advanced Studies": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Elsevier BV": 1,
+            "John Benjamins Publishing Company": 1,
+            "Resilience Alliance": 1,
+            "Springer Science+Business Media": 1,
+            "The Academy of Transdisciplinary Learning and Advanced Studies": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Elsevier BV": 0.2,
+            "John Benjamins Publishing Company": 0.2,
+            "Resilience Alliance": 0.2,
+            "Springer Science+Business Media": 0.2,
+            "The Academy of Transdisciplinary Learning and Advanced Studies": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.20000000000000004,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "publisher",
+        "effective_categories": 4.999999999999999,
+        "hhi": 0.20000000000000004,
+        "known_count": 5,
+        "max_share": 0.2,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "Elsevier BV": 0.2,
+          "John Benjamins Publishing Company": 0.2,
+          "Resilience Alliance": 0.2,
+          "Springer Science+Business Media": 0.2,
+          "The Academy of Transdisciplinary Learning and Advanced Studies": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "Elsevier BV": 1,
+            "John Benjamins Publishing Company": 1,
+            "Resilience Alliance": 1,
+            "Springer Science+Business Media": 1,
+            "The Academy of Transdisciplinary Learning and Advanced Studies": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Elsevier BV": 0.2,
+            "John Benjamins Publishing Company": 0.2,
+            "Resilience Alliance": 0.2,
+            "Springer Science+Business Media": 0.2,
+            "The Academy of Transdisciplinary Learning and Advanced Studies": 0.2
+          }
+        },
+        "source_count_hhi": 0.20000000000000004,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "source_type": {
+        "applicable": true,
+        "balance_dimension": 0.6399999999999997,
+        "category_counts": {
+          "article": 4,
+          "book-chapter": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "article": 4,
+            "book-chapter": 1
+          },
+          "effective_categories": 1.4705882352941173,
+          "hhi": 0.6800000000000002,
+          "max_share": 0.8,
+          "normalized_balance": 0.6399999999999997,
+          "shares": {
+            "article": 0.8,
+            "book-chapter": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.6800000000000002,
+        "corrective_query": "independent source evidence across source_type",
+        "covered_strata": [],
+        "dimension": "source_type",
+        "effective_categories": 1.4705882352941173,
+        "hhi": 0.6800000000000002,
+        "known_count": 5,
+        "max_share": 0.8,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.6399999999999997,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "article": 0.8,
+          "book-chapter": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "article": 4,
+            "book-chapter": 1
+          },
+          "effective_categories": 1.4705882352941173,
+          "hhi": 0.6800000000000002,
+          "max_share": 0.8,
+          "normalized_balance": 0.6399999999999997,
+          "shares": {
+            "article": 0.8,
+            "book-chapter": 0.2
+          }
+        },
+        "source_count_hhi": 0.6800000000000002,
+        "status": "fail",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      },
+      "venue": {
+        "applicable": true,
+        "balance_dimension": 0.9999999999999999,
+        "category_counts": {
+          "Discourse approaches to politics, society and culture": 1,
+          "Ecology and Society": 1,
+          "Futures": 1,
+          "Sustainability Science": 1,
+          "Transdisciplinary Journal of Engineering & Science": 1
+        },
+        "claim_exposure": {
+          "applicable": true,
+          "category_counts": {
+            "Discourse approaches to politics, society and culture": 1,
+            "Ecology and Society": 1,
+            "Futures": 1,
+            "Sustainability Science": 1,
+            "Transdisciplinary Journal of Engineering & Science": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Discourse approaches to politics, society and culture": 0.2,
+            "Ecology and Society": 0.2,
+            "Futures": 0.2,
+            "Sustainability Science": 0.2,
+            "Transdisciplinary Journal of Engineering & Science": 0.2
+          }
+        },
+        "claim_exposure_hhi": 0.20000000000000004,
+        "corrective_query": "",
+        "covered_strata": [],
+        "dimension": "venue",
+        "effective_categories": 4.999999999999999,
+        "hhi": 0.20000000000000004,
+        "known_count": 5,
+        "max_share": 0.2,
+        "metadata_completeness": 1.0,
+        "missing_strata": [],
+        "normalized_balance": 0.9999999999999999,
+        "required_strata": [],
+        "required_strata_coverage": 1.0,
+        "sample_size": 5,
+        "shares": {
+          "Discourse approaches to politics, society and culture": 0.2,
+          "Ecology and Society": 0.2,
+          "Futures": 0.2,
+          "Sustainability Science": 0.2,
+          "Transdisciplinary Journal of Engineering & Science": 0.2
+        },
+        "source_count": {
+          "category_counts": {
+            "Discourse approaches to politics, society and culture": 1,
+            "Ecology and Society": 1,
+            "Futures": 1,
+            "Sustainability Science": 1,
+            "Transdisciplinary Journal of Engineering & Science": 1
+          },
+          "effective_categories": 4.999999999999999,
+          "hhi": 0.20000000000000004,
+          "max_share": 0.2,
+          "normalized_balance": 0.9999999999999999,
+          "shares": {
+            "Discourse approaches to politics, society and culture": 0.2,
+            "Ecology and Society": 0.2,
+            "Futures": 0.2,
+            "Sustainability Science": 0.2,
+            "Transdisciplinary Journal of Engineering & Science": 0.2
+          }
+        },
+        "source_count_hhi": 0.20000000000000004,
+        "status": "pass",
+        "unknown_count": 0,
+        "unknown_rate": 0.0
+      }
+    },
+    "exception": {},
+    "family_count": 5,
+    "family_digest": "c9fff92420fa8b52764c07a56041b1d39f54bb973953c78b11fbdba746cb990e",
+    "limitations": [],
+    "policy_version": "2.0.0",
+    "provider_count": 2,
+    "raw_status": "fail",
+    "report_id": "diversity-b0a2c9dd35a2d53533957bf3",
+    "requirement_digest": "375a22dcab811ec6c04a09d7aa9033f08caf29ac010ddd0ab6d5f001b1cf86ae",
+    "requirement_id": "REQ-DIV-INTERDISCIPLINARY-11",
+    "research_grade_composite": 0.0,
+    "status": "fail"
+  },
+  "packet_digest": "c21596f04111dbf3510a33617559b29864df6a32c4398f0939a55949ff535a48",
+  "packet_id": "DIV-INTERDISCIPLINARY-11",
+  "partition": "locked_candidate",
+  "pre_retrieval_requirement": {
+    "claim_exposure_required": true,
+    "counter_position_required": false,
+    "declared_before_retrieval": true,
+    "dimensions": [
+      "publisher",
+      "venue",
+      "geography",
+      "language",
+      "period",
+      "source_type",
+      "access_mode"
+    ],
+    "max_hhi": 0.4,
+    "max_share": 0.6,
+    "max_unknown_rate": 0.1,
+    "min_composite": 0.5,
+    "min_family_count": 5,
+    "ontology_digest": "PENDING_FINAL_ONTOLOGY_APPROVAL",
+    "required_strata": {},
+    "requirement_id": "REQ-DIV-INTERDISCIPLINARY-11",
+    "research_question": "T079 structural source-diversity evaluation for DIV-INTERDISCIPLINARY-11"
+  },
+  "research_question": "T079 structural source-diversity evaluation for DIV-INTERDISCIPLINARY-11",
+  "review": null,
+  "schema_version": "2.0.0-candidate",
+  "source_records": [
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Norman Fairclough",
+      "canonical_work_id": "doi:10.1075/dapsac.13.06fai",
+      "doi": "10.1075/dapsac.13.06fai",
+      "geography": "GB",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W117982022",
+      "publisher": "John Benjamins Publishing Company",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W117982022",
+      "source_type": "book-chapter",
+      "stance": null,
+      "title": "Critical discourse analysis in transdisciplinary research",
+      "venue": "Discourse approaches to politics, society and culture"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Norman Fairclough",
+      "canonical_work_id": "doi:10.1075/dapsac.13.06fai",
+      "doi": "10.1075/dapsac.13.06fai",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1075%2Fdapsac.13.06fai",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "crossref",
+      "provider_record_id": "10.1075/dapsac.13.06fai",
+      "publisher": "John Benjamins Publishing Company",
+      "retrieved_uri": "https://api.crossref.org/works/10.1075%2Fdapsac.13.06fai",
+      "source_id": "crossref-59bc8bf46e6193f82e213e74",
+      "source_type": "book-chapter",
+      "stance": null,
+      "title": "Critical discourse analysis in transdisciplinary research",
+      "venue": "Discourse Approaches to Politics, Society and Culture"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Bagele Chilisa",
+      "canonical_work_id": "doi:10.1007/s11625-017-0461-1",
+      "doi": "10.1007/s11625-017-0461-1",
+      "geography": "BW",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2751517291",
+      "publisher": "Springer Science+Business Media",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2751517291",
+      "source_type": "article",
+      "stance": null,
+      "title": "Decolonising transdisciplinary research approaches: an African perspective for enhancing knowledge integration in sustainability science",
+      "venue": "Sustainability Science"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Bagele Chilisa",
+      "canonical_work_id": "doi:10.1007/s11625-017-0461-1",
+      "doi": "10.1007/s11625-017-0461-1",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1007%2Fs11625-017-0461-1",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "crossref",
+      "provider_record_id": "10.1007/s11625-017-0461-1",
+      "publisher": "Springer Science and Business Media LLC",
+      "retrieved_uri": "https://api.crossref.org/works/10.1007%2Fs11625-017-0461-1",
+      "source_id": "crossref-272c2744484c66000e0b9488",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Decolonising transdisciplinary research approaches: an African perspective for enhancing knowledge integration in sustainability science",
+      "venue": "Sustainability Science"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Georgina Cundill | Dirk J. Roux | John N. Parker",
+      "canonical_work_id": "doi:10.5751/es-07580-200222",
+      "doi": "10.5751/es-07580-200222",
+      "geography": "ZA",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2574836281",
+      "publisher": "Resilience Alliance",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2574836281",
+      "source_type": "article",
+      "stance": null,
+      "title": "Nurturing communities of practice for transdisciplinary research",
+      "venue": "Ecology and Society"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Georgina Cundill | Dirk J. Roux | John N. Parker",
+      "canonical_work_id": "doi:10.5751/es-07580-200222",
+      "doi": "10.5751/es-07580-200222",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.5751%2Fes-07580-200222",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "crossref",
+      "provider_record_id": "10.5751/es-07580-200222",
+      "publisher": "Resilience Alliance, Inc.",
+      "retrieved_uri": "https://api.crossref.org/works/10.5751%2Fes-07580-200222",
+      "source_id": "crossref-9f1f096445c6d3d276bff250",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Nurturing communities of practice for transdisciplinary research",
+      "venue": "Ecology and Society"
+    },
+    {
+      "access_mode": "closed_or_unknown",
+      "author_cluster": "Roderick J. Lawrence",
+      "canonical_work_id": "doi:10.1016/j.futures.2003.10.001",
+      "doi": "10.1016/j.futures.2003.10.001",
+      "geography": "CH",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2034251512",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2034251512",
+      "source_type": "article",
+      "stance": null,
+      "title": "Housing and health: from interdisciplinary principles to transdisciplinary research and practice",
+      "venue": "Futures"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Roderick J. Lawrence",
+      "canonical_work_id": "doi:10.1016/j.futures.2003.10.001",
+      "doi": "10.1016/j.futures.2003.10.001",
+      "geography": null,
+      "language": "en",
+      "metadata_provenance": "https://api.crossref.org/works/10.1016%2Fj.futures.2003.10.001",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2000s",
+      "provider": "crossref",
+      "provider_record_id": "10.1016/j.futures.2003.10.001",
+      "publisher": "Elsevier BV",
+      "retrieved_uri": "https://api.crossref.org/works/10.1016%2Fj.futures.2003.10.001",
+      "source_id": "crossref-5366104cee57ea2c9beff331",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "Housing and health: from interdisciplinary principles to transdisciplinary research and practice",
+      "venue": "Futures"
+    },
+    {
+      "access_mode": "open_access",
+      "author_cluster": "Christian Pohl",
+      "canonical_work_id": "doi:10.22545/2010/0006",
+      "doi": "10.22545/2010/0006",
+      "geography": "CH",
+      "language": "en",
+      "metadata_provenance": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "metadata_status": {
+        "access_mode": "observed",
+        "author_cluster": "observed",
+        "geography": "observed",
+        "language": "observed",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "unknown",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "openalex",
+      "provider_record_id": "https://openalex.org/W2181964589",
+      "publisher": null,
+      "retrieved_uri": "https://api.openalex.org/works?search=transdisciplinary+research&per-page=50&select=id%2Cdoi%2Cdisplay_name%2Ctitle%2Cpublication_year%2Clanguage%2Ctype%2Cprimary_location%2Copen_access%2Cauthorships&mailto=41898282%2Bgithub-actions%5Bbot%5D%40users.noreply.github.com",
+      "source_id": "openalex-W2181964589",
+      "source_type": "article",
+      "stance": null,
+      "title": "From Transdisciplinarity to Transdisciplinary Research",
+      "venue": "Transdisciplinary Journal of Engineering & Science"
+    },
+    {
+      "access_mode": null,
+      "author_cluster": "Christian Pohl",
+      "canonical_work_id": "doi:10.22545/2010/0006",
+      "doi": "10.22545/2010/0006",
+      "geography": null,
+      "language": null,
+      "metadata_provenance": "https://api.crossref.org/works/10.22545%2F2010%2F0006",
+      "metadata_status": {
+        "access_mode": "unknown",
+        "author_cluster": "observed",
+        "geography": "unknown",
+        "language": "unknown",
+        "methodology": "unknown",
+        "period": "observed",
+        "publisher": "observed",
+        "source_type": "observed",
+        "stance": "unknown",
+        "venue": "observed"
+      },
+      "methodology": null,
+      "period": "2010s",
+      "provider": "crossref",
+      "provider_record_id": "10.22545/2010/0006",
+      "publisher": "The Academy of Transdisciplinary Learning and Advanced Studies",
+      "retrieved_uri": "https://api.crossref.org/works/10.22545%2F2010%2F0006",
+      "source_id": "crossref-e8c03f2e5448f2a136117c0d",
+      "source_type": "journal-article",
+      "stance": null,
+      "title": "From Transdisciplinarity to Transdisciplinary Research",
+      "venue": "Transdisciplinary Journal of Engineering &amp; Science"
+    }
+  ],
+  "status": "READY_FOR_HUMAN_REVIEW",
+  "stress_category": "fake_diversity"
+}
