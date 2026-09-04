@@ -254,9 +254,7 @@ def _require_declared_fields(
 ) -> None:
     missing = sorted(str(name) for name in required if name not in value)
     if missing:
-        raise AcquisitionValidationError(
-            f"{label} lacks required fields: " + ", ".join(missing)
-        )
+        raise AcquisitionValidationError(f"{label} lacks required fields: " + ", ".join(missing))
 
 
 def _normalise_license(value: Any) -> str:
@@ -1621,9 +1619,7 @@ def acquire_candidates(
                     content_uri, target, cached, entry, max_bytes=max_bytes
                 ):
                     if target.stat().st_size > max_bytes:
-                        raise OSError(
-                            f"cached content exceeds resource limit: {max_bytes} bytes"
-                        )
+                        raise OSError(f"cached content exceeds resource limit: {max_bytes} bytes")
                     digest = _sha256_file(target)
                     if digest != str(cached["sha256"]).lower():
                         raise OSError("cached source digest does not match acquisition state")

@@ -788,9 +788,7 @@ class CitationAcquisitionTests(unittest.TestCase):
         candidate = self._manifest()
         candidate["sources"][0]["approval"]["reviewer_id"] = "reviewer-1"
         errors = list(jsonschema.Draft202012Validator(schema).iter_errors(candidate))
-        self.assertTrue(
-            any(list(error.absolute_path)[-1:] == ["reviewer_id"] for error in errors)
-        )
+        self.assertTrue(any(list(error.absolute_path)[-1:] == ["reviewer_id"] for error in errors))
 
     def test_candidate_schema_has_valid_source_level_rights_condition(self) -> None:
         schema = json.loads(
@@ -1200,11 +1198,7 @@ class CitationAcquisitionTests(unittest.TestCase):
             first = acquire_candidates(catalog, output, max_pairs=5)
 
             content.write_text(
-                json.dumps(
-                    {
-                        "text": sentences.replace("original", "revised")
-                    }
-                ),
+                json.dumps({"text": sentences.replace("original", "revised")}),
                 encoding="utf-8",
             )
             second = acquire_candidates(catalog, output, max_pairs=5)
