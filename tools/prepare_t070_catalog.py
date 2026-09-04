@@ -24,6 +24,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from xml.etree import ElementTree as ET
 
 ELSEVIER_DOI = "10.17632/zm33cdndxs.2"
 ELSEVIER_ARCHIVE_URI = (
@@ -340,6 +341,31 @@ def _normalise_doi(value: Any) -> str | None:
     raw = str(value or "").strip()
     raw = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", raw, flags=re.I).rstrip(".")
     return raw or None
+
+
+def _olh_article_doi(content_path: Path) -> str | None:
+    """Read the article-level DOI declared by the acquired OLH XML."""
+
+    try:
+        root = ET.parse(content_path).getroot()
+    except (OSError, ET.ParseError):
+        return None
+    for element in root.iter():
+        tag = str(element.tag).rsplit("}", 1)[-1]
+        pub_id_type = next(
+            (
+                str(value)
+                for key, value in element.attrib.items()
+                if str(key).rsplit("}", 1)[-1] == "pub-id-type"
+            ),
+            "",
+        )
+        if tag != "article-id" or pub_id_type.casefold() != "doi":
+            continue
+        doi = _normalise_doi("".join(element.itertext()))
+        if doi:
+            return doi
+    return None
 
 
 def _keywords(metadata: dict[str, Any]) -> str:
@@ -683,6 +709,9 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
         authors = _olh_author_names(article.get("authors"))
     if not authors:
         return None
+    doi = _olh_article_doi(content_path)
+    if not doi:
+        return None
     year = None
     match = re.match(r"^(\d{4})", str(article.get("date_published") or ""))
     if match:
@@ -690,7 +719,7 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
     rule_terms, rule_subject_codes = _OLH_DISCIPLINE_RULES[discipline]
     return {
         "source_id": f"olh-{article_id}",
-        "doi": f"10.16995/olh.{article_id}",
+        "doi": doi,
         "stable_uri": article_uri,
         "content_uri": str(content_path.resolve()),
         "title": _strip_markup(article.get("title")) or f"OLH article {article_id}",

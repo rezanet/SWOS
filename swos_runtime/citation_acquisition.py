@@ -912,6 +912,48 @@ def _read_text_content(path: Path) -> str:
     if path.suffix.lower() in {".xml", ".tei"} or stripped.startswith(b"<"):
         try:
             root = ET.fromstring(raw)
+            if str(root.tag).rsplit("}", 1)[-1] == "article":
+                parents = {child: parent for parent in root.iter() for child in parent}
+                prose_nodes = []
+                for element in root.iter():
+                    tag = str(element.tag).rsplit("}", 1)[-1]
+                    if tag == "body":
+                        prose_nodes.append(element)
+                    elif tag == "abstract":
+                        ancestor = parents.get(element)
+                        inside_body = False
+                        while ancestor is not None:
+                            if str(ancestor.tag).rsplit("}", 1)[-1] == "body":
+                                inside_body = True
+                                break
+                            ancestor = parents.get(ancestor)
+                        if not inside_body:
+                            prose_nodes.append(element)
+                if prose_nodes:
+                    excluded = {
+                        "ack",
+                        "acknowledgments",
+                        "author-notes",
+                        "back",
+                        "fn-group",
+                        "front",
+                        "ref-list",
+                        "supplementary-material",
+                    }
+
+                    def collect(element: ET.Element) -> list[str]:
+                        if str(element.tag).rsplit("}", 1)[-1] in excluded:
+                            return []
+                        values = [element.text or ""]
+                        for child in element:
+                            values.extend(collect(child))
+                            values.append(child.tail or "")
+                        return values
+
+                    return " ".join(
+                        " ".join("".join(collect(element)).split())
+                        for element in prose_nodes
+                    ).strip()
             return "\n".join(" ".join(root.itertext()).split())
         except ET.ParseError:
             pass

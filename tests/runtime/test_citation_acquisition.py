@@ -13,6 +13,7 @@ from unittest.mock import patch
 from swos_runtime.citation_acquisition import (
     AcquisitionValidationError,
     _entry_licence_error,
+    _read_text_content,
     _source_record,
     _source_semantic_assignment,
     acquire_candidates,
@@ -385,14 +386,23 @@ class CitationAcquisitionTests(unittest.TestCase):
             "abstract": "A study of museum collections.",
             "date_published": "2019-01-02",
         }
-        olh_entry = _olh_entry(olh, Path("collections.xml"), 0)
-        self.assertIsNotNone(olh_entry)
-        assert olh_entry is not None
-        olh_evidence = olh_entry["discipline_assignment"]
-        self.assertEqual(olh_entry["disciplines"], ["art_history"])
-        self.assertNotIn("collections", olh_evidence["rule_terms"])
-        self.assertEqual(olh_evidence["matched_terms"], ["museum"])
-        self.assertNotIn("title", olh_evidence["matched_evidence"])
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "collections.xml"
+            content.write_text(
+                '<article><front><article-meta><article-id pub-id-type="doi">'
+                "10.16995/olh.5678</article-id></article-meta></front>"
+                "<body><p>Article prose with enough words for candidates.</p></body></article>",
+                encoding="utf-8",
+            )
+            olh_entry = _olh_entry(olh, content, 0)
+
+            self.assertIsNotNone(olh_entry)
+            assert olh_entry is not None
+            olh_evidence = olh_entry["discipline_assignment"]
+            self.assertEqual(olh_entry["disciplines"], ["art_history"])
+            self.assertNotIn("collections", olh_evidence["rule_terms"])
+            self.assertEqual(olh_evidence["matched_terms"], ["museum"])
+            self.assertNotIn("title", olh_evidence["matched_evidence"])
 
     def test_generic_collections_does_not_define_olh_art_history(self) -> None:
         article = {
@@ -568,19 +578,87 @@ class CitationAcquisitionTests(unittest.TestCase):
             "title": "A source with complete attribution",
         }
 
-        entry = _olh_entry(article, Path("article.xml"), 0)
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "article.xml"
+            content.write_text(
+                '<article><front><article-meta><article-id pub-id-type="doi">'
+                "10.16995/olh.1234</article-id></article-meta></front>"
+                "<body><p>Article prose with enough words for candidates.</p></body></article>",
+                encoding="utf-8",
+            )
+            entry = _olh_entry(article, content, 0)
+
+            self.assertIsNotNone(entry)
+            assert entry is not None
+            self.assertEqual(entry["authors"], ["Ada Lovelace", "Grace Hopper", "Katherine Johnson"])
+            self.assertIn("Ada Lovelace", entry["attribution"])
+            self.assertIn("Grace Hopper", entry["attribution"])
+            self.assertIn("Katherine Johnson", entry["attribution"])
+            evidence = entry["discipline_assignment"]
+            self.assertEqual(evidence["evidence_fields"], ["title", "section", "abstract"])
+            self.assertIn("history", evidence["rule_terms"])
+            self.assertEqual(evidence["matched_terms"], [])
+            self.assertEqual(evidence["fallback_basis"], "official_olh_humanities_scope")
+
+    def test_olh_entry_uses_doi_declared_in_acquired_xml(self) -> None:
+        article = {
+            "pk": 4432,
+            "license": {"short_name": "CC BY 4.0"},
+            "galleys": [{"type": "xml", "path": "https://example.org/4432.xml"}],
+            "frozenauthors": [{"first_name": "Example", "last_name": "Author"}],
+            "date_published": "2022-01-02",
+            "title": "A source with a declared DOI",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "article.xml"
+            content.write_text(
+                "<article><front><article-meta>"
+                '<article-id pub-id-type="doi">10.16995/olh.80</article-id>'
+                "</article-meta></front><body><p>Article prose with enough words for candidates.</p>"
+                "</body></article>",
+                encoding="utf-8",
+            )
+
+            entry = _olh_entry(article, content, 0)
 
         self.assertIsNotNone(entry)
         assert entry is not None
-        self.assertEqual(entry["authors"], ["Ada Lovelace", "Grace Hopper", "Katherine Johnson"])
-        self.assertIn("Ada Lovelace", entry["attribution"])
-        self.assertIn("Grace Hopper", entry["attribution"])
-        self.assertIn("Katherine Johnson", entry["attribution"])
-        evidence = entry["discipline_assignment"]
-        self.assertEqual(evidence["evidence_fields"], ["title", "section", "abstract"])
-        self.assertIn("history", evidence["rule_terms"])
-        self.assertEqual(evidence["matched_terms"], [])
-        self.assertEqual(evidence["fallback_basis"], "official_olh_humanities_scope")
+        self.assertEqual(entry["doi"], "10.16995/olh.80")
+
+    def test_jats_text_extraction_excludes_front_and_back_matter(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "article.xml"
+            content.write_text(
+                "<article><front><article-meta><article-title>Front metadata title</article-title>"
+                "<permissions><copyright-statement>Copyright notice</copyright-statement>"
+                "</permissions></article-meta></front>"
+                "<body><p>The eligible article body contains a bounded scholarly claim here.</p>"
+                "</body><back><ref-list><ref>Back matter reference text.</ref></ref-list></back></article>",
+                encoding="utf-8",
+            )
+
+            text = _read_text_content(content)
+
+        self.assertIn("eligible article body", text)
+        self.assertNotIn("Front metadata title", text)
+        self.assertNotIn("Copyright notice", text)
+        self.assertNotIn("Back matter reference text", text)
+
+    def test_candidate_schema_has_valid_source_level_rights_condition(self) -> None:
+        schema = json.loads(
+            Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        import jsonschema
+
+        jsonschema.Draft202012Validator.check_schema(schema)
+        candidate = self._manifest()
+        candidate["sources"][0]["licence"]["article_rights_uri"] = ""
+        errors = list(jsonschema.Draft202012Validator(schema).iter_errors(candidate))
+        self.assertTrue(
+            any(list(error.absolute_path)[-1:] == ["article_rights_uri"] for error in errors)
+        )
 
     def test_candidate_span_collisions_are_rejected_and_backfilled(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
