@@ -65,6 +65,57 @@ ALLOWED_USES = {
 }
 REQUIRED_CANDIDATE_USES = {"candidate_generation", "human_annotation"}
 
+_SOURCE_MANIFEST_FIELDS = frozenset(
+    {
+        "schema_version",
+        "manifest_type",
+        "status",
+        "generated_at",
+        "catalog_uri",
+        "catalog_sha256",
+        "acquisition",
+        "semantic_split_policy",
+        "sources",
+    }
+)
+_SOURCE_RECORD_FIELDS = frozenset(
+    {
+        "source_id",
+        "doi",
+        "stable_uri",
+        "exact_acquired_copy_uri",
+        "canonical_source_family",
+        "title",
+        "authors",
+        "publisher",
+        "publication_date",
+        "disciplines",
+        "licence",
+        "attribution",
+        "acquired_at",
+        "sha256",
+        "allowed_uses",
+        "third_party",
+        "state",
+        "approval",
+        "rejection_reason",
+        "semantic_split_default",
+    }
+)
+_LICENCE_FIELDS = frozenset(
+    {
+        "spdx",
+        "uri",
+        "version",
+        "article_rights_uri",
+        "verification",
+        "evidence_uri",
+        "verification_basis",
+    }
+)
+_THIRD_PARTY_FIELDS = frozenset({"status", "warning"})
+_APPROVAL_FIELDS = frozenset({"status", "reviewer_id"})
+
 SEMANTIC_POLICY_VERSION = "2.0.0"
 TEMPORAL_CRITERIA_ID = "T070-TEMPORAL-LATER-YEAR-V1"
 TEMPORAL_START_YEAR = 2020
@@ -188,6 +239,16 @@ def _nonempty(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
+def _reject_undeclared_fields(
+    value: Mapping[str, Any], allowed: frozenset[str], *, label: str
+) -> None:
+    undeclared = sorted(str(name) for name in value if name not in allowed)
+    if undeclared:
+        raise AcquisitionValidationError(
+            f"{label} contains undeclared fields: " + ", ".join(undeclared)
+        )
+
+
 def _normalise_license(value: Any) -> str:
     raw = str(value or "").strip().upper().replace(" ", "-").replace("_", "-")
     raw = raw.replace("CREATIVE-COMMONS-", "CC-")
@@ -231,10 +292,25 @@ def _validate_semantic_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
         raise AcquisitionValidationError(
             f"semantic split policy must be version {SEMANTIC_POLICY_VERSION}"
         )
+    _reject_undeclared_fields(
+        policy,
+        frozenset({"version", "temporal", "ood"}),
+        label="semantic split policy",
+    )
     temporal = policy.get("temporal")
     ood = policy.get("ood")
     if not isinstance(temporal, Mapping) or not isinstance(ood, Mapping):
         raise AcquisitionValidationError("semantic split policy requires temporal and ood criteria")
+    _reject_undeclared_fields(
+        temporal,
+        frozenset({"criteria_id", "definition", "start_year"}),
+        label="temporal split policy",
+    )
+    _reject_undeclared_fields(
+        ood,
+        frozenset({"criteria_id", "definition"}),
+        label="OOD split policy",
+    )
     if temporal.get("criteria_id") != TEMPORAL_CRITERIA_ID:
         raise AcquisitionValidationError("temporal split criteria ID is not predeclared")
     if temporal.get("definition") != TEMPORAL_DEFINITION:
@@ -342,7 +418,10 @@ def validate_source_candidate_manifest(
 ) -> dict[str, dict[str, Any]]:
     """Validate pre-annotation source records without granting approval."""
 
-    if not isinstance(manifest, Mapping) or manifest.get("schema_version") != "2.0.0":
+    if not isinstance(manifest, Mapping):
+        raise AcquisitionValidationError("source candidate manifest has an unsupported schema")
+    _reject_undeclared_fields(manifest, _SOURCE_MANIFEST_FIELDS, label="source candidate manifest")
+    if manifest.get("schema_version") != "2.0.0":
         raise AcquisitionValidationError("source candidate manifest has an unsupported schema")
     if manifest.get("manifest_type") != "citation_support_source_candidates":
         raise AcquisitionValidationError("source candidate manifest has an unsupported type")
@@ -360,6 +439,7 @@ def validate_source_candidate_manifest(
     for source in sources:
         if not isinstance(source, Mapping):
             raise AcquisitionValidationError("source candidate record must be an object")
+        _reject_undeclared_fields(source, _SOURCE_RECORD_FIELDS, label="source candidate record")
         source_id = str(source.get("source_id") or "").strip()
         if not source_id or source_id in indexed:
             raise AcquisitionValidationError("source candidate IDs must be non-empty and unique")
@@ -414,6 +494,7 @@ def validate_source_candidate_manifest(
         licence = source.get("licence")
         if not isinstance(licence, Mapping):
             raise AcquisitionValidationError(f"source {source_id} licence record is invalid")
+        _reject_undeclared_fields(licence, _LICENCE_FIELDS, label=f"source {source_id} licence")
         for field in ("spdx", "uri", "version", "verification"):
             if not _nonempty(licence.get(field)):
                 raise AcquisitionValidationError(f"source {source_id} licence lacks {field}")
@@ -437,6 +518,11 @@ def validate_source_candidate_manifest(
             "unknown",
         }:
             raise AcquisitionValidationError(f"source {source_id} third-party status is invalid")
+        _reject_undeclared_fields(
+            third_party,
+            _THIRD_PARTY_FIELDS,
+            label=f"source {source_id} third-party record",
+        )
         if not _nonempty(third_party.get("warning")):
             raise AcquisitionValidationError(f"source {source_id} third-party warning is missing")
         approval = source.get("approval")
@@ -445,6 +531,11 @@ def validate_source_candidate_manifest(
             "not_requested",
         }:
             raise AcquisitionValidationError(f"source {source_id} approval state is invalid")
+        _reject_undeclared_fields(
+            approval,
+            _APPROVAL_FIELDS,
+            label=f"source {source_id} approval record",
+        )
         if approval.get("reviewer_id") not in {None, ""}:
             raise AcquisitionValidationError(
                 f"source {source_id} cannot record an approval reviewer"

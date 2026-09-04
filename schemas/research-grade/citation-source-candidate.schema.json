@@ -136,6 +136,7 @@
         },
         "allowed_uses": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "enum": ["candidate_generation", "human_annotation", "provenance_audit"]
           }
@@ -172,15 +173,54 @@
         "semantic_split_default": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["partition", "criteria_id"],
           "properties": {
             "partition": {"enum": ["in_domain", "temporal", "ood"]},
             "criteria_id": {"type": "string", "minLength": 1},
-            "publication_year": {"type": "integer"},
+            "publication_year": {"type": ["integer", "null"]},
             "start_year": {"type": "integer"},
             "catalog_declared_held_out_domain": {"type": "boolean"},
             "domain_id": {"type": "string", "minLength": 1}
-          }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "partition",
+                "criteria_id",
+                "publication_year",
+                "start_year"
+              ],
+              "properties": {
+                "partition": {"const": "temporal"},
+                "criteria_id": {"const": "T070-TEMPORAL-LATER-YEAR-V1"},
+                "publication_year": {"type": "integer", "minimum": 2020},
+                "start_year": {"const": 2020},
+                "catalog_declared_held_out_domain": {"const": false}
+              }
+            },
+            {
+              "required": ["partition", "criteria_id"],
+              "properties": {
+                "partition": {"const": "in_domain"},
+                "criteria_id": {"const": "T070-IN-DOMAIN-V1"},
+                "publication_year": {"type": ["integer", "null"], "maximum": 2019},
+                "catalog_declared_held_out_domain": {"const": false}
+              }
+            },
+            {
+              "required": [
+                "partition",
+                "criteria_id",
+                "catalog_declared_held_out_domain",
+                "domain_id"
+              ],
+              "properties": {
+                "partition": {"const": "ood"},
+                "criteria_id": {"const": "T070-OOD-DOMAIN-V1"},
+                "catalog_declared_held_out_domain": {"const": true},
+                "domain_id": {"type": "string", "minLength": 1}
+              }
+            }
+          ]
         }
       },
       "allOf": [
@@ -194,11 +234,33 @@
             }
           },
           "then": {
+            "required": ["semantic_split_default"],
             "properties": {
+              "authors": {"minItems": 1},
+              "exact_acquired_copy_uri": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+              "allowed_uses": {
+                "minItems": 2,
+                "uniqueItems": true,
+                "allOf": [
+                  {"contains": {"const": "candidate_generation"}},
+                  {"contains": {"const": "human_annotation"}}
+                ]
+              },
+              "approval": {
+                "properties": {
+                  "status": {"const": "pending"}
+                }
+              },
               "licence": {
                 "properties": {
-                  "article_rights_uri": {"minLength": 1}
+                  "spdx": {"enum": ["CC-BY-4.0", "CC0-1.0", "PUBLIC-DOMAIN"]},
+                  "article_rights_uri": {"minLength": 1},
+                  "verification": {"const": "article_level_verified"}
                 }
+              },
+              "rejection_reason": {
+                "anyOf": [{"type": "null"}, {"const": ""}]
               }
             }
           }

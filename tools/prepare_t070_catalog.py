@@ -337,6 +337,12 @@ def _strip_markup(value: Any) -> str:
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html.unescape(str(value or "")))).strip()
 
 
+def _term_matches(text: str, term: str) -> bool:
+    """Match a lexical rule at a token boundary while preserving stems."""
+
+    return re.search(rf"(?<![a-z0-9]){re.escape(term.casefold())}", text.casefold()) is not None
+
+
 def _normalise_doi(value: Any) -> str | None:
     raw = str(value or "").strip()
     raw = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", raw, flags=re.I).rstrip(".")
@@ -405,9 +411,9 @@ def _discipline_evidence(
     )
     text_by_field = {name: _evidence_text(value).casefold() for name, value in fields.items()}
     matched_evidence = {
-        name: sorted({term for term in rule_terms if term in text})
+        name: sorted({term for term in rule_terms if _term_matches(text, term)})
         for name, text in text_by_field.items()
-        if any(term in text for term in rule_terms)
+        if any(_term_matches(text, term) for term in rule_terms)
     }
     normalised_subject_codes = _subject_codes(subject_codes)
     rule_subject_codes = sorted(
@@ -442,18 +448,24 @@ def _discipline_evidence(
 def classify_elsevier(metadata: dict[str, Any]) -> str | None:
     subjects = set(_subject_codes(metadata.get("subjareas")))
     text = f"{metadata.get('title', '')} {_keywords(metadata)}".lower()
-    if any(token in text for token in _TECHNICAL_WRITING_TERMS):
+    if any(_term_matches(text, token) for token in _TECHNICAL_WRITING_TERMS):
         return "technical_writing"
-    if any(token in text for token in _ELSEVIER_INTERDISCIPLINARY_TERMS) or "MULT" in subjects:
+    if (
+        any(_term_matches(text, token) for token in _ELSEVIER_INTERDISCIPLINARY_TERMS)
+        or "MULT" in subjects
+    ):
         return "interdisciplinary"
-    if any(token in text for token in _ELSEVIER_PHILOSOPHY_TERMS):
+    if any(_term_matches(text, token) for token in _ELSEVIER_PHILOSOPHY_TERMS):
         return "philosophy"
-    if any(token in text for token in _ELSEVIER_PSYCHOLOGY_TERMS) or subjects & _PSYCHOLOGY:
+    if (
+        any(_term_matches(text, token) for token in _ELSEVIER_PSYCHOLOGY_TERMS)
+        or subjects & _PSYCHOLOGY
+    ):
         return "psychology"
     if subjects & _ARTS:
-        if any(token in text for token in _ELSEVIER_ART_CRITICISM_TERMS):
+        if any(_term_matches(text, token) for token in _ELSEVIER_ART_CRITICISM_TERMS):
             return "art_criticism"
-        if any(token in text for token in _ART_HISTORY_TERMS):
+        if any(_term_matches(text, token) for token in _ART_HISTORY_TERMS):
             return "art_history"
         return None
     if subjects & _ENGINEERING:
@@ -469,19 +481,19 @@ def classify_olh(article: dict[str, Any]) -> str:
     text = " ".join(
         _evidence_text(article.get(key)) for key in ("title", "section", "abstract")
     ).lower()
-    if any(token in text for token in _TECHNICAL_WRITING_TERMS):
+    if any(_term_matches(text, token) for token in _TECHNICAL_WRITING_TERMS):
         return "technical_writing"
-    if any(token in text for token in _OLH_INTERDISCIPLINARY_TERMS):
+    if any(_term_matches(text, token) for token in _OLH_INTERDISCIPLINARY_TERMS):
         return "interdisciplinary"
-    if any(token in text for token in _OLH_PHILOSOPHY_TERMS):
+    if any(_term_matches(text, token) for token in _OLH_PHILOSOPHY_TERMS):
         return "philosophy"
-    if any(token in text for token in _OLH_PSYCHOLOGY_TERMS):
+    if any(_term_matches(text, token) for token in _OLH_PSYCHOLOGY_TERMS):
         return "psychology"
-    if any(token in text for token in _OLH_ART_HISTORY_TERMS):
+    if any(_term_matches(text, token) for token in _OLH_ART_HISTORY_TERMS):
         return "art_history"
-    if any(token in text for token in _OLH_ART_CRITICISM_TERMS):
+    if any(_term_matches(text, token) for token in _OLH_ART_CRITICISM_TERMS):
         return "art_criticism"
-    if any(token in text for token in _OLH_HUMANITIES_TERMS):
+    if any(_term_matches(text, token) for token in _OLH_HUMANITIES_TERMS):
         return "humanities"
     return "humanities"
 

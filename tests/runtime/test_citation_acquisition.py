@@ -177,6 +177,16 @@ class CitationAcquisitionTests(unittest.TestCase):
         with self.assertRaises(AcquisitionValidationError):
             validate_source_candidate_manifest(missing_use)
 
+        unknown_manifest_field = self._manifest()
+        unknown_manifest_field["release_approval"] = {"status": "approved"}
+        with self.assertRaises(AcquisitionValidationError):
+            validate_source_candidate_manifest(unknown_manifest_field)
+
+        unknown_source_field = self._manifest()
+        unknown_source_field["sources"][0]["approved"] = True
+        with self.assertRaises(AcquisitionValidationError):
+            validate_source_candidate_manifest(unknown_source_field)
+
     def test_unlabelled_validation_requires_all_reserved_human_keys(self) -> None:
         missing_annotation_key = self._pair("pair-1", "group-1")
         del missing_annotation_key["annotations"][0]["rationale"]
@@ -198,6 +208,40 @@ class CitationAcquisitionTests(unittest.TestCase):
         nested_extra["semantic_split"]["gold_label"] = "supported"
         with self.assertRaises(AcquisitionValidationError):
             validate_unlabelled_candidate_pair(nested_extra)
+
+    def test_packet_schema_keeps_all_human_placeholders_null(self) -> None:
+        schema = json.loads(
+            Path(
+                "schemas/research-grade/citation-unlabelled-candidate-packet.schema.json"
+            ).read_text(encoding="utf-8")
+        )
+        import jsonschema
+
+        validator = jsonschema.Draft202012Validator(schema)
+        mutations = (
+            (
+                "annotation identity",
+                lambda packet: packet["annotations"][0].__setitem__("annotator_id", "ann-1"),
+            ),
+            (
+                "annotation rationale",
+                lambda packet: packet["annotations"][0].__setitem__(
+                    "rationale", "directly supports"
+                ),
+            ),
+            (
+                "adjudicator identity",
+                lambda packet: packet["adjudication"].__setitem__("adjudicator_id", "adj-1"),
+            ),
+            (
+                "adjudication rationale",
+                lambda packet: packet["adjudication"].__setitem__("rationale", "accepted"),
+            ),
+        )
+        for name, mutate in mutations:
+            packet = self._pair("schema-" + name.replace(" ", "-"), "schema-group")
+            mutate(packet)
+            self.assertTrue(list(validator.iter_errors(packet)), name)
 
     def test_elsevier_catalog_requires_article_level_open_access_marker(self) -> None:
         data = {
@@ -411,6 +455,21 @@ class CitationAcquisitionTests(unittest.TestCase):
             "abstract": "A study of public memory and political humor.",
         }
         self.assertEqual(classify_olh(article), "humanities")
+
+    def test_olh_classifier_matches_curator_terms_at_word_boundaries(self) -> None:
+        ordinary = {
+            "title": "Accurate methods for reliable evidence",
+            "section": "Research article",
+            "abstract": "Accurate measurements support reproducible conclusions.",
+        }
+        self.assertNotEqual(classify_olh(ordinary), "art_history")
+
+        curator = {
+            "title": "Curatorial practice in public museums",
+            "section": "Research article",
+            "abstract": "Curatorial work documents the history of collections.",
+        }
+        self.assertEqual(classify_olh(curator), "art_history")
 
     def test_catalog_rejects_sources_without_real_authors(self) -> None:
         elsevier = {
@@ -661,6 +720,36 @@ class CitationAcquisitionTests(unittest.TestCase):
         self.assertTrue(
             any(list(error.absolute_path)[-1:] == ["article_rights_uri"] for error in errors)
         )
+
+    def test_candidate_schema_enforces_the_admissible_source_contract(self) -> None:
+        schema = json.loads(
+            Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        import jsonschema
+
+        mutations = (
+            ("authors", lambda source: source.__setitem__("authors", [])),
+            ("exact copy", lambda source: source.__setitem__("exact_acquired_copy_uri", None)),
+            ("digest", lambda source: source.__setitem__("sha256", None)),
+            ("allowed uses", lambda source: source.__setitem__("allowed_uses", [])),
+            ("approval", lambda source: source["approval"].__setitem__("status", "not_requested")),
+            ("semantic assignment", lambda source: source.pop("semantic_split_default")),
+            (
+                "article rights",
+                lambda source: source["licence"].__setitem__("article_rights_uri", ""),
+            ),
+            (
+                "rights verification",
+                lambda source: source["licence"].__setitem__("verification", "unverified"),
+            ),
+        )
+        for name, mutate in mutations:
+            candidate = self._manifest()
+            mutate(candidate["sources"][0])
+            errors = list(jsonschema.Draft202012Validator(schema).iter_errors(candidate))
+            self.assertTrue(errors, name)
 
     def test_candidate_span_collisions_are_rejected_and_backfilled(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -8,9 +8,9 @@
     "tool": "swos_runtime.citation_acquisition",
     "version": "1.0.0"
   },
-  "catalog_sha256": "ee75d2af682e08605206d6c37dd0f221508b0a8e77fd2fd6607295d713c5cab9",
+  "catalog_sha256": "6660e79c61d531d2920d8a59c235b5ef6112714e3d80831f3e30dce1b00838c4",
   "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog-v11.json",
-  "generated_at": "2026-09-04T12:03:56Z",
+  "generated_at": "2026-09-04T12:37:43Z",
   "manifest_type": "citation_support_source_candidates",
   "schema_version": "2.0.0",
   "semantic_split_policy": {
@@ -27,7 +27,7 @@
   },
   "sources": [
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -78,7 +78,7 @@
       "title": "Imaging ancient and mummified specimens: Dual-energy CT with effective atomic number imaging of two ancient Egyptian cat mummies"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -121,7 +121,7 @@
       "title": "The demography of the Upper Palaeolithic hunter-gatherers of Southwestern France: A multi-proxy approach using archaeological data"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -169,7 +169,7 @@
       "title": "The zooarchaeological application of quantifying cranial shape differences in wild boar and domestic pigs (Sus scrofa) using 3D geometric morphometrics"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -213,7 +213,7 @@
       "title": "Upper Palaeolithic population histories of Southwestern France: A comparison of the demographic signatures of 14C date distributions and archaeological site counts"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -256,7 +256,7 @@
       "title": "Airborne laser scanning as a method for exploring long-term socio-ecological dynamics in Cambodia"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -299,52 +299,7 @@
       "title": "Museum perceptions and productions: American migrations of a Maori hei-tiki"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "approval": {
-        "reviewer_id": null,
-        "status": "not_requested"
-      },
-      "attribution": "Elsevier OA CC-BY Corpus, Accurate determination of the Pleistocene uplift rate of the NE Japan forearc from the buried MIS 5e marine terrace shoreline angle, Tabito Matsu'ura, Junko Komatsubara, Changjiang Wu",
-      "authors": [
-        "Tabito Matsu'ura",
-        "Junko Komatsubara",
-        "Changjiang Wu"
-      ],
-      "canonical_source_family": "doi:10.1016/j.quascirev.2019.03.007",
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.1016/j.quascirev.2019.03.007",
-      "exact_acquired_copy_uri": null,
-      "licence": {
-        "article_rights_uri": "",
-        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "unverified",
-        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
-        "version": "4.0"
-      },
-      "publication_date": "2019-01-01",
-      "publisher": "Elsevier OA CC-BY Corpus",
-      "rejection_reason": "article-level rights URI is missing",
-      "sha256": null,
-      "source_id": "elsevier-S0277379118308278",
-      "stable_uri": "https://doi.org/10.1016/j.quascirev.2019.03.007",
-      "state": "REJECTED_UNRESOLVED_LICENCE",
-      "third_party": {
-        "status": "warning",
-        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
-      },
-      "title": "Accurate determination of the Pleistocene uplift rate of the NE Japan forearc from the buried MIS 5e marine terrace shoreline angle"
-    },
-    {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -388,7 +343,7 @@
       "title": "Isotopic and zooarchaeological approaches towards understanding aquatic resource use in human economies and animal management in the prehistoric Scottish North Atlantic Islands"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -433,7 +388,7 @@
       "title": "Complications in the study of ancient tuberculosis: Presence of environmental bacteria in human archaeological remains"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -476,7 +431,7 @@
       "title": "Forest becomes frontline: Conservation and counter-insurgency in a space of violent conflict in Assam, Northeast India"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -522,7 +477,7 @@
       "title": "Holocene cultural history of Red jungle fowl (Gallus gallus) and its domestic descendant in East Asia"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -576,7 +531,7 @@
       "title": "Approaches to Middle Stone Age landscape archaeology in tropical Africa"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -629,7 +584,7 @@
       "title": "Investigation of the foil structure and corrosion mechanisms of modern Zwischgold using advanced analysis techniques"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -677,7 +632,7 @@
       "title": "Species identification of archaeological marine mammals using collagen fingerprinting"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -724,7 +679,7 @@
       "title": "Ecological globalisation, serial depletion and the medieval trade of walrus rostra"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -767,7 +722,7 @@
       "title": "People like us: Historical geographies of industrial-environmental crisis at Malakoff Diggins State Historic Park"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -816,7 +771,7 @@
       "title": "Hyperspectral imaging combined with data classification techniques as an aid for artwork authentication"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -862,7 +817,7 @@
       "title": "Earth system impacts of the European arrival and Great Dying in the Americas after 1492"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -907,7 +862,7 @@
       "title": "Rethinking burial dates at a Graeco-Roman Cemetery: Fag el-Gamous, Fayoum, Egypt"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -952,7 +907,7 @@
       "title": "Application of luminescence dating and geomorphological analysis to the study of landscape evolution, settlement and climate change on the Channel Island of Herm"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1000,7 +955,7 @@
       "title": "Public acceptability of nudging and taxing to reduce consumption of alcohol, tobacco, and food: A population-based survey experiment"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1050,7 +1005,7 @@
       "title": "From the inside out: Upscaling organic residue analyses of archaeological ceramics"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1097,7 +1052,7 @@
       "title": "Phenotypic diversity in Bronze Age pigs from the Alpine and Central Plateau regions of Switzerland"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1141,7 +1096,7 @@
       "title": "A brave new world for archaeological survey: Automated machine learning-based potsherd detection using high-resolution drone imagery"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1184,7 +1139,7 @@
       "title": "Making the \u2018man-eater\u2019: Tiger conservation as necropolitics"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1227,7 +1182,7 @@
       "title": "On the importance of blind testing in archaeological science: The example from lithic functional studies"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1270,7 +1225,7 @@
       "title": "Disrupting air power: Performativity and the unsettling of geopolitical frames through artworks"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1325,54 +1280,7 @@
       "title": "The identification of poultry processing in archaeological ceramic vessels using in-situ isotope references for organic residue analysis"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "approval": {
-        "reviewer_id": null,
-        "status": "not_requested"
-      },
-      "attribution": "Elsevier OA CC-BY Corpus, Growing up different in Neolithic China: A contextualised case study and differential diagnosis of a young adult with skeletal dysplasia, Si\u00e2n E. Halcrow, Melanie J. Miller, Anne Marie E. Snoddy, Wenquan Fan, Kate Pechenkina",
-      "authors": [
-        "Si\u00e2n E. Halcrow",
-        "Melanie J. Miller",
-        "Anne Marie E. Snoddy",
-        "Wenquan Fan",
-        "Kate Pechenkina"
-      ],
-      "canonical_source_family": "doi:10.1016/j.ijpp.2019.11.001",
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.1016/j.ijpp.2019.11.001",
-      "exact_acquired_copy_uri": null,
-      "licence": {
-        "article_rights_uri": "",
-        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "unverified",
-        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
-        "version": "4.0"
-      },
-      "publication_date": "2020-01-01",
-      "publisher": "Elsevier OA CC-BY Corpus",
-      "rejection_reason": "article-level rights URI is missing",
-      "sha256": null,
-      "source_id": "elsevier-S1879981719301342",
-      "stable_uri": "https://doi.org/10.1016/j.ijpp.2019.11.001",
-      "state": "REJECTED_UNRESOLVED_LICENCE",
-      "third_party": {
-        "status": "warning",
-        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
-      },
-      "title": "Growing up different in Neolithic China: A contextualised case study and differential diagnosis of a young adult with skeletal dysplasia"
-    },
-    {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1416,7 +1324,7 @@
       "title": "Towards the detection of dietary cereal processing through absorbed lipid biomarkers in archaeological pottery"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1466,7 +1374,7 @@
       "title": "Redefining the age of tattooing in western North America: A 2000-year-old artifact from Utah"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1513,7 +1421,7 @@
       "title": "Artificial cognition for social human\u2013robot interaction: An implementation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1557,7 +1465,7 @@
       "title": "The sablefish (Anoplopoma fimbria) of \u010c\u1e2fx w ic\u0259n: Socioenvironmental lessons from an unusually abundant species"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1603,7 +1511,7 @@
       "title": "Exploring ecodynamics of coastal foragers using integrated faunal records from \u010c\u1e2fx w ic\u0259n village (Strait of Juan de Fuca, Washington, U.S.A.)"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1646,7 +1554,7 @@
       "title": "Care in the community? Interpretations of a fractured goat bone from Neolithic Jarmo, Iraq"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1690,7 +1598,7 @@
       "title": "The Roman introduction and exportation of animals into Tunisia: Linking archaeozoology with textual and iconographic evidence"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1735,7 +1643,7 @@
       "title": "Affecting care: Maggie's Centres and the orchestration of architectural atmospheres"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1779,7 +1687,7 @@
       "title": "A comparison of standard and realistic curing conditions of natural hydraulic lime repointing mortar for damp masonry: Impact on laboratory evaluation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1825,7 +1733,7 @@
       "title": "Recent trends in cultural heritage 3D survey: The photogrammetric computer vision approach"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1871,7 +1779,7 @@
       "title": "Applying event history analysis to explain the diffusion of innovations in archaeological networks"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -1914,55 +1822,7 @@
       "title": "Reconstructing animal husbandry: Trauma in Meleagris gallopavo (domestic turkey) ulnae from the American Southwest (c. 900\u20131678 CE)"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "approval": {
-        "reviewer_id": null,
-        "status": "not_requested"
-      },
-      "attribution": "Elsevier OA CC-BY Corpus, Animal domestication in the high Arctic: Hunting and holding reindeer on the I\u0361Amal peninsula, northwest Siberia, David G. Anderson, Lo\u00efc Harrault, Karen B. Milek, Bruce C. Forbes, Mari Kuoppamaa, Andre\u012d V. Plekhanov",
-      "authors": [
-        "David G. Anderson",
-        "Lo\u00efc Harrault",
-        "Karen B. Milek",
-        "Bruce C. Forbes",
-        "Mari Kuoppamaa",
-        "Andre\u012d V. Plekhanov"
-      ],
-      "canonical_source_family": "doi:10.1016/j.jaa.2019.101079",
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.1016/j.jaa.2019.101079",
-      "exact_acquired_copy_uri": null,
-      "licence": {
-        "article_rights_uri": "",
-        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "unverified",
-        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
-        "version": "4.0"
-      },
-      "publication_date": "2019-01-01",
-      "publisher": "Elsevier OA CC-BY Corpus",
-      "rejection_reason": "article-level rights URI is missing",
-      "sha256": null,
-      "source_id": "elsevier-S0278416518302368",
-      "stable_uri": "https://doi.org/10.1016/j.jaa.2019.101079",
-      "state": "REJECTED_UNRESOLVED_LICENCE",
-      "third_party": {
-        "status": "warning",
-        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
-      },
-      "title": "Animal domestication in the high Arctic: Hunting and holding reindeer on the I\u0361Amal peninsula, northwest Siberia"
-    },
-    {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -2007,7 +1867,7 @@
       "title": "Introducing visual neighbourhood configurations for total viewsheds"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -2052,7 +1912,7 @@
       "title": "Aerogel materials for heritage buildings: Materials, properties and case studies"
     },
     {
-      "acquired_at": "2026-09-04T12:03:45Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -2096,6 +1956,169 @@
         "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
       },
       "title": "Science, value and material decay in the conservation of historic environments"
+    },
+    {
+      "acquired_at": "2026-09-04T12:37:37Z",
+      "allowed_uses": [
+        "candidate_generation",
+        "human_annotation",
+        "provenance_audit"
+      ],
+      "approval": {
+        "reviewer_id": null,
+        "status": "not_requested"
+      },
+      "attribution": "Elsevier OA CC-BY Corpus, Climatic changes and social transformations in the Near East and North Africa during the 'long' 4th millennium BC: A comparative study of environmental and archaeological evidence, Joanne Clarke, Nick Brooks, Edward B. Banning, Miryam Bar-Matthews, Stuart Campbell, Lee Clare, Mauro Cremaschi, Savino di Lernia, Nick Drake, Marina Gallinaro, Sturt Manning, Kathleen Nicoll, Graham Philip, Steve Rosen, Ulf Dietrich Schoop, Mary Anne Tafuri, Bernhard Weninger, Andrea Zerboni",
+      "authors": [
+        "Joanne Clarke",
+        "Nick Brooks",
+        "Edward B. Banning",
+        "Miryam Bar-Matthews",
+        "Stuart Campbell",
+        "Lee Clare",
+        "Mauro Cremaschi",
+        "Savino di Lernia",
+        "Nick Drake",
+        "Marina Gallinaro",
+        "Sturt Manning",
+        "Kathleen Nicoll",
+        "Graham Philip",
+        "Steve Rosen",
+        "Ulf Dietrich Schoop",
+        "Mary Anne Tafuri",
+        "Bernhard Weninger",
+        "Andrea Zerboni"
+      ],
+      "canonical_source_family": "doi:10.1016/j.quascirev.2015.10.003",
+      "disciplines": [
+        "art_history"
+      ],
+      "doi": "10.1016/j.quascirev.2015.10.003",
+      "exact_acquired_copy_uri": null,
+      "licence": {
+        "article_rights_uri": "",
+        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
+        "spdx": "CC-BY-4.0",
+        "uri": "https://creativecommons.org/licenses/by/4.0/",
+        "verification": "unverified",
+        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
+        "version": "4.0"
+      },
+      "publication_date": "2016-01-01",
+      "publisher": "Elsevier OA CC-BY Corpus",
+      "rejection_reason": "article-level rights URI is missing",
+      "sha256": null,
+      "source_id": "elsevier-S027737911530127X",
+      "stable_uri": "https://doi.org/10.1016/j.quascirev.2015.10.003",
+      "state": "REJECTED_UNRESOLVED_LICENCE",
+      "third_party": {
+        "status": "warning",
+        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
+      },
+      "title": "Climatic changes and social transformations in the Near East and North Africa during the 'long' 4th millennium BC: A comparative study of environmental and archaeological evidence"
+    },
+    {
+      "acquired_at": "2026-09-04T12:37:37Z",
+      "allowed_uses": [
+        "candidate_generation",
+        "human_annotation",
+        "provenance_audit"
+      ],
+      "approval": {
+        "reviewer_id": null,
+        "status": "not_requested"
+      },
+      "attribution": "Elsevier OA CC-BY Corpus, Computer vision, archaeological classification and China's terracotta warriors, Andrew Bevan, Xiuzhen Li, Marcos Martin\u00f3n-Torres, Susan Green, Yin Xia, Kun Zhao, Zhen Zhao, Shengtao Ma, Wei Cao, Thilo Rehren",
+      "authors": [
+        "Andrew Bevan",
+        "Xiuzhen Li",
+        "Marcos Martin\u00f3n-Torres",
+        "Susan Green",
+        "Yin Xia",
+        "Kun Zhao",
+        "Zhen Zhao",
+        "Shengtao Ma",
+        "Wei Cao",
+        "Thilo Rehren"
+      ],
+      "canonical_source_family": "doi:10.1016/j.jas.2014.05.014",
+      "disciplines": [
+        "art_history"
+      ],
+      "doi": "10.1016/j.jas.2014.05.014",
+      "exact_acquired_copy_uri": null,
+      "licence": {
+        "article_rights_uri": "",
+        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
+        "spdx": "CC-BY-4.0",
+        "uri": "https://creativecommons.org/licenses/by/4.0/",
+        "verification": "unverified",
+        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
+        "version": "4.0"
+      },
+      "publication_date": "2014-01-01",
+      "publisher": "Elsevier OA CC-BY Corpus",
+      "rejection_reason": "article-level rights URI is missing",
+      "sha256": null,
+      "source_id": "elsevier-S0305440314001927",
+      "stable_uri": "https://doi.org/10.1016/j.jas.2014.05.014",
+      "state": "REJECTED_UNRESOLVED_LICENCE",
+      "third_party": {
+        "status": "warning",
+        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
+      },
+      "title": "Computer vision, archaeological classification and China's terracotta warriors"
+    },
+    {
+      "acquired_at": "2026-09-04T12:37:37Z",
+      "allowed_uses": [
+        "candidate_generation",
+        "human_annotation",
+        "provenance_audit"
+      ],
+      "approval": {
+        "reviewer_id": null,
+        "status": "not_requested"
+      },
+      "attribution": "Elsevier OA CC-BY Corpus, The use of close-range photogrammetry in zooarchaeology: Creating accurate 3D models of wolf crania to study dog domestication, Allowen Evin, Thibaud Souter, Ardern Hulme-Beaman, Carly Ameen, Richard Allen, Pietro Viacava, Greger Larson, Thomas Cucchi, Keith Dobney",
+      "authors": [
+        "Allowen Evin",
+        "Thibaud Souter",
+        "Ardern Hulme-Beaman",
+        "Carly Ameen",
+        "Richard Allen",
+        "Pietro Viacava",
+        "Greger Larson",
+        "Thomas Cucchi",
+        "Keith Dobney"
+      ],
+      "canonical_source_family": "doi:10.1016/j.jasrep.2016.06.028",
+      "disciplines": [
+        "art_history"
+      ],
+      "doi": "10.1016/j.jasrep.2016.06.028",
+      "exact_acquired_copy_uri": null,
+      "licence": {
+        "article_rights_uri": "",
+        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
+        "spdx": "CC-BY-4.0",
+        "uri": "https://creativecommons.org/licenses/by/4.0/",
+        "verification": "unverified",
+        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
+        "version": "4.0"
+      },
+      "publication_date": "2016-01-01",
+      "publisher": "Elsevier OA CC-BY Corpus",
+      "rejection_reason": "article-level rights URI is missing",
+      "sha256": null,
+      "source_id": "elsevier-S2352409X1630284X",
+      "stable_uri": "https://doi.org/10.1016/j.jasrep.2016.06.028",
+      "state": "REJECTED_UNRESOLVED_LICENCE",
+      "third_party": {
+        "status": "warning",
+        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
+      },
+      "title": "The use of close-range photogrammetry in zooarchaeology: Creating accurate 3D models of wolf crania to study dog domestication"
     },
     {
       "acquired_at": "2026-09-04T12:03:45Z",
@@ -2246,56 +2269,6 @@
         "warning": "Review article-level notices for separately licensed third-party material before final admission."
       },
       "title": "Challenging the Colonial Archive of Conflict in Kamila Shamsie\u2019s A God in Every Stone"
-    },
-    {
-      "acquired_at": "2026-09-04T12:03:46Z",
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "approval": {
-        "reviewer_id": null,
-        "status": "pending"
-      },
-      "attribution": "Anna Rakityanskaya, Born-Digital Humor and Context Saturation: Using Generative AI to Preserve and Interpret Russo-Ukrainian War Memes, Open Library of Humanities",
-      "authors": [
-        "Anna Rakityanskaya"
-      ],
-      "canonical_source_family": "doi:10.16995/olh.24212",
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.16995/olh.24212",
-      "exact_acquired_copy_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/candidate-output-v11/sources/olh-24212-45d68a7a38c3.source",
-      "licence": {
-        "article_rights_uri": "https://olh.openlibhums.org/article/id/24212/",
-        "evidence_uri": "https://olh.openlibhums.org/api/articles/24212/",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "article_level_verified",
-        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
-        "version": "4.0"
-      },
-      "publication_date": "2025-11-12T11:40:00+01:00",
-      "publisher": "Open Library of Humanities",
-      "rejection_reason": null,
-      "semantic_split_default": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
-        "partition": "temporal",
-        "publication_year": 2025,
-        "start_year": 2020
-      },
-      "sha256": "318c45221953cf9a23b3c4fd28893fda156c48aa1694de3c6f1e2b023509d34b",
-      "source_id": "olh-24212",
-      "stable_uri": "https://olh.openlibhums.org/article/id/24212/",
-      "state": "ADMISSIBLE_PENDING_REVIEW",
-      "third_party": {
-        "status": "warning",
-        "warning": "Review article-level notices for separately licensed third-party material before final admission."
-      },
-      "title": "Born-Digital Humor and Context Saturation: Using Generative AI to Preserve and Interpret Russo-Ukrainian War Memes"
     },
     {
       "acquired_at": "2026-09-04T12:03:46Z",
@@ -3712,55 +3685,6 @@
         "reviewer_id": null,
         "status": "pending"
       },
-      "attribution": "Philip Senter, Cognitive Styles Used in Evidence Citation by Ancient Christian Authors: The Psychology of a Major Ancient Controversy over the Historicity of the Pentateuch, and Its Implications for Science Education Today, Open Library of Humanities",
-      "authors": [
-        "Philip Senter"
-      ],
-      "canonical_source_family": "doi:10.16995/olh.80",
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.16995/olh.80",
-      "exact_acquired_copy_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/candidate-output-v11/sources/olh-4432-3d0594aba0c9.source",
-      "licence": {
-        "article_rights_uri": "https://olh.openlibhums.org/article/id/4432/",
-        "evidence_uri": "https://olh.openlibhums.org/api/articles/4432/",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "article_level_verified",
-        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
-        "version": "4.0"
-      },
-      "publication_date": "2017-02-21T13:00:00+01:00",
-      "publisher": "Open Library of Humanities",
-      "rejection_reason": null,
-      "semantic_split_default": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2017
-      },
-      "sha256": "25189eb87335f2339bed6cfc7f07818202b50410d6dccd34e0d73e0c94350df6",
-      "source_id": "olh-4432",
-      "stable_uri": "https://olh.openlibhums.org/article/id/4432/",
-      "state": "ADMISSIBLE_PENDING_REVIEW",
-      "third_party": {
-        "status": "warning",
-        "warning": "Review article-level notices for separately licensed third-party material before final admission."
-      },
-      "title": "Cognitive Styles Used in Evidence Citation by Ancient Christian Authors: The Psychology of a Major Ancient Controversy over the Historicity of the Pentateuch, and Its Implications for Science Education Today"
-    },
-    {
-      "acquired_at": "2026-09-04T12:03:46Z",
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "approval": {
-        "reviewer_id": null,
-        "status": "pending"
-      },
       "attribution": "Gabriel Moshenska, Esoteric Egyptology, Seed Science and the Myth of Mummy Wheat, Open Library of Humanities",
       "authors": [
         "Gabriel Moshenska"
@@ -3898,7 +3822,7 @@
       "title": "Metaphors of Collecting in Late Nineteenth Century Paris"
     },
     {
-      "acquired_at": "2026-09-04T12:03:46Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -3948,7 +3872,7 @@
       "title": "On engagement with anthropology: A critical evaluation of skeletal and developmental abnormalities in the Atacama preterm baby and issues of forensic and bioarchaeological research ethics. Response to Bhattacharya et al. \u201cWhole-genome sequencing of Atacama skeleton shows novel mutations linked with dysplasia\u201d in Genome Research, 2018, 28: 423\u2013431. Doi: 10.1101/gr.223693.117"
     },
     {
-      "acquired_at": "2026-09-04T12:03:46Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -3993,7 +3917,7 @@
       "title": "A critical content analysis of media reporting on opioids: The social construction of an epidemic"
     },
     {
-      "acquired_at": "2026-09-04T12:03:46Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -4039,7 +3963,7 @@
       "title": "Attitudes to vaccination: A critical review"
     },
     {
-      "acquired_at": "2026-09-04T12:03:46Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -4083,7 +4007,7 @@
       "title": "Disease and child growth in industrialising Japan: Critical windows and the growth pattern, 1917\u201339"
     },
     {
-      "acquired_at": "2026-09-04T12:03:46Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -4128,7 +4052,7 @@
       "title": "The Lovelace\u2013De Morgan mathematical correspondence: A critical re-appraisal"
     },
     {
-      "acquired_at": "2026-09-04T12:03:46Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -4371,6 +4295,56 @@
         "warning": "Review article-level notices for separately licensed third-party material before final admission."
       },
       "title": "Visual Rhetoric in Mediating Impartial Humor: Political Cartoons on the Russo-Ukrainian War"
+    },
+    {
+      "acquired_at": "2026-09-04T12:03:46Z",
+      "allowed_uses": [
+        "candidate_generation",
+        "human_annotation",
+        "provenance_audit"
+      ],
+      "approval": {
+        "reviewer_id": null,
+        "status": "pending"
+      },
+      "attribution": "Anna Rakityanskaya, Born-Digital Humor and Context Saturation: Using Generative AI to Preserve and Interpret Russo-Ukrainian War Memes, Open Library of Humanities",
+      "authors": [
+        "Anna Rakityanskaya"
+      ],
+      "canonical_source_family": "doi:10.16995/olh.24212",
+      "disciplines": [
+        "art_criticism"
+      ],
+      "doi": "10.16995/olh.24212",
+      "exact_acquired_copy_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/candidate-output-v11/sources/olh-24212-45d68a7a38c3.source",
+      "licence": {
+        "article_rights_uri": "https://olh.openlibhums.org/article/id/24212/",
+        "evidence_uri": "https://olh.openlibhums.org/api/articles/24212/",
+        "spdx": "CC-BY-4.0",
+        "uri": "https://creativecommons.org/licenses/by/4.0/",
+        "verification": "article_level_verified",
+        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
+        "version": "4.0"
+      },
+      "publication_date": "2025-11-12T11:40:00+01:00",
+      "publisher": "Open Library of Humanities",
+      "rejection_reason": null,
+      "semantic_split_default": {
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
+      },
+      "sha256": "318c45221953cf9a23b3c4fd28893fda156c48aa1694de3c6f1e2b023509d34b",
+      "source_id": "olh-24212",
+      "stable_uri": "https://olh.openlibhums.org/article/id/24212/",
+      "state": "ADMISSIBLE_PENDING_REVIEW",
+      "third_party": {
+        "status": "warning",
+        "warning": "Review article-level notices for separately licensed third-party material before final admission."
+      },
+      "title": "Born-Digital Humor and Context Saturation: Using Generative AI to Preserve and Interpret Russo-Ukrainian War Memes"
     },
     {
       "acquired_at": "2026-09-04T12:03:46Z",
@@ -6358,57 +6332,7 @@
       "title": "Facing Fanon : Examining Neocolonial Aspects in Grand Theft Auto V through the Prism of the Machinima Film Finding Fanon II"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "approval": {
-        "reviewer_id": null,
-        "status": "pending"
-      },
-      "attribution": "V\u00edctor Navarro-Remesal, Beatriz P\u00e9rez Zapata, Who Made Your Phone? Compassion and the Voice of the Oppressed in Phone Story and Burn the Boards, Open Library of Humanities",
-      "authors": [
-        "V\u00edctor Navarro-Remesal",
-        "Beatriz P\u00e9rez Zapata"
-      ],
-      "canonical_source_family": "doi:10.16995/olh.209",
-      "disciplines": [
-        "art_criticism"
-      ],
-      "doi": "10.16995/olh.209",
-      "exact_acquired_copy_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/candidate-output-v11/sources/olh-4468-bf1500b16bd0.source",
-      "licence": {
-        "article_rights_uri": "https://olh.openlibhums.org/article/id/4468/",
-        "evidence_uri": "https://olh.openlibhums.org/api/articles/4468/",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "article_level_verified",
-        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
-        "version": "4.0"
-      },
-      "publication_date": "2018-02-19T13:12:04+01:00",
-      "publisher": "Open Library of Humanities",
-      "rejection_reason": null,
-      "semantic_split_default": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2018
-      },
-      "sha256": "467cf903156ff04f9cfb5c0baedf203a5d0023bcb352ce98d756746a4daeb8b2",
-      "source_id": "olh-4468",
-      "stable_uri": "https://olh.openlibhums.org/article/id/4468/",
-      "state": "ADMISSIBLE_PENDING_REVIEW",
-      "third_party": {
-        "status": "warning",
-        "warning": "Review article-level notices for separately licensed third-party material before final admission."
-      },
-      "title": "Who Made Your Phone? Compassion and the Voice of the Oppressed in Phone Story and Burn the Boards"
-    },
-    {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6456,7 +6380,7 @@
       "title": "Multi-step biocatalytic strategies for chiral amino alcohol synthesis"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6501,7 +6425,7 @@
       "title": "Soft++, a multi-parametric non-saturating non-linearity that improves convergence in deep neural architectures"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6548,7 +6472,7 @@
       "title": "Electrochemical detection and photocatalytic performance of MoS2/TiO2 nanocomposite against pharmaceutical contaminant: Paracetamol"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6592,7 +6516,7 @@
       "title": "Hide and Seek: Protein-coding Sequences Inside \u201cNon-coding\u201d RNAs"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6637,7 +6561,7 @@
       "title": "Towards the assessment of potential impact of unmanned vessels on maritime transportation safety"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6684,7 +6608,7 @@
       "title": "Dewatering treatments to increase dry matter content of the brown seaweed, kelp (Laminaria digitata ((Hudson) JV Lamouroux))"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6730,7 +6654,7 @@
       "title": "Automated specification of steel reinforcement to support the optimisation of RC floors"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6773,7 +6697,7 @@
       "title": "Stated preferences based estimation of power interruption costs in private households: An example from Germany"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6817,7 +6741,7 @@
       "title": "Analysis of thermo-mechanical behaviour of a crack using XFEM for Leak-before-Break assessments"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6862,7 +6786,7 @@
       "title": "Interfacial rheology and relaxation behavior of adsorption layers of the triterpenoid saponin Escin"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6906,7 +6830,7 @@
       "title": "A machine learning approach to evolving an optimal propagation model for last mile connectivity using low altitude platforms"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6951,7 +6875,7 @@
       "title": "Human saliva and model saliva at bulk to adsorbed phases\u202f\u2013\u202fsimilarities and differences"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -6998,7 +6922,7 @@
       "title": "Filterability prediction of needle-like crystals based on particle size and shape distribution data"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7044,7 +6968,7 @@
       "title": "Approximation of the economy of fusion energy"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7091,7 +7015,7 @@
       "title": "Electricity adjustment for capacity market auction by a district heating and cooling system"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7135,7 +7059,7 @@
       "title": "Structure and function of the telomeric CST complex"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7178,7 +7102,7 @@
       "title": "The fuzzy cognitive pairwise comparisons for ranking and grade clustering to build a recommender system: An application of smartphone recommendation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7223,7 +7147,7 @@
       "title": "Feasibility study of a hybrid wind turbine system - Integration with compressed air energy storage"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7268,7 +7192,7 @@
       "title": "Product-Service System applied to Distributed Renewable Energy: A classification system, 15 archetypal models and a strategic design tool"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7315,7 +7239,7 @@
       "title": "Heat source management in wire-arc additive manufacturing process for Al-Mg and Al-Si alloys"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7368,7 +7292,7 @@
       "title": "Transient thermal finite element analysis of CFC-Cu ITER monoblock using X-ray tomography data"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7413,7 +7337,7 @@
       "title": "Incorporating homeowners' preferences of heating technologies in the UK TIMES model"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7460,7 +7384,7 @@
       "title": "Performance of single carbon granules as perspective for larger scale capacitive bioanodes"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7511,7 +7435,7 @@
       "title": "Film growth and alloy enrichment during anodizing AZ31 magnesium alloy in fluoride/glycerol electrolytes of a range of water contents"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7555,7 +7479,7 @@
       "title": "The interplay of vaccination and vector control on small dengue networks"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7603,7 +7527,7 @@
       "title": "Evaluation of durability of composite materials applied to renewable marine energy: Case of ducted tidal turbine"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7652,7 +7576,7 @@
       "title": "Recent developments in small punch testing: Tensile properties and DBTT"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7697,7 +7621,7 @@
       "title": "Can Portland cement be replaced by low-carbon alternative materials? A study on the thermal properties and carbon emissions of innovative cements"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7741,7 +7665,7 @@
       "title": "Network analysis of human post-mortem microarrays reveals novel genes, microRNAs, and mechanistic scenarios of potential importance in fighting huntington's disease"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7791,7 +7715,7 @@
       "title": "Natural products from resurrection plants: Potential for medical applications"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7835,7 +7759,7 @@
       "title": "Energy-efficient Legionella control that mimics nature and an open-source computational model to aid system design"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7884,7 +7808,7 @@
       "title": "Enhanced energy conversion of up-conversion solar cells by the integration of compound parabolic concentrating optics"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7932,7 +7856,7 @@
       "title": "Engineering serendipity: High-throughput discovery of materials that resist bacterial attachment"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -7977,7 +7901,7 @@
       "title": "Double substrate limitation model for the bio-based production of succinic acid from glycerol"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8029,7 +7953,7 @@
       "title": "Strongly enhanced dielectric and energy storage properties in lead-free perovskite titanate thin films by alloying"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8073,7 +7997,7 @@
       "title": "Poly-beta-amino-esters nano-vehicles based drug delivery system for cartilage"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8123,7 +8047,7 @@
       "title": "Application of the SAFT-\u03b3 Mie group contribution equation of state to fluids of relevance to the oil and gas industry"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8169,7 +8093,7 @@
       "title": "Integrating phytoremediation with biomass valorisation and critical element recovery: A UK contaminated land perspective"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8219,7 +8143,7 @@
       "title": "Microstructure and mechanical properties of synthetic brow-suspension materials"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8263,7 +8187,7 @@
       "title": "LIBVERSIONINGCOMPILER: An easy-to-use library for dynamic generation and invocation of multiple code versions"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8310,7 +8234,7 @@
       "title": "Detecting spammers on social networks"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8362,7 +8286,7 @@
       "title": "Advanced laboratory techniques characterising solids, fluids and pores in shales"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8406,7 +8330,7 @@
       "title": "Mechanical properties of thermally-stable, nanocrystalline bainitic steels"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8449,7 +8373,7 @@
       "title": "A decade of modelling drug release from arterial stents"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8493,7 +8417,7 @@
       "title": "Study of supercritical power plant integration with high temperature thermal energy storage for flexible operation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8536,7 +8460,7 @@
       "title": "Achieving respectable motherhood? Exploring the impossibility of feminist and egalitarian ideologies against the everyday realities of lived Welsh working-class femininities"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8581,7 +8505,7 @@
       "title": "Is treatment \u201cintensity\u201d associated with healthier lifestyle choices? An application of the dose response function"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8625,7 +8549,7 @@
       "title": "Exploring the tourist destination as a mosaic: The alternative lifecycles of the seaside amusement arcade sector in Britain"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8669,7 +8593,7 @@
       "title": "Territorial Coalitions and Rural Dynamics in Ecuador: Why History Matters"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8713,7 +8637,7 @@
       "title": "Characterizing air traffic networks via large-scale aircraft tracking data: A comparison between China and the US networks"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8757,7 +8681,7 @@
       "title": "The imperishable controversy over aquaculture"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8802,7 +8726,7 @@
       "title": "Wastewater as a resource: Strategies to recover resources from Amsterdam's wastewater"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8852,7 +8776,7 @@
       "title": "Barriers to equity in REDD+: Deficiencies in national interpretation processes constrain adaptation to context"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8896,7 +8820,7 @@
       "title": "Incorporated entrepreneurship in Norway: Propensity and endurance"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8941,7 +8865,7 @@
       "title": "Human capital and international portfolio diversification: A reappraisal"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -8985,7 +8909,7 @@
       "title": "Forestry paradigms and policy change: The evolution of forestry policy in Britain in relation to the ecosystem approach"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9031,7 +8955,7 @@
       "title": "Having a creative day: Understanding entrepreneurs' daily idea generation through a recovery lens"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9079,7 +9003,7 @@
       "title": "Mendelian randomization in health research: Using appropriate genetic variants and avoiding biased estimates"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9122,7 +9046,7 @@
       "title": "Passenger's subjective traffic safety, in-vehicle security and emergency management in the driverless shuttle bus in Finland"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9168,7 +9092,7 @@
       "title": "Assessment of large-scale transitions in public transport networks using open timetable data: case of Helsinki metro extension"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9243,7 +9167,7 @@
       "title": "Monitoring biodiversity change through effective global coordination"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9286,7 +9210,7 @@
       "title": "Measures of equity home bias puzzle"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9334,7 +9258,7 @@
       "title": "Using geographical information systems and cartograms as a health service quality improvement tool"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9379,7 +9303,7 @@
       "title": "The rural panopticon"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9423,7 +9347,7 @@
       "title": "Urban parks: Visitors\u2019 perceptions versus spatial indicators"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9468,7 +9392,7 @@
       "title": "NGOs, States, and Donors Revisited: Still Too Close for Comfort?"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9529,7 +9453,7 @@
       "title": "Interregional flows of ecosystem services: Concepts, typology and four cases"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9577,7 +9501,7 @@
       "title": "Teaching content in practice: Investigating rehearsals of social studies discussions"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9624,7 +9548,7 @@
       "title": "Water footprint based water allowance coefficient"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9671,7 +9595,7 @@
       "title": "Delivering sustainable fisheries through adoption of a risk-based framework as part of an ecosystem approach to fisheries management"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9714,7 +9638,7 @@
       "title": "Reallocation of resources between generations and genders in the market and non-market economy. The case of Italy"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9762,7 +9686,7 @@
       "title": "Purposes and degrees of commodification: Economic instruments for biodiversity and ecosystem services need not rely on markets or monetary valuation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9807,7 +9731,7 @@
       "title": "Persistence in the cryptocurrency market"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9853,7 +9777,7 @@
       "title": "Examining the secondary effects of mother-tongue literacy instruction in Kenya: Impacts on student learning in English, Kiswahili, and mathematics"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9898,7 +9822,7 @@
       "title": "Subsidiary capability upgrading under emerging market acquirers"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9942,7 +9866,7 @@
       "title": "The spatial structure of American cities: The great majority of workplaces are no longer in CBDs, employment sub-centers, or live-work communities"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -9987,7 +9911,7 @@
       "title": "On the beliefs off the path: Equilibrium refinement due to quantal response and level-k"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10030,7 +9954,7 @@
       "title": "Insects as food in the Netherlands: Production networks and the geographies of edibility"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10075,7 +9999,7 @@
       "title": "Saltmarshes, ecosystem services, and an evolving policy landscape: A case study of Wales, UK"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10119,7 +10043,7 @@
       "title": "The social, economic, and environmental impacts of casino gambling on the residents of Macau and Singapore"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10164,7 +10088,7 @@
       "title": "Difficult travels: Delta plans don't land in the Chao Phraya delta"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10212,7 +10136,7 @@
       "title": "Developing agent-based models of complex health behaviour"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10257,7 +10181,7 @@
       "title": "Measuring the impact of innovative human capital on small firms' propensity to innovate"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10300,7 +10224,7 @@
       "title": "A resource-based analysis of realized knowledge relatedness in diversified firms"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10344,7 +10268,7 @@
       "title": "Facilitative reforms, democratic accountability, social accounting and learning representative initiatives"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10389,7 +10313,7 @@
       "title": "A model for improving sustainable green waste recovery"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10434,7 +10358,7 @@
       "title": "Macroeconomic information, structural change, and the prediction of fiscal aggregates"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10477,7 +10401,7 @@
       "title": "Resilience, locality and the cultural economy"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -10522,7 +10446,7 @@
       "title": "From gatekeepers to gateway constructors: Credit rating agencies and the financialisation of housing associations"
     },
     {
-      "acquired_at": "2026-09-04T12:03:47Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -12824,7 +12748,7 @@
       "title": "BS Johnson and the Attack of the White-Collar Working Class"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -12871,7 +12795,7 @@
       "title": "Time-resolved searchlight analysis of imagined visual motion using 7 T ultra-high field fMRI: Data on interindividual differences"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -12920,7 +12844,7 @@
       "title": "Repeat cross-sectional data on the progression of the metabolic syndrome in Ossabaw miniature swine"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -12966,7 +12890,7 @@
       "title": "Data on localization of coxsackievirus and adenovirus receptor (CAR) in prenatal and adult rat olfactory, intestine, pancreas, liver, ovary, and testis"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13013,7 +12937,7 @@
       "title": "Data on assessment of groundwater quality for drinking and irrigation in rural area Sarpol-e Zahab city, Kermanshah province, Iran"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13062,7 +12986,7 @@
       "title": "Data on heavy metals content and biochar toxicity in a pristine tropical agricultural soil"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13121,7 +13045,7 @@
       "title": "The science, policy and practice of nature-based solutions: An interdisciplinary perspective"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13170,7 +13094,7 @@
       "title": "Data on optimization of expression and purification of AIMP2-DX2 protein in Escherichia coli"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13213,7 +13137,7 @@
       "title": "The ecosystem approach, ecosystem services and established forestry policy approaches in the United Kingdom"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13264,7 +13188,7 @@
       "title": "Reconciling qualitative storylines and quantitative descriptions: An iterative approach"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13308,7 +13232,7 @@
       "title": "Event-Dataset: Temporal information retrieval and text classification dataset"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13354,7 +13278,7 @@
       "title": "Kinetics of cytokine profile in response to Mycobacterium bovis BCG and Streptococcus pyogenes activated cells"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13400,7 +13324,7 @@
       "title": "Dataset of proinflammatory cytokine and cytokine receptor gene expression in rainbow trout (Oncorhynchus mykiss) measured using a novel GeXP multiplex, RT-PCR assay"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13449,7 +13373,7 @@
       "title": "LiCoPO4 cathode from a CoHPO4\u00b7xH2O nanoplate precursor for high voltage Li-ion batteries"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13511,7 +13435,7 @@
       "title": "Exploring urban metabolism\u2014Towards an interdisciplinary perspective"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13557,7 +13481,7 @@
       "title": "Data on population density, growth, survival, water quality, larval stage index and ingestion rate of selected microalgae of portunids crabs at different feeding regimes"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13607,7 +13531,7 @@
       "title": "Draft genome of the fungus-growing termite pathogenic fungus Ophiocordyceps bispora (Ophiocordycipitaceae, Hypocreales, Ascomycota)"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13651,7 +13575,7 @@
       "title": "The multidisciplinary management of hip fractures in older patients"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13703,7 +13627,7 @@
       "title": "An open data repository and a data processing software toolset of an equivalent Nordic grid model matched to historical electricity market data"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13748,7 +13672,7 @@
       "title": "Data in support of 5'AMP-activated protein kinase alpha regulates stress granule biogenesis"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13796,7 +13720,7 @@
       "title": "Classifying global catastrophic risks"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13840,7 +13764,7 @@
       "title": "Data on the mixing of non-Newtonian fluids by a Rushton turbine in a cylindrical tank"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13884,7 +13808,7 @@
       "title": "The accuracy of effect-size estimates under normals and contaminated normals in meta-analysis"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13929,7 +13853,7 @@
       "title": "A feasibility randomised controlled trial to evaluate the effectiveness of a novel neuromuscular electro-stimulation device in preventing the formation of oedema following total hip replacement surgery"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -13972,7 +13896,7 @@
       "title": "A structural group-connectome in standard stereotactic (MNI) space"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14018,7 +13942,7 @@
       "title": "MC3T3 osteoblast-like cells cultured at alkaline pH: Microarray data (Affymetrix GeneChip Mouse 2.0 ST)"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14064,7 +13988,7 @@
       "title": "Lipidomic data uncover extensive heterogeneity in phosphatidylcholine structural variants in HepG2 cells"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14112,7 +14036,7 @@
       "title": "Annually and monthly resolved solar irradiance and atmospheric temperature data across the Hawaiian archipelago from 1998 to 2015 with interannual summary statistics"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14161,7 +14085,7 @@
       "title": "Proteome identification of the silkworm middle silk gland"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14209,7 +14133,7 @@
       "title": "Data on the positive synergic action of dimethylacetamide and trehalose on quality of cryopreserved chicken sperm"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14253,7 +14177,7 @@
       "title": "Variability changes of some climatology parameters of Nigeria using wavelet analysis"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14301,7 +14225,7 @@
       "title": "Exploring the potential role of sonic hedgehog cell signalling pathway in antidepressant effects of nicotine in chronic unpredictable mild stress rat model"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14349,7 +14273,7 @@
       "title": "Anticancer Molecule Discovery via C2-Substituent Promoted Oxidative Coupling of Indole and Enolate"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14400,7 +14324,7 @@
       "title": "Data on a new neurorehabilitation approach targeting functional recovery in stroke patients"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14445,7 +14369,7 @@
       "title": "A framework for a joint hydro-meteorological-social analysis of drought"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14497,7 +14421,7 @@
       "title": "Sne\u017ena jama (Slovenia): Interdisciplinary dating of cave sediments and implication for landscape evolution"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14542,7 +14466,7 @@
       "title": "Global proteomics dataset of miR-126 overexpression in acute myeloid leukemia"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14591,7 +14515,7 @@
       "title": "Advances in green nanobiotechnology: Data for synthesis and characterization of silver nanoparticles from ethanolic extracts of fruits and leaves of Annona muricata"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14636,7 +14560,7 @@
       "title": "Heavy metals' data in soils for agricultural activities"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14684,7 +14608,7 @@
       "title": "Ex-situ X-ray computed tomography, tension clamp and in-situ transilluminated white light imaging data of non-crimp fabric based fibre composite under fatigue loading"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14728,7 +14652,7 @@
       "title": "Towards an interdisciplinary approach to wellbeing: Life histories and Self-Determination Theory in rural Zambia"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14774,7 +14698,7 @@
       "title": "Respiration data on sleep state misperception, psychophysiological insomnia and normal individuals from a cross sectional study"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14819,7 +14743,7 @@
       "title": "Electricity prices in Italy: Data registered during photovoltaic activity interval"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14864,7 +14788,7 @@
       "title": "Promoting novelty, rigor, and style in energy social science: Towards codes of practice for appropriate methods and research design"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -14911,7 +14835,7 @@
       "title": "The effect of rosemary Extract and cold plasma treatments on bacterial community diversity in poultry ground meats"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15566,7 +15490,7 @@
       "title": "Healing Gods, Heroes and Rituals in the Graeco-Roman World"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15613,7 +15537,7 @@
       "title": "Rigid-lattice Monte Carlo study of nucleation kinetics in dilute bcc Fe-Cu alloys using statistical sampling techniques"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15662,7 +15586,7 @@
       "title": "Kinetic analysis of solids of the quasi-autocatalytic decomposition type: SADT determination of low-temperature polymorph of AIBN"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15719,7 +15643,7 @@
       "title": "Coupling of a single active nanoparticle to a polymer-based photonic structure"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15769,7 +15693,7 @@
       "title": "Visualization of high radiation field by radiophotoluminescence photography"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15812,7 +15736,7 @@
       "title": "Status and performance of the ATLAS Pixel Detector after 3 years of operation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15865,7 +15789,7 @@
       "title": "Chromosomal stability in buccal cells was linked to age but not affected by exercise and nutrients - Vienna Active Ageing Study (VAAS), a randomized controlled trial"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15916,7 +15840,7 @@
       "title": "Investigations on small molecule inhibitors targeting the histone H3K4 tri-methyllysine binding PHD-finger of JmjC histone demethylases"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -15961,7 +15885,7 @@
       "title": "Butyrolactone signalling circuits for synthetic biology"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16009,7 +15933,7 @@
       "title": "Systematic analysis of the use of amphipathic polymers for studies of outer membrane proteins using mass spectrometry"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16058,7 +15982,7 @@
       "title": "Organophosphate flame retardants in heron eggs from upper Yangtze River basin, southwest China"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16109,7 +16033,7 @@
       "title": "Ultrafast synchrotron X-ray imaging studies of microstructure fragmentation in solidification under ultrasound"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16158,7 +16082,7 @@
       "title": "Correlating pore size and shape to local disorder in microporous carbon: A combined small angle neutron and X-ray scattering study"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16203,7 +16127,7 @@
       "title": "Entropy and heat transfer analysis using Cattaneo-Christov heat flux model for a boundary layer flow of Casson nanofluid"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16249,7 +16173,7 @@
       "title": "Tutorial: Correction of shifts in single-stage LC-MS(/MS) data"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16293,7 +16217,7 @@
       "title": "Onset of spin wave time-domain fractals in a dynamic artificial crystal"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16340,7 +16264,7 @@
       "title": "Theory of multiple-stellar population synthesis in a non-Hamiltonian setting"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16385,7 +16309,7 @@
       "title": "Role of electronegativity on the bulk modulus, magnetic moment and band gap of Co 2 MnAl based Heusler alloys"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16430,7 +16354,7 @@
       "title": "Influence of heterogeneous-homogeneous reactions in thermally stratified stagnation point flow of an Oldroyd-B fluid"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16478,7 +16402,7 @@
       "title": "An in-situ approach for preparing atom probe tomography specimens by xenon plasma-focussed ion beam"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16524,7 +16448,7 @@
       "title": "The dual effect of stem extract of Brahmi(Bacopamonnieri) and Henna as a green corrosion inhibitor for low carbon steel in 0.5 M NaOH solution"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16567,7 +16491,7 @@
       "title": "A dynamo model of Jupiter's magnetic field"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16613,7 +16537,7 @@
       "title": "Three-dimensional Finite Elements Method simulation of Total Ionizing Dose in 22 nm bulk nFinFETs"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16660,7 +16584,7 @@
       "title": "Modelling the properties of a difunctional epoxy resin cured with aromatic diamine isomers"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16707,7 +16631,7 @@
       "title": "Spectral and chemical effects of simulated space weathering of the Murchison CM2 carbonaceous chondrite"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16759,7 +16683,7 @@
       "title": "Esters of levonorgestrel and etonogestrel intended as single, subcutaneous-injection, long-lasting contraceptives"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16802,7 +16726,7 @@
       "title": "Calculation of transition matrix element, |MAB|, in a triboelectric nanogenerator (TENG) system"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16846,7 +16770,7 @@
       "title": "Endlessly flat scalar potentials and \u03b1-attractors"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16894,7 +16818,7 @@
       "title": "Hydrophobicity of hemp shiv treated with sol-gel coatings"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16937,7 +16861,7 @@
       "title": "Bis-tris propane as a flexible ligand for high-nuclearity complexes"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -16982,7 +16906,7 @@
       "title": "Metal oxides based electrochemical pH sensors: Current progress and future perspectives"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17030,7 +16954,7 @@
       "title": "Explosive volcanic activity on Venus: The roles of volatile contribution, degassing, and external environment"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17077,7 +17001,7 @@
       "title": "PFG NMR and Bayesian analysis to characterise non-Newtonian fluids"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17124,7 +17048,7 @@
       "title": "Accurate Taylor transfer maps for large aperture iron dominated magnets used in charged particle separators and spectrometers"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17168,7 +17092,7 @@
       "title": "The classical solution for the Bosonic string in the presence of three D-branes rotated by arbitrary SO(4) elements"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17214,7 +17138,7 @@
       "title": "Current\u2013voltage characteristics of electrochemically synthesized multi-layer graphene with polyaniline"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17258,7 +17182,7 @@
       "title": "Synthesis, spectroscopic, coordination and biological activities of some organometallic complexes derived from thio-Schiff base ligands"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17309,7 +17233,7 @@
       "title": "Automated harvesting and 2-step purification of unclarified mammalian cell-culture broths containing antibodies"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17353,7 +17277,7 @@
       "title": "First-order reversal curve (FORC) diagrams of nanomagnets with cubic magnetocrystalline anisotropy: A numerical approach"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17399,7 +17323,7 @@
       "title": "Photoacoustic imaging of human coronary atherosclerosis in two spectral bands"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17445,7 +17369,7 @@
       "title": "Review: Catalytic oxidation of cellulose with nitroxyl radicals under aqueous conditions"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17492,7 +17416,7 @@
       "title": "A study of deformation twinning in a titanium alloy by X-ray diffraction contrast tomography"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17540,7 +17464,7 @@
       "title": "A new small molecule inhibitor of soluble guanylate cyclase"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17590,7 +17514,7 @@
       "title": "Low temperature studies of the removal reactions of 1CH2 with particular relevance to the atmosphere of Titan"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17648,7 +17572,7 @@
       "title": "Deep diffused Avalanche photodiodes for charged particles timing"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17693,7 +17617,7 @@
       "title": "On the scattering of elastic waves from a non-axisymmetric defect in a coated pipe"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17739,7 +17663,7 @@
       "title": "On the benefits of \u2018doing science\u2019: Does integrative writing about scientific controversies foster epistemic beliefs?"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17782,7 +17706,7 @@
       "title": "On \u201cnot having a future\u201d"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17829,7 +17753,7 @@
       "title": "The value of designers' creative practice within complex collaborations"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17872,7 +17796,7 @@
       "title": "Safety vs. efficacy assessment of pharmaceuticals: Epistemological rationales and methods"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17915,7 +17839,7 @@
       "title": "What we see now: Event-persistence and the predictability of hydro-eco-geomorphological systems"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -17962,7 +17886,7 @@
       "title": "What is the role of epistemic communities in shaping local environmental policy? Managing environmental change through planning and greenspace in Fukuoka City, Japan"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18005,7 +17929,7 @@
       "title": "Narrative: An ontology, epistemology and methodology for pro-environmental psychology research"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18048,7 +17972,7 @@
       "title": "The epistemic innocence of motivated delusions"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18094,7 +18018,7 @@
       "title": "An Epistemic-Deontic-Axiologic (EDA) agent-based energy management system in office buildings"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18141,7 +18065,7 @@
       "title": "Lakatos-style collaborative mathematics through dialectical, structured and abstract argumentation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18184,7 +18108,7 @@
       "title": "On becoming a sociomaterial researcher: Exploring epistemological practices grounded in a relational, performative ontology"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18230,7 +18154,7 @@
       "title": "Epistemological beliefs in science-a person-centered approach to investigate high school students' profiles"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18275,7 +18199,7 @@
       "title": "Map-makers and navigators of politicised terrain: Expert understandings of epistemological uncertainty in integrated assessment modelling of bioenergy with carbon capture and storage"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18318,7 +18242,7 @@
       "title": "Why science's crisis should not become a political battling ground"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18362,7 +18286,7 @@
       "title": "Recent earthquakes and the need for a new philosophy for earthquake-resistant design"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18406,7 +18330,7 @@
       "title": "Consciousness as a concrete physical phenomenon"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18454,7 +18378,7 @@
       "title": "Grounding IPBES experts\u2019 views on the multiple values of nature in epistemology, knowledge and collaborative science"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18500,7 +18424,7 @@
       "title": "Children's understanding of first- and third-person perspectives in complement clauses and false-belief tasks"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18545,7 +18469,7 @@
       "title": "Hegemony in the marketplace of biomedical innovation: Consumer demand and stem cell science"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18592,7 +18516,7 @@
       "title": "Epistemic spillovers: Learning others\u2019 political views reduces the ability to assess and use their expertise in nonpolitical domains"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18637,7 +18561,7 @@
       "title": "A robust Bayesian approach to modeling epistemic uncertainty in common-cause failure models"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18680,7 +18604,7 @@
       "title": "Implicit bias, confabulation, and epistemic innocence"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18724,7 +18648,7 @@
       "title": "What is science's crisis really about?"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18767,7 +18691,7 @@
       "title": "Securing a future for responsible neuromodulation in children: The importance of maintaining a broad clinical gaze"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18810,7 +18734,7 @@
       "title": "Experiment and speculation in seventeenth-century Italy: The case of Geminiano Montanari"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18858,7 +18782,7 @@
       "title": "Active inference and learning"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18902,7 +18826,7 @@
       "title": "Active inference, Communication and hermeneutics"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18947,7 +18871,7 @@
       "title": "Neural signals encoding shifts in beliefs"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -18991,7 +18915,7 @@
       "title": "Objectivity in science and law: A shared rescue strategy"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19035,7 +18959,7 @@
       "title": "Concurrent AIV as a method to hard tailor test- and model philosophies in times of need"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19080,7 +19004,7 @@
       "title": "The return of behaviourist epistemology: A review of learning outcomes studies"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19130,7 +19054,7 @@
       "title": "The General Single-Dish Data format: A retrospective"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19173,7 +19097,7 @@
       "title": "System safety assessment under epistemic uncertainty: Using imprecise probabilities in Bayesian network"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19216,7 +19140,7 @@
       "title": "Taking pills for developmental ails in Southern Brazil: The biologization of adolescence?"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19261,7 +19185,7 @@
       "title": "Dizziness\u2014A Resource: Dizziness and the compossible space in research-creation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19305,7 +19229,7 @@
       "title": "On a wing and hot air: Eco-modernisation, epistemic lock-in, and the barriers to greening aviation and ruminant farming"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19350,7 +19274,7 @@
       "title": "Narrative perspective, person references, and evidentiality in clinical incident reports"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -19397,7 +19321,7 @@
       "title": "Genome Writing: Current Progress and Related Applications"
     },
     {
-      "acquired_at": "2026-09-04T12:03:48Z",
+      "acquired_at": "2026-09-04T12:37:37Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20486,56 +20410,7 @@
       "title": "Plasticity, the Genetics of Difference, and the Repair of Utopia"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "approval": {
-        "reviewer_id": null,
-        "status": "pending"
-      },
-      "attribution": "Alvin Lim, Cinematic Rupture: Reading Cambodia\u2019s Genocide through Deleuze and Guattari, Open Library of Humanities",
-      "authors": [
-        "Alvin Lim"
-      ],
-      "canonical_source_family": "doi:10.16995/olh.11",
-      "disciplines": [
-        "philosophy"
-      ],
-      "doi": "10.16995/olh.11",
-      "exact_acquired_copy_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/candidate-output-v11/sources/olh-4409-8bb90f3d9cd4.source",
-      "licence": {
-        "article_rights_uri": "https://olh.openlibhums.org/article/id/4409/",
-        "evidence_uri": "https://olh.openlibhums.org/api/articles/4409/",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "article_level_verified",
-        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
-        "version": "4.0"
-      },
-      "publication_date": "2015-11-23T13:00:13+01:00",
-      "publisher": "Open Library of Humanities",
-      "rejection_reason": null,
-      "semantic_split_default": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2015
-      },
-      "sha256": "eb8ce750b9cbb3fb501086870c2c217f4ce4aabdb37ffbc1e4be93c57048abc1",
-      "source_id": "olh-4409",
-      "stable_uri": "https://olh.openlibhums.org/article/id/4409/",
-      "state": "ADMISSIBLE_PENDING_REVIEW",
-      "third_party": {
-        "status": "warning",
-        "warning": "Review article-level notices for separately licensed third-party material before final admission."
-      },
-      "title": "Cinematic Rupture: Reading Cambodia\u2019s Genocide through Deleuze and Guattari"
-    },
-    {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20582,7 +20457,7 @@
       "title": "Decision support approaches for cyber security investment"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20626,7 +20501,7 @@
       "title": "If you want a quick kiss, make it count: How choice of syntactic construction affects event construal"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20673,7 +20548,7 @@
       "title": "What do people search for in stuttering therapy: Personal goal-setting as a gold standard?"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20727,7 +20602,7 @@
       "title": "Tau, amyloid, and cascading network failure across the Alzheimer's disease spectrum"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20773,7 +20648,7 @@
       "title": "A re-examination of responding on ratio and regulated-probability interval schedules"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20821,7 +20696,7 @@
       "title": "Assessment of NMDA receptor inhibition of phencyclidine analogues using a high-throughput drebrin immunocytochemical assay"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20864,7 +20739,7 @@
       "title": "The influence of juvenile and educator humor on the social climate of young offenders\u2019 institutions"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20915,7 +20790,7 @@
       "title": "Clinical management following self-harm in a UK-wide primary care cohort"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -20960,7 +20835,7 @@
       "title": "The Welsh Single-Use Carrier Bag Charge and behavioural spillover"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21012,7 +20887,7 @@
       "title": "From cookies to carrots; the effect of inhibitory control training on children's snack selections"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21058,7 +20933,7 @@
       "title": "The emotional impact of verbal irony: Eye-tracking evidence for a two-stage process"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21107,7 +20982,7 @@
       "title": "Inhibitory control training for appetitive behaviour change: A meta-analytic investigation of mechanisms of action and moderators of effectiveness"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21152,7 +21027,7 @@
       "title": "The tempos of performance"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21199,7 +21074,7 @@
       "title": "Unravelling subjectivity, embodied experience and (taking) psychotropic medication"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21248,7 +21123,7 @@
       "title": "Are multiple physical symptoms a poor prognostic factor or just a marker of depression severity? Secondary analysis of the GenPod trial"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21296,7 +21171,7 @@
       "title": "Perinatal maternal life events and psychotic experiences in children at twelve years in a birth cohort study"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21341,7 +21216,7 @@
       "title": "What genome-wide association studies reveal about the association between intelligence and mental health"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21392,7 +21267,7 @@
       "title": "Microstructural plasticity in the bilingual brain"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21439,7 +21314,7 @@
       "title": "Communicating the relative health risks of E-cigarettes: An online experimental study exploring the effects of a comparative health message versus the EU nicotine addiction warnings on smokers\u2019 and non-smokers\u2019 risk perceptions and behavioural intentions"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21485,7 +21360,7 @@
       "title": "Vocabulary relearning in semantic dementia: Positive and negative consequences of increasing variability in the learning experience"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21529,7 +21404,7 @@
       "title": "Emotion expression modulates perception of animacy from faces"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21576,7 +21451,7 @@
       "title": "Cortical hyperexcitability and sensitivity to discomfort glare"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21631,7 +21506,7 @@
       "title": "The functional neuroanatomy of musical memory in Alzheimer's disease"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21675,7 +21550,7 @@
       "title": "Children's inference generation: The role of vocabulary and working memory"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21720,7 +21595,7 @@
       "title": "Verbal declarative memory impairments in specific language impairment are related to working memory deficits"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21766,7 +21641,7 @@
       "title": "\u201cNeural overlap of L1 and L2 semantic representations across visual and auditory modalities: a decoding approach\u201d"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21815,7 +21690,7 @@
       "title": "Measuring childhood maltreatment to predict early-adult psychopathology: Comparison of prospective informant-reports and retrospective self-reports"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21867,7 +21742,7 @@
       "title": "Positive mood on the day of influenza vaccination predicts vaccine effectiveness: A prospective observational cohort study"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21913,7 +21788,7 @@
       "title": "Whole scalp resting state EEG of oscillatory brain activity shows no parametric relationship with psychoacoustic and psychosocial assessment of tinnitus: A repeated measures study"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -21959,7 +21834,7 @@
       "title": "Further evidence of the heterogeneous nature of impulsivity"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22003,7 +21878,7 @@
       "title": "Expectation affects learning and modulates memory experience at retrieval"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22048,7 +21923,7 @@
       "title": "Efficacy of navigation may be influenced by retrosplenial cortex-mediated learning of landmark stability"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22094,7 +21969,7 @@
       "title": "Psychiatric Symptom Dimensions Are Associated With Dissociable Shifts in Metacognition but Not Task Performance"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22140,7 +22015,7 @@
       "title": "Who is sceptical about emerging public health threats? Results from 39 national surveys in the United Kingdom"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22186,7 +22061,7 @@
       "title": "Integration of audiovisual spatial signals is not consistent with maximum likelihood estimation"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22234,7 +22109,7 @@
       "title": "Formative assessment in mathematics: Mediated by feedback's perceived usefulness and students\u2019 self-efficacy"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22278,7 +22153,7 @@
       "title": "Audience gaze while appreciating a multipart musical performance"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22323,7 +22198,7 @@
       "title": "Latent variable mixture modelling and individual treatment prediction"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22369,7 +22244,7 @@
       "title": "Dissociable routes for personal and interpersonal visual enhancement of touch"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22415,7 +22290,7 @@
       "title": "Mood as Representation of Momentum"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22461,7 +22336,7 @@
       "title": "Reconsidering unconscious persistence: Suppressing unwanted memories reduces their indirect expression in later thoughts"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22513,7 +22388,7 @@
       "title": "Positive attributes buffer the negative associations between low intelligence and high psychopathology with educational outcomes"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22559,7 +22434,7 @@
       "title": "Novel sensory preconditioning procedures identify a specific role for the hippocampus in pattern completion"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",
@@ -22605,7 +22480,7 @@
       "title": "Childhood aggression: A synthesis of reviews and meta-analyses to reveal patterns and opportunities for prevention and intervention strategies"
     },
     {
-      "acquired_at": "2026-09-04T12:03:49Z",
+      "acquired_at": "2026-09-04T12:37:38Z",
       "allowed_uses": [
         "candidate_generation",
         "human_annotation",

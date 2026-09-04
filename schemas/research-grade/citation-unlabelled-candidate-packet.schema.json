@@ -103,9 +103,9 @@
       "additionalProperties": false,
       "required": ["annotator_id", "label", "rationale"],
       "properties": {
-        "annotator_id": {"type": ["string", "null"]},
+        "annotator_id": {"type": "null"},
         "label": {"type": ["null"]},
-        "rationale": {"type": ["string", "null"]}
+        "rationale": {"type": "null"}
       }
     },
     "blank_adjudication": {
@@ -114,9 +114,9 @@
       "required": ["status", "adjudicator_id", "label", "rationale"],
       "properties": {
         "status": {"const": "pending"},
-        "adjudicator_id": {"type": ["string", "null"]},
+        "adjudicator_id": {"type": "null"},
         "label": {"type": ["null"]},
-        "rationale": {"type": ["string", "null"]}
+        "rationale": {"type": "null"}
       }
     }
   }

@@ -6,7 +6,7 @@
     "review_status": "pending_human_review",
     "version": "1.0.0"
   },
-  "generated_at": "2026-09-04T12:03:37Z",
+  "generated_at": "2026-09-04T12:37:14Z",
   "provenance": {
     "elsevier_archive_copy_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/elsevier-oa-ccby-v2.zip",
     "elsevier_archive_sha256": "877ac30109eb1333965a1c912e7e1b7b422542990cdc5b4658feb8d978d5bce2",
@@ -30,12 +30,12 @@
   },
   "source_counts_by_discipline": {
     "art_criticism": 51,
-    "art_history": 81,
+    "art_history": 79,
     "engineering": 45,
     "humanities": 90,
     "interdisciplinary": 57,
     "materials_science": 45,
-    "philosophy": 61,
+    "philosophy": 60,
     "psychology": 63,
     "technical_writing": 6
   },
@@ -356,14 +356,12 @@
         ],
         "matched_evidence": {
           "keywords": [
-            "archaeolog",
             "zooarchaeolog"
           ],
           "subjareas": [
             "ARTS"
           ],
           "title": [
-            "archaeolog",
             "zooarchaeolog"
           ]
         },
@@ -371,7 +369,6 @@
           "ARTS"
         ],
         "matched_terms": [
-          "archaeolog",
           "zooarchaeolog"
         ],
         "review_status": "pending_human_review",
@@ -808,133 +805,6 @@
         "human_annotation",
         "provenance_audit"
       ],
-      "attribution": "Elsevier OA CC-BY Corpus, Accurate determination of the Pleistocene uplift rate of the NE Japan forearc from the buried MIS 5e marine terrace shoreline angle, Tabito Matsu'ura, Junko Komatsubara, Changjiang Wu",
-      "authors": [
-        "Tabito Matsu'ura",
-        "Junko Komatsubara",
-        "Changjiang Wu"
-      ],
-      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\elsevier-json\\S0277379118308278.json",
-      "discipline_assignment": {
-        "classifier_predicate": {
-          "subject_any": [
-            "ARTS"
-          ],
-          "text_any": [
-            "art history",
-            "archaeolog",
-            "museum",
-            "museolog",
-            "heritage",
-            "iconograph",
-            "curat",
-            "painting",
-            "sculptur",
-            "visual art",
-            "artwork",
-            "gallery",
-            "mumm",
-            "paleopath",
-            "zooarchaeolog",
-            "material culture",
-            "ancient egypt",
-            "architecture",
-            "architectural history",
-            "manuscript illumination",
-            "conservation"
-          ]
-        },
-        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
-        "evidence_fields": [
-          "title",
-          "keywords",
-          "subjareas"
-        ],
-        "matched_evidence": {
-          "subjareas": [
-            "ARTS"
-          ],
-          "title": [
-            "curat"
-          ]
-        },
-        "matched_subject_codes": [
-          "ARTS"
-        ],
-        "matched_terms": [
-          "curat"
-        ],
-        "review_status": "pending_human_review",
-        "rule_subject_codes": [
-          "ARTS"
-        ],
-        "rule_terms": [
-          "art history",
-          "archaeolog",
-          "museum",
-          "museolog",
-          "heritage",
-          "iconograph",
-          "curat",
-          "painting",
-          "sculptur",
-          "visual art",
-          "artwork",
-          "gallery",
-          "mumm",
-          "paleopath",
-          "zooarchaeolog",
-          "material culture",
-          "ancient egypt",
-          "architecture",
-          "architectural history",
-          "manuscript illumination",
-          "conservation"
-        ],
-        "subject_codes": [
-          "AGRI",
-          "ARTS",
-          "EART",
-          "ENVI",
-          "SOCI"
-        ]
-      },
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.1016/j.quascirev.2019.03.007",
-      "expected_sha256": null,
-      "licence": {
-        "article_rights_uri": "",
-        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "unverified",
-        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
-        "version": "4.0"
-      },
-      "publication_date": "2019-01-01",
-      "publisher": "Elsevier OA CC-BY Corpus",
-      "semantic_split": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2019
-      },
-      "source_id": "elsevier-S0277379118308278",
-      "stable_uri": "https://doi.org/10.1016/j.quascirev.2019.03.007",
-      "third_party": {
-        "status": "warning",
-        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
-      },
-      "title": "Accurate determination of the Pleistocene uplift rate of the NE Japan forearc from the buried MIS 5e marine terrace shoreline angle"
-    },
-    {
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
       "attribution": "Elsevier OA CC-BY Corpus, Isotopic and zooarchaeological approaches towards understanding aquatic resource use in human economies and animal management in the prehistoric Scottish North Atlantic Islands, Jennifer R. Jones, Jacqui Mulville",
       "authors": [
         "Jennifer R. Jones",
@@ -978,14 +848,12 @@
         ],
         "matched_evidence": {
           "keywords": [
-            "archaeolog",
             "zooarchaeolog"
           ],
           "subjareas": [
             "ARTS"
           ],
           "title": [
-            "archaeolog",
             "zooarchaeolog"
           ]
         },
@@ -993,7 +861,6 @@
           "ARTS"
         ],
         "matched_terms": [
-          "archaeolog",
           "zooarchaeolog"
         ],
         "review_status": "pending_human_review",
@@ -1356,7 +1223,6 @@
         ],
         "matched_evidence": {
           "keywords": [
-            "archaeolog",
             "zooarchaeolog"
           ],
           "subjareas": [
@@ -1367,7 +1233,6 @@
           "ARTS"
         ],
         "matched_terms": [
-          "archaeolog",
           "zooarchaeolog"
         ],
         "review_status": "pending_human_review",
@@ -2903,7 +2768,6 @@
         ],
         "matched_evidence": {
           "keywords": [
-            "archaeolog",
             "zooarchaeolog"
           ],
           "subjareas": [
@@ -2914,7 +2778,6 @@
           "ARTS"
         ],
         "matched_terms": [
-          "archaeolog",
           "zooarchaeolog"
         ],
         "review_status": "pending_human_review",
@@ -3607,133 +3470,6 @@
         "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
       },
       "title": "The identification of poultry processing in archaeological ceramic vessels using in-situ isotope references for organic residue analysis"
-    },
-    {
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "attribution": "Elsevier OA CC-BY Corpus, Growing up different in Neolithic China: A contextualised case study and differential diagnosis of a young adult with skeletal dysplasia, Si\u00e2n E. Halcrow, Melanie J. Miller, Anne Marie E. Snoddy, Wenquan Fan, Kate Pechenkina",
-      "authors": [
-        "Si\u00e2n E. Halcrow",
-        "Melanie J. Miller",
-        "Anne Marie E. Snoddy",
-        "Wenquan Fan",
-        "Kate Pechenkina"
-      ],
-      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\elsevier-json\\S1879981719301342.json",
-      "discipline_assignment": {
-        "classifier_predicate": {
-          "subject_any": [
-            "ARTS"
-          ],
-          "text_any": [
-            "art history",
-            "archaeolog",
-            "museum",
-            "museolog",
-            "heritage",
-            "iconograph",
-            "curat",
-            "painting",
-            "sculptur",
-            "visual art",
-            "artwork",
-            "gallery",
-            "mumm",
-            "paleopath",
-            "zooarchaeolog",
-            "material culture",
-            "ancient egypt",
-            "architecture",
-            "architectural history",
-            "manuscript illumination",
-            "conservation"
-          ]
-        },
-        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
-        "evidence_fields": [
-          "title",
-          "keywords",
-          "subjareas"
-        ],
-        "matched_evidence": {
-          "keywords": [
-            "archaeolog"
-          ],
-          "subjareas": [
-            "ARTS"
-          ]
-        },
-        "matched_subject_codes": [
-          "ARTS"
-        ],
-        "matched_terms": [
-          "archaeolog"
-        ],
-        "review_status": "pending_human_review",
-        "rule_subject_codes": [
-          "ARTS"
-        ],
-        "rule_terms": [
-          "art history",
-          "archaeolog",
-          "museum",
-          "museolog",
-          "heritage",
-          "iconograph",
-          "curat",
-          "painting",
-          "sculptur",
-          "visual art",
-          "artwork",
-          "gallery",
-          "mumm",
-          "paleopath",
-          "zooarchaeolog",
-          "material culture",
-          "ancient egypt",
-          "architecture",
-          "architectural history",
-          "manuscript illumination",
-          "conservation"
-        ],
-        "subject_codes": [
-          "ARTS",
-          "MEDI"
-        ]
-      },
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.1016/j.ijpp.2019.11.001",
-      "expected_sha256": null,
-      "licence": {
-        "article_rights_uri": "",
-        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "unverified",
-        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
-        "version": "4.0"
-      },
-      "publication_date": "2020-01-01",
-      "publisher": "Elsevier OA CC-BY Corpus",
-      "semantic_split": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
-        "partition": "temporal",
-        "publication_year": 2020,
-        "start_year": 2020
-      },
-      "source_id": "elsevier-S1879981719301342",
-      "stable_uri": "https://doi.org/10.1016/j.ijpp.2019.11.001",
-      "third_party": {
-        "status": "warning",
-        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
-      },
-      "title": "Growing up different in Neolithic China: A contextualised case study and differential diagnosis of a young adult with skeletal dysplasia"
     },
     {
       "allowed_uses": [
@@ -5166,7 +4902,6 @@
         ],
         "matched_evidence": {
           "keywords": [
-            "archaeolog",
             "zooarchaeolog"
           ],
           "subjareas": [
@@ -5177,7 +4912,6 @@
           "ARTS"
         ],
         "matched_terms": [
-          "archaeolog",
           "zooarchaeolog"
         ],
         "review_status": "pending_human_review",
@@ -5241,133 +4975,6 @@
         "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
       },
       "title": "Reconstructing animal husbandry: Trauma in Meleagris gallopavo (domestic turkey) ulnae from the American Southwest (c. 900\u20131678 CE)"
-    },
-    {
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "attribution": "Elsevier OA CC-BY Corpus, Animal domestication in the high Arctic: Hunting and holding reindeer on the I\u0361Amal peninsula, northwest Siberia, David G. Anderson, Lo\u00efc Harrault, Karen B. Milek, Bruce C. Forbes, Mari Kuoppamaa, Andre\u012d V. Plekhanov",
-      "authors": [
-        "David G. Anderson",
-        "Lo\u00efc Harrault",
-        "Karen B. Milek",
-        "Bruce C. Forbes",
-        "Mari Kuoppamaa",
-        "Andre\u012d V. Plekhanov"
-      ],
-      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\elsevier-json\\S0278416518302368.json",
-      "discipline_assignment": {
-        "classifier_predicate": {
-          "subject_any": [
-            "ARTS"
-          ],
-          "text_any": [
-            "art history",
-            "archaeolog",
-            "museum",
-            "museolog",
-            "heritage",
-            "iconograph",
-            "curat",
-            "painting",
-            "sculptur",
-            "visual art",
-            "artwork",
-            "gallery",
-            "mumm",
-            "paleopath",
-            "zooarchaeolog",
-            "material culture",
-            "ancient egypt",
-            "architecture",
-            "architectural history",
-            "manuscript illumination",
-            "conservation"
-          ]
-        },
-        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
-        "evidence_fields": [
-          "title",
-          "keywords",
-          "subjareas"
-        ],
-        "matched_evidence": {
-          "keywords": [
-            "archaeolog"
-          ],
-          "subjareas": [
-            "ARTS"
-          ]
-        },
-        "matched_subject_codes": [
-          "ARTS"
-        ],
-        "matched_terms": [
-          "archaeolog"
-        ],
-        "review_status": "pending_human_review",
-        "rule_subject_codes": [
-          "ARTS"
-        ],
-        "rule_terms": [
-          "art history",
-          "archaeolog",
-          "museum",
-          "museolog",
-          "heritage",
-          "iconograph",
-          "curat",
-          "painting",
-          "sculptur",
-          "visual art",
-          "artwork",
-          "gallery",
-          "mumm",
-          "paleopath",
-          "zooarchaeolog",
-          "material culture",
-          "ancient egypt",
-          "architecture",
-          "architectural history",
-          "manuscript illumination",
-          "conservation"
-        ],
-        "subject_codes": [
-          "ARTS",
-          "SOCI"
-        ]
-      },
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.1016/j.jaa.2019.101079",
-      "expected_sha256": null,
-      "licence": {
-        "article_rights_uri": "",
-        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "unverified",
-        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
-        "version": "4.0"
-      },
-      "publication_date": "2019-01-01",
-      "publisher": "Elsevier OA CC-BY Corpus",
-      "semantic_split": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2019
-      },
-      "source_id": "elsevier-S0278416518302368",
-      "stable_uri": "https://doi.org/10.1016/j.jaa.2019.101079",
-      "third_party": {
-        "status": "warning",
-        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
-      },
-      "title": "Animal domestication in the high Arctic: Hunting and holding reindeer on the I\u0361Amal peninsula, northwest Siberia"
     },
     {
       "allowed_uses": [
@@ -5760,6 +5367,409 @@
         "human_annotation",
         "provenance_audit"
       ],
+      "attribution": "Elsevier OA CC-BY Corpus, Climatic changes and social transformations in the Near East and North Africa during the 'long' 4th millennium BC: A comparative study of environmental and archaeological evidence, Joanne Clarke, Nick Brooks, Edward B. Banning, Miryam Bar-Matthews, Stuart Campbell, Lee Clare, Mauro Cremaschi, Savino di Lernia, Nick Drake, Marina Gallinaro, Sturt Manning, Kathleen Nicoll, Graham Philip, Steve Rosen, Ulf Dietrich Schoop, Mary Anne Tafuri, Bernhard Weninger, Andrea Zerboni",
+      "authors": [
+        "Joanne Clarke",
+        "Nick Brooks",
+        "Edward B. Banning",
+        "Miryam Bar-Matthews",
+        "Stuart Campbell",
+        "Lee Clare",
+        "Mauro Cremaschi",
+        "Savino di Lernia",
+        "Nick Drake",
+        "Marina Gallinaro",
+        "Sturt Manning",
+        "Kathleen Nicoll",
+        "Graham Philip",
+        "Steve Rosen",
+        "Ulf Dietrich Schoop",
+        "Mary Anne Tafuri",
+        "Bernhard Weninger",
+        "Andrea Zerboni"
+      ],
+      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\elsevier-json\\S027737911530127X.json",
+      "discipline_assignment": {
+        "classifier_predicate": {
+          "subject_any": [
+            "ARTS"
+          ],
+          "text_any": [
+            "art history",
+            "archaeolog",
+            "museum",
+            "museolog",
+            "heritage",
+            "iconograph",
+            "curat",
+            "painting",
+            "sculptur",
+            "visual art",
+            "artwork",
+            "gallery",
+            "mumm",
+            "paleopath",
+            "zooarchaeolog",
+            "material culture",
+            "ancient egypt",
+            "architecture",
+            "architectural history",
+            "manuscript illumination",
+            "conservation"
+          ]
+        },
+        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
+        "evidence_fields": [
+          "title",
+          "keywords",
+          "subjareas"
+        ],
+        "matched_evidence": {
+          "subjareas": [
+            "ARTS"
+          ],
+          "title": [
+            "archaeolog"
+          ]
+        },
+        "matched_subject_codes": [
+          "ARTS"
+        ],
+        "matched_terms": [
+          "archaeolog"
+        ],
+        "review_status": "pending_human_review",
+        "rule_subject_codes": [
+          "ARTS"
+        ],
+        "rule_terms": [
+          "art history",
+          "archaeolog",
+          "museum",
+          "museolog",
+          "heritage",
+          "iconograph",
+          "curat",
+          "painting",
+          "sculptur",
+          "visual art",
+          "artwork",
+          "gallery",
+          "mumm",
+          "paleopath",
+          "zooarchaeolog",
+          "material culture",
+          "ancient egypt",
+          "architecture",
+          "architectural history",
+          "manuscript illumination",
+          "conservation"
+        ],
+        "subject_codes": [
+          "AGRI",
+          "ARTS",
+          "EART",
+          "ENVI",
+          "SOCI"
+        ]
+      },
+      "disciplines": [
+        "art_history"
+      ],
+      "doi": "10.1016/j.quascirev.2015.10.003",
+      "expected_sha256": null,
+      "licence": {
+        "article_rights_uri": "",
+        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
+        "spdx": "CC-BY-4.0",
+        "uri": "https://creativecommons.org/licenses/by/4.0/",
+        "verification": "unverified",
+        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
+        "version": "4.0"
+      },
+      "publication_date": "2016-01-01",
+      "publisher": "Elsevier OA CC-BY Corpus",
+      "semantic_split": {
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
+        "publication_year": 2016
+      },
+      "source_id": "elsevier-S027737911530127X",
+      "stable_uri": "https://doi.org/10.1016/j.quascirev.2015.10.003",
+      "third_party": {
+        "status": "warning",
+        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
+      },
+      "title": "Climatic changes and social transformations in the Near East and North Africa during the 'long' 4th millennium BC: A comparative study of environmental and archaeological evidence"
+    },
+    {
+      "allowed_uses": [
+        "candidate_generation",
+        "human_annotation",
+        "provenance_audit"
+      ],
+      "attribution": "Elsevier OA CC-BY Corpus, Computer vision, archaeological classification and China's terracotta warriors, Andrew Bevan, Xiuzhen Li, Marcos Martin\u00f3n-Torres, Susan Green, Yin Xia, Kun Zhao, Zhen Zhao, Shengtao Ma, Wei Cao, Thilo Rehren",
+      "authors": [
+        "Andrew Bevan",
+        "Xiuzhen Li",
+        "Marcos Martin\u00f3n-Torres",
+        "Susan Green",
+        "Yin Xia",
+        "Kun Zhao",
+        "Zhen Zhao",
+        "Shengtao Ma",
+        "Wei Cao",
+        "Thilo Rehren"
+      ],
+      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\elsevier-json\\S0305440314001927.json",
+      "discipline_assignment": {
+        "classifier_predicate": {
+          "subject_any": [
+            "ARTS"
+          ],
+          "text_any": [
+            "art history",
+            "archaeolog",
+            "museum",
+            "museolog",
+            "heritage",
+            "iconograph",
+            "curat",
+            "painting",
+            "sculptur",
+            "visual art",
+            "artwork",
+            "gallery",
+            "mumm",
+            "paleopath",
+            "zooarchaeolog",
+            "material culture",
+            "ancient egypt",
+            "architecture",
+            "architectural history",
+            "manuscript illumination",
+            "conservation"
+          ]
+        },
+        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
+        "evidence_fields": [
+          "title",
+          "keywords",
+          "subjareas"
+        ],
+        "matched_evidence": {
+          "subjareas": [
+            "ARTS"
+          ],
+          "title": [
+            "archaeolog"
+          ]
+        },
+        "matched_subject_codes": [
+          "ARTS"
+        ],
+        "matched_terms": [
+          "archaeolog"
+        ],
+        "review_status": "pending_human_review",
+        "rule_subject_codes": [
+          "ARTS"
+        ],
+        "rule_terms": [
+          "art history",
+          "archaeolog",
+          "museum",
+          "museolog",
+          "heritage",
+          "iconograph",
+          "curat",
+          "painting",
+          "sculptur",
+          "visual art",
+          "artwork",
+          "gallery",
+          "mumm",
+          "paleopath",
+          "zooarchaeolog",
+          "material culture",
+          "ancient egypt",
+          "architecture",
+          "architectural history",
+          "manuscript illumination",
+          "conservation"
+        ],
+        "subject_codes": [
+          "ARTS",
+          "SOCI"
+        ]
+      },
+      "disciplines": [
+        "art_history"
+      ],
+      "doi": "10.1016/j.jas.2014.05.014",
+      "expected_sha256": null,
+      "licence": {
+        "article_rights_uri": "",
+        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
+        "spdx": "CC-BY-4.0",
+        "uri": "https://creativecommons.org/licenses/by/4.0/",
+        "verification": "unverified",
+        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
+        "version": "4.0"
+      },
+      "publication_date": "2014-01-01",
+      "publisher": "Elsevier OA CC-BY Corpus",
+      "semantic_split": {
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
+        "publication_year": 2014
+      },
+      "source_id": "elsevier-S0305440314001927",
+      "stable_uri": "https://doi.org/10.1016/j.jas.2014.05.014",
+      "third_party": {
+        "status": "warning",
+        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
+      },
+      "title": "Computer vision, archaeological classification and China's terracotta warriors"
+    },
+    {
+      "allowed_uses": [
+        "candidate_generation",
+        "human_annotation",
+        "provenance_audit"
+      ],
+      "attribution": "Elsevier OA CC-BY Corpus, The use of close-range photogrammetry in zooarchaeology: Creating accurate 3D models of wolf crania to study dog domestication, Allowen Evin, Thibaud Souter, Ardern Hulme-Beaman, Carly Ameen, Richard Allen, Pietro Viacava, Greger Larson, Thomas Cucchi, Keith Dobney",
+      "authors": [
+        "Allowen Evin",
+        "Thibaud Souter",
+        "Ardern Hulme-Beaman",
+        "Carly Ameen",
+        "Richard Allen",
+        "Pietro Viacava",
+        "Greger Larson",
+        "Thomas Cucchi",
+        "Keith Dobney"
+      ],
+      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\elsevier-json\\S2352409X1630284X.json",
+      "discipline_assignment": {
+        "classifier_predicate": {
+          "subject_any": [
+            "ARTS"
+          ],
+          "text_any": [
+            "art history",
+            "archaeolog",
+            "museum",
+            "museolog",
+            "heritage",
+            "iconograph",
+            "curat",
+            "painting",
+            "sculptur",
+            "visual art",
+            "artwork",
+            "gallery",
+            "mumm",
+            "paleopath",
+            "zooarchaeolog",
+            "material culture",
+            "ancient egypt",
+            "architecture",
+            "architectural history",
+            "manuscript illumination",
+            "conservation"
+          ]
+        },
+        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
+        "evidence_fields": [
+          "title",
+          "keywords",
+          "subjareas"
+        ],
+        "matched_evidence": {
+          "subjareas": [
+            "ARTS"
+          ],
+          "title": [
+            "zooarchaeolog"
+          ]
+        },
+        "matched_subject_codes": [
+          "ARTS"
+        ],
+        "matched_terms": [
+          "zooarchaeolog"
+        ],
+        "review_status": "pending_human_review",
+        "rule_subject_codes": [
+          "ARTS"
+        ],
+        "rule_terms": [
+          "art history",
+          "archaeolog",
+          "museum",
+          "museolog",
+          "heritage",
+          "iconograph",
+          "curat",
+          "painting",
+          "sculptur",
+          "visual art",
+          "artwork",
+          "gallery",
+          "mumm",
+          "paleopath",
+          "zooarchaeolog",
+          "material culture",
+          "ancient egypt",
+          "architecture",
+          "architectural history",
+          "manuscript illumination",
+          "conservation"
+        ],
+        "subject_codes": [
+          "ARTS",
+          "SOCI"
+        ]
+      },
+      "disciplines": [
+        "art_history"
+      ],
+      "doi": "10.1016/j.jasrep.2016.06.028",
+      "expected_sha256": null,
+      "licence": {
+        "article_rights_uri": "",
+        "evidence_uri": "https://elsevier.digitalcommonsdata.com/datasets/zm33cdndxs/2",
+        "spdx": "CC-BY-4.0",
+        "uri": "https://creativecommons.org/licenses/by/4.0/",
+        "verification": "unverified",
+        "verification_basis": "dataset-level openaccess=Full marker only; article-level licence or notice was not inspected and candidate generation is blocked",
+        "version": "4.0"
+      },
+      "publication_date": "2016-01-01",
+      "publisher": "Elsevier OA CC-BY Corpus",
+      "semantic_split": {
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-IN-DOMAIN-V1",
+        "partition": "in_domain",
+        "publication_year": 2016
+      },
+      "source_id": "elsevier-S2352409X1630284X",
+      "stable_uri": "https://doi.org/10.1016/j.jasrep.2016.06.028",
+      "third_party": {
+        "status": "warning",
+        "warning": "The dataset licence warns that further permission may be required for third-party content within an article."
+      },
+      "title": "The use of close-range photogrammetry in zooarchaeology: Creating accurate 3D models of wolf crania to study dog domestication"
+    },
+    {
+      "allowed_uses": [
+        "candidate_generation",
+        "human_annotation",
+        "provenance_audit"
+      ],
       "attribution": "Kostiantyn Raikhert, The Soviet-Ukrainian Magazine Chervonyi Perets Imagines Fighters for the Independence of Ukraine, Open Library of Humanities",
       "authors": [
         "Kostiantyn Raikhert"
@@ -5993,86 +6003,6 @@
         "warning": "Review article-level notices for separately licensed third-party material before final admission."
       },
       "title": "Challenging the Colonial Archive of Conflict in Kamila Shamsie\u2019s A God in Every Stone"
-    },
-    {
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "attribution": "Anna Rakityanskaya, Born-Digital Humor and Context Saturation: Using Generative AI to Preserve and Interpret Russo-Ukrainian War Memes, Open Library of Humanities",
-      "authors": [
-        "Anna Rakityanskaya"
-      ],
-      "content_download_uri": "https://olh.openlibhums.org/article/24212/galley/42705/download/",
-      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\olh-xml\\24212.xml",
-      "discipline_assignment": {
-        "classifier_predicate": {
-          "subject_any": [],
-          "text_any": [
-            "visual art",
-            "museum",
-            "curat",
-            "iconograph",
-            "art history"
-          ]
-        },
-        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
-        "evidence_fields": [
-          "title",
-          "section",
-          "abstract"
-        ],
-        "matched_evidence": {
-          "abstract": [
-            "curat"
-          ]
-        },
-        "matched_subject_codes": [],
-        "matched_terms": [
-          "curat"
-        ],
-        "review_status": "pending_human_review",
-        "rule_subject_codes": [],
-        "rule_terms": [
-          "visual art",
-          "museum",
-          "curat",
-          "iconograph",
-          "art history"
-        ],
-        "subject_codes": []
-      },
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.16995/olh.24212",
-      "expected_sha256": null,
-      "licence": {
-        "article_rights_uri": "https://olh.openlibhums.org/article/id/24212/",
-        "evidence_uri": "https://olh.openlibhums.org/api/articles/24212/",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "article_level_verified",
-        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
-        "version": "4.0"
-      },
-      "publication_date": "2025-11-12T11:40:00+01:00",
-      "publisher": "Open Library of Humanities",
-      "semantic_split": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
-        "partition": "temporal",
-        "publication_year": 2025,
-        "start_year": 2020
-      },
-      "source_id": "olh-24212",
-      "stable_uri": "https://olh.openlibhums.org/article/id/24212/",
-      "third_party": {
-        "status": "warning",
-        "warning": "Review article-level notices for separately licensed third-party material before final admission."
-      },
-      "title": "Born-Digital Humor and Context Saturation: Using Generative AI to Preserve and Interpret Russo-Ukrainian War Memes"
     },
     {
       "allowed_uses": [
@@ -6930,9 +6860,6 @@
           "abstract"
         ],
         "matched_evidence": {
-          "abstract": [
-            "curat"
-          ],
           "section": [
             "curat"
           ]
@@ -8376,85 +8303,6 @@
         "human_annotation",
         "provenance_audit"
       ],
-      "attribution": "Philip Senter, Cognitive Styles Used in Evidence Citation by Ancient Christian Authors: The Psychology of a Major Ancient Controversy over the Historicity of the Pentateuch, and Its Implications for Science Education Today, Open Library of Humanities",
-      "authors": [
-        "Philip Senter"
-      ],
-      "content_download_uri": "https://olh.openlibhums.org/article/4432/galley/7508/download/",
-      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\olh-xml\\4432.xml",
-      "discipline_assignment": {
-        "classifier_predicate": {
-          "subject_any": [],
-          "text_any": [
-            "visual art",
-            "museum",
-            "curat",
-            "iconograph",
-            "art history"
-          ]
-        },
-        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
-        "evidence_fields": [
-          "title",
-          "section",
-          "abstract"
-        ],
-        "matched_evidence": {
-          "abstract": [
-            "curat"
-          ]
-        },
-        "matched_subject_codes": [],
-        "matched_terms": [
-          "curat"
-        ],
-        "review_status": "pending_human_review",
-        "rule_subject_codes": [],
-        "rule_terms": [
-          "visual art",
-          "museum",
-          "curat",
-          "iconograph",
-          "art history"
-        ],
-        "subject_codes": []
-      },
-      "disciplines": [
-        "art_history"
-      ],
-      "doi": "10.16995/olh.80",
-      "expected_sha256": null,
-      "licence": {
-        "article_rights_uri": "https://olh.openlibhums.org/article/id/4432/",
-        "evidence_uri": "https://olh.openlibhums.org/api/articles/4432/",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "article_level_verified",
-        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
-        "version": "4.0"
-      },
-      "publication_date": "2017-02-21T13:00:00+01:00",
-      "publisher": "Open Library of Humanities",
-      "semantic_split": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2017
-      },
-      "source_id": "olh-4432",
-      "stable_uri": "https://olh.openlibhums.org/article/id/4432/",
-      "third_party": {
-        "status": "warning",
-        "warning": "Review article-level notices for separately licensed third-party material before final admission."
-      },
-      "title": "Cognitive Styles Used in Evidence Citation by Ancient Christian Authors: The Psychology of a Major Ancient Controversy over the Historicity of the Pentateuch, and Its Implications for Science Education Today"
-    },
-    {
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
       "attribution": "Gabriel Moshenska, Esoteric Egyptology, Seed Science and the Myth of Mummy Wheat, Open Library of Humanities",
       "authors": [
         "Gabriel Moshenska"
@@ -9590,6 +9438,90 @@
         "warning": "Review article-level notices for separately licensed third-party material before final admission."
       },
       "title": "Visual Rhetoric in Mediating Impartial Humor: Political Cartoons on the Russo-Ukrainian War"
+    },
+    {
+      "allowed_uses": [
+        "candidate_generation",
+        "human_annotation",
+        "provenance_audit"
+      ],
+      "attribution": "Anna Rakityanskaya, Born-Digital Humor and Context Saturation: Using Generative AI to Preserve and Interpret Russo-Ukrainian War Memes, Open Library of Humanities",
+      "authors": [
+        "Anna Rakityanskaya"
+      ],
+      "content_download_uri": "https://olh.openlibhums.org/article/24212/galley/42705/download/",
+      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\olh-xml\\24212.xml",
+      "discipline_assignment": {
+        "classifier_predicate": {
+          "subject_any": [],
+          "text_any": [
+            "art criticism",
+            "cinema",
+            "film",
+            "cartoon",
+            "visual rhetor",
+            "game studies"
+          ]
+        },
+        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
+        "evidence_fields": [
+          "title",
+          "section",
+          "abstract"
+        ],
+        "matched_evidence": {
+          "section": [
+            "cartoon",
+            "visual rhetor"
+          ]
+        },
+        "matched_subject_codes": [],
+        "matched_terms": [
+          "cartoon",
+          "visual rhetor"
+        ],
+        "review_status": "pending_human_review",
+        "rule_subject_codes": [],
+        "rule_terms": [
+          "art criticism",
+          "cinema",
+          "film",
+          "cartoon",
+          "visual rhetor",
+          "game studies"
+        ],
+        "subject_codes": []
+      },
+      "disciplines": [
+        "art_criticism"
+      ],
+      "doi": "10.16995/olh.24212",
+      "expected_sha256": null,
+      "licence": {
+        "article_rights_uri": "https://olh.openlibhums.org/article/id/24212/",
+        "evidence_uri": "https://olh.openlibhums.org/api/articles/24212/",
+        "spdx": "CC-BY-4.0",
+        "uri": "https://creativecommons.org/licenses/by/4.0/",
+        "verification": "article_level_verified",
+        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
+        "version": "4.0"
+      },
+      "publication_date": "2025-11-12T11:40:00+01:00",
+      "publisher": "Open Library of Humanities",
+      "semantic_split": {
+        "catalog_declared_held_out_domain": false,
+        "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+        "partition": "temporal",
+        "publication_year": 2025,
+        "start_year": 2020
+      },
+      "source_id": "olh-24212",
+      "stable_uri": "https://olh.openlibhums.org/article/id/24212/",
+      "third_party": {
+        "status": "warning",
+        "warning": "Review article-level notices for separately licensed third-party material before final admission."
+      },
+      "title": "Born-Digital Humor and Context Saturation: Using Generative AI to Preserve and Interpret Russo-Ukrainian War Memes"
     },
     {
       "allowed_uses": [
@@ -12961,91 +12893,6 @@
         "warning": "Review article-level notices for separately licensed third-party material before final admission."
       },
       "title": "Facing Fanon : Examining Neocolonial Aspects in Grand Theft Auto V through the Prism of the Machinima Film Finding Fanon II"
-    },
-    {
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "attribution": "V\u00edctor Navarro-Remesal, Beatriz P\u00e9rez Zapata, Who Made Your Phone? Compassion and the Voice of the Oppressed in Phone Story and Burn the Boards, Open Library of Humanities",
-      "authors": [
-        "V\u00edctor Navarro-Remesal",
-        "Beatriz P\u00e9rez Zapata"
-      ],
-      "content_download_uri": "https://olh.openlibhums.org/article/4468/galley/7922/download/",
-      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\olh-xml\\4468.xml",
-      "discipline_assignment": {
-        "classifier_predicate": {
-          "subject_any": [],
-          "text_any": [
-            "art criticism",
-            "cinema",
-            "film",
-            "cartoon",
-            "visual rhetor",
-            "game studies"
-          ]
-        },
-        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
-        "evidence_fields": [
-          "title",
-          "section",
-          "abstract"
-        ],
-        "matched_evidence": {
-          "abstract": [
-            "game studies"
-          ],
-          "section": [
-            "game studies"
-          ]
-        },
-        "matched_subject_codes": [],
-        "matched_terms": [
-          "game studies"
-        ],
-        "review_status": "pending_human_review",
-        "rule_subject_codes": [],
-        "rule_terms": [
-          "art criticism",
-          "cinema",
-          "film",
-          "cartoon",
-          "visual rhetor",
-          "game studies"
-        ],
-        "subject_codes": []
-      },
-      "disciplines": [
-        "art_criticism"
-      ],
-      "doi": "10.16995/olh.209",
-      "expected_sha256": null,
-      "licence": {
-        "article_rights_uri": "https://olh.openlibhums.org/article/id/4468/",
-        "evidence_uri": "https://olh.openlibhums.org/api/articles/4468/",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "article_level_verified",
-        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
-        "version": "4.0"
-      },
-      "publication_date": "2018-02-19T13:12:04+01:00",
-      "publisher": "Open Library of Humanities",
-      "semantic_split": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2018
-      },
-      "source_id": "olh-4468",
-      "stable_uri": "https://olh.openlibhums.org/article/id/4468/",
-      "third_party": {
-        "status": "warning",
-        "warning": "Review article-level notices for separately licensed third-party material before final admission."
-      },
-      "title": "Who Made Your Phone? Compassion and the Voice of the Oppressed in Phone Story and Burn the Boards"
     },
     {
       "allowed_uses": [
@@ -22885,15 +22732,10 @@
           "section",
           "abstract"
         ],
-        "matched_evidence": {
-          "abstract": [
-            "textual"
-          ]
-        },
+        "fallback_basis": "official_olh_humanities_scope",
+        "matched_evidence": {},
         "matched_subject_codes": [],
-        "matched_terms": [
-          "textual"
-        ],
+        "matched_terms": [],
         "review_status": "pending_human_review",
         "rule_subject_codes": [],
         "rule_terms": [
@@ -38320,91 +38162,6 @@
         "warning": "Review article-level notices for separately licensed third-party material before final admission."
       },
       "title": "Plasticity, the Genetics of Difference, and the Repair of Utopia"
-    },
-    {
-      "allowed_uses": [
-        "candidate_generation",
-        "human_annotation",
-        "provenance_audit"
-      ],
-      "attribution": "Alvin Lim, Cinematic Rupture: Reading Cambodia\u2019s Genocide through Deleuze and Guattari, Open Library of Humanities",
-      "authors": [
-        "Alvin Lim"
-      ],
-      "content_download_uri": "https://olh.openlibhums.org/article/4409/galley/7588/download/",
-      "content_uri": "C:\\GitHub\\SWOS-t070-acquisition-cache\\article-corpus-v11\\olh-xml\\4409.xml",
-      "discipline_assignment": {
-        "classifier_predicate": {
-          "subject_any": [],
-          "text_any": [
-            "philosoph",
-            "posthuman",
-            "political theory",
-            "ethical theory",
-            "normative ethics",
-            "metaethic",
-            "applied ethics",
-            "bioethic"
-          ]
-        },
-        "criteria_id": "T070-DISCIPLINE-SOURCE-METADATA-V1",
-        "evidence_fields": [
-          "title",
-          "section",
-          "abstract"
-        ],
-        "matched_evidence": {
-          "abstract": [
-            "philosoph"
-          ]
-        },
-        "matched_subject_codes": [],
-        "matched_terms": [
-          "philosoph"
-        ],
-        "review_status": "pending_human_review",
-        "rule_subject_codes": [],
-        "rule_terms": [
-          "philosoph",
-          "posthuman",
-          "political theory",
-          "ethical theory",
-          "normative ethics",
-          "metaethic",
-          "applied ethics",
-          "bioethic"
-        ],
-        "subject_codes": []
-      },
-      "disciplines": [
-        "philosophy"
-      ],
-      "doi": "10.16995/olh.11",
-      "expected_sha256": null,
-      "licence": {
-        "article_rights_uri": "https://olh.openlibhums.org/article/id/4409/",
-        "evidence_uri": "https://olh.openlibhums.org/api/articles/4409/",
-        "spdx": "CC-BY-4.0",
-        "uri": "https://creativecommons.org/licenses/by/4.0/",
-        "verification": "article_level_verified",
-        "verification_basis": "official article API returns CC BY 4.0 and the XML galley is the acquired article copy",
-        "version": "4.0"
-      },
-      "publication_date": "2015-11-23T13:00:13+01:00",
-      "publisher": "Open Library of Humanities",
-      "semantic_split": {
-        "catalog_declared_held_out_domain": false,
-        "criteria_id": "T070-IN-DOMAIN-V1",
-        "partition": "in_domain",
-        "publication_year": 2015
-      },
-      "source_id": "olh-4409",
-      "stable_uri": "https://olh.openlibhums.org/article/id/4409/",
-      "third_party": {
-        "status": "warning",
-        "warning": "Review article-level notices for separately licensed third-party material before final admission."
-      },
-      "title": "Cinematic Rupture: Reading Cambodia\u2019s Genocide through Deleuze and Guattari"
     },
     {
       "allowed_uses": [
