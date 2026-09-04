@@ -431,9 +431,7 @@ def _validate_semantic_assignment(
         if "publication_year" not in value:
             raise AcquisitionValidationError("in-domain candidate lacks a publication year field")
         if "catalog_declared_held_out_domain" not in value:
-            raise AcquisitionValidationError(
-                "in-domain candidate lacks an explicit non-OOD field"
-            )
+            raise AcquisitionValidationError("in-domain candidate lacks an explicit non-OOD field")
         year = value.get("publication_year")
         if (
             isinstance(year, int)
@@ -1293,9 +1291,8 @@ def _source_semantic_assignment(
 
     explicit = source.get("semantic_split") or source.get("semantic_split_default")
     if isinstance(explicit, Mapping):
-        if (
-            explicit.get("partition") not in SEMANTIC_PARTITIONS
-            or not _nonempty(explicit.get("criteria_id"))
+        if explicit.get("partition") not in SEMANTIC_PARTITIONS or not _nonempty(
+            explicit.get("criteria_id")
         ):
             raise AcquisitionValidationError("semantic assignment is incomplete")
         declared = dict(explicit)

@@ -1051,9 +1051,7 @@ class CitationAcquisitionTests(unittest.TestCase):
         missing_in_domain_domain_flag = self._pair(
             "runtime-in-domain-domain-flag", "runtime-in-domain-domain-flag", "in_domain"
         )
-        missing_in_domain_domain_flag["semantic_split"].pop(
-            "catalog_declared_held_out_domain"
-        )
+        missing_in_domain_domain_flag["semantic_split"].pop("catalog_declared_held_out_domain")
         with self.assertRaises(AcquisitionValidationError):
             validate_unlabelled_candidate_pair(missing_in_domain_domain_flag, policy=policy)
 
