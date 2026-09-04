@@ -416,7 +416,7 @@
       "Claim exposure records are explicit synthetic structural metric fixtures and contain no asserted scholarly proposition.",
       "Unknown/inferred methodology or stance cannot improve the metric."
     ],
-    "generated_at": "2026-09-04T02:24:21Z",
+    "generated_at": "2026-09-04T02:33:55Z",
     "generator": "T079-BUILD-REVIEWER-PACKETS.py",
     "source_metadata_snapshot_digest": "b6c4306364e78804f487c498f9899cb21ea2e362080449d85272c94c8d5f119e"
   },
@@ -432,7 +432,7 @@
       "required": false,
       "status": "not_required"
     },
-    "created_at": "2026-09-04T02:24:21.409791Z",
+    "created_at": "2026-09-04T02:33:55.060382Z",
     "dimensions": {
       "access_mode": {
         "applicable": true,
@@ -899,7 +899,7 @@
     "research_grade_composite": 0.0,
     "status": "fail"
   },
-  "packet_digest": "f6939577536de59882256ded1697b9bc1db3db3c65f56491ea593cd23557efed",
+  "packet_digest": "10ee9f344b9600b7df9f9448b90ac48ecb0ab5627c9af5864f6dda07cca8734b",
   "packet_id": "DIV-ART-CRITICISM-10",
   "partition": "locked_candidate",
   "pre_retrieval_requirement": {
