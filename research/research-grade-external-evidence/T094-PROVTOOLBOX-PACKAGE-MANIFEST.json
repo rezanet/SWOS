@@ -1,8 +1,8 @@
 {
   "artifact": {
-    "bytes": 20235743,
+    "bytes": 20237474,
     "path": "provtoolbox-oracle-2.2.3.pyz",
-    "sha256": "7b2535ddc4eced15ca51d25a7e1259524637980fa24c54af542b51dcc33a71a8"
+    "sha256": "f6e473cb9d0ee2c8cfa81bc0fc0a7dcd6699eb434b4a64be8529fcba4b98b8d0"
   },
   "artifact_contract": {
     "invocation": [
@@ -24,7 +24,7 @@
     "single_file": true
   },
   "candidate_oracle_manifest_patch": {
-    "artifact_sha256": "7b2535ddc4eced15ca51d25a7e1259524637980fa24c54af542b51dcc33a71a8",
+    "artifact_sha256": "f6e473cb9d0ee2c8cfa81bc0fc0a7dcd6699eb434b4a64be8529fcba4b98b8d0",
     "artifact_uri": null,
     "command": [
       "python3",
@@ -60,9 +60,9 @@
       "sha256": "147f99cd87ca23fb66e8da69fba39ef5f937d12e3575f7ca1bbd942e00e55fba"
     },
     {
-      "bytes": 8191,
+      "bytes": 14797,
       "path": "__main__.py",
-      "sha256": "47947cca34b406f1124572b29b4eeb0f7c127cad3b163dbbcae07cd80310ada3"
+      "sha256": "a90714f060e5ec393fbabc6613c0ac411f1f61a444c8dde87a79b506a6701744"
     },
     {
       "bytes": 459295,
@@ -322,6 +322,12 @@
   "runtime": {
     "jar_count": 48,
     "java_executable": "java",
+    "java_version_probe": {
+      "exit_code": 0,
+      "reported_text": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)",
+      "stderr_sha256": "5b4412738541184e84f6b2d7520d4f4a7c2a455f60650491464c61adcbbbdeb0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
     "main_class": "org.openprovenance.prov.interop.CommandLineArguments",
     "version_probe": {
       "exit_code": 0,
