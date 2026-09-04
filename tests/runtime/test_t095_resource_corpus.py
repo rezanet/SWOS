@@ -25,7 +25,8 @@ MEASURE_SCRIPT = (
 
 
 def _file_sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def _load(path: Path, name: str):
@@ -38,6 +39,21 @@ def _load(path: Path, name: str):
 
 
 class T095ResourceCorpusTests(unittest.TestCase):
+    def test_text_digests_are_stable_across_checkout_line_endings(self) -> None:
+        module = _load(GENERATOR_SCRIPT, "t095_generator_line_endings")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = (
+                REPOSITORY_ROOT / "benchmark" / "provenance" / "resource-limits.json"
+            ).read_bytes()
+            lf_path = root / "limits-lf.json"
+            crlf_path = root / "limits-crlf.json"
+            lf_bytes = source.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+            lf_path.write_bytes(lf_bytes)
+            crlf_path.write_bytes(lf_bytes.replace(b"\n", b"\r\n"))
+
+            self.assertEqual(module.sha256_file(lf_path), module.sha256_file(crlf_path))
+
     def test_committed_corpus_manifest_binds_all_generated_files(self) -> None:
         manifest_path = REPOSITORY_ROOT / "benchmark" / "provenance" / "manifest.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

@@ -102,7 +102,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add research/research-grade-external-evidence/T111-REVIEW-CANDIDATE-MANIFEST.json
-          git commit -m "research: record T111 review-candidate manifest" \
+          git commit -s -m "research: record T111 review-candidate manifest" \
             -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Human truth remains null and the third mediation condition remains unreviewed."
           git fetch origin research/research-grade-external-evidence-2026-09-03
           git rebase origin/research/research-grade-external-evidence-2026-09-03

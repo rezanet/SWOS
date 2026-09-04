@@ -5,11 +5,11 @@
   "baseline_main_sha": "1f5135969f04a104d4a99764f921d1743d22710f",
   "generator": "T095-GENERATE-RESOURCE-CORPORA.py",
   "generator_version": "1.0.0",
-  "generator_source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+  "generator_source_sha256": "719ce66d30738f13f206b27d1041ace29ff6f0f09c13e452afb68166221c6f40",
   "profile_id": "swos.prov-dm-round-trip.v2",
   "resource_limits": {
     "path": "benchmark/provenance/resource-limits.json",
-    "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab",
+    "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4",
     "limits": {
       "cpu_seconds": 60.0,
       "max_rss_kb": 1048576,

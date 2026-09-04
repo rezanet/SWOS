@@ -14,10 +14,10 @@
         "profile_id": "swos.prov-dm-round-trip.v2",
         "resource_limits": {
           "path": "benchmark/provenance/resource-limits.json",
-          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+          "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4"
         },
         "seed": 0,
-        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "source_sha256": "719ce66d30738f13f206b27d1041ace29ff6f0f09c13e452afb68166221c6f40",
         "version": "1.0.0"
       },
       "name": "valid-1000",
@@ -41,10 +41,10 @@
         "profile_id": "swos.prov-dm-round-trip.v2",
         "resource_limits": {
           "path": "benchmark/provenance/resource-limits.json",
-          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+          "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4"
         },
         "seed": 0,
-        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "source_sha256": "719ce66d30738f13f206b27d1041ace29ff6f0f09c13e452afb68166221c6f40",
         "version": "1.0.0"
       },
       "name": "valid-10000",
@@ -68,10 +68,10 @@
         "profile_id": "swos.prov-dm-round-trip.v2",
         "resource_limits": {
           "path": "benchmark/provenance/resource-limits.json",
-          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+          "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4"
         },
         "seed": 0,
-        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "source_sha256": "719ce66d30738f13f206b27d1041ace29ff6f0f09c13e452afb68166221c6f40",
         "version": "1.0.0"
       },
       "name": "valid-100000",
@@ -97,10 +97,10 @@
         "profile_id": "swos.prov-dm-round-trip.v2",
         "resource_limits": {
           "path": "benchmark/provenance/resource-limits.json",
-          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+          "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4"
         },
         "seed": 0,
-        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "source_sha256": "719ce66d30738f13f206b27d1041ace29ff6f0f09c13e452afb68166221c6f40",
         "version": "1.0.0"
       },
       "name": "hostile-bnodes-1000",
@@ -125,10 +125,10 @@
         "profile_id": "swos.prov-dm-round-trip.v2",
         "resource_limits": {
           "path": "benchmark/provenance/resource-limits.json",
-          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+          "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4"
         },
         "seed": 0,
-        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "source_sha256": "719ce66d30738f13f206b27d1041ace29ff6f0f09c13e452afb68166221c6f40",
         "version": "1.0.0"
       },
       "name": "hostile-bnodes-5000",
@@ -153,10 +153,10 @@
         "profile_id": "swos.prov-dm-round-trip.v2",
         "resource_limits": {
           "path": "benchmark/provenance/resource-limits.json",
-          "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+          "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4"
         },
         "seed": 0,
-        "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+        "source_sha256": "719ce66d30738f13f206b27d1041ace29ff6f0f09c13e452afb68166221c6f40",
         "version": "1.0.0"
       },
       "name": "hostile-bnodes-10000",
@@ -183,10 +183,10 @@
     "profile_id": "swos.prov-dm-round-trip.v2",
     "resource_limits": {
       "path": "benchmark/provenance/resource-limits.json",
-      "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+      "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4"
     },
     "seed": 0,
-    "source_sha256": "263a99631dcafac84d384b2ed969dd1bade841fbde771a03604f4296a9205aa4",
+    "source_sha256": "719ce66d30738f13f206b27d1041ace29ff6f0f09c13e452afb68166221c6f40",
     "version": "1.0.0"
   },
   "profile_id": "swos.prov-dm-round-trip.v2",
@@ -203,7 +203,7 @@
       "timeout_seconds": 60.0
     },
     "path": "benchmark/provenance/resource-limits.json",
-    "sha256": "ade82af47131464883267ca7c17bd3690a41a3735d5cc8e033dabec2282913ab"
+      "sha256": "b28a8adf4538d6b115124150161e9b47f0eaadddc8653ed3fcc7b9836073dbe4"
   },
   "schema_version": "research-handoff.t095.resource-corpus.v1",
   "status": "generated_not_measured",

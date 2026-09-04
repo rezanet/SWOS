@@ -29,8 +29,13 @@ def sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def canonical_text_bytes(path: Path) -> bytes:
+    """Return UTF-8 text bytes with the repository's canonical LF endings."""
+    return path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
 def sha256_file(path: Path) -> str:
-    return sha256_bytes(path.read_bytes())
+    return sha256_bytes(canonical_text_bytes(path))
 
 
 def _positive_number(value: Any, name: str) -> int | float:

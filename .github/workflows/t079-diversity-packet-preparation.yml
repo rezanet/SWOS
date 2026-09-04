@@ -104,6 +104,6 @@ jobs:
             echo "Generated packet set unchanged; nothing to commit."
             exit 0
           fi
-          git commit -m "research: record 108 T079 reviewer-prep packets" \
+          git commit -s -m "research: record 108 T079 reviewer-prep packets" \
             -m "Preparation only; source workflow commit: ${SOURCE_SHA}. Human review fields remain blank and T079 remains open."
           git push origin "HEAD:$TARGET_BRANCH"
