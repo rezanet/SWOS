@@ -17,6 +17,7 @@ import json
 import os
 import re
 import tempfile
+import time
 import urllib.request
 import zipfile
 from collections import Counter, defaultdict
@@ -242,7 +243,6 @@ _OLH_ART_HISTORY_TERMS = (
     "curat",
     "iconograph",
     "art history",
-    "collections",
 )
 _OLH_ART_CRITICISM_TERMS = (
     "art criticism",
@@ -320,7 +320,14 @@ def _download(url: str, path: Path, *, max_bytes: int = MAX_ARTICLE_BYTES) -> No
                 if count > max_bytes:
                     raise OSError(f"article content exceeds resource limit: {max_bytes} bytes")
                 handle.write(block)
-        os.replace(temporary, path)
+        for attempt in range(8):
+            try:
+                os.replace(temporary, path)
+                break
+            except PermissionError:
+                if attempt == 7:
+                    raise
+                time.sleep(0.5)
     finally:
         temporary.unlink(missing_ok=True)
 
@@ -557,7 +564,8 @@ def _elsevier_entry(
             name = " ".join(str(author.get(key) or "").strip() for key in ("first", "last")).strip()
             if name:
                 authors.append(name)
-    authors = authors or ["Elsevier OA CC-BY Corpus contributor"]
+    if not authors:
+        return None
     return {
         "source_id": f"elsevier-{doc_id}",
         "doi": doi,
@@ -673,7 +681,8 @@ def _olh_entry(article: dict[str, Any], content_path: Path, ordinal: int) -> dic
     authors = _olh_author_names(article.get("frozenauthors"))
     if not authors:
         authors = _olh_author_names(article.get("authors"))
-    authors = authors or ["Open Library of Humanities author"]
+    if not authors:
+        return None
     year = None
     match = re.match(r"^(\d{4})", str(article.get("date_published") or ""))
     if match:
@@ -819,8 +828,11 @@ def prepare_catalog(
         if not article_id or not xml_galleys:
             continue
         target = olh_dir / f"{article_id}.xml"
-        if not target.is_file():
-            _download(str(xml_galleys[0].get("path")), target, max_bytes=MAX_ARTICLE_BYTES)
+        # A path-only cache cannot prove that an existing byte copy came from
+        # the current API galley. Reacquire it every run so current metadata
+        # never binds to stale XML; the runtime acquisition lane remains
+        # responsible for immutable digest reuse after this preparation step.
+        _download(str(xml_galleys[0].get("path")), target, max_bytes=MAX_ARTICLE_BYTES)
         entry = _olh_entry(article, target, len(selected[discipline]))
         if entry is not None:
             selected[discipline].append(entry)

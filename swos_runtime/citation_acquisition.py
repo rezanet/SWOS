@@ -272,6 +272,19 @@ def _validate_semantic_assignment(
     policy = _validate_semantic_policy(policy)
     if not isinstance(value, Mapping):
         raise AcquisitionValidationError("candidate lacks a semantic temporal/OOD assignment")
+    allowed_fields = {
+        "partition",
+        "criteria_id",
+        "publication_year",
+        "start_year",
+        "catalog_declared_held_out_domain",
+        "domain_id",
+    }
+    undeclared = sorted(str(name) for name in value if name not in allowed_fields)
+    if undeclared:
+        raise AcquisitionValidationError(
+            "candidate semantic assignment contains undeclared fields: " + ", ".join(undeclared)
+        )
     partition = value.get("partition")
     criteria_id = value.get("criteria_id")
     if partition not in SEMANTIC_PARTITIONS or not _nonempty(criteria_id):
@@ -371,6 +384,9 @@ def validate_source_candidate_manifest(
         missing = [name for name in required if name not in source]
         if missing:
             raise AcquisitionValidationError(f"source {source_id} lacks " + ", ".join(missing))
+        state = source.get("state")
+        if state not in SOURCE_STATES:
+            raise AcquisitionValidationError(f"source {source_id} has an invalid state")
         if not _nonempty(source.get("stable_uri")) or not _nonempty(
             source.get("canonical_source_family")
         ):
@@ -379,11 +395,13 @@ def validate_source_candidate_manifest(
             raise AcquisitionValidationError(f"source {source_id} lacks bibliographic metadata")
         authors = source.get("authors")
         disciplines = source.get("disciplines")
-        if (
-            not isinstance(authors, Sequence)
-            or isinstance(authors, (str, bytes))
-            or not authors
-            or not all(_nonempty(item) for item in authors)
+        authors_valid = (
+            isinstance(authors, Sequence)
+            and not isinstance(authors, (str, bytes))
+            and all(_nonempty(item) for item in authors)
+        )
+        if not authors_valid or (
+            state in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"} and not authors
         ):
             raise AcquisitionValidationError(f"source {source_id} authors are invalid")
         if (
@@ -393,13 +411,10 @@ def validate_source_candidate_manifest(
             or not all(str(item) in SUPPORTED_DISCIPLINES for item in disciplines)
         ):
             raise AcquisitionValidationError(f"source {source_id} discipline mapping is invalid")
-        state = source.get("state")
-        if state not in SOURCE_STATES:
-            raise AcquisitionValidationError(f"source {source_id} has an invalid state")
         licence = source.get("licence")
         if not isinstance(licence, Mapping):
             raise AcquisitionValidationError(f"source {source_id} licence record is invalid")
-        for field in ("spdx", "uri", "version", "article_rights_uri", "verification"):
+        for field in ("spdx", "uri", "version", "verification"):
             if not _nonempty(licence.get(field)):
                 raise AcquisitionValidationError(f"source {source_id} licence lacks {field}")
         spdx = _normalise_license(licence.get("spdx"))
@@ -437,9 +452,15 @@ def validate_source_candidate_manifest(
         rejection_reason = source.get("rejection_reason")
         accepted = state in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}
         if accepted:
+            if not _nonempty(source.get("attribution")):
+                raise AcquisitionValidationError(f"source {source_id} attribution is missing")
             if spdx not in ADMISSIBLE_LICENSES:
                 raise AcquisitionValidationError(
                     f"source {source_id} uses a non-admissible licence"
+                )
+            if not _nonempty(licence.get("article_rights_uri")):
+                raise AcquisitionValidationError(
+                    f"source {source_id} licence lacks article_rights_uri"
                 )
             if licence.get("verification") != "article_level_verified":
                 raise AcquisitionValidationError(
@@ -474,8 +495,13 @@ def validate_source_candidate_manifest(
                 raise AcquisitionValidationError(
                     f"source {source_id} rejected record has an invalid hash"
                 )
-        if "semantic_split_default" in source:
-            _validate_semantic_assignment(source["semantic_split_default"], policy=policy)
+        semantic_split_default = source.get("semantic_split_default")
+        if accepted and not isinstance(semantic_split_default, Mapping):
+            raise AcquisitionValidationError(
+                f"source {source_id} lacks a declared semantic_split_default"
+            )
+        if semantic_split_default is not None:
+            _validate_semantic_assignment(semantic_split_default, policy=policy)
         family = str(source.get("canonical_source_family")).strip().lower()
         if family in families and state in {"CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"}:
             raise AcquisitionValidationError(
@@ -525,6 +551,11 @@ def validate_unlabelled_candidate_pair(
         "annotations",
         "adjudication",
     )
+    undeclared = sorted(str(name) for name in row if name not in required)
+    if undeclared:
+        raise AcquisitionValidationError(
+            "candidate packet contains undeclared top-level fields: " + ", ".join(undeclared)
+        )
     missing = [
         name
         for name in required
@@ -621,6 +652,25 @@ def validate_candidate_source_binding(
     if row.get("licence") != source.get("licence", {}).get("spdx"):
         raise AcquisitionValidationError(
             f"candidate {row.get('pair_id', '<unknown>')} licence binding mismatches"
+        )
+    if row.get("discipline") not in source.get("disciplines", []):
+        raise AcquisitionValidationError(
+            f"candidate {row.get('pair_id', '<unknown>')} discipline binding mismatches"
+        )
+    policy = source.get("semantic_split_policy", DEFAULT_SEMANTIC_POLICY)
+    declared_assignment = source.get("semantic_split_default")
+    if not isinstance(declared_assignment, Mapping):
+        raise AcquisitionValidationError(
+            f"candidate {row.get('pair_id', '<unknown>')} source lacks a semantic split binding"
+        )
+    expected_assignment = _validate_semantic_assignment(
+        declared_assignment,
+        policy=policy,
+    )
+    actual_assignment = _validate_semantic_assignment(row.get("semantic_split"), policy=policy)
+    if actual_assignment != expected_assignment:
+        raise AcquisitionValidationError(
+            f"candidate {row.get('pair_id', '<unknown>')} semantic split binding mismatches"
         )
 
 
@@ -1049,14 +1099,12 @@ def _source_record(
         entry.get("stable_uri") or entry.get("uri") or entry.get("content_uri") or ""
     ).strip()
     rights_uri = str(
-        raw_licence.get("article_rights_uri") or entry.get("article_rights_uri") or stable_uri
+        raw_licence.get("article_rights_uri") or entry.get("article_rights_uri") or ""
     ).strip()
     licence_uri = str(
         raw_licence.get("uri") or "https://spdx.org/licenses/NOASSERTION.html"
     ).strip()
-    authors = [str(value).strip() for value in entry.get("authors", []) if str(value).strip()] or [
-        "Unknown author"
-    ]
+    authors = [str(value).strip() for value in entry.get("authors", []) if str(value).strip()]
     title = str(entry.get("title") or "Untitled candidate source").strip()
     record: dict[str, Any] = {
         "source_id": str(entry.get("source_id") or "").strip(),
@@ -1078,7 +1126,7 @@ def _source_record(
             "evidence_uri": str(raw_licence.get("evidence_uri") or "").strip() or None,
             "verification_basis": str(raw_licence.get("verification_basis") or "").strip() or None,
         },
-        "attribution": str(entry.get("attribution") or " ".join(authors) + ", " + title).strip(),
+        "attribution": str(entry.get("attribution") or "").strip(),
         "acquired_at": _now(),
         "sha256": digest,
         "allowed_uses": [

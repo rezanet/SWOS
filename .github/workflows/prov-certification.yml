@@ -34,6 +34,7 @@ jobs:
         env:
           SOURCE_SHA: ${{ inputs.source_sha }}
         run: |
+          SOURCE_SHA="${SOURCE_SHA,,}"
           case "$SOURCE_SHA" in
             *[!0-9a-fA-F]*|'') echo "source_sha must be a hexadecimal commit SHA" >&2; exit 1 ;;
           esac
@@ -56,6 +57,7 @@ jobs:
         env:
           SOURCE_SHA: ${{ inputs.source_sha }}
         run: |
+          SOURCE_SHA="${SOURCE_SHA,,}"
           mkdir -p artifacts/research-grade/provenance
           printf '%s\n' "$SOURCE_SHA" > artifacts/research-grade/provenance/input-sha.txt
           git rev-parse HEAD > artifacts/research-grade/provenance/checked-out-sha.txt

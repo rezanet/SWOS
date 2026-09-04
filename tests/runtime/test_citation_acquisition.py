@@ -5,12 +5,15 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+import zipfile
 from copy import deepcopy
 from pathlib import Path
+from unittest.mock import patch
 
 from swos_runtime.citation_acquisition import (
     AcquisitionValidationError,
     _entry_licence_error,
+    _source_record,
     _source_semantic_assignment,
     acquire_candidates,
     semantic_grouped_split,
@@ -20,11 +23,13 @@ from swos_runtime.citation_acquisition import (
 )
 from swos_runtime.citation_dataset import DatasetValidationError, validate_pair_record
 from tools.prepare_t070_catalog import (
+    MAX_ARTICLE_BYTES,
     _elsevier_entry,
     _olh_entry,
     _semantic_assignment,
     classify_elsevier,
     classify_olh,
+    prepare_catalog,
 )
 
 
@@ -41,6 +46,12 @@ class CitationAcquisitionTests(unittest.TestCase):
             "publisher": "Example Press",
             "publication_date": "2019-01-02",
             "disciplines": ["engineering"],
+            "semantic_split_default": {
+                "partition": "in_domain",
+                "criteria_id": "T070-IN-DOMAIN-V1",
+                "publication_year": 2019,
+                "catalog_declared_held_out_domain": False,
+            },
             "licence": {
                 "spdx": "CC-BY-4.0",
                 "uri": "https://creativecommons.org/licenses/by/4.0/",
@@ -176,6 +187,17 @@ class CitationAcquisitionTests(unittest.TestCase):
         with self.assertRaises(AcquisitionValidationError):
             validate_unlabelled_candidate_pair(missing_adjudication_key)
 
+    def test_unlabelled_packet_rejects_undeclared_top_level_fields(self) -> None:
+        packet = self._pair("pair-extra", "group-extra")
+        packet["approved"] = True
+        with self.assertRaises(AcquisitionValidationError):
+            validate_unlabelled_candidate_pair(packet)
+
+        nested_extra = self._pair("pair-nested-extra", "group-nested-extra")
+        nested_extra["semantic_split"]["gold_label"] = "supported"
+        with self.assertRaises(AcquisitionValidationError):
+            validate_unlabelled_candidate_pair(nested_extra)
+
     def test_elsevier_catalog_requires_article_level_open_access_marker(self) -> None:
         data = {
             "docId": "S0000000000000000",
@@ -194,6 +216,7 @@ class CitationAcquisitionTests(unittest.TestCase):
                 "openaccess": "Full",
                 "title": "An engineering article",
                 "subjareas": ["ENGI"],
+                "authors": [{"first": "Example", "last": "Author"}],
             },
         }
         entry = _elsevier_entry(data, Path("article.json"), 0)
@@ -338,7 +361,7 @@ class CitationAcquisitionTests(unittest.TestCase):
                 "title": "Psychometric assessment of human memory",
                 "subjareas": ["COMP"],
                 "keywords": [],
-                "authors": [],
+                "authors": [{"first": "Example", "last": "Author"}],
                 "pub_year": 2019,
                 "doi": "10.1234/example.2",
             },
@@ -356,6 +379,7 @@ class CitationAcquisitionTests(unittest.TestCase):
             "pk": 5678,
             "license": {"short_name": "CC BY 4.0"},
             "galleys": [{"type": "xml", "path": "https://example.org/5678.xml"}],
+            "frozenauthors": [{"first_name": "Example", "last_name": "Author"}],
             "title": "Collections and public memory",
             "section": "Research article",
             "abstract": "A study of museum collections.",
@@ -366,9 +390,164 @@ class CitationAcquisitionTests(unittest.TestCase):
         assert olh_entry is not None
         olh_evidence = olh_entry["discipline_assignment"]
         self.assertEqual(olh_entry["disciplines"], ["art_history"])
-        self.assertIn("collections", olh_evidence["rule_terms"])
-        self.assertEqual(olh_evidence["matched_terms"], ["collections", "museum"])
-        self.assertEqual(olh_evidence["matched_evidence"]["title"], ["collections"])
+        self.assertNotIn("collections", olh_evidence["rule_terms"])
+        self.assertEqual(olh_evidence["matched_terms"], ["museum"])
+        self.assertNotIn("title", olh_evidence["matched_evidence"])
+
+    def test_generic_collections_does_not_define_olh_art_history(self) -> None:
+        article = {
+            "title": "Collections and public memory",
+            "section": "Research article",
+            "abstract": "A study of public memory and political humor.",
+        }
+        self.assertEqual(classify_olh(article), "humanities")
+
+    def test_catalog_rejects_sources_without_real_authors(self) -> None:
+        elsevier = {
+            "docId": "S0000000000000010",
+            "metadata": {
+                "openaccess": "Full",
+                "title": "Engineering methods and reliable systems",
+                "subjareas": ["ENGI"],
+                "keywords": ["engineering"],
+                "authors": [],
+            },
+        }
+        self.assertIsNone(_elsevier_entry(elsevier, Path("missing-authors.json"), 0))
+
+        olh = {
+            "pk": 9010,
+            "license": {"short_name": "CC BY 4.0"},
+            "galleys": [{"type": "xml", "path": "https://example.org/9010.xml"}],
+            "frozenauthors": [],
+            "authors": [],
+            "title": "A humanities source",
+            "date_published": "2019-01-02",
+        }
+        self.assertIsNone(_olh_entry(olh, Path("missing-authors.xml"), 0))
+
+    def test_rejected_source_does_not_invent_article_rights_uri(self) -> None:
+        entry = {
+            "source_id": "elsevier-unresolved",
+            "doi": "10.1234/unresolved",
+            "stable_uri": "https://doi.org/10.1234/unresolved",
+            "content_uri": "file:///cache/unresolved.json",
+            "title": "Unresolved rights",
+            "authors": ["Example Author"],
+            "publisher": "Example Press",
+            "publication_date": "2019-01-02",
+            "disciplines": ["engineering"],
+            "licence": {
+                "spdx": "UNKNOWN",
+                "uri": "https://spdx.org/licenses/NOASSERTION.html",
+                "version": "unspecified",
+                "article_rights_uri": "",
+                "verification": "unverified",
+            },
+            "attribution": "Example Author, Unresolved rights, Example Press",
+            "allowed_uses": [],
+            "third_party": {"status": "unknown", "warning": "Review rights."},
+        }
+        record = _source_record(
+            entry,
+            state="REJECTED_UNRESOLVED_LICENCE",
+            acquired_uri=None,
+            digest=None,
+            reason="article-level rights URI is missing",
+        )
+        self.assertEqual(record["licence"]["article_rights_uri"], "")
+
+        rejected = self._manifest()
+        rejected_source = rejected["sources"][0]
+        rejected_source["state"] = "REJECTED_UNRESOLVED_LICENCE"
+        rejected_source["approval"] = {"status": "not_requested", "reviewer_id": None}
+        rejected_source["rejection_reason"] = "article-level rights URI is missing"
+        rejected_source["authors"] = []
+        rejected_source["attribution"] = ""
+        rejected_source["licence"]["spdx"] = "UNKNOWN"
+        rejected_source["licence"]["article_rights_uri"] = ""
+        rejected_source["licence"]["verification"] = "unverified"
+        indexed = validate_source_candidate_manifest(rejected)
+        self.assertEqual(indexed["source-1"]["state"], "REJECTED_UNRESOLVED_LICENCE")
+
+        rejected_source["authors"] = ["Example Author"]
+        rejected_source["attribution"] = "Example Author, A licensed example, Example Press"
+        schema = json.loads(
+            Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        import jsonschema
+
+        self.assertEqual(list(jsonschema.Draft202012Validator(schema).iter_errors(rejected)), [])
+
+    def test_candidate_binding_rejects_discipline_and_semantic_split_tampering(self) -> None:
+        indexed = validate_source_candidate_manifest(self._manifest())
+
+        wrong_discipline = self._pair("pair-discipline", "group-discipline")
+        wrong_discipline["discipline"] = "technical_writing"
+        with self.assertRaises(AcquisitionValidationError):
+            validate_candidate_source_binding(wrong_discipline, indexed)
+
+        wrong_split = self._pair("pair-split", "group-split")
+        wrong_split["semantic_split"] = {
+            "partition": "temporal",
+            "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+            "publication_year": 2020,
+            "start_year": 2020,
+            "catalog_declared_held_out_domain": False,
+        }
+        with self.assertRaises(AcquisitionValidationError):
+            validate_candidate_source_binding(wrong_split, indexed)
+
+    def test_existing_olh_cache_is_reacquired_for_the_current_galley_uri(self) -> None:
+        article = {
+            "pk": 9011,
+            "license": {"short_name": "CC BY 4.0"},
+            "galleys": [{"type": "xml", "path": "https://example.org/current.xml"}],
+            "frozenauthors": [{"first_name": "Example", "last_name": "Author"}],
+            "title": "An ordinary humanities source",
+            "date_published": "2019-01-02",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            archive = root / "elsevier.zip"
+            with zipfile.ZipFile(archive, "w") as outer:
+                nested_path = root / "json-articals.zip"
+                with zipfile.ZipFile(nested_path, "w"):
+                    pass
+                outer.write(nested_path, "json-articals.zip")
+            cache = root / "cache"
+            stale = cache / "olh-xml" / "9011.xml"
+            stale.parent.mkdir(parents=True)
+            stale.write_text("stale bytes", encoding="utf-8")
+
+            def write_current(_url: str, path: Path, *, max_bytes: int) -> None:
+                self.assertEqual(max_bytes, MAX_ARTICLE_BYTES)
+                path.write_text("current bytes", encoding="utf-8")
+
+            # Re-run with the digest patched to the archive's actual bytes.
+            from tools import prepare_t070_catalog
+
+            actual_digest = prepare_t070_catalog._sha256(archive)
+            with (
+                patch("tools.prepare_t070_catalog._discover_olh", return_value=[article]),
+                patch(
+                    "tools.prepare_t070_catalog._download", side_effect=write_current
+                ) as download,
+                patch("tools.prepare_t070_catalog.ELSEVIER_ARCHIVE_SHA256", actual_digest),
+            ):
+                prepare_catalog(
+                    archive,
+                    cache,
+                    root / "catalog.json",
+                    per_discipline=1,
+                    olh_per_discipline=1,
+                )
+            download.assert_called_once_with(
+                "https://example.org/current.xml", stale, max_bytes=MAX_ARTICLE_BYTES
+            )
+            self.assertEqual(stale.read_text(encoding="utf-8"), "current bytes")
 
     def test_ood_domain_assignment_is_not_an_ordinal_bucket(self) -> None:
         self.assertEqual(_semantic_assignment(2019, "technical_writing", 1)["partition"], "ood")
@@ -486,14 +665,17 @@ class CitationAcquisitionTests(unittest.TestCase):
         policy = self._manifest()["semantic_split_policy"]
 
         older = self._source()
+        older.pop("semantic_split_default")
         older["publication_date"] = "2019-12-31"
         self.assertEqual(_source_semantic_assignment(older, policy)["partition"], "in_domain")
 
         later = self._source()
+        later.pop("semantic_split_default")
         later["publication_date"] = "2020-01-01"
         self.assertEqual(_source_semantic_assignment(later, policy)["partition"], "temporal")
 
         held_out = self._source()
+        held_out.pop("semantic_split_default")
         held_out["publication_date"] = "2024-01-01"
         held_out["catalog_declared_held_out_domain"] = True
         held_out["held_out_domain_id"] = "declared-ood-v1"

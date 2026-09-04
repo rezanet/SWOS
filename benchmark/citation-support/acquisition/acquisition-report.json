@@ -13,45 +13,45 @@
     "A14": "summary stronger than passage",
     "A15": "neighboring mechanism"
   },
-  "candidate_families_rejected_for_span_collision": 185,
+  "candidate_families_rejected_for_span_collision": 172,
   "candidate_pairs": 6000,
   "candidate_pairs_by_discipline": {
-    "art_criticism": 870,
-    "art_history": 825,
+    "art_criticism": 865,
+    "art_history": 865,
     "engineering": 0,
-    "humanities": 865,
-    "interdisciplinary": 870,
+    "humanities": 855,
+    "interdisciplinary": 860,
     "materials_science": 0,
-    "philosophy": 850,
-    "psychology": 820,
+    "philosophy": 845,
+    "psychology": 810,
     "technical_writing": 900
   },
   "candidate_pairs_by_pattern": {
     "A01": 1200,
     "A02": 1200,
     "A03": 1200,
-    "A04": 617,
-    "A05": 420,
-    "A06": 134,
+    "A04": 609,
+    "A05": 422,
+    "A06": 131,
     "A07": 141,
-    "A08": 62,
-    "A09": 130,
-    "A10": 533,
-    "A11": 216,
-    "A12": 25,
+    "A08": 67,
+    "A09": 122,
+    "A10": 542,
+    "A11": 219,
+    "A12": 26,
     "A13": 5,
-    "A14": 44,
+    "A14": 43,
     "A15": 73
   },
   "candidate_pairs_by_pattern_basis": {
-    "fallback_pending_human_review": 216,
-    "lexical_heuristic": 2184,
+    "fallback_pending_human_review": 217,
+    "lexical_heuristic": 2183,
     "stratum_defined": 3600
   },
   "candidate_pairs_by_semantic_partition": {
-    "in_domain": 1455,
+    "in_domain": 1420,
     "ood": 900,
-    "temporal": 3645
+    "temporal": 3680
   },
   "candidate_pairs_by_stratum": {
     "S1": 1200,
@@ -60,16 +60,16 @@
     "S4": 1200,
     "S5": 1200
   },
-  "catalog_sha256": "45eddb6cdf887c3d4ab1a3c545e662b223b9a092d40b8418da41db7a15126a0d",
-  "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog-v9.json",
+  "catalog_sha256": "834bf6b42b5abbea9483c071485e04114cc717d2dc5abe4e0f6cee0facc3362b",
+  "catalog_uri": "file:///C:/GitHub/SWOS-t070-acquisition-cache/citation-source-catalog-v10.json",
   "claim_families": 1200,
   "claim_families_by_semantic_partition": {
-    "in_domain": 291,
+    "in_domain": 284,
     "ood": 180,
-    "temporal": 729
+    "temporal": 736
   },
   "claim_family_leakage": [],
-  "downloaded_sources": 193,
+  "downloaded_sources": 184,
   "duplicate_candidate_span_count": 0,
   "group_leakage": [],
   "human_annotation": {
@@ -82,26 +82,26 @@
   "independent_approval": false,
   "labels_present": [],
   "licence_counts_by_reason": {
-    "admissible_pending_review": 193,
+    "admissible_pending_review": 184,
     "rejected_content": 0,
     "rejected_duplicate": 0,
     "rejected_rights": 0,
     "rejected_unresolved_licence": 315
   },
   "output_digests": {
-    "source_candidate_manifest_sha256": "0ad0ea346e8a1b682a247bbdd1d6c9d55314a0b95424f0dcb6e1625e5c7853cc",
-    "unlabelled_candidate_pairs_sha256": "a9aa9e3ff615fa4c1d3f7a362115b0ea813e1d74a02af18669a89c69a9df5992"
+    "source_candidate_manifest_sha256": "95bc6a29cd2c948141bc3513bed91d29bb183c4c7ae69f990fea7376d93d7630",
+    "unlabelled_candidate_pairs_sha256": "538028d6e0294515d842de9c3c5cb18c353d8002ca5715f261a8016bcc7f7451"
   },
   "pairs_by_discipline_and_semantic_partition": {
     "art_criticism": {
       "in_domain": 445,
       "ood": 0,
-      "temporal": 425
+      "temporal": 420
     },
     "art_history": {
-      "in_domain": 285,
+      "in_domain": 265,
       "ood": 0,
-      "temporal": 540
+      "temporal": 600
     },
     "engineering": {
       "in_domain": 0,
@@ -111,12 +111,12 @@
     "humanities": {
       "in_domain": 0,
       "ood": 0,
-      "temporal": 865
+      "temporal": 855
     },
     "interdisciplinary": {
       "in_domain": 130,
       "ood": 0,
-      "temporal": 740
+      "temporal": 730
     },
     "materials_science": {
       "in_domain": 0,
@@ -124,12 +124,12 @@
       "temporal": 0
     },
     "philosophy": {
-      "in_domain": 260,
+      "in_domain": 255,
       "ood": 0,
       "temporal": 590
     },
     "psychology": {
-      "in_domain": 335,
+      "in_domain": 325,
       "ood": 0,
       "temporal": 485
     },
@@ -140,55 +140,55 @@
     }
   },
   "pairs_by_semantic_partition": {
-    "in_domain": 1455,
+    "in_domain": 1420,
     "ood": 900,
-    "temporal": 3645
+    "temporal": 3680
   },
   "pairs_by_stratum_and_semantic_partition": {
     "S1": {
-      "in_domain": 291,
+      "in_domain": 284,
       "ood": 180,
-      "temporal": 729
+      "temporal": 736
     },
     "S2": {
-      "in_domain": 291,
+      "in_domain": 284,
       "ood": 180,
-      "temporal": 729
+      "temporal": 736
     },
     "S3": {
-      "in_domain": 291,
+      "in_domain": 284,
       "ood": 180,
-      "temporal": 729
+      "temporal": 736
     },
     "S4": {
-      "in_domain": 291,
+      "in_domain": 284,
       "ood": 180,
-      "temporal": 729
+      "temporal": 736
     },
     "S5": {
-      "in_domain": 291,
+      "in_domain": 284,
       "ood": 180,
-      "temporal": 729
+      "temporal": 736
     }
   },
   "publication_year_histogram": {
     "2015": 1,
-    "2016": 1,
-    "2017": 1,
-    "2018": 34,
-    "2019": 28,
+    "2016": 3,
+    "2017": 2,
+    "2018": 27,
+    "2019": 26,
     "2020": 16,
     "2021": 11,
-    "2022": 12,
-    "2023": 11,
-    "2024": 14,
+    "2022": 11,
+    "2023": 10,
+    "2024": 13,
     "2025": 36,
     "2026": 28
   },
   "release_status": "NOT_CERTIFIED",
   "reused_sources": 0,
   "schema_version": "2.0.0",
-  "scholarly_works_discovered": 508,
+  "scholarly_works_discovered": 499,
   "semantic_split_policy": {
     "ood": {
       "criteria_id": "T070-OOD-DOMAIN-V1",
@@ -202,20 +202,20 @@
     "version": "2.0.0"
   },
   "source_counts_by_state": {
-    "ADMISSIBLE_PENDING_REVIEW": 193,
+    "ADMISSIBLE_PENDING_REVIEW": 184,
     "REJECTED_UNRESOLVED_LICENCE": 315
   },
   "source_families": {
     "by_provider": {
       "elsevier": 315,
-      "olh": 193
+      "olh": 184
     },
-    "unique_admissible": 193
+    "unique_admissible": 184
   },
   "source_families_by_semantic_partition": {
-    "in_domain": 59,
+    "in_domain": 53,
     "ood": 6,
-    "temporal": 128
+    "temporal": 125
   },
   "source_family_leakage": [],
   "status": "READY_FOR_HUMAN_ANNOTATION",
@@ -229,28 +229,28 @@
   "target_pairs": 6000,
   "temporal_holdout_selection": {
     "claim_families_by_partition": {
-      "in_domain": 291,
+      "in_domain": 284,
       "ood": 180,
-      "temporal": 729
+      "temporal": 736
     },
     "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
     "pairs_by_partition": {
-      "in_domain": 1455,
+      "in_domain": 1420,
       "ood": 900,
-      "temporal": 3645
+      "temporal": 3680
     },
     "policy_version": "2.0.0",
     "publication_year_histogram": {
       "2015": 1,
-      "2016": 1,
-      "2017": 1,
-      "2018": 34,
-      "2019": 28,
+      "2016": 3,
+      "2017": 2,
+      "2018": 27,
+      "2019": 26,
       "2020": 16,
       "2021": 11,
-      "2022": 12,
-      "2023": 11,
-      "2024": 14,
+      "2022": 11,
+      "2023": 10,
+      "2024": 13,
       "2025": 36,
       "2026": 28
     },
@@ -258,11 +258,11 @@
     "rule": "publication_year >= 2020 and catalog_declared_held_out_domain is not true",
     "selection_basis": "publication-year histogram and pre-annotation benchmark viability; no human labels or model performance were consulted",
     "source_families_by_partition": {
-      "in_domain": 59,
+      "in_domain": 53,
       "ood": 6,
-      "temporal": 128
+      "temporal": 125
     },
     "start_year": 2020
   },
-  "third_party_warning_sources": 508
+  "third_party_warning_sources": 499
 }

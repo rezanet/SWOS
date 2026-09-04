@@ -1,4 +1,4 @@
-# T070 acquisition record — 2026-09-03
+# T070 acquisition record — 2026-09-04
 
 Status: `READY_FOR_HUMAN_ANNOTATION`; T070 remains open and Research Grade is
 not certified. This record describes a pre-annotation candidate set only.
@@ -14,7 +14,7 @@ not certified. This record describes a pre-annotation candidate set only.
 - Open Library of Humanities article API:
   `https://olh.openlibhums.org/api/articles/`
 - Article-level OLH XML galleys were fetched only when the official article API
-  returned `CC BY 4.0`. The 193 admitted OLH source families retain their
+  returned `CC BY 4.0`. The 184 admitted OLH source families retain their
   article rights URI, exact licence URI/version, attribution, exact
   acquired-copy URI, SHA-256, and a third-party-rights warning.
 - The Elsevier archive records only the dataset-level `openaccess=Full` marker
@@ -28,13 +28,13 @@ The bulk archive and acquired article copies are machine-local under
 
 ## Prepared candidate set
 
-- 508 catalog source records: 315 Elsevier records with unresolved rights and
-  193 OLH source families admissible pending human review. Only the 193
+- 499 catalog source records: 315 Elsevier records with unresolved rights and
+  184 OLH source families admissible pending human review. Only the 184
   article-level rights-screened OLH source families enter the packet manifest.
 - 1,200 source-authored claim families and exactly 6,000 candidate pairs.
-- Candidate pairs by discipline are: art_criticism 870, art_history 825,
-  engineering 0, humanities 865, interdisciplinary 870, materials_science 0,
-  philosophy 850, psychology 820, and technical_writing 900. Zero-count
+- Candidate pairs by discipline are: art_criticism 865, art_history 865,
+  engineering 0, humanities 855, interdisciplinary 860, materials_science 0,
+  philosophy 845, psychology 810, and technical_writing 900. Zero-count
   disciplines are reported explicitly because their rights-cleared source
   profiles are not yet available.
 - Exactly 1,200 candidates in each acquisition stratum: direct candidate,
@@ -53,22 +53,22 @@ The bulk archive and acquired article copies are machine-local under
   terms, matched terms, matched subject codes, and any explicit corpus-scope
   fallback; unresolved Elsevier `ARTS` records are excluded rather than being
   assigned to `art_history`. Every assignment remains pending human review.
-- The publication-year histogram for the 193 admitted packet source families
-  is: `2015: 1`, `2016: 1`, `2017: 1`, `2018: 34`, `2019: 28`, `2020: 16`,
-  `2021: 11`, `2022: 12`, `2023: 11`, `2024: 14`, `2025: 36`, `2026: 28`.
+- The publication-year histogram for the 184 admitted packet source families
+  is: `2015: 1`, `2016: 3`, `2017: 2`, `2018: 27`, `2019: 26`, `2020: 16`,
+  `2021: 11`, `2022: 11`, `2023: 10`, `2024: 13`, `2025: 36`, `2026: 28`.
 - The 2020 boundary was selected from corpus availability and pre-annotation
-  benchmark viability only: 59 in-domain source families / 291 claim families
-  / 1,455 pairs; 128 temporal source families / 729 claim families / 3,645
+  benchmark viability only: 53 in-domain source families / 284 claim families
+  / 1,420 pairs; 125 temporal source families / 736 claim families / 3,680
   pairs; and 6 OOD source families / 180 claim families / 900 pairs. It retains a
   useful later holdout while leaving substantial in-domain material for train,
   calibration, and locked-test. No human labels or model performance were
   consulted, and changing the boundary requires a new semantic policy version.
 - Pair counts by discipline `(in_domain, temporal, ood)` are: art_criticism
-  `(445, 425, 0)`, art_history `(285, 540, 0)`, engineering `(0, 0, 0)`,
-  humanities `(0, 865, 0)`, interdisciplinary `(130, 740, 0)`,
-  materials_science `(0, 0, 0)`, philosophy `(260, 590, 0)`, psychology
-  `(335, 485, 0)`, and technical_writing `(0, 0, 900)`. Each stratum S1–S5
-  has `(291, 729, 180)` pairs in `(in_domain, temporal, ood)`.
+  `(445, 420, 0)`, art_history `(265, 600, 0)`, engineering `(0, 0, 0)`,
+  humanities `(0, 855, 0)`, interdisciplinary `(130, 730, 0)`,
+  materials_science `(0, 0, 0)`, philosophy `(255, 590, 0)`, psychology
+  `(325, 485, 0)`, and technical_writing `(0, 0, 900)`. Each stratum S1–S5
+  has `(284, 736, 180)` pairs in `(in_domain, temporal, ood)`.
 - 1,200 isolated canonical claim groups; no group crosses a semantic partition
   or generated split.
 - 0 support labels, 0 annotator identities, and 0 adjudications are present.
@@ -77,7 +77,7 @@ The bulk archive and acquired article copies are machine-local under
 
 ## Human and release boundary
 
-All 193 admitted sources are `ADMISSIBLE_PENDING_REVIEW`, never `APPROVED`; the
+All 184 admitted sources are `ADMISSIBLE_PENDING_REVIEW`, never `APPROVED`; the
 315 Elsevier records are `REJECTED_UNRESOLVED_LICENCE` and have no acquired
 copy in the packet output. All 6,000 packets are unlabelled candidates, not
 evaluation truth. Independent source-rights review, two competent independent

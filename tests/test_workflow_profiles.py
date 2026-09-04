@@ -31,6 +31,7 @@ class WorkflowProfileInspectionTests(unittest.TestCase):
                 self.assertIn("description: Full 40-character commit SHA to evaluate", workflow)
                 self.assertIn("ref: ${{ inputs.source_sha }}", workflow)
                 self.assertIn("SOURCE_SHA: ${{ inputs.source_sha }}", workflow)
+                self.assertIn('SOURCE_SHA="${SOURCE_SHA,,}"', workflow)
                 self.assertIn('test "$(git rev-parse HEAD)" = "$SOURCE_SHA"', workflow)
                 self.assertIn("git rev-parse HEAD >", workflow)
                 self.assertIn("uses: actions/upload-artifact@v4", workflow)
