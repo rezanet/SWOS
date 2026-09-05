@@ -3,6 +3,10 @@ name: Research Grade citation model evaluation
 on:
   workflow_dispatch:
     inputs:
+      source_sha:
+        description: Full 40-character commit SHA to evaluate
+        required: true
+        type: string
       model_manifest:
         description: "Repository-relative verified model manifest"
         required: true
@@ -26,10 +30,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.source_sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Verify exact evaluated commit
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          SOURCE_SHA="${SOURCE_SHA,,}"
+          case "$SOURCE_SHA" in
+            *[!0-9a-fA-F]*|'') echo "source_sha must be a hexadecimal commit SHA" >&2; exit 1 ;;
+          esac
+          test "${#SOURCE_SHA}" -eq 40
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Install deterministic runtime
         run: python -m pip install --disable-pip-version-check --no-input -e .
       - name: Require the exact verified release inputs
@@ -49,3 +64,20 @@ jobs:
             --locked-test "${{ inputs.locked_test }}" \
             --predictions-out artifacts/research-grade/citation-model/locked-predictions.jsonl \
             --report-out artifacts/research-grade/citation-model/locked-evaluation.json
+      - name: Record exact evaluated SHA
+        if: always()
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          SOURCE_SHA="${SOURCE_SHA,,}"
+          mkdir -p artifacts/research-grade/citation-model
+          printf '%s\n' "$SOURCE_SHA" > artifacts/research-grade/citation-model/input-sha.txt
+          git rev-parse HEAD > artifacts/research-grade/citation-model/checked-out-sha.txt
+      - name: Upload immutable citation evaluation outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-grade-citation-model-${{ inputs.source_sha }}
+          path: artifacts/research-grade/citation-model/
+          if-no-files-found: warn
+          retention-days: 30

@@ -16,6 +16,28 @@ class WorkflowProfileInspectionTests(unittest.TestCase):
     def test_repository_workflows_have_safe_profile_boundaries(self) -> None:
         self.assertEqual(inspect_workflow_files(REPOSITORY_ROOT), [])
 
+    def test_release_evidence_workflows_bind_and_publish_exact_head_outputs(self) -> None:
+        expectations = {
+            "citation-model-evaluation.yml": "research-grade-citation-model",
+            "prov-certification.yml": "research-grade-provenance",
+        }
+        for workflow_name, artifact_name in expectations.items():
+            with self.subTest(workflow=workflow_name):
+                workflow = (REPOSITORY_ROOT / ".github" / "workflows" / workflow_name).read_text(
+                    encoding="utf-8"
+                )
+
+                self.assertIn("source_sha:", workflow)
+                self.assertIn("description: Full 40-character commit SHA to evaluate", workflow)
+                self.assertIn("ref: ${{ inputs.source_sha }}", workflow)
+                self.assertIn("SOURCE_SHA: ${{ inputs.source_sha }}", workflow)
+                self.assertIn('SOURCE_SHA="${SOURCE_SHA,,}"', workflow)
+                self.assertIn('test "$(git rev-parse HEAD)" = "$SOURCE_SHA"', workflow)
+                self.assertIn("git rev-parse HEAD >", workflow)
+                self.assertIn("uses: actions/upload-artifact@v4", workflow)
+                self.assertIn("if: always()", workflow)
+                self.assertIn(f"name: {artifact_name}-${{{{ inputs.source_sha }}}}", workflow)
+
     def test_pull_request_portability_release_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)

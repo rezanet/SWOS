@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swos.dev/schemas/research-grade/citation-source-candidate-2.0.0.schema.json",
+  "title": "SWOS Research Grade citation source candidate manifest",
+  "description": "Pre-annotation source, rights, acquisition, and independent-review records. This is not the approved final source manifest.",
+  "x-swos-version": "2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_type",
+    "status",
+    "generated_at",
+    "semantic_split_policy",
+    "sources"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "manifest_type": {"const": "citation_support_source_candidates"},
+    "status": {"enum": ["ACQUISITION_INCOMPLETE", "READY_FOR_HUMAN_ANNOTATION"]},
+    "generated_at": {"type": "string", "minLength": 1},
+    "catalog_uri": {"type": ["string", "null"]},
+    "catalog_sha256": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "acquisition": {"type": "object"},
+    "semantic_split_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "temporal", "ood"],
+      "properties": {
+        "version": {"const": "2.0.0"},
+        "temporal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["criteria_id", "definition", "start_year"],
+          "properties": {
+            "criteria_id": {"const": "T070-TEMPORAL-LATER-YEAR-V1"},
+            "definition": {
+              "const": "publication_year >= 2020 and catalog_declared_held_out_domain is not true"
+            },
+            "start_year": {"const": 2020}
+          }
+        },
+        "ood": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["criteria_id", "definition"],
+          "properties": {
+            "criteria_id": {"const": "T070-OOD-DOMAIN-V1"},
+            "definition": {"const": "catalog_declared_held_out_domain is true"}
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/source"}
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "doi",
+        "stable_uri",
+        "exact_acquired_copy_uri",
+        "canonical_source_family",
+        "title",
+        "authors",
+        "publisher",
+        "publication_date",
+        "disciplines",
+        "licence",
+        "attribution",
+        "acquired_at",
+        "sha256",
+        "allowed_uses",
+        "third_party",
+        "state",
+        "approval",
+        "rejection_reason"
+      ],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "doi": {"type": ["string", "null"]},
+        "stable_uri": {"type": "string", "minLength": 1},
+        "exact_acquired_copy_uri": {"type": ["string", "null"]},
+        "canonical_source_family": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "authors": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "publisher": {"type": "string", "minLength": 1},
+        "publication_date": {"type": "string", "minLength": 1},
+        "disciplines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "art_history",
+              "art_criticism",
+              "engineering",
+              "humanities",
+              "interdisciplinary",
+              "materials_science",
+              "philosophy",
+              "psychology",
+              "technical_writing"
+            ]
+          }
+        },
+        "licence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["spdx", "uri", "version", "article_rights_uri", "verification"],
+          "properties": {
+            "spdx": {"type": "string", "minLength": 1},
+            "uri": {"type": "string", "minLength": 1},
+            "version": {"type": "string", "minLength": 1},
+            "article_rights_uri": {"type": "string"},
+            "verification": {"type": "string", "minLength": 1},
+            "evidence_uri": {"type": ["string", "null"]},
+            "verification_basis": {"type": ["string", "null"]}
+          }
+        },
+        "attribution": {"type": "string"},
+        "acquired_at": {"type": "string", "minLength": 1},
+        "sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "allowed_uses": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": ["candidate_generation", "human_annotation", "provenance_audit"]
+          }
+        },
+        "third_party": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "warning"],
+          "properties": {
+            "status": {"enum": ["clear", "warning", "unknown"]},
+            "warning": {"type": "string", "minLength": 1}
+          }
+        },
+        "state": {
+          "enum": [
+            "CANDIDATE",
+            "ADMISSIBLE_PENDING_REVIEW",
+            "REJECTED_RIGHTS",
+            "REJECTED_CONTENT",
+            "REJECTED_DUPLICATE",
+            "REJECTED_UNRESOLVED_LICENCE"
+          ]
+        },
+        "approval": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reviewer_id"],
+          "properties": {
+            "status": {"enum": ["pending", "not_requested"]},
+            "reviewer_id": {"type": ["string", "null"]}
+          }
+        },
+        "rejection_reason": {"type": ["string", "null"]},
+        "semantic_split_default": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "partition": {"enum": ["in_domain", "temporal", "ood"]},
+            "criteria_id": {"type": "string", "minLength": 1},
+            "publication_year": {"type": ["integer", "null"]},
+            "start_year": {"type": "integer"},
+            "catalog_declared_held_out_domain": {"type": "boolean"},
+            "domain_id": {"type": "string", "minLength": 1}
+          },
+          "oneOf": [
+            {
+              "required": [
+                "partition",
+                "criteria_id",
+                "publication_year",
+                "start_year",
+                "catalog_declared_held_out_domain"
+              ],
+              "properties": {
+                "partition": {"const": "temporal"},
+                "criteria_id": {"const": "T070-TEMPORAL-LATER-YEAR-V1"},
+                "publication_year": {"type": "integer", "minimum": 2020},
+                "start_year": {"const": 2020},
+                "catalog_declared_held_out_domain": {"const": false}
+              }
+            },
+            {
+              "required": [
+                "partition",
+                "criteria_id",
+                "publication_year",
+                "catalog_declared_held_out_domain"
+              ],
+              "properties": {
+                "partition": {"const": "in_domain"},
+                "criteria_id": {"const": "T070-IN-DOMAIN-V1"},
+                "publication_year": {"type": ["integer", "null"], "maximum": 2019},
+                "catalog_declared_held_out_domain": {"const": false}
+              }
+            },
+            {
+              "required": [
+                "partition",
+                "criteria_id",
+                "catalog_declared_held_out_domain",
+                "domain_id"
+              ],
+              "properties": {
+                "partition": {"const": "ood"},
+                "criteria_id": {"const": "T070-OOD-DOMAIN-V1"},
+                "catalog_declared_held_out_domain": {"const": true},
+                "domain_id": {"type": "string", "minLength": 1}
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "enum": ["CANDIDATE", "ADMISSIBLE_PENDING_REVIEW"]
+              }
+            }
+          },
+          "then": {
+            "required": ["semantic_split_default"],
+            "properties": {
+              "authors": {"minItems": 1},
+              "attribution": {"minLength": 1},
+              "exact_acquired_copy_uri": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+              "allowed_uses": {
+                "minItems": 2,
+                "uniqueItems": true,
+                "allOf": [
+                  {"contains": {"const": "candidate_generation"}},
+                  {"contains": {"const": "human_annotation"}}
+                ]
+              },
+              "approval": {
+                "properties": {
+                  "status": {"const": "pending"},
+                  "reviewer_id": {"type": "null"}
+                }
+              },
+              "licence": {
+                "properties": {
+                  "spdx": {"enum": ["CC-BY-4.0", "CC0-1.0", "PUBLIC-DOMAIN"]},
+                  "article_rights_uri": {"minLength": 1},
+                  "verification": {"const": "article_level_verified"}
+                }
+              },
+              "rejection_reason": {
+                "anyOf": [{"type": "null"}, {"const": ""}]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "enum": [
+                  "REJECTED_RIGHTS",
+                  "REJECTED_CONTENT",
+                  "REJECTED_DUPLICATE",
+                  "REJECTED_UNRESOLVED_LICENCE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "approval": {
+                "required": ["status", "reviewer_id"],
+                "properties": {
+                  "status": {"const": "not_requested"},
+                  "reviewer_id": {"anyOf": [{"type": "null"}, {"const": ""}]}
+                }
+              },
+              "rejection_reason": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      ]
+    }
+  }
+}
