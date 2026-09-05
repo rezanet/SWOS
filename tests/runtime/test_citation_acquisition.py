@@ -824,6 +824,22 @@ class CitationAcquisitionTests(unittest.TestCase):
         self.assertIn("main article body", text)
         self.assertNotIn("Nested reviewer prose", text)
 
+    def test_bom_prefixed_jats_uses_the_structured_text_boundary(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "bom.source"
+            content.write_bytes(
+                b"\xef\xbb\xbf<article><front><article-meta>"
+                b"<article-title>Metadata title</article-title></article-meta></front>"
+                b"<body><p>The BOM-prefixed body contains a bounded scholarly claim here.</p>"
+                b"</body><back><ref-list><ref>Back metadata text.</ref></ref-list></back></article>"
+            )
+
+            text = _read_text_content(content)
+
+        self.assertIn("BOM-prefixed body", text)
+        self.assertNotIn("Metadata title", text)
+        self.assertNotIn("Back metadata text", text)
+
     def test_candidate_schema_enforces_rejected_approval_contract(self) -> None:
         schema = json.loads(
             Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
@@ -1155,6 +1171,13 @@ class CitationAcquisitionTests(unittest.TestCase):
         missing_in_domain_domain_flag["semantic_split"].pop("catalog_declared_held_out_domain")
         with self.assertRaises(AcquisitionValidationError):
             validate_unlabelled_candidate_pair(missing_in_domain_domain_flag, policy=policy)
+
+        non_integer_in_domain_year = self._pair(
+            "runtime-in-domain-string-year", "runtime-in-domain-string-year", "in_domain"
+        )
+        non_integer_in_domain_year["semantic_split"]["publication_year"] = "2026"
+        with self.assertRaises(AcquisitionValidationError):
+            validate_unlabelled_candidate_pair(non_integer_in_domain_year, policy=policy)
 
     def test_temporal_cutoff_change_requires_a_policy_version_change(self) -> None:
         policy = self._manifest()["semantic_split_policy"]

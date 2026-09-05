@@ -433,10 +433,10 @@ def _validate_semantic_assignment(
         if "catalog_declared_held_out_domain" not in value:
             raise AcquisitionValidationError("in-domain candidate lacks an explicit non-OOD field")
         year = value.get("publication_year")
-        if (
-            isinstance(year, int)
-            and not isinstance(year, bool)
-            and year >= policy["temporal"]["start_year"]
+        if year is not None and (
+            isinstance(year, bool)
+            or not isinstance(year, int)
+            or year >= policy["temporal"]["start_year"]
         ):
             raise AcquisitionValidationError("later-period candidate cannot be marked in-domain")
         if value.get("catalog_declared_held_out_domain") is not False:
@@ -1068,6 +1068,8 @@ def _read_catalog(path: Path) -> tuple[dict[str, Any], str]:
 def _read_text_content(path: Path) -> str:
     raw = path.read_bytes()
     stripped = raw.lstrip()
+    if stripped.startswith(b"\xef\xbb\xbf"):
+        stripped = stripped[3:].lstrip()
     if path.suffix.lower() in {".json", ".jsonl"} or stripped[:1] in {b"{", b"["}:
         try:
             payload = json.loads(raw.decode("utf-8-sig"))
