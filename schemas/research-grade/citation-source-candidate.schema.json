@@ -272,6 +272,33 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "enum": [
+                  "REJECTED_RIGHTS",
+                  "REJECTED_CONTENT",
+                  "REJECTED_DUPLICATE",
+                  "REJECTED_UNRESOLVED_LICENCE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "approval": {
+                "required": ["status", "reviewer_id"],
+                "properties": {
+                  "status": {"const": "not_requested"},
+                  "reviewer_id": {"anyOf": [{"type": "null"}, {"const": ""}]}
+                }
+              },
+              "rejection_reason": {"type": "string", "minLength": 1}
+            }
+          }
         }
       ]
     }

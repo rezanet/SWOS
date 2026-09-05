@@ -371,7 +371,24 @@ def _olh_article_doi(content_path: Path) -> str | None:
         root = ET.parse(content_path).getroot()
     except (OSError, ET.ParseError):
         return None
-    for element in root.iter():
+
+    if str(root.tag).rsplit("}", 1)[-1] != "article":
+        return None
+    front = next(
+        (child for child in root if str(child.tag).rsplit("}", 1)[-1] == "front"),
+        None,
+    )
+    article_meta = next(
+        (
+            child
+            for child in (front if front is not None else [])
+            if str(child.tag).rsplit("}", 1)[-1] == "article-meta"
+        ),
+        None,
+    )
+    if article_meta is None:
+        return None
+    for element in article_meta.iter():
         tag = str(element.tag).rsplit("}", 1)[-1]
         pub_id_type = next(
             (
@@ -890,6 +907,9 @@ def prepare_catalog(
             item for item in galleys or [] if isinstance(item, dict) and item.get("type") == "xml"
         ]
         if not article_id or not xml_galleys:
+            continue
+        licence = article.get("license")
+        if not isinstance(licence, dict) or licence.get("short_name") != "CC BY 4.0":
             continue
         target = olh_dir / f"{article_id}.xml"
         # A path-only cache cannot prove that an existing byte copy came from

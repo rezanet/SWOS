@@ -1096,11 +1096,28 @@ def _read_text_content(path: Path) -> str:
             if str(root.tag).rsplit("}", 1)[-1] == "article":
                 parents = {child: parent for parent in root.iter() for child in parent}
                 prose_nodes = []
+
+                def has_nested_article_ancestor(element: ET.Element) -> bool:
+                    ancestor = parents.get(element)
+                    while ancestor is not None and ancestor is not root:
+                        if str(ancestor.tag).rsplit("}", 1)[-1] in {
+                            "article",
+                            "response",
+                            "sub-article",
+                        }:
+                            return True
+                        ancestor = parents.get(ancestor)
+                    return False
+
                 for element in root.iter():
                     tag = str(element.tag).rsplit("}", 1)[-1]
-                    if tag == "body":
+                    if tag == "body" and parents.get(element) is root:
+                        if has_nested_article_ancestor(element):
+                            continue
                         prose_nodes.append(element)
                     elif tag == "abstract":
+                        if has_nested_article_ancestor(element):
+                            continue
                         ancestor = parents.get(element)
                         inside_body = False
                         while ancestor is not None:

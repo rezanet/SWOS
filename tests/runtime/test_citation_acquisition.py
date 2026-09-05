@@ -663,6 +663,40 @@ class CitationAcquisitionTests(unittest.TestCase):
             )
             self.assertEqual(stale.read_text(encoding="utf-8"), "current bytes")
 
+    def test_prepare_catalog_checks_olh_licence_before_downloading_galley(self) -> None:
+        article = {
+            "pk": 9012,
+            "license": {"short_name": "CC BY-NC 4.0"},
+            "galleys": [{"type": "xml", "path": "https://example.org/9012.xml"}],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            archive = root / "elsevier.zip"
+            with zipfile.ZipFile(archive, "w") as outer:
+                nested_path = root / "json-articals.zip"
+                with zipfile.ZipFile(nested_path, "w"):
+                    pass
+                outer.write(nested_path, "json-articals.zip")
+
+            from tools import prepare_t070_catalog
+
+            actual_digest = prepare_t070_catalog._sha256(archive)
+            with (
+                patch("tools.prepare_t070_catalog._discover_olh", return_value=[article]),
+                patch("tools.prepare_t070_catalog._download") as download,
+                patch("tools.prepare_t070_catalog.ELSEVIER_ARCHIVE_SHA256", actual_digest),
+            ):
+                result = prepare_catalog(
+                    archive,
+                    root / "cache",
+                    root / "catalog.json",
+                    per_discipline=1,
+                    olh_per_discipline=1,
+                )
+
+            download.assert_not_called()
+            self.assertEqual(result["source_count"], 0)
+
     def test_ood_domain_assignment_is_not_an_ordinal_bucket(self) -> None:
         self.assertEqual(_semantic_assignment(2019, "technical_writing", 1)["partition"], "ood")
         self.assertEqual(_semantic_assignment(2025, "technical_writing", 2)["partition"], "ood")
@@ -731,6 +765,29 @@ class CitationAcquisitionTests(unittest.TestCase):
         assert entry is not None
         self.assertEqual(entry["doi"], "10.16995/olh.80")
 
+    def test_olh_entry_ignores_doi_declared_only_in_nested_sub_article(self) -> None:
+        article = {
+            "pk": 4433,
+            "license": {"short_name": "CC BY 4.0"},
+            "galleys": [{"type": "xml", "path": "https://example.org/4433.xml"}],
+            "frozenauthors": [{"first_name": "Example", "last_name": "Author"}],
+            "date_published": "2022-01-02",
+            "title": "A compound source without a main DOI",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "article.xml"
+            content.write_text(
+                "<article><front><article-meta /></front>"
+                "<body><p>Main article prose with enough words for candidates.</p></body>"
+                "<sub-article><front><article-meta>"
+                '<article-id pub-id-type="doi">10.16995/olh.nested</article-id>'
+                "</article-meta></front><body><p>Nested article prose.</p></body></sub-article>"
+                "</article>",
+                encoding="utf-8",
+            )
+
+            self.assertIsNone(_olh_entry(article, content, 0))
+
     def test_jats_text_extraction_excludes_front_and_back_matter(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             content = Path(directory) / "article.xml"
@@ -749,6 +806,50 @@ class CitationAcquisitionTests(unittest.TestCase):
         self.assertNotIn("Front metadata title", text)
         self.assertNotIn("Copyright notice", text)
         self.assertNotIn("Back matter reference text", text)
+
+    def test_jats_text_extraction_excludes_nested_sub_article_bodies(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "compound.xml"
+            content.write_text(
+                "<article><body>"
+                "<p>The main article body contains a bounded scholarly claim here.</p>"
+                "</body><sub-article><body>"
+                "<p>Nested reviewer prose must not become a source claim.</p>"
+                "</body></sub-article></article>",
+                encoding="utf-8",
+            )
+
+            text = _read_text_content(content)
+
+        self.assertIn("main article body", text)
+        self.assertNotIn("Nested reviewer prose", text)
+
+    def test_candidate_schema_enforces_rejected_approval_contract(self) -> None:
+        schema = json.loads(
+            Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        import jsonschema
+
+        rejected = self._source(state="REJECTED_UNRESOLVED_LICENCE")
+        rejected["approval"] = {"status": "not_requested", "reviewer_id": None}
+        rejected["rejection_reason"] = "Article-level licence evidence is unresolved."
+        manifest = {**self._manifest(), "sources": [rejected]}
+        validator = jsonschema.Draft202012Validator(schema)
+        self.assertEqual(list(validator.iter_errors(manifest)), [])
+
+        for approval in (
+            {"status": "pending", "reviewer_id": None},
+            {"status": "not_requested", "reviewer_id": "reviewer-1"},
+        ):
+            invalid = deepcopy(manifest)
+            invalid["sources"][0]["approval"] = approval
+            self.assertTrue(list(validator.iter_errors(invalid)))
+
+        invalid_reason = deepcopy(manifest)
+        invalid_reason["sources"][0]["rejection_reason"] = ""
+        self.assertTrue(list(validator.iter_errors(invalid_reason)))
 
     def test_jats_without_eligible_abstract_or_body_has_no_extractable_prose(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
