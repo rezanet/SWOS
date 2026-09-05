@@ -840,6 +840,23 @@ class CitationAcquisitionTests(unittest.TestCase):
         self.assertNotIn("Metadata title", text)
         self.assertNotIn("Back metadata text", text)
 
+    def test_jats_text_extraction_excludes_inline_footnotes_with_a_boundary(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            content = Path(directory) / "footnote.xml"
+            content.write_text(
+                "<article><body><p>The bounded statement ends here."
+                "<fn id=\"fn-1\"><p>Copyright notice must not become a claim.</p></fn>"
+                "The next bounded statement continues here.</p></body></article>",
+                encoding="utf-8",
+            )
+
+            text = _read_text_content(content)
+
+        self.assertEqual(
+            text,
+            "The bounded statement ends here. The next bounded statement continues here.",
+        )
+
     def test_candidate_schema_enforces_rejected_approval_contract(self) -> None:
         schema = json.loads(
             Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
@@ -1178,6 +1195,14 @@ class CitationAcquisitionTests(unittest.TestCase):
         non_integer_in_domain_year["semantic_split"]["publication_year"] = "2026"
         with self.assertRaises(AcquisitionValidationError):
             validate_unlabelled_candidate_pair(non_integer_in_domain_year, policy=policy)
+
+        unparseable_publication_date = self._manifest()
+        unparseable_publication_date["sources"][0]["publication_date"] = "September 5, 2026"
+        unparseable_publication_date["sources"][0]["semantic_split_default"][
+            "publication_year"
+        ] = None
+        with self.assertRaises(AcquisitionValidationError):
+            validate_source_candidate_manifest(unparseable_publication_date)
 
     def test_temporal_cutoff_change_requires_a_policy_version_change(self) -> None:
         policy = self._manifest()["semantic_split_policy"]

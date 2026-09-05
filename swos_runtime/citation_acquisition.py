@@ -1137,6 +1137,7 @@ def _read_text_content(path: Path) -> str:
                         "back",
                         "fn-group",
                         "front",
+                        "fn",
                         "ref-list",
                         "supplementary-material",
                         "title",
@@ -1148,7 +1149,8 @@ def _read_text_content(path: Path) -> str:
                         values = [element.text or ""]
                         for child in element:
                             values.extend(collect(child))
-                            if str(child.tag).rsplit("}", 1)[-1] in _JATS_BLOCK_TAGS:
+                            child_tag = str(child.tag).rsplit("}", 1)[-1]
+                            if child_tag in excluded or child_tag in _JATS_BLOCK_TAGS:
                                 values.append(" ")
                             values.append(child.tail or "")
                         return values
@@ -1250,8 +1252,28 @@ def _candidate_pattern_id(
 
 
 def _publication_year(value: Any) -> int | None:
-    match = re.match(r"^(\d{4})", str(value or ""))
-    return int(match.group(1)) if match else None
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise AcquisitionValidationError(
+            "publication_date must be an ISO year/date or 'undated'"
+        )
+    text = value.strip()
+    if text.casefold() == "undated":
+        return None
+    match = re.fullmatch(r"(\d{4})(?:-(\d{2})-(\d{2}))?", text)
+    if match is None:
+        raise AcquisitionValidationError(
+            "publication_date must be an ISO year/date or 'undated'"
+        )
+    if match.group(2) is not None:
+        try:
+            datetime.strptime(text, "%Y-%m-%d")
+        except ValueError as exc:
+            raise AcquisitionValidationError(
+                "publication_date must be a valid ISO year/date or 'undated'"
+            ) from exc
+    return int(match.group(1))
 
 
 def _source_semantic_assignment(
