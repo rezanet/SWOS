@@ -3072,6 +3072,32 @@
       "canonical_for": ["document-evals-fixtures-source-diversity-readme"],
       "supersedes": [],
       "superseded_by": []
+    },
+    {
+      "id": "benchmark-citation-support-acquisition-readme",
+      "path": "benchmark/citation-support/acquisition/README.md",
+      "title": "T070 Citation Candidate Acquisition",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "living",
+      "version": "current",
+      "canonical_for": ["document-benchmark-citation-support-acquisition-readme"],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "benchmark-citation-support-acquisition-record",
+      "path": "benchmark/citation-support/acquisition/T070-ACQUISITION-RECORD.md",
+      "title": "T070 Citation Candidate Acquisition Record",
+      "owner": "SWOS Maintainers",
+      "authority": "operational",
+      "status": "active",
+      "version_scheme": "date",
+      "version": "2026-09-05",
+      "canonical_for": ["document-benchmark-citation-support-acquisition-record"],
+      "supersedes": [],
+      "superseded_by": []
     }
   ]
 }

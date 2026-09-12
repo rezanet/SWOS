@@ -60,6 +60,14 @@ class ResearchGradeCIContractTests(unittest.TestCase):
         self.assertIn(".[research-grade]", text)
         self.assertIn("python tools/certify_prov_roundtrip.py", text)
 
+    def test_prov_certification_runs_the_frozen_corpus_manifest(self) -> None:
+        text = PROV_WORKFLOW.read_text(encoding="utf-8")
+        corpus_input = text.split("corpus_manifest:", 1)[1].split("oracle:", 1)[0]
+        self.assertIn("required: true", corpus_input)
+        self.assertNotIn("default:", corpus_input)
+        self.assertIn("--corpus-manifest", text)
+        self.assertNotIn("--epg", text)
+
 
 if __name__ == "__main__":
     unittest.main()
