@@ -884,6 +884,20 @@ class CitationAcquisitionTests(unittest.TestCase):
         invalid_reason["sources"][0]["rejection_reason"] = ""
         self.assertTrue(list(validator.iter_errors(invalid_reason)))
 
+    def test_candidate_schema_enforces_iso_publication_date_grammar(self) -> None:
+        schema = json.loads(
+            Path("schemas/research-grade/citation-source-candidate.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        import jsonschema
+
+        candidate = self._manifest()
+        source = candidate["sources"][0]
+        source["publication_date"] = "September 5, 2026"
+        source["semantic_split_default"]["publication_year"] = None
+        self.assertTrue(list(jsonschema.Draft202012Validator(schema).iter_errors(candidate)))
+
     def test_jats_without_eligible_abstract_or_body_has_no_extractable_prose(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             content = Path(directory) / "metadata-only.xml"
@@ -1167,6 +1181,23 @@ class CitationAcquisitionTests(unittest.TestCase):
         }
         with self.assertRaises(AcquisitionValidationError):
             _source_semantic_assignment(conflicting, policy)
+
+        timestamped = self._manifest()
+        timestamped_source = timestamped["sources"][0]
+        timestamped_source["publication_date"] = "2026-08-24T00:25:00-07:00"
+        timestamped_source["semantic_split_default"] = {
+            "partition": "temporal",
+            "criteria_id": "T070-TEMPORAL-LATER-YEAR-V1",
+            "publication_year": 2026,
+            "start_year": 2020,
+            "catalog_declared_held_out_domain": False,
+        }
+        self.assertEqual(
+            validate_source_candidate_manifest(timestamped)["source-1"][
+                "semantic_split_default"
+            ]["partition"],
+            "temporal",
+        )
 
         missing_temporal_domain_flag = self._pair(
             "runtime-temporal-domain-flag", "runtime-temporal-domain-flag", "temporal"
